@@ -105,7 +105,7 @@ class FhirDb {
 
             /// Save it in the temporary box as we're changing over to the new password, so
             /// in case something goes wrong, we don't lose the data
-            await tempBox.put(resource.id, newValue);
+            await tempBox.put(resource.id!.value, newValue);
           }
 
           /// after we have saved all of the resources in the temporary box, we can
@@ -127,7 +127,7 @@ class FhirDb {
             final Resource resource = Resource.fromJson(newValue);
 
             /// Save it to the new box with the new password
-            await newBox.put(resource.id, newValue);
+            await newBox.put(resource.id!.value, newValue);
           }
 
           /// clear everything from the tempBox so we can use it again
