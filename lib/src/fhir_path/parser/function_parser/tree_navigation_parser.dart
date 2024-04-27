@@ -1,5 +1,5 @@
 // Project imports:
-import '../../r6.dart';
+import '../../../../fhir_r6.dart';
 
 class ChildrenParser extends FhirPathParser {
   ChildrenParser();

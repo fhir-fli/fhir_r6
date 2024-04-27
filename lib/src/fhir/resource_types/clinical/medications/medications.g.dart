@@ -53,7 +53,7 @@ _$FormularyItemImpl _$$FormularyItemImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$FormularyItemImplToJson(_$FormularyItemImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -170,7 +170,7 @@ const _$R6ResourceTypeEnumMap = {
   R6ResourceType.Invoice: 'Invoice',
   R6ResourceType.Library: 'Library',
   R6ResourceType.Linkage: 'Linkage',
-  R6ResourceType.List: 'List',
+  R6ResourceType.FhirList: 'List',
   R6ResourceType.Location: 'Location',
   R6ResourceType.ManufacturedItemDefinition: 'ManufacturedItemDefinition',
   R6ResourceType.Measure: 'Measure',
@@ -392,7 +392,7 @@ _$ImmunizationImpl _$$ImmunizationImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$ImmunizationImplToJson(_$ImmunizationImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -723,7 +723,7 @@ _$ImmunizationEvaluationImpl _$$ImmunizationEvaluationImplFromJson(
 Map<String, dynamic> _$$ImmunizationEvaluationImplToJson(
     _$ImmunizationEvaluationImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -825,7 +825,7 @@ _$ImmunizationRecommendationImpl _$$ImmunizationRecommendationImplFromJson(
 Map<String, dynamic> _$$ImmunizationRecommendationImplToJson(
     _$ImmunizationRecommendationImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -1064,7 +1064,7 @@ _$MedicationImpl _$$MedicationImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$MedicationImplToJson(_$MedicationImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -1318,7 +1318,7 @@ _$MedicationAdministrationImpl _$$MedicationAdministrationImplFromJson(
 Map<String, dynamic> _$$MedicationAdministrationImplToJson(
     _$MedicationAdministrationImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -1616,7 +1616,7 @@ _$MedicationDispenseImpl _$$MedicationDispenseImplFromJson(
 Map<String, dynamic> _$$MedicationDispenseImplToJson(
     _$MedicationDispenseImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -1984,7 +1984,7 @@ _$MedicationKnowledgeImpl _$$MedicationKnowledgeImplFromJson(
 Map<String, dynamic> _$$MedicationKnowledgeImplToJson(
     _$MedicationKnowledgeImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -3091,7 +3091,7 @@ _$MedicationRequestImpl _$$MedicationRequestImplFromJson(
 Map<String, dynamic> _$$MedicationRequestImplToJson(
     _$MedicationRequestImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -3443,7 +3443,7 @@ _$MedicationStatementImpl _$$MedicationStatementImplFromJson(
 Map<String, dynamic> _$$MedicationStatementImplToJson(
     _$MedicationStatementImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {

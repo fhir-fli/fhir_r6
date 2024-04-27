@@ -136,7 +136,7 @@ _$EncounterImpl _$$EncounterImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$EncounterImplToJson(_$EncounterImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -289,7 +289,7 @@ const _$R6ResourceTypeEnumMap = {
   R6ResourceType.Invoice: 'Invoice',
   R6ResourceType.Library: 'Library',
   R6ResourceType.Linkage: 'Linkage',
-  R6ResourceType.List: 'List',
+  R6ResourceType.FhirList: 'List',
   R6ResourceType.Location: 'Location',
   R6ResourceType.ManufacturedItemDefinition: 'ManufacturedItemDefinition',
   R6ResourceType.Measure: 'Measure',
@@ -675,7 +675,7 @@ _$EncounterHistoryImpl _$$EncounterHistoryImplFromJson(
 Map<String, dynamic> _$$EncounterHistoryImplToJson(
     _$EncounterHistoryImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -832,7 +832,7 @@ _$EpisodeOfCareImpl _$$EpisodeOfCareImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$EpisodeOfCareImplToJson(_$EpisodeOfCareImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -1050,7 +1050,7 @@ _$FlagImpl _$$FlagImplFromJson(Map<String, dynamic> json) => _$FlagImpl(
 
 Map<String, dynamic> _$$FlagImplToJson(_$FlagImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -1263,7 +1263,7 @@ _$LibraryImpl _$$LibraryImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$LibraryImplToJson(_$LibraryImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -1353,8 +1353,8 @@ _$FhirListImpl _$$FhirListImplFromJson(Map<String, dynamic> json) =>
     _$FhirListImpl(
       resourceType: $enumDecodeNullable(
               _$R6ResourceTypeEnumMap, json['resourceType'],
-              unknownValue: R6ResourceType.List) ??
-          R6ResourceType.List,
+              unknownValue: R6ResourceType.FhirList) ??
+          R6ResourceType.FhirList,
       id: json['id'] == null ? null : FhirId.fromJson(json['id']),
       meta: json['meta'] == null
           ? null
@@ -1432,7 +1432,7 @@ _$FhirListImpl _$$FhirListImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$FhirListImplToJson(_$FhirListImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {

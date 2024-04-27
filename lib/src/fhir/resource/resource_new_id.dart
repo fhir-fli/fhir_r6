@@ -172,7 +172,7 @@ Resource _newId(Resource resource) {
       return (resource as Library).copyWith(id: newId());
     case R6ResourceType.Linkage:
       return (resource as Linkage).copyWith(id: newId());
-    case R6ResourceType.List:
+    case R6ResourceType.FhirList:
       return (resource as FhirList).copyWith(id: newId());
     case R6ResourceType.Location:
       return (resource as Location).copyWith(id: newId());

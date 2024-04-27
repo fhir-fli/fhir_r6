@@ -1,7 +1,7 @@
 // ignore_for_file: annotate_overrides, overridden_fields
 
 // Project imports:
-import '../../r6.dart';
+import '../../../../fhir_r6.dart';
 
 /// DEPRECATED
 /// The as() function is defined for backwards compatibility with previous implementations

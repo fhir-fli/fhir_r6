@@ -79,7 +79,7 @@ class FhirDb {
         /// get that list of types
         final List<String> types = typesBox.get('types') ?? <String>[];
 
-        _types.map((R6ResourceType e) => resourceTypeToStringMap[e]!).toList();
+        _types.map((R6ResourceType e) => e.toString()).toList();
 
         /// Create a new temporary box to store resources while we are updating the boxes
         /// with a new password
@@ -275,34 +275,30 @@ class FhirDb {
     Resource resource,
     String? pw,
   ) async {
-    if (resource.resourceTypeString != null) {
-      if (resource.id != null) {
-        final Resource? oldResource = await get(
-          resourceType: resource.resourceType!,
-          id: resource.id!.value!,
+    if (resource.id != null) {
+      final Resource? oldResource = await get(
+        resourceType: resource.resourceType!,
+        id: resource.id!.value!,
+        pw: pw,
+      );
+      if (oldResource != null) {
+        await _saveHistory(
+          resource: oldResource.toJson(),
           pw: pw,
         );
-        if (oldResource != null) {
-          await _saveHistory(
-            resource: oldResource.toJson(),
-            pw: pw,
-          );
-          final FhirMeta? oldMeta = oldResource.meta;
-          final Resource newResource = resource.updateVersion(oldMeta: oldMeta);
-          await _saveToDb(
-            resourceType: newResource.resourceType!,
-            resource: newResource.toJson(),
-            pw: pw,
-          );
-          return newResource;
-        } else {
-          return _insert(resource, pw);
-        }
+        final FhirMeta? oldMeta = oldResource.meta;
+        final Resource newResource = resource.updateVersion(oldMeta: oldMeta);
+        await _saveToDb(
+          resourceType: newResource.resourceType!,
+          resource: newResource.toJson(),
+          pw: pw,
+        );
+        return newResource;
       } else {
         return _insert(resource, pw);
       }
     } else {
-      throw const FormatException('Resource passed must have a resourceType');
+      return _insert(resource, pw);
     }
   }
 
@@ -491,7 +487,7 @@ class FhirDb {
     }
     if (resourceTypeStrings != null) {
       for (final String type in resourceTypeStrings) {
-        final R6ResourceType? resourceType = resourceTypeFromStringMap[type];
+        final R6ResourceType? resourceType = R6ResourceType.fromString(type);
         if (resourceType != null) {
           typeList.add(resourceType);
         }

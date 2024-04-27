@@ -90,7 +90,7 @@ _$FhirEndpointImpl _$$FhirEndpointImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$FhirEndpointImplToJson(_$FhirEndpointImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -224,7 +224,7 @@ const _$R6ResourceTypeEnumMap = {
   R6ResourceType.Invoice: 'Invoice',
   R6ResourceType.Library: 'Library',
   R6ResourceType.Linkage: 'Linkage',
-  R6ResourceType.List: 'List',
+  R6ResourceType.FhirList: 'List',
   R6ResourceType.Location: 'Location',
   R6ResourceType.ManufacturedItemDefinition: 'ManufacturedItemDefinition',
   R6ResourceType.Measure: 'Measure',
@@ -492,7 +492,7 @@ _$HealthcareServiceImpl _$$HealthcareServiceImplFromJson(
 Map<String, dynamic> _$$HealthcareServiceImplToJson(
     _$HealthcareServiceImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -733,7 +733,7 @@ _$LocationImpl _$$LocationImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$LocationImplToJson(_$LocationImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -916,7 +916,7 @@ _$OrganizationImpl _$$OrganizationImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$OrganizationImplToJson(_$OrganizationImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -1086,7 +1086,7 @@ _$OrganizationAffiliationImpl _$$OrganizationAffiliationImplFromJson(
 Map<String, dynamic> _$$OrganizationAffiliationImplToJson(
     _$OrganizationAffiliationImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {

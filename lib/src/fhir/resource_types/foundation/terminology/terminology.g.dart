@@ -205,7 +205,7 @@ _$CodeSystemImpl _$$CodeSystemImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$CodeSystemImplToJson(_$CodeSystemImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -382,7 +382,7 @@ const _$R6ResourceTypeEnumMap = {
   R6ResourceType.Invoice: 'Invoice',
   R6ResourceType.Library: 'Library',
   R6ResourceType.Linkage: 'Linkage',
-  R6ResourceType.List: 'List',
+  R6ResourceType.FhirList: 'List',
   R6ResourceType.Location: 'Location',
   R6ResourceType.ManufacturedItemDefinition: 'ManufacturedItemDefinition',
   R6ResourceType.Measure: 'Measure',
@@ -954,7 +954,7 @@ _$ConceptMapImpl _$$ConceptMapImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$ConceptMapImplToJson(_$ConceptMapImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -1718,7 +1718,7 @@ _$NamingSystemImpl _$$NamingSystemImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$NamingSystemImplToJson(_$NamingSystemImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -2029,7 +2029,7 @@ _$TerminologyCapabilitiesImpl _$$TerminologyCapabilitiesImplFromJson(
 Map<String, dynamic> _$$TerminologyCapabilitiesImplToJson(
     _$TerminologyCapabilitiesImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -2759,7 +2759,7 @@ _$ValueSetImpl _$$ValueSetImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$ValueSetImplToJson(_$ValueSetImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {

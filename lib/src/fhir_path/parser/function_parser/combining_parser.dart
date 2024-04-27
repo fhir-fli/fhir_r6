@@ -1,6 +1,6 @@
 // ignore_for_file: annotate_overrides, overridden_fields
 
-import '../../r6.dart';
+import '../../../../fhir_r6.dart';
 
 /// Merge the two collections into a single collection,
 /// eliminating any duplicate values (using = (Equals) (=) to

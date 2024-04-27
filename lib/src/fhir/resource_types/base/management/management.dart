@@ -4,13 +4,11 @@
 import 'dart:convert';
 
 // Package imports:
-import 'package:fhir_primitives/fhir_primitives.dart';
-import 'package:fhir_yaml/fhir_yaml.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:yaml/yaml.dart';
 
 // Project imports:
-import '../../../r6.dart';
+import '../../../../../fhir_r6.dart';
 
 part 'management.freezed.dart';
 part 'management.g.dart';
@@ -3022,8 +3020,8 @@ class FhirList with Resource, _$FhirList {
   ///
   const factory FhirList({
     /// [resourceType] This is a List resource
-    @Default(R6ResourceType.List)
-    @JsonKey(unknownEnumValue: R6ResourceType.List)
+    @Default(R6ResourceType.FhirList)
+    @JsonKey(unknownEnumValue: R6ResourceType.FhirList)
     R6ResourceType resourceType,
 
     /// [id] The logical id of the resource, as used in the URL for the resource.

@@ -1,7 +1,7 @@
 // ignore_for_file: annotate_overrides, overridden_fields
 
 // Project imports:
-import '../../r6.dart';
+import '../../../../fhir_r6.dart';
 
 class IndexOfParser extends FunctionParser {
   IndexOfParser(super.value);

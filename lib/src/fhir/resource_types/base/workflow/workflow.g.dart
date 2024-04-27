@@ -169,7 +169,7 @@ _$AppointmentImpl _$$AppointmentImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$AppointmentImplToJson(_$AppointmentImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -333,7 +333,7 @@ const _$R6ResourceTypeEnumMap = {
   R6ResourceType.Invoice: 'Invoice',
   R6ResourceType.Library: 'Library',
   R6ResourceType.Linkage: 'Linkage',
-  R6ResourceType.List: 'List',
+  R6ResourceType.FhirList: 'List',
   R6ResourceType.Location: 'Location',
   R6ResourceType.ManufacturedItemDefinition: 'ManufacturedItemDefinition',
   R6ResourceType.Measure: 'Measure',
@@ -852,7 +852,7 @@ _$AppointmentResponseImpl _$$AppointmentResponseImplFromJson(
 Map<String, dynamic> _$$AppointmentResponseImplToJson(
     _$AppointmentResponseImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -970,7 +970,7 @@ _$ScheduleImpl _$$ScheduleImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$ScheduleImplToJson(_$ScheduleImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -1089,7 +1089,7 @@ _$SlotImpl _$$SlotImplFromJson(Map<String, dynamic> json) => _$SlotImpl(
 
 Map<String, dynamic> _$$SlotImplToJson(_$SlotImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -1291,7 +1291,7 @@ _$TaskImpl _$$TaskImplFromJson(Map<String, dynamic> json) => _$TaskImpl(
 
 Map<String, dynamic> _$$TaskImplToJson(_$TaskImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -2281,7 +2281,7 @@ _$TransportImpl _$$TransportImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$TransportImplToJson(_$TransportImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -3186,7 +3186,7 @@ _$VerificationResultImpl _$$VerificationResultImplFromJson(
 Map<String, dynamic> _$$VerificationResultImplToJson(
     _$VerificationResultImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {

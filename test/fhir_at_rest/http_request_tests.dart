@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 // Package imports:
-import 'package:fhir_primitives/fhir_primitives.dart';
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:test/test.dart';
 

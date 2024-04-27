@@ -246,7 +246,7 @@ _$MeasureImpl _$$MeasureImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$MeasureImplToJson(_$MeasureImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -439,7 +439,7 @@ const _$R6ResourceTypeEnumMap = {
   R6ResourceType.Invoice: 'Invoice',
   R6ResourceType.Library: 'Library',
   R6ResourceType.Linkage: 'Linkage',
-  R6ResourceType.List: 'List',
+  R6ResourceType.FhirList: 'List',
   R6ResourceType.Location: 'Location',
   R6ResourceType.ManufacturedItemDefinition: 'ManufacturedItemDefinition',
   R6ResourceType.Measure: 'Measure',
@@ -995,7 +995,7 @@ _$MeasureReportImpl _$$MeasureReportImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$MeasureReportImplToJson(_$MeasureReportImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -1600,7 +1600,7 @@ _$TestPlanImpl _$$TestPlanImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$TestPlanImplToJson(_$TestPlanImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -2068,7 +2068,7 @@ _$TestReportImpl _$$TestReportImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$TestReportImplToJson(_$TestReportImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -2687,7 +2687,7 @@ _$TestScriptImpl _$$TestScriptImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$TestScriptImplToJson(_$TestScriptImpl instance) {
   final val = <String, dynamic>{
-    'resourceType': _$R6ResourceTypeEnumMap[instance.resourceType]!,
+    'resourceType': instance.resourceType.toJson(),
   };
 
   void writeNotNull(String key, dynamic value) {
