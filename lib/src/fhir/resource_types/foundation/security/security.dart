@@ -270,6 +270,9 @@ class AuditEvent with Resource, _$AuditEvent {
     List<AuditEventEntity>? entity,
   }) = _AuditEvent;
 
+  @override
+  String get fhirType => 'AuditEvent';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -310,7 +313,7 @@ class AuditEvent with Resource, _$AuditEvent {
 /// [AuditEventOutcome] A record of an event relevant for purposes such as
 ///  operations, privacy, security, maintenance, and performance analysis.
 @freezed
-class AuditEventOutcome with _$AuditEventOutcome {
+class AuditEventOutcome with BackboneType, _$AuditEventOutcome {
   /// [AuditEventOutcome] A record of an event relevant for purposes such as
   ///  operations, privacy, security, maintenance, and performance analysis.
   const AuditEventOutcome._();
@@ -384,8 +387,8 @@ class AuditEventOutcome with _$AuditEventOutcome {
     List<CodeableConcept>? detail,
   }) = _AuditEventOutcome;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'AuditEventOutcome';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory AuditEventOutcome.fromYaml(dynamic yaml) => yaml is String
@@ -413,16 +416,12 @@ class AuditEventOutcome with _$AuditEventOutcome {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [AuditEventAgent] A record of an event relevant for purposes such as
 ///  operations, privacy, security, maintenance, and performance analysis.
 @freezed
-class AuditEventAgent with _$AuditEventAgent {
+class AuditEventAgent with BackboneType, _$AuditEventAgent {
   /// [AuditEventAgent] A record of an event relevant for purposes such as
   ///  operations, privacy, security, maintenance, and performance analysis.
   const AuditEventAgent._();
@@ -582,8 +581,8 @@ class AuditEventAgent with _$AuditEventAgent {
     List<CodeableConcept>? authorization,
   }) = _AuditEventAgent;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'AuditEventAgent';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory AuditEventAgent.fromYaml(dynamic yaml) => yaml is String
@@ -611,16 +610,12 @@ class AuditEventAgent with _$AuditEventAgent {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [AuditEventSource] A record of an event relevant for purposes such as
 ///  operations, privacy, security, maintenance, and performance analysis.
 @freezed
-class AuditEventSource with _$AuditEventSource {
+class AuditEventSource with BackboneType, _$AuditEventSource {
   /// [AuditEventSource] A record of an event relevant for purposes such as
   ///  operations, privacy, security, maintenance, and performance analysis.
   const AuditEventSource._();
@@ -701,8 +696,8 @@ class AuditEventSource with _$AuditEventSource {
     List<CodeableConcept>? type,
   }) = _AuditEventSource;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'AuditEventSource';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory AuditEventSource.fromYaml(dynamic yaml) => yaml is String
@@ -730,16 +725,12 @@ class AuditEventSource with _$AuditEventSource {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [AuditEventEntity] A record of an event relevant for purposes such as
 ///  operations, privacy, security, maintenance, and performance analysis.
 @freezed
-class AuditEventEntity with _$AuditEventEntity {
+class AuditEventEntity with BackboneType, _$AuditEventEntity {
   /// [AuditEventEntity] A record of an event relevant for purposes such as
   ///  operations, privacy, security, maintenance, and performance analysis.
   const AuditEventEntity._();
@@ -853,8 +844,8 @@ class AuditEventEntity with _$AuditEventEntity {
     List<AuditEventAgent>? agent,
   }) = _AuditEventEntity;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'AuditEventEntity';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory AuditEventEntity.fromYaml(dynamic yaml) => yaml is String
@@ -882,16 +873,12 @@ class AuditEventEntity with _$AuditEventEntity {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [AuditEventDetail] A record of an event relevant for purposes such as
 ///  operations, privacy, security, maintenance, and performance analysis.
 @freezed
-class AuditEventDetail with _$AuditEventDetail {
+class AuditEventDetail with BackboneType, _$AuditEventDetail {
   /// [AuditEventDetail] A record of an event relevant for purposes such as
   ///  operations, privacy, security, maintenance, and performance analysis.
   const AuditEventDetail._();
@@ -1045,8 +1032,8 @@ class AuditEventDetail with _$AuditEventDetail {
     @JsonKey(name: '_valueBase64Binary') Element? valueBase64BinaryElement,
   }) = _AuditEventDetail;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'AuditEventDetail';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory AuditEventDetail.fromYaml(dynamic yaml) => yaml is String
@@ -1074,10 +1061,6 @@ class AuditEventDetail with _$AuditEventDetail {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [Consent] A record of a healthcare consumer’s  choices  or choices made on
@@ -1366,6 +1349,9 @@ class Consent with Resource, _$Consent {
     List<ConsentProvision>? provision,
   }) = _Consent;
 
+  @override
+  String get fhirType => 'Consent';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -1409,7 +1395,7 @@ class Consent with Resource, _$Consent {
 ///  actions within a given policy context, for specific purposes and periods
 ///  of time.
 @freezed
-class ConsentPolicyBasis with _$ConsentPolicyBasis {
+class ConsentPolicyBasis with BackboneType, _$ConsentPolicyBasis {
   /// [ConsentPolicyBasis] A record of a healthcare consumer’s  choices  or
   ///  choices made on their behalf by a third party, which permits or denies
   ///  identified recipient(s) or recipient role(s) to perform one or more
@@ -1496,8 +1482,8 @@ class ConsentPolicyBasis with _$ConsentPolicyBasis {
     @JsonKey(name: '_url') Element? urlElement,
   }) = _ConsentPolicyBasis;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ConsentPolicyBasis';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ConsentPolicyBasis.fromYaml(dynamic yaml) => yaml is String
@@ -1525,10 +1511,6 @@ class ConsentPolicyBasis with _$ConsentPolicyBasis {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ConsentVerification] A record of a healthcare consumer’s  choices  or
@@ -1537,7 +1519,7 @@ class ConsentPolicyBasis with _$ConsentPolicyBasis {
 ///  actions within a given policy context, for specific purposes and periods
 ///  of time.
 @freezed
-class ConsentVerification with _$ConsentVerification {
+class ConsentVerification with BackboneType, _$ConsentVerification {
   /// [ConsentVerification] A record of a healthcare consumer’s  choices  or
   ///  choices made on their behalf by a third party, which permits or denies
   ///  identified recipient(s) or recipient role(s) to perform one or more
@@ -1648,8 +1630,8 @@ class ConsentVerification with _$ConsentVerification {
     @JsonKey(name: '_verificationDate') List<Element>? verificationDateElement,
   }) = _ConsentVerification;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ConsentVerification';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ConsentVerification.fromYaml(dynamic yaml) => yaml is String
@@ -1677,10 +1659,6 @@ class ConsentVerification with _$ConsentVerification {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ConsentProvision] A record of a healthcare consumer’s  choices  or choices
@@ -1688,7 +1666,7 @@ class ConsentVerification with _$ConsentVerification {
 ///  recipient(s) or recipient role(s) to perform one or more actions within a
 ///  given policy context, for specific purposes and periods of time.
 @freezed
-class ConsentProvision with _$ConsentProvision {
+class ConsentProvision with BackboneType, _$ConsentProvision {
   /// [ConsentProvision] A record of a healthcare consumer’s  choices  or
   ///  choices made on their behalf by a third party, which permits or denies
   ///  identified recipient(s) or recipient role(s) to perform one or more
@@ -1842,8 +1820,8 @@ class ConsentProvision with _$ConsentProvision {
     List<ConsentProvision>? provision,
   }) = _ConsentProvision;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ConsentProvision';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ConsentProvision.fromYaml(dynamic yaml) => yaml is String
@@ -1871,10 +1849,6 @@ class ConsentProvision with _$ConsentProvision {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ConsentActor] A record of a healthcare consumer’s  choices  or choices
@@ -1882,7 +1856,7 @@ class ConsentProvision with _$ConsentProvision {
 ///  recipient(s) or recipient role(s) to perform one or more actions within a
 ///  given policy context, for specific purposes and periods of time.
 @freezed
-class ConsentActor with _$ConsentActor {
+class ConsentActor with BackboneType, _$ConsentActor {
   /// [ConsentActor] A record of a healthcare consumer’s  choices  or choices
   ///  made on their behalf by a third party, which permits or denies
   ///  identified recipient(s) or recipient role(s) to perform one or more
@@ -1966,8 +1940,8 @@ class ConsentActor with _$ConsentActor {
     Reference? reference,
   }) = _ConsentActor;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ConsentActor';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ConsentActor.fromYaml(dynamic yaml) => yaml is String
@@ -1995,10 +1969,6 @@ class ConsentActor with _$ConsentActor {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ConsentData] A record of a healthcare consumer’s  choices  or choices made
@@ -2006,7 +1976,7 @@ class ConsentActor with _$ConsentActor {
 ///  recipient(s) or recipient role(s) to perform one or more actions within a
 ///  given policy context, for specific purposes and periods of time.
 @freezed
-class ConsentData with _$ConsentData {
+class ConsentData with BackboneType, _$ConsentData {
   /// [ConsentData] A record of a healthcare consumer’s  choices  or choices
   ///  made on their behalf by a third party, which permits or denies
   ///  identified recipient(s) or recipient role(s) to perform one or more
@@ -2093,8 +2063,8 @@ class ConsentData with _$ConsentData {
     required Reference reference,
   }) = _ConsentData;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ConsentData';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ConsentData.fromYaml(dynamic yaml) => yaml is String
@@ -2122,10 +2092,6 @@ class ConsentData with _$ConsentData {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [Permission] Permission resource holds access rules for a given data and
@@ -2317,6 +2283,9 @@ class Permission with Resource, _$Permission {
     List<PermissionRule>? rule,
   }) = _Permission;
 
+  @override
+  String get fhirType => 'Permission';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -2357,7 +2326,7 @@ class Permission with Resource, _$Permission {
 /// [PermissionJustification] Permission resource holds access rules for a
 ///  given data and context.
 @freezed
-class PermissionJustification with _$PermissionJustification {
+class PermissionJustification with BackboneType, _$PermissionJustification {
   /// [PermissionJustification] Permission resource holds access rules for a
   ///  given data and context.
   const PermissionJustification._();
@@ -2431,8 +2400,8 @@ class PermissionJustification with _$PermissionJustification {
     List<Reference>? evidence,
   }) = _PermissionJustification;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'PermissionJustification';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory PermissionJustification.fromYaml(dynamic yaml) => yaml is String
@@ -2460,16 +2429,12 @@ class PermissionJustification with _$PermissionJustification {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [PermissionRule] Permission resource holds access rules for a given data
 ///  and context.
 @freezed
-class PermissionRule with _$PermissionRule {
+class PermissionRule with BackboneType, _$PermissionRule {
   /// [PermissionRule] Permission resource holds access rules for a given data
   ///  and context.
   const PermissionRule._();
@@ -2560,8 +2525,8 @@ class PermissionRule with _$PermissionRule {
     List<CodeableConcept>? limit,
   }) = _PermissionRule;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'PermissionRule';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory PermissionRule.fromYaml(dynamic yaml) => yaml is String
@@ -2589,16 +2554,12 @@ class PermissionRule with _$PermissionRule {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [PermissionData] Permission resource holds access rules for a given data
 ///  and context.
 @freezed
-class PermissionData with _$PermissionData {
+class PermissionData with BackboneType, _$PermissionData {
   /// [PermissionData] Permission resource holds access rules for a given data
   ///  and context.
   const PermissionData._();
@@ -2684,8 +2645,8 @@ class PermissionData with _$PermissionData {
     FhirExpression? expression,
   }) = _PermissionData;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'PermissionData';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory PermissionData.fromYaml(dynamic yaml) => yaml is String
@@ -2713,16 +2674,12 @@ class PermissionData with _$PermissionData {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [PermissionResource] Permission resource holds access rules for a given
 ///  data and context.
 @freezed
-class PermissionResource with _$PermissionResource {
+class PermissionResource with BackboneType, _$PermissionResource {
   /// [PermissionResource] Permission resource holds access rules for a given
   ///  data and context.
   const PermissionResource._();
@@ -2803,8 +2760,8 @@ class PermissionResource with _$PermissionResource {
     required Reference reference,
   }) = _PermissionResource;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'PermissionResource';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory PermissionResource.fromYaml(dynamic yaml) => yaml is String
@@ -2832,16 +2789,12 @@ class PermissionResource with _$PermissionResource {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [PermissionActivity] Permission resource holds access rules for a given
 ///  data and context.
 @freezed
-class PermissionActivity with _$PermissionActivity {
+class PermissionActivity with BackboneType, _$PermissionActivity {
   /// [PermissionActivity] Permission resource holds access rules for a given
   ///  data and context.
   const PermissionActivity._();
@@ -2918,8 +2871,8 @@ class PermissionActivity with _$PermissionActivity {
     List<CodeableConcept>? purpose,
   }) = _PermissionActivity;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'PermissionActivity';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory PermissionActivity.fromYaml(dynamic yaml) => yaml is String
@@ -2947,10 +2900,6 @@ class PermissionActivity with _$PermissionActivity {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [Provenance] Provenance of a resource is a record that describes entities
@@ -3236,6 +3185,9 @@ class Provenance with Resource, _$Provenance {
     List<Signature>? signature,
   }) = _Provenance;
 
+  @override
+  String get fhirType => 'Provenance';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -3284,7 +3236,7 @@ class Provenance with Resource, _$Provenance {
 ///  Document Completion - has the artifact been legally authenticated), all of
 ///  which may impact security, privacy, and trust policies.
 @freezed
-class ProvenanceAgent with _$ProvenanceAgent {
+class ProvenanceAgent with BackboneType, _$ProvenanceAgent {
   /// [ProvenanceAgent] Provenance of a resource is a record that describes
   ///  entities and processes involved in producing and delivering or otherwise
   ///  influencing that resource. Provenance provides a critical foundation for
@@ -3390,8 +3342,8 @@ class ProvenanceAgent with _$ProvenanceAgent {
     Reference? onBehalfOf,
   }) = _ProvenanceAgent;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ProvenanceAgent';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ProvenanceAgent.fromYaml(dynamic yaml) => yaml is String
@@ -3419,10 +3371,6 @@ class ProvenanceAgent with _$ProvenanceAgent {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ProvenanceEntity] Provenance of a resource is a record that describes
@@ -3436,7 +3384,7 @@ class ProvenanceAgent with _$ProvenanceAgent {
 ///  Document Completion - has the artifact been legally authenticated), all of
 ///  which may impact security, privacy, and trust policies.
 @freezed
-class ProvenanceEntity with _$ProvenanceEntity {
+class ProvenanceEntity with BackboneType, _$ProvenanceEntity {
   /// [ProvenanceEntity] Provenance of a resource is a record that describes
   ///  entities and processes involved in producing and delivering or otherwise
   ///  influencing that resource. Provenance provides a critical foundation for
@@ -3544,8 +3492,8 @@ class ProvenanceEntity with _$ProvenanceEntity {
     List<ProvenanceAgent>? agent,
   }) = _ProvenanceEntity;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ProvenanceEntity';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ProvenanceEntity.fromYaml(dynamic yaml) => yaml is String
@@ -3573,8 +3521,4 @@ class ProvenanceEntity with _$ProvenanceEntity {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }

@@ -308,6 +308,9 @@ class ArtifactAssessment with Resource, _$ArtifactAssessment {
     @JsonKey(name: '_disposition') Element? dispositionElement,
   }) = _ArtifactAssessment;
 
+  @override
+  String get fhirType => 'ArtifactAssessment';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -349,7 +352,7 @@ class ArtifactAssessment with Resource, _$ArtifactAssessment {
 ///  classifiers or ratings about a Resource and supports attribution and
 ///  rights management metadata for the added content.
 @freezed
-class ArtifactAssessmentContent with _$ArtifactAssessmentContent {
+class ArtifactAssessmentContent with BackboneType, _$ArtifactAssessmentContent {
   /// [ArtifactAssessmentContent] This Resource provides one or more comments,
   ///  classifiers or ratings about a Resource and supports attribution and
   ///  rights management metadata for the added content.
@@ -492,8 +495,8 @@ class ArtifactAssessmentContent with _$ArtifactAssessmentContent {
     List<ArtifactAssessmentContent>? component,
   }) = _ArtifactAssessmentContent;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ArtifactAssessmentContent';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ArtifactAssessmentContent.fromYaml(dynamic yaml) => yaml is String
@@ -521,10 +524,6 @@ class ArtifactAssessmentContent with _$ArtifactAssessmentContent {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [Citation] The Citation Resource enables reference to any knowledge
@@ -1003,6 +1002,9 @@ class Citation with Resource, _$Citation {
     CitationCitedArtifact? citedArtifact,
   }) = _Citation;
 
+  @override
+  String get fhirType => 'Citation';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -1046,7 +1048,7 @@ class Citation with Resource, _$Citation {
 ///  practices such as versioning, expressing complex contributorship roles,
 ///  and referencing computable resources.
 @freezed
-class CitationSummary with _$CitationSummary {
+class CitationSummary with BackboneType, _$CitationSummary {
   /// [CitationSummary] The Citation Resource enables reference to any knowledge
   ///  artifact for purposes of identification and attribution. The Citation
   ///  Resource supports existing reference structures and developing publication
@@ -1126,8 +1128,8 @@ class CitationSummary with _$CitationSummary {
     @JsonKey(name: '_text') Element? textElement,
   }) = _CitationSummary;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationSummary';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationSummary.fromYaml(dynamic yaml) => yaml is String
@@ -1155,10 +1157,6 @@ class CitationSummary with _$CitationSummary {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CitationClassification] The Citation Resource enables reference to any
@@ -1167,7 +1165,7 @@ class CitationSummary with _$CitationSummary {
 ///  publication practices such as versioning, expressing complex
 ///  contributorship roles, and referencing computable resources.
 @freezed
-class CitationClassification with _$CitationClassification {
+class CitationClassification with BackboneType, _$CitationClassification {
   /// [CitationClassification] The Citation Resource enables reference to any
   ///  knowledge artifact for purposes of identification and attribution. The
   ///  Citation Resource supports existing reference structures and developing
@@ -1242,8 +1240,8 @@ class CitationClassification with _$CitationClassification {
     List<CodeableConcept>? classifier,
   }) = _CitationClassification;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationClassification';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationClassification.fromYaml(dynamic yaml) => yaml is String
@@ -1271,10 +1269,6 @@ class CitationClassification with _$CitationClassification {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CitationStatusDate] The Citation Resource enables reference to any
@@ -1283,7 +1277,7 @@ class CitationClassification with _$CitationClassification {
 ///  publication practices such as versioning, expressing complex
 ///  contributorship roles, and referencing computable resources.
 @freezed
-class CitationStatusDate with _$CitationStatusDate {
+class CitationStatusDate with BackboneType, _$CitationStatusDate {
   /// [CitationStatusDate] The Citation Resource enables reference to any
   ///  knowledge artifact for purposes of identification and attribution. The
   ///  Citation Resource supports existing reference structures and developing
@@ -1372,8 +1366,8 @@ class CitationStatusDate with _$CitationStatusDate {
     required Period period,
   }) = _CitationStatusDate;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationStatusDate';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationStatusDate.fromYaml(dynamic yaml) => yaml is String
@@ -1401,10 +1395,6 @@ class CitationStatusDate with _$CitationStatusDate {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CitationCitedArtifact] The Citation Resource enables reference to any
@@ -1413,7 +1403,7 @@ class CitationStatusDate with _$CitationStatusDate {
 ///  publication practices such as versioning, expressing complex
 ///  contributorship roles, and referencing computable resources.
 @freezed
-class CitationCitedArtifact with _$CitationCitedArtifact {
+class CitationCitedArtifact with BackboneType, _$CitationCitedArtifact {
   /// [CitationCitedArtifact] The Citation Resource enables reference to any
   ///  knowledge artifact for purposes of identification and attribution. The
   ///  Citation Resource supports existing reference structures and developing
@@ -1576,8 +1566,8 @@ class CitationCitedArtifact with _$CitationCitedArtifact {
     List<Annotation>? note,
   }) = _CitationCitedArtifact;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationCitedArtifact';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationCitedArtifact.fromYaml(dynamic yaml) => yaml is String
@@ -1605,10 +1595,6 @@ class CitationCitedArtifact with _$CitationCitedArtifact {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CitationVersion] The Citation Resource enables reference to any knowledge
@@ -1617,7 +1603,7 @@ class CitationCitedArtifact with _$CitationCitedArtifact {
 ///  practices such as versioning, expressing complex contributorship roles,
 ///  and referencing computable resources.
 @freezed
-class CitationVersion with _$CitationVersion {
+class CitationVersion with BackboneType, _$CitationVersion {
   /// [CitationVersion] The Citation Resource enables reference to any knowledge
   ///  artifact for purposes of identification and attribution. The Citation
   ///  Resource supports existing reference structures and developing publication
@@ -1697,8 +1683,8 @@ class CitationVersion with _$CitationVersion {
     Reference? baseCitation,
   }) = _CitationVersion;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationVersion';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationVersion.fromYaml(dynamic yaml) => yaml is String
@@ -1726,10 +1712,6 @@ class CitationVersion with _$CitationVersion {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CitationStatusDate1] The Citation Resource enables reference to any
@@ -1738,7 +1720,7 @@ class CitationVersion with _$CitationVersion {
 ///  publication practices such as versioning, expressing complex
 ///  contributorship roles, and referencing computable resources.
 @freezed
-class CitationStatusDate1 with _$CitationStatusDate1 {
+class CitationStatusDate1 with BackboneType, _$CitationStatusDate1 {
   /// [CitationStatusDate1] The Citation Resource enables reference to any
   ///  knowledge artifact for purposes of identification and attribution. The
   ///  Citation Resource supports existing reference structures and developing
@@ -1823,8 +1805,8 @@ class CitationStatusDate1 with _$CitationStatusDate1 {
     required Period period,
   }) = _CitationStatusDate1;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationStatusDate1';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationStatusDate1.fromYaml(dynamic yaml) => yaml is String
@@ -1852,10 +1834,6 @@ class CitationStatusDate1 with _$CitationStatusDate1 {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CitationTitle] The Citation Resource enables reference to any knowledge
@@ -1864,7 +1842,7 @@ class CitationStatusDate1 with _$CitationStatusDate1 {
 ///  practices such as versioning, expressing complex contributorship roles,
 ///  and referencing computable resources.
 @freezed
-class CitationTitle with _$CitationTitle {
+class CitationTitle with BackboneType, _$CitationTitle {
   /// [CitationTitle] The Citation Resource enables reference to any knowledge
   ///  artifact for purposes of identification and attribution. The Citation
   ///  Resource supports existing reference structures and developing publication
@@ -1949,8 +1927,8 @@ class CitationTitle with _$CitationTitle {
     @JsonKey(name: '_text') Element? textElement,
   }) = _CitationTitle;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationTitle';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationTitle.fromYaml(dynamic yaml) => yaml is String
@@ -1978,10 +1956,6 @@ class CitationTitle with _$CitationTitle {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CitationAbstract] The Citation Resource enables reference to any knowledge
@@ -1990,7 +1964,7 @@ class CitationTitle with _$CitationTitle {
 ///  practices such as versioning, expressing complex contributorship roles,
 ///  and referencing computable resources.
 @freezed
-class CitationAbstract with _$CitationAbstract {
+class CitationAbstract with BackboneType, _$CitationAbstract {
   /// [CitationAbstract] The Citation Resource enables reference to any knowledge
   ///  artifact for purposes of identification and attribution. The Citation
   ///  Resource supports existing reference structures and developing publication
@@ -2085,8 +2059,8 @@ class CitationAbstract with _$CitationAbstract {
     @JsonKey(name: '_copyright') Element? copyrightElement,
   }) = _CitationAbstract;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationAbstract';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationAbstract.fromYaml(dynamic yaml) => yaml is String
@@ -2114,10 +2088,6 @@ class CitationAbstract with _$CitationAbstract {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CitationPart] The Citation Resource enables reference to any knowledge
@@ -2126,7 +2096,7 @@ class CitationAbstract with _$CitationAbstract {
 ///  practices such as versioning, expressing complex contributorship roles,
 ///  and referencing computable resources.
 @freezed
-class CitationPart with _$CitationPart {
+class CitationPart with BackboneType, _$CitationPart {
   /// [CitationPart] The Citation Resource enables reference to any knowledge
   ///  artifact for purposes of identification and attribution. The Citation
   ///  Resource supports existing reference structures and developing publication
@@ -2211,8 +2181,8 @@ class CitationPart with _$CitationPart {
     Reference? baseCitation,
   }) = _CitationPart;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationPart';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationPart.fromYaml(dynamic yaml) => yaml is String
@@ -2240,10 +2210,6 @@ class CitationPart with _$CitationPart {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CitationRelatesTo] The Citation Resource enables reference to any
@@ -2252,7 +2218,7 @@ class CitationPart with _$CitationPart {
 ///  publication practices such as versioning, expressing complex
 ///  contributorship roles, and referencing computable resources.
 @freezed
-class CitationRelatesTo with _$CitationRelatesTo {
+class CitationRelatesTo with BackboneType, _$CitationRelatesTo {
   /// [CitationRelatesTo] The Citation Resource enables reference to any
   ///  knowledge artifact for purposes of identification and attribution. The
   ///  Citation Resource supports existing reference structures and developing
@@ -2396,8 +2362,8 @@ class CitationRelatesTo with _$CitationRelatesTo {
     Reference? resourceReference,
   }) = _CitationRelatesTo;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationRelatesTo';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationRelatesTo.fromYaml(dynamic yaml) => yaml is String
@@ -2425,10 +2391,6 @@ class CitationRelatesTo with _$CitationRelatesTo {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CitationPublicationForm] The Citation Resource enables reference to any
@@ -2437,7 +2399,7 @@ class CitationRelatesTo with _$CitationRelatesTo {
 ///  publication practices such as versioning, expressing complex
 ///  contributorship roles, and referencing computable resources.
 @freezed
-class CitationPublicationForm with _$CitationPublicationForm {
+class CitationPublicationForm with BackboneType, _$CitationPublicationForm {
   /// [CitationPublicationForm] The Citation Resource enables reference to any
   ///  knowledge artifact for purposes of identification and attribution. The
   ///  Citation Resource supports existing reference structures and developing
@@ -2676,8 +2638,8 @@ class CitationPublicationForm with _$CitationPublicationForm {
     @JsonKey(name: '_copyright') Element? copyrightElement,
   }) = _CitationPublicationForm;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationPublicationForm';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationPublicationForm.fromYaml(dynamic yaml) => yaml is String
@@ -2705,10 +2667,6 @@ class CitationPublicationForm with _$CitationPublicationForm {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CitationPublishedIn] The Citation Resource enables reference to any
@@ -2717,7 +2675,7 @@ class CitationPublicationForm with _$CitationPublicationForm {
 ///  publication practices such as versioning, expressing complex
 ///  contributorship roles, and referencing computable resources.
 @freezed
-class CitationPublishedIn with _$CitationPublishedIn {
+class CitationPublishedIn with BackboneType, _$CitationPublishedIn {
   /// [CitationPublishedIn] The Citation Resource enables reference to any
   ///  knowledge artifact for purposes of identification and attribution. The
   ///  Citation Resource supports existing reference structures and developing
@@ -2821,8 +2779,8 @@ class CitationPublishedIn with _$CitationPublishedIn {
     @JsonKey(name: '_publisherLocation') Element? publisherLocationElement,
   }) = _CitationPublishedIn;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationPublishedIn';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationPublishedIn.fromYaml(dynamic yaml) => yaml is String
@@ -2850,10 +2808,6 @@ class CitationPublishedIn with _$CitationPublishedIn {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CitationWebLocation] The Citation Resource enables reference to any
@@ -2862,7 +2816,7 @@ class CitationPublishedIn with _$CitationPublishedIn {
 ///  publication practices such as versioning, expressing complex
 ///  contributorship roles, and referencing computable resources.
 @freezed
-class CitationWebLocation with _$CitationWebLocation {
+class CitationWebLocation with BackboneType, _$CitationWebLocation {
   /// [CitationWebLocation] The Citation Resource enables reference to any
   ///  knowledge artifact for purposes of identification and attribution. The
   ///  Citation Resource supports existing reference structures and developing
@@ -2942,8 +2896,8 @@ class CitationWebLocation with _$CitationWebLocation {
     @JsonKey(name: '_url') Element? urlElement,
   }) = _CitationWebLocation;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationWebLocation';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationWebLocation.fromYaml(dynamic yaml) => yaml is String
@@ -2971,10 +2925,6 @@ class CitationWebLocation with _$CitationWebLocation {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CitationClassification1] The Citation Resource enables reference to any
@@ -2983,7 +2933,7 @@ class CitationWebLocation with _$CitationWebLocation {
 ///  publication practices such as versioning, expressing complex
 ///  contributorship roles, and referencing computable resources.
 @freezed
-class CitationClassification1 with _$CitationClassification1 {
+class CitationClassification1 with BackboneType, _$CitationClassification1 {
   /// [CitationClassification1] The Citation Resource enables reference to any
   ///  knowledge artifact for purposes of identification and attribution. The
   ///  Citation Resource supports existing reference structures and developing
@@ -3063,8 +3013,8 @@ class CitationClassification1 with _$CitationClassification1 {
     List<Reference>? artifactAssessment,
   }) = _CitationClassification1;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationClassification1';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationClassification1.fromYaml(dynamic yaml) => yaml is String
@@ -3092,10 +3042,6 @@ class CitationClassification1 with _$CitationClassification1 {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CitationContributorship] The Citation Resource enables reference to any
@@ -3104,7 +3050,7 @@ class CitationClassification1 with _$CitationClassification1 {
 ///  publication practices such as versioning, expressing complex
 ///  contributorship roles, and referencing computable resources.
 @freezed
-class CitationContributorship with _$CitationContributorship {
+class CitationContributorship with BackboneType, _$CitationContributorship {
   /// [CitationContributorship] The Citation Resource enables reference to any
   ///  knowledge artifact for purposes of identification and attribution. The
   ///  Citation Resource supports existing reference structures and developing
@@ -3193,8 +3139,8 @@ class CitationContributorship with _$CitationContributorship {
     List<CitationSummary1>? summary,
   }) = _CitationContributorship;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationContributorship';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationContributorship.fromYaml(dynamic yaml) => yaml is String
@@ -3222,10 +3168,6 @@ class CitationContributorship with _$CitationContributorship {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CitationEntry] The Citation Resource enables reference to any knowledge
@@ -3234,7 +3176,7 @@ class CitationContributorship with _$CitationContributorship {
 ///  practices such as versioning, expressing complex contributorship roles,
 ///  and referencing computable resources.
 @freezed
-class CitationEntry with _$CitationEntry {
+class CitationEntry with BackboneType, _$CitationEntry {
   /// [CitationEntry] The Citation Resource enables reference to any knowledge
   ///  artifact for purposes of identification and attribution. The Citation
   ///  Resource supports existing reference structures and developing publication
@@ -3367,8 +3309,8 @@ class CitationEntry with _$CitationEntry {
     @JsonKey(name: '_rankingOrder') Element? rankingOrderElement,
   }) = _CitationEntry;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationEntry';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationEntry.fromYaml(dynamic yaml) => yaml is String
@@ -3396,10 +3338,6 @@ class CitationEntry with _$CitationEntry {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CitationContributionInstance] The Citation Resource enables reference to
@@ -3408,7 +3346,8 @@ class CitationEntry with _$CitationEntry {
 ///  publication practices such as versioning, expressing complex
 ///  contributorship roles, and referencing computable resources.
 @freezed
-class CitationContributionInstance with _$CitationContributionInstance {
+class CitationContributionInstance
+    with BackboneType, _$CitationContributionInstance {
   /// [CitationContributionInstance] The Citation Resource enables reference to
   ///  any knowledge artifact for purposes of identification and attribution. The
   ///  Citation Resource supports existing reference structures and developing
@@ -3488,8 +3427,8 @@ class CitationContributionInstance with _$CitationContributionInstance {
     @JsonKey(name: '_time') Element? timeElement,
   }) = _CitationContributionInstance;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationContributionInstance';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationContributionInstance.fromYaml(dynamic yaml) => yaml is String
@@ -3518,10 +3457,6 @@ class CitationContributionInstance with _$CitationContributionInstance {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CitationSummary1] The Citation Resource enables reference to any knowledge
@@ -3530,7 +3465,7 @@ class CitationContributionInstance with _$CitationContributionInstance {
 ///  practices such as versioning, expressing complex contributorship roles,
 ///  and referencing computable resources.
 @freezed
-class CitationSummary1 with _$CitationSummary1 {
+class CitationSummary1 with BackboneType, _$CitationSummary1 {
   /// [CitationSummary1] The Citation Resource enables reference to any knowledge
   ///  artifact for purposes of identification and attribution. The Citation
   ///  Resource supports existing reference structures and developing publication
@@ -3626,8 +3561,8 @@ class CitationSummary1 with _$CitationSummary1 {
     @JsonKey(name: '_value') Element? valueElement,
   }) = _CitationSummary1;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CitationSummary1';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CitationSummary1.fromYaml(dynamic yaml) => yaml is String
@@ -3655,10 +3590,6 @@ class CitationSummary1 with _$CitationSummary1 {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [Evidence] The Evidence Resource provides a machine-interpretable
@@ -4174,6 +4105,9 @@ class Evidence with Resource, _$Evidence {
     List<EvidenceCertainty>? certainty,
   }) = _Evidence;
 
+  @override
+  String get fhirType => 'Evidence';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -4217,7 +4151,8 @@ class Evidence with Resource, _$Evidence {
 ///  comparators, outcomes, measured variables, confounding variables), the
 ///  statistics, and the certainty of this evidence.
 @freezed
-class EvidenceVariableDefinition with _$EvidenceVariableDefinition {
+class EvidenceVariableDefinition
+    with BackboneType, _$EvidenceVariableDefinition {
   /// [EvidenceVariableDefinition] The Evidence Resource provides a
   ///  machine-interpretable expression of an evidence concept including the
   ///  evidence variables (e.g., population, exposures/interventions,
@@ -4341,8 +4276,8 @@ class EvidenceVariableDefinition with _$EvidenceVariableDefinition {
     CodeableConcept? directnessMatch,
   }) = _EvidenceVariableDefinition;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'EvidenceVariableDefinition';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory EvidenceVariableDefinition.fromYaml(dynamic yaml) => yaml is String
@@ -4370,10 +4305,6 @@ class EvidenceVariableDefinition with _$EvidenceVariableDefinition {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [EvidenceStatistic] The Evidence Resource provides a machine-interpretable
@@ -4382,7 +4313,7 @@ class EvidenceVariableDefinition with _$EvidenceVariableDefinition {
 ///  variables, confounding variables), the statistics, and the certainty of
 ///  this evidence.
 @freezed
-class EvidenceStatistic with _$EvidenceStatistic {
+class EvidenceStatistic with BackboneType, _$EvidenceStatistic {
   /// [EvidenceStatistic] The Evidence Resource provides a machine-interpretable
   ///  expression of an evidence concept including the evidence variables (e.g.,
   ///  population, exposures/interventions, comparators, outcomes, measured
@@ -4526,8 +4457,8 @@ class EvidenceStatistic with _$EvidenceStatistic {
     List<EvidenceModelCharacteristic>? modelCharacteristic,
   }) = _EvidenceStatistic;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'EvidenceStatistic';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory EvidenceStatistic.fromYaml(dynamic yaml) => yaml is String
@@ -4555,10 +4486,6 @@ class EvidenceStatistic with _$EvidenceStatistic {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [EvidenceSampleSize] The Evidence Resource provides a machine-interpretable
@@ -4567,7 +4494,7 @@ class EvidenceStatistic with _$EvidenceStatistic {
 ///  variables, confounding variables), the statistics, and the certainty of
 ///  this evidence.
 @freezed
-class EvidenceSampleSize with _$EvidenceSampleSize {
+class EvidenceSampleSize with BackboneType, _$EvidenceSampleSize {
   /// [EvidenceSampleSize] The Evidence Resource provides a machine-interpretable
   ///  expression of an evidence concept including the evidence variables (e.g.,
   ///  population, exposures/interventions, comparators, outcomes, measured
@@ -4684,8 +4611,8 @@ class EvidenceSampleSize with _$EvidenceSampleSize {
     @JsonKey(name: '_knownDataCount') Element? knownDataCountElement,
   }) = _EvidenceSampleSize;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'EvidenceSampleSize';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory EvidenceSampleSize.fromYaml(dynamic yaml) => yaml is String
@@ -4713,10 +4640,6 @@ class EvidenceSampleSize with _$EvidenceSampleSize {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [EvidenceAttributeEstimate] The Evidence Resource provides a
@@ -4725,7 +4648,7 @@ class EvidenceSampleSize with _$EvidenceSampleSize {
 ///  comparators, outcomes, measured variables, confounding variables), the
 ///  statistics, and the certainty of this evidence.
 @freezed
-class EvidenceAttributeEstimate with _$EvidenceAttributeEstimate {
+class EvidenceAttributeEstimate with BackboneType, _$EvidenceAttributeEstimate {
   /// [EvidenceAttributeEstimate] The Evidence Resource provides a
   ///  machine-interpretable expression of an evidence concept including the
   ///  evidence variables (e.g., population, exposures/interventions,
@@ -4841,8 +4764,8 @@ class EvidenceAttributeEstimate with _$EvidenceAttributeEstimate {
     List<EvidenceAttributeEstimate>? attributeEstimate,
   }) = _EvidenceAttributeEstimate;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'EvidenceAttributeEstimate';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory EvidenceAttributeEstimate.fromYaml(dynamic yaml) => yaml is String
@@ -4870,10 +4793,6 @@ class EvidenceAttributeEstimate with _$EvidenceAttributeEstimate {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [EvidenceModelCharacteristic] The Evidence Resource provides a
@@ -4882,7 +4801,8 @@ class EvidenceAttributeEstimate with _$EvidenceAttributeEstimate {
 ///  comparators, outcomes, measured variables, confounding variables), the
 ///  statistics, and the certainty of this evidence.
 @freezed
-class EvidenceModelCharacteristic with _$EvidenceModelCharacteristic {
+class EvidenceModelCharacteristic
+    with BackboneType, _$EvidenceModelCharacteristic {
   /// [EvidenceModelCharacteristic] The Evidence Resource provides a
   ///  machine-interpretable expression of an evidence concept including the
   ///  evidence variables (e.g., population, exposures/interventions,
@@ -5020,8 +4940,8 @@ class EvidenceModelCharacteristic with _$EvidenceModelCharacteristic {
     List<EvidenceModelCharacteristic>? modelCharacteristic,
   }) = _EvidenceModelCharacteristic;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'EvidenceModelCharacteristic';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory EvidenceModelCharacteristic.fromYaml(dynamic yaml) => yaml is String
@@ -5050,10 +4970,6 @@ class EvidenceModelCharacteristic with _$EvidenceModelCharacteristic {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ModelCharacteristicVariable] The Evidence Resource provides a machine-interpretable
@@ -5062,7 +4978,8 @@ class EvidenceModelCharacteristic with _$EvidenceModelCharacteristic {
 ///  variables, confounding variables), the statistics, and the certainty of
 ///  this evidence.
 @freezed
-class ModelCharacteristicVariable with _$ModelCharacteristicVariable {
+class ModelCharacteristicVariable
+    with BackboneType, _$ModelCharacteristicVariable {
   /// [ModelCharacteristicVariable] The Evidence Resource provides a machine-interpretable
   ///  expression of an evidence concept including the evidence variables (e.g.,
   ///  population, exposures/interventions, comparators, outcomes, measured
@@ -5163,8 +5080,8 @@ class ModelCharacteristicVariable with _$ModelCharacteristicVariable {
     List<Range>? valueRange,
   }) = _ModelCharacteristicVariable;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ModelCharacteristicVariable';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ModelCharacteristicVariable.fromYaml(dynamic yaml) => yaml is String
@@ -5192,10 +5109,6 @@ class ModelCharacteristicVariable with _$ModelCharacteristicVariable {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [EvidenceCertainty] The Evidence Resource provides a machine-interpretable
@@ -5204,7 +5117,7 @@ class ModelCharacteristicVariable with _$ModelCharacteristicVariable {
 ///  variables, confounding variables), the statistics, and the certainty of
 ///  this evidence.
 @freezed
-class EvidenceCertainty with _$EvidenceCertainty {
+class EvidenceCertainty with BackboneType, _$EvidenceCertainty {
   /// [EvidenceCertainty] The Evidence Resource provides a machine-interpretable
   ///  expression of an evidence concept including the evidence variables (e.g.,
   ///  population, exposures/interventions, comparators, outcomes, measured
@@ -5309,8 +5222,8 @@ class EvidenceCertainty with _$EvidenceCertainty {
     List<EvidenceCertainty>? subcomponent,
   }) = _EvidenceCertainty;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'EvidenceCertainty';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory EvidenceCertainty.fromYaml(dynamic yaml) => yaml is String
@@ -5338,10 +5251,6 @@ class EvidenceCertainty with _$EvidenceCertainty {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [EvidenceReport] The EvidenceReport Resource is a specialized container for
@@ -5852,6 +5761,9 @@ class EvidenceReport with Resource, _$EvidenceReport {
     List<EvidenceReportSection>? section,
   }) = _EvidenceReport;
 
+  @override
+  String get fhirType => 'EvidenceReport';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -5894,7 +5806,7 @@ class EvidenceReport with Resource, _$EvidenceReport {
 ///  support compositions of Evidence, EvidenceVariable, and Citation resources
 ///  and related concepts.
 @freezed
-class EvidenceReportSubject with _$EvidenceReportSubject {
+class EvidenceReportSubject with BackboneType, _$EvidenceReportSubject {
   /// [EvidenceReportSubject] The EvidenceReport Resource is a specialized
   ///  container for a collection of resources and codeable concepts, adapted to
   ///  support compositions of Evidence, EvidenceVariable, and Citation resources
@@ -5967,8 +5879,8 @@ class EvidenceReportSubject with _$EvidenceReportSubject {
     List<Annotation>? note,
   }) = _EvidenceReportSubject;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'EvidenceReportSubject';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory EvidenceReportSubject.fromYaml(dynamic yaml) => yaml is String
@@ -5996,10 +5908,6 @@ class EvidenceReportSubject with _$EvidenceReportSubject {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [EvidenceReportCharacteristic] The EvidenceReport Resource is a specialized
@@ -6007,7 +5915,8 @@ class EvidenceReportSubject with _$EvidenceReportSubject {
 ///  support compositions of Evidence, EvidenceVariable, and Citation resources
 ///  and related concepts.
 @freezed
-class EvidenceReportCharacteristic with _$EvidenceReportCharacteristic {
+class EvidenceReportCharacteristic
+    with BackboneType, _$EvidenceReportCharacteristic {
   /// [EvidenceReportCharacteristic] The EvidenceReport Resource is a specialized
   ///  container for a collection of resources and codeable concepts, adapted to
   ///  support compositions of Evidence, EvidenceVariable, and Citation resources
@@ -6120,8 +6029,8 @@ class EvidenceReportCharacteristic with _$EvidenceReportCharacteristic {
     Period? period,
   }) = _EvidenceReportCharacteristic;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'EvidenceReportCharacteristic';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory EvidenceReportCharacteristic.fromYaml(dynamic yaml) => yaml is String
@@ -6150,10 +6059,6 @@ class EvidenceReportCharacteristic with _$EvidenceReportCharacteristic {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [EvidenceReportRelatesTo] The EvidenceReport Resource is a specialized
@@ -6161,7 +6066,7 @@ class EvidenceReportCharacteristic with _$EvidenceReportCharacteristic {
 ///  support compositions of Evidence, EvidenceVariable, and Citation resources
 ///  and related concepts.
 @freezed
-class EvidenceReportRelatesTo with _$EvidenceReportRelatesTo {
+class EvidenceReportRelatesTo with BackboneType, _$EvidenceReportRelatesTo {
   /// [EvidenceReportRelatesTo] The EvidenceReport Resource is a specialized
   ///  container for a collection of resources and codeable concepts, adapted to
   ///  support compositions of Evidence, EvidenceVariable, and Citation resources
@@ -6241,8 +6146,8 @@ class EvidenceReportRelatesTo with _$EvidenceReportRelatesTo {
     required EvidenceReportTarget target,
   }) = _EvidenceReportRelatesTo;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'EvidenceReportRelatesTo';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory EvidenceReportRelatesTo.fromYaml(dynamic yaml) => yaml is String
@@ -6270,10 +6175,6 @@ class EvidenceReportRelatesTo with _$EvidenceReportRelatesTo {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [EvidenceReportTarget] The EvidenceReport Resource is a specialized
@@ -6281,7 +6182,7 @@ class EvidenceReportRelatesTo with _$EvidenceReportRelatesTo {
 ///  support compositions of Evidence, EvidenceVariable, and Citation resources
 ///  and related concepts.
 @freezed
-class EvidenceReportTarget with _$EvidenceReportTarget {
+class EvidenceReportTarget with BackboneType, _$EvidenceReportTarget {
   /// [EvidenceReportTarget] The EvidenceReport Resource is a specialized
   ///  container for a collection of resources and codeable concepts, adapted to
   ///  support compositions of Evidence, EvidenceVariable, and Citation resources
@@ -6374,8 +6275,8 @@ class EvidenceReportTarget with _$EvidenceReportTarget {
     Reference? resource,
   }) = _EvidenceReportTarget;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'EvidenceReportTarget';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory EvidenceReportTarget.fromYaml(dynamic yaml) => yaml is String
@@ -6403,10 +6304,6 @@ class EvidenceReportTarget with _$EvidenceReportTarget {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [EvidenceReportSection] The EvidenceReport Resource is a specialized
@@ -6414,7 +6311,7 @@ class EvidenceReportTarget with _$EvidenceReportTarget {
 ///  support compositions of Evidence, EvidenceVariable, and Citation resources
 ///  and related concepts.
 @freezed
-class EvidenceReportSection with _$EvidenceReportSection {
+class EvidenceReportSection with BackboneType, _$EvidenceReportSection {
   /// [EvidenceReportSection] The EvidenceReport Resource is a specialized
   ///  container for a collection of resources and codeable concepts, adapted to
   ///  support compositions of Evidence, EvidenceVariable, and Citation resources
@@ -6579,8 +6476,8 @@ class EvidenceReportSection with _$EvidenceReportSection {
     List<EvidenceReportSection>? section,
   }) = _EvidenceReportSection;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'EvidenceReportSection';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory EvidenceReportSection.fromYaml(dynamic yaml) => yaml is String
@@ -6608,10 +6505,6 @@ class EvidenceReportSection with _$EvidenceReportSection {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [EvidenceVariable] The EvidenceVariable resource describes an element that
@@ -7124,6 +7017,9 @@ class EvidenceVariable with Resource, _$EvidenceVariable {
     List<EvidenceVariableCategory>? category,
   }) = _EvidenceVariable;
 
+  @override
+  String get fhirType => 'EvidenceVariable';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -7164,7 +7060,7 @@ class EvidenceVariable with Resource, _$EvidenceVariable {
 /// [EvidenceVariableCategory] The EvidenceVariable resource describes an
 ///  element that knowledge (Evidence) is about.
 @freezed
-class EvidenceVariableCategory with _$EvidenceVariableCategory {
+class EvidenceVariableCategory with BackboneType, _$EvidenceVariableCategory {
   /// [EvidenceVariableCategory] The EvidenceVariable resource describes an
   ///  element that knowledge (Evidence) is about.
   const EvidenceVariableCategory._();
@@ -7253,8 +7149,8 @@ class EvidenceVariableCategory with _$EvidenceVariableCategory {
     Reference? valueReference,
   }) = _EvidenceVariableCategory;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'EvidenceVariableCategory';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory EvidenceVariableCategory.fromYaml(dynamic yaml) => yaml is String
@@ -7282,8 +7178,4 @@ class EvidenceVariableCategory with _$EvidenceVariableCategory {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }

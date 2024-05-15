@@ -258,6 +258,9 @@ class BiologicallyDerivedProduct with Resource, _$BiologicallyDerivedProduct {
     List<BiologicallyDerivedProductProperty>? property,
   }) = _BiologicallyDerivedProduct;
 
+  @override
+  String get fhirType => 'BiologicallyDerivedProduct';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -301,7 +304,7 @@ class BiologicallyDerivedProduct with Resource, _$BiologicallyDerivedProduct {
 ///  (possibly the same) biological entity.
 @freezed
 class BiologicallyDerivedProductCollection
-    with _$BiologicallyDerivedProductCollection {
+    with BackboneType, _$BiologicallyDerivedProductCollection {
   /// [BiologicallyDerivedProductCollection] This resource reflects an instance
   ///  of a biologically derived product. A material substance originating from
   ///  a biological entity intended to be transplanted or infused into another
@@ -397,8 +400,8 @@ class BiologicallyDerivedProductCollection
     Period? collectedPeriod,
   }) = _BiologicallyDerivedProductCollection;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'BiologicallyDerivedProductCollection';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory BiologicallyDerivedProductCollection.fromYaml(dynamic yaml) => yaml
@@ -429,10 +432,6 @@ class BiologicallyDerivedProductCollection
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [BiologicallyDerivedProductProperty] This resource reflects an instance of
@@ -441,7 +440,7 @@ class BiologicallyDerivedProductCollection
 ///  (possibly the same) biological entity.
 @freezed
 class BiologicallyDerivedProductProperty
-    with _$BiologicallyDerivedProductProperty {
+    with BackboneType, _$BiologicallyDerivedProductProperty {
   /// [BiologicallyDerivedProductProperty] This resource reflects an instance
   ///  of a biologically derived product. A material substance originating from
   ///  a biological entity intended to be transplanted or infused into another
@@ -574,8 +573,8 @@ class BiologicallyDerivedProductProperty
     Attachment? valueAttachment,
   }) = _BiologicallyDerivedProductProperty;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'BiologicallyDerivedProductProperty';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory BiologicallyDerivedProductProperty.fromYaml(dynamic yaml) => yaml
@@ -606,10 +605,6 @@ class BiologicallyDerivedProductProperty
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [BiologicallyDerivedProductDispense] This resource reflects an instance of
@@ -882,6 +877,9 @@ class BiologicallyDerivedProductDispense
     @JsonKey(name: '_usageInstruction') Element? usageInstructionElement,
   }) = _BiologicallyDerivedProductDispense;
 
+  @override
+  String get fhirType => 'BiologicallyDerivedProductDispense';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -929,7 +927,7 @@ class BiologicallyDerivedProductDispense
 ///  responsible for clinical application.
 @freezed
 class BiologicallyDerivedProductDispensePerformer
-    with _$BiologicallyDerivedProductDispensePerformer {
+    with BackboneType, _$BiologicallyDerivedProductDispensePerformer {
   /// [BiologicallyDerivedProductDispensePerformer] This resource reflects an
   ///  instance of a biologically derived product dispense. The supply or
   ///  dispense of a biologically derived product from the supply organization
@@ -1009,8 +1007,8 @@ class BiologicallyDerivedProductDispensePerformer
     required Reference actor,
   }) = _BiologicallyDerivedProductDispensePerformer;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'BiologicallyDerivedProductDispensePerformer';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory BiologicallyDerivedProductDispensePerformer.fromYaml(dynamic yaml) =>
@@ -1042,10 +1040,6 @@ class BiologicallyDerivedProductDispensePerformer
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [Device] A type of a manufactured item that is used in the provision of
@@ -1471,6 +1465,9 @@ class Device with Resource, _$Device {
     Reference? parent,
   }) = _Device;
 
+  @override
+  String get fhirType => 'Device';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -1511,7 +1508,7 @@ class Device with Resource, _$Device {
 ///  provision of healthcare without being substantially changed through that
 ///  activity. The device may be a medical or non-medical device.
 @freezed
-class DeviceUdiCarrier with _$DeviceUdiCarrier {
+class DeviceUdiCarrier with BackboneType, _$DeviceUdiCarrier {
   /// [DeviceUdiCarrier] A type of a manufactured item that is used in the
   ///  provision of healthcare without being substantially changed through that
   ///  activity. The device may be a medical or non-medical device.
@@ -1683,8 +1680,8 @@ class DeviceUdiCarrier with _$DeviceUdiCarrier {
     @JsonKey(name: '_entryType') Element? entryTypeElement,
   }) = _DeviceUdiCarrier;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'DeviceUdiCarrier';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory DeviceUdiCarrier.fromYaml(dynamic yaml) => yaml is String
@@ -1712,17 +1709,13 @@ class DeviceUdiCarrier with _$DeviceUdiCarrier {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [DeviceName] A type of a manufactured item that is used in the provision of
 ///  healthcare without being substantially changed through that activity. The
 ///  device may be a medical or non-medical device.
 @freezed
-class DeviceName with _$DeviceName {
+class DeviceName with BackboneType, _$DeviceName {
   /// [DeviceName] A type of a manufactured item that is used in the provision
   ///  of healthcare without being substantially changed through that activity.
   ///  The device may be a medical or non-medical device.
@@ -1818,8 +1811,8 @@ class DeviceName with _$DeviceName {
     @JsonKey(name: '_display') Element? displayElement,
   }) = _DeviceName;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'DeviceName';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory DeviceName.fromYaml(dynamic yaml) => yaml is String
@@ -1847,17 +1840,13 @@ class DeviceName with _$DeviceName {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [DeviceVersion] A type of a manufactured item that is used in the provision
 ///  of healthcare without being substantially changed through that activity.
 ///  The device may be a medical or non-medical device.
 @freezed
-class DeviceVersion with _$DeviceVersion {
+class DeviceVersion with BackboneType, _$DeviceVersion {
   /// [DeviceVersion] A type of a manufactured item that is used in the
   ///  provision of healthcare without being substantially changed through that
   ///  activity. The device may be a medical or non-medical device.
@@ -1955,8 +1944,8 @@ class DeviceVersion with _$DeviceVersion {
     @JsonKey(name: '_value') Element? valueElement,
   }) = _DeviceVersion;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'DeviceVersion';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory DeviceVersion.fromYaml(dynamic yaml) => yaml is String
@@ -1984,17 +1973,13 @@ class DeviceVersion with _$DeviceVersion {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [DeviceConformsTo] A type of a manufactured item that is used in the
 ///  provision of healthcare without being substantially changed through that
 ///  activity. The device may be a medical or non-medical device.
 @freezed
-class DeviceConformsTo with _$DeviceConformsTo {
+class DeviceConformsTo with BackboneType, _$DeviceConformsTo {
   /// [DeviceConformsTo] A type of a manufactured item that is used in the
   ///  provision of healthcare without being substantially changed through that
   ///  activity. The device may be a medical or non-medical device.
@@ -2088,8 +2073,8 @@ class DeviceConformsTo with _$DeviceConformsTo {
     @JsonKey(name: '_version') Element? versionElement,
   }) = _DeviceConformsTo;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'DeviceConformsTo';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory DeviceConformsTo.fromYaml(dynamic yaml) => yaml is String
@@ -2117,17 +2102,13 @@ class DeviceConformsTo with _$DeviceConformsTo {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [DeviceProperty] A type of a manufactured item that is used in the
 ///  provision of healthcare without being substantially changed through that
 ///  activity. The device may be a medical or non-medical device.
 @freezed
-class DeviceProperty with _$DeviceProperty {
+class DeviceProperty with BackboneType, _$DeviceProperty {
   /// [DeviceProperty] A type of a manufactured item that is used in the
   ///  provision of healthcare without being substantially changed through that
   ///  activity. The device may be a medical or non-medical device.
@@ -2262,8 +2243,8 @@ class DeviceProperty with _$DeviceProperty {
     Attachment? valueAttachment,
   }) = _DeviceProperty;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'DeviceProperty';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory DeviceProperty.fromYaml(dynamic yaml) => yaml is String
@@ -2291,10 +2272,6 @@ class DeviceProperty with _$DeviceProperty {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [DeviceMetric] Describes a measurement, calculation or setting capability
@@ -2538,6 +2515,9 @@ class DeviceMetric with Resource, _$DeviceMetric {
     List<DeviceMetricCalibration>? calibration,
   }) = _DeviceMetric;
 
+  @override
+  String get fhirType => 'DeviceMetric';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -2578,7 +2558,7 @@ class DeviceMetric with Resource, _$DeviceMetric {
 /// [DeviceMetricCalibration] Describes a measurement, calculation or setting
 ///  capability of a device.
 @freezed
-class DeviceMetricCalibration with _$DeviceMetricCalibration {
+class DeviceMetricCalibration with BackboneType, _$DeviceMetricCalibration {
   /// [DeviceMetricCalibration] Describes a measurement, calculation or setting
   ///  capability of a device.
   const DeviceMetricCalibration._();
@@ -2670,8 +2650,8 @@ class DeviceMetricCalibration with _$DeviceMetricCalibration {
     @JsonKey(name: '_time') Element? timeElement,
   }) = _DeviceMetricCalibration;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'DeviceMetricCalibration';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory DeviceMetricCalibration.fromYaml(dynamic yaml) => yaml is String
@@ -2699,10 +2679,6 @@ class DeviceMetricCalibration with _$DeviceMetricCalibration {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [NutritionProduct] A food or supplement that is consumed by patients.
@@ -2910,6 +2886,9 @@ class NutritionProduct with Resource, _$NutritionProduct {
     List<Annotation>? note,
   }) = _NutritionProduct;
 
+  @override
+  String get fhirType => 'NutritionProduct';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -2950,7 +2929,7 @@ class NutritionProduct with Resource, _$NutritionProduct {
 /// [NutritionProductNutrient] A food or supplement that is consumed by
 ///  patients.
 @freezed
-class NutritionProductNutrient with _$NutritionProductNutrient {
+class NutritionProductNutrient with BackboneType, _$NutritionProductNutrient {
   /// [NutritionProductNutrient] A food or supplement that is consumed by
   ///  patients.
   const NutritionProductNutrient._();
@@ -3024,8 +3003,8 @@ class NutritionProductNutrient with _$NutritionProductNutrient {
     List<Ratio>? amount,
   }) = _NutritionProductNutrient;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'NutritionProductNutrient';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory NutritionProductNutrient.fromYaml(dynamic yaml) => yaml is String
@@ -3053,16 +3032,13 @@ class NutritionProductNutrient with _$NutritionProductNutrient {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [NutritionProductIngredient] A food or supplement that is consumed by
 ///  patients.
 @freezed
-class NutritionProductIngredient with _$NutritionProductIngredient {
+class NutritionProductIngredient
+    with BackboneType, _$NutritionProductIngredient {
   /// [NutritionProductIngredient] A food or supplement that is consumed by
   ///  patients.
   const NutritionProductIngredient._();
@@ -3134,8 +3110,8 @@ class NutritionProductIngredient with _$NutritionProductIngredient {
     List<Ratio>? amount,
   }) = _NutritionProductIngredient;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'NutritionProductIngredient';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory NutritionProductIngredient.fromYaml(dynamic yaml) => yaml is String
@@ -3163,16 +3139,13 @@ class NutritionProductIngredient with _$NutritionProductIngredient {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [NutritionProductCharacteristic] A food or supplement that is consumed by
 ///  patients.
 @freezed
-class NutritionProductCharacteristic with _$NutritionProductCharacteristic {
+class NutritionProductCharacteristic
+    with BackboneType, _$NutritionProductCharacteristic {
   /// [NutritionProductCharacteristic] A food or supplement that is consumed by
   ///  patients.
   const NutritionProductCharacteristic._();
@@ -3296,8 +3269,8 @@ class NutritionProductCharacteristic with _$NutritionProductCharacteristic {
     @JsonKey(name: '_valueBoolean') Element? valueBooleanElement,
   }) = _NutritionProductCharacteristic;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'NutritionProductCharacteristic';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory NutritionProductCharacteristic.fromYaml(dynamic yaml) => yaml
@@ -3327,16 +3300,12 @@ class NutritionProductCharacteristic with _$NutritionProductCharacteristic {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [NutritionProductInstance] A food or supplement that is consumed by
 ///  patients.
 @freezed
-class NutritionProductInstance with _$NutritionProductInstance {
+class NutritionProductInstance with BackboneType, _$NutritionProductInstance {
   /// [NutritionProductInstance] A food or supplement that is consumed by
   ///  patients.
   const NutritionProductInstance._();
@@ -3465,8 +3434,8 @@ class NutritionProductInstance with _$NutritionProductInstance {
     Identifier? biologicalSourceEvent,
   }) = _NutritionProductInstance;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'NutritionProductInstance';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory NutritionProductInstance.fromYaml(dynamic yaml) => yaml is String
@@ -3494,10 +3463,6 @@ class NutritionProductInstance with _$NutritionProductInstance {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [Substance] A homogeneous material with a definite composition.
@@ -3711,6 +3676,9 @@ class Substance with Resource, _$Substance {
     List<SubstanceIngredient>? ingredient,
   }) = _Substance;
 
+  @override
+  String get fhirType => 'Substance';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -3750,7 +3718,7 @@ class Substance with Resource, _$Substance {
 
 /// [SubstanceIngredient] A homogeneous material with a definite composition.
 @freezed
-class SubstanceIngredient with _$SubstanceIngredient {
+class SubstanceIngredient with BackboneType, _$SubstanceIngredient {
   /// [SubstanceIngredient] A homogeneous material with a definite composition.
   const SubstanceIngredient._();
 
@@ -3831,8 +3799,8 @@ class SubstanceIngredient with _$SubstanceIngredient {
     Reference? substanceReference,
   }) = _SubstanceIngredient;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'SubstanceIngredient';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory SubstanceIngredient.fromYaml(dynamic yaml) => yaml is String
@@ -3860,8 +3828,4 @@ class SubstanceIngredient with _$SubstanceIngredient {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }

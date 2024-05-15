@@ -590,6 +590,9 @@ class CodeSystem with Resource, _$CodeSystem {
     List<CodeSystemConcept>? concept,
   }) = _CodeSystem;
 
+  @override
+  String get fhirType => 'CodeSystem';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -631,7 +634,7 @@ class CodeSystem with Resource, _$CodeSystem {
 ///  of and describe a code system or code system supplement and its key
 ///  properties, and optionally define a part or all of its content.
 @freezed
-class CodeSystemFilter with _$CodeSystemFilter {
+class CodeSystemFilter with BackboneType, _$CodeSystemFilter {
   /// [CodeSystemFilter] The CodeSystem resource is used to declare the
   ///  existence of and describe a code system or code system supplement and
   ///  its key properties, and optionally define a part or all of its content.
@@ -739,8 +742,8 @@ class CodeSystemFilter with _$CodeSystemFilter {
     @JsonKey(name: '_value') Element? valueElement,
   }) = _CodeSystemFilter;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CodeSystemFilter';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CodeSystemFilter.fromYaml(dynamic yaml) => yaml is String
@@ -768,17 +771,13 @@ class CodeSystemFilter with _$CodeSystemFilter {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CodeSystemProperty] The CodeSystem resource is used to declare the
 ///  existence of and describe a code system or code system supplement and its
 ///  key properties, and optionally define a part or all of its content.
 @freezed
-class CodeSystemProperty with _$CodeSystemProperty {
+class CodeSystemProperty with BackboneType, _$CodeSystemProperty {
   /// [CodeSystemProperty] The CodeSystem resource is used to declare the
   ///  existence of and describe a code system or code system supplement and
   ///  its key properties, and optionally define a part or all of its content.
@@ -896,8 +895,8 @@ class CodeSystemProperty with _$CodeSystemProperty {
     @JsonKey(name: '_type') Element? typeElement,
   }) = _CodeSystemProperty;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CodeSystemProperty';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CodeSystemProperty.fromYaml(dynamic yaml) => yaml is String
@@ -925,17 +924,13 @@ class CodeSystemProperty with _$CodeSystemProperty {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CodeSystemConcept] The CodeSystem resource is used to declare the
 ///  existence of and describe a code system or code system supplement and its
 ///  key properties, and optionally define a part or all of its content.
 @freezed
-class CodeSystemConcept with _$CodeSystemConcept {
+class CodeSystemConcept with BackboneType, _$CodeSystemConcept {
   /// [CodeSystemConcept] The CodeSystem resource is used to declare the
   ///  existence of and describe a code system or code system supplement and
   ///  its key properties, and optionally define a part or all of its content.
@@ -1062,8 +1057,8 @@ class CodeSystemConcept with _$CodeSystemConcept {
     List<CodeSystemConcept>? concept,
   }) = _CodeSystemConcept;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CodeSystemConcept';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CodeSystemConcept.fromYaml(dynamic yaml) => yaml is String
@@ -1091,17 +1086,13 @@ class CodeSystemConcept with _$CodeSystemConcept {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CodeSystemDesignation] The CodeSystem resource is used to declare the
 ///  existence of and describe a code system or code system supplement and its
 ///  key properties, and optionally define a part or all of its content.
 @freezed
-class CodeSystemDesignation with _$CodeSystemDesignation {
+class CodeSystemDesignation with BackboneType, _$CodeSystemDesignation {
   /// [CodeSystemDesignation] The CodeSystem resource is used to declare the
   ///  existence of and describe a code system or code system supplement and
   ///  its key properties, and optionally define a part or all of its content.
@@ -1197,8 +1188,8 @@ class CodeSystemDesignation with _$CodeSystemDesignation {
     @JsonKey(name: '_value') Element? valueElement,
   }) = _CodeSystemDesignation;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CodeSystemDesignation';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CodeSystemDesignation.fromYaml(dynamic yaml) => yaml is String
@@ -1226,17 +1217,13 @@ class CodeSystemDesignation with _$CodeSystemDesignation {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CodeSystemProperty1] The CodeSystem resource is used to declare the
 ///  existence of and describe a code system or code system supplement and its
 ///  key properties, and optionally define a part or all of its content.
 @freezed
-class CodeSystemProperty1 with _$CodeSystemProperty1 {
+class CodeSystemProperty1 with BackboneType, _$CodeSystemProperty1 {
   /// [CodeSystemProperty1] The CodeSystem resource is used to declare the
   ///  existence of and describe a code system or code system supplement and
   ///  its key properties, and optionally define a part or all of its content.
@@ -1375,8 +1362,8 @@ class CodeSystemProperty1 with _$CodeSystemProperty1 {
     @JsonKey(name: '_valueDecimal') Element? valueDecimalElement,
   }) = _CodeSystemProperty1;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CodeSystemProperty1';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CodeSystemProperty1.fromYaml(dynamic yaml) => yaml is String
@@ -1404,10 +1391,6 @@ class CodeSystemProperty1 with _$CodeSystemProperty1 {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ConceptMap] A statement of relationships from one set of concepts to one
@@ -1971,6 +1954,9 @@ class ConceptMap with Resource, _$ConceptMap {
     List<ConceptMapGroup>? group,
   }) = _ConceptMap;
 
+  @override
+  String get fhirType => 'ConceptMap';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -2012,7 +1998,7 @@ class ConceptMap with Resource, _$ConceptMap {
 ///  to one or more other concepts - either concepts in code systems, or data
 ///  element/data element concepts, or classes in class models.
 @freezed
-class ConceptMapProperty with _$ConceptMapProperty {
+class ConceptMapProperty with BackboneType, _$ConceptMapProperty {
   /// [ConceptMapProperty] A statement of relationships from one set of
   ///  concepts to one or more other concepts - either concepts in code
   ///  systems, or data element/data element concepts, or classes in class
@@ -2131,8 +2117,8 @@ class ConceptMapProperty with _$ConceptMapProperty {
     FhirCanonical? system,
   }) = _ConceptMapProperty;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ConceptMapProperty';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ConceptMapProperty.fromYaml(dynamic yaml) => yaml is String
@@ -2160,17 +2146,14 @@ class ConceptMapProperty with _$ConceptMapProperty {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ConceptMapAdditionalAttribute] A statement of relationships from one set
 ///  of concepts to one or more other concepts - either concepts in code
 ///  systems, or data element/data element concepts, or classes in class models.
 @freezed
-class ConceptMapAdditionalAttribute with _$ConceptMapAdditionalAttribute {
+class ConceptMapAdditionalAttribute
+    with BackboneType, _$ConceptMapAdditionalAttribute {
   /// [ConceptMapAdditionalAttribute] A statement of relationships from one set
   ///  of concepts to one or more other concepts - either concepts in code
   ///  systems, or data element/data element concepts, or classes in class
@@ -2294,8 +2277,8 @@ class ConceptMapAdditionalAttribute with _$ConceptMapAdditionalAttribute {
     @JsonKey(name: '_type') Element? typeElement,
   }) = _ConceptMapAdditionalAttribute;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ConceptMapAdditionalAttribute';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ConceptMapAdditionalAttribute.fromYaml(dynamic yaml) => yaml is String
@@ -2324,17 +2307,13 @@ class ConceptMapAdditionalAttribute with _$ConceptMapAdditionalAttribute {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ConceptMapGroup] A statement of relationships from one set of concepts to
 ///  one or more other concepts - either concepts in code systems, or data
 ///  element/data element concepts, or classes in class models.
 @freezed
-class ConceptMapGroup with _$ConceptMapGroup {
+class ConceptMapGroup with BackboneType, _$ConceptMapGroup {
   /// [ConceptMapGroup] A statement of relationships from one set of concepts
   ///  to one or more other concepts - either concepts in code systems, or data
   ///  element/data element concepts, or classes in class models.
@@ -2432,8 +2411,8 @@ class ConceptMapGroup with _$ConceptMapGroup {
     ConceptMapUnmapped? unmapped,
   }) = _ConceptMapGroup;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ConceptMapGroup';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ConceptMapGroup.fromYaml(dynamic yaml) => yaml is String
@@ -2461,17 +2440,13 @@ class ConceptMapGroup with _$ConceptMapGroup {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ConceptMapElement] A statement of relationships from one set of concepts
 ///  to one or more other concepts - either concepts in code systems, or data
 ///  element/data element concepts, or classes in class models.
 @freezed
-class ConceptMapElement with _$ConceptMapElement {
+class ConceptMapElement with BackboneType, _$ConceptMapElement {
   /// [ConceptMapElement] A statement of relationships from one set of concepts
   ///  to one or more other concepts - either concepts in code systems, or data
   ///  element/data element concepts, or classes in class models.
@@ -2583,8 +2558,8 @@ class ConceptMapElement with _$ConceptMapElement {
     List<ConceptMapTarget>? target,
   }) = _ConceptMapElement;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ConceptMapElement';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ConceptMapElement.fromYaml(dynamic yaml) => yaml is String
@@ -2612,17 +2587,13 @@ class ConceptMapElement with _$ConceptMapElement {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ConceptMapTarget] A statement of relationships from one set of concepts to
 ///  one or more other concepts - either concepts in code systems, or data
 ///  element/data element concepts, or classes in class models.
 @freezed
-class ConceptMapTarget with _$ConceptMapTarget {
+class ConceptMapTarget with BackboneType, _$ConceptMapTarget {
   /// [ConceptMapTarget] A statement of relationships from one set of concepts
   ///  to one or more other concepts - either concepts in code systems, or data
   ///  element/data element concepts, or classes in class models.
@@ -2770,8 +2741,8 @@ class ConceptMapTarget with _$ConceptMapTarget {
     List<ConceptMapDependsOn>? product,
   }) = _ConceptMapTarget;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ConceptMapTarget';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ConceptMapTarget.fromYaml(dynamic yaml) => yaml is String
@@ -2799,17 +2770,13 @@ class ConceptMapTarget with _$ConceptMapTarget {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ConceptMapProperty1] A statement of relationships from one set of concepts
 ///  to one or more other concepts - either concepts in code systems, or data
 ///  element/data element concepts, or classes in class models.
 @freezed
-class ConceptMapProperty1 with _$ConceptMapProperty1 {
+class ConceptMapProperty1 with BackboneType, _$ConceptMapProperty1 {
   /// [ConceptMapProperty1] A statement of relationships from one set of
   ///  concepts to one or more other concepts - either concepts in code
   ///  systems, or data element/data element concepts, or classes in class
@@ -2992,8 +2959,8 @@ class ConceptMapProperty1 with _$ConceptMapProperty1 {
     @JsonKey(name: '_valueCode') Element? valueCodeElement,
   }) = _ConceptMapProperty1;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ConceptMapProperty1';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ConceptMapProperty1.fromYaml(dynamic yaml) => yaml is String
@@ -3021,17 +2988,13 @@ class ConceptMapProperty1 with _$ConceptMapProperty1 {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ConceptMapDependsOn] A statement of relationships from one set of concepts
 ///  to one or more other concepts - either concepts in code systems, or data
 ///  element/data element concepts, or classes in class models.
 @freezed
-class ConceptMapDependsOn with _$ConceptMapDependsOn {
+class ConceptMapDependsOn with BackboneType, _$ConceptMapDependsOn {
   /// [ConceptMapDependsOn] A statement of relationships from one set of
   ///  concepts to one or more other concepts - either concepts in code
   ///  systems, or data element/data element concepts, or classes in class
@@ -3186,8 +3149,8 @@ class ConceptMapDependsOn with _$ConceptMapDependsOn {
     FhirCanonical? valueSet,
   }) = _ConceptMapDependsOn;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ConceptMapDependsOn';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ConceptMapDependsOn.fromYaml(dynamic yaml) => yaml is String
@@ -3215,17 +3178,13 @@ class ConceptMapDependsOn with _$ConceptMapDependsOn {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ConceptMapUnmapped] A statement of relationships from one set of concepts
 ///  to one or more other concepts - either concepts in code systems, or data
 ///  element/data element concepts, or classes in class models.
 @freezed
-class ConceptMapUnmapped with _$ConceptMapUnmapped {
+class ConceptMapUnmapped with BackboneType, _$ConceptMapUnmapped {
   /// [ConceptMapUnmapped] A statement of relationships from one set of
   ///  concepts to one or more other concepts - either concepts in code
   ///  systems, or data element/data element concepts, or classes in class
@@ -3366,8 +3325,8 @@ class ConceptMapUnmapped with _$ConceptMapUnmapped {
     FhirCanonical? otherMap,
   }) = _ConceptMapUnmapped;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ConceptMapUnmapped';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ConceptMapUnmapped.fromYaml(dynamic yaml) => yaml is String
@@ -3395,10 +3354,6 @@ class ConceptMapUnmapped with _$ConceptMapUnmapped {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [NamingSystem] A curated namespace that issues unique symbols within that
@@ -3915,6 +3870,9 @@ class NamingSystem with Resource, _$NamingSystem {
     required List<NamingSystemUniqueId> uniqueId,
   }) = _NamingSystem;
 
+  @override
+  String get fhirType => 'NamingSystem';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -3957,7 +3915,7 @@ class NamingSystem with Resource, _$NamingSystem {
 ///  etc.  Represents a "System" used within the Identifier and Coding data
 ///  types.
 @freezed
-class NamingSystemUniqueId with _$NamingSystemUniqueId {
+class NamingSystemUniqueId with BackboneType, _$NamingSystemUniqueId {
   /// [NamingSystemUniqueId] A curated namespace that issues unique symbols
   ///  within that namespace for the identification of concepts, people,
   ///  devices, etc.  Represents a "System" used within the Identifier and
@@ -4090,8 +4048,8 @@ class NamingSystemUniqueId with _$NamingSystemUniqueId {
     @JsonKey(name: '_authoritative') Element? authoritativeElement,
   }) = _NamingSystemUniqueId;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'NamingSystemUniqueId';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory NamingSystemUniqueId.fromYaml(dynamic yaml) => yaml is String
@@ -4119,10 +4077,6 @@ class NamingSystemUniqueId with _$NamingSystemUniqueId {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [TerminologyCapabilities] A TerminologyCapabilities resource documents a
@@ -4614,6 +4568,9 @@ class TerminologyCapabilities with Resource, _$TerminologyCapabilities {
     TerminologyCapabilitiesClosure? closure,
   }) = _TerminologyCapabilities;
 
+  @override
+  String get fhirType => 'TerminologyCapabilities';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -4656,7 +4613,8 @@ class TerminologyCapabilities with Resource, _$TerminologyCapabilities {
 ///  that may be used as a statement of actual server functionality or a
 ///  statement of required or desired server implementation.
 @freezed
-class TerminologyCapabilitiesSoftware with _$TerminologyCapabilitiesSoftware {
+class TerminologyCapabilitiesSoftware
+    with BackboneType, _$TerminologyCapabilitiesSoftware {
   /// [TerminologyCapabilitiesSoftware] A TerminologyCapabilities resource
   ///  documents a set of capabilities (behaviors) of a FHIR Terminology Server
   ///  that may be used as a statement of actual server functionality or a
@@ -4744,8 +4702,8 @@ class TerminologyCapabilitiesSoftware with _$TerminologyCapabilitiesSoftware {
     @JsonKey(name: '_version') Element? versionElement,
   }) = _TerminologyCapabilitiesSoftware;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'TerminologyCapabilitiesSoftware';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory TerminologyCapabilitiesSoftware.fromYaml(dynamic yaml) => yaml
@@ -4775,10 +4733,6 @@ class TerminologyCapabilitiesSoftware with _$TerminologyCapabilitiesSoftware {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [TerminologyCapabilitiesImplementation] A TerminologyCapabilities resource
@@ -4787,7 +4741,7 @@ class TerminologyCapabilitiesSoftware with _$TerminologyCapabilitiesSoftware {
 ///  statement of required or desired server implementation.
 @freezed
 class TerminologyCapabilitiesImplementation
-    with _$TerminologyCapabilitiesImplementation {
+    with BackboneType, _$TerminologyCapabilitiesImplementation {
   /// [TerminologyCapabilitiesImplementation] A TerminologyCapabilities
   ///  resource documents a set of capabilities (behaviors) of a FHIR
   ///  Terminology Server that may be used as a statement of actual server
@@ -4877,8 +4831,8 @@ class TerminologyCapabilitiesImplementation
     @JsonKey(name: '_url') Element? urlElement,
   }) = _TerminologyCapabilitiesImplementation;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'TerminologyCapabilitiesImplementation';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory TerminologyCapabilitiesImplementation.fromYaml(dynamic yaml) => yaml
@@ -4909,10 +4863,6 @@ class TerminologyCapabilitiesImplementation
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [TerminologyCapabilitiesCodeSystem] A TerminologyCapabilities resource
@@ -4921,7 +4871,7 @@ class TerminologyCapabilitiesImplementation
 ///  statement of required or desired server implementation.
 @freezed
 class TerminologyCapabilitiesCodeSystem
-    with _$TerminologyCapabilitiesCodeSystem {
+    with BackboneType, _$TerminologyCapabilitiesCodeSystem {
   /// [TerminologyCapabilitiesCodeSystem] A TerminologyCapabilities resource
   ///  documents a set of capabilities (behaviors) of a FHIR Terminology Server
   ///  that may be used as a statement of actual server functionality or a
@@ -5023,8 +4973,8 @@ class TerminologyCapabilitiesCodeSystem
     @JsonKey(name: '_subsumption') Element? subsumptionElement,
   }) = _TerminologyCapabilitiesCodeSystem;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'TerminologyCapabilitiesCodeSystem';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory TerminologyCapabilitiesCodeSystem.fromYaml(dynamic yaml) => yaml
@@ -5055,10 +5005,6 @@ class TerminologyCapabilitiesCodeSystem
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [TerminologyCapabilitiesVersion] A TerminologyCapabilities resource
@@ -5066,7 +5012,8 @@ class TerminologyCapabilitiesCodeSystem
 ///  that may be used as a statement of actual server functionality or a
 ///  statement of required or desired server implementation.
 @freezed
-class TerminologyCapabilitiesVersion with _$TerminologyCapabilitiesVersion {
+class TerminologyCapabilitiesVersion
+    with BackboneType, _$TerminologyCapabilitiesVersion {
   /// [TerminologyCapabilitiesVersion] A TerminologyCapabilities resource
   ///  documents a set of capabilities (behaviors) of a FHIR Terminology Server
   ///  that may be used as a statement of actual server functionality or a
@@ -5191,8 +5138,8 @@ class TerminologyCapabilitiesVersion with _$TerminologyCapabilitiesVersion {
     @JsonKey(name: '_property') List<Element>? propertyElement,
   }) = _TerminologyCapabilitiesVersion;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'TerminologyCapabilitiesVersion';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory TerminologyCapabilitiesVersion.fromYaml(dynamic yaml) => yaml
@@ -5222,10 +5169,6 @@ class TerminologyCapabilitiesVersion with _$TerminologyCapabilitiesVersion {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [TerminologyCapabilitiesFilter] A TerminologyCapabilities resource
@@ -5233,7 +5176,8 @@ class TerminologyCapabilitiesVersion with _$TerminologyCapabilitiesVersion {
 ///  that may be used as a statement of actual server functionality or a
 ///  statement of required or desired server implementation.
 @freezed
-class TerminologyCapabilitiesFilter with _$TerminologyCapabilitiesFilter {
+class TerminologyCapabilitiesFilter
+    with BackboneType, _$TerminologyCapabilitiesFilter {
   /// [TerminologyCapabilitiesFilter] A TerminologyCapabilities resource
   ///  documents a set of capabilities (behaviors) of a FHIR Terminology Server
   ///  that may be used as a statement of actual server functionality or a
@@ -5319,8 +5263,8 @@ class TerminologyCapabilitiesFilter with _$TerminologyCapabilitiesFilter {
     @JsonKey(name: '_op') List<Element>? opElement,
   }) = _TerminologyCapabilitiesFilter;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'TerminologyCapabilitiesFilter';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory TerminologyCapabilitiesFilter.fromYaml(dynamic yaml) => yaml is String
@@ -5349,10 +5293,6 @@ class TerminologyCapabilitiesFilter with _$TerminologyCapabilitiesFilter {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [TerminologyCapabilitiesExpansion] A TerminologyCapabilities resource
@@ -5360,7 +5300,8 @@ class TerminologyCapabilitiesFilter with _$TerminologyCapabilitiesFilter {
 ///  that may be used as a statement of actual server functionality or a
 ///  statement of required or desired server implementation.
 @freezed
-class TerminologyCapabilitiesExpansion with _$TerminologyCapabilitiesExpansion {
+class TerminologyCapabilitiesExpansion
+    with BackboneType, _$TerminologyCapabilitiesExpansion {
   /// [TerminologyCapabilitiesExpansion] A TerminologyCapabilities resource
   ///  documents a set of capabilities (behaviors) of a FHIR Terminology Server
   ///  that may be used as a statement of actual server functionality or a
@@ -5471,8 +5412,8 @@ class TerminologyCapabilitiesExpansion with _$TerminologyCapabilitiesExpansion {
     @JsonKey(name: '_textFilter') Element? textFilterElement,
   }) = _TerminologyCapabilitiesExpansion;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'TerminologyCapabilitiesExpansion';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory TerminologyCapabilitiesExpansion.fromYaml(dynamic yaml) => yaml
@@ -5503,10 +5444,6 @@ class TerminologyCapabilitiesExpansion with _$TerminologyCapabilitiesExpansion {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [TerminologyCapabilitiesParameter] A TerminologyCapabilities resource
@@ -5514,7 +5451,8 @@ class TerminologyCapabilitiesExpansion with _$TerminologyCapabilitiesExpansion {
 ///  that may be used as a statement of actual server functionality or a
 ///  statement of required or desired server implementation.
 @freezed
-class TerminologyCapabilitiesParameter with _$TerminologyCapabilitiesParameter {
+class TerminologyCapabilitiesParameter
+    with BackboneType, _$TerminologyCapabilitiesParameter {
   /// [TerminologyCapabilitiesParameter] A TerminologyCapabilities resource
   ///  documents a set of capabilities (behaviors) of a FHIR Terminology Server
   ///  that may be used as a statement of actual server functionality or a
@@ -5600,8 +5538,8 @@ class TerminologyCapabilitiesParameter with _$TerminologyCapabilitiesParameter {
     @JsonKey(name: '_documentation') Element? documentationElement,
   }) = _TerminologyCapabilitiesParameter;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'TerminologyCapabilitiesParameter';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory TerminologyCapabilitiesParameter.fromYaml(dynamic yaml) => yaml
@@ -5632,10 +5570,6 @@ class TerminologyCapabilitiesParameter with _$TerminologyCapabilitiesParameter {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [TerminologyCapabilitiesValidateCode] A TerminologyCapabilities resource
@@ -5644,7 +5578,7 @@ class TerminologyCapabilitiesParameter with _$TerminologyCapabilitiesParameter {
 ///  statement of required or desired server implementation.
 @freezed
 class TerminologyCapabilitiesValidateCode
-    with _$TerminologyCapabilitiesValidateCode {
+    with BackboneType, _$TerminologyCapabilitiesValidateCode {
   /// [TerminologyCapabilitiesValidateCode] A TerminologyCapabilities resource
   ///  documents a set of capabilities (behaviors) of a FHIR Terminology Server
   ///  that may be used as a statement of actual server functionality or a
@@ -5720,8 +5654,8 @@ class TerminologyCapabilitiesValidateCode
     @JsonKey(name: '_translations') Element? translationsElement,
   }) = _TerminologyCapabilitiesValidateCode;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'TerminologyCapabilitiesValidateCode';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory TerminologyCapabilitiesValidateCode.fromYaml(dynamic yaml) => yaml
@@ -5752,10 +5686,6 @@ class TerminologyCapabilitiesValidateCode
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [TerminologyCapabilitiesTranslation] A TerminologyCapabilities resource
@@ -5764,7 +5694,7 @@ class TerminologyCapabilitiesValidateCode
 ///  statement of required or desired server implementation.
 @freezed
 class TerminologyCapabilitiesTranslation
-    with _$TerminologyCapabilitiesTranslation {
+    with BackboneType, _$TerminologyCapabilitiesTranslation {
   /// [TerminologyCapabilitiesTranslation] A TerminologyCapabilities resource
   ///  documents a set of capabilities (behaviors) of a FHIR Terminology Server
   ///  that may be used as a statement of actual server functionality or a
@@ -5840,8 +5770,8 @@ class TerminologyCapabilitiesTranslation
     @JsonKey(name: '_needsMap') Element? needsMapElement,
   }) = _TerminologyCapabilitiesTranslation;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'TerminologyCapabilitiesTranslation';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory TerminologyCapabilitiesTranslation.fromYaml(dynamic yaml) => yaml
@@ -5872,10 +5802,6 @@ class TerminologyCapabilitiesTranslation
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [TerminologyCapabilitiesClosure] A TerminologyCapabilities resource
@@ -5883,7 +5809,8 @@ class TerminologyCapabilitiesTranslation
 ///  that may be used as a statement of actual server functionality or a
 ///  statement of required or desired server implementation.
 @freezed
-class TerminologyCapabilitiesClosure with _$TerminologyCapabilitiesClosure {
+class TerminologyCapabilitiesClosure
+    with BackboneType, _$TerminologyCapabilitiesClosure {
   /// [TerminologyCapabilitiesClosure] A TerminologyCapabilities resource
   ///  documents a set of capabilities (behaviors) of a FHIR Terminology Server
   ///  that may be used as a statement of actual server functionality or a
@@ -5959,8 +5886,8 @@ class TerminologyCapabilitiesClosure with _$TerminologyCapabilitiesClosure {
     @JsonKey(name: '_translation') Element? translationElement,
   }) = _TerminologyCapabilitiesClosure;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'TerminologyCapabilitiesClosure';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory TerminologyCapabilitiesClosure.fromYaml(dynamic yaml) => yaml
@@ -5990,10 +5917,6 @@ class TerminologyCapabilitiesClosure with _$TerminologyCapabilitiesClosure {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ValueSet] A ValueSet resource instance specifies a set of codes drawn from
@@ -6507,6 +6430,9 @@ class ValueSet with Resource, _$ValueSet {
     ValueSetScope? scope,
   }) = _ValueSet;
 
+  @override
+  String get fhirType => 'ValueSet';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -6549,7 +6475,7 @@ class ValueSet with Resource, _$ValueSet {
 ///  context. Value sets link between [CodeSystem](codesystem.html) definitions
 ///  and their use in [coded elements](terminologies.html).
 @freezed
-class ValueSetCompose with _$ValueSetCompose {
+class ValueSetCompose with BackboneType, _$ValueSetCompose {
   /// [ValueSetCompose] A ValueSet resource instance specifies a set of codes
   ///  drawn from one or more code systems, intended for use in a particular
   ///  context. Value sets link between [CodeSystem](codesystem.html)
@@ -6684,8 +6610,8 @@ class ValueSetCompose with _$ValueSetCompose {
     @JsonKey(name: '_property') List<Element>? propertyElement,
   }) = _ValueSetCompose;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ValueSetCompose';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ValueSetCompose.fromYaml(dynamic yaml) => yaml is String
@@ -6713,10 +6639,6 @@ class ValueSetCompose with _$ValueSetCompose {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ValueSetInclude] A ValueSet resource instance specifies a set of codes
@@ -6724,7 +6646,7 @@ class ValueSetCompose with _$ValueSetCompose {
 ///  context. Value sets link between [CodeSystem](codesystem.html) definitions
 ///  and their use in [coded elements](terminologies.html).
 @freezed
-class ValueSetInclude with _$ValueSetInclude {
+class ValueSetInclude with BackboneType, _$ValueSetInclude {
   /// [ValueSetInclude] A ValueSet resource instance specifies a set of codes
   ///  drawn from one or more code systems, intended for use in a particular
   ///  context. Value sets link between [CodeSystem](codesystem.html)
@@ -6859,8 +6781,8 @@ class ValueSetInclude with _$ValueSetInclude {
     @JsonKey(name: '_copyright') Element? copyrightElement,
   }) = _ValueSetInclude;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ValueSetInclude';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ValueSetInclude.fromYaml(dynamic yaml) => yaml is String
@@ -6888,10 +6810,6 @@ class ValueSetInclude with _$ValueSetInclude {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ValueSetConcept] A ValueSet resource instance specifies a set of codes
@@ -6899,7 +6817,7 @@ class ValueSetInclude with _$ValueSetInclude {
 ///  context. Value sets link between [CodeSystem](codesystem.html) definitions
 ///  and their use in [coded elements](terminologies.html).
 @freezed
-class ValueSetConcept with _$ValueSetConcept {
+class ValueSetConcept with BackboneType, _$ValueSetConcept {
   /// [ValueSetConcept] A ValueSet resource instance specifies a set of codes
   ///  drawn from one or more code systems, intended for use in a particular
   ///  context. Value sets link between [CodeSystem](codesystem.html)
@@ -6999,8 +6917,8 @@ class ValueSetConcept with _$ValueSetConcept {
     List<ValueSetDesignation>? designation,
   }) = _ValueSetConcept;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ValueSetConcept';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ValueSetConcept.fromYaml(dynamic yaml) => yaml is String
@@ -7028,10 +6946,6 @@ class ValueSetConcept with _$ValueSetConcept {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ValueSetDesignation] A ValueSet resource instance specifies a set of codes
@@ -7039,7 +6953,7 @@ class ValueSetConcept with _$ValueSetConcept {
 ///  context. Value sets link between [CodeSystem](codesystem.html) definitions
 ///  and their use in [coded elements](terminologies.html).
 @freezed
-class ValueSetDesignation with _$ValueSetDesignation {
+class ValueSetDesignation with BackboneType, _$ValueSetDesignation {
   /// [ValueSetDesignation] A ValueSet resource instance specifies a set of
   ///  codes drawn from one or more code systems, intended for use in a
   ///  particular context. Value sets link between
@@ -7139,8 +7053,8 @@ class ValueSetDesignation with _$ValueSetDesignation {
     @JsonKey(name: '_value') Element? valueElement,
   }) = _ValueSetDesignation;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ValueSetDesignation';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ValueSetDesignation.fromYaml(dynamic yaml) => yaml is String
@@ -7168,10 +7082,6 @@ class ValueSetDesignation with _$ValueSetDesignation {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ValueSetFilter] A ValueSet resource instance specifies a set of codes
@@ -7179,7 +7089,7 @@ class ValueSetDesignation with _$ValueSetDesignation {
 ///  context. Value sets link between [CodeSystem](codesystem.html) definitions
 ///  and their use in [coded elements](terminologies.html).
 @freezed
-class ValueSetFilter with _$ValueSetFilter {
+class ValueSetFilter with BackboneType, _$ValueSetFilter {
   /// [ValueSetFilter] A ValueSet resource instance specifies a set of codes
   ///  drawn from one or more code systems, intended for use in a particular
   ///  context. Value sets link between [CodeSystem](codesystem.html)
@@ -7287,8 +7197,8 @@ class ValueSetFilter with _$ValueSetFilter {
     @JsonKey(name: '_value') Element? valueElement,
   }) = _ValueSetFilter;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ValueSetFilter';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ValueSetFilter.fromYaml(dynamic yaml) => yaml is String
@@ -7316,10 +7226,6 @@ class ValueSetFilter with _$ValueSetFilter {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ValueSetExpansion] A ValueSet resource instance specifies a set of codes
@@ -7327,7 +7233,7 @@ class ValueSetFilter with _$ValueSetFilter {
 ///  context. Value sets link between [CodeSystem](codesystem.html) definitions
 ///  and their use in [coded elements](terminologies.html).
 @freezed
-class ValueSetExpansion with _$ValueSetExpansion {
+class ValueSetExpansion with BackboneType, _$ValueSetExpansion {
   /// [ValueSetExpansion] A ValueSet resource instance specifies a set of codes
   ///  drawn from one or more code systems, intended for use in a particular
   ///  context. Value sets link between [CodeSystem](codesystem.html)
@@ -7489,8 +7395,8 @@ class ValueSetExpansion with _$ValueSetExpansion {
     List<ValueSetContains>? contains,
   }) = _ValueSetExpansion;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ValueSetExpansion';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ValueSetExpansion.fromYaml(dynamic yaml) => yaml is String
@@ -7518,10 +7424,6 @@ class ValueSetExpansion with _$ValueSetExpansion {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ValueSetParameter] A ValueSet resource instance specifies a set of codes
@@ -7529,7 +7431,7 @@ class ValueSetExpansion with _$ValueSetExpansion {
 ///  context. Value sets link between [CodeSystem](codesystem.html) definitions
 ///  and their use in [coded elements](terminologies.html).
 @freezed
-class ValueSetParameter with _$ValueSetParameter {
+class ValueSetParameter with BackboneType, _$ValueSetParameter {
   /// [ValueSetParameter] A ValueSet resource instance specifies a set of codes
   ///  drawn from one or more code systems, intended for use in a particular
   ///  context. Value sets link between [CodeSystem](codesystem.html)
@@ -7679,8 +7581,8 @@ class ValueSetParameter with _$ValueSetParameter {
     @JsonKey(name: '_valueDateTime') Element? valueDateTimeElement,
   }) = _ValueSetParameter;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ValueSetParameter';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ValueSetParameter.fromYaml(dynamic yaml) => yaml is String
@@ -7708,10 +7610,6 @@ class ValueSetParameter with _$ValueSetParameter {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ValueSetProperty] A ValueSet resource instance specifies a set of codes
@@ -7719,7 +7617,7 @@ class ValueSetParameter with _$ValueSetParameter {
 ///  context. Value sets link between [CodeSystem](codesystem.html) definitions
 ///  and their use in [coded elements](terminologies.html).
 @freezed
-class ValueSetProperty with _$ValueSetProperty {
+class ValueSetProperty with BackboneType, _$ValueSetProperty {
   /// [ValueSetProperty] A ValueSet resource instance specifies a set of codes
   ///  drawn from one or more code systems, intended for use in a particular
   ///  context. Value sets link between [CodeSystem](codesystem.html)
@@ -7811,8 +7709,8 @@ class ValueSetProperty with _$ValueSetProperty {
     @JsonKey(name: '_uri') Element? uriElement,
   }) = _ValueSetProperty;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ValueSetProperty';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ValueSetProperty.fromYaml(dynamic yaml) => yaml is String
@@ -7840,10 +7738,6 @@ class ValueSetProperty with _$ValueSetProperty {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ValueSetContains] A ValueSet resource instance specifies a set of codes
@@ -7851,7 +7745,7 @@ class ValueSetProperty with _$ValueSetProperty {
 ///  context. Value sets link between [CodeSystem](codesystem.html) definitions
 ///  and their use in [coded elements](terminologies.html).
 @freezed
-class ValueSetContains with _$ValueSetContains {
+class ValueSetContains with BackboneType, _$ValueSetContains {
   /// [ValueSetContains] A ValueSet resource instance specifies a set of codes
   ///  drawn from one or more code systems, intended for use in a particular
   ///  context. Value sets link between [CodeSystem](codesystem.html)
@@ -8026,8 +7920,8 @@ class ValueSetContains with _$ValueSetContains {
     List<ValueSetContains>? contains,
   }) = _ValueSetContains;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ValueSetContains';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ValueSetContains.fromYaml(dynamic yaml) => yaml is String
@@ -8055,10 +7949,6 @@ class ValueSetContains with _$ValueSetContains {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ValueSetProperty1] A ValueSet resource instance specifies a set of codes
@@ -8066,7 +7956,7 @@ class ValueSetContains with _$ValueSetContains {
 ///  context. Value sets link between [CodeSystem](codesystem.html) definitions
 ///  and their use in [coded elements](terminologies.html).
 @freezed
-class ValueSetProperty1 with _$ValueSetProperty1 {
+class ValueSetProperty1 with BackboneType, _$ValueSetProperty1 {
   /// [ValueSetProperty1] A ValueSet resource instance specifies a set of codes
   ///  drawn from one or more code systems, intended for use in a particular
   ///  context. Value sets link between [CodeSystem](codesystem.html)
@@ -8212,8 +8102,8 @@ class ValueSetProperty1 with _$ValueSetProperty1 {
     List<ValueSetSubProperty>? subProperty,
   }) = _ValueSetProperty1;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ValueSetProperty1';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ValueSetProperty1.fromYaml(dynamic yaml) => yaml is String
@@ -8241,10 +8131,6 @@ class ValueSetProperty1 with _$ValueSetProperty1 {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ValueSetSubProperty] A ValueSet resource instance specifies a set of codes
@@ -8252,7 +8138,7 @@ class ValueSetProperty1 with _$ValueSetProperty1 {
 ///  context. Value sets link between [CodeSystem](codesystem.html) definitions
 ///  and their use in [coded elements](terminologies.html).
 @freezed
-class ValueSetSubProperty with _$ValueSetSubProperty {
+class ValueSetSubProperty with BackboneType, _$ValueSetSubProperty {
   /// [ValueSetSubProperty] A ValueSet resource instance specifies a set of
   ///  codes drawn from one or more code systems, intended for use in a
   ///  particular context. Value sets link between
@@ -8395,8 +8281,8 @@ class ValueSetSubProperty with _$ValueSetSubProperty {
     @JsonKey(name: '_valueDecimal') Element? valueDecimalElement,
   }) = _ValueSetSubProperty;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ValueSetSubProperty';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ValueSetSubProperty.fromYaml(dynamic yaml) => yaml is String
@@ -8424,10 +8310,6 @@ class ValueSetSubProperty with _$ValueSetSubProperty {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [ValueSetScope] A ValueSet resource instance specifies a set of codes drawn
@@ -8435,7 +8317,7 @@ class ValueSetSubProperty with _$ValueSetSubProperty {
 ///  Value sets link between [CodeSystem](codesystem.html) definitions and
 ///  their use in [coded elements](terminologies.html).
 @freezed
-class ValueSetScope with _$ValueSetScope {
+class ValueSetScope with BackboneType, _$ValueSetScope {
   /// [ValueSetScope] A ValueSet resource instance specifies a set of codes
   ///  drawn from one or more code systems, intended for use in a particular
   ///  context. Value sets link between [CodeSystem](codesystem.html)
@@ -8529,8 +8411,8 @@ class ValueSetScope with _$ValueSetScope {
     @JsonKey(name: '_exclusionCriteria') Element? exclusionCriteriaElement,
   }) = _ValueSetScope;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'ValueSetScope';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory ValueSetScope.fromYaml(dynamic yaml) => yaml is String
@@ -8558,8 +8440,4 @@ class ValueSetScope with _$ValueSetScope {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }

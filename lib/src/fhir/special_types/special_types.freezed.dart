@@ -63,8 +63,6 @@ abstract class $NarrativeCopyWith<$Res> {
       NarrativeStatus? status,
       @JsonKey(name: '_status') Element? statusElement,
       FhirMarkdown div});
-
-  $ElementCopyWith<$Res>? get statusElement;
 }
 
 /// @nodoc
@@ -109,18 +107,6 @@ class _$NarrativeCopyWithImpl<$Res, $Val extends Narrative>
               as FhirMarkdown,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get statusElement {
-    if (_value.statusElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.statusElement!, (value) {
-      return _then(_value.copyWith(statusElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -137,9 +123,6 @@ abstract class _$$NarrativeImplCopyWith<$Res>
       NarrativeStatus? status,
       @JsonKey(name: '_status') Element? statusElement,
       FhirMarkdown div});
-
-  @override
-  $ElementCopyWith<$Res>? get statusElement;
 }
 
 /// @nodoc
@@ -736,10 +719,7 @@ abstract class $ReferenceCopyWith<$Res> {
       String? display,
       @JsonKey(name: '_display') Element? displayElement});
 
-  $ElementCopyWith<$Res>? get referenceElement;
-  $ElementCopyWith<$Res>? get typeElement;
   $IdentifierCopyWith<$Res>? get identifier;
-  $ElementCopyWith<$Res>? get displayElement;
 }
 
 /// @nodoc
@@ -807,30 +787,6 @@ class _$ReferenceCopyWithImpl<$Res, $Val extends Reference>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get referenceElement {
-    if (_value.referenceElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.referenceElement!, (value) {
-      return _then(_value.copyWith(referenceElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get typeElement {
-    if (_value.typeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.typeElement!, (value) {
-      return _then(_value.copyWith(typeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $IdentifierCopyWith<$Res>? get identifier {
     if (_value.identifier == null) {
       return null;
@@ -838,18 +794,6 @@ class _$ReferenceCopyWithImpl<$Res, $Val extends Reference>
 
     return $IdentifierCopyWith<$Res>(_value.identifier!, (value) {
       return _then(_value.copyWith(identifier: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get displayElement {
-    if (_value.displayElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.displayElement!, (value) {
-      return _then(_value.copyWith(displayElement: value) as $Val);
     });
   }
 }
@@ -874,13 +818,7 @@ abstract class _$$ReferenceImplCopyWith<$Res>
       @JsonKey(name: '_display') Element? displayElement});
 
   @override
-  $ElementCopyWith<$Res>? get referenceElement;
-  @override
-  $ElementCopyWith<$Res>? get typeElement;
-  @override
   $IdentifierCopyWith<$Res>? get identifier;
-  @override
-  $ElementCopyWith<$Res>? get displayElement;
 }
 
 /// @nodoc
@@ -1301,11 +1239,9 @@ abstract class $RelativeTimeCopyWith<$Res> {
       @JsonKey(name: '_text') Element? textElement});
 
   $ReferenceCopyWith<$Res>? get contextReference;
-  $ElementCopyWith<$Res>? get contextPathElement;
   $CodeableConceptCopyWith<$Res>? get contextCode;
   $FhirDurationCopyWith<$Res>? get offsetDuration;
   $RangeCopyWith<$Res>? get offsetRange;
-  $ElementCopyWith<$Res>? get textElement;
 }
 
 /// @nodoc
@@ -1400,18 +1336,6 @@ class _$RelativeTimeCopyWithImpl<$Res, $Val extends RelativeTime>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get contextPathElement {
-    if (_value.contextPathElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.contextPathElement!, (value) {
-      return _then(_value.copyWith(contextPathElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $CodeableConceptCopyWith<$Res>? get contextCode {
     if (_value.contextCode == null) {
       return null;
@@ -1445,18 +1369,6 @@ class _$RelativeTimeCopyWithImpl<$Res, $Val extends RelativeTime>
       return _then(_value.copyWith(offsetRange: value) as $Val);
     });
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get textElement {
-    if (_value.textElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.textElement!, (value) {
-      return _then(_value.copyWith(textElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -1484,15 +1396,11 @@ abstract class _$$RelativeTimeImplCopyWith<$Res>
   @override
   $ReferenceCopyWith<$Res>? get contextReference;
   @override
-  $ElementCopyWith<$Res>? get contextPathElement;
-  @override
   $CodeableConceptCopyWith<$Res>? get contextCode;
   @override
   $FhirDurationCopyWith<$Res>? get offsetDuration;
   @override
   $RangeCopyWith<$Res>? get offsetRange;
-  @override
-  $ElementCopyWith<$Res>? get textElement;
 }
 
 /// @nodoc
@@ -1971,10 +1879,6 @@ abstract class $FhirMetaCopyWith<$Res> {
       @JsonKey(name: '_profile') List<Element>? profileElement,
       List<Coding>? security,
       List<Coding>? tag});
-
-  $ElementCopyWith<$Res>? get versionIdElement;
-  $ElementCopyWith<$Res>? get lastUpdatedElement;
-  $ElementCopyWith<$Res>? get sourceElement;
 }
 
 /// @nodoc
@@ -2054,42 +1958,6 @@ class _$FhirMetaCopyWithImpl<$Res, $Val extends FhirMeta>
               as List<Coding>?,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get versionIdElement {
-    if (_value.versionIdElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.versionIdElement!, (value) {
-      return _then(_value.copyWith(versionIdElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get lastUpdatedElement {
-    if (_value.lastUpdatedElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.lastUpdatedElement!, (value) {
-      return _then(_value.copyWith(lastUpdatedElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get sourceElement {
-    if (_value.sourceElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.sourceElement!, (value) {
-      return _then(_value.copyWith(sourceElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -2113,13 +1981,6 @@ abstract class _$$FhirMetaImplCopyWith<$Res>
       @JsonKey(name: '_profile') List<Element>? profileElement,
       List<Coding>? security,
       List<Coding>? tag});
-
-  @override
-  $ElementCopyWith<$Res>? get versionIdElement;
-  @override
-  $ElementCopyWith<$Res>? get lastUpdatedElement;
-  @override
-  $ElementCopyWith<$Res>? get sourceElement;
 }
 
 /// @nodoc
@@ -2651,11 +2512,7 @@ abstract class $DosageCopyWith<$Res> {
       Quantity? maxDosePerAdministration,
       Quantity? maxDosePerLifetime});
 
-  $ElementCopyWith<$Res>? get sequenceElement;
-  $ElementCopyWith<$Res>? get textElement;
-  $ElementCopyWith<$Res>? get patientInstructionElement;
   $TimingCopyWith<$Res>? get timing;
-  $ElementCopyWith<$Res>? get asNeededElement;
   $CodeableConceptCopyWith<$Res>? get site;
   $CodeableConceptCopyWith<$Res>? get route;
   $CodeableConceptCopyWith<$Res>? get method;
@@ -2788,42 +2645,6 @@ class _$DosageCopyWithImpl<$Res, $Val extends Dosage>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get sequenceElement {
-    if (_value.sequenceElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.sequenceElement!, (value) {
-      return _then(_value.copyWith(sequenceElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get textElement {
-    if (_value.textElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.textElement!, (value) {
-      return _then(_value.copyWith(textElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patientInstructionElement {
-    if (_value.patientInstructionElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patientInstructionElement!, (value) {
-      return _then(_value.copyWith(patientInstructionElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $TimingCopyWith<$Res>? get timing {
     if (_value.timing == null) {
       return null;
@@ -2831,18 +2652,6 @@ class _$DosageCopyWithImpl<$Res, $Val extends Dosage>
 
     return $TimingCopyWith<$Res>(_value.timing!, (value) {
       return _then(_value.copyWith(timing: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get asNeededElement {
-    if (_value.asNeededElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.asNeededElement!, (value) {
-      return _then(_value.copyWith(asNeededElement: value) as $Val);
     });
   }
 
@@ -2938,15 +2747,7 @@ abstract class _$$DosageImplCopyWith<$Res> implements $DosageCopyWith<$Res> {
       Quantity? maxDosePerLifetime});
 
   @override
-  $ElementCopyWith<$Res>? get sequenceElement;
-  @override
-  $ElementCopyWith<$Res>? get textElement;
-  @override
-  $ElementCopyWith<$Res>? get patientInstructionElement;
-  @override
   $TimingCopyWith<$Res>? get timing;
-  @override
-  $ElementCopyWith<$Res>? get asNeededElement;
   @override
   $CodeableConceptCopyWith<$Res>? get site;
   @override
@@ -7426,39 +7227,8 @@ abstract class $ElementDefinitionCopyWith<$Res> {
       ElementDefinitionBinding? binding,
       List<ElementDefinitionMapping>? mapping});
 
-  $ElementCopyWith<$Res>? get pathElement;
-  $ElementCopyWith<$Res>? get sliceNameElement;
-  $ElementCopyWith<$Res>? get sliceIsConstrainingElement;
-  $ElementCopyWith<$Res>? get labelElement;
   $ElementDefinitionSlicingCopyWith<$Res>? get slicing;
-  $ElementCopyWith<$Res>? get shortElement;
-  $ElementCopyWith<$Res>? get definitionElement;
-  $ElementCopyWith<$Res>? get commentElement;
-  $ElementCopyWith<$Res>? get requirementsElement;
-  $ElementCopyWith<$Res>? get minElement;
-  $ElementCopyWith<$Res>? get maxElement;
   $ElementDefinitionBaseCopyWith<$Res>? get base;
-  $ElementCopyWith<$Res>? get contentReferenceElement;
-  $ElementCopyWith<$Res>? get defaultValueBase64BinaryElement;
-  $ElementCopyWith<$Res>? get defaultValueBooleanElement;
-  $ElementCopyWith<$Res>? get defaultValueCanonicalElement;
-  $ElementCopyWith<$Res>? get defaultValueCodeElement;
-  $ElementCopyWith<$Res>? get defaultValueDateElement;
-  $ElementCopyWith<$Res>? get defaultValueDateTimeElement;
-  $ElementCopyWith<$Res>? get defaultValueDecimalElement;
-  $ElementCopyWith<$Res>? get defaultValueIdElement;
-  $ElementCopyWith<$Res>? get defaultValueInstantElement;
-  $ElementCopyWith<$Res>? get defaultValueIntegerElement;
-  $ElementCopyWith<$Res>? get defaultValueInteger64Element;
-  $ElementCopyWith<$Res>? get defaultValueMarkdownElement;
-  $ElementCopyWith<$Res>? get defaultValueOidElement;
-  $ElementCopyWith<$Res>? get defaultValuePositiveIntElement;
-  $ElementCopyWith<$Res>? get defaultValueStringElement;
-  $ElementCopyWith<$Res>? get defaultValueTimeElement;
-  $ElementCopyWith<$Res>? get defaultValueUnsignedIntElement;
-  $ElementCopyWith<$Res>? get defaultValueUriElement;
-  $ElementCopyWith<$Res>? get defaultValueUrlElement;
-  $ElementCopyWith<$Res>? get defaultValueUuidElement;
   $AddressCopyWith<$Res>? get defaultValueAddress;
   $AgeCopyWith<$Res>? get defaultValueAge;
   $AnnotationCopyWith<$Res>? get defaultValueAnnotation;
@@ -7493,28 +7263,6 @@ abstract class $ElementDefinitionCopyWith<$Res> {
   $ExtendedContactDetailCopyWith<$Res>? get defaultValueExtendedContactDetail;
   $DosageCopyWith<$Res>? get defaultValueDosage;
   $FhirMetaCopyWith<$Res>? get defaultValueMeta;
-  $ElementCopyWith<$Res>? get meaningWhenMissingElement;
-  $ElementCopyWith<$Res>? get orderMeaningElement;
-  $ElementCopyWith<$Res>? get fixedBase64BinaryElement;
-  $ElementCopyWith<$Res>? get fixedBooleanElement;
-  $ElementCopyWith<$Res>? get fixedCanonicalElement;
-  $ElementCopyWith<$Res>? get fixedCodeElement;
-  $ElementCopyWith<$Res>? get fixedDateElement;
-  $ElementCopyWith<$Res>? get fixedDateTimeElement;
-  $ElementCopyWith<$Res>? get fixedDecimalElement;
-  $ElementCopyWith<$Res>? get fixedIdElement;
-  $ElementCopyWith<$Res>? get fixedInstantElement;
-  $ElementCopyWith<$Res>? get fixedIntegerElement;
-  $ElementCopyWith<$Res>? get fixedInteger64Element;
-  $ElementCopyWith<$Res>? get fixedMarkdownElement;
-  $ElementCopyWith<$Res>? get fixedOidElement;
-  $ElementCopyWith<$Res>? get fixedPositiveIntElement;
-  $ElementCopyWith<$Res>? get fixedStringElement;
-  $ElementCopyWith<$Res>? get fixedTimeElement;
-  $ElementCopyWith<$Res>? get fixedUnsignedIntElement;
-  $ElementCopyWith<$Res>? get fixedUriElement;
-  $ElementCopyWith<$Res>? get fixedUrlElement;
-  $ElementCopyWith<$Res>? get fixedUuidElement;
   $AddressCopyWith<$Res>? get fixedAddress;
   $AgeCopyWith<$Res>? get fixedAge;
   $AnnotationCopyWith<$Res>? get fixedAnnotation;
@@ -7549,26 +7297,6 @@ abstract class $ElementDefinitionCopyWith<$Res> {
   $ExtendedContactDetailCopyWith<$Res>? get fixedExtendedContactDetail;
   $DosageCopyWith<$Res>? get fixedDosage;
   $FhirMetaCopyWith<$Res>? get fixedMeta;
-  $ElementCopyWith<$Res>? get patternBase64BinaryElement;
-  $ElementCopyWith<$Res>? get patternBooleanElement;
-  $ElementCopyWith<$Res>? get patternCanonicalElement;
-  $ElementCopyWith<$Res>? get patternCodeElement;
-  $ElementCopyWith<$Res>? get patternDateElement;
-  $ElementCopyWith<$Res>? get patternDateTimeElement;
-  $ElementCopyWith<$Res>? get patternDecimalElement;
-  $ElementCopyWith<$Res>? get patternIdElement;
-  $ElementCopyWith<$Res>? get patternInstantElement;
-  $ElementCopyWith<$Res>? get patternIntegerElement;
-  $ElementCopyWith<$Res>? get patternInteger64Element;
-  $ElementCopyWith<$Res>? get patternMarkdownElement;
-  $ElementCopyWith<$Res>? get patternOidElement;
-  $ElementCopyWith<$Res>? get patternPositiveIntElement;
-  $ElementCopyWith<$Res>? get patternStringElement;
-  $ElementCopyWith<$Res>? get patternTimeElement;
-  $ElementCopyWith<$Res>? get patternUnsignedIntElement;
-  $ElementCopyWith<$Res>? get patternUriElement;
-  $ElementCopyWith<$Res>? get patternUrlElement;
-  $ElementCopyWith<$Res>? get patternUuidElement;
   $AddressCopyWith<$Res>? get patternAddress;
   $AgeCopyWith<$Res>? get patternAge;
   $AnnotationCopyWith<$Res>? get patternAnnotation;
@@ -7603,32 +7331,8 @@ abstract class $ElementDefinitionCopyWith<$Res> {
   $ExtendedContactDetailCopyWith<$Res>? get patternExtendedContactDetail;
   $DosageCopyWith<$Res>? get patternDosage;
   $FhirMetaCopyWith<$Res>? get patternMeta;
-  $ElementCopyWith<$Res>? get minValueDateElement;
-  $ElementCopyWith<$Res>? get minValueDateTimeElement;
-  $ElementCopyWith<$Res>? get minValueInstantElement;
-  $ElementCopyWith<$Res>? get minValueTimeElement;
-  $ElementCopyWith<$Res>? get minValueDecimalElement;
-  $ElementCopyWith<$Res>? get minValueIntegerElement;
-  $ElementCopyWith<$Res>? get minValueInteger64Element;
-  $ElementCopyWith<$Res>? get minValuePositiveIntElement;
-  $ElementCopyWith<$Res>? get minValueUnsignedIntElement;
   $QuantityCopyWith<$Res>? get minValueQuantity;
-  $ElementCopyWith<$Res>? get maxValueDateElement;
-  $ElementCopyWith<$Res>? get maxValueDateTimeElement;
-  $ElementCopyWith<$Res>? get maxValueInstantElement;
-  $ElementCopyWith<$Res>? get maxValueTimeElement;
-  $ElementCopyWith<$Res>? get maxValueDecimalElement;
-  $ElementCopyWith<$Res>? get maxValueIntegerElement;
-  $ElementCopyWith<$Res>? get maxValueInteger64Element;
-  $ElementCopyWith<$Res>? get maxValuePositiveIntElement;
-  $ElementCopyWith<$Res>? get maxValueUnsignedIntElement;
   $QuantityCopyWith<$Res>? get maxValueQuantity;
-  $ElementCopyWith<$Res>? get maxLengthElement;
-  $ElementCopyWith<$Res>? get mustHaveValueElement;
-  $ElementCopyWith<$Res>? get mustSupportElement;
-  $ElementCopyWith<$Res>? get isModifierElement;
-  $ElementCopyWith<$Res>? get isModifierReasonElement;
-  $ElementCopyWith<$Res>? get isSummaryElement;
   $ElementDefinitionBindingCopyWith<$Res>? get binding;
 }
 
@@ -9235,54 +8939,6 @@ class _$ElementDefinitionCopyWithImpl<$Res, $Val extends ElementDefinition>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get pathElement {
-    if (_value.pathElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.pathElement!, (value) {
-      return _then(_value.copyWith(pathElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get sliceNameElement {
-    if (_value.sliceNameElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.sliceNameElement!, (value) {
-      return _then(_value.copyWith(sliceNameElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get sliceIsConstrainingElement {
-    if (_value.sliceIsConstrainingElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.sliceIsConstrainingElement!, (value) {
-      return _then(_value.copyWith(sliceIsConstrainingElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get labelElement {
-    if (_value.labelElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.labelElement!, (value) {
-      return _then(_value.copyWith(labelElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $ElementDefinitionSlicingCopyWith<$Res>? get slicing {
     if (_value.slicing == null) {
       return null;
@@ -9295,78 +8951,6 @@ class _$ElementDefinitionCopyWithImpl<$Res, $Val extends ElementDefinition>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get shortElement {
-    if (_value.shortElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.shortElement!, (value) {
-      return _then(_value.copyWith(shortElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get definitionElement {
-    if (_value.definitionElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.definitionElement!, (value) {
-      return _then(_value.copyWith(definitionElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get commentElement {
-    if (_value.commentElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.commentElement!, (value) {
-      return _then(_value.copyWith(commentElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get requirementsElement {
-    if (_value.requirementsElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.requirementsElement!, (value) {
-      return _then(_value.copyWith(requirementsElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get minElement {
-    if (_value.minElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.minElement!, (value) {
-      return _then(_value.copyWith(minElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get maxElement {
-    if (_value.maxElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.maxElement!, (value) {
-      return _then(_value.copyWith(maxElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $ElementDefinitionBaseCopyWith<$Res>? get base {
     if (_value.base == null) {
       return null;
@@ -9374,268 +8958,6 @@ class _$ElementDefinitionCopyWithImpl<$Res, $Val extends ElementDefinition>
 
     return $ElementDefinitionBaseCopyWith<$Res>(_value.base!, (value) {
       return _then(_value.copyWith(base: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get contentReferenceElement {
-    if (_value.contentReferenceElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.contentReferenceElement!, (value) {
-      return _then(_value.copyWith(contentReferenceElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueBase64BinaryElement {
-    if (_value.defaultValueBase64BinaryElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueBase64BinaryElement!,
-        (value) {
-      return _then(
-          _value.copyWith(defaultValueBase64BinaryElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueBooleanElement {
-    if (_value.defaultValueBooleanElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueBooleanElement!, (value) {
-      return _then(_value.copyWith(defaultValueBooleanElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueCanonicalElement {
-    if (_value.defaultValueCanonicalElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueCanonicalElement!,
-        (value) {
-      return _then(
-          _value.copyWith(defaultValueCanonicalElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueCodeElement {
-    if (_value.defaultValueCodeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueCodeElement!, (value) {
-      return _then(_value.copyWith(defaultValueCodeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueDateElement {
-    if (_value.defaultValueDateElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueDateElement!, (value) {
-      return _then(_value.copyWith(defaultValueDateElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueDateTimeElement {
-    if (_value.defaultValueDateTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueDateTimeElement!, (value) {
-      return _then(_value.copyWith(defaultValueDateTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueDecimalElement {
-    if (_value.defaultValueDecimalElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueDecimalElement!, (value) {
-      return _then(_value.copyWith(defaultValueDecimalElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueIdElement {
-    if (_value.defaultValueIdElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueIdElement!, (value) {
-      return _then(_value.copyWith(defaultValueIdElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueInstantElement {
-    if (_value.defaultValueInstantElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueInstantElement!, (value) {
-      return _then(_value.copyWith(defaultValueInstantElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueIntegerElement {
-    if (_value.defaultValueIntegerElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueIntegerElement!, (value) {
-      return _then(_value.copyWith(defaultValueIntegerElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueInteger64Element {
-    if (_value.defaultValueInteger64Element == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueInteger64Element!,
-        (value) {
-      return _then(
-          _value.copyWith(defaultValueInteger64Element: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueMarkdownElement {
-    if (_value.defaultValueMarkdownElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueMarkdownElement!, (value) {
-      return _then(_value.copyWith(defaultValueMarkdownElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueOidElement {
-    if (_value.defaultValueOidElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueOidElement!, (value) {
-      return _then(_value.copyWith(defaultValueOidElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValuePositiveIntElement {
-    if (_value.defaultValuePositiveIntElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValuePositiveIntElement!,
-        (value) {
-      return _then(
-          _value.copyWith(defaultValuePositiveIntElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueStringElement {
-    if (_value.defaultValueStringElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueStringElement!, (value) {
-      return _then(_value.copyWith(defaultValueStringElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueTimeElement {
-    if (_value.defaultValueTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueTimeElement!, (value) {
-      return _then(_value.copyWith(defaultValueTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueUnsignedIntElement {
-    if (_value.defaultValueUnsignedIntElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueUnsignedIntElement!,
-        (value) {
-      return _then(
-          _value.copyWith(defaultValueUnsignedIntElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueUriElement {
-    if (_value.defaultValueUriElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueUriElement!, (value) {
-      return _then(_value.copyWith(defaultValueUriElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueUrlElement {
-    if (_value.defaultValueUrlElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueUrlElement!, (value) {
-      return _then(_value.copyWith(defaultValueUrlElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get defaultValueUuidElement {
-    if (_value.defaultValueUuidElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.defaultValueUuidElement!, (value) {
-      return _then(_value.copyWith(defaultValueUuidElement: value) as $Val);
     });
   }
 
@@ -10065,270 +9387,6 @@ class _$ElementDefinitionCopyWithImpl<$Res, $Val extends ElementDefinition>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get meaningWhenMissingElement {
-    if (_value.meaningWhenMissingElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.meaningWhenMissingElement!, (value) {
-      return _then(_value.copyWith(meaningWhenMissingElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get orderMeaningElement {
-    if (_value.orderMeaningElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.orderMeaningElement!, (value) {
-      return _then(_value.copyWith(orderMeaningElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedBase64BinaryElement {
-    if (_value.fixedBase64BinaryElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedBase64BinaryElement!, (value) {
-      return _then(_value.copyWith(fixedBase64BinaryElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedBooleanElement {
-    if (_value.fixedBooleanElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedBooleanElement!, (value) {
-      return _then(_value.copyWith(fixedBooleanElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedCanonicalElement {
-    if (_value.fixedCanonicalElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedCanonicalElement!, (value) {
-      return _then(_value.copyWith(fixedCanonicalElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedCodeElement {
-    if (_value.fixedCodeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedCodeElement!, (value) {
-      return _then(_value.copyWith(fixedCodeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedDateElement {
-    if (_value.fixedDateElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedDateElement!, (value) {
-      return _then(_value.copyWith(fixedDateElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedDateTimeElement {
-    if (_value.fixedDateTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedDateTimeElement!, (value) {
-      return _then(_value.copyWith(fixedDateTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedDecimalElement {
-    if (_value.fixedDecimalElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedDecimalElement!, (value) {
-      return _then(_value.copyWith(fixedDecimalElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedIdElement {
-    if (_value.fixedIdElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedIdElement!, (value) {
-      return _then(_value.copyWith(fixedIdElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedInstantElement {
-    if (_value.fixedInstantElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedInstantElement!, (value) {
-      return _then(_value.copyWith(fixedInstantElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedIntegerElement {
-    if (_value.fixedIntegerElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedIntegerElement!, (value) {
-      return _then(_value.copyWith(fixedIntegerElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedInteger64Element {
-    if (_value.fixedInteger64Element == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedInteger64Element!, (value) {
-      return _then(_value.copyWith(fixedInteger64Element: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedMarkdownElement {
-    if (_value.fixedMarkdownElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedMarkdownElement!, (value) {
-      return _then(_value.copyWith(fixedMarkdownElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedOidElement {
-    if (_value.fixedOidElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedOidElement!, (value) {
-      return _then(_value.copyWith(fixedOidElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedPositiveIntElement {
-    if (_value.fixedPositiveIntElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedPositiveIntElement!, (value) {
-      return _then(_value.copyWith(fixedPositiveIntElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedStringElement {
-    if (_value.fixedStringElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedStringElement!, (value) {
-      return _then(_value.copyWith(fixedStringElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedTimeElement {
-    if (_value.fixedTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedTimeElement!, (value) {
-      return _then(_value.copyWith(fixedTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedUnsignedIntElement {
-    if (_value.fixedUnsignedIntElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedUnsignedIntElement!, (value) {
-      return _then(_value.copyWith(fixedUnsignedIntElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedUriElement {
-    if (_value.fixedUriElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedUriElement!, (value) {
-      return _then(_value.copyWith(fixedUriElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedUrlElement {
-    if (_value.fixedUrlElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedUrlElement!, (value) {
-      return _then(_value.copyWith(fixedUrlElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get fixedUuidElement {
-    if (_value.fixedUuidElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.fixedUuidElement!, (value) {
-      return _then(_value.copyWith(fixedUuidElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $AddressCopyWith<$Res>? get fixedAddress {
     if (_value.fixedAddress == null) {
       return null;
@@ -10739,246 +9797,6 @@ class _$ElementDefinitionCopyWithImpl<$Res, $Val extends ElementDefinition>
 
     return $FhirMetaCopyWith<$Res>(_value.fixedMeta!, (value) {
       return _then(_value.copyWith(fixedMeta: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternBase64BinaryElement {
-    if (_value.patternBase64BinaryElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternBase64BinaryElement!, (value) {
-      return _then(_value.copyWith(patternBase64BinaryElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternBooleanElement {
-    if (_value.patternBooleanElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternBooleanElement!, (value) {
-      return _then(_value.copyWith(patternBooleanElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternCanonicalElement {
-    if (_value.patternCanonicalElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternCanonicalElement!, (value) {
-      return _then(_value.copyWith(patternCanonicalElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternCodeElement {
-    if (_value.patternCodeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternCodeElement!, (value) {
-      return _then(_value.copyWith(patternCodeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternDateElement {
-    if (_value.patternDateElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternDateElement!, (value) {
-      return _then(_value.copyWith(patternDateElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternDateTimeElement {
-    if (_value.patternDateTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternDateTimeElement!, (value) {
-      return _then(_value.copyWith(patternDateTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternDecimalElement {
-    if (_value.patternDecimalElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternDecimalElement!, (value) {
-      return _then(_value.copyWith(patternDecimalElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternIdElement {
-    if (_value.patternIdElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternIdElement!, (value) {
-      return _then(_value.copyWith(patternIdElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternInstantElement {
-    if (_value.patternInstantElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternInstantElement!, (value) {
-      return _then(_value.copyWith(patternInstantElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternIntegerElement {
-    if (_value.patternIntegerElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternIntegerElement!, (value) {
-      return _then(_value.copyWith(patternIntegerElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternInteger64Element {
-    if (_value.patternInteger64Element == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternInteger64Element!, (value) {
-      return _then(_value.copyWith(patternInteger64Element: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternMarkdownElement {
-    if (_value.patternMarkdownElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternMarkdownElement!, (value) {
-      return _then(_value.copyWith(patternMarkdownElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternOidElement {
-    if (_value.patternOidElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternOidElement!, (value) {
-      return _then(_value.copyWith(patternOidElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternPositiveIntElement {
-    if (_value.patternPositiveIntElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternPositiveIntElement!, (value) {
-      return _then(_value.copyWith(patternPositiveIntElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternStringElement {
-    if (_value.patternStringElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternStringElement!, (value) {
-      return _then(_value.copyWith(patternStringElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternTimeElement {
-    if (_value.patternTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternTimeElement!, (value) {
-      return _then(_value.copyWith(patternTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternUnsignedIntElement {
-    if (_value.patternUnsignedIntElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternUnsignedIntElement!, (value) {
-      return _then(_value.copyWith(patternUnsignedIntElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternUriElement {
-    if (_value.patternUriElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternUriElement!, (value) {
-      return _then(_value.copyWith(patternUriElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternUrlElement {
-    if (_value.patternUrlElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternUrlElement!, (value) {
-      return _then(_value.copyWith(patternUrlElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get patternUuidElement {
-    if (_value.patternUuidElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.patternUuidElement!, (value) {
-      return _then(_value.copyWith(patternUuidElement: value) as $Val);
     });
   }
 
@@ -11400,114 +10218,6 @@ class _$ElementDefinitionCopyWithImpl<$Res, $Val extends ElementDefinition>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get minValueDateElement {
-    if (_value.minValueDateElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.minValueDateElement!, (value) {
-      return _then(_value.copyWith(minValueDateElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get minValueDateTimeElement {
-    if (_value.minValueDateTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.minValueDateTimeElement!, (value) {
-      return _then(_value.copyWith(minValueDateTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get minValueInstantElement {
-    if (_value.minValueInstantElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.minValueInstantElement!, (value) {
-      return _then(_value.copyWith(minValueInstantElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get minValueTimeElement {
-    if (_value.minValueTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.minValueTimeElement!, (value) {
-      return _then(_value.copyWith(minValueTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get minValueDecimalElement {
-    if (_value.minValueDecimalElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.minValueDecimalElement!, (value) {
-      return _then(_value.copyWith(minValueDecimalElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get minValueIntegerElement {
-    if (_value.minValueIntegerElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.minValueIntegerElement!, (value) {
-      return _then(_value.copyWith(minValueIntegerElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get minValueInteger64Element {
-    if (_value.minValueInteger64Element == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.minValueInteger64Element!, (value) {
-      return _then(_value.copyWith(minValueInteger64Element: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get minValuePositiveIntElement {
-    if (_value.minValuePositiveIntElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.minValuePositiveIntElement!, (value) {
-      return _then(_value.copyWith(minValuePositiveIntElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get minValueUnsignedIntElement {
-    if (_value.minValueUnsignedIntElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.minValueUnsignedIntElement!, (value) {
-      return _then(_value.copyWith(minValueUnsignedIntElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $QuantityCopyWith<$Res>? get minValueQuantity {
     if (_value.minValueQuantity == null) {
       return null;
@@ -11520,114 +10230,6 @@ class _$ElementDefinitionCopyWithImpl<$Res, $Val extends ElementDefinition>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get maxValueDateElement {
-    if (_value.maxValueDateElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.maxValueDateElement!, (value) {
-      return _then(_value.copyWith(maxValueDateElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get maxValueDateTimeElement {
-    if (_value.maxValueDateTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.maxValueDateTimeElement!, (value) {
-      return _then(_value.copyWith(maxValueDateTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get maxValueInstantElement {
-    if (_value.maxValueInstantElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.maxValueInstantElement!, (value) {
-      return _then(_value.copyWith(maxValueInstantElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get maxValueTimeElement {
-    if (_value.maxValueTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.maxValueTimeElement!, (value) {
-      return _then(_value.copyWith(maxValueTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get maxValueDecimalElement {
-    if (_value.maxValueDecimalElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.maxValueDecimalElement!, (value) {
-      return _then(_value.copyWith(maxValueDecimalElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get maxValueIntegerElement {
-    if (_value.maxValueIntegerElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.maxValueIntegerElement!, (value) {
-      return _then(_value.copyWith(maxValueIntegerElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get maxValueInteger64Element {
-    if (_value.maxValueInteger64Element == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.maxValueInteger64Element!, (value) {
-      return _then(_value.copyWith(maxValueInteger64Element: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get maxValuePositiveIntElement {
-    if (_value.maxValuePositiveIntElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.maxValuePositiveIntElement!, (value) {
-      return _then(_value.copyWith(maxValuePositiveIntElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get maxValueUnsignedIntElement {
-    if (_value.maxValueUnsignedIntElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.maxValueUnsignedIntElement!, (value) {
-      return _then(_value.copyWith(maxValueUnsignedIntElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $QuantityCopyWith<$Res>? get maxValueQuantity {
     if (_value.maxValueQuantity == null) {
       return null;
@@ -11635,78 +10237,6 @@ class _$ElementDefinitionCopyWithImpl<$Res, $Val extends ElementDefinition>
 
     return $QuantityCopyWith<$Res>(_value.maxValueQuantity!, (value) {
       return _then(_value.copyWith(maxValueQuantity: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get maxLengthElement {
-    if (_value.maxLengthElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.maxLengthElement!, (value) {
-      return _then(_value.copyWith(maxLengthElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get mustHaveValueElement {
-    if (_value.mustHaveValueElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.mustHaveValueElement!, (value) {
-      return _then(_value.copyWith(mustHaveValueElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get mustSupportElement {
-    if (_value.mustSupportElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.mustSupportElement!, (value) {
-      return _then(_value.copyWith(mustSupportElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get isModifierElement {
-    if (_value.isModifierElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.isModifierElement!, (value) {
-      return _then(_value.copyWith(isModifierElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get isModifierReasonElement {
-    if (_value.isModifierReasonElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.isModifierReasonElement!, (value) {
-      return _then(_value.copyWith(isModifierReasonElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get isSummaryElement {
-    if (_value.isSummaryElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.isSummaryElement!, (value) {
-      return _then(_value.copyWith(isSummaryElement: value) as $Val);
     });
   }
 
@@ -12067,71 +10597,9 @@ abstract class _$$ElementDefinitionImplCopyWith<$Res>
       List<ElementDefinitionMapping>? mapping});
 
   @override
-  $ElementCopyWith<$Res>? get pathElement;
-  @override
-  $ElementCopyWith<$Res>? get sliceNameElement;
-  @override
-  $ElementCopyWith<$Res>? get sliceIsConstrainingElement;
-  @override
-  $ElementCopyWith<$Res>? get labelElement;
-  @override
   $ElementDefinitionSlicingCopyWith<$Res>? get slicing;
   @override
-  $ElementCopyWith<$Res>? get shortElement;
-  @override
-  $ElementCopyWith<$Res>? get definitionElement;
-  @override
-  $ElementCopyWith<$Res>? get commentElement;
-  @override
-  $ElementCopyWith<$Res>? get requirementsElement;
-  @override
-  $ElementCopyWith<$Res>? get minElement;
-  @override
-  $ElementCopyWith<$Res>? get maxElement;
-  @override
   $ElementDefinitionBaseCopyWith<$Res>? get base;
-  @override
-  $ElementCopyWith<$Res>? get contentReferenceElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueBase64BinaryElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueBooleanElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueCanonicalElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueCodeElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueDateElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueDateTimeElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueDecimalElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueIdElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueInstantElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueIntegerElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueInteger64Element;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueMarkdownElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueOidElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValuePositiveIntElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueStringElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueTimeElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueUnsignedIntElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueUriElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueUrlElement;
-  @override
-  $ElementCopyWith<$Res>? get defaultValueUuidElement;
   @override
   $AddressCopyWith<$Res>? get defaultValueAddress;
   @override
@@ -12201,50 +10669,6 @@ abstract class _$$ElementDefinitionImplCopyWith<$Res>
   @override
   $FhirMetaCopyWith<$Res>? get defaultValueMeta;
   @override
-  $ElementCopyWith<$Res>? get meaningWhenMissingElement;
-  @override
-  $ElementCopyWith<$Res>? get orderMeaningElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedBase64BinaryElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedBooleanElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedCanonicalElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedCodeElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedDateElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedDateTimeElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedDecimalElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedIdElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedInstantElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedIntegerElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedInteger64Element;
-  @override
-  $ElementCopyWith<$Res>? get fixedMarkdownElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedOidElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedPositiveIntElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedStringElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedTimeElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedUnsignedIntElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedUriElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedUrlElement;
-  @override
-  $ElementCopyWith<$Res>? get fixedUuidElement;
-  @override
   $AddressCopyWith<$Res>? get fixedAddress;
   @override
   $AgeCopyWith<$Res>? get fixedAge;
@@ -12312,46 +10736,6 @@ abstract class _$$ElementDefinitionImplCopyWith<$Res>
   $DosageCopyWith<$Res>? get fixedDosage;
   @override
   $FhirMetaCopyWith<$Res>? get fixedMeta;
-  @override
-  $ElementCopyWith<$Res>? get patternBase64BinaryElement;
-  @override
-  $ElementCopyWith<$Res>? get patternBooleanElement;
-  @override
-  $ElementCopyWith<$Res>? get patternCanonicalElement;
-  @override
-  $ElementCopyWith<$Res>? get patternCodeElement;
-  @override
-  $ElementCopyWith<$Res>? get patternDateElement;
-  @override
-  $ElementCopyWith<$Res>? get patternDateTimeElement;
-  @override
-  $ElementCopyWith<$Res>? get patternDecimalElement;
-  @override
-  $ElementCopyWith<$Res>? get patternIdElement;
-  @override
-  $ElementCopyWith<$Res>? get patternInstantElement;
-  @override
-  $ElementCopyWith<$Res>? get patternIntegerElement;
-  @override
-  $ElementCopyWith<$Res>? get patternInteger64Element;
-  @override
-  $ElementCopyWith<$Res>? get patternMarkdownElement;
-  @override
-  $ElementCopyWith<$Res>? get patternOidElement;
-  @override
-  $ElementCopyWith<$Res>? get patternPositiveIntElement;
-  @override
-  $ElementCopyWith<$Res>? get patternStringElement;
-  @override
-  $ElementCopyWith<$Res>? get patternTimeElement;
-  @override
-  $ElementCopyWith<$Res>? get patternUnsignedIntElement;
-  @override
-  $ElementCopyWith<$Res>? get patternUriElement;
-  @override
-  $ElementCopyWith<$Res>? get patternUrlElement;
-  @override
-  $ElementCopyWith<$Res>? get patternUuidElement;
   @override
   $AddressCopyWith<$Res>? get patternAddress;
   @override
@@ -12421,57 +10805,9 @@ abstract class _$$ElementDefinitionImplCopyWith<$Res>
   @override
   $FhirMetaCopyWith<$Res>? get patternMeta;
   @override
-  $ElementCopyWith<$Res>? get minValueDateElement;
-  @override
-  $ElementCopyWith<$Res>? get minValueDateTimeElement;
-  @override
-  $ElementCopyWith<$Res>? get minValueInstantElement;
-  @override
-  $ElementCopyWith<$Res>? get minValueTimeElement;
-  @override
-  $ElementCopyWith<$Res>? get minValueDecimalElement;
-  @override
-  $ElementCopyWith<$Res>? get minValueIntegerElement;
-  @override
-  $ElementCopyWith<$Res>? get minValueInteger64Element;
-  @override
-  $ElementCopyWith<$Res>? get minValuePositiveIntElement;
-  @override
-  $ElementCopyWith<$Res>? get minValueUnsignedIntElement;
-  @override
   $QuantityCopyWith<$Res>? get minValueQuantity;
   @override
-  $ElementCopyWith<$Res>? get maxValueDateElement;
-  @override
-  $ElementCopyWith<$Res>? get maxValueDateTimeElement;
-  @override
-  $ElementCopyWith<$Res>? get maxValueInstantElement;
-  @override
-  $ElementCopyWith<$Res>? get maxValueTimeElement;
-  @override
-  $ElementCopyWith<$Res>? get maxValueDecimalElement;
-  @override
-  $ElementCopyWith<$Res>? get maxValueIntegerElement;
-  @override
-  $ElementCopyWith<$Res>? get maxValueInteger64Element;
-  @override
-  $ElementCopyWith<$Res>? get maxValuePositiveIntElement;
-  @override
-  $ElementCopyWith<$Res>? get maxValueUnsignedIntElement;
-  @override
   $QuantityCopyWith<$Res>? get maxValueQuantity;
-  @override
-  $ElementCopyWith<$Res>? get maxLengthElement;
-  @override
-  $ElementCopyWith<$Res>? get mustHaveValueElement;
-  @override
-  $ElementCopyWith<$Res>? get mustSupportElement;
-  @override
-  $ElementCopyWith<$Res>? get isModifierElement;
-  @override
-  $ElementCopyWith<$Res>? get isModifierReasonElement;
-  @override
-  $ElementCopyWith<$Res>? get isSummaryElement;
   @override
   $ElementDefinitionBindingCopyWith<$Res>? get binding;
 }
@@ -22157,10 +20493,6 @@ abstract class $ElementDefinitionSlicingCopyWith<$Res> {
       @JsonKey(name: '_ordered') Element? orderedElement,
       ElementDefinitionSlicingRules? rules,
       @JsonKey(name: '_rules') Element? rulesElement});
-
-  $ElementCopyWith<$Res>? get descriptionElement;
-  $ElementCopyWith<$Res>? get orderedElement;
-  $ElementCopyWith<$Res>? get rulesElement;
 }
 
 /// @nodoc
@@ -22231,42 +20563,6 @@ class _$ElementDefinitionSlicingCopyWithImpl<$Res,
               as Element?,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get descriptionElement {
-    if (_value.descriptionElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.descriptionElement!, (value) {
-      return _then(_value.copyWith(descriptionElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get orderedElement {
-    if (_value.orderedElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.orderedElement!, (value) {
-      return _then(_value.copyWith(orderedElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get rulesElement {
-    if (_value.rulesElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.rulesElement!, (value) {
-      return _then(_value.copyWith(rulesElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -22289,13 +20585,6 @@ abstract class _$$ElementDefinitionSlicingImplCopyWith<$Res>
       @JsonKey(name: '_ordered') Element? orderedElement,
       ElementDefinitionSlicingRules? rules,
       @JsonKey(name: '_rules') Element? rulesElement});
-
-  @override
-  $ElementCopyWith<$Res>? get descriptionElement;
-  @override
-  $ElementCopyWith<$Res>? get orderedElement;
-  @override
-  $ElementCopyWith<$Res>? get rulesElement;
 }
 
 /// @nodoc
@@ -22748,9 +21037,6 @@ abstract class $ElementDefinitionDiscriminatorCopyWith<$Res> {
       @JsonKey(name: '_type') Element? typeElement,
       String? path,
       @JsonKey(name: '_path') Element? pathElement});
-
-  $ElementCopyWith<$Res>? get typeElement;
-  $ElementCopyWith<$Res>? get pathElement;
 }
 
 /// @nodoc
@@ -22806,30 +21092,6 @@ class _$ElementDefinitionDiscriminatorCopyWithImpl<$Res,
               as Element?,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get typeElement {
-    if (_value.typeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.typeElement!, (value) {
-      return _then(_value.copyWith(typeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get pathElement {
-    if (_value.pathElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.pathElement!, (value) {
-      return _then(_value.copyWith(pathElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -22849,11 +21111,6 @@ abstract class _$$ElementDefinitionDiscriminatorImplCopyWith<$Res>
       @JsonKey(name: '_type') Element? typeElement,
       String? path,
       @JsonKey(name: '_path') Element? pathElement});
-
-  @override
-  $ElementCopyWith<$Res>? get typeElement;
-  @override
-  $ElementCopyWith<$Res>? get pathElement;
 }
 
 /// @nodoc
@@ -23230,10 +21487,6 @@ abstract class $ElementDefinitionBaseCopyWith<$Res> {
       @JsonKey(name: '_min') Element? minElement,
       String? max,
       @JsonKey(name: '_max') Element? maxElement});
-
-  $ElementCopyWith<$Res>? get pathElement;
-  $ElementCopyWith<$Res>? get minElement;
-  $ElementCopyWith<$Res>? get maxElement;
 }
 
 /// @nodoc
@@ -23299,42 +21552,6 @@ class _$ElementDefinitionBaseCopyWithImpl<$Res,
               as Element?,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get pathElement {
-    if (_value.pathElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.pathElement!, (value) {
-      return _then(_value.copyWith(pathElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get minElement {
-    if (_value.minElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.minElement!, (value) {
-      return _then(_value.copyWith(minElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get maxElement {
-    if (_value.maxElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.maxElement!, (value) {
-      return _then(_value.copyWith(maxElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -23356,13 +21573,6 @@ abstract class _$$ElementDefinitionBaseImplCopyWith<$Res>
       @JsonKey(name: '_min') Element? minElement,
       String? max,
       @JsonKey(name: '_max') Element? maxElement});
-
-  @override
-  $ElementCopyWith<$Res>? get pathElement;
-  @override
-  $ElementCopyWith<$Res>? get minElement;
-  @override
-  $ElementCopyWith<$Res>? get maxElement;
 }
 
 /// @nodoc
@@ -23803,9 +22013,6 @@ abstract class $ElementDefinitionTypeCopyWith<$Res> {
       @JsonKey(name: '_aggregation') List<Element>? aggregationElement,
       ElementDefinitionTypeVersioning? versioning,
       @JsonKey(name: '_versioning') Element? versioningElement});
-
-  $ElementCopyWith<$Res>? get codeElement;
-  $ElementCopyWith<$Res>? get versioningElement;
 }
 
 /// @nodoc
@@ -23886,30 +22093,6 @@ class _$ElementDefinitionTypeCopyWithImpl<$Res,
               as Element?,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get codeElement {
-    if (_value.codeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.codeElement!, (value) {
-      return _then(_value.copyWith(codeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get versioningElement {
-    if (_value.versioningElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.versioningElement!, (value) {
-      return _then(_value.copyWith(versioningElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -23934,11 +22117,6 @@ abstract class _$$ElementDefinitionTypeImplCopyWith<$Res>
       @JsonKey(name: '_aggregation') List<Element>? aggregationElement,
       ElementDefinitionTypeVersioning? versioning,
       @JsonKey(name: '_versioning') Element? versioningElement});
-
-  @override
-  $ElementCopyWith<$Res>? get codeElement;
-  @override
-  $ElementCopyWith<$Res>? get versioningElement;
 }
 
 /// @nodoc
@@ -24856,27 +23034,6 @@ abstract class $ElementDefinitionExampleCopyWith<$Res> {
       Dosage? valueDosage,
       FhirMeta? valueMeta});
 
-  $ElementCopyWith<$Res>? get labelElement;
-  $ElementCopyWith<$Res>? get valueBase64BinaryElement;
-  $ElementCopyWith<$Res>? get valueBooleanElement;
-  $ElementCopyWith<$Res>? get valueCanonicalElement;
-  $ElementCopyWith<$Res>? get valueCodeElement;
-  $ElementCopyWith<$Res>? get valueDateElement;
-  $ElementCopyWith<$Res>? get valueDateTimeElement;
-  $ElementCopyWith<$Res>? get valueDecimalElement;
-  $ElementCopyWith<$Res>? get valueIdElement;
-  $ElementCopyWith<$Res>? get valueInstantElement;
-  $ElementCopyWith<$Res>? get valueIntegerElement;
-  $ElementCopyWith<$Res>? get valueInteger64Element;
-  $ElementCopyWith<$Res>? get valueMarkdownElement;
-  $ElementCopyWith<$Res>? get valueOidElement;
-  $ElementCopyWith<$Res>? get valuePositiveIntElement;
-  $ElementCopyWith<$Res>? get valueStringElement;
-  $ElementCopyWith<$Res>? get valueTimeElement;
-  $ElementCopyWith<$Res>? get valueUnsignedIntElement;
-  $ElementCopyWith<$Res>? get valueUriElement;
-  $ElementCopyWith<$Res>? get valueUrlElement;
-  $ElementCopyWith<$Res>? get valueUuidElement;
   $AddressCopyWith<$Res>? get valueAddress;
   $AgeCopyWith<$Res>? get valueAge;
   $AnnotationCopyWith<$Res>? get valueAnnotation;
@@ -25325,258 +23482,6 @@ class _$ElementDefinitionExampleCopyWithImpl<$Res,
           : valueMeta // ignore: cast_nullable_to_non_nullable
               as FhirMeta?,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get labelElement {
-    if (_value.labelElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.labelElement!, (value) {
-      return _then(_value.copyWith(labelElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueBase64BinaryElement {
-    if (_value.valueBase64BinaryElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueBase64BinaryElement!, (value) {
-      return _then(_value.copyWith(valueBase64BinaryElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueBooleanElement {
-    if (_value.valueBooleanElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueBooleanElement!, (value) {
-      return _then(_value.copyWith(valueBooleanElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueCanonicalElement {
-    if (_value.valueCanonicalElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueCanonicalElement!, (value) {
-      return _then(_value.copyWith(valueCanonicalElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueCodeElement {
-    if (_value.valueCodeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueCodeElement!, (value) {
-      return _then(_value.copyWith(valueCodeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueDateElement {
-    if (_value.valueDateElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueDateElement!, (value) {
-      return _then(_value.copyWith(valueDateElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueDateTimeElement {
-    if (_value.valueDateTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueDateTimeElement!, (value) {
-      return _then(_value.copyWith(valueDateTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueDecimalElement {
-    if (_value.valueDecimalElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueDecimalElement!, (value) {
-      return _then(_value.copyWith(valueDecimalElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueIdElement {
-    if (_value.valueIdElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueIdElement!, (value) {
-      return _then(_value.copyWith(valueIdElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueInstantElement {
-    if (_value.valueInstantElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueInstantElement!, (value) {
-      return _then(_value.copyWith(valueInstantElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueIntegerElement {
-    if (_value.valueIntegerElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueIntegerElement!, (value) {
-      return _then(_value.copyWith(valueIntegerElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueInteger64Element {
-    if (_value.valueInteger64Element == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueInteger64Element!, (value) {
-      return _then(_value.copyWith(valueInteger64Element: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueMarkdownElement {
-    if (_value.valueMarkdownElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueMarkdownElement!, (value) {
-      return _then(_value.copyWith(valueMarkdownElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueOidElement {
-    if (_value.valueOidElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueOidElement!, (value) {
-      return _then(_value.copyWith(valueOidElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valuePositiveIntElement {
-    if (_value.valuePositiveIntElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valuePositiveIntElement!, (value) {
-      return _then(_value.copyWith(valuePositiveIntElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueStringElement {
-    if (_value.valueStringElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueStringElement!, (value) {
-      return _then(_value.copyWith(valueStringElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueTimeElement {
-    if (_value.valueTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueTimeElement!, (value) {
-      return _then(_value.copyWith(valueTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueUnsignedIntElement {
-    if (_value.valueUnsignedIntElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueUnsignedIntElement!, (value) {
-      return _then(_value.copyWith(valueUnsignedIntElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueUriElement {
-    if (_value.valueUriElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueUriElement!, (value) {
-      return _then(_value.copyWith(valueUriElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueUrlElement {
-    if (_value.valueUrlElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueUrlElement!, (value) {
-      return _then(_value.copyWith(valueUrlElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueUuidElement {
-    if (_value.valueUuidElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueUuidElement!, (value) {
-      return _then(_value.copyWith(valueUuidElement: value) as $Val);
-    });
   }
 
   @override
@@ -26085,48 +23990,6 @@ abstract class _$$ElementDefinitionExampleImplCopyWith<$Res>
       Dosage? valueDosage,
       FhirMeta? valueMeta});
 
-  @override
-  $ElementCopyWith<$Res>? get labelElement;
-  @override
-  $ElementCopyWith<$Res>? get valueBase64BinaryElement;
-  @override
-  $ElementCopyWith<$Res>? get valueBooleanElement;
-  @override
-  $ElementCopyWith<$Res>? get valueCanonicalElement;
-  @override
-  $ElementCopyWith<$Res>? get valueCodeElement;
-  @override
-  $ElementCopyWith<$Res>? get valueDateElement;
-  @override
-  $ElementCopyWith<$Res>? get valueDateTimeElement;
-  @override
-  $ElementCopyWith<$Res>? get valueDecimalElement;
-  @override
-  $ElementCopyWith<$Res>? get valueIdElement;
-  @override
-  $ElementCopyWith<$Res>? get valueInstantElement;
-  @override
-  $ElementCopyWith<$Res>? get valueIntegerElement;
-  @override
-  $ElementCopyWith<$Res>? get valueInteger64Element;
-  @override
-  $ElementCopyWith<$Res>? get valueMarkdownElement;
-  @override
-  $ElementCopyWith<$Res>? get valueOidElement;
-  @override
-  $ElementCopyWith<$Res>? get valuePositiveIntElement;
-  @override
-  $ElementCopyWith<$Res>? get valueStringElement;
-  @override
-  $ElementCopyWith<$Res>? get valueTimeElement;
-  @override
-  $ElementCopyWith<$Res>? get valueUnsignedIntElement;
-  @override
-  $ElementCopyWith<$Res>? get valueUriElement;
-  @override
-  $ElementCopyWith<$Res>? get valueUrlElement;
-  @override
-  $ElementCopyWith<$Res>? get valueUuidElement;
   @override
   $AddressCopyWith<$Res>? get valueAddress;
   @override
@@ -28011,13 +25874,6 @@ abstract class $ElementDefinitionConstraintCopyWith<$Res> {
       String? expression,
       @JsonKey(name: '_expression') Element? expressionElement,
       FhirCanonical? source});
-
-  $ElementCopyWith<$Res>? get keyElement;
-  $ElementCopyWith<$Res>? get requirementsElement;
-  $ElementCopyWith<$Res>? get severityElement;
-  $ElementCopyWith<$Res>? get suppressElement;
-  $ElementCopyWith<$Res>? get humanElement;
-  $ElementCopyWith<$Res>? get expressionElement;
 }
 
 /// @nodoc
@@ -28118,78 +25974,6 @@ class _$ElementDefinitionConstraintCopyWithImpl<$Res,
               as FhirCanonical?,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get keyElement {
-    if (_value.keyElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.keyElement!, (value) {
-      return _then(_value.copyWith(keyElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get requirementsElement {
-    if (_value.requirementsElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.requirementsElement!, (value) {
-      return _then(_value.copyWith(requirementsElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get severityElement {
-    if (_value.severityElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.severityElement!, (value) {
-      return _then(_value.copyWith(severityElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get suppressElement {
-    if (_value.suppressElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.suppressElement!, (value) {
-      return _then(_value.copyWith(suppressElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get humanElement {
-    if (_value.humanElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.humanElement!, (value) {
-      return _then(_value.copyWith(humanElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get expressionElement {
-    if (_value.expressionElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.expressionElement!, (value) {
-      return _then(_value.copyWith(expressionElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -28218,19 +26002,6 @@ abstract class _$$ElementDefinitionConstraintImplCopyWith<$Res>
       String? expression,
       @JsonKey(name: '_expression') Element? expressionElement,
       FhirCanonical? source});
-
-  @override
-  $ElementCopyWith<$Res>? get keyElement;
-  @override
-  $ElementCopyWith<$Res>? get requirementsElement;
-  @override
-  $ElementCopyWith<$Res>? get severityElement;
-  @override
-  $ElementCopyWith<$Res>? get suppressElement;
-  @override
-  $ElementCopyWith<$Res>? get humanElement;
-  @override
-  $ElementCopyWith<$Res>? get expressionElement;
 }
 
 /// @nodoc
@@ -28786,9 +26557,6 @@ abstract class $ElementDefinitionBindingCopyWith<$Res> {
       @JsonKey(name: '_description') Element? descriptionElement,
       FhirCanonical? valueSet,
       List<ElementDefinitionAdditional>? additional});
-
-  $ElementCopyWith<$Res>? get strengthElement;
-  $ElementCopyWith<$Res>? get descriptionElement;
 }
 
 /// @nodoc
@@ -28854,30 +26622,6 @@ class _$ElementDefinitionBindingCopyWithImpl<$Res,
               as List<ElementDefinitionAdditional>?,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get strengthElement {
-    if (_value.strengthElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.strengthElement!, (value) {
-      return _then(_value.copyWith(strengthElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get descriptionElement {
-    if (_value.descriptionElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.descriptionElement!, (value) {
-      return _then(_value.copyWith(descriptionElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -28899,11 +26643,6 @@ abstract class _$$ElementDefinitionBindingImplCopyWith<$Res>
       @JsonKey(name: '_description') Element? descriptionElement,
       FhirCanonical? valueSet,
       List<ElementDefinitionAdditional>? additional});
-
-  @override
-  $ElementCopyWith<$Res>? get strengthElement;
-  @override
-  $ElementCopyWith<$Res>? get descriptionElement;
 }
 
 /// @nodoc
@@ -29355,11 +27094,6 @@ abstract class $ElementDefinitionAdditionalCopyWith<$Res> {
       List<UsageContext>? usage,
       FhirBoolean? any,
       @JsonKey(name: '_any') Element? anyElement});
-
-  $ElementCopyWith<$Res>? get purposeElement;
-  $ElementCopyWith<$Res>? get documentationElement;
-  $ElementCopyWith<$Res>? get shortDocoElement;
-  $ElementCopyWith<$Res>? get anyElement;
 }
 
 /// @nodoc
@@ -29445,54 +27179,6 @@ class _$ElementDefinitionAdditionalCopyWithImpl<$Res,
               as Element?,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get purposeElement {
-    if (_value.purposeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.purposeElement!, (value) {
-      return _then(_value.copyWith(purposeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get documentationElement {
-    if (_value.documentationElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.documentationElement!, (value) {
-      return _then(_value.copyWith(documentationElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get shortDocoElement {
-    if (_value.shortDocoElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.shortDocoElement!, (value) {
-      return _then(_value.copyWith(shortDocoElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get anyElement {
-    if (_value.anyElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.anyElement!, (value) {
-      return _then(_value.copyWith(anyElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -29518,15 +27204,6 @@ abstract class _$$ElementDefinitionAdditionalImplCopyWith<$Res>
       List<UsageContext>? usage,
       FhirBoolean? any,
       @JsonKey(name: '_any') Element? anyElement});
-
-  @override
-  $ElementCopyWith<$Res>? get purposeElement;
-  @override
-  $ElementCopyWith<$Res>? get documentationElement;
-  @override
-  $ElementCopyWith<$Res>? get shortDocoElement;
-  @override
-  $ElementCopyWith<$Res>? get anyElement;
 }
 
 /// @nodoc
@@ -30045,11 +27722,6 @@ abstract class $ElementDefinitionMappingCopyWith<$Res> {
       @JsonKey(name: '_map') Element? mapElement,
       FhirMarkdown? comment,
       @JsonKey(name: '_comment') Element? commentElement});
-
-  $ElementCopyWith<$Res>? get identityElement;
-  $ElementCopyWith<$Res>? get languageElement;
-  $ElementCopyWith<$Res>? get mapElement;
-  $ElementCopyWith<$Res>? get commentElement;
 }
 
 /// @nodoc
@@ -30125,54 +27797,6 @@ class _$ElementDefinitionMappingCopyWithImpl<$Res,
               as Element?,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get identityElement {
-    if (_value.identityElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.identityElement!, (value) {
-      return _then(_value.copyWith(identityElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get languageElement {
-    if (_value.languageElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.languageElement!, (value) {
-      return _then(_value.copyWith(languageElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get mapElement {
-    if (_value.mapElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.mapElement!, (value) {
-      return _then(_value.copyWith(mapElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get commentElement {
-    if (_value.commentElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.commentElement!, (value) {
-      return _then(_value.copyWith(commentElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -30196,15 +27820,6 @@ abstract class _$$ElementDefinitionMappingImplCopyWith<$Res>
       @JsonKey(name: '_map') Element? mapElement,
       FhirMarkdown? comment,
       @JsonKey(name: '_comment') Element? commentElement});
-
-  @override
-  $ElementCopyWith<$Res>? get identityElement;
-  @override
-  $ElementCopyWith<$Res>? get languageElement;
-  @override
-  $ElementCopyWith<$Res>? get mapElement;
-  @override
-  $ElementCopyWith<$Res>? get commentElement;
 }
 
 /// @nodoc

@@ -257,22 +257,14 @@ abstract class $CoverageCopyWith<$Res> {
       Reference? insurancePlan});
 
   $FhirMetaCopyWith<$Res>? get meta;
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  $ElementCopyWith<$Res>? get languageElement;
   $NarrativeCopyWith<$Res>? get text;
-  $ElementCopyWith<$Res>? get statusElement;
-  $ElementCopyWith<$Res>? get kindElement;
   $CodeableConceptCopyWith<$Res>? get type;
   $ReferenceCopyWith<$Res>? get policyHolder;
   $ReferenceCopyWith<$Res>? get subscriber;
   $ReferenceCopyWith<$Res> get beneficiary;
-  $ElementCopyWith<$Res>? get dependentElement;
   $CodeableConceptCopyWith<$Res>? get relationship;
   $PeriodCopyWith<$Res>? get period;
   $ReferenceCopyWith<$Res>? get insurer;
-  $ElementCopyWith<$Res>? get orderElement;
-  $ElementCopyWith<$Res>? get networkElement;
-  $ElementCopyWith<$Res>? get subrogationElement;
   $ReferenceCopyWith<$Res>? get insurancePlan;
 }
 
@@ -493,30 +485,6 @@ class _$CoverageCopyWithImpl<$Res, $Val extends Coverage>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get implicitRulesElement {
-    if (_value.implicitRulesElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.implicitRulesElement!, (value) {
-      return _then(_value.copyWith(implicitRulesElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get languageElement {
-    if (_value.languageElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.languageElement!, (value) {
-      return _then(_value.copyWith(languageElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $NarrativeCopyWith<$Res>? get text {
     if (_value.text == null) {
       return null;
@@ -524,30 +492,6 @@ class _$CoverageCopyWithImpl<$Res, $Val extends Coverage>
 
     return $NarrativeCopyWith<$Res>(_value.text!, (value) {
       return _then(_value.copyWith(text: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get statusElement {
-    if (_value.statusElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.statusElement!, (value) {
-      return _then(_value.copyWith(statusElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get kindElement {
-    if (_value.kindElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.kindElement!, (value) {
-      return _then(_value.copyWith(kindElement: value) as $Val);
     });
   }
 
@@ -597,18 +541,6 @@ class _$CoverageCopyWithImpl<$Res, $Val extends Coverage>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get dependentElement {
-    if (_value.dependentElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.dependentElement!, (value) {
-      return _then(_value.copyWith(dependentElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $CodeableConceptCopyWith<$Res>? get relationship {
     if (_value.relationship == null) {
       return null;
@@ -640,42 +572,6 @@ class _$CoverageCopyWithImpl<$Res, $Val extends Coverage>
 
     return $ReferenceCopyWith<$Res>(_value.insurer!, (value) {
       return _then(_value.copyWith(insurer: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get orderElement {
-    if (_value.orderElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.orderElement!, (value) {
-      return _then(_value.copyWith(orderElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get networkElement {
-    if (_value.networkElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.networkElement!, (value) {
-      return _then(_value.copyWith(networkElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get subrogationElement {
-    if (_value.subrogationElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.subrogationElement!, (value) {
-      return _then(_value.copyWith(subrogationElement: value) as $Val);
     });
   }
 
@@ -743,15 +639,7 @@ abstract class _$$CoverageImplCopyWith<$Res>
   @override
   $FhirMetaCopyWith<$Res>? get meta;
   @override
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  @override
-  $ElementCopyWith<$Res>? get languageElement;
-  @override
   $NarrativeCopyWith<$Res>? get text;
-  @override
-  $ElementCopyWith<$Res>? get statusElement;
-  @override
-  $ElementCopyWith<$Res>? get kindElement;
   @override
   $CodeableConceptCopyWith<$Res>? get type;
   @override
@@ -761,19 +649,11 @@ abstract class _$$CoverageImplCopyWith<$Res>
   @override
   $ReferenceCopyWith<$Res> get beneficiary;
   @override
-  $ElementCopyWith<$Res>? get dependentElement;
-  @override
   $CodeableConceptCopyWith<$Res>? get relationship;
   @override
   $PeriodCopyWith<$Res>? get period;
   @override
   $ReferenceCopyWith<$Res>? get insurer;
-  @override
-  $ElementCopyWith<$Res>? get orderElement;
-  @override
-  $ElementCopyWith<$Res>? get networkElement;
-  @override
-  $ElementCopyWith<$Res>? get subrogationElement;
   @override
   $ReferenceCopyWith<$Res>? get insurancePlan;
 }
@@ -1835,7 +1715,6 @@ abstract class $CoveragePaymentByCopyWith<$Res> {
       @JsonKey(name: '_responsibility') Element? responsibilityElement});
 
   $ReferenceCopyWith<$Res> get party;
-  $ElementCopyWith<$Res>? get responsibilityElement;
 }
 
 /// @nodoc
@@ -1893,18 +1772,6 @@ class _$CoveragePaymentByCopyWithImpl<$Res, $Val extends CoveragePaymentBy>
       return _then(_value.copyWith(party: value) as $Val);
     });
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get responsibilityElement {
-    if (_value.responsibilityElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.responsibilityElement!, (value) {
-      return _then(_value.copyWith(responsibilityElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -1925,8 +1792,6 @@ abstract class _$$CoveragePaymentByImplCopyWith<$Res>
 
   @override
   $ReferenceCopyWith<$Res> get party;
-  @override
-  $ElementCopyWith<$Res>? get responsibilityElement;
 }
 
 /// @nodoc
@@ -2268,7 +2133,6 @@ abstract class $CoverageClassCopyWith<$Res> {
 
   $CodeableConceptCopyWith<$Res> get type;
   $IdentifierCopyWith<$Res> get value;
-  $ElementCopyWith<$Res>? get nameElement;
 }
 
 /// @nodoc
@@ -2339,18 +2203,6 @@ class _$CoverageClassCopyWithImpl<$Res, $Val extends CoverageClass>
       return _then(_value.copyWith(value: value) as $Val);
     });
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get nameElement {
-    if (_value.nameElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.nameElement!, (value) {
-      return _then(_value.copyWith(nameElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -2374,8 +2226,6 @@ abstract class _$$CoverageClassImplCopyWith<$Res>
   $CodeableConceptCopyWith<$Res> get type;
   @override
   $IdentifierCopyWith<$Res> get value;
-  @override
-  $ElementCopyWith<$Res>? get nameElement;
 }
 
 /// @nodoc
@@ -3924,15 +3774,10 @@ abstract class $CoverageEligibilityRequestCopyWith<$Res> {
       List<CoverageEligibilityRequestItem>? item});
 
   $FhirMetaCopyWith<$Res>? get meta;
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  $ElementCopyWith<$Res>? get languageElement;
   $NarrativeCopyWith<$Res>? get text;
-  $ElementCopyWith<$Res>? get statusElement;
   $CodeableConceptCopyWith<$Res>? get priority;
   $ReferenceCopyWith<$Res> get patient;
-  $ElementCopyWith<$Res>? get servicedDateElement;
   $PeriodCopyWith<$Res>? get servicedPeriod;
-  $ElementCopyWith<$Res>? get createdElement;
   $ReferenceCopyWith<$Res>? get enterer;
   $ReferenceCopyWith<$Res>? get provider;
   $ReferenceCopyWith<$Res> get insurer;
@@ -4127,30 +3972,6 @@ class _$CoverageEligibilityRequestCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get implicitRulesElement {
-    if (_value.implicitRulesElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.implicitRulesElement!, (value) {
-      return _then(_value.copyWith(implicitRulesElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get languageElement {
-    if (_value.languageElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.languageElement!, (value) {
-      return _then(_value.copyWith(languageElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $NarrativeCopyWith<$Res>? get text {
     if (_value.text == null) {
       return null;
@@ -4158,18 +3979,6 @@ class _$CoverageEligibilityRequestCopyWithImpl<$Res,
 
     return $NarrativeCopyWith<$Res>(_value.text!, (value) {
       return _then(_value.copyWith(text: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get statusElement {
-    if (_value.statusElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.statusElement!, (value) {
-      return _then(_value.copyWith(statusElement: value) as $Val);
     });
   }
 
@@ -4195,18 +4004,6 @@ class _$CoverageEligibilityRequestCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get servicedDateElement {
-    if (_value.servicedDateElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.servicedDateElement!, (value) {
-      return _then(_value.copyWith(servicedDateElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $PeriodCopyWith<$Res>? get servicedPeriod {
     if (_value.servicedPeriod == null) {
       return null;
@@ -4214,18 +4011,6 @@ class _$CoverageEligibilityRequestCopyWithImpl<$Res,
 
     return $PeriodCopyWith<$Res>(_value.servicedPeriod!, (value) {
       return _then(_value.copyWith(servicedPeriod: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get createdElement {
-    if (_value.createdElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.createdElement!, (value) {
-      return _then(_value.copyWith(createdElement: value) as $Val);
     });
   }
 
@@ -4320,23 +4105,13 @@ abstract class _$$CoverageEligibilityRequestImplCopyWith<$Res>
   @override
   $FhirMetaCopyWith<$Res>? get meta;
   @override
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  @override
-  $ElementCopyWith<$Res>? get languageElement;
-  @override
   $NarrativeCopyWith<$Res>? get text;
-  @override
-  $ElementCopyWith<$Res>? get statusElement;
   @override
   $CodeableConceptCopyWith<$Res>? get priority;
   @override
   $ReferenceCopyWith<$Res> get patient;
   @override
-  $ElementCopyWith<$Res>? get servicedDateElement;
-  @override
   $PeriodCopyWith<$Res>? get servicedPeriod;
-  @override
-  $ElementCopyWith<$Res>? get createdElement;
   @override
   $ReferenceCopyWith<$Res>? get enterer;
   @override
@@ -5304,7 +5079,6 @@ abstract class $CoverageEligibilityRequestEventCopyWith<$Res> {
       Period? whenPeriod});
 
   $CodeableConceptCopyWith<$Res> get type;
-  $ElementCopyWith<$Res>? get whenDateTimeElement;
   $PeriodCopyWith<$Res>? get whenPeriod;
 }
 
@@ -5372,18 +5146,6 @@ class _$CoverageEligibilityRequestEventCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get whenDateTimeElement {
-    if (_value.whenDateTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.whenDateTimeElement!, (value) {
-      return _then(_value.copyWith(whenDateTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $PeriodCopyWith<$Res>? get whenPeriod {
     if (_value.whenPeriod == null) {
       return null;
@@ -5415,8 +5177,6 @@ abstract class _$$CoverageEligibilityRequestEventImplCopyWith<$Res>
 
   @override
   $CodeableConceptCopyWith<$Res> get type;
-  @override
-  $ElementCopyWith<$Res>? get whenDateTimeElement;
   @override
   $PeriodCopyWith<$Res>? get whenPeriod;
 }
@@ -5793,9 +5553,7 @@ abstract class $CoverageEligibilityRequestSupportingInfoCopyWith<$Res> {
       FhirBoolean? appliesToAll,
       @JsonKey(name: '_appliesToAll') Element? appliesToAllElement});
 
-  $ElementCopyWith<$Res>? get sequenceElement;
   $ReferenceCopyWith<$Res> get information;
-  $ElementCopyWith<$Res>? get appliesToAllElement;
 }
 
 /// @nodoc
@@ -5860,33 +5618,9 @@ class _$CoverageEligibilityRequestSupportingInfoCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get sequenceElement {
-    if (_value.sequenceElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.sequenceElement!, (value) {
-      return _then(_value.copyWith(sequenceElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $ReferenceCopyWith<$Res> get information {
     return $ReferenceCopyWith<$Res>(_value.information, (value) {
       return _then(_value.copyWith(information: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get appliesToAllElement {
-    if (_value.appliesToAllElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.appliesToAllElement!, (value) {
-      return _then(_value.copyWith(appliesToAllElement: value) as $Val);
     });
   }
 }
@@ -5911,11 +5645,7 @@ abstract class _$$CoverageEligibilityRequestSupportingInfoImplCopyWith<$Res>
       @JsonKey(name: '_appliesToAll') Element? appliesToAllElement});
 
   @override
-  $ElementCopyWith<$Res>? get sequenceElement;
-  @override
   $ReferenceCopyWith<$Res> get information;
-  @override
-  $ElementCopyWith<$Res>? get appliesToAllElement;
 }
 
 /// @nodoc
@@ -6317,9 +6047,7 @@ abstract class $CoverageEligibilityRequestInsuranceCopyWith<$Res> {
       @JsonKey(name: '_businessArrangement')
       Element? businessArrangementElement});
 
-  $ElementCopyWith<$Res>? get focalElement;
   $ReferenceCopyWith<$Res> get coverage;
-  $ElementCopyWith<$Res>? get businessArrangementElement;
 }
 
 /// @nodoc
@@ -6383,33 +6111,9 @@ class _$CoverageEligibilityRequestInsuranceCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get focalElement {
-    if (_value.focalElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.focalElement!, (value) {
-      return _then(_value.copyWith(focalElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $ReferenceCopyWith<$Res> get coverage {
     return $ReferenceCopyWith<$Res>(_value.coverage, (value) {
       return _then(_value.copyWith(coverage: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get businessArrangementElement {
-    if (_value.businessArrangementElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.businessArrangementElement!, (value) {
-      return _then(_value.copyWith(businessArrangementElement: value) as $Val);
     });
   }
 }
@@ -6435,11 +6139,7 @@ abstract class _$$CoverageEligibilityRequestInsuranceImplCopyWith<$Res>
       Element? businessArrangementElement});
 
   @override
-  $ElementCopyWith<$Res>? get focalElement;
-  @override
   $ReferenceCopyWith<$Res> get coverage;
-  @override
-  $ElementCopyWith<$Res>? get businessArrangementElement;
 }
 
 /// @nodoc
@@ -8215,20 +7915,12 @@ abstract class $CoverageEligibilityResponseCopyWith<$Res> {
       List<CoverageEligibilityResponseError>? error});
 
   $FhirMetaCopyWith<$Res>? get meta;
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  $ElementCopyWith<$Res>? get languageElement;
   $NarrativeCopyWith<$Res>? get text;
-  $ElementCopyWith<$Res>? get statusElement;
   $ReferenceCopyWith<$Res> get patient;
-  $ElementCopyWith<$Res>? get servicedDateElement;
   $PeriodCopyWith<$Res>? get servicedPeriod;
-  $ElementCopyWith<$Res>? get createdElement;
   $ReferenceCopyWith<$Res>? get requestor;
   $ReferenceCopyWith<$Res> get request;
-  $ElementCopyWith<$Res>? get outcomeElement;
-  $ElementCopyWith<$Res>? get dispositionElement;
   $ReferenceCopyWith<$Res> get insurer;
-  $ElementCopyWith<$Res>? get preAuthRefElement;
   $CodeableConceptCopyWith<$Res>? get form;
 }
 
@@ -8440,30 +8132,6 @@ class _$CoverageEligibilityResponseCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get implicitRulesElement {
-    if (_value.implicitRulesElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.implicitRulesElement!, (value) {
-      return _then(_value.copyWith(implicitRulesElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get languageElement {
-    if (_value.languageElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.languageElement!, (value) {
-      return _then(_value.copyWith(languageElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $NarrativeCopyWith<$Res>? get text {
     if (_value.text == null) {
       return null;
@@ -8471,18 +8139,6 @@ class _$CoverageEligibilityResponseCopyWithImpl<$Res,
 
     return $NarrativeCopyWith<$Res>(_value.text!, (value) {
       return _then(_value.copyWith(text: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get statusElement {
-    if (_value.statusElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.statusElement!, (value) {
-      return _then(_value.copyWith(statusElement: value) as $Val);
     });
   }
 
@@ -8496,18 +8152,6 @@ class _$CoverageEligibilityResponseCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get servicedDateElement {
-    if (_value.servicedDateElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.servicedDateElement!, (value) {
-      return _then(_value.copyWith(servicedDateElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $PeriodCopyWith<$Res>? get servicedPeriod {
     if (_value.servicedPeriod == null) {
       return null;
@@ -8515,18 +8159,6 @@ class _$CoverageEligibilityResponseCopyWithImpl<$Res,
 
     return $PeriodCopyWith<$Res>(_value.servicedPeriod!, (value) {
       return _then(_value.copyWith(servicedPeriod: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get createdElement {
-    if (_value.createdElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.createdElement!, (value) {
-      return _then(_value.copyWith(createdElement: value) as $Val);
     });
   }
 
@@ -8552,45 +8184,9 @@ class _$CoverageEligibilityResponseCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get outcomeElement {
-    if (_value.outcomeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.outcomeElement!, (value) {
-      return _then(_value.copyWith(outcomeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get dispositionElement {
-    if (_value.dispositionElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.dispositionElement!, (value) {
-      return _then(_value.copyWith(dispositionElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $ReferenceCopyWith<$Res> get insurer {
     return $ReferenceCopyWith<$Res>(_value.insurer, (value) {
       return _then(_value.copyWith(insurer: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get preAuthRefElement {
-    if (_value.preAuthRefElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.preAuthRefElement!, (value) {
-      return _then(_value.copyWith(preAuthRefElement: value) as $Val);
     });
   }
 
@@ -8657,33 +8253,17 @@ abstract class _$$CoverageEligibilityResponseImplCopyWith<$Res>
   @override
   $FhirMetaCopyWith<$Res>? get meta;
   @override
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  @override
-  $ElementCopyWith<$Res>? get languageElement;
-  @override
   $NarrativeCopyWith<$Res>? get text;
-  @override
-  $ElementCopyWith<$Res>? get statusElement;
   @override
   $ReferenceCopyWith<$Res> get patient;
   @override
-  $ElementCopyWith<$Res>? get servicedDateElement;
-  @override
   $PeriodCopyWith<$Res>? get servicedPeriod;
-  @override
-  $ElementCopyWith<$Res>? get createdElement;
   @override
   $ReferenceCopyWith<$Res>? get requestor;
   @override
   $ReferenceCopyWith<$Res> get request;
   @override
-  $ElementCopyWith<$Res>? get outcomeElement;
-  @override
-  $ElementCopyWith<$Res>? get dispositionElement;
-  @override
   $ReferenceCopyWith<$Res> get insurer;
-  @override
-  $ElementCopyWith<$Res>? get preAuthRefElement;
   @override
   $CodeableConceptCopyWith<$Res>? get form;
 }
@@ -9705,7 +9285,6 @@ abstract class $CoverageEligibilityResponseEventCopyWith<$Res> {
       Period? whenPeriod});
 
   $CodeableConceptCopyWith<$Res> get type;
-  $ElementCopyWith<$Res>? get whenDateTimeElement;
   $PeriodCopyWith<$Res>? get whenPeriod;
 }
 
@@ -9773,18 +9352,6 @@ class _$CoverageEligibilityResponseEventCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get whenDateTimeElement {
-    if (_value.whenDateTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.whenDateTimeElement!, (value) {
-      return _then(_value.copyWith(whenDateTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $PeriodCopyWith<$Res>? get whenPeriod {
     if (_value.whenPeriod == null) {
       return null;
@@ -9816,8 +9383,6 @@ abstract class _$$CoverageEligibilityResponseEventImplCopyWith<$Res>
 
   @override
   $CodeableConceptCopyWith<$Res> get type;
-  @override
-  $ElementCopyWith<$Res>? get whenDateTimeElement;
   @override
   $PeriodCopyWith<$Res>? get whenPeriod;
 }
@@ -10198,7 +9763,6 @@ abstract class $CoverageEligibilityResponseInsuranceCopyWith<$Res> {
       List<CoverageEligibilityResponseItem>? item});
 
   $ReferenceCopyWith<$Res> get coverage;
-  $ElementCopyWith<$Res>? get inforceElement;
   $PeriodCopyWith<$Res>? get benefitPeriod;
 }
 
@@ -10271,18 +9835,6 @@ class _$CoverageEligibilityResponseInsuranceCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get inforceElement {
-    if (_value.inforceElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.inforceElement!, (value) {
-      return _then(_value.copyWith(inforceElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $PeriodCopyWith<$Res>? get benefitPeriod {
     if (_value.benefitPeriod == null) {
       return null;
@@ -10315,8 +9867,6 @@ abstract class _$$CoverageEligibilityResponseInsuranceImplCopyWith<$Res>
 
   @override
   $ReferenceCopyWith<$Res> get coverage;
-  @override
-  $ElementCopyWith<$Res>? get inforceElement;
   @override
   $PeriodCopyWith<$Res>? get benefitPeriod;
 }
@@ -10804,14 +10354,9 @@ abstract class $CoverageEligibilityResponseItemCopyWith<$Res> {
   $CodeableConceptCopyWith<$Res>? get category;
   $CodeableConceptCopyWith<$Res>? get productOrService;
   $ReferenceCopyWith<$Res>? get provider;
-  $ElementCopyWith<$Res>? get excludedElement;
-  $ElementCopyWith<$Res>? get nameElement;
-  $ElementCopyWith<$Res>? get descriptionElement;
   $CodeableConceptCopyWith<$Res>? get network;
   $CodeableConceptCopyWith<$Res>? get unit;
   $CodeableConceptCopyWith<$Res>? get term;
-  $ElementCopyWith<$Res>? get authorizationRequiredElement;
-  $ElementCopyWith<$Res>? get authorizationUrlElement;
 }
 
 /// @nodoc
@@ -10981,42 +10526,6 @@ class _$CoverageEligibilityResponseItemCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get excludedElement {
-    if (_value.excludedElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.excludedElement!, (value) {
-      return _then(_value.copyWith(excludedElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get nameElement {
-    if (_value.nameElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.nameElement!, (value) {
-      return _then(_value.copyWith(nameElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get descriptionElement {
-    if (_value.descriptionElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.descriptionElement!, (value) {
-      return _then(_value.copyWith(descriptionElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $CodeableConceptCopyWith<$Res>? get network {
     if (_value.network == null) {
       return null;
@@ -11048,32 +10557,6 @@ class _$CoverageEligibilityResponseItemCopyWithImpl<$Res,
 
     return $CodeableConceptCopyWith<$Res>(_value.term!, (value) {
       return _then(_value.copyWith(term: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get authorizationRequiredElement {
-    if (_value.authorizationRequiredElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.authorizationRequiredElement!,
-        (value) {
-      return _then(
-          _value.copyWith(authorizationRequiredElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get authorizationUrlElement {
-    if (_value.authorizationUrlElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.authorizationUrlElement!, (value) {
-      return _then(_value.copyWith(authorizationUrlElement: value) as $Val);
     });
   }
 }
@@ -11119,21 +10602,11 @@ abstract class _$$CoverageEligibilityResponseItemImplCopyWith<$Res>
   @override
   $ReferenceCopyWith<$Res>? get provider;
   @override
-  $ElementCopyWith<$Res>? get excludedElement;
-  @override
-  $ElementCopyWith<$Res>? get nameElement;
-  @override
-  $ElementCopyWith<$Res>? get descriptionElement;
-  @override
   $CodeableConceptCopyWith<$Res>? get network;
   @override
   $CodeableConceptCopyWith<$Res>? get unit;
   @override
   $CodeableConceptCopyWith<$Res>? get term;
-  @override
-  $ElementCopyWith<$Res>? get authorizationRequiredElement;
-  @override
-  $ElementCopyWith<$Res>? get authorizationUrlElement;
 }
 
 /// @nodoc
@@ -11875,11 +11348,7 @@ abstract class $CoverageEligibilityResponseBenefitCopyWith<$Res> {
       Money? usedMoney});
 
   $CodeableConceptCopyWith<$Res> get type;
-  $ElementCopyWith<$Res>? get allowedUnsignedIntElement;
-  $ElementCopyWith<$Res>? get allowedStringElement;
   $MoneyCopyWith<$Res>? get allowedMoney;
-  $ElementCopyWith<$Res>? get usedUnsignedIntElement;
-  $ElementCopyWith<$Res>? get usedStringElement;
   $MoneyCopyWith<$Res>? get usedMoney;
 }
 
@@ -11982,30 +11451,6 @@ class _$CoverageEligibilityResponseBenefitCopyWithImpl<$Res,
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get allowedUnsignedIntElement {
-    if (_value.allowedUnsignedIntElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.allowedUnsignedIntElement!, (value) {
-      return _then(_value.copyWith(allowedUnsignedIntElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get allowedStringElement {
-    if (_value.allowedStringElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.allowedStringElement!, (value) {
-      return _then(_value.copyWith(allowedStringElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $MoneyCopyWith<$Res>? get allowedMoney {
     if (_value.allowedMoney == null) {
       return null;
@@ -12013,30 +11458,6 @@ class _$CoverageEligibilityResponseBenefitCopyWithImpl<$Res,
 
     return $MoneyCopyWith<$Res>(_value.allowedMoney!, (value) {
       return _then(_value.copyWith(allowedMoney: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get usedUnsignedIntElement {
-    if (_value.usedUnsignedIntElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.usedUnsignedIntElement!, (value) {
-      return _then(_value.copyWith(usedUnsignedIntElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get usedStringElement {
-    if (_value.usedStringElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.usedStringElement!, (value) {
-      return _then(_value.copyWith(usedStringElement: value) as $Val);
     });
   }
 
@@ -12081,15 +11502,7 @@ abstract class _$$CoverageEligibilityResponseBenefitImplCopyWith<$Res>
   @override
   $CodeableConceptCopyWith<$Res> get type;
   @override
-  $ElementCopyWith<$Res>? get allowedUnsignedIntElement;
-  @override
-  $ElementCopyWith<$Res>? get allowedStringElement;
-  @override
   $MoneyCopyWith<$Res>? get allowedMoney;
-  @override
-  $ElementCopyWith<$Res>? get usedUnsignedIntElement;
-  @override
-  $ElementCopyWith<$Res>? get usedStringElement;
   @override
   $MoneyCopyWith<$Res>? get usedMoney;
 }
@@ -13129,11 +12542,7 @@ abstract class $EnrollmentRequestCopyWith<$Res> {
       Reference? coverage});
 
   $FhirMetaCopyWith<$Res>? get meta;
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  $ElementCopyWith<$Res>? get languageElement;
   $NarrativeCopyWith<$Res>? get text;
-  $ElementCopyWith<$Res>? get statusElement;
-  $ElementCopyWith<$Res>? get createdElement;
   $ReferenceCopyWith<$Res>? get insurer;
   $ReferenceCopyWith<$Res>? get provider;
   $ReferenceCopyWith<$Res>? get candidate;
@@ -13272,30 +12681,6 @@ class _$EnrollmentRequestCopyWithImpl<$Res, $Val extends EnrollmentRequest>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get implicitRulesElement {
-    if (_value.implicitRulesElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.implicitRulesElement!, (value) {
-      return _then(_value.copyWith(implicitRulesElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get languageElement {
-    if (_value.languageElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.languageElement!, (value) {
-      return _then(_value.copyWith(languageElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $NarrativeCopyWith<$Res>? get text {
     if (_value.text == null) {
       return null;
@@ -13303,30 +12688,6 @@ class _$EnrollmentRequestCopyWithImpl<$Res, $Val extends EnrollmentRequest>
 
     return $NarrativeCopyWith<$Res>(_value.text!, (value) {
       return _then(_value.copyWith(text: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get statusElement {
-    if (_value.statusElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.statusElement!, (value) {
-      return _then(_value.copyWith(statusElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get createdElement {
-    if (_value.createdElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.createdElement!, (value) {
-      return _then(_value.copyWith(createdElement: value) as $Val);
     });
   }
 
@@ -13413,15 +12774,7 @@ abstract class _$$EnrollmentRequestImplCopyWith<$Res>
   @override
   $FhirMetaCopyWith<$Res>? get meta;
   @override
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  @override
-  $ElementCopyWith<$Res>? get languageElement;
-  @override
   $NarrativeCopyWith<$Res>? get text;
-  @override
-  $ElementCopyWith<$Res>? get statusElement;
-  @override
-  $ElementCopyWith<$Res>? get createdElement;
   @override
   $ReferenceCopyWith<$Res>? get insurer;
   @override
@@ -14169,14 +13522,8 @@ abstract class $EnrollmentResponseCopyWith<$Res> {
       Reference? requestProvider});
 
   $FhirMetaCopyWith<$Res>? get meta;
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  $ElementCopyWith<$Res>? get languageElement;
   $NarrativeCopyWith<$Res>? get text;
-  $ElementCopyWith<$Res>? get statusElement;
   $ReferenceCopyWith<$Res>? get request;
-  $ElementCopyWith<$Res>? get outcomeElement;
-  $ElementCopyWith<$Res>? get dispositionElement;
-  $ElementCopyWith<$Res>? get createdElement;
   $ReferenceCopyWith<$Res>? get organization;
   $ReferenceCopyWith<$Res>? get requestProvider;
 }
@@ -14328,30 +13675,6 @@ class _$EnrollmentResponseCopyWithImpl<$Res, $Val extends EnrollmentResponse>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get implicitRulesElement {
-    if (_value.implicitRulesElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.implicitRulesElement!, (value) {
-      return _then(_value.copyWith(implicitRulesElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get languageElement {
-    if (_value.languageElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.languageElement!, (value) {
-      return _then(_value.copyWith(languageElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $NarrativeCopyWith<$Res>? get text {
     if (_value.text == null) {
       return null;
@@ -14364,18 +13687,6 @@ class _$EnrollmentResponseCopyWithImpl<$Res, $Val extends EnrollmentResponse>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get statusElement {
-    if (_value.statusElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.statusElement!, (value) {
-      return _then(_value.copyWith(statusElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $ReferenceCopyWith<$Res>? get request {
     if (_value.request == null) {
       return null;
@@ -14383,42 +13694,6 @@ class _$EnrollmentResponseCopyWithImpl<$Res, $Val extends EnrollmentResponse>
 
     return $ReferenceCopyWith<$Res>(_value.request!, (value) {
       return _then(_value.copyWith(request: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get outcomeElement {
-    if (_value.outcomeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.outcomeElement!, (value) {
-      return _then(_value.copyWith(outcomeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get dispositionElement {
-    if (_value.dispositionElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.dispositionElement!, (value) {
-      return _then(_value.copyWith(dispositionElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get createdElement {
-    if (_value.createdElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.createdElement!, (value) {
-      return _then(_value.copyWith(createdElement: value) as $Val);
     });
   }
 
@@ -14484,21 +13759,9 @@ abstract class _$$EnrollmentResponseImplCopyWith<$Res>
   @override
   $FhirMetaCopyWith<$Res>? get meta;
   @override
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  @override
-  $ElementCopyWith<$Res>? get languageElement;
-  @override
   $NarrativeCopyWith<$Res>? get text;
   @override
-  $ElementCopyWith<$Res>? get statusElement;
-  @override
   $ReferenceCopyWith<$Res>? get request;
-  @override
-  $ElementCopyWith<$Res>? get outcomeElement;
-  @override
-  $ElementCopyWith<$Res>? get dispositionElement;
-  @override
-  $ElementCopyWith<$Res>? get createdElement;
   @override
   $ReferenceCopyWith<$Res>? get organization;
   @override
