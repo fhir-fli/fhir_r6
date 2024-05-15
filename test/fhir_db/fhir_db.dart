@@ -448,7 +448,7 @@ Future<void> main() async {
       String output = '';
       final Directory dir = Directory('assets');
       final StreamSubscription<Resource?> subscription =
-          fhirDb.listen(resourceType: R6ResourceType.Observation).listen(
+          fhirDb.subject(resourceType: R6ResourceType.Observation).listen(
         (Resource? resource) {
           // This block is where you handle each emitted item
           print('Received resource: ${resource?.path}');
