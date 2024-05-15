@@ -214,15 +214,9 @@ abstract class $AuditEventCopyWith<$Res> {
       List<AuditEventEntity>? entity});
 
   $FhirMetaCopyWith<$Res>? get meta;
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  $ElementCopyWith<$Res>? get languageElement;
   $NarrativeCopyWith<$Res>? get text;
   $CodeableConceptCopyWith<$Res> get code;
-  $ElementCopyWith<$Res>? get actionElement;
-  $ElementCopyWith<$Res>? get severityElement;
   $PeriodCopyWith<$Res>? get occurredPeriod;
-  $ElementCopyWith<$Res>? get occurredDateTimeElement;
-  $ElementCopyWith<$Res>? get recordedElement;
   $AuditEventOutcomeCopyWith<$Res>? get outcome;
   $ReferenceCopyWith<$Res>? get patient;
   $ReferenceCopyWith<$Res>? get encounter;
@@ -411,30 +405,6 @@ class _$AuditEventCopyWithImpl<$Res, $Val extends AuditEvent>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get implicitRulesElement {
-    if (_value.implicitRulesElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.implicitRulesElement!, (value) {
-      return _then(_value.copyWith(implicitRulesElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get languageElement {
-    if (_value.languageElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.languageElement!, (value) {
-      return _then(_value.copyWith(languageElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $NarrativeCopyWith<$Res>? get text {
     if (_value.text == null) {
       return null;
@@ -455,30 +425,6 @@ class _$AuditEventCopyWithImpl<$Res, $Val extends AuditEvent>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get actionElement {
-    if (_value.actionElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.actionElement!, (value) {
-      return _then(_value.copyWith(actionElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get severityElement {
-    if (_value.severityElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.severityElement!, (value) {
-      return _then(_value.copyWith(severityElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $PeriodCopyWith<$Res>? get occurredPeriod {
     if (_value.occurredPeriod == null) {
       return null;
@@ -486,30 +432,6 @@ class _$AuditEventCopyWithImpl<$Res, $Val extends AuditEvent>
 
     return $PeriodCopyWith<$Res>(_value.occurredPeriod!, (value) {
       return _then(_value.copyWith(occurredPeriod: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get occurredDateTimeElement {
-    if (_value.occurredDateTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.occurredDateTimeElement!, (value) {
-      return _then(_value.copyWith(occurredDateTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get recordedElement {
-    if (_value.recordedElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.recordedElement!, (value) {
-      return _then(_value.copyWith(recordedElement: value) as $Val);
     });
   }
 
@@ -602,23 +524,11 @@ abstract class _$$AuditEventImplCopyWith<$Res>
   @override
   $FhirMetaCopyWith<$Res>? get meta;
   @override
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  @override
-  $ElementCopyWith<$Res>? get languageElement;
-  @override
   $NarrativeCopyWith<$Res>? get text;
   @override
   $CodeableConceptCopyWith<$Res> get code;
   @override
-  $ElementCopyWith<$Res>? get actionElement;
-  @override
-  $ElementCopyWith<$Res>? get severityElement;
-  @override
   $PeriodCopyWith<$Res>? get occurredPeriod;
-  @override
-  $ElementCopyWith<$Res>? get occurredDateTimeElement;
-  @override
-  $ElementCopyWith<$Res>? get recordedElement;
   @override
   $AuditEventOutcomeCopyWith<$Res>? get outcome;
   @override
@@ -1964,11 +1874,8 @@ abstract class $AuditEventAgentCopyWith<$Res> {
 
   $CodeableConceptCopyWith<$Res>? get type;
   $ReferenceCopyWith<$Res> get who;
-  $ElementCopyWith<$Res>? get requestorElement;
   $ReferenceCopyWith<$Res>? get location;
   $ReferenceCopyWith<$Res>? get networkReference;
-  $ElementCopyWith<$Res>? get networkUriElement;
-  $ElementCopyWith<$Res>? get networkStringElement;
 }
 
 /// @nodoc
@@ -2096,18 +2003,6 @@ class _$AuditEventAgentCopyWithImpl<$Res, $Val extends AuditEventAgent>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get requestorElement {
-    if (_value.requestorElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.requestorElement!, (value) {
-      return _then(_value.copyWith(requestorElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $ReferenceCopyWith<$Res>? get location {
     if (_value.location == null) {
       return null;
@@ -2127,30 +2022,6 @@ class _$AuditEventAgentCopyWithImpl<$Res, $Val extends AuditEventAgent>
 
     return $ReferenceCopyWith<$Res>(_value.networkReference!, (value) {
       return _then(_value.copyWith(networkReference: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get networkUriElement {
-    if (_value.networkUriElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.networkUriElement!, (value) {
-      return _then(_value.copyWith(networkUriElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get networkStringElement {
-    if (_value.networkStringElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.networkStringElement!, (value) {
-      return _then(_value.copyWith(networkStringElement: value) as $Val);
     });
   }
 }
@@ -2187,15 +2058,9 @@ abstract class _$$AuditEventAgentImplCopyWith<$Res>
   @override
   $ReferenceCopyWith<$Res> get who;
   @override
-  $ElementCopyWith<$Res>? get requestorElement;
-  @override
   $ReferenceCopyWith<$Res>? get location;
   @override
   $ReferenceCopyWith<$Res>? get networkReference;
-  @override
-  $ElementCopyWith<$Res>? get networkUriElement;
-  @override
-  $ElementCopyWith<$Res>? get networkStringElement;
 }
 
 /// @nodoc
@@ -3256,7 +3121,6 @@ abstract class $AuditEventEntityCopyWith<$Res> {
 
   $ReferenceCopyWith<$Res>? get what;
   $CodeableConceptCopyWith<$Res>? get role;
-  $ElementCopyWith<$Res>? get queryElement;
 }
 
 /// @nodoc
@@ -3350,18 +3214,6 @@ class _$AuditEventEntityCopyWithImpl<$Res, $Val extends AuditEventEntity>
       return _then(_value.copyWith(role: value) as $Val);
     });
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get queryElement {
-    if (_value.queryElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.queryElement!, (value) {
-      return _then(_value.copyWith(queryElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -3388,8 +3240,6 @@ abstract class _$$AuditEventEntityImplCopyWith<$Res>
   $ReferenceCopyWith<$Res>? get what;
   @override
   $CodeableConceptCopyWith<$Res>? get role;
-  @override
-  $ElementCopyWith<$Res>? get queryElement;
 }
 
 /// @nodoc
@@ -3908,15 +3758,9 @@ abstract class $AuditEventDetailCopyWith<$Res> {
   $CodeableConceptCopyWith<$Res> get type;
   $QuantityCopyWith<$Res>? get valueQuantity;
   $CodeableConceptCopyWith<$Res>? get valueCodeableConcept;
-  $ElementCopyWith<$Res>? get valueStringElement;
-  $ElementCopyWith<$Res>? get valueBooleanElement;
-  $ElementCopyWith<$Res>? get valueIntegerElement;
   $RangeCopyWith<$Res>? get valueRange;
   $RatioCopyWith<$Res>? get valueRatio;
-  $ElementCopyWith<$Res>? get valueTimeElement;
-  $ElementCopyWith<$Res>? get valueDateTimeElement;
   $PeriodCopyWith<$Res>? get valuePeriod;
-  $ElementCopyWith<$Res>? get valueBase64BinaryElement;
 }
 
 /// @nodoc
@@ -4077,42 +3921,6 @@ class _$AuditEventDetailCopyWithImpl<$Res, $Val extends AuditEventDetail>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueStringElement {
-    if (_value.valueStringElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueStringElement!, (value) {
-      return _then(_value.copyWith(valueStringElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueBooleanElement {
-    if (_value.valueBooleanElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueBooleanElement!, (value) {
-      return _then(_value.copyWith(valueBooleanElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueIntegerElement {
-    if (_value.valueIntegerElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueIntegerElement!, (value) {
-      return _then(_value.copyWith(valueIntegerElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $RangeCopyWith<$Res>? get valueRange {
     if (_value.valueRange == null) {
       return null;
@@ -4137,30 +3945,6 @@ class _$AuditEventDetailCopyWithImpl<$Res, $Val extends AuditEventDetail>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueTimeElement {
-    if (_value.valueTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueTimeElement!, (value) {
-      return _then(_value.copyWith(valueTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueDateTimeElement {
-    if (_value.valueDateTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueDateTimeElement!, (value) {
-      return _then(_value.copyWith(valueDateTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $PeriodCopyWith<$Res>? get valuePeriod {
     if (_value.valuePeriod == null) {
       return null;
@@ -4168,18 +3952,6 @@ class _$AuditEventDetailCopyWithImpl<$Res, $Val extends AuditEventDetail>
 
     return $PeriodCopyWith<$Res>(_value.valuePeriod!, (value) {
       return _then(_value.copyWith(valuePeriod: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get valueBase64BinaryElement {
-    if (_value.valueBase64BinaryElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.valueBase64BinaryElement!, (value) {
-      return _then(_value.copyWith(valueBase64BinaryElement: value) as $Val);
     });
   }
 }
@@ -4222,23 +3994,11 @@ abstract class _$$AuditEventDetailImplCopyWith<$Res>
   @override
   $CodeableConceptCopyWith<$Res>? get valueCodeableConcept;
   @override
-  $ElementCopyWith<$Res>? get valueStringElement;
-  @override
-  $ElementCopyWith<$Res>? get valueBooleanElement;
-  @override
-  $ElementCopyWith<$Res>? get valueIntegerElement;
-  @override
   $RangeCopyWith<$Res>? get valueRange;
   @override
   $RatioCopyWith<$Res>? get valueRatio;
   @override
-  $ElementCopyWith<$Res>? get valueTimeElement;
-  @override
-  $ElementCopyWith<$Res>? get valueDateTimeElement;
-  @override
   $PeriodCopyWith<$Res>? get valuePeriod;
-  @override
-  $ElementCopyWith<$Res>? get valueBase64BinaryElement;
 }
 
 /// @nodoc
@@ -4996,15 +4756,10 @@ abstract class $ConsentCopyWith<$Res> {
       List<ConsentProvision>? provision});
 
   $FhirMetaCopyWith<$Res>? get meta;
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  $ElementCopyWith<$Res>? get languageElement;
   $NarrativeCopyWith<$Res>? get text;
-  $ElementCopyWith<$Res>? get statusElement;
   $ReferenceCopyWith<$Res>? get subject;
-  $ElementCopyWith<$Res>? get dateElement;
   $PeriodCopyWith<$Res>? get period;
   $ConsentPolicyBasisCopyWith<$Res>? get policyBasis;
-  $ElementCopyWith<$Res>? get decisionElement;
 }
 
 /// @nodoc
@@ -5199,30 +4954,6 @@ class _$ConsentCopyWithImpl<$Res, $Val extends Consent>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get implicitRulesElement {
-    if (_value.implicitRulesElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.implicitRulesElement!, (value) {
-      return _then(_value.copyWith(implicitRulesElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get languageElement {
-    if (_value.languageElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.languageElement!, (value) {
-      return _then(_value.copyWith(languageElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $NarrativeCopyWith<$Res>? get text {
     if (_value.text == null) {
       return null;
@@ -5235,18 +4966,6 @@ class _$ConsentCopyWithImpl<$Res, $Val extends Consent>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get statusElement {
-    if (_value.statusElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.statusElement!, (value) {
-      return _then(_value.copyWith(statusElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $ReferenceCopyWith<$Res>? get subject {
     if (_value.subject == null) {
       return null;
@@ -5254,18 +4973,6 @@ class _$ConsentCopyWithImpl<$Res, $Val extends Consent>
 
     return $ReferenceCopyWith<$Res>(_value.subject!, (value) {
       return _then(_value.copyWith(subject: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get dateElement {
-    if (_value.dateElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.dateElement!, (value) {
-      return _then(_value.copyWith(dateElement: value) as $Val);
     });
   }
 
@@ -5290,18 +4997,6 @@ class _$ConsentCopyWithImpl<$Res, $Val extends Consent>
 
     return $ConsentPolicyBasisCopyWith<$Res>(_value.policyBasis!, (value) {
       return _then(_value.copyWith(policyBasis: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get decisionElement {
-    if (_value.decisionElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.decisionElement!, (value) {
-      return _then(_value.copyWith(decisionElement: value) as $Val);
     });
   }
 }
@@ -5351,23 +5046,13 @@ abstract class _$$ConsentImplCopyWith<$Res> implements $ConsentCopyWith<$Res> {
   @override
   $FhirMetaCopyWith<$Res>? get meta;
   @override
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  @override
-  $ElementCopyWith<$Res>? get languageElement;
-  @override
   $NarrativeCopyWith<$Res>? get text;
   @override
-  $ElementCopyWith<$Res>? get statusElement;
-  @override
   $ReferenceCopyWith<$Res>? get subject;
-  @override
-  $ElementCopyWith<$Res>? get dateElement;
   @override
   $PeriodCopyWith<$Res>? get period;
   @override
   $ConsentPolicyBasisCopyWith<$Res>? get policyBasis;
-  @override
-  $ElementCopyWith<$Res>? get decisionElement;
 }
 
 /// @nodoc
@@ -6386,7 +6071,6 @@ abstract class $ConsentPolicyBasisCopyWith<$Res> {
       @JsonKey(name: '_url') Element? urlElement});
 
   $ReferenceCopyWith<$Res>? get reference;
-  $ElementCopyWith<$Res>? get urlElement;
 }
 
 /// @nodoc
@@ -6448,18 +6132,6 @@ class _$ConsentPolicyBasisCopyWithImpl<$Res, $Val extends ConsentPolicyBasis>
       return _then(_value.copyWith(reference: value) as $Val);
     });
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get urlElement {
-    if (_value.urlElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.urlElement!, (value) {
-      return _then(_value.copyWith(urlElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -6480,8 +6152,6 @@ abstract class _$$ConsentPolicyBasisImplCopyWith<$Res>
 
   @override
   $ReferenceCopyWith<$Res>? get reference;
-  @override
-  $ElementCopyWith<$Res>? get urlElement;
 }
 
 /// @nodoc
@@ -6837,7 +6507,6 @@ abstract class $ConsentVerificationCopyWith<$Res> {
       @JsonKey(name: '_verificationDate')
       List<Element>? verificationDateElement});
 
-  $ElementCopyWith<$Res>? get verifiedElement;
   $CodeableConceptCopyWith<$Res>? get verificationType;
   $ReferenceCopyWith<$Res>? get verifiedBy;
   $ReferenceCopyWith<$Res>? get verifiedWith;
@@ -6913,18 +6582,6 @@ class _$ConsentVerificationCopyWithImpl<$Res, $Val extends ConsentVerification>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get verifiedElement {
-    if (_value.verifiedElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.verifiedElement!, (value) {
-      return _then(_value.copyWith(verifiedElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $CodeableConceptCopyWith<$Res>? get verificationType {
     if (_value.verificationType == null) {
       return null;
@@ -6981,8 +6638,6 @@ abstract class _$$ConsentVerificationImplCopyWith<$Res>
       @JsonKey(name: '_verificationDate')
       List<Element>? verificationDateElement});
 
-  @override
-  $ElementCopyWith<$Res>? get verifiedElement;
   @override
   $CodeableConceptCopyWith<$Res>? get verificationType;
   @override
@@ -8648,7 +8303,6 @@ abstract class $ConsentDataCopyWith<$Res> {
       @JsonKey(name: '_meaning') Element? meaningElement,
       Reference reference});
 
-  $ElementCopyWith<$Res>? get meaningElement;
   $ReferenceCopyWith<$Res> get reference;
 }
 
@@ -8702,18 +8356,6 @@ class _$ConsentDataCopyWithImpl<$Res, $Val extends ConsentData>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get meaningElement {
-    if (_value.meaningElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.meaningElement!, (value) {
-      return _then(_value.copyWith(meaningElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $ReferenceCopyWith<$Res> get reference {
     return $ReferenceCopyWith<$Res>(_value.reference, (value) {
       return _then(_value.copyWith(reference: value) as $Val);
@@ -8737,8 +8379,6 @@ abstract class _$$ConsentDataImplCopyWith<$Res>
       @JsonKey(name: '_meaning') Element? meaningElement,
       Reference reference});
 
-  @override
-  $ElementCopyWith<$Res>? get meaningElement;
   @override
   $ReferenceCopyWith<$Res> get reference;
 }
@@ -9155,14 +8795,10 @@ abstract class $PermissionCopyWith<$Res> {
       List<PermissionRule>? rule});
 
   $FhirMetaCopyWith<$Res>? get meta;
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  $ElementCopyWith<$Res>? get languageElement;
   $NarrativeCopyWith<$Res>? get text;
-  $ElementCopyWith<$Res>? get statusElement;
   $ReferenceCopyWith<$Res>? get asserter;
   $PeriodCopyWith<$Res>? get validity;
   $PermissionJustificationCopyWith<$Res>? get justification;
-  $ElementCopyWith<$Res>? get combiningElement;
 }
 
 /// @nodoc
@@ -9302,30 +8938,6 @@ class _$PermissionCopyWithImpl<$Res, $Val extends Permission>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get implicitRulesElement {
-    if (_value.implicitRulesElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.implicitRulesElement!, (value) {
-      return _then(_value.copyWith(implicitRulesElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get languageElement {
-    if (_value.languageElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.languageElement!, (value) {
-      return _then(_value.copyWith(languageElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $NarrativeCopyWith<$Res>? get text {
     if (_value.text == null) {
       return null;
@@ -9333,18 +8945,6 @@ class _$PermissionCopyWithImpl<$Res, $Val extends Permission>
 
     return $NarrativeCopyWith<$Res>(_value.text!, (value) {
       return _then(_value.copyWith(text: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get statusElement {
-    if (_value.statusElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.statusElement!, (value) {
-      return _then(_value.copyWith(statusElement: value) as $Val);
     });
   }
 
@@ -9384,18 +8984,6 @@ class _$PermissionCopyWithImpl<$Res, $Val extends Permission>
       return _then(_value.copyWith(justification: value) as $Val);
     });
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get combiningElement {
-    if (_value.combiningElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.combiningElement!, (value) {
-      return _then(_value.copyWith(combiningElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -9433,21 +9021,13 @@ abstract class _$$PermissionImplCopyWith<$Res>
   @override
   $FhirMetaCopyWith<$Res>? get meta;
   @override
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  @override
-  $ElementCopyWith<$Res>? get languageElement;
-  @override
   $NarrativeCopyWith<$Res>? get text;
-  @override
-  $ElementCopyWith<$Res>? get statusElement;
   @override
   $ReferenceCopyWith<$Res>? get asserter;
   @override
   $PeriodCopyWith<$Res>? get validity;
   @override
   $PermissionJustificationCopyWith<$Res>? get justification;
-  @override
-  $ElementCopyWith<$Res>? get combiningElement;
 }
 
 /// @nodoc
@@ -10527,8 +10107,6 @@ abstract class $PermissionRuleCopyWith<$Res> {
       List<PermissionData>? data,
       List<PermissionActivity>? activity,
       List<CodeableConcept>? limit});
-
-  $ElementCopyWith<$Res>? get typeElement;
 }
 
 /// @nodoc
@@ -10588,18 +10166,6 @@ class _$PermissionRuleCopyWithImpl<$Res, $Val extends PermissionRule>
               as List<CodeableConcept>?,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get typeElement {
-    if (_value.typeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.typeElement!, (value) {
-      return _then(_value.copyWith(typeElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -10619,9 +10185,6 @@ abstract class _$$PermissionRuleImplCopyWith<$Res>
       List<PermissionData>? data,
       List<PermissionActivity>? activity,
       List<CodeableConcept>? limit});
-
-  @override
-  $ElementCopyWith<$Res>? get typeElement;
 }
 
 /// @nodoc
@@ -11488,7 +11051,6 @@ abstract class $PermissionResourceCopyWith<$Res> {
       @JsonKey(name: '_meaning') Element? meaningElement,
       Reference reference});
 
-  $ElementCopyWith<$Res>? get meaningElement;
   $ReferenceCopyWith<$Res> get reference;
 }
 
@@ -11542,18 +11104,6 @@ class _$PermissionResourceCopyWithImpl<$Res, $Val extends PermissionResource>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get meaningElement {
-    if (_value.meaningElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.meaningElement!, (value) {
-      return _then(_value.copyWith(meaningElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $ReferenceCopyWith<$Res> get reference {
     return $ReferenceCopyWith<$Res>(_value.reference, (value) {
       return _then(_value.copyWith(reference: value) as $Val);
@@ -11577,8 +11127,6 @@ abstract class _$$PermissionResourceImplCopyWith<$Res>
       @JsonKey(name: '_meaning') Element? meaningElement,
       Reference reference});
 
-  @override
-  $ElementCopyWith<$Res>? get meaningElement;
   @override
   $ReferenceCopyWith<$Res> get reference;
 }
@@ -12457,12 +12005,8 @@ abstract class $ProvenanceCopyWith<$Res> {
       List<Signature>? signature});
 
   $FhirMetaCopyWith<$Res>? get meta;
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  $ElementCopyWith<$Res>? get languageElement;
   $NarrativeCopyWith<$Res>? get text;
   $PeriodCopyWith<$Res>? get occurredPeriod;
-  $ElementCopyWith<$Res>? get occurredDateTimeElement;
-  $ElementCopyWith<$Res>? get recordedElement;
   $ReferenceCopyWith<$Res>? get location;
   $CodeableConceptCopyWith<$Res>? get activity;
   $ReferenceCopyWith<$Res>? get patient;
@@ -12641,30 +12185,6 @@ class _$ProvenanceCopyWithImpl<$Res, $Val extends Provenance>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get implicitRulesElement {
-    if (_value.implicitRulesElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.implicitRulesElement!, (value) {
-      return _then(_value.copyWith(implicitRulesElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get languageElement {
-    if (_value.languageElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.languageElement!, (value) {
-      return _then(_value.copyWith(languageElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $NarrativeCopyWith<$Res>? get text {
     if (_value.text == null) {
       return null;
@@ -12684,30 +12204,6 @@ class _$ProvenanceCopyWithImpl<$Res, $Val extends Provenance>
 
     return $PeriodCopyWith<$Res>(_value.occurredPeriod!, (value) {
       return _then(_value.copyWith(occurredPeriod: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get occurredDateTimeElement {
-    if (_value.occurredDateTimeElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.occurredDateTimeElement!, (value) {
-      return _then(_value.copyWith(occurredDateTimeElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get recordedElement {
-    if (_value.recordedElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.recordedElement!, (value) {
-      return _then(_value.copyWith(recordedElement: value) as $Val);
     });
   }
 
@@ -12802,17 +12298,9 @@ abstract class _$$ProvenanceImplCopyWith<$Res>
   @override
   $FhirMetaCopyWith<$Res>? get meta;
   @override
-  $ElementCopyWith<$Res>? get implicitRulesElement;
-  @override
-  $ElementCopyWith<$Res>? get languageElement;
-  @override
   $NarrativeCopyWith<$Res>? get text;
   @override
   $PeriodCopyWith<$Res>? get occurredPeriod;
-  @override
-  $ElementCopyWith<$Res>? get occurredDateTimeElement;
-  @override
-  $ElementCopyWith<$Res>? get recordedElement;
   @override
   $ReferenceCopyWith<$Res>? get location;
   @override
@@ -14204,7 +13692,6 @@ abstract class $ProvenanceEntityCopyWith<$Res> {
       Reference what,
       List<ProvenanceAgent>? agent});
 
-  $ElementCopyWith<$Res>? get roleElement;
   $ReferenceCopyWith<$Res> get what;
 }
 
@@ -14263,18 +13750,6 @@ class _$ProvenanceEntityCopyWithImpl<$Res, $Val extends ProvenanceEntity>
 
   @override
   @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get roleElement {
-    if (_value.roleElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.roleElement!, (value) {
-      return _then(_value.copyWith(roleElement: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
   $ReferenceCopyWith<$Res> get what {
     return $ReferenceCopyWith<$Res>(_value.what, (value) {
       return _then(_value.copyWith(what: value) as $Val);
@@ -14299,8 +13774,6 @@ abstract class _$$ProvenanceEntityImplCopyWith<$Res>
       Reference what,
       List<ProvenanceAgent>? agent});
 
-  @override
-  $ElementCopyWith<$Res>? get roleElement;
   @override
   $ReferenceCopyWith<$Res> get what;
 }

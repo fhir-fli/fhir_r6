@@ -794,7 +794,6 @@ abstract class $ProductShelfLifeCopyWith<$Res> {
 
   $CodeableConceptCopyWith<$Res>? get type;
   $FhirDurationCopyWith<$Res>? get periodDuration;
-  $ElementCopyWith<$Res>? get periodStringElement;
 }
 
 /// @nodoc
@@ -878,18 +877,6 @@ class _$ProductShelfLifeCopyWithImpl<$Res, $Val extends ProductShelfLife>
       return _then(_value.copyWith(periodDuration: value) as $Val);
     });
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get periodStringElement {
-    if (_value.periodStringElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.periodStringElement!, (value) {
-      return _then(_value.copyWith(periodStringElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -914,8 +901,6 @@ abstract class _$$ProductShelfLifeImplCopyWith<$Res>
   $CodeableConceptCopyWith<$Res>? get type;
   @override
   $FhirDurationCopyWith<$Res>? get periodDuration;
-  @override
-  $ElementCopyWith<$Res>? get periodStringElement;
 }
 
 /// @nodoc
@@ -1535,7 +1520,6 @@ abstract class $MarketingStatusCopyWith<$Res> {
   $CodeableConceptCopyWith<$Res>? get jurisdiction;
   $CodeableConceptCopyWith<$Res> get status;
   $PeriodCopyWith<$Res>? get dateRange;
-  $ElementCopyWith<$Res>? get restoreDateElement;
 }
 
 /// @nodoc
@@ -1644,18 +1628,6 @@ class _$MarketingStatusCopyWithImpl<$Res, $Val extends MarketingStatus>
       return _then(_value.copyWith(dateRange: value) as $Val);
     });
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ElementCopyWith<$Res>? get restoreDateElement {
-    if (_value.restoreDateElement == null) {
-      return null;
-    }
-
-    return $ElementCopyWith<$Res>(_value.restoreDateElement!, (value) {
-      return _then(_value.copyWith(restoreDateElement: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -1685,8 +1657,6 @@ abstract class _$$MarketingStatusImplCopyWith<$Res>
   $CodeableConceptCopyWith<$Res> get status;
   @override
   $PeriodCopyWith<$Res>? get dateRange;
-  @override
-  $ElementCopyWith<$Res>? get restoreDateElement;
 }
 
 /// @nodoc

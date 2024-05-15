@@ -359,6 +359,9 @@ class Composition with Resource, _$Composition {
     List<CompositionSection>? section,
   }) = _Composition;
 
+  @override
+  String get fhirType => 'Composition';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -407,7 +410,7 @@ class Composition with Resource, _$Composition {
 ///  must be included as subsequent entries in the Bundle (for example Patient,
 ///  Practitioner, Encounter, etc.).
 @freezed
-class CompositionAttester with _$CompositionAttester {
+class CompositionAttester with BackboneType, _$CompositionAttester {
   /// [CompositionAttester] A set of healthcare-related information that is
   ///  assembled together into a single logical package that provides a single
   ///  coherent statement of meaning, establishes its own context and that has
@@ -505,8 +508,8 @@ class CompositionAttester with _$CompositionAttester {
     Reference? party,
   }) = _CompositionAttester;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CompositionAttester';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CompositionAttester.fromYaml(dynamic yaml) => yaml is String
@@ -534,10 +537,6 @@ class CompositionAttester with _$CompositionAttester {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CompositionEvent] A set of healthcare-related information that is
@@ -551,7 +550,7 @@ class CompositionAttester with _$CompositionAttester {
 ///  must be included as subsequent entries in the Bundle (for example Patient,
 ///  Practitioner, Encounter, etc.).
 @freezed
-class CompositionEvent with _$CompositionEvent {
+class CompositionEvent with BackboneType, _$CompositionEvent {
   /// [CompositionEvent] A set of healthcare-related information that is
   ///  assembled together into a single logical package that provides a single
   ///  coherent statement of meaning, establishes its own context and that has
@@ -653,8 +652,8 @@ class CompositionEvent with _$CompositionEvent {
     List<CodeableReference>? detail,
   }) = _CompositionEvent;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CompositionEvent';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CompositionEvent.fromYaml(dynamic yaml) => yaml is String
@@ -682,10 +681,6 @@ class CompositionEvent with _$CompositionEvent {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [CompositionSection] A set of healthcare-related information that is
@@ -699,7 +694,7 @@ class CompositionEvent with _$CompositionEvent {
 ///  must be included as subsequent entries in the Bundle (for example Patient,
 ///  Practitioner, Encounter, etc.).
 @freezed
-class CompositionSection with _$CompositionSection {
+class CompositionSection with BackboneType, _$CompositionSection {
   /// [CompositionSection] A set of healthcare-related information that is
   ///  assembled together into a single logical package that provides a single
   ///  coherent statement of meaning, establishes its own context and that has
@@ -865,8 +860,8 @@ class CompositionSection with _$CompositionSection {
     List<CompositionSection>? section,
   }) = _CompositionSection;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'CompositionSection';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory CompositionSection.fromYaml(dynamic yaml) => yaml is String
@@ -894,10 +889,6 @@ class CompositionSection with _$CompositionSection {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [DocumentReference] A reference to a document of any kind for any purpose.
@@ -1271,6 +1262,9 @@ class DocumentReference with Resource, _$DocumentReference {
     required List<DocumentReferenceContent> content,
   }) = _DocumentReference;
 
+  @override
+  String get fhirType => 'DocumentReference';
+
   /// Produces a Yaml formatted String version of the object
   @override
   String toYaml() => json2yaml(toJson());
@@ -1318,7 +1312,7 @@ class DocumentReference with Resource, _$DocumentReference {
 ///  that the document can be discovered and managed.  The actual content may
 ///  be inline base64 encoded data or provided by direct reference.
 @freezed
-class DocumentReferenceAttester with _$DocumentReferenceAttester {
+class DocumentReferenceAttester with BackboneType, _$DocumentReferenceAttester {
   /// [DocumentReferenceAttester] A reference to a document of any kind for any
   ///  purpose. While the term “document” implies a more narrow focus, for this
   ///  resource this "document" encompasses *any* serialized object with a
@@ -1416,8 +1410,8 @@ class DocumentReferenceAttester with _$DocumentReferenceAttester {
     Reference? party,
   }) = _DocumentReferenceAttester;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'DocumentReferenceAttester';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory DocumentReferenceAttester.fromYaml(dynamic yaml) => yaml is String
@@ -1445,10 +1439,6 @@ class DocumentReferenceAttester with _$DocumentReferenceAttester {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [DocumentReferenceRelatesTo] A reference to a document of any kind for any
@@ -1461,7 +1451,8 @@ class DocumentReferenceAttester with _$DocumentReferenceAttester {
 ///  that the document can be discovered and managed.  The actual content may
 ///  be inline base64 encoded data or provided by direct reference.
 @freezed
-class DocumentReferenceRelatesTo with _$DocumentReferenceRelatesTo {
+class DocumentReferenceRelatesTo
+    with BackboneType, _$DocumentReferenceRelatesTo {
   /// [DocumentReferenceRelatesTo] A reference to a document of any kind for
   ///  any purpose. While the term “document” implies a more narrow focus, for
   ///  this resource this "document" encompasses *any* serialized object with a
@@ -1551,8 +1542,8 @@ class DocumentReferenceRelatesTo with _$DocumentReferenceRelatesTo {
     required Reference target,
   }) = _DocumentReferenceRelatesTo;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'DocumentReferenceRelatesTo';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory DocumentReferenceRelatesTo.fromYaml(dynamic yaml) => yaml is String
@@ -1580,10 +1571,6 @@ class DocumentReferenceRelatesTo with _$DocumentReferenceRelatesTo {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [DocumentReferenceContent] A reference to a document of any kind for any
@@ -1596,7 +1583,7 @@ class DocumentReferenceRelatesTo with _$DocumentReferenceRelatesTo {
 ///  that the document can be discovered and managed.  The actual content may
 ///  be inline base64 encoded data or provided by direct reference.
 @freezed
-class DocumentReferenceContent with _$DocumentReferenceContent {
+class DocumentReferenceContent with BackboneType, _$DocumentReferenceContent {
   /// [DocumentReferenceContent] A reference to a document of any kind for any
   ///  purpose. While the term “document” implies a more narrow focus, for this
   ///  resource this "document" encompasses *any* serialized object with a
@@ -1690,8 +1677,8 @@ class DocumentReferenceContent with _$DocumentReferenceContent {
     List<DocumentReferenceProfile>? profile,
   }) = _DocumentReferenceContent;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'DocumentReferenceContent';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory DocumentReferenceContent.fromYaml(dynamic yaml) => yaml is String
@@ -1719,10 +1706,6 @@ class DocumentReferenceContent with _$DocumentReferenceContent {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
 
 /// [DocumentReferenceProfile] A reference to a document of any kind for any
@@ -1735,7 +1718,7 @@ class DocumentReferenceContent with _$DocumentReferenceContent {
 ///  that the document can be discovered and managed.  The actual content may
 ///  be inline base64 encoded data or provided by direct reference.
 @freezed
-class DocumentReferenceProfile with _$DocumentReferenceProfile {
+class DocumentReferenceProfile with BackboneType, _$DocumentReferenceProfile {
   /// [DocumentReferenceProfile] A reference to a document of any kind for any
   ///  purpose. While the term “document” implies a more narrow focus, for this
   ///  resource this "document" encompasses *any* serialized object with a
@@ -1839,8 +1822,8 @@ class DocumentReferenceProfile with _$DocumentReferenceProfile {
     @JsonKey(name: '_valueCanonical') Element? valueCanonicalElement,
   }) = _DocumentReferenceProfile;
 
-  /// Produces a Yaml formatted String version of the object
-  String toYaml() => json2yaml(toJson());
+  @override
+  String get fhirType => 'DocumentReferenceProfile';
 
   /// Factory constructor that accepts a [String] in YAML format as an argument
   factory DocumentReferenceProfile.fromYaml(dynamic yaml) => yaml is String
@@ -1868,8 +1851,4 @@ class DocumentReferenceProfile with _$DocumentReferenceProfile {
           'This does not properly decode to a Map<String,dynamic>.');
     }
   }
-
-  /// Another convenience method because more and more I'm transmitting FHIR
-  /// data as a String and not a Map
-  String toJsonString() => jsonEncode(toJson());
 }
