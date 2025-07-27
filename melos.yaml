@@ -1,0 +1,5 @@
+name: fhir_r5
+
+packages:
+  - apps/**
+  - packages/**
