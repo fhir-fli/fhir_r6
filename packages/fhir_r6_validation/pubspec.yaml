@@ -18,7 +18,8 @@ environment:
 
 dependencies:
   collection: ^1.19.0
-  fhir_r6: ^0.4.0
+  fhir_r6:
+    path: ../fhir_r6
   # fhir_r6_path: ^0.4.3
   fhir_r6_path:
     path: ../fhir_r6_path
