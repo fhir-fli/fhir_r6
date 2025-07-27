@@ -29,7 +29,7 @@ class DeviceMetric extends DomainResource {
     this.measurementFrequency,
     this.calibration,
   }) : super(
-          resourceType: R5ResourceType.DeviceMetric,
+          resourceType: R6ResourceType.DeviceMetric,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

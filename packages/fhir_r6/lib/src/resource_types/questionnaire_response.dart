@@ -33,7 +33,7 @@ class QuestionnaireResponse extends DomainResource {
     this.source,
     this.item,
   }) : super(
-          resourceType: R5ResourceType.QuestionnaireResponse,
+          resourceType: R6ResourceType.QuestionnaireResponse,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -28,7 +28,7 @@ class Basic extends DomainResource {
     this.created,
     this.author,
   }) : super(
-          resourceType: R5ResourceType.Basic,
+          resourceType: R6ResourceType.Basic,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

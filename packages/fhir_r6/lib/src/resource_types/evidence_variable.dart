@@ -56,7 +56,7 @@ class EvidenceVariable extends MetadataResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.EvidenceVariable,
+          resourceType: R6ResourceType.EvidenceVariable,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

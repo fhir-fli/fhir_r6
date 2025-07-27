@@ -71,7 +71,7 @@ class ExplanationOfBenefit extends DomainResource {
     this.benefitPeriod,
     this.benefitBalance,
   }) : super(
-          resourceType: R5ResourceType.ExplanationOfBenefit,
+          resourceType: R6ResourceType.ExplanationOfBenefit,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

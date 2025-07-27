@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         DeviceDefinition,
         DeviceDefinitionChargeItem,
@@ -18,10 +18,10 @@ import 'package:fhir_r5/fhir_r5.dart'
         DeviceDefinitionRegulatoryIdentifier,
         DeviceDefinitionUdiDeviceIdentifier,
         DeviceDefinitionVersion,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [DeviceDefinitionBuilder]
@@ -68,7 +68,7 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
     this.chargeItem,
   }) : super(
           objectPath: 'DeviceDefinition',
-          resourceType: R5ResourceType.DeviceDefinition,
+          resourceType: R6ResourceType.DeviceDefinition,
         );
 
   /// An empty constructor for partial usage.

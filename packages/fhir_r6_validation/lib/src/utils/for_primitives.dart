@@ -1,4 +1,4 @@
-import 'package:fhir_r5/fhir_r5.dart';
+import 'package:fhir_r6/fhir_r6.dart';
 
 /// List of the Strings for the primitive types
 bool isPrimitiveType(String type) => <String>[

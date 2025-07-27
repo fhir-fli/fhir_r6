@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         AuditEvent,
         AuditEventAgent,
@@ -7,10 +7,10 @@ import 'package:fhir_r5/fhir_r5.dart'
         AuditEventEntity,
         AuditEventOutcome,
         AuditEventSource,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [AuditEventBuilder]
@@ -48,7 +48,7 @@ class AuditEventBuilder extends DomainResourceBuilder {
   })  : occurredX = occurredX ?? occurredPeriod ?? occurredDateTime,
         super(
           objectPath: 'AuditEvent',
-          resourceType: R5ResourceType.AuditEvent,
+          resourceType: R6ResourceType.AuditEvent,
         );
 
   /// An empty constructor for partial usage.

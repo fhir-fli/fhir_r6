@@ -55,7 +55,7 @@ class DeviceRequest extends DomainResource {
             occurrencePeriod ??
             occurrenceTiming,
         super(
-          resourceType: R5ResourceType.DeviceRequest,
+          resourceType: R6ResourceType.DeviceRequest,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

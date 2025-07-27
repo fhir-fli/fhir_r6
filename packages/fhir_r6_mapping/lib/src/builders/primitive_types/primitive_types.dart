@@ -1,7 +1,7 @@
 // imports
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         FhirBase64Binary,
         FhirBoolean,
@@ -25,7 +25,7 @@ import 'package:fhir_r5/fhir_r5.dart'
         FhirUuid,
         FhirXhtml,
         InvalidTypes;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:uuid/uuid.dart';
 import 'package:xml/xml.dart';
 import 'package:yaml/yaml.dart';

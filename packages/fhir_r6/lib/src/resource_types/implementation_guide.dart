@@ -53,7 +53,7 @@ class ImplementationGuide extends CanonicalResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.ImplementationGuide,
+          resourceType: R6ResourceType.ImplementationGuide,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -1,4 +1,4 @@
-import 'package:fhir_r5/fhir_r5.dart';
+import 'package:fhir_r6/fhir_r6.dart';
 
 /// Extension on [Map<String, dynamic] to check if it is a resource.
 extension IsResource on Map<String, dynamic> {
@@ -8,7 +8,7 @@ extension IsResource on Map<String, dynamic> {
     if (type == null) {
       return false;
     }
-    return R5ResourceType.typesAsStrings.contains(type) ||
+    return R6ResourceType.typesAsStrings.contains(type) ||
         type.toLowerCase().contains('tright') ||
         type.toLowerCase().contains('tleft');
   }

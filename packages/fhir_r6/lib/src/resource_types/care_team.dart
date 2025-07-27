@@ -32,7 +32,7 @@ class CareTeam extends DomainResource {
     this.telecom,
     this.note,
   }) : super(
-          resourceType: R5ResourceType.CareTeam,
+          resourceType: R6ResourceType.CareTeam,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

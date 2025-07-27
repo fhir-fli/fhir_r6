@@ -36,7 +36,7 @@ class EpisodeOfCare extends DomainResource {
     this.careTeam,
     this.account,
   }) : super(
-          resourceType: R5ResourceType.EpisodeOfCare,
+          resourceType: R6ResourceType.EpisodeOfCare,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

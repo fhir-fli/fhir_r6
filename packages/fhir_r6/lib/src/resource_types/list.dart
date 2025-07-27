@@ -34,7 +34,7 @@ class FhirList extends DomainResource {
     this.entry,
     this.emptyReason,
   }) : super(
-          resourceType: R5ResourceType.FhirList,
+          resourceType: R6ResourceType.FhirList,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

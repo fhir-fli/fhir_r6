@@ -34,7 +34,7 @@ class MessageHeader extends DomainResource {
     this.focus,
     this.definition,
   }) : super(
-          resourceType: R5ResourceType.MessageHeader,
+          resourceType: R6ResourceType.MessageHeader,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

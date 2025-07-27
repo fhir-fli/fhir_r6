@@ -53,7 +53,7 @@ class TestScript extends CanonicalResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.TestScript,
+          resourceType: R6ResourceType.TestScript,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

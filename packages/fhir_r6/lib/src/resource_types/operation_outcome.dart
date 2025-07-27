@@ -22,7 +22,7 @@ class OperationOutcome extends DomainResource {
     super.modifierExtension,
     required this.issue,
   }) : super(
-          resourceType: R5ResourceType.OperationOutcome,
+          resourceType: R6ResourceType.OperationOutcome,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

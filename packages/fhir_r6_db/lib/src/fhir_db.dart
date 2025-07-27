@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:collection/collection.dart';
-import 'package:fhir_r5/fhir_r5.dart';
-import 'package:fhir_r5_db/fhir_r5_db.dart';
+import 'package:fhir_r6/fhir_r6.dart';
+import 'package:fhir_r6_db/fhir_r6_db.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -20,7 +20,7 @@ class FhirDb {
 
   bool _initialized = false;
   Completer<void>? _initCompleter;
-  Set<R5ResourceType> _types = <R5ResourceType>{};
+  Set<R6ResourceType> _types = <R6ResourceType>{};
 
   /// Set to true if you want to store resources for sync
   bool storeForSync = false;
@@ -49,7 +49,7 @@ class FhirDb {
               .get('types')
               ?.map((String e) => Resource.resourceTypeFromString(e)!)
               .toSet() ??
-          <R5ResourceType>{};
+          <R6ResourceType>{};
       await Hive.openBox<Map<dynamic, dynamic>>(
         'sync',
         encryptionCipher: cipher,
@@ -160,7 +160,7 @@ class FhirDb {
 
   /// This is to get a specific Box
   Future<Box<Map<dynamic, dynamic>>> _getBox({
-    required R5ResourceType resourceType,
+    required R6ResourceType resourceType,
     String? pw,
   }) async {
     await _ensureInit(pw: pw);
@@ -182,7 +182,7 @@ class FhirDb {
   /// and after we can assume the 'types' box is open, get the Set, update
   /// it, write it back, and return true.
   Future<bool> _addType({
-    required R5ResourceType resourceType,
+    required R6ResourceType resourceType,
     String? pw,
   }) async {
     if (!_types.add(resourceType)) {
@@ -319,7 +319,7 @@ class FhirDb {
   }
 
   Future<bool> _saveToDb({
-    required R5ResourceType resourceType,
+    required R6ResourceType resourceType,
     required Map<String, dynamic> resource,
     String? pw,
   }) async {
@@ -361,7 +361,7 @@ class FhirDb {
 
   /// function used to check if a resource exists in the db
   Future<bool> exists({
-    required R5ResourceType resourceType,
+    required R6ResourceType resourceType,
     required String id,
     String? pw,
   }) async {
@@ -375,7 +375,7 @@ class FhirDb {
 
   /// function used to get a specific resource from the db
   BehaviorSubject<Resource?> subject({
-    required R5ResourceType resourceType,
+    required R6ResourceType resourceType,
     String? id,
     String? pw,
   }) {
@@ -412,7 +412,7 @@ class FhirDb {
   /// function used to save a new resource in the db
   /// Retrieves a resource from the db based on its type and id.
   Future<Resource?> get({
-    required R5ResourceType resourceType,
+    required R6ResourceType resourceType,
     required String id,
     String? pw,
   }) async {
@@ -447,7 +447,7 @@ class FhirDb {
   /// Refactored for clarity and reduced redundancy
   Future<List<Resource>> find({
     Resource? resource,
-    R5ResourceType? resourceType,
+    R6ResourceType? resourceType,
     String? id,
     List<Object>? field,
     String? value,
@@ -479,7 +479,7 @@ class FhirDb {
   }
 
   Future<List<Resource>> _searchById(
-    R5ResourceType resourceType,
+    R6ResourceType resourceType,
     String id,
     String? pw,
   ) async {
@@ -492,7 +492,7 @@ class FhirDb {
   }
 
   Future<List<Resource>> _searchByField(
-    R5ResourceType resourceType,
+    R6ResourceType resourceType,
     List<Object> field,
     String value,
     String? pw,
@@ -515,12 +515,12 @@ class FhirDb {
 
   /// returns all resources of a specific type
   Future<List<Resource>> getActiveResourcesOfType({
-    List<R5ResourceType>? resourceTypes,
+    List<R6ResourceType>? resourceTypes,
     List<String>? resourceTypeStrings,
     Resource? resource,
     String? pw,
   }) async {
-    final typeList = <R5ResourceType>{};
+    final typeList = <R6ResourceType>{};
     if (resource?.resourceType != null) {
       typeList.add(resource!.resourceType);
     }
@@ -529,7 +529,7 @@ class FhirDb {
     }
     if (resourceTypeStrings != null) {
       for (final type in resourceTypeStrings) {
-        final resourceType = R5ResourceType.fromString(type);
+        final resourceType = R6ResourceType.fromString(type);
         if (resourceType != null) {
           typeList.add(resourceType);
         }
@@ -562,7 +562,7 @@ class FhirDb {
   /// Delete specific resource
   Future<bool> delete({
     Resource? resource,
-    R5ResourceType? resourceType,
+    R6ResourceType? resourceType,
     String? id,
     bool Function(Map<String, dynamic>)? finder,
     String? pw,
@@ -597,7 +597,7 @@ class FhirDb {
   /// that type - Note: will NOT delete any _historical stores (must pass in
   /// _history as the type for this to happen)
   Future<bool> deleteSingleType({
-    R5ResourceType? resourceType,
+    R6ResourceType? resourceType,
     Resource? resource,
     String? pw,
   }) async {
@@ -611,7 +611,7 @@ class FhirDb {
   }
 
   Future<bool> _deleteById({
-    required R5ResourceType resourceType,
+    required R6ResourceType resourceType,
     required String id,
     String? pw,
   }) async {
@@ -628,7 +628,7 @@ class FhirDb {
   }
 
   Future<bool> _deleteFromDb({
-    required R5ResourceType resourceType,
+    required R6ResourceType resourceType,
     required bool Function(Map<String, dynamic>) finder,
     String? pw,
   }) async {
@@ -651,7 +651,7 @@ class FhirDb {
   }
 
   Future<bool> _deleteSingleType({
-    required R5ResourceType resourceType,
+    required R6ResourceType resourceType,
     String? pw,
   }) async {
     try {
@@ -695,7 +695,7 @@ class FhirDb {
   ///
   /// search: searches for a specific resource in the db
   Future<Iterable<Resource>> search({
-    required R5ResourceType resourceType,
+    required R6ResourceType resourceType,
     required bool Function(Map<String, dynamic>) finder,
     String? pw,
   }) async {
@@ -859,7 +859,7 @@ class FhirDb {
 
   /// Retrieves a all Canonical Resources of a type from the database
   Future<List<T>> getAllCanonicalByType<T extends CanonicalResource>({
-    required R5ResourceType type,
+    required R6ResourceType type,
     String? pw,
   }) async {
     await _ensureInit(pw: pw);
@@ -1121,7 +1121,7 @@ class FhirDb {
 
   /// Specify a list of which boxes you want to close
   Future<void> closeResourceBoxes({
-    required List<R5ResourceType> types,
+    required List<R6ResourceType> types,
     String? pw,
   }) async {
     await _ensureInit(pw: pw);

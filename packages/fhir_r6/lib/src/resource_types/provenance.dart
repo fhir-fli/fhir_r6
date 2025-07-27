@@ -46,7 +46,7 @@ class Provenance extends DomainResource {
     this.signature,
   })  : occurredX = occurredX ?? occurredPeriod ?? occurredDateTime,
         super(
-          resourceType: R5ResourceType.Provenance,
+          resourceType: R6ResourceType.Provenance,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

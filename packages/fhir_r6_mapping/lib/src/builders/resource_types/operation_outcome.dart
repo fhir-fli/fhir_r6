@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         OperationOutcome,
         OperationOutcomeIssue,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [OperationOutcomeBuilder]
@@ -28,7 +28,7 @@ class OperationOutcomeBuilder extends DomainResourceBuilder {
     this.issue,
   }) : super(
           objectPath: 'OperationOutcome',
-          resourceType: R5ResourceType.OperationOutcome,
+          resourceType: R6ResourceType.OperationOutcome,
         );
 
   /// An empty constructor for partial usage.

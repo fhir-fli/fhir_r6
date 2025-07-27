@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         NutritionOrder,
         NutritionOrderAdditive,
@@ -12,10 +12,10 @@ import 'package:fhir_r5/fhir_r5.dart'
         NutritionOrderSchedule2,
         NutritionOrderSupplement,
         NutritionOrderTexture,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [NutritionOrderBuilder]
@@ -59,7 +59,7 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
     this.note,
   }) : super(
           objectPath: 'NutritionOrder',
-          resourceType: R5ResourceType.NutritionOrder,
+          resourceType: R6ResourceType.NutritionOrder,
         );
 
   /// An empty constructor for partial usage.

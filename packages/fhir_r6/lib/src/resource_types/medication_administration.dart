@@ -45,7 +45,7 @@ class MedicationAdministration extends DomainResource {
     this.dosage,
     this.eventHistory,
   }) : super(
-          resourceType: R5ResourceType.MedicationAdministration,
+          resourceType: R6ResourceType.MedicationAdministration,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

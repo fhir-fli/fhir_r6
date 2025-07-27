@@ -47,7 +47,7 @@ class StructureMap extends CanonicalResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.StructureMap,
+          resourceType: R6ResourceType.StructureMap,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

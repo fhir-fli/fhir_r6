@@ -41,7 +41,7 @@ class Consent extends DomainResource {
     this.decision,
     this.provision,
   }) : super(
-          resourceType: R5ResourceType.Consent,
+          resourceType: R6ResourceType.Consent,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

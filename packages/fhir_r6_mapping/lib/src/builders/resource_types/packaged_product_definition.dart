@@ -1,17 +1,17 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         PackagedProductDefinition,
         PackagedProductDefinitionContainedItem,
         PackagedProductDefinitionLegalStatusOfSupply,
         PackagedProductDefinitionPackaging,
         PackagedProductDefinitionProperty,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [PackagedProductDefinitionBuilder]
@@ -46,7 +46,7 @@ class PackagedProductDefinitionBuilder extends DomainResourceBuilder {
     this.characteristic,
   }) : super(
           objectPath: 'PackagedProductDefinition',
-          resourceType: R5ResourceType.PackagedProductDefinition,
+          resourceType: R6ResourceType.PackagedProductDefinition,
         );
 
   /// An empty constructor for partial usage.

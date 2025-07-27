@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
-        R5ResourceType,
+        R6ResourceType,
         Task,
         TaskInput,
         TaskOutput,
@@ -9,7 +9,7 @@ import 'package:fhir_r5/fhir_r5.dart'
         TaskRestriction,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [TaskBuilder]
@@ -62,7 +62,7 @@ class TaskBuilder extends DomainResourceBuilder {
     this.output,
   }) : super(
           objectPath: 'Task',
-          resourceType: R5ResourceType.Task,
+          resourceType: R6ResourceType.Task,
         );
 
   /// An empty constructor for partial usage.

@@ -36,7 +36,7 @@ class ArtifactAssessment extends DomainResource {
     this.disposition,
   })  : citeAsX = citeAsX ?? citeAsReference ?? citeAsMarkdown,
         super(
-          resourceType: R5ResourceType.ArtifactAssessment,
+          resourceType: R6ResourceType.ArtifactAssessment,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

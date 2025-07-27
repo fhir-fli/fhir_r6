@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         AdverseEvent,
         AdverseEventCausality,
@@ -9,10 +9,10 @@ import 'package:fhir_r5/fhir_r5.dart'
         AdverseEventPreventiveAction,
         AdverseEventSupportingInfo,
         AdverseEventSuspectEntity,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [AdverseEventBuilder]
@@ -76,7 +76,7 @@ class AdverseEventBuilder extends DomainResourceBuilder {
             occurrenceTiming,
         super(
           objectPath: 'AdverseEvent',
-          resourceType: R5ResourceType.AdverseEvent,
+          resourceType: R6ResourceType.AdverseEvent,
         );
 
   /// An empty constructor for partial usage.

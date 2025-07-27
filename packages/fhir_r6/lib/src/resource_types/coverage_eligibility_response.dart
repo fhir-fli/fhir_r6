@@ -40,7 +40,7 @@ class CoverageEligibilityResponse extends DomainResource {
     this.error,
   })  : servicedX = servicedX ?? servicedDate ?? servicedPeriod,
         super(
-          resourceType: R5ResourceType.CoverageEligibilityResponse,
+          resourceType: R6ResourceType.CoverageEligibilityResponse,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

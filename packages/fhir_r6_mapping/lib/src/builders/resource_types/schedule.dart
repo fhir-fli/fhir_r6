@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
-    show R5ResourceType, Schedule, yamlMapToJson, yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6/fhir_r6.dart'
+    show R6ResourceType, Schedule, yamlMapToJson, yamlToJson;
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [ScheduleBuilder]
@@ -31,7 +31,7 @@ class ScheduleBuilder extends DomainResourceBuilder {
     this.comment,
   }) : super(
           objectPath: 'Schedule',
-          resourceType: R5ResourceType.Schedule,
+          resourceType: R6ResourceType.Schedule,
         );
 
   /// An empty constructor for partial usage.

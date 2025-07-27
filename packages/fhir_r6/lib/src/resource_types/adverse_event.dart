@@ -64,7 +64,7 @@ class AdverseEvent extends DomainResource {
             occurrencePeriod ??
             occurrenceTiming,
         super(
-          resourceType: R5ResourceType.AdverseEvent,
+          resourceType: R6ResourceType.AdverseEvent,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

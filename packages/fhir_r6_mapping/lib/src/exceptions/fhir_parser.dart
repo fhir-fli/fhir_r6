@@ -1,4 +1,4 @@
-import 'package:fhir_r5/fhir_r5.dart';
+import 'package:fhir_r6/fhir_r6.dart';
 
 /// Exception thrown when there is an error parsing FHIR data.
 class FhirParserException extends FHIRException {

@@ -52,7 +52,7 @@ class Transport extends DomainResource {
     this.reason,
     this.history,
   }) : super(
-          resourceType: R5ResourceType.Transport,
+          resourceType: R6ResourceType.Transport,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

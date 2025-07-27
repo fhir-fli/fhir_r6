@@ -33,7 +33,7 @@ class AppointmentResponse extends DomainResource {
     this.occurrenceDate,
     this.recurrenceId,
   }) : super(
-          resourceType: R5ResourceType.AppointmentResponse,
+          resourceType: R6ResourceType.AppointmentResponse,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

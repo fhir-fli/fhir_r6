@@ -115,12 +115,12 @@ abstract class DomainResource extends Resource {
     }
   }
 
-  /// Returns a [R5ResourceType] from a [String]
-  static R5ResourceType? resourceTypeFromString(String type) =>
-      R5ResourceType.fromString(type);
+  /// Returns a [R6ResourceType] from a [String]
+  static R6ResourceType? resourceTypeFromString(String type) =>
+      R6ResourceType.fromString(type);
 
-  /// Returns a [String] from a [R5ResourceType]
-  static String resourceTypeToString(R5ResourceType type) => type.toString();
+  /// Returns a [String] from a [R6ResourceType]
+  static String resourceTypeToString(R6ResourceType type) => type.toString();
 
   @override
   DomainResource clone();

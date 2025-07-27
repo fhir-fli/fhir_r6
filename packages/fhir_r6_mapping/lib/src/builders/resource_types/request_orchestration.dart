@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
-        R5ResourceType,
+        R6ResourceType,
         RequestOrchestration,
         RequestOrchestrationAction,
         RequestOrchestrationCondition,
@@ -12,7 +12,7 @@ import 'package:fhir_r5/fhir_r5.dart'
         RequestOrchestrationRelatedAction,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [RequestOrchestrationBuilder]
@@ -52,7 +52,7 @@ class RequestOrchestrationBuilder extends DomainResourceBuilder {
     this.action,
   }) : super(
           objectPath: 'RequestOrchestration',
-          resourceType: R5ResourceType.RequestOrchestration,
+          resourceType: R6ResourceType.RequestOrchestration,
         );
 
   /// An empty constructor for partial usage.

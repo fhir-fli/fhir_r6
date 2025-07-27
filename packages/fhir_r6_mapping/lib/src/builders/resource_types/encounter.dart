@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         Encounter,
         EncounterAdmission,
@@ -7,10 +7,10 @@ import 'package:fhir_r5/fhir_r5.dart'
         EncounterLocation,
         EncounterParticipant,
         EncounterReason,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [EncounterBuilder]
@@ -62,7 +62,7 @@ class EncounterBuilder extends DomainResourceBuilder {
     this.location,
   }) : super(
           objectPath: 'Encounter',
-          resourceType: R5ResourceType.Encounter,
+          resourceType: R6ResourceType.Encounter,
         );
 
   /// An empty constructor for partial usage.

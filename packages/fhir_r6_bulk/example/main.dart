@@ -1,8 +1,8 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart';
-import 'package:fhir_r5_bulk/fhir_r5_bulk.dart';
+import 'package:fhir_r6/fhir_r6.dart';
+import 'package:fhir_r6_bulk/fhir_r6_bulk.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:test/test.dart';
@@ -117,7 +117,7 @@ void main() {
         client: mockClient,
         useHttpPost: true, // <--- we do POST-based approach
         types: [
-          WhichResource(R5ResourceType.Patient),
+          WhichResource(R6ResourceType.Patient),
         ],
       );
 
@@ -148,7 +148,7 @@ void main() {
         base: Uri.parse('http://fake-server/fhir'),
         files: [
           ImportFile(
-            resourceType: R5ResourceType.Patient,
+            resourceType: R6ResourceType.Patient,
             url: Uri.parse('http://fake/patients.ndjson'),
           ),
         ],
@@ -199,12 +199,12 @@ void main() {
         useHttpPost: true, // do POST
         // Optionally specify resource types
         types: [
-          WhichResource(R5ResourceType.AllergyIntolerance),
-          WhichResource(R5ResourceType.Device),
-          WhichResource(R5ResourceType.ImagingStudy),
-          WhichResource(R5ResourceType.Patient),
-          WhichResource(R5ResourceType.DocumentReference),
-          WhichResource(R5ResourceType.Immunization),
+          WhichResource(R6ResourceType.AllergyIntolerance),
+          WhichResource(R6ResourceType.Device),
+          WhichResource(R6ResourceType.ImagingStudy),
+          WhichResource(R6ResourceType.Patient),
+          WhichResource(R6ResourceType.DocumentReference),
+          WhichResource(R6ResourceType.Immunization),
         ],
       );
 

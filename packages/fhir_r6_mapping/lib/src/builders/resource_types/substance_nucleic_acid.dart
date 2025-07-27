@@ -1,14 +1,14 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
-        R5ResourceType,
+        R6ResourceType,
         SubstanceNucleicAcid,
         SubstanceNucleicAcidLinkage,
         SubstanceNucleicAcidSubunit,
         SubstanceNucleicAcidSugar,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [SubstanceNucleicAcidBuilder]
@@ -36,7 +36,7 @@ class SubstanceNucleicAcidBuilder extends DomainResourceBuilder {
     this.subunit,
   }) : super(
           objectPath: 'SubstanceNucleicAcid',
-          resourceType: R5ResourceType.SubstanceNucleicAcid,
+          resourceType: R6ResourceType.SubstanceNucleicAcid,
         );
 
   /// An empty constructor for partial usage.

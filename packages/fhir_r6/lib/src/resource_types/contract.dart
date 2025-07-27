@@ -62,7 +62,7 @@ class Contract extends DomainResource {
             legallyBindingAttachment ??
             legallyBindingReference,
         super(
-          resourceType: R5ResourceType.Contract,
+          resourceType: R6ResourceType.Contract,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -42,7 +42,7 @@ class Invoice extends DomainResource {
     this.note,
   })  : periodX = periodX ?? periodDate ?? periodPeriod,
         super(
-          resourceType: R5ResourceType.Invoice,
+          resourceType: R6ResourceType.Invoice,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

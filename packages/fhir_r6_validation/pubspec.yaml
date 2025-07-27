@@ -1,8 +1,8 @@
-name: fhir_r5_validation
+name: fhir_r6_validation
 description: Utility Library that Peforms Validation and Mapping Functionality.
 version: 0.4.0
 homepage: https://www.fhirfli.dev/
-repository: https://github.com/fhir-fli/fhir_r5
+repository: https://github.com/fhir-fli/fhir_r6
 
 # This package supports all platforms listed below.
 platforms:
@@ -18,10 +18,10 @@ environment:
 
 dependencies:
   collection: ^1.19.0
-  fhir_r5: ^0.4.0
-  # fhir_r5_path: ^0.4.3
-  fhir_r5_path:
-    path: ../fhir_r5_path
+  fhir_r6: ^0.4.0
+  # fhir_r6_path: ^0.4.3
+  fhir_r6_path:
+    path: ../fhir_r6_path
   http: ^1.3.0
 
 dev_dependencies:

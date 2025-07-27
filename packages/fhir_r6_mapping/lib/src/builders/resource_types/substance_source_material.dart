@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
-        R5ResourceType,
+        R6ResourceType,
         SubstanceSourceMaterial,
         SubstanceSourceMaterialAuthor,
         SubstanceSourceMaterialFractionDescription,
@@ -11,7 +11,7 @@ import 'package:fhir_r5/fhir_r5.dart'
         SubstanceSourceMaterialPartDescription,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [SubstanceSourceMaterialBuilder]
@@ -58,7 +58,7 @@ class SubstanceSourceMaterialBuilder extends DomainResourceBuilder {
     this.partDescription,
   }) : super(
           objectPath: 'SubstanceSourceMaterial',
-          resourceType: R5ResourceType.SubstanceSourceMaterial,
+          resourceType: R6ResourceType.SubstanceSourceMaterial,
         );
 
   /// An empty constructor for partial usage.

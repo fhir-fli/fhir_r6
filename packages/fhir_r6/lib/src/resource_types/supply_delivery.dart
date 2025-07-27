@@ -38,7 +38,7 @@ class SupplyDelivery extends DomainResource {
             occurrencePeriod ??
             occurrenceTiming,
         super(
-          resourceType: R5ResourceType.SupplyDelivery,
+          resourceType: R6ResourceType.SupplyDelivery,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

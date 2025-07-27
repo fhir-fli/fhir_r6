@@ -24,7 +24,7 @@ class Bundle extends Resource {
     this.signature,
     this.issues,
   }) : super(
-          resourceType: R5ResourceType.Bundle,
+          resourceType: R6ResourceType.Bundle,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

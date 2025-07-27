@@ -1,15 +1,15 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         OperationDefinition,
         OperationDefinitionBinding,
         OperationDefinitionOverload,
         OperationDefinitionParameter,
         OperationDefinitionReferencedFrom,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [OperationDefinitionBuilder]
@@ -65,7 +65,7 @@ class OperationDefinitionBuilder extends CanonicalResourceBuilder {
             versionAlgorithmCoding,
         super(
           objectPath: 'OperationDefinition',
-          resourceType: R5ResourceType.OperationDefinition,
+          resourceType: R6ResourceType.OperationDefinition,
         );
 
   /// An empty constructor for partial usage.

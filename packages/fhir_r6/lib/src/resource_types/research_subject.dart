@@ -30,7 +30,7 @@ class ResearchSubject extends DomainResource {
     this.actualComparisonGroup,
     this.consent,
   }) : super(
-          resourceType: R5ResourceType.ResearchSubject,
+          resourceType: R6ResourceType.ResearchSubject,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

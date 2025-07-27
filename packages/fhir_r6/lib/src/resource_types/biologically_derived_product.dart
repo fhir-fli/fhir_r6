@@ -36,7 +36,7 @@ class BiologicallyDerivedProduct extends DomainResource {
     this.storageTempRequirements,
     this.property,
   }) : super(
-          resourceType: R5ResourceType.BiologicallyDerivedProduct,
+          resourceType: R6ResourceType.BiologicallyDerivedProduct,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

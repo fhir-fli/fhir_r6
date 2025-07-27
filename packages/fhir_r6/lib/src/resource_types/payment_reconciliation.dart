@@ -50,7 +50,7 @@ class PaymentReconciliation extends DomainResource {
     this.formCode,
     this.processNote,
   }) : super(
-          resourceType: R5ResourceType.PaymentReconciliation,
+          resourceType: R6ResourceType.PaymentReconciliation,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

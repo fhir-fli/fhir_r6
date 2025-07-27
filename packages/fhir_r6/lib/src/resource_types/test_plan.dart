@@ -48,7 +48,7 @@ class TestPlan extends CanonicalResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.TestPlan,
+          resourceType: R6ResourceType.TestPlan,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

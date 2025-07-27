@@ -52,7 +52,7 @@ class Encounter extends DomainResource {
     this.admission,
     this.location,
   }) : super(
-          resourceType: R5ResourceType.Encounter,
+          resourceType: R6ResourceType.Encounter,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

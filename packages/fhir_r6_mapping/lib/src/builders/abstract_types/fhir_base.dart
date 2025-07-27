@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
-import 'package:fhir_r5/fhir_r5.dart' as fhir;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6/fhir_r6.dart' as fhir;
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 
 /// Base class for all FHIR elements.
 abstract class FhirBaseBuilder {

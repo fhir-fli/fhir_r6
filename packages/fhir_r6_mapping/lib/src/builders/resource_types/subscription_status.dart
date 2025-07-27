@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
-        R5ResourceType,
+        R6ResourceType,
         SubscriptionStatus,
         SubscriptionStatusNotificationEvent,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [SubscriptionStatusBuilder]
@@ -34,7 +34,7 @@ class SubscriptionStatusBuilder extends DomainResourceBuilder {
     this.error,
   }) : super(
           objectPath: 'SubscriptionStatus',
-          resourceType: R5ResourceType.SubscriptionStatus,
+          resourceType: R6ResourceType.SubscriptionStatus,
         );
 
   /// An empty constructor for partial usage.

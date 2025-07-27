@@ -40,7 +40,7 @@ class MedicationKnowledge extends DomainResource {
     this.regulatory,
     this.definitional,
   }) : super(
-          resourceType: R5ResourceType.MedicationKnowledge,
+          resourceType: R6ResourceType.MedicationKnowledge,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -1,14 +1,14 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         MessageHeader,
         MessageHeaderDestination,
         MessageHeaderResponse,
         MessageHeaderSource,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [MessageHeaderBuilder]
@@ -45,7 +45,7 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
   })  : eventX = eventX ?? eventCoding ?? eventCanonical,
         super(
           objectPath: 'MessageHeader',
-          resourceType: R5ResourceType.MessageHeader,
+          resourceType: R6ResourceType.MessageHeader,
         );
 
   /// An empty constructor for partial usage.

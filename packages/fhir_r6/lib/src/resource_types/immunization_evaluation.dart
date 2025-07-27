@@ -35,7 +35,7 @@ class ImmunizationEvaluation extends DomainResource {
     this.doseNumber,
     this.seriesDoses,
   }) : super(
-          resourceType: R5ResourceType.ImmunizationEvaluation,
+          resourceType: R6ResourceType.ImmunizationEvaluation,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

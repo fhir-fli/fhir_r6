@@ -4,8 +4,8 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:fhir_r5/fhir_r5.dart';
-import 'package:fhir_r5_path/fhir_r5_path.dart';
+import 'package:fhir_r6/fhir_r6.dart';
+import 'package:fhir_r6_path/fhir_r6_path.dart';
 
 import 'package:ucum/ucum.dart';
 

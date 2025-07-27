@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
-        R5ResourceType,
+        R6ResourceType,
         SpecimenDefinition,
         SpecimenDefinitionAdditive,
         SpecimenDefinitionContainer,
@@ -9,7 +9,7 @@ import 'package:fhir_r5/fhir_r5.dart'
         SpecimenDefinitionTypeTested,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [SpecimenDefinitionBuilder]
@@ -65,7 +65,7 @@ class SpecimenDefinitionBuilder extends MetadataResourceBuilder {
         subjectX = subjectX ?? subjectCodeableConcept ?? subjectReference,
         super(
           objectPath: 'SpecimenDefinition',
-          resourceType: R5ResourceType.SpecimenDefinition,
+          resourceType: R6ResourceType.SpecimenDefinition,
         );
 
   /// An empty constructor for partial usage.

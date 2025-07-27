@@ -59,7 +59,7 @@ class Condition extends DomainResource {
             abatementRange ??
             abatementString,
         super(
-          resourceType: R5ResourceType.Condition,
+          resourceType: R6ResourceType.Condition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         DeviceMetric,
         DeviceMetricCalibration,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [DeviceMetricBuilder]
@@ -35,7 +35,7 @@ class DeviceMetricBuilder extends DomainResourceBuilder {
     this.calibration,
   }) : super(
           objectPath: 'DeviceMetric',
-          resourceType: R5ResourceType.DeviceMetric,
+          resourceType: R6ResourceType.DeviceMetric,
         );
 
   /// An empty constructor for partial usage.

@@ -48,7 +48,7 @@ class Composition extends DomainResource {
     this.event,
     this.section,
   }) : super(
-          resourceType: R5ResourceType.Composition,
+          resourceType: R6ResourceType.Composition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

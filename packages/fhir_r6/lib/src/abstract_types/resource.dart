@@ -23,7 +23,7 @@ abstract class Resource extends FhirBase {
   String get fhirType => 'Resource';
 
   /// The type of resource
-  final R5ResourceType resourceType;
+  final R6ResourceType resourceType;
 
   /// The logical id of the resource, as used in the URL for the resource.
   final FhirString? id;
@@ -112,12 +112,12 @@ abstract class Resource extends FhirBase {
   Resource updateVersion({FhirMeta? oldMeta, bool versionIdAsTime = false}) =>
       updateMeta(this, meta: oldMeta, versionIdAsTime: versionIdAsTime);
 
-  /// Returns a [R5ResourceType] from a [String]
-  static R5ResourceType? resourceTypeFromString(String type) =>
-      R5ResourceType.fromString(type);
+  /// Returns a [R6ResourceType] from a [String]
+  static R6ResourceType? resourceTypeFromString(String type) =>
+      R6ResourceType.fromString(type);
 
-  /// Returns a [String] from a [R5ResourceType]
-  static String resourceTypeToString(R5ResourceType type) => type.toString();
+  /// Returns a [String] from a [R6ResourceType]
+  static String resourceTypeToString(R6ResourceType type) => type.toString();
 
   @override
   Resource clone();

@@ -32,7 +32,7 @@ class ManufacturedItemDefinition extends DomainResource {
     this.property,
     this.component,
   }) : super(
-          resourceType: R5ResourceType.ManufacturedItemDefinition,
+          resourceType: R6ResourceType.ManufacturedItemDefinition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

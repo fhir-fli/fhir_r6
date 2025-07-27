@@ -46,7 +46,7 @@ class CarePlan extends DomainResource {
     this.activity,
     this.note,
   }) : super(
-          resourceType: R5ResourceType.CarePlan,
+          resourceType: R6ResourceType.CarePlan,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

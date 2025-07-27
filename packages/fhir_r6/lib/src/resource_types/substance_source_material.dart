@@ -47,7 +47,7 @@ class SubstanceSourceMaterial extends DomainResource {
     this.organism,
     this.partDescription,
   }) : super(
-          resourceType: R5ResourceType.SubstanceSourceMaterial,
+          resourceType: R6ResourceType.SubstanceSourceMaterial,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

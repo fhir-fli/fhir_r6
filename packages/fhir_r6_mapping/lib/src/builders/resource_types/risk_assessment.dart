@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
-        R5ResourceType,
+        R6ResourceType,
         RiskAssessment,
         RiskAssessmentPrediction,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [RiskAssessmentBuilder]
@@ -46,7 +46,7 @@ class RiskAssessmentBuilder extends DomainResourceBuilder {
   })  : occurrenceX = occurrenceX ?? occurrenceDateTime ?? occurrencePeriod,
         super(
           objectPath: 'RiskAssessment',
-          resourceType: R5ResourceType.RiskAssessment,
+          resourceType: R6ResourceType.RiskAssessment,
         );
 
   /// An empty constructor for partial usage.

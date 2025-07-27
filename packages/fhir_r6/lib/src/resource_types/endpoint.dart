@@ -35,7 +35,7 @@ class FhirEndpoint extends DomainResource {
     required this.address,
     this.header,
   }) : super(
-          resourceType: R5ResourceType.FhirEndpoint,
+          resourceType: R6ResourceType.FhirEndpoint,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

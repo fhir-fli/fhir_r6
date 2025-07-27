@@ -32,7 +32,7 @@ class Medication extends DomainResource {
     this.batch,
     this.definition,
   }) : super(
-          resourceType: R5ResourceType.Medication,
+          resourceType: R6ResourceType.Medication,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

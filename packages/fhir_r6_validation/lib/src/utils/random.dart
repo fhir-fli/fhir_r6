@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
-import 'package:fhir_r5/fhir_r5.dart';
-import 'package:fhir_r5_path/fhir_r5_path.dart';
+import 'package:fhir_r6/fhir_r6.dart';
+import 'package:fhir_r6_path/fhir_r6_path.dart';
 
 /// Determines the appropriate FHIR type code for an element.
 /// For polymorphic elements (ending in `[x]`), the code is derived
@@ -93,7 +93,7 @@ Future<Set<String>> getValueSetCodes(
 
   final codes = <String>{};
 
-  if (resource.resourceType == R5ResourceType.ValueSet) {
+  if (resource.resourceType == R6ResourceType.ValueSet) {
     final valueSet = resource as ValueSet;
 
     // Extract codes from ValueSet.compose.include
@@ -133,7 +133,7 @@ Future<Set<String>> getValueSetCodes(
         }
       }
     }
-  } else if (resource.resourceType == R5ResourceType.CodeSystem) {
+  } else if (resource.resourceType == R6ResourceType.CodeSystem) {
     final codeSystem = resource as CodeSystem;
 
     // Extract codes and sub-concepts recursively
@@ -163,7 +163,7 @@ Future<Set<String>> _fetchIncludedValueSetCodes(
 
   final includedCodes = <String>{};
 
-  if (resource.resourceType == R5ResourceType.ValueSet) {
+  if (resource.resourceType == R6ResourceType.ValueSet) {
     final includedValueSet = resource as ValueSet;
 
     // Process compose.include concepts
@@ -184,7 +184,7 @@ Future<Set<String>> _fetchIncludedValueSetCodes(
         }
       }
     }
-  } else if (resource.resourceType == R5ResourceType.CodeSystem) {
+  } else if (resource.resourceType == R6ResourceType.CodeSystem) {
     final includedCodeSystem = resource as CodeSystem;
     for (final concept in includedCodeSystem.concept ?? <CodeSystemConcept>[]) {
       includedCodes

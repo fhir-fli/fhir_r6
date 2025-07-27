@@ -1,15 +1,15 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         DocumentReference,
         DocumentReferenceAttester,
         DocumentReferenceContent,
         DocumentReferenceProfile,
         DocumentReferenceRelatesTo,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [DocumentReferenceBuilder]
@@ -60,7 +60,7 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
     this.content,
   }) : super(
           objectPath: 'DocumentReference',
-          resourceType: R5ResourceType.DocumentReference,
+          resourceType: R6ResourceType.DocumentReference,
         );
 
   /// An empty constructor for partial usage.

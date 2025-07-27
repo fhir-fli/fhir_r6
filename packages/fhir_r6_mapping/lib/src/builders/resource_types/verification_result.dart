@@ -1,14 +1,14 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
-        R5ResourceType,
+        R6ResourceType,
         VerificationResult,
         VerificationResultAttestation,
         VerificationResultPrimarySource,
         VerificationResultValidator,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [VerificationResultBuilder]
@@ -43,7 +43,7 @@ class VerificationResultBuilder extends DomainResourceBuilder {
     this.validator,
   }) : super(
           objectPath: 'VerificationResult',
-          resourceType: R5ResourceType.VerificationResult,
+          resourceType: R6ResourceType.VerificationResult,
         );
 
   /// An empty constructor for partial usage.

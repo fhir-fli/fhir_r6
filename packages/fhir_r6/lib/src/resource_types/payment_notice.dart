@@ -33,7 +33,7 @@ class PaymentNotice extends DomainResource {
     required this.amount,
     this.paymentStatus,
   }) : super(
-          resourceType: R5ResourceType.PaymentNotice,
+          resourceType: R6ResourceType.PaymentNotice,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -1,4 +1,4 @@
-# fhir_r5_path
+# fhir_r6_path
 
 ## [0.4.4]
 
@@ -21,7 +21,7 @@
 
 ## [0.4.0]
 
-* just update to use the most recent fhir_r5 package
+* just update to use the most recent fhir_r6 package
 * also changed to universal_io so no issues using with web
 * added example
 

@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         CareTeam,
         CareTeamParticipant,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [CareTeamBuilder]
@@ -38,7 +38,7 @@ class CareTeamBuilder extends DomainResourceBuilder {
     this.note,
   }) : super(
           objectPath: 'CareTeam',
-          resourceType: R5ResourceType.CareTeam,
+          resourceType: R6ResourceType.CareTeam,
         );
 
   /// An empty constructor for partial usage.

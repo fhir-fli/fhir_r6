@@ -60,7 +60,7 @@ class CapabilityStatement extends CanonicalResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.CapabilityStatement,
+          resourceType: R6ResourceType.CapabilityStatement,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -1,9 +1,9 @@
 // ignore_for_file: flutter_style_todos
 
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
-        R5ResourceType,
+        R6ResourceType,
         SubstancePolymer,
         SubstancePolymerDegreeOfPolymerisation,
         SubstancePolymerMonomerSet,
@@ -13,7 +13,7 @@ import 'package:fhir_r5/fhir_r5.dart'
         SubstancePolymerStructuralRepresentation,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [SubstancePolymerBuilder]
@@ -40,7 +40,7 @@ class SubstancePolymerBuilder extends DomainResourceBuilder {
     this.repeat,
   }) : super(
           objectPath: 'SubstancePolymer',
-          resourceType: R5ResourceType.SubstancePolymer,
+          resourceType: R6ResourceType.SubstancePolymer,
         );
 
   /// An empty constructor for partial usage.

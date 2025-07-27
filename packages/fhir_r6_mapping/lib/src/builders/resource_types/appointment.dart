@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         Appointment,
         AppointmentMonthlyTemplate,
@@ -7,10 +7,10 @@ import 'package:fhir_r5/fhir_r5.dart'
         AppointmentRecurrenceTemplate,
         AppointmentWeeklyTemplate,
         AppointmentYearlyTemplate,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [AppointmentBuilder]
@@ -64,7 +64,7 @@ class AppointmentBuilder extends DomainResourceBuilder {
     this.recurrenceTemplate,
   }) : super(
           objectPath: 'Appointment',
-          resourceType: R5ResourceType.Appointment,
+          resourceType: R6ResourceType.Appointment,
         );
 
   /// An empty constructor for partial usage.

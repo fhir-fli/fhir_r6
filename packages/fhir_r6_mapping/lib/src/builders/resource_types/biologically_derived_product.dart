@@ -1,13 +1,13 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         BiologicallyDerivedProduct,
         BiologicallyDerivedProductCollection,
         BiologicallyDerivedProductProperty,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [BiologicallyDerivedProductBuilder]
@@ -43,7 +43,7 @@ class BiologicallyDerivedProductBuilder extends DomainResourceBuilder {
     this.property,
   }) : super(
           objectPath: 'BiologicallyDerivedProduct',
-          resourceType: R5ResourceType.BiologicallyDerivedProduct,
+          resourceType: R6ResourceType.BiologicallyDerivedProduct,
         );
 
   /// An empty constructor for partial usage.

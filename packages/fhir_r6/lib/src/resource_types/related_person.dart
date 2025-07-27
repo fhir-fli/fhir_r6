@@ -34,7 +34,7 @@ class RelatedPerson extends DomainResource {
     this.period,
     this.communication,
   }) : super(
-          resourceType: R5ResourceType.RelatedPerson,
+          resourceType: R6ResourceType.RelatedPerson,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -34,7 +34,7 @@ class InsurancePlan extends DomainResource {
     this.coverage,
     this.plan,
   }) : super(
-          resourceType: R5ResourceType.InsurancePlan,
+          resourceType: R6ResourceType.InsurancePlan,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

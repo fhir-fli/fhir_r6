@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
-    show EventDefinition, R5ResourceType, yamlMapToJson, yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6/fhir_r6.dart'
+    show EventDefinition, R6ResourceType, yamlMapToJson, yamlToJson;
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [EventDefinitionBuilder]
@@ -60,7 +60,7 @@ class EventDefinitionBuilder extends MetadataResourceBuilder {
         subjectX = subjectX ?? subjectCodeableConcept ?? subjectReference,
         super(
           objectPath: 'EventDefinition',
-          resourceType: R5ResourceType.EventDefinition,
+          resourceType: R6ResourceType.EventDefinition,
         );
 
   /// An empty constructor for partial usage.

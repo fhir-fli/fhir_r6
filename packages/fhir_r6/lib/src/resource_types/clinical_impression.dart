@@ -49,7 +49,7 @@ class ClinicalImpression extends DomainResource {
     this.note,
   })  : effectiveX = effectiveX ?? effectiveDateTime ?? effectivePeriod,
         super(
-          resourceType: R5ResourceType.ClinicalImpression,
+          resourceType: R6ResourceType.ClinicalImpression,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

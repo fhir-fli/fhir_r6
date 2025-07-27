@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart';
-import 'package:fhir_r5_path/fhir_r5_path.dart';
+import 'package:fhir_r6/fhir_r6.dart';
+import 'package:fhir_r6_path/fhir_r6_path.dart';
 import 'package:http/http.dart';
 
 /// An online-capable extension of [CanonicalResourceCache].

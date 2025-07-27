@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
-    show FhirList, ListEntry, R5ResourceType, yamlMapToJson, yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6/fhir_r6.dart'
+    show FhirList, ListEntry, R6ResourceType, yamlMapToJson, yamlToJson;
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [FhirListBuilder]
@@ -35,7 +35,7 @@ class FhirListBuilder extends DomainResourceBuilder {
     this.emptyReason,
   }) : super(
           objectPath: 'List',
-          resourceType: R5ResourceType.FhirList,
+          resourceType: R6ResourceType.FhirList,
         );
 
   /// An empty constructor for partial usage.

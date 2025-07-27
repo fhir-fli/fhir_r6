@@ -36,7 +36,7 @@ class Specimen extends DomainResource {
     this.condition,
     this.note,
   }) : super(
-          resourceType: R5ResourceType.Specimen,
+          resourceType: R6ResourceType.Specimen,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

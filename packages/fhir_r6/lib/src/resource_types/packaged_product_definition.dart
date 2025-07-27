@@ -37,7 +37,7 @@ class PackagedProductDefinition extends DomainResource {
     this.packaging,
     this.characteristic,
   }) : super(
-          resourceType: R5ResourceType.PackagedProductDefinition,
+          resourceType: R6ResourceType.PackagedProductDefinition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

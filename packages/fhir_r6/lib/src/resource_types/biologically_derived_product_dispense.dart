@@ -39,7 +39,7 @@ class BiologicallyDerivedProductDispense extends DomainResource {
     this.note,
     this.usageInstruction,
   }) : super(
-          resourceType: R5ResourceType.BiologicallyDerivedProductDispense,
+          resourceType: R6ResourceType.BiologicallyDerivedProductDispense,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

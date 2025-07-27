@@ -34,7 +34,7 @@ class OrganizationAffiliation extends DomainResource {
     this.contact,
     this.endpoint,
   }) : super(
-          resourceType: R5ResourceType.OrganizationAffiliation,
+          resourceType: R6ResourceType.OrganizationAffiliation,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

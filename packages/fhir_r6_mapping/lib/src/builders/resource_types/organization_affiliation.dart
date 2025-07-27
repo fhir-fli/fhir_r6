@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
-    show OrganizationAffiliation, R5ResourceType, yamlMapToJson, yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6/fhir_r6.dart'
+    show OrganizationAffiliation, R6ResourceType, yamlMapToJson, yamlToJson;
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [OrganizationAffiliationBuilder]
@@ -35,7 +35,7 @@ class OrganizationAffiliationBuilder extends DomainResourceBuilder {
     this.endpoint,
   }) : super(
           objectPath: 'OrganizationAffiliation',
-          resourceType: R5ResourceType.OrganizationAffiliation,
+          resourceType: R6ResourceType.OrganizationAffiliation,
         );
 
   /// An empty constructor for partial usage.

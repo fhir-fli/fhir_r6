@@ -56,7 +56,7 @@ class OperationDefinition extends CanonicalResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.OperationDefinition,
+          resourceType: R6ResourceType.OperationDefinition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

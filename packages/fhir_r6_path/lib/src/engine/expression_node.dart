@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, constant_identifier_names,
 // ignore_for_file: lines_longer_than_80_chars, avoid_print
 
-import 'package:fhir_r5/fhir_r5.dart';
-import 'package:fhir_r5_path/fhir_r5_path.dart';
+import 'package:fhir_r6/fhir_r6.dart';
+import 'package:fhir_r6_path/fhir_r6_path.dart';
 
 // Converted from Java to Dart
 

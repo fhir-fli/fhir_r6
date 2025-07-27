@@ -2,9 +2,9 @@
 // ignore_for_file: avoid_escaping_inner_quotes, file_names
 // ignore_for_file: require_trailing_commas, unused_local_variable
 
-import 'package:fhir_r5/fhir_r5.dart';
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
-import 'package:fhir_r5_path/fhir_r5_path.dart';
+import 'package:fhir_r6/fhir_r6.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
+import 'package:fhir_r6_path/fhir_r6_path.dart';
 
 Future<void> main() async {
   final parser = await StructureMapParser.create();

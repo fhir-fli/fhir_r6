@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
-        R5ResourceType,
+        R6ResourceType,
         SearchParameter,
         SearchParameterComponent,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [SearchParameterBuilder]
@@ -63,7 +63,7 @@ class SearchParameterBuilder extends CanonicalResourceBuilder {
             versionAlgorithmCoding,
         super(
           objectPath: 'SearchParameter',
-          resourceType: R5ResourceType.SearchParameter,
+          resourceType: R6ResourceType.SearchParameter,
         );
 
   /// An empty constructor for partial usage.

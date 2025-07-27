@@ -1,6 +1,6 @@
-import 'package:fhir_r5/fhir_r5.dart';
-import 'package:fhir_r5_path/fhir_r5_path.dart';
-import 'package:fhir_r5_validation/fhir_r5_validation.dart';
+import 'package:fhir_r6/fhir_r6.dart';
+import 'package:fhir_r6_path/fhir_r6_path.dart';
+import 'package:fhir_r6_validation/fhir_r6_validation.dart';
 
 /// Validates the extensions of a [Node] against the corresponding
 /// [ElementDefinition].

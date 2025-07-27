@@ -42,7 +42,7 @@ class Goal extends DomainResource {
     this.outcome,
   })  : startX = startX ?? startDate ?? startCodeableConcept,
         super(
-          resourceType: R5ResourceType.Goal,
+          resourceType: R6ResourceType.Goal,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

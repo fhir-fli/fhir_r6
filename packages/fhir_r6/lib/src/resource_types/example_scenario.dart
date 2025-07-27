@@ -45,7 +45,7 @@ class ExampleScenario extends CanonicalResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.ExampleScenario,
+          resourceType: R6ResourceType.ExampleScenario,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

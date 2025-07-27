@@ -27,7 +27,7 @@ class ImmunizationRecommendation extends DomainResource {
     this.authority,
     required this.recommendation,
   }) : super(
-          resourceType: R5ResourceType.ImmunizationRecommendation,
+          resourceType: R6ResourceType.ImmunizationRecommendation,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

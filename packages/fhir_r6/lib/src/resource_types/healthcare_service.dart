@@ -43,7 +43,7 @@ class HealthcareService extends DomainResource {
     this.availability,
     this.endpoint,
   }) : super(
-          resourceType: R5ResourceType.HealthcareService,
+          resourceType: R6ResourceType.HealthcareService,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -29,7 +29,7 @@ class EnrollmentResponse extends DomainResource {
     this.organization,
     this.requestProvider,
   }) : super(
-          resourceType: R5ResourceType.EnrollmentResponse,
+          resourceType: R6ResourceType.EnrollmentResponse,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

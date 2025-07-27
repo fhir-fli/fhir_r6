@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         NamingSystem,
         NamingSystemUniqueId,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [NamingSystemBuilder]
@@ -64,7 +64,7 @@ class NamingSystemBuilder extends MetadataResourceBuilder {
             versionAlgorithmCoding,
         super(
           objectPath: 'NamingSystem',
-          resourceType: R5ResourceType.NamingSystem,
+          resourceType: R6ResourceType.NamingSystem,
         );
 
   /// An empty constructor for partial usage.

@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
-    show ImmunizationEvaluation, R5ResourceType, yamlMapToJson, yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6/fhir_r6.dart'
+    show ImmunizationEvaluation, R6ResourceType, yamlMapToJson, yamlToJson;
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [ImmunizationEvaluationBuilder]
@@ -36,7 +36,7 @@ class ImmunizationEvaluationBuilder extends DomainResourceBuilder {
     this.seriesDoses,
   }) : super(
           objectPath: 'ImmunizationEvaluation',
-          resourceType: R5ResourceType.ImmunizationEvaluation,
+          resourceType: R6ResourceType.ImmunizationEvaluation,
         );
 
   /// An empty constructor for partial usage.

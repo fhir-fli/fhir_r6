@@ -33,7 +33,7 @@ class AdministrableProductDefinition extends DomainResource {
     this.property,
     required this.routeOfAdministration,
   }) : super(
-          resourceType: R5ResourceType.AdministrableProductDefinition,
+          resourceType: R6ResourceType.AdministrableProductDefinition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

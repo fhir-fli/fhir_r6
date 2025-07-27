@@ -71,7 +71,7 @@ class MedicationStatement extends DomainResource {
             effectivePeriod ??
             effectiveTiming,
         super(
-          resourceType: R5ResourceType.MedicationStatement,
+          resourceType: R6ResourceType.MedicationStatement,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

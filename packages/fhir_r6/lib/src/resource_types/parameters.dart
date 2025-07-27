@@ -20,7 +20,7 @@ class Parameters extends Resource {
     super.language,
     this.parameter,
   }) : super(
-          resourceType: R5ResourceType.Parameters,
+          resourceType: R6ResourceType.Parameters,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

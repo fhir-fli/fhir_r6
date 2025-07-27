@@ -1,14 +1,14 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         Observation,
         ObservationComponent,
         ObservationReferenceRange,
         ObservationTriggeredBy,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [ObservationBuilder]
@@ -96,7 +96,7 @@ class ObservationBuilder extends DomainResourceBuilder {
             valueReference,
         super(
           objectPath: 'Observation',
-          resourceType: R5ResourceType.Observation,
+          resourceType: R6ResourceType.Observation,
         );
 
   /// An empty constructor for partial usage.

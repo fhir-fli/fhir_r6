@@ -37,7 +37,7 @@ class Person extends DomainResource {
     this.link,
   })  : deceasedX = deceasedX ?? deceasedBoolean ?? deceasedDateTime,
         super(
-          resourceType: R5ResourceType.Person,
+          resourceType: R6ResourceType.Person,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

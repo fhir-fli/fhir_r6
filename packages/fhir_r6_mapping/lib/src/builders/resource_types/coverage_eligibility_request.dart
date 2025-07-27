@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         CoverageEligibilityRequest,
         CoverageEligibilityRequestDiagnosis,
@@ -7,10 +7,10 @@ import 'package:fhir_r5/fhir_r5.dart'
         CoverageEligibilityRequestInsurance,
         CoverageEligibilityRequestItem,
         CoverageEligibilityRequestSupportingInfo,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [CoverageEligibilityRequestBuilder]
@@ -52,7 +52,7 @@ class CoverageEligibilityRequestBuilder extends DomainResourceBuilder {
   })  : servicedX = servicedX ?? servicedDate ?? servicedPeriod,
         super(
           objectPath: 'CoverageEligibilityRequest',
-          resourceType: R5ResourceType.CoverageEligibilityRequest,
+          resourceType: R6ResourceType.CoverageEligibilityRequest,
         );
 
   /// An empty constructor for partial usage.

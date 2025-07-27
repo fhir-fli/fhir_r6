@@ -1,10 +1,10 @@
-# fhir_r5_mapping
+# fhir_r6_mapping
 
 # FHIR-FLI Mapping (R4)
 
 A comprehensive implementation of the FHIR Mapping Language for Dart, enabling transformations between different FHIR resources and structures.
 
-[![pub package](https://img.shields.io/pub/v/fhir_r5_mapping.svg)](https://pub.dev/packages/fhir_r5_mapping)
+[![pub package](https://img.shields.io/pub/v/fhir_r6_mapping.svg)](https://pub.dev/packages/fhir_r6_mapping)
 
 ## Overview
 
@@ -22,9 +22,9 @@ FHIR-FLI Mapping provides tools to parse the FHIR Mapping Language and execute t
 
 ```yaml
 dependencies:
-  fhir_r5_mapping: ^0.4.0
-  fhir_r5: ^0.4.2
-  fhir_r5_path: ^0.4.2
+  fhir_r6_mapping: ^0.4.0
+  fhir_r6: ^0.4.2
+  fhir_r6_path: ^0.4.2
 ```
 
 ## Quick Start
@@ -32,7 +32,7 @@ dependencies:
 ### Parsing a FHIR Map
 
 ```dart
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 
 Future<void> main() async {
   // Create the parser
@@ -60,8 +60,8 @@ Future<void> main() async {
 ### Executing a Transformation
 
 ```dart
-import 'package:fhir_r5/fhir_r5.dart';
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6/fhir_r6.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 
 Future<void> transformPatient() async {
   // Set up the resource cache
@@ -144,5 +144,5 @@ MIT
 ## Related Packages
 
 - [fhir](https://pub.dev/packages/fhir): Core FHIR package for Dart
-- [fhir_r5](https://pub.dev/packages/fhir_r5): R4 FHIR resources and models
+- [fhir_r6](https://pub.dev/packages/fhir_r6): R4 FHIR resources and models
 - [fhir_path](https://pub.dev/packages/fhir_path): FHIRPath implementation for Dart

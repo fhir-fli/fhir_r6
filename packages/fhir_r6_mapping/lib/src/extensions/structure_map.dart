@@ -1,4 +1,4 @@
-import 'package:fhir_r5/fhir_r5.dart';
+import 'package:fhir_r6/fhir_r6.dart';
 
 /// Extension on [StructureMapGroupRuleSource] to get the value of the source.
 extension StructureMapParameterExtension on StructureMapParameter {

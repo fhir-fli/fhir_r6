@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
-        R5ResourceType,
+        R6ResourceType,
         TestPlan,
         TestPlanAssertion,
         TestPlanDependency,
@@ -12,7 +12,7 @@ import 'package:fhir_r5/fhir_r5.dart'
         TestPlanTestRun,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [TestPlanBuilder]
@@ -60,7 +60,7 @@ class TestPlanBuilder extends CanonicalResourceBuilder {
             versionAlgorithmCoding,
         super(
           objectPath: 'TestPlan',
-          resourceType: R5ResourceType.TestPlan,
+          resourceType: R6ResourceType.TestPlan,
         );
 
   /// An empty constructor for partial usage.

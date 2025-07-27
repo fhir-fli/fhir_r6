@@ -28,7 +28,7 @@ class EnrollmentRequest extends DomainResource {
     this.candidate,
     this.coverage,
   }) : super(
-          resourceType: R5ResourceType.EnrollmentRequest,
+          resourceType: R6ResourceType.EnrollmentRequest,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

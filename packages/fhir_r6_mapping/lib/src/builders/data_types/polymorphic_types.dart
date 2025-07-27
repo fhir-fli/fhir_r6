@@ -1,6 +1,6 @@
 // ignore_for_file: flutter_style_todos
 
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 
 /// Polymorphic types for FHIR data types.
 abstract class PolymorphicTypeBuilder {}

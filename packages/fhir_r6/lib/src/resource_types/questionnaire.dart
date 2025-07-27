@@ -52,7 +52,7 @@ class Questionnaire extends MetadataResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.Questionnaire,
+          resourceType: R6ResourceType.Questionnaire,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

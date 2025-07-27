@@ -4,8 +4,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:collection/collection.dart';
-import 'package:fhir_r5/fhir_r5.dart';
-import 'package:fhir_r5_db/fhir_r5_db.dart';
+import 'package:fhir_r6/fhir_r6.dart';
+import 'package:fhir_r6_db/fhir_r6_db.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:test/test.dart';
 
@@ -35,7 +35,7 @@ Future<void> main() async {
       saved1 = await fhirDb.save(resource: patient1, pw: password1) as Patient;
 
       final search1 = await fhirDb.find(
-        resourceType: R5ResourceType.Patient,
+        resourceType: R6ResourceType.Patient,
         id: '1',
         pw: password1,
       );
@@ -46,7 +46,7 @@ Future<void> main() async {
     test('Found Patient With New Password Because Box Was Already Opened',
         () async {
       final search2 = await fhirDb.find(
-        resourceType: R5ResourceType.Patient,
+        resourceType: R6ResourceType.Patient,
         id: '1',
         pw: password1,
       );
@@ -56,7 +56,7 @@ Future<void> main() async {
     test('Password Changed', () async {
       await fhirDb.updatePw(oldPw: password1, newPw: password2);
       final search4 = await fhirDb.find(
-        resourceType: R5ResourceType.Patient,
+        resourceType: R6ResourceType.Patient,
         id: '1',
         pw: password2,
       );
@@ -145,7 +145,7 @@ Future<void> main() async {
   group('Finding Things:', () {
     test('Find 1st Patient', () async {
       final search = await fhirDb.find(
-        resourceType: R5ResourceType.Patient,
+        resourceType: R6ResourceType.Patient,
         id: id,
         pw: password1,
       );
@@ -160,7 +160,7 @@ Future<void> main() async {
 
     test('Find 3rd Observation', () async {
       final search = await fhirDb.find(
-        resourceType: R5ResourceType.Observation,
+        resourceType: R6ResourceType.Observation,
         id: 'obs3',
         pw: password1,
       );
@@ -174,7 +174,7 @@ Future<void> main() async {
 
     test('Find All Observations', () async {
       final search = await fhirDb.getActiveResourcesOfType(
-        resourceTypes: <R5ResourceType>[R5ResourceType.Observation],
+        resourceTypes: <R6ResourceType>[R6ResourceType.Observation],
         pw: password1,
       );
       expect(search.length, 3);
@@ -197,15 +197,15 @@ Future<void> main() async {
       final orgList = search.toList();
       final obsList = search.toList();
       patList.retainWhere(
-        (Resource resource) => resource.resourceType == R5ResourceType.Patient,
+        (Resource resource) => resource.resourceType == R6ResourceType.Patient,
       );
       orgList.retainWhere(
         (Resource resource) =>
-            resource.resourceType == R5ResourceType.Organization,
+            resource.resourceType == R6ResourceType.Organization,
       );
       obsList.retainWhere(
         (Resource resource) =>
-            resource.resourceType == R5ResourceType.Observation,
+            resource.resourceType == R6ResourceType.Observation,
       );
 
       expect(patList.length, 2);
@@ -217,13 +217,13 @@ Future<void> main() async {
   group('Deleting Things:', () {
     test('Delete 2nd Observation', () async {
       await fhirDb.delete(
-        resourceType: R5ResourceType.Observation,
+        resourceType: R6ResourceType.Observation,
         id: 'obs2',
         pw: password1,
       );
 
       final search = await fhirDb.getActiveResourcesOfType(
-        resourceTypes: <R5ResourceType>[R5ResourceType.Observation],
+        resourceTypes: <R6ResourceType>[R6ResourceType.Observation],
         pw: password1,
       );
 
@@ -241,7 +241,7 @@ Future<void> main() async {
 
     test('Delete All Observations', () async {
       await fhirDb.deleteSingleType(
-        resourceType: R5ResourceType.Observation,
+        resourceType: R6ResourceType.Observation,
         pw: password1,
       );
 
@@ -252,11 +252,11 @@ Future<void> main() async {
       final patList = search.toList();
       final orgList = search.toList();
       patList.retainWhere(
-        (Resource resource) => resource.resourceType == R5ResourceType.Patient,
+        (Resource resource) => resource.resourceType == R6ResourceType.Patient,
       );
       orgList.retainWhere(
         (Resource resource) =>
-            resource.resourceType == R5ResourceType.Organization,
+            resource.resourceType == R6ResourceType.Organization,
       );
 
       expect(patList.length, 2);
@@ -354,7 +354,7 @@ Future<void> main() async {
   group('Password - Finding Things:', () {
     test('Find 1st Patient', () async {
       final search = await fhirDb.find(
-        resourceType: R5ResourceType.Patient,
+        resourceType: R6ResourceType.Patient,
         id: id,
         pw: password2,
       );
@@ -369,7 +369,7 @@ Future<void> main() async {
 
     test('Find 3rd Observation', () async {
       final search = await fhirDb.find(
-        resourceType: R5ResourceType.Observation,
+        resourceType: R6ResourceType.Observation,
         id: 'obs3',
         pw: password2,
       );
@@ -384,7 +384,7 @@ Future<void> main() async {
 
     test('Find All Observations', () async {
       final search = await fhirDb.getActiveResourcesOfType(
-        resourceTypes: <R5ResourceType>[R5ResourceType.Observation],
+        resourceTypes: <R6ResourceType>[R6ResourceType.Observation],
         pw: password2,
       );
 
@@ -407,15 +407,15 @@ Future<void> main() async {
       final orgList = search.toList();
       final obsList = search.toList();
       patList.retainWhere(
-        (Resource resource) => resource.resourceType == R5ResourceType.Patient,
+        (Resource resource) => resource.resourceType == R6ResourceType.Patient,
       );
       orgList.retainWhere(
         (Resource resource) =>
-            resource.resourceType == R5ResourceType.Organization,
+            resource.resourceType == R6ResourceType.Organization,
       );
       obsList.retainWhere(
         (Resource resource) =>
-            resource.resourceType == R5ResourceType.Observation,
+            resource.resourceType == R6ResourceType.Observation,
       );
 
       expect(patList.length, 1);
@@ -427,13 +427,13 @@ Future<void> main() async {
   group('Password - Deleting Things:', () {
     test('Delete 2nd Observation', () async {
       await fhirDb.delete(
-        resourceType: R5ResourceType.Observation,
+        resourceType: R6ResourceType.Observation,
         id: 'obs2',
         pw: password2,
       );
 
       final search = await fhirDb.getActiveResourcesOfType(
-        resourceTypes: <R5ResourceType>[R5ResourceType.Observation],
+        resourceTypes: <R6ResourceType>[R6ResourceType.Observation],
         pw: password2,
       );
 
@@ -451,7 +451,7 @@ Future<void> main() async {
 
     test('Delete All Observations', () async {
       await fhirDb.deleteSingleType(
-        resourceType: R5ResourceType.Observation,
+        resourceType: R6ResourceType.Observation,
         pw: password2,
       );
 
@@ -462,11 +462,11 @@ Future<void> main() async {
       final patList = search.toList();
       final orgList = search.toList();
       patList.retainWhere(
-        (Resource resource) => resource.resourceType == R5ResourceType.Patient,
+        (Resource resource) => resource.resourceType == R6ResourceType.Patient,
       );
       orgList.retainWhere(
         (Resource resource) =>
-            resource.resourceType == R5ResourceType.Organization,
+            resource.resourceType == R6ResourceType.Organization,
       );
 
       expect(patList.length, 1);
@@ -488,7 +488,7 @@ Future<void> main() async {
       () async {
         final dir = Directory('test/assets');
         final subscription =
-            fhirDb.subject(resourceType: R5ResourceType.Observation).listen(
+            fhirDb.subject(resourceType: R6ResourceType.Observation).listen(
           (Resource? resource) {
             // This block is where you handle each emitted item
             print('Received resource: ${resource?.path}');

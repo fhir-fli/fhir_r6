@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         ClinicalUseDefinition,
         ClinicalUseDefinitionContraindication,
@@ -9,10 +9,10 @@ import 'package:fhir_r5/fhir_r5.dart'
         ClinicalUseDefinitionOtherTherapy,
         ClinicalUseDefinitionUndesirableEffect,
         ClinicalUseDefinitionWarning,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [ClinicalUseDefinitionBuilder]
@@ -46,7 +46,7 @@ class ClinicalUseDefinitionBuilder extends DomainResourceBuilder {
     this.warning,
   }) : super(
           objectPath: 'ClinicalUseDefinition',
-          resourceType: R5ResourceType.ClinicalUseDefinition,
+          resourceType: R6ResourceType.ClinicalUseDefinition,
         );
 
   /// An empty constructor for partial usage.

@@ -41,7 +41,7 @@ class ImagingSelection extends DomainResource {
     this.focus,
     this.instance,
   }) : super(
-          resourceType: R5ResourceType.ImagingSelection,
+          resourceType: R6ResourceType.ImagingSelection,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

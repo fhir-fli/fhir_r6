@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs
 
-import 'package:fhir_r5/fhir_r5.dart';
+import 'package:fhir_r6/fhir_r6.dart';
 
 // ignore: constant_identifier_names
 const String NS_SYSTEM_TYPE = 'http://hl7.org/fhirpath/System.';

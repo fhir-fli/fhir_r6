@@ -1,5 +1,5 @@
-import 'package:fhir_r5/fhir_r5.dart';
-import 'package:fhir_r5_at_rest/fhir_r5_at_rest.dart';
+import 'package:fhir_r6/fhir_r6.dart';
+import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 
 /// There are usually 3 types of responses from a RESTful request made to a FHIR
 /// server. It can be a single Resource, it can be a Bundle, or it can be an

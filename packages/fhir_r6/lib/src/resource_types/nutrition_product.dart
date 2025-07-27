@@ -30,7 +30,7 @@ class NutritionProduct extends DomainResource {
     this.instance,
     this.note,
   }) : super(
-          resourceType: R5ResourceType.NutritionProduct,
+          resourceType: R6ResourceType.NutritionProduct,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

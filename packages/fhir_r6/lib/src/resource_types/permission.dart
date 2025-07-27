@@ -27,7 +27,7 @@ class Permission extends DomainResource {
     required this.combining,
     this.rule,
   }) : super(
-          resourceType: R5ResourceType.Permission,
+          resourceType: R6ResourceType.Permission,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

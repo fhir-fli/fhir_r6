@@ -56,7 +56,7 @@ class SpecimenDefinition extends MetadataResource {
             versionAlgorithmCoding,
         subjectX = subjectX ?? subjectCodeableConcept ?? subjectReference,
         super(
-          resourceType: R5ResourceType.SpecimenDefinition,
+          resourceType: R6ResourceType.SpecimenDefinition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

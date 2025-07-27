@@ -40,7 +40,7 @@ class RiskAssessment extends DomainResource {
     this.note,
   })  : occurrenceX = occurrenceX ?? occurrenceDateTime ?? occurrencePeriod,
         super(
-          resourceType: R5ResourceType.RiskAssessment,
+          resourceType: R6ResourceType.RiskAssessment,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

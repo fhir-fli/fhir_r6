@@ -1,6 +1,6 @@
-# fhir_r5_at_rest
+# fhir_r6_at_rest
 
-[![pub package](https://img.shields.io/pub/v/fhir_r5_at_rest.svg)](https://pub.dev/packages/fhir_r5_at_rest)
+[![pub package](https://img.shields.io/pub/v/fhir_r6_at_rest.svg)](https://pub.dev/packages/fhir_r6_at_rest)
 
 A Dart package providing type-safe, fluent RESTful operations for FHIR R4 resources. This library simplifies interactions with FHIR servers by providing structured request classes for all standard FHIR operations.
 
@@ -18,8 +18,8 @@ FHIR® is the registered trademark of HL7 and is used with the permission of HL7
 
 ```yaml
 dependencies:
-  fhir_r5_at_rest: ^0.4.0
-  fhir_r5: ^0.4.2
+  fhir_r6_at_rest: ^0.4.0
+  fhir_r6: ^0.4.2
 ```
 
 ## Basic Usage

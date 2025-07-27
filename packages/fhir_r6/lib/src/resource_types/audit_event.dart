@@ -38,7 +38,7 @@ class AuditEvent extends DomainResource {
     this.entity,
   })  : occurredX = occurredX ?? occurredPeriod ?? occurredDateTime,
         super(
-          resourceType: R5ResourceType.AuditEvent,
+          resourceType: R6ResourceType.AuditEvent,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -29,7 +29,7 @@ class VisionPrescription extends DomainResource {
     required this.prescriber,
     required this.lensSpecification,
   }) : super(
-          resourceType: R5ResourceType.VisionPrescription,
+          resourceType: R6ResourceType.VisionPrescription,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

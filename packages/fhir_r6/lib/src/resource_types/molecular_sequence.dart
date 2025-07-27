@@ -30,7 +30,7 @@ class MolecularSequence extends DomainResource {
     this.formatted,
     this.relative,
   }) : super(
-          resourceType: R5ResourceType.MolecularSequence,
+          resourceType: R6ResourceType.MolecularSequence,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

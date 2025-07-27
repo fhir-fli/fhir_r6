@@ -35,7 +35,7 @@ class EncounterHistory extends DomainResource {
     this.length,
     this.location,
   }) : super(
-          resourceType: R5ResourceType.EncounterHistory,
+          resourceType: R6ResourceType.EncounterHistory,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

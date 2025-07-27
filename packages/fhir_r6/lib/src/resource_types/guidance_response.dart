@@ -36,7 +36,7 @@ class GuidanceResponse extends DomainResource {
     this.result,
     this.dataRequirement,
   }) : super(
-          resourceType: R5ResourceType.GuidanceResponse,
+          resourceType: R6ResourceType.GuidanceResponse,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

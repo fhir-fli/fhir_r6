@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
-        R5ResourceType,
+        R6ResourceType,
         SupplyRequest,
         SupplyRequestParameter,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [SupplyRequestBuilder]
@@ -51,7 +51,7 @@ class SupplyRequestBuilder extends DomainResourceBuilder {
             occurrenceTiming,
         super(
           objectPath: 'SupplyRequest',
-          resourceType: R5ResourceType.SupplyRequest,
+          resourceType: R6ResourceType.SupplyRequest,
         );
 
   /// An empty constructor for partial usage.

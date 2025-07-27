@@ -29,7 +29,7 @@ class Flag extends DomainResource {
     this.encounter,
     this.author,
   }) : super(
-          resourceType: R5ResourceType.Flag,
+          resourceType: R6ResourceType.Flag,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -1,6 +1,6 @@
-import 'package:fhir_r5/fhir_r5.dart';
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
-import 'package:fhir_r5_path/fhir_r5_path.dart';
+import 'package:fhir_r6/fhir_r6.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
+import 'package:fhir_r6_path/fhir_r6_path.dart';
 
 /// FHIRPath host services for evaluating FHIRPath expressions.
 class FHIRPathHostServices extends IEvaluationContext {

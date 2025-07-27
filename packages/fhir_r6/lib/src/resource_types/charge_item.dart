@@ -58,7 +58,7 @@ class ChargeItem extends DomainResource {
             occurrencePeriod ??
             occurrenceTiming,
         super(
-          resourceType: R5ResourceType.ChargeItem,
+          resourceType: R6ResourceType.ChargeItem,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

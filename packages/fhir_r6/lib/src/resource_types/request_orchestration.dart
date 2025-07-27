@@ -40,7 +40,7 @@ class RequestOrchestration extends DomainResource {
     this.note,
     this.action,
   }) : super(
-          resourceType: R5ResourceType.RequestOrchestration,
+          resourceType: R6ResourceType.RequestOrchestration,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

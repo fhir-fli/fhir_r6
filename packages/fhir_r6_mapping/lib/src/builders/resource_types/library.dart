@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
-    show Library, R5ResourceType, yamlMapToJson, yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6/fhir_r6.dart'
+    show Library, R6ResourceType, yamlMapToJson, yamlToJson;
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [LibraryBuilder]
@@ -65,7 +65,7 @@ class LibraryBuilder extends MetadataResourceBuilder {
         subjectX = subjectX ?? subjectCodeableConcept ?? subjectReference,
         super(
           objectPath: 'Library',
-          resourceType: R5ResourceType.Library,
+          resourceType: R6ResourceType.Library,
         );
 
   /// An empty constructor for partial usage.

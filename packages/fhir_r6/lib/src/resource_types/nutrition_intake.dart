@@ -55,7 +55,7 @@ class NutritionIntake extends DomainResource {
   })  : occurrenceX = occurrenceX ?? occurrenceDateTime ?? occurrencePeriod,
         reportedX = reportedX ?? reportedBoolean ?? reportedReference,
         super(
-          resourceType: R5ResourceType.NutritionIntake,
+          resourceType: R6ResourceType.NutritionIntake,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

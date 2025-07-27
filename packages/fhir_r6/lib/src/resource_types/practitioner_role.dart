@@ -35,7 +35,7 @@ class PractitionerRole extends DomainResource {
     this.availability,
     this.endpoint,
   }) : super(
-          resourceType: R5ResourceType.PractitionerRole,
+          resourceType: R6ResourceType.PractitionerRole,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

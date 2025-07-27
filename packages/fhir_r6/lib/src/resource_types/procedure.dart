@@ -69,7 +69,7 @@ class Procedure extends DomainResource {
             occurrenceTiming,
         reportedX = reportedX ?? reportedBoolean ?? reportedReference,
         super(
-          resourceType: R5ResourceType.Procedure,
+          resourceType: R6ResourceType.Procedure,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

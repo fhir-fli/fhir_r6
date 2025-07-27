@@ -29,7 +29,7 @@ class DeviceAssociation extends DomainResource {
     this.period,
     this.operation,
   }) : super(
-          resourceType: R5ResourceType.DeviceAssociation,
+          resourceType: R6ResourceType.DeviceAssociation,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

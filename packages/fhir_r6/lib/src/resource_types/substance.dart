@@ -29,7 +29,7 @@ class Substance extends DomainResource {
     this.quantity,
     this.ingredient,
   }) : super(
-          resourceType: R5ResourceType.Substance,
+          resourceType: R6ResourceType.Substance,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

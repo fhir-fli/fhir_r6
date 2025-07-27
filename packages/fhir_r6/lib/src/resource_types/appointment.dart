@@ -54,7 +54,7 @@ class Appointment extends DomainResource {
     this.occurrenceChanged,
     this.recurrenceTemplate,
   }) : super(
-          resourceType: R5ResourceType.Appointment,
+          resourceType: R6ResourceType.Appointment,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -1,7 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         MedicationKnowledge,
         MedicationKnowledgeCost,
@@ -22,10 +22,10 @@ import 'package:fhir_r5/fhir_r5.dart'
         MedicationKnowledgeRelatedMedicationKnowledge,
         MedicationKnowledgeStorageGuideline,
         MedicationKnowledgeSubstitution,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [MedicationKnowledgeBuilder]
@@ -65,7 +65,7 @@ class MedicationKnowledgeBuilder extends DomainResourceBuilder {
     this.definitional,
   }) : super(
           objectPath: 'MedicationKnowledge',
-          resourceType: R5ResourceType.MedicationKnowledge,
+          resourceType: R6ResourceType.MedicationKnowledge,
         );
 
   /// An empty constructor for partial usage.

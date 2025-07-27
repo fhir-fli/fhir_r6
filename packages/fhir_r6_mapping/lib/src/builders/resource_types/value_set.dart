@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
-        R5ResourceType,
+        R6ResourceType,
         ValueSet,
         ValueSetCompose,
         ValueSetConcept,
@@ -17,7 +17,7 @@ import 'package:fhir_r5/fhir_r5.dart'
         ValueSetSubProperty,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [ValueSetBuilder]
@@ -75,7 +75,7 @@ class ValueSetBuilder extends MetadataResourceBuilder {
             versionAlgorithmCoding,
         super(
           objectPath: 'ValueSet',
-          resourceType: R5ResourceType.ValueSet,
+          resourceType: R6ResourceType.ValueSet,
         );
 
   /// An empty constructor for partial usage.

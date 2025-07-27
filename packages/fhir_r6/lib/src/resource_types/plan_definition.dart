@@ -74,7 +74,7 @@ class PlanDefinition extends MetadataResource {
             subjectCanonical,
         asNeededX = asNeededX ?? asNeededBoolean ?? asNeededCodeableConcept,
         super(
-          resourceType: R5ResourceType.PlanDefinition,
+          resourceType: R6ResourceType.PlanDefinition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

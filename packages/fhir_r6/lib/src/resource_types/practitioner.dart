@@ -35,7 +35,7 @@ class Practitioner extends DomainResource {
     this.communication,
   })  : deceasedX = deceasedX ?? deceasedBoolean ?? deceasedDateTime,
         super(
-          resourceType: R5ResourceType.Practitioner,
+          resourceType: R6ResourceType.Practitioner,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

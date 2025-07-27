@@ -26,7 +26,7 @@ class SubstanceReferenceInformation extends DomainResource {
     this.geneElement,
     this.target,
   }) : super(
-          resourceType: R5ResourceType.SubstanceReferenceInformation,
+          resourceType: R6ResourceType.SubstanceReferenceInformation,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

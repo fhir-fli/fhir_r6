@@ -40,7 +40,7 @@ class Location extends DomainResource {
     this.virtualService,
     this.endpoint,
   }) : super(
-          resourceType: R5ResourceType.Location,
+          resourceType: R6ResourceType.Location,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

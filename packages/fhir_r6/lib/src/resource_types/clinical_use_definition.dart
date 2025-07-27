@@ -34,7 +34,7 @@ class ClinicalUseDefinition extends DomainResource {
     this.undesirableEffect,
     this.warning,
   }) : super(
-          resourceType: R5ResourceType.ClinicalUseDefinition,
+          resourceType: R6ResourceType.ClinicalUseDefinition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

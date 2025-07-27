@@ -44,7 +44,7 @@ class Patient extends DomainResource {
         multipleBirthX =
             multipleBirthX ?? multipleBirthBoolean ?? multipleBirthInteger,
         super(
-          resourceType: R5ResourceType.Patient,
+          resourceType: R6ResourceType.Patient,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

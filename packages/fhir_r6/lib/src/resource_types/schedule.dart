@@ -30,7 +30,7 @@ class Schedule extends DomainResource {
     this.planningHorizon,
     this.comment,
   }) : super(
-          resourceType: R5ResourceType.Schedule,
+          resourceType: R6ResourceType.Schedule,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

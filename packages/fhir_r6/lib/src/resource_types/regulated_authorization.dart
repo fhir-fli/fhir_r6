@@ -38,7 +38,7 @@ class RegulatedAuthorization extends DomainResource {
     this.attachedDocument,
     this.case_,
   }) : super(
-          resourceType: R5ResourceType.RegulatedAuthorization,
+          resourceType: R6ResourceType.RegulatedAuthorization,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show Element, FhirBase, FhirExtension, FhirInteger, FhirString;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 
 /// [TRight6]
 /// TRight definition

@@ -42,7 +42,7 @@ class CompartmentDefinition extends CanonicalResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.CompartmentDefinition,
+          resourceType: R6ResourceType.CompartmentDefinition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

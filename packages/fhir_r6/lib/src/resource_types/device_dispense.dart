@@ -42,7 +42,7 @@ class DeviceDispense extends DomainResource {
     this.usageInstruction,
     this.eventHistory,
   }) : super(
-          resourceType: R5ResourceType.DeviceDispense,
+          resourceType: R6ResourceType.DeviceDispense,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

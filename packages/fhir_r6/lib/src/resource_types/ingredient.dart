@@ -30,7 +30,7 @@ class Ingredient extends DomainResource {
     this.manufacturer,
     required this.substance,
   }) : super(
-          resourceType: R5ResourceType.Ingredient,
+          resourceType: R6ResourceType.Ingredient,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -88,7 +88,7 @@ class Observation extends DomainResource {
             valueAttachment ??
             valueReference,
         super(
-          resourceType: R5ResourceType.Observation,
+          resourceType: R6ResourceType.Observation,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

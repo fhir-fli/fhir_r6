@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
-        R5ResourceType,
+        R6ResourceType,
         StructureDefinition,
         StructureDefinitionContext,
         StructureDefinitionDifferential,
@@ -9,7 +9,7 @@ import 'package:fhir_r5/fhir_r5.dart'
         StructureDefinitionSnapshot,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [StructureDefinitionBuilder]
@@ -65,7 +65,7 @@ class StructureDefinitionBuilder extends CanonicalResourceBuilder {
             versionAlgorithmCoding,
         super(
           objectPath: 'StructureDefinition',
-          resourceType: R5ResourceType.StructureDefinition,
+          resourceType: R6ResourceType.StructureDefinition,
         );
 
   /// An empty constructor for partial usage.

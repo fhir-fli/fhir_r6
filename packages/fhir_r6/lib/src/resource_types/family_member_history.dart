@@ -59,7 +59,7 @@ class FamilyMemberHistory extends DomainResource {
             deceasedDate ??
             deceasedString,
         super(
-          resourceType: R5ResourceType.FamilyMemberHistory,
+          resourceType: R6ResourceType.FamilyMemberHistory,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

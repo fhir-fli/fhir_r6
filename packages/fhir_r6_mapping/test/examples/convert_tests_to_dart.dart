@@ -153,7 +153,7 @@ String _generateDartCode(
 // ignore_for_file: prefer_single_quotes, always_specify_types, 
 // ignore_for_file: avoid_escaping_inner_quotes
 
-import 'package:fhir_r5/fhir_r5.dart';
+import 'package:fhir_r6/fhir_r6.dart';
 
 final $className = $fromJsonType.fromJson(
   $prettyJson

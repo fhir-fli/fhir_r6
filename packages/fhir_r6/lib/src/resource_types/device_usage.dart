@@ -42,7 +42,7 @@ class DeviceUsage extends DomainResource {
     this.note,
   })  : timingX = timingX ?? timingTiming ?? timingPeriod ?? timingDateTime,
         super(
-          resourceType: R5ResourceType.DeviceUsage,
+          resourceType: R6ResourceType.DeviceUsage,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

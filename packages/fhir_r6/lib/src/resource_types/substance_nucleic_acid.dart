@@ -28,7 +28,7 @@ class SubstanceNucleicAcid extends DomainResource {
     this.oligoNucleotideType,
     this.subunit,
   }) : super(
-          resourceType: R5ResourceType.SubstanceNucleicAcid,
+          resourceType: R6ResourceType.SubstanceNucleicAcid,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

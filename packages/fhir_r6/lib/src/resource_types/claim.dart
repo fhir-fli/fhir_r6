@@ -54,7 +54,7 @@ class Claim extends DomainResource {
     this.item,
     this.total,
   }) : super(
-          resourceType: R5ResourceType.Claim,
+          resourceType: R6ResourceType.Claim,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

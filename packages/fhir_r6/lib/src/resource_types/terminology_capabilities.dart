@@ -55,7 +55,7 @@ class TerminologyCapabilities extends CanonicalResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.TerminologyCapabilities,
+          resourceType: R6ResourceType.TerminologyCapabilities,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

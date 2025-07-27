@@ -30,7 +30,7 @@ class BodyStructure extends DomainResource {
     this.image,
     required this.patient,
   }) : super(
-          resourceType: R5ResourceType.BodyStructure,
+          resourceType: R6ResourceType.BodyStructure,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

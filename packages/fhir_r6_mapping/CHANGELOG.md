@@ -1,4 +1,4 @@
-# fhir_r5_mapping
+# fhir_r6_mapping
 
 ## [0.4.0]
 

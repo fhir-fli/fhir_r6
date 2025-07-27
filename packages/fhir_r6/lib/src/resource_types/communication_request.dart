@@ -47,7 +47,7 @@ class CommunicationRequest extends DomainResource {
     this.note,
   })  : occurrenceX = occurrenceX ?? occurrenceDateTime ?? occurrencePeriod,
         super(
-          resourceType: R5ResourceType.CommunicationRequest,
+          resourceType: R6ResourceType.CommunicationRequest,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

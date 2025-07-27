@@ -53,7 +53,7 @@ class Task extends DomainResource {
     this.input,
     this.output,
   }) : super(
-          resourceType: R5ResourceType.Task,
+          resourceType: R6ResourceType.Task,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

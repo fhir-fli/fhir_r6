@@ -1,8 +1,8 @@
 // ignore_for_file: avoid_dynamic_calls
 
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart';
-import 'package:fhir_r5_bulk/fhir_r5_bulk.dart';
+import 'package:fhir_r6/fhir_r6.dart';
+import 'package:fhir_r6_bulk/fhir_r6_bulk.dart';
 import 'package:http/http.dart';
 
 /// Simple class defining which resourceType & optional ID to request in a
@@ -12,7 +12,7 @@ class WhichResource {
   WhichResource(this.resourceType, [this.id]);
 
   /// The FHIR resourceType (e.g. "Patient", "Observation", etc.)
-  final R5ResourceType? resourceType;
+  final R6ResourceType? resourceType;
 
   /// The optional ID of the resource (e.g. "12345")
   final FhirId? id;

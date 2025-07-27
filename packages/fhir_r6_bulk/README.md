@@ -1,6 +1,6 @@
-# fhir_r5_bulk
+# fhir_r6_bulk
 
-[![pub package](https://img.shields.io/pub/v/fhir_r5_bulk.svg)](https://pub.dev/packages/fhir_r5_bulk)
+[![pub package](https://img.shields.io/pub/v/fhir_r6_bulk.svg)](https://pub.dev/packages/fhir_r6_bulk)
 
 A Dart package for FHIR R4a Bulk Data operations, supporting NDJSON conversion, compression, and the standard FHIR bulk import/export operations.
 
@@ -18,8 +18,8 @@ FHIR® is the registered trademark of HL7 and is used with the permission of HL7
 
 ```yaml
 dependencies:
-  fhir_r5_bulk: ^0.4.0
-  fhir_r5: ^0.4.2
+  fhir_r6_bulk: ^0.4.0
+  fhir_r6: ^0.4.2
 ```
 
 ## Usage
@@ -27,8 +27,8 @@ dependencies:
 ### NDJSON Operations
 
 ```dart
-import 'package:fhir_r5/fhir_r5.dart';
-import 'package:fhir_r5_bulk/fhir_r5_bulk.dart';
+import 'package:fhir_r6/fhir_r6.dart';
+import 'package:fhir_r6_bulk/fhir_r6_bulk.dart';
 
 // Convert FHIR resources to NDJSON
 final resources = <Resource>[patient1, observation1];
@@ -56,8 +56,8 @@ final exportRequest = BulkRequestSystem(
   base: Uri.parse('https://example.com/fhir'),
   since: FhirDateTime('2023-01-01'),
   types: [
-    WhichResource(R5ResourceType.Patient),
-    WhichResource(R5ResourceType.Observation),
+    WhichResource(R6ResourceType.Patient),
+    WhichResource(R6ResourceType.Observation),
   ],
   headers: {'Authorization': 'Bearer token'},
 );
@@ -77,11 +77,11 @@ final importRequest = BulkImportRequest(
   base: Uri.parse('https://example.com/fhir'),
   files: [
     ImportFile(
-      resourceType: R5ResourceType.Patient,
+      resourceType: R6ResourceType.Patient,
       url: Uri.parse('https://example.com/patients.ndjson'),
     ),
     ImportFile(
-      resourceType: R5ResourceType.Observation,
+      resourceType: R6ResourceType.Observation,
       url: Uri.parse('https://example.com/observations.ndjson'),
     ),
   ],
@@ -108,8 +108,8 @@ final request = BulkRequestGroup(
   since: FhirDateTime('2023-01-01'),
   // Specific resource types to include
   types: [
-    WhichResource(R5ResourceType.Patient),
-    WhichResource(R5ResourceType.Observation),
+    WhichResource(R6ResourceType.Patient),
+    WhichResource(R6ResourceType.Observation),
   ],
   // Additional filters
   typeFilters: ['Patient?gender=female'],

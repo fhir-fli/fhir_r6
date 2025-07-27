@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:fhir_r5_at_rest/fhir_r5_at_rest.dart';
+import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 
 /// Utility class for building a JSON Patch or FHIR Patch body
 class PatchBody {

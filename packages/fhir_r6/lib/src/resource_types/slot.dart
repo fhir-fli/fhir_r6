@@ -32,7 +32,7 @@ class Slot extends DomainResource {
     this.overbooked,
     this.comment,
   }) : super(
-          resourceType: R5ResourceType.Slot,
+          resourceType: R6ResourceType.Slot,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -1186,19 +1186,19 @@ extension StringExtensionForFHIR on String {
           ? '${this}_'
           : this;
 
-  /// Returns `true` if the [String] is a valid [R5ResourceType].
+  /// Returns `true` if the [String] is a valid [R6ResourceType].
   bool get isFhirResourceType =>
-      R5ResourceType.typesAsStrings.contains(this) ||
+      R6ResourceType.typesAsStrings.contains(this) ||
       toLowerCase().contains('tright') ||
       toLowerCase().contains('tleft');
 
-  /// Returns `true` if the [String] is a valid [R5ResourceType].
+  /// Returns `true` if the [String] is a valid [R6ResourceType].
   bool get isBackboneElement => this == 'BackboneElement';
 
-  /// Returns `true` if the [String] is a valid [R5ResourceType].
+  /// Returns `true` if the [String] is a valid [R6ResourceType].
   bool get isLetter => RegExp(r'^[A-Za-z]$').hasMatch(this);
 
-  /// Returns `true` if the [String] is a valid [R5ResourceType].
+  /// Returns `true` if the [String] is a valid [R6ResourceType].
   bool get isWhitespace => trim().isEmpty;
 }
 
@@ -1239,16 +1239,16 @@ extension FhirPathStringsExtension on List<String?> {
 
 /// Extensions on [String] to provide additional functionality.
 extension ExtensionsForFhirString on FhirString {
-  /// Returns `true` if the [String] is a valid [R5ResourceType].
+  /// Returns `true` if the [String] is a valid [R6ResourceType].
   bool get isFhirPrimitive => valueString?.isFhirPrimitive ?? false;
 
-  /// Returns `true` if the [String] is a valid [R5ResourceType].
+  /// Returns `true` if the [String] is a valid [R6ResourceType].
   bool get isFhirResourceType =>
       valueString != null &&
-      (R5ResourceType.typesAsStrings.contains(valueString) ||
+      (R6ResourceType.typesAsStrings.contains(valueString) ||
           valueString!.toLowerCase().contains('tright') ||
           valueString!.toLowerCase().contains('tleft'));
 
-  /// Returns `true` if the [String] is a valid [R5ResourceType].
+  /// Returns `true` if the [String] is a valid [R6ResourceType].
   bool get isBackboneElement => valueString == 'BackboneElement';
 }

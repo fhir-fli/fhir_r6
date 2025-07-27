@@ -1,17 +1,17 @@
 // ignore_for_file: lines_longer_than_80_chars
 
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         AdministrableProductDefinition,
         AdministrableProductDefinitionProperty,
         AdministrableProductDefinitionRouteOfAdministration,
         AdministrableProductDefinitionTargetSpecies,
         AdministrableProductDefinitionWithdrawalPeriod,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [AdministrableProductDefinitionBuilder]
@@ -44,7 +44,7 @@ class AdministrableProductDefinitionBuilder extends DomainResourceBuilder {
     this.routeOfAdministration,
   }) : super(
           objectPath: 'AdministrableProductDefinition',
-          resourceType: R5ResourceType.AdministrableProductDefinition,
+          resourceType: R6ResourceType.AdministrableProductDefinition,
         );
 
   /// An empty constructor for partial usage.

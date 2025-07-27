@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:fhir_r5/fhir_r5.dart' show R5ResourceType;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6/fhir_r6.dart' show R6ResourceType;
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [ResourceBuilder] Base definition for all FHIR elements.
@@ -32,7 +32,7 @@ abstract class ResourceBuilder extends FhirBaseBuilder {
   String get fhirType => 'Resource';
 
   /// The type of resource
-  R5ResourceType resourceType;
+  R6ResourceType resourceType;
 
   /// The logical id of the resource, as used in the URL for the resource.
   FhirStringBuilder? id;
@@ -125,12 +125,12 @@ abstract class ResourceBuilder extends FhirBaseBuilder {
   }) =>
       updateMeta(this, meta: oldMeta, versionIdAsTime: versionIdAsTime);
 
-  /// Returns a [R5ResourceType] from a [String]
-  static R5ResourceType? resourceTypeFromString(String type) =>
-      R5ResourceType.fromString(type);
+  /// Returns a [R6ResourceType] from a [String]
+  static R6ResourceType? resourceTypeFromString(String type) =>
+      R6ResourceType.fromString(type);
 
-  /// Returns a [String] from a [R5ResourceType]
-  static String resourceTypeToString(R5ResourceType type) => type.toString();
+  /// Returns a [String] from a [R6ResourceType]
+  static String resourceTypeToString(R6ResourceType type) => type.toString();
 
   @override
   ResourceBuilder copyWith({

@@ -47,7 +47,7 @@ class DeviceDefinition extends DomainResource {
     this.correctiveAction,
     this.chargeItem,
   }) : super(
-          resourceType: R5ResourceType.DeviceDefinition,
+          resourceType: R6ResourceType.DeviceDefinition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

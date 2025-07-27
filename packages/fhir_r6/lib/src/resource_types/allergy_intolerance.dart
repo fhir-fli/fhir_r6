@@ -47,7 +47,7 @@ class AllergyIntolerance extends DomainResource {
             onsetRange ??
             onsetString,
         super(
-          resourceType: R5ResourceType.AllergyIntolerance,
+          resourceType: R6ResourceType.AllergyIntolerance,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

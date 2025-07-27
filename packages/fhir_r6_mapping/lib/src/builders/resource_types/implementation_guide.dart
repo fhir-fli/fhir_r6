@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         ImplementationGuide,
         ImplementationGuideDefinition,
@@ -13,10 +13,10 @@ import 'package:fhir_r5/fhir_r5.dart'
         ImplementationGuideResource,
         ImplementationGuideResource1,
         ImplementationGuideTemplate,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [ImplementationGuideBuilder]
@@ -69,7 +69,7 @@ class ImplementationGuideBuilder extends CanonicalResourceBuilder {
             versionAlgorithmCoding,
         super(
           objectPath: 'ImplementationGuide',
-          resourceType: R5ResourceType.ImplementationGuide,
+          resourceType: R6ResourceType.ImplementationGuide,
         );
 
   /// An empty constructor for partial usage.

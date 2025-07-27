@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
-    show R5ResourceType, Slot, yamlMapToJson, yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6/fhir_r6.dart'
+    show R6ResourceType, Slot, yamlMapToJson, yamlToJson;
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [SlotBuilder]
@@ -33,7 +33,7 @@ class SlotBuilder extends DomainResourceBuilder {
     this.comment,
   }) : super(
           objectPath: 'Slot',
-          resourceType: R5ResourceType.Slot,
+          resourceType: R6ResourceType.Slot,
         );
 
   /// An empty constructor for partial usage.

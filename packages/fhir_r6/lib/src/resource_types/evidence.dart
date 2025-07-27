@@ -63,7 +63,7 @@ class Evidence extends MetadataResource {
             versionAlgorithmCoding,
         citeAsX = citeAsX ?? citeAsReference ?? citeAsMarkdown,
         super(
-          resourceType: R5ResourceType.Evidence,
+          resourceType: R6ResourceType.Evidence,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

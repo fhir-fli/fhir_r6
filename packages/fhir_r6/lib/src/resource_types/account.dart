@@ -39,7 +39,7 @@ class Account extends DomainResource {
     this.balance,
     this.calculatedAt,
   }) : super(
-          resourceType: R5ResourceType.Account,
+          resourceType: R6ResourceType.Account,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

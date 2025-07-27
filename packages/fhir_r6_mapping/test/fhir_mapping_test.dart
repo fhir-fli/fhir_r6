@@ -2,9 +2,9 @@
 // ignore_for_file: avoid_escaping_inner_quotes
 
 import 'package:collection/collection.dart' show DeepCollectionEquality;
-import 'package:fhir_r5/fhir_r5.dart' show QuestionnaireResponse;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
-import 'package:fhir_r5_path/fhir_r5_path.dart';
+import 'package:fhir_r6/fhir_r6.dart' show QuestionnaireResponse;
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
+import 'package:fhir_r6_path/fhir_r6_path.dart';
 import 'package:test/test.dart';
 import 'examples/step1/export.dart';
 // import 'examples/step10/export.dart';

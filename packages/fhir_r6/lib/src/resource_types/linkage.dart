@@ -24,7 +24,7 @@ class Linkage extends DomainResource {
     this.author,
     required this.item,
   }) : super(
-          resourceType: R5ResourceType.Linkage,
+          resourceType: R6ResourceType.Linkage,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

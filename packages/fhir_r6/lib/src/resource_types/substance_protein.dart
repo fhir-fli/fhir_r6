@@ -31,7 +31,7 @@ class SubstanceProtein extends DomainResource {
     this.disulfideLinkage,
     this.subunit,
   }) : super(
-          resourceType: R5ResourceType.SubstanceProtein,
+          resourceType: R6ResourceType.SubstanceProtein,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

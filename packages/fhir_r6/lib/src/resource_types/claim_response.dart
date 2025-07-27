@@ -53,7 +53,7 @@ class ClaimResponse extends DomainResource {
     this.insurance,
     this.error,
   }) : super(
-          resourceType: R5ResourceType.ClaimResponse,
+          resourceType: R6ResourceType.ClaimResponse,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

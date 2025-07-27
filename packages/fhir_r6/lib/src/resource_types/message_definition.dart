@@ -53,7 +53,7 @@ class MessageDefinition extends CanonicalResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.MessageDefinition,
+          resourceType: R6ResourceType.MessageDefinition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -29,7 +29,7 @@ class SubstancePolymer extends DomainResource {
     this.monomerSet,
     this.repeat,
   }) : super(
-          resourceType: R5ResourceType.SubstancePolymer,
+          resourceType: R6ResourceType.SubstancePolymer,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -54,7 +54,7 @@ class ConditionDefinition extends MetadataResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.ConditionDefinition,
+          resourceType: R6ResourceType.ConditionDefinition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -44,7 +44,7 @@ class NutritionOrder extends DomainResource {
     this.enteralFormula,
     this.note,
   }) : super(
-          resourceType: R5ResourceType.NutritionOrder,
+          resourceType: R6ResourceType.NutritionOrder,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

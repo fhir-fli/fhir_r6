@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         DeviceUsage,
         DeviceUsageAdherence,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [DeviceUsageBuilder]
@@ -48,7 +48,7 @@ class DeviceUsageBuilder extends DomainResourceBuilder {
   })  : timingX = timingX ?? timingTiming ?? timingPeriod ?? timingDateTime,
         super(
           objectPath: 'DeviceUsage',
-          resourceType: R5ResourceType.DeviceUsage,
+          resourceType: R6ResourceType.DeviceUsage,
         );
 
   /// An empty constructor for partial usage.

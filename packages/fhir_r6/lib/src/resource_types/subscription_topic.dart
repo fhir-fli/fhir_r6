@@ -51,7 +51,7 @@ class SubscriptionTopic extends CanonicalResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.SubscriptionTopic,
+          resourceType: R6ResourceType.SubscriptionTopic,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

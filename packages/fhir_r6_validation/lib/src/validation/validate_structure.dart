@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
-import 'package:fhir_r5/fhir_r5.dart';
-import 'package:fhir_r5_path/fhir_r5_path.dart';
-import 'package:fhir_r5_validation/fhir_r5_validation.dart';
+import 'package:fhir_r6/fhir_r6.dart';
+import 'package:fhir_r6_path/fhir_r6_path.dart';
+import 'package:fhir_r6_validation/fhir_r6_validation.dart';
 
 /// Validates the structure of a FHIR resource against a given
 /// StructureDefinition.
@@ -682,7 +682,7 @@ bool _isAResourceType(PropertyNode node, ElementDefinition? element) =>
     element == null &&
     node.value is LiteralNode &&
     node.key?.value == 'resourceType' &&
-    R5ResourceType.typesAsStrings.contains((node.value! as LiteralNode).value);
+    R6ResourceType.typesAsStrings.contains((node.value! as LiteralNode).value);
 
 /// Finds a polymorphic element definition that matches a given path.
 ///

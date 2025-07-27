@@ -39,7 +39,7 @@ class MeasureReport extends DomainResource {
     this.supplementalData,
     this.evaluatedResource,
   }) : super(
-          resourceType: R5ResourceType.MeasureReport,
+          resourceType: R6ResourceType.MeasureReport,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

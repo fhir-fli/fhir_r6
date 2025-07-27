@@ -51,7 +51,7 @@ class DocumentReference extends DomainResource {
     this.securityLabel,
     required this.content,
   }) : super(
-          resourceType: R5ResourceType.DocumentReference,
+          resourceType: R6ResourceType.DocumentReference,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

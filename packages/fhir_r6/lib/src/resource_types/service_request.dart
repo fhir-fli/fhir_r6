@@ -69,7 +69,7 @@ class ServiceRequest extends DomainResource {
             occurrenceTiming,
         asNeededX = asNeededX ?? asNeededBoolean ?? asNeededCodeableConcept,
         super(
-          resourceType: R5ResourceType.ServiceRequest,
+          resourceType: R6ResourceType.ServiceRequest,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

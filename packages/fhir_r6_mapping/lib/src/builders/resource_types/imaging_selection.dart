@@ -1,15 +1,15 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         ImagingSelection,
         ImagingSelectionImageRegion2D,
         ImagingSelectionImageRegion3D,
         ImagingSelectionInstance,
         ImagingSelectionPerformer,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [ImagingSelectionBuilder]
@@ -50,7 +50,7 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
     this.instance,
   }) : super(
           objectPath: 'ImagingSelection',
-          resourceType: R5ResourceType.ImagingSelection,
+          resourceType: R6ResourceType.ImagingSelection,
         );
 
   /// An empty constructor for partial usage.

@@ -36,7 +36,7 @@ class GenomicStudy extends DomainResource {
     this.description,
     this.analysis,
   }) : super(
-          resourceType: R5ResourceType.GenomicStudy,
+          resourceType: R6ResourceType.GenomicStudy,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

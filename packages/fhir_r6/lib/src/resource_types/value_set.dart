@@ -58,7 +58,7 @@ class ValueSet extends MetadataResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.ValueSet,
+          resourceType: R6ResourceType.ValueSet,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

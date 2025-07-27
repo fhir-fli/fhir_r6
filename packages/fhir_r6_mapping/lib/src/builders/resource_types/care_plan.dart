@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
-    show CarePlan, CarePlanActivity, R5ResourceType, yamlMapToJson, yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6/fhir_r6.dart'
+    show CarePlan, CarePlanActivity, R6ResourceType, yamlMapToJson, yamlToJson;
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [CarePlanBuilder]
@@ -47,7 +47,7 @@ class CarePlanBuilder extends DomainResourceBuilder {
     this.note,
   }) : super(
           objectPath: 'CarePlan',
-          resourceType: R5ResourceType.CarePlan,
+          resourceType: R6ResourceType.CarePlan,
         );
 
   /// An empty constructor for partial usage.

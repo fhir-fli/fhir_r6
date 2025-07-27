@@ -1,7 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 /// An enum representing the different FHIR resource types.
-enum R5ResourceType {
+enum R6ResourceType {
   /// Account
   Account,
 
@@ -480,661 +480,661 @@ enum R5ResourceType {
   @override
   String toString() {
     switch (this) {
-      case R5ResourceType.Account:
+      case R6ResourceType.Account:
         return 'Account';
-      case R5ResourceType.ActivityDefinition:
+      case R6ResourceType.ActivityDefinition:
         return 'ActivityDefinition';
-      case R5ResourceType.ActorDefinition:
+      case R6ResourceType.ActorDefinition:
         return 'ActorDefinition';
-      case R5ResourceType.AdministrableProductDefinition:
+      case R6ResourceType.AdministrableProductDefinition:
         return 'AdministrableProductDefinition';
-      case R5ResourceType.AdverseEvent:
+      case R6ResourceType.AdverseEvent:
         return 'AdverseEvent';
-      case R5ResourceType.AllergyIntolerance:
+      case R6ResourceType.AllergyIntolerance:
         return 'AllergyIntolerance';
-      case R5ResourceType.Appointment:
+      case R6ResourceType.Appointment:
         return 'Appointment';
-      case R5ResourceType.AppointmentResponse:
+      case R6ResourceType.AppointmentResponse:
         return 'AppointmentResponse';
-      case R5ResourceType.ArtifactAssessment:
+      case R6ResourceType.ArtifactAssessment:
         return 'ArtifactAssessment';
-      case R5ResourceType.AuditEvent:
+      case R6ResourceType.AuditEvent:
         return 'AuditEvent';
-      case R5ResourceType.Basic:
+      case R6ResourceType.Basic:
         return 'Basic';
-      case R5ResourceType.Binary:
+      case R6ResourceType.Binary:
         return 'Binary';
-      case R5ResourceType.BiologicallyDerivedProduct:
+      case R6ResourceType.BiologicallyDerivedProduct:
         return 'BiologicallyDerivedProduct';
-      case R5ResourceType.BiologicallyDerivedProductDispense:
+      case R6ResourceType.BiologicallyDerivedProductDispense:
         return 'BiologicallyDerivedProductDispense';
-      case R5ResourceType.BodyStructure:
+      case R6ResourceType.BodyStructure:
         return 'BodyStructure';
-      case R5ResourceType.Bundle:
+      case R6ResourceType.Bundle:
         return 'Bundle';
-      case R5ResourceType.CapabilityStatement:
+      case R6ResourceType.CapabilityStatement:
         return 'CapabilityStatement';
-      case R5ResourceType.CarePlan:
+      case R6ResourceType.CarePlan:
         return 'CarePlan';
-      case R5ResourceType.CareTeam:
+      case R6ResourceType.CareTeam:
         return 'CareTeam';
-      case R5ResourceType.ChargeItem:
+      case R6ResourceType.ChargeItem:
         return 'ChargeItem';
-      case R5ResourceType.ChargeItemDefinition:
+      case R6ResourceType.ChargeItemDefinition:
         return 'ChargeItemDefinition';
-      case R5ResourceType.Citation:
+      case R6ResourceType.Citation:
         return 'Citation';
-      case R5ResourceType.Claim:
+      case R6ResourceType.Claim:
         return 'Claim';
-      case R5ResourceType.ClaimResponse:
+      case R6ResourceType.ClaimResponse:
         return 'ClaimResponse';
-      case R5ResourceType.ClinicalImpression:
+      case R6ResourceType.ClinicalImpression:
         return 'ClinicalImpression';
-      case R5ResourceType.ClinicalUseDefinition:
+      case R6ResourceType.ClinicalUseDefinition:
         return 'ClinicalUseDefinition';
-      case R5ResourceType.CodeSystem:
+      case R6ResourceType.CodeSystem:
         return 'CodeSystem';
-      case R5ResourceType.Communication:
+      case R6ResourceType.Communication:
         return 'Communication';
-      case R5ResourceType.CommunicationRequest:
+      case R6ResourceType.CommunicationRequest:
         return 'CommunicationRequest';
-      case R5ResourceType.CompartmentDefinition:
+      case R6ResourceType.CompartmentDefinition:
         return 'CompartmentDefinition';
-      case R5ResourceType.Composition:
+      case R6ResourceType.Composition:
         return 'Composition';
-      case R5ResourceType.ConceptMap:
+      case R6ResourceType.ConceptMap:
         return 'ConceptMap';
-      case R5ResourceType.Condition:
+      case R6ResourceType.Condition:
         return 'Condition';
-      case R5ResourceType.ConditionDefinition:
+      case R6ResourceType.ConditionDefinition:
         return 'ConditionDefinition';
-      case R5ResourceType.Consent:
+      case R6ResourceType.Consent:
         return 'Consent';
-      case R5ResourceType.Contract:
+      case R6ResourceType.Contract:
         return 'Contract';
-      case R5ResourceType.Coverage:
+      case R6ResourceType.Coverage:
         return 'Coverage';
-      case R5ResourceType.CoverageEligibilityRequest:
+      case R6ResourceType.CoverageEligibilityRequest:
         return 'CoverageEligibilityRequest';
-      case R5ResourceType.CoverageEligibilityResponse:
+      case R6ResourceType.CoverageEligibilityResponse:
         return 'CoverageEligibilityResponse';
-      case R5ResourceType.DetectedIssue:
+      case R6ResourceType.DetectedIssue:
         return 'DetectedIssue';
-      case R5ResourceType.Device:
+      case R6ResourceType.Device:
         return 'Device';
-      case R5ResourceType.DeviceAssociation:
+      case R6ResourceType.DeviceAssociation:
         return 'DeviceAssociation';
-      case R5ResourceType.DeviceDefinition:
+      case R6ResourceType.DeviceDefinition:
         return 'DeviceDefinition';
-      case R5ResourceType.DeviceDispense:
+      case R6ResourceType.DeviceDispense:
         return 'DeviceDispense';
-      case R5ResourceType.DeviceMetric:
+      case R6ResourceType.DeviceMetric:
         return 'DeviceMetric';
-      case R5ResourceType.DeviceRequest:
+      case R6ResourceType.DeviceRequest:
         return 'DeviceRequest';
-      case R5ResourceType.DeviceUsage:
+      case R6ResourceType.DeviceUsage:
         return 'DeviceUsage';
-      case R5ResourceType.DiagnosticReport:
+      case R6ResourceType.DiagnosticReport:
         return 'DiagnosticReport';
-      case R5ResourceType.DocumentReference:
+      case R6ResourceType.DocumentReference:
         return 'DocumentReference';
-      case R5ResourceType.Encounter:
+      case R6ResourceType.Encounter:
         return 'Encounter';
-      case R5ResourceType.EncounterHistory:
+      case R6ResourceType.EncounterHistory:
         return 'EncounterHistory';
-      case R5ResourceType.EnrollmentRequest:
+      case R6ResourceType.EnrollmentRequest:
         return 'EnrollmentRequest';
-      case R5ResourceType.EnrollmentResponse:
+      case R6ResourceType.EnrollmentResponse:
         return 'EnrollmentResponse';
-      case R5ResourceType.EpisodeOfCare:
+      case R6ResourceType.EpisodeOfCare:
         return 'EpisodeOfCare';
-      case R5ResourceType.EventDefinition:
+      case R6ResourceType.EventDefinition:
         return 'EventDefinition';
-      case R5ResourceType.Evidence:
+      case R6ResourceType.Evidence:
         return 'Evidence';
-      case R5ResourceType.EvidenceReport:
+      case R6ResourceType.EvidenceReport:
         return 'EvidenceReport';
-      case R5ResourceType.EvidenceVariable:
+      case R6ResourceType.EvidenceVariable:
         return 'EvidenceVariable';
-      case R5ResourceType.ExampleScenario:
+      case R6ResourceType.ExampleScenario:
         return 'ExampleScenario';
-      case R5ResourceType.ExplanationOfBenefit:
+      case R6ResourceType.ExplanationOfBenefit:
         return 'ExplanationOfBenefit';
-      case R5ResourceType.FamilyMemberHistory:
+      case R6ResourceType.FamilyMemberHistory:
         return 'FamilyMemberHistory';
-      case R5ResourceType.FhirEndpoint:
+      case R6ResourceType.FhirEndpoint:
         return 'Endpoint';
-      case R5ResourceType.FhirGroup:
+      case R6ResourceType.FhirGroup:
         return 'Group';
-      case R5ResourceType.FhirList:
+      case R6ResourceType.FhirList:
         return 'List';
-      case R5ResourceType.Flag:
+      case R6ResourceType.Flag:
         return 'Flag';
-      case R5ResourceType.FormularyItem:
+      case R6ResourceType.FormularyItem:
         return 'FormularyItem';
-      case R5ResourceType.GenomicStudy:
+      case R6ResourceType.GenomicStudy:
         return 'GenomicStudy';
-      case R5ResourceType.Goal:
+      case R6ResourceType.Goal:
         return 'Goal';
-      case R5ResourceType.GraphDefinition:
+      case R6ResourceType.GraphDefinition:
         return 'GraphDefinition';
-      case R5ResourceType.GuidanceResponse:
+      case R6ResourceType.GuidanceResponse:
         return 'GuidanceResponse';
-      case R5ResourceType.HealthcareService:
+      case R6ResourceType.HealthcareService:
         return 'HealthcareService';
-      case R5ResourceType.ImagingSelection:
+      case R6ResourceType.ImagingSelection:
         return 'ImagingSelection';
-      case R5ResourceType.ImagingStudy:
+      case R6ResourceType.ImagingStudy:
         return 'ImagingStudy';
-      case R5ResourceType.Immunization:
+      case R6ResourceType.Immunization:
         return 'Immunization';
-      case R5ResourceType.ImmunizationEvaluation:
+      case R6ResourceType.ImmunizationEvaluation:
         return 'ImmunizationEvaluation';
-      case R5ResourceType.ImmunizationRecommendation:
+      case R6ResourceType.ImmunizationRecommendation:
         return 'ImmunizationRecommendation';
-      case R5ResourceType.ImplementationGuide:
+      case R6ResourceType.ImplementationGuide:
         return 'ImplementationGuide';
-      case R5ResourceType.Ingredient:
+      case R6ResourceType.Ingredient:
         return 'Ingredient';
-      case R5ResourceType.InsurancePlan:
+      case R6ResourceType.InsurancePlan:
         return 'InsurancePlan';
-      case R5ResourceType.InventoryItem:
+      case R6ResourceType.InventoryItem:
         return 'InventoryItem';
-      case R5ResourceType.InventoryReport:
+      case R6ResourceType.InventoryReport:
         return 'InventoryReport';
-      case R5ResourceType.Invoice:
+      case R6ResourceType.Invoice:
         return 'Invoice';
-      case R5ResourceType.Library:
+      case R6ResourceType.Library:
         return 'Library';
-      case R5ResourceType.Linkage:
+      case R6ResourceType.Linkage:
         return 'Linkage';
-      case R5ResourceType.Location:
+      case R6ResourceType.Location:
         return 'Location';
-      case R5ResourceType.ManufacturedItemDefinition:
+      case R6ResourceType.ManufacturedItemDefinition:
         return 'ManufacturedItemDefinition';
-      case R5ResourceType.Measure:
+      case R6ResourceType.Measure:
         return 'Measure';
-      case R5ResourceType.MeasureReport:
+      case R6ResourceType.MeasureReport:
         return 'MeasureReport';
-      case R5ResourceType.Medication:
+      case R6ResourceType.Medication:
         return 'Medication';
-      case R5ResourceType.MedicationAdministration:
+      case R6ResourceType.MedicationAdministration:
         return 'MedicationAdministration';
-      case R5ResourceType.MedicationDispense:
+      case R6ResourceType.MedicationDispense:
         return 'MedicationDispense';
-      case R5ResourceType.MedicationKnowledge:
+      case R6ResourceType.MedicationKnowledge:
         return 'MedicationKnowledge';
-      case R5ResourceType.MedicationRequest:
+      case R6ResourceType.MedicationRequest:
         return 'MedicationRequest';
-      case R5ResourceType.MedicationStatement:
+      case R6ResourceType.MedicationStatement:
         return 'MedicationStatement';
-      case R5ResourceType.MedicinalProductDefinition:
+      case R6ResourceType.MedicinalProductDefinition:
         return 'MedicinalProductDefinition';
-      case R5ResourceType.MessageDefinition:
+      case R6ResourceType.MessageDefinition:
         return 'MessageDefinition';
-      case R5ResourceType.MessageHeader:
+      case R6ResourceType.MessageHeader:
         return 'MessageHeader';
-      case R5ResourceType.MolecularSequence:
+      case R6ResourceType.MolecularSequence:
         return 'MolecularSequence';
-      case R5ResourceType.NamingSystem:
+      case R6ResourceType.NamingSystem:
         return 'NamingSystem';
-      case R5ResourceType.NutritionIntake:
+      case R6ResourceType.NutritionIntake:
         return 'NutritionIntake';
-      case R5ResourceType.NutritionOrder:
+      case R6ResourceType.NutritionOrder:
         return 'NutritionOrder';
-      case R5ResourceType.NutritionProduct:
+      case R6ResourceType.NutritionProduct:
         return 'NutritionProduct';
-      case R5ResourceType.Observation:
+      case R6ResourceType.Observation:
         return 'Observation';
-      case R5ResourceType.ObservationDefinition:
+      case R6ResourceType.ObservationDefinition:
         return 'ObservationDefinition';
-      case R5ResourceType.OperationDefinition:
+      case R6ResourceType.OperationDefinition:
         return 'OperationDefinition';
-      case R5ResourceType.OperationOutcome:
+      case R6ResourceType.OperationOutcome:
         return 'OperationOutcome';
-      case R5ResourceType.Organization:
+      case R6ResourceType.Organization:
         return 'Organization';
-      case R5ResourceType.OrganizationAffiliation:
+      case R6ResourceType.OrganizationAffiliation:
         return 'OrganizationAffiliation';
-      case R5ResourceType.PackagedProductDefinition:
+      case R6ResourceType.PackagedProductDefinition:
         return 'PackagedProductDefinition';
-      case R5ResourceType.Parameters:
+      case R6ResourceType.Parameters:
         return 'Parameters';
-      case R5ResourceType.Patient:
+      case R6ResourceType.Patient:
         return 'Patient';
-      case R5ResourceType.PaymentNotice:
+      case R6ResourceType.PaymentNotice:
         return 'PaymentNotice';
-      case R5ResourceType.PaymentReconciliation:
+      case R6ResourceType.PaymentReconciliation:
         return 'PaymentReconciliation';
-      case R5ResourceType.Permission:
+      case R6ResourceType.Permission:
         return 'Permission';
-      case R5ResourceType.Person:
+      case R6ResourceType.Person:
         return 'Person';
-      case R5ResourceType.PlanDefinition:
+      case R6ResourceType.PlanDefinition:
         return 'PlanDefinition';
-      case R5ResourceType.Practitioner:
+      case R6ResourceType.Practitioner:
         return 'Practitioner';
-      case R5ResourceType.PractitionerRole:
+      case R6ResourceType.PractitionerRole:
         return 'PractitionerRole';
-      case R5ResourceType.Procedure:
+      case R6ResourceType.Procedure:
         return 'Procedure';
-      case R5ResourceType.Provenance:
+      case R6ResourceType.Provenance:
         return 'Provenance';
-      case R5ResourceType.Questionnaire:
+      case R6ResourceType.Questionnaire:
         return 'Questionnaire';
-      case R5ResourceType.QuestionnaireResponse:
+      case R6ResourceType.QuestionnaireResponse:
         return 'QuestionnaireResponse';
-      case R5ResourceType.RegulatedAuthorization:
+      case R6ResourceType.RegulatedAuthorization:
         return 'RegulatedAuthorization';
-      case R5ResourceType.RelatedPerson:
+      case R6ResourceType.RelatedPerson:
         return 'RelatedPerson';
-      case R5ResourceType.RequestOrchestration:
+      case R6ResourceType.RequestOrchestration:
         return 'RequestOrchestration';
-      case R5ResourceType.Requirements:
+      case R6ResourceType.Requirements:
         return 'Requirements';
-      case R5ResourceType.ResearchStudy:
+      case R6ResourceType.ResearchStudy:
         return 'ResearchStudy';
-      case R5ResourceType.ResearchSubject:
+      case R6ResourceType.ResearchSubject:
         return 'ResearchSubject';
-      case R5ResourceType.RiskAssessment:
+      case R6ResourceType.RiskAssessment:
         return 'RiskAssessment';
-      case R5ResourceType.Schedule:
+      case R6ResourceType.Schedule:
         return 'Schedule';
-      case R5ResourceType.SearchParameter:
+      case R6ResourceType.SearchParameter:
         return 'SearchParameter';
-      case R5ResourceType.ServiceRequest:
+      case R6ResourceType.ServiceRequest:
         return 'ServiceRequest';
-      case R5ResourceType.Slot:
+      case R6ResourceType.Slot:
         return 'Slot';
-      case R5ResourceType.Specimen:
+      case R6ResourceType.Specimen:
         return 'Specimen';
-      case R5ResourceType.SpecimenDefinition:
+      case R6ResourceType.SpecimenDefinition:
         return 'SpecimenDefinition';
-      case R5ResourceType.StructureDefinition:
+      case R6ResourceType.StructureDefinition:
         return 'StructureDefinition';
-      case R5ResourceType.StructureMap:
+      case R6ResourceType.StructureMap:
         return 'StructureMap';
-      case R5ResourceType.Subscription:
+      case R6ResourceType.Subscription:
         return 'Subscription';
-      case R5ResourceType.SubscriptionStatus:
+      case R6ResourceType.SubscriptionStatus:
         return 'SubscriptionStatus';
-      case R5ResourceType.SubscriptionTopic:
+      case R6ResourceType.SubscriptionTopic:
         return 'SubscriptionTopic';
-      case R5ResourceType.Substance:
+      case R6ResourceType.Substance:
         return 'Substance';
-      case R5ResourceType.SubstanceDefinition:
+      case R6ResourceType.SubstanceDefinition:
         return 'SubstanceDefinition';
-      case R5ResourceType.SubstanceNucleicAcid:
+      case R6ResourceType.SubstanceNucleicAcid:
         return 'SubstanceNucleicAcid';
-      case R5ResourceType.SubstancePolymer:
+      case R6ResourceType.SubstancePolymer:
         return 'SubstancePolymer';
-      case R5ResourceType.SubstanceProtein:
+      case R6ResourceType.SubstanceProtein:
         return 'SubstanceProtein';
-      case R5ResourceType.SubstanceReferenceInformation:
+      case R6ResourceType.SubstanceReferenceInformation:
         return 'SubstanceReferenceInformation';
-      case R5ResourceType.SubstanceSourceMaterial:
+      case R6ResourceType.SubstanceSourceMaterial:
         return 'SubstanceSourceMaterial';
-      case R5ResourceType.SupplyDelivery:
+      case R6ResourceType.SupplyDelivery:
         return 'SupplyDelivery';
-      case R5ResourceType.SupplyRequest:
+      case R6ResourceType.SupplyRequest:
         return 'SupplyRequest';
-      case R5ResourceType.Task:
+      case R6ResourceType.Task:
         return 'Task';
-      case R5ResourceType.TerminologyCapabilities:
+      case R6ResourceType.TerminologyCapabilities:
         return 'TerminologyCapabilities';
-      case R5ResourceType.TestPlan:
+      case R6ResourceType.TestPlan:
         return 'TestPlan';
-      case R5ResourceType.TestReport:
+      case R6ResourceType.TestReport:
         return 'TestReport';
-      case R5ResourceType.TestScript:
+      case R6ResourceType.TestScript:
         return 'TestScript';
-      case R5ResourceType.Transport:
+      case R6ResourceType.Transport:
         return 'Transport';
-      case R5ResourceType.ValueSet:
+      case R6ResourceType.ValueSet:
         return 'ValueSet';
-      case R5ResourceType.VerificationResult:
+      case R6ResourceType.VerificationResult:
         return 'VerificationResult';
-      case R5ResourceType.VisionPrescription:
+      case R6ResourceType.VisionPrescription:
         return 'VisionPrescription';
     }
   }
 
-  /// Returns the [R5ResourceType] as a [String].
+  /// Returns the [R6ResourceType] as a [String].
   String toJson() => toString();
 
-  /// Returns the [R5ResourceType] from a [String].
-  static R5ResourceType? fromString(String string) {
+  /// Returns the [R6ResourceType] from a [String].
+  static R6ResourceType? fromString(String string) {
     switch (string) {
       case 'Account':
-        return R5ResourceType.Account;
+        return R6ResourceType.Account;
       case 'ActivityDefinition':
-        return R5ResourceType.ActivityDefinition;
+        return R6ResourceType.ActivityDefinition;
       case 'ActorDefinition':
-        return R5ResourceType.ActorDefinition;
+        return R6ResourceType.ActorDefinition;
       case 'AdministrableProductDefinition':
-        return R5ResourceType.AdministrableProductDefinition;
+        return R6ResourceType.AdministrableProductDefinition;
       case 'AdverseEvent':
-        return R5ResourceType.AdverseEvent;
+        return R6ResourceType.AdverseEvent;
       case 'AllergyIntolerance':
-        return R5ResourceType.AllergyIntolerance;
+        return R6ResourceType.AllergyIntolerance;
       case 'Appointment':
-        return R5ResourceType.Appointment;
+        return R6ResourceType.Appointment;
       case 'AppointmentResponse':
-        return R5ResourceType.AppointmentResponse;
+        return R6ResourceType.AppointmentResponse;
       case 'ArtifactAssessment':
-        return R5ResourceType.ArtifactAssessment;
+        return R6ResourceType.ArtifactAssessment;
       case 'AuditEvent':
-        return R5ResourceType.AuditEvent;
+        return R6ResourceType.AuditEvent;
       case 'Basic':
-        return R5ResourceType.Basic;
+        return R6ResourceType.Basic;
       case 'Binary':
-        return R5ResourceType.Binary;
+        return R6ResourceType.Binary;
       case 'BiologicallyDerivedProduct':
-        return R5ResourceType.BiologicallyDerivedProduct;
+        return R6ResourceType.BiologicallyDerivedProduct;
       case 'BiologicallyDerivedProductDispense':
-        return R5ResourceType.BiologicallyDerivedProductDispense;
+        return R6ResourceType.BiologicallyDerivedProductDispense;
       case 'BodyStructure':
-        return R5ResourceType.BodyStructure;
+        return R6ResourceType.BodyStructure;
       case 'Bundle':
-        return R5ResourceType.Bundle;
+        return R6ResourceType.Bundle;
       case 'CapabilityStatement':
-        return R5ResourceType.CapabilityStatement;
+        return R6ResourceType.CapabilityStatement;
       case 'CarePlan':
-        return R5ResourceType.CarePlan;
+        return R6ResourceType.CarePlan;
       case 'CareTeam':
-        return R5ResourceType.CareTeam;
+        return R6ResourceType.CareTeam;
       case 'ChargeItem':
-        return R5ResourceType.ChargeItem;
+        return R6ResourceType.ChargeItem;
       case 'ChargeItemDefinition':
-        return R5ResourceType.ChargeItemDefinition;
+        return R6ResourceType.ChargeItemDefinition;
       case 'Citation':
-        return R5ResourceType.Citation;
+        return R6ResourceType.Citation;
       case 'Claim':
-        return R5ResourceType.Claim;
+        return R6ResourceType.Claim;
       case 'ClaimResponse':
-        return R5ResourceType.ClaimResponse;
+        return R6ResourceType.ClaimResponse;
       case 'ClinicalImpression':
-        return R5ResourceType.ClinicalImpression;
+        return R6ResourceType.ClinicalImpression;
       case 'ClinicalUseDefinition':
-        return R5ResourceType.ClinicalUseDefinition;
+        return R6ResourceType.ClinicalUseDefinition;
       case 'CodeSystem':
-        return R5ResourceType.CodeSystem;
+        return R6ResourceType.CodeSystem;
       case 'Communication':
-        return R5ResourceType.Communication;
+        return R6ResourceType.Communication;
       case 'CommunicationRequest':
-        return R5ResourceType.CommunicationRequest;
+        return R6ResourceType.CommunicationRequest;
       case 'CompartmentDefinition':
-        return R5ResourceType.CompartmentDefinition;
+        return R6ResourceType.CompartmentDefinition;
       case 'Composition':
-        return R5ResourceType.Composition;
+        return R6ResourceType.Composition;
       case 'ConceptMap':
-        return R5ResourceType.ConceptMap;
+        return R6ResourceType.ConceptMap;
       case 'Condition':
-        return R5ResourceType.Condition;
+        return R6ResourceType.Condition;
       case 'ConditionDefinition':
-        return R5ResourceType.ConditionDefinition;
+        return R6ResourceType.ConditionDefinition;
       case 'Consent':
-        return R5ResourceType.Consent;
+        return R6ResourceType.Consent;
       case 'Contract':
-        return R5ResourceType.Contract;
+        return R6ResourceType.Contract;
       case 'Coverage':
-        return R5ResourceType.Coverage;
+        return R6ResourceType.Coverage;
       case 'CoverageEligibilityRequest':
-        return R5ResourceType.CoverageEligibilityRequest;
+        return R6ResourceType.CoverageEligibilityRequest;
       case 'CoverageEligibilityResponse':
-        return R5ResourceType.CoverageEligibilityResponse;
+        return R6ResourceType.CoverageEligibilityResponse;
       case 'DetectedIssue':
-        return R5ResourceType.DetectedIssue;
+        return R6ResourceType.DetectedIssue;
       case 'Device':
-        return R5ResourceType.Device;
+        return R6ResourceType.Device;
       case 'DeviceAssociation':
-        return R5ResourceType.DeviceAssociation;
+        return R6ResourceType.DeviceAssociation;
       case 'DeviceDefinition':
-        return R5ResourceType.DeviceDefinition;
+        return R6ResourceType.DeviceDefinition;
       case 'DeviceDispense':
-        return R5ResourceType.DeviceDispense;
+        return R6ResourceType.DeviceDispense;
       case 'DeviceMetric':
-        return R5ResourceType.DeviceMetric;
+        return R6ResourceType.DeviceMetric;
       case 'DeviceRequest':
-        return R5ResourceType.DeviceRequest;
+        return R6ResourceType.DeviceRequest;
       case 'DeviceUsage':
-        return R5ResourceType.DeviceUsage;
+        return R6ResourceType.DeviceUsage;
       case 'DiagnosticReport':
-        return R5ResourceType.DiagnosticReport;
+        return R6ResourceType.DiagnosticReport;
       case 'DocumentReference':
-        return R5ResourceType.DocumentReference;
+        return R6ResourceType.DocumentReference;
       case 'Encounter':
-        return R5ResourceType.Encounter;
+        return R6ResourceType.Encounter;
       case 'EncounterHistory':
-        return R5ResourceType.EncounterHistory;
+        return R6ResourceType.EncounterHistory;
       case 'EnrollmentRequest':
-        return R5ResourceType.EnrollmentRequest;
+        return R6ResourceType.EnrollmentRequest;
       case 'EnrollmentResponse':
-        return R5ResourceType.EnrollmentResponse;
+        return R6ResourceType.EnrollmentResponse;
       case 'EpisodeOfCare':
-        return R5ResourceType.EpisodeOfCare;
+        return R6ResourceType.EpisodeOfCare;
       case 'EventDefinition':
-        return R5ResourceType.EventDefinition;
+        return R6ResourceType.EventDefinition;
       case 'Evidence':
-        return R5ResourceType.Evidence;
+        return R6ResourceType.Evidence;
       case 'EvidenceReport':
-        return R5ResourceType.EvidenceReport;
+        return R6ResourceType.EvidenceReport;
       case 'EvidenceVariable':
-        return R5ResourceType.EvidenceVariable;
+        return R6ResourceType.EvidenceVariable;
       case 'ExampleScenario':
-        return R5ResourceType.ExampleScenario;
+        return R6ResourceType.ExampleScenario;
       case 'ExplanationOfBenefit':
-        return R5ResourceType.ExplanationOfBenefit;
+        return R6ResourceType.ExplanationOfBenefit;
       case 'FamilyMemberHistory':
-        return R5ResourceType.FamilyMemberHistory;
+        return R6ResourceType.FamilyMemberHistory;
       case 'Endpoint':
-        return R5ResourceType.FhirEndpoint;
+        return R6ResourceType.FhirEndpoint;
       case 'Group':
-        return R5ResourceType.FhirGroup;
+        return R6ResourceType.FhirGroup;
       case 'List':
-        return R5ResourceType.FhirList;
+        return R6ResourceType.FhirList;
       case 'Flag':
-        return R5ResourceType.Flag;
+        return R6ResourceType.Flag;
       case 'FormularyItem':
-        return R5ResourceType.FormularyItem;
+        return R6ResourceType.FormularyItem;
       case 'GenomicStudy':
-        return R5ResourceType.GenomicStudy;
+        return R6ResourceType.GenomicStudy;
       case 'Goal':
-        return R5ResourceType.Goal;
+        return R6ResourceType.Goal;
       case 'GraphDefinition':
-        return R5ResourceType.GraphDefinition;
+        return R6ResourceType.GraphDefinition;
       case 'GuidanceResponse':
-        return R5ResourceType.GuidanceResponse;
+        return R6ResourceType.GuidanceResponse;
       case 'HealthcareService':
-        return R5ResourceType.HealthcareService;
+        return R6ResourceType.HealthcareService;
       case 'ImagingSelection':
-        return R5ResourceType.ImagingSelection;
+        return R6ResourceType.ImagingSelection;
       case 'ImagingStudy':
-        return R5ResourceType.ImagingStudy;
+        return R6ResourceType.ImagingStudy;
       case 'Immunization':
-        return R5ResourceType.Immunization;
+        return R6ResourceType.Immunization;
       case 'ImmunizationEvaluation':
-        return R5ResourceType.ImmunizationEvaluation;
+        return R6ResourceType.ImmunizationEvaluation;
       case 'ImmunizationRecommendation':
-        return R5ResourceType.ImmunizationRecommendation;
+        return R6ResourceType.ImmunizationRecommendation;
       case 'ImplementationGuide':
-        return R5ResourceType.ImplementationGuide;
+        return R6ResourceType.ImplementationGuide;
       case 'Ingredient':
-        return R5ResourceType.Ingredient;
+        return R6ResourceType.Ingredient;
       case 'InsurancePlan':
-        return R5ResourceType.InsurancePlan;
+        return R6ResourceType.InsurancePlan;
       case 'InventoryItem':
-        return R5ResourceType.InventoryItem;
+        return R6ResourceType.InventoryItem;
       case 'InventoryReport':
-        return R5ResourceType.InventoryReport;
+        return R6ResourceType.InventoryReport;
       case 'Invoice':
-        return R5ResourceType.Invoice;
+        return R6ResourceType.Invoice;
       case 'Library':
-        return R5ResourceType.Library;
+        return R6ResourceType.Library;
       case 'Linkage':
-        return R5ResourceType.Linkage;
+        return R6ResourceType.Linkage;
       case 'Location':
-        return R5ResourceType.Location;
+        return R6ResourceType.Location;
       case 'ManufacturedItemDefinition':
-        return R5ResourceType.ManufacturedItemDefinition;
+        return R6ResourceType.ManufacturedItemDefinition;
       case 'Measure':
-        return R5ResourceType.Measure;
+        return R6ResourceType.Measure;
       case 'MeasureReport':
-        return R5ResourceType.MeasureReport;
+        return R6ResourceType.MeasureReport;
       case 'Medication':
-        return R5ResourceType.Medication;
+        return R6ResourceType.Medication;
       case 'MedicationAdministration':
-        return R5ResourceType.MedicationAdministration;
+        return R6ResourceType.MedicationAdministration;
       case 'MedicationDispense':
-        return R5ResourceType.MedicationDispense;
+        return R6ResourceType.MedicationDispense;
       case 'MedicationKnowledge':
-        return R5ResourceType.MedicationKnowledge;
+        return R6ResourceType.MedicationKnowledge;
       case 'MedicationRequest':
-        return R5ResourceType.MedicationRequest;
+        return R6ResourceType.MedicationRequest;
       case 'MedicationStatement':
-        return R5ResourceType.MedicationStatement;
+        return R6ResourceType.MedicationStatement;
       case 'MedicinalProductDefinition':
-        return R5ResourceType.MedicinalProductDefinition;
+        return R6ResourceType.MedicinalProductDefinition;
       case 'MessageDefinition':
-        return R5ResourceType.MessageDefinition;
+        return R6ResourceType.MessageDefinition;
       case 'MessageHeader':
-        return R5ResourceType.MessageHeader;
+        return R6ResourceType.MessageHeader;
       case 'MolecularSequence':
-        return R5ResourceType.MolecularSequence;
+        return R6ResourceType.MolecularSequence;
       case 'NamingSystem':
-        return R5ResourceType.NamingSystem;
+        return R6ResourceType.NamingSystem;
       case 'NutritionIntake':
-        return R5ResourceType.NutritionIntake;
+        return R6ResourceType.NutritionIntake;
       case 'NutritionOrder':
-        return R5ResourceType.NutritionOrder;
+        return R6ResourceType.NutritionOrder;
       case 'NutritionProduct':
-        return R5ResourceType.NutritionProduct;
+        return R6ResourceType.NutritionProduct;
       case 'Observation':
-        return R5ResourceType.Observation;
+        return R6ResourceType.Observation;
       case 'ObservationDefinition':
-        return R5ResourceType.ObservationDefinition;
+        return R6ResourceType.ObservationDefinition;
       case 'OperationDefinition':
-        return R5ResourceType.OperationDefinition;
+        return R6ResourceType.OperationDefinition;
       case 'OperationOutcome':
-        return R5ResourceType.OperationOutcome;
+        return R6ResourceType.OperationOutcome;
       case 'Organization':
-        return R5ResourceType.Organization;
+        return R6ResourceType.Organization;
       case 'OrganizationAffiliation':
-        return R5ResourceType.OrganizationAffiliation;
+        return R6ResourceType.OrganizationAffiliation;
       case 'PackagedProductDefinition':
-        return R5ResourceType.PackagedProductDefinition;
+        return R6ResourceType.PackagedProductDefinition;
       case 'Parameters':
-        return R5ResourceType.Parameters;
+        return R6ResourceType.Parameters;
       case 'Patient':
-        return R5ResourceType.Patient;
+        return R6ResourceType.Patient;
       case 'PaymentNotice':
-        return R5ResourceType.PaymentNotice;
+        return R6ResourceType.PaymentNotice;
       case 'PaymentReconciliation':
-        return R5ResourceType.PaymentReconciliation;
+        return R6ResourceType.PaymentReconciliation;
       case 'Permission':
-        return R5ResourceType.Permission;
+        return R6ResourceType.Permission;
       case 'Person':
-        return R5ResourceType.Person;
+        return R6ResourceType.Person;
       case 'PlanDefinition':
-        return R5ResourceType.PlanDefinition;
+        return R6ResourceType.PlanDefinition;
       case 'Practitioner':
-        return R5ResourceType.Practitioner;
+        return R6ResourceType.Practitioner;
       case 'PractitionerRole':
-        return R5ResourceType.PractitionerRole;
+        return R6ResourceType.PractitionerRole;
       case 'Procedure':
-        return R5ResourceType.Procedure;
+        return R6ResourceType.Procedure;
       case 'Provenance':
-        return R5ResourceType.Provenance;
+        return R6ResourceType.Provenance;
       case 'Questionnaire':
-        return R5ResourceType.Questionnaire;
+        return R6ResourceType.Questionnaire;
       case 'QuestionnaireResponse':
-        return R5ResourceType.QuestionnaireResponse;
+        return R6ResourceType.QuestionnaireResponse;
       case 'RegulatedAuthorization':
-        return R5ResourceType.RegulatedAuthorization;
+        return R6ResourceType.RegulatedAuthorization;
       case 'RelatedPerson':
-        return R5ResourceType.RelatedPerson;
+        return R6ResourceType.RelatedPerson;
       case 'RequestOrchestration':
-        return R5ResourceType.RequestOrchestration;
+        return R6ResourceType.RequestOrchestration;
       case 'Requirements':
-        return R5ResourceType.Requirements;
+        return R6ResourceType.Requirements;
       case 'ResearchStudy':
-        return R5ResourceType.ResearchStudy;
+        return R6ResourceType.ResearchStudy;
       case 'ResearchSubject':
-        return R5ResourceType.ResearchSubject;
+        return R6ResourceType.ResearchSubject;
       case 'RiskAssessment':
-        return R5ResourceType.RiskAssessment;
+        return R6ResourceType.RiskAssessment;
       case 'Schedule':
-        return R5ResourceType.Schedule;
+        return R6ResourceType.Schedule;
       case 'SearchParameter':
-        return R5ResourceType.SearchParameter;
+        return R6ResourceType.SearchParameter;
       case 'ServiceRequest':
-        return R5ResourceType.ServiceRequest;
+        return R6ResourceType.ServiceRequest;
       case 'Slot':
-        return R5ResourceType.Slot;
+        return R6ResourceType.Slot;
       case 'Specimen':
-        return R5ResourceType.Specimen;
+        return R6ResourceType.Specimen;
       case 'SpecimenDefinition':
-        return R5ResourceType.SpecimenDefinition;
+        return R6ResourceType.SpecimenDefinition;
       case 'StructureDefinition':
-        return R5ResourceType.StructureDefinition;
+        return R6ResourceType.StructureDefinition;
       case 'StructureMap':
-        return R5ResourceType.StructureMap;
+        return R6ResourceType.StructureMap;
       case 'Subscription':
-        return R5ResourceType.Subscription;
+        return R6ResourceType.Subscription;
       case 'SubscriptionStatus':
-        return R5ResourceType.SubscriptionStatus;
+        return R6ResourceType.SubscriptionStatus;
       case 'SubscriptionTopic':
-        return R5ResourceType.SubscriptionTopic;
+        return R6ResourceType.SubscriptionTopic;
       case 'Substance':
-        return R5ResourceType.Substance;
+        return R6ResourceType.Substance;
       case 'SubstanceDefinition':
-        return R5ResourceType.SubstanceDefinition;
+        return R6ResourceType.SubstanceDefinition;
       case 'SubstanceNucleicAcid':
-        return R5ResourceType.SubstanceNucleicAcid;
+        return R6ResourceType.SubstanceNucleicAcid;
       case 'SubstancePolymer':
-        return R5ResourceType.SubstancePolymer;
+        return R6ResourceType.SubstancePolymer;
       case 'SubstanceProtein':
-        return R5ResourceType.SubstanceProtein;
+        return R6ResourceType.SubstanceProtein;
       case 'SubstanceReferenceInformation':
-        return R5ResourceType.SubstanceReferenceInformation;
+        return R6ResourceType.SubstanceReferenceInformation;
       case 'SubstanceSourceMaterial':
-        return R5ResourceType.SubstanceSourceMaterial;
+        return R6ResourceType.SubstanceSourceMaterial;
       case 'SupplyDelivery':
-        return R5ResourceType.SupplyDelivery;
+        return R6ResourceType.SupplyDelivery;
       case 'SupplyRequest':
-        return R5ResourceType.SupplyRequest;
+        return R6ResourceType.SupplyRequest;
       case 'Task':
-        return R5ResourceType.Task;
+        return R6ResourceType.Task;
       case 'TerminologyCapabilities':
-        return R5ResourceType.TerminologyCapabilities;
+        return R6ResourceType.TerminologyCapabilities;
       case 'TestPlan':
-        return R5ResourceType.TestPlan;
+        return R6ResourceType.TestPlan;
       case 'TestReport':
-        return R5ResourceType.TestReport;
+        return R6ResourceType.TestReport;
       case 'TestScript':
-        return R5ResourceType.TestScript;
+        return R6ResourceType.TestScript;
       case 'Transport':
-        return R5ResourceType.Transport;
+        return R6ResourceType.Transport;
       case 'ValueSet':
-        return R5ResourceType.ValueSet;
+        return R6ResourceType.ValueSet;
       case 'VerificationResult':
-        return R5ResourceType.VerificationResult;
+        return R6ResourceType.VerificationResult;
       case 'VisionPrescription':
-        return R5ResourceType.VisionPrescription;
+        return R6ResourceType.VisionPrescription;
       default:
         return null;
     }
   }
 
-  /// Returns a list of [R5ResourceType] from a [dynamic] object.
-  static R5ResourceType? fromJson(dynamic json) {
+  /// Returns a list of [R6ResourceType] from a [dynamic] object.
+  static R6ResourceType? fromJson(dynamic json) {
     if (json is String) {
       return fromString(json);
     }
     return null;
   }
 
-  /// Returns a list of [R5ResourceType] as [String]s.
+  /// Returns a list of [R6ResourceType] as [String]s.
   static List<String> get typesAsStrings => <String>[
         'Account',
         'ActivityDefinition',

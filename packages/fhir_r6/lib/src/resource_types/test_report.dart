@@ -33,7 +33,7 @@ class TestReport extends DomainResource {
     this.test,
     this.teardown,
   }) : super(
-          resourceType: R5ResourceType.TestReport,
+          resourceType: R6ResourceType.TestReport,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -1,4 +1,4 @@
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 
 /// A utility class to parse JSON fields.
 class JsonParser {

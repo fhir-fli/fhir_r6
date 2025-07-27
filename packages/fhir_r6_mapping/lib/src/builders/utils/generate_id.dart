@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:uuid/uuid.dart';
 
 /// Change a DateTime into a versionId

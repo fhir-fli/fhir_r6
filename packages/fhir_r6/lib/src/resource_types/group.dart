@@ -34,7 +34,7 @@ class FhirGroup extends DomainResource {
     this.characteristic,
     this.member,
   }) : super(
-          resourceType: R5ResourceType.FhirGroup,
+          resourceType: R6ResourceType.FhirGroup,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

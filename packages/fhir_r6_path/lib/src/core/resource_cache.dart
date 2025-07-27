@@ -1,4 +1,4 @@
-import 'package:fhir_r5/fhir_r5.dart';
+import 'package:fhir_r6/fhir_r6.dart';
 import 'package:http/http.dart';
 
 /// A cache for FHIR resources.

@@ -55,7 +55,7 @@ class MedicinalProductDefinition extends DomainResource {
     this.operation,
     this.characteristic,
   }) : super(
-          resourceType: R5ResourceType.MedicinalProductDefinition,
+          resourceType: R6ResourceType.MedicinalProductDefinition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

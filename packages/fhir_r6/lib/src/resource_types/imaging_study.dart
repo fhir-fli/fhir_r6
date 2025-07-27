@@ -43,7 +43,7 @@ class ImagingStudy extends DomainResource {
     this.description,
     this.series,
   }) : super(
-          resourceType: R5ResourceType.ImagingStudy,
+          resourceType: R6ResourceType.ImagingStudy,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

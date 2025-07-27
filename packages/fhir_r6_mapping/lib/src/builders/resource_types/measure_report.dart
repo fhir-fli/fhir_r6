@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         MeasureReport,
         MeasureReportComponent,
@@ -8,10 +8,10 @@ import 'package:fhir_r5/fhir_r5.dart'
         MeasureReportPopulation1,
         MeasureReportStratifier,
         MeasureReportStratum,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [MeasureReportBuilder]
@@ -50,7 +50,7 @@ class MeasureReportBuilder extends DomainResourceBuilder {
     this.evaluatedResource,
   }) : super(
           objectPath: 'MeasureReport',
-          resourceType: R5ResourceType.MeasureReport,
+          resourceType: R6ResourceType.MeasureReport,
         );
 
   /// An empty constructor for partial usage.

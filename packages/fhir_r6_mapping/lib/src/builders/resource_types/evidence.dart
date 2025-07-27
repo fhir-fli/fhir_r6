@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         Evidence,
         EvidenceAttributeEstimate,
@@ -9,10 +9,10 @@ import 'package:fhir_r5/fhir_r5.dart'
         EvidenceSampleSize,
         EvidenceStatistic,
         EvidenceVariableDefinition,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [EvidenceBuilder]
@@ -75,7 +75,7 @@ class EvidenceBuilder extends MetadataResourceBuilder {
         citeAsX = citeAsX ?? citeAsReference ?? citeAsMarkdown,
         super(
           objectPath: 'Evidence',
-          resourceType: R5ResourceType.Evidence,
+          resourceType: R6ResourceType.Evidence,
         );
 
   /// An empty constructor for partial usage.

@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs
 
-import 'package:fhir_r5_path/fhir_r5_path.dart';
+import 'package:fhir_r6_path/fhir_r6_path.dart';
 
 enum FhirPublication {
   null_,

@@ -1,6 +1,6 @@
-# fhir_r5_path
+# fhir_r6_path
 
-[![pub package](https://img.shields.io/pub/v/fhir_r5_path.svg)](https://pub.dev/packages/fhir_r5_path)
+[![pub package](https://img.shields.io/pub/v/fhir_r6_path.svg)](https://pub.dev/packages/fhir_r6_path)
 
 A Dart implementation of the [FHIRPath](https://hl7.org/fhirpath/) specification for FHIR R4 resources, allowing you to query and manipulate FHIR data using standardized expressions.
 
@@ -12,14 +12,14 @@ FHIR® is the registered trademark of HL7 and is used with the permission of HL7
 - **High performance** evaluation engine with optimization for repeated use
 - **Resource caching** for canonical resources like CodeSystems and StructureDefinitions
 - **Async API** for seamless integration with Flutter and Dart applications
-- **Type-safe** working with FHIR R4 resources from the `fhir_r5` package
+- **Type-safe** working with FHIR R4 resources from the `fhir_r6` package
 
 ## Installation
 
 ```yaml
 dependencies:
-  fhir_r5_path: ^0.4.1
-  fhir_r5: ^0.4.2
+  fhir_r6_path: ^0.4.1
+  fhir_r6: ^0.4.2
 ```
 
 ## Basic Usage
@@ -27,8 +27,8 @@ dependencies:
 ### Simple Approach
 
 ```dart
-import 'package:fhir_r5/fhir_r5.dart';
-import 'package:fhir_r5_path/fhir_r5_path.dart';
+import 'package:fhir_r6/fhir_r6.dart';
+import 'package:fhir_r6_path/fhir_r6_path.dart';
 
 // Create a patient resource
 final patient = Patient(

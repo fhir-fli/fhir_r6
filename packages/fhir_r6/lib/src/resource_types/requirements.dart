@@ -48,7 +48,7 @@ class Requirements extends CanonicalResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.Requirements,
+          resourceType: R6ResourceType.Requirements,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

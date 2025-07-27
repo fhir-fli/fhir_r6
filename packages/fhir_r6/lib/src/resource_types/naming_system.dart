@@ -58,7 +58,7 @@ class NamingSystem extends MetadataResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.NamingSystem,
+          resourceType: R6ResourceType.NamingSystem,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

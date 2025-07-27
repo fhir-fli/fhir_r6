@@ -33,7 +33,7 @@ class Organization extends DomainResource {
     this.endpoint,
     this.qualification,
   }) : super(
-          resourceType: R5ResourceType.Organization,
+          resourceType: R6ResourceType.Organization,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

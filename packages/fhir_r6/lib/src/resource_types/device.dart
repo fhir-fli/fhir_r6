@@ -54,7 +54,7 @@ class Device extends DomainResource {
     this.safety,
     this.parent,
   }) : super(
-          resourceType: R5ResourceType.Device,
+          resourceType: R6ResourceType.Device,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

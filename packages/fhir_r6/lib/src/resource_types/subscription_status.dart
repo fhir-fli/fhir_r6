@@ -28,7 +28,7 @@ class SubscriptionStatus extends DomainResource {
     this.topic,
     this.error,
   }) : super(
-          resourceType: R5ResourceType.SubscriptionStatus,
+          resourceType: R6ResourceType.SubscriptionStatus,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

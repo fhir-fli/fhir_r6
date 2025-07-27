@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         Device,
         DeviceConformsTo,
@@ -7,10 +7,10 @@ import 'package:fhir_r5/fhir_r5.dart'
         DeviceProperty,
         DeviceUdiCarrier,
         DeviceVersion,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [DeviceBuilder]
@@ -64,7 +64,7 @@ class DeviceBuilder extends DomainResourceBuilder {
     this.parent,
   }) : super(
           objectPath: 'Device',
-          resourceType: R5ResourceType.Device,
+          resourceType: R6ResourceType.Device,
         );
 
   /// An empty constructor for partial usage.

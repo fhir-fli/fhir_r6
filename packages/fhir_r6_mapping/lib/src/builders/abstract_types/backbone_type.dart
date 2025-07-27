@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// Base class for the few data types that are allowed to carry modifier

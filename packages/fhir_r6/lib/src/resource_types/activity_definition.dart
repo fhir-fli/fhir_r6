@@ -98,7 +98,7 @@ class ActivityDefinition extends MetadataResource {
         asNeededX = asNeededX ?? asNeededBoolean ?? asNeededCodeableConcept,
         productX = productX ?? productReference ?? productCodeableConcept,
         super(
-          resourceType: R5ResourceType.ActivityDefinition,
+          resourceType: R6ResourceType.ActivityDefinition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

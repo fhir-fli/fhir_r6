@@ -50,7 +50,7 @@ class Immunization extends DomainResource {
     this.reaction,
     this.protocolApplied,
   }) : super(
-          resourceType: R5ResourceType.Immunization,
+          resourceType: R6ResourceType.Immunization,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

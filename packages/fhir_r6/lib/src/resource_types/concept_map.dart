@@ -64,7 +64,7 @@ class ConceptMap extends MetadataResource {
         sourceScopeX = sourceScopeX ?? sourceScopeUri ?? sourceScopeCanonical,
         targetScopeX = targetScopeX ?? targetScopeUri ?? targetScopeCanonical,
         super(
-          resourceType: R5ResourceType.ConceptMap,
+          resourceType: R6ResourceType.ConceptMap,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

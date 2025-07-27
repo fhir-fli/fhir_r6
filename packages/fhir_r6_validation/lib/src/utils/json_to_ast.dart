@@ -2,7 +2,7 @@
 
 import 'dart:math';
 
-import 'package:fhir_r5_validation/fhir_r5_validation.dart';
+import 'package:fhir_r6_validation/fhir_r6_validation.dart';
 
 /// Custom exception class for handling JSON AST parsing errors.
 class JSONASTException implements Exception {

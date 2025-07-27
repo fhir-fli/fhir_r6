@@ -1,5 +1,5 @@
-import 'package:fhir_r5/fhir_r5.dart';
-import 'package:fhir_r5_path/fhir_r5_path.dart';
+import 'package:fhir_r6/fhir_r6.dart';
+import 'package:fhir_r6_path/fhir_r6_path.dart';
 
 /// Start here! This is where the fun begins. This is a bit confusing, so we'll
 /// explain the arguments that can be passed.

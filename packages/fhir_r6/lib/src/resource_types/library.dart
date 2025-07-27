@@ -64,7 +64,7 @@ class Library extends MetadataResource {
             versionAlgorithmCoding,
         subjectX = subjectX ?? subjectCodeableConcept ?? subjectReference,
         super(
-          resourceType: R5ResourceType.Library,
+          resourceType: R6ResourceType.Library,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

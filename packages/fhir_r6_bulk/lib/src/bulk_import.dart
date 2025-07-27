@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart';
+import 'package:fhir_r6/fhir_r6.dart';
 import 'package:http/http.dart';
 
 /// A description of one NDJSON file to be imported.
@@ -11,7 +11,7 @@ class ImportFile {
   });
 
   /// The FHIR resourceType stored within this NDJSON file (e.g. "Patient")
-  final R5ResourceType resourceType;
+  final R6ResourceType resourceType;
 
   /// The HTTP(S) location of the NDJSON file.
   final Uri url;

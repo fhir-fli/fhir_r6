@@ -26,7 +26,7 @@ class FormularyItem extends DomainResource {
     this.code,
     this.status,
   }) : super(
-          resourceType: R5ResourceType.FormularyItem,
+          resourceType: R6ResourceType.FormularyItem,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

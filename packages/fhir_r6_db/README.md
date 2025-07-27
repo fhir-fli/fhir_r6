@@ -1,6 +1,6 @@
-# fhir_r5_db
+# fhir_r6_db
 
-[![pub package](https://img.shields.io/pub/v/fhir_r5_db.svg)](https://pub.dev/packages/fhir_r5_db)
+[![pub package](https://img.shields.io/pub/v/fhir_r6_db.svg)](https://pub.dev/packages/fhir_r6_db)
 
 A lightweight, encrypted local database for FHIR R4 resources using Hive.
 
@@ -19,8 +19,8 @@ FHIR® is the registered trademark of HL7 and is used with the permission of HL7
 
 ```yaml
 dependencies:
-  fhir_r5_db: ^0.4.0
-  fhir_r5: ^0.4.2
+  fhir_r6_db: ^0.4.0
+  fhir_r6: ^0.4.2
 ```
 
 ## Quick Start
@@ -53,13 +53,13 @@ final savedPatient = await FhirDb().save(resource: patient);
 
 // Retrieve by type and ID
 final fetchedPatient = await FhirDb().get(
-  resourceType: R5ResourceType.Patient,
+  resourceType: R6ResourceType.Patient,
   id: savedPatient.id!.valueString!,
 );
 
 // Find resources matching criteria
 final results = await FhirDb().find(
-  resourceType: R5ResourceType.Patient,
+  resourceType: R6ResourceType.Patient,
   field: ['name', 0, 'family'],
   value: 'Doe',
 );
@@ -91,7 +91,7 @@ final updatedPatient = await FhirDb().save(resource: patient);
 ```dart
 // Subscribe to changes for a specific resource
 final subscription = FhirDb().subject(
-  resourceType: R5ResourceType.Patient,
+  resourceType: R6ResourceType.Patient,
   id: '12345',
 ).listen((patient) {
   if (patient != null) {
@@ -132,13 +132,13 @@ final valueSet = await FhirDb().getCanonicalResource(
 ```dart
 // Custom search with a finder function
 final activePatients = await FhirDb().search(
-  resourceType: R5ResourceType.Patient,
+  resourceType: R6ResourceType.Patient,
   finder: (resource) => resource['active'] == true,
 );
 
 // Get all resources of certain types
 final allObservations = await FhirDb().getActiveResourcesOfType(
-  resourceTypes: [R5ResourceType.Observation],
+  resourceTypes: [R6ResourceType.Observation],
 );
 ```
 
@@ -165,7 +165,7 @@ final settings = await FhirDb().readGeneral(key: key);
 ```dart
 // Close specific resource boxes
 await FhirDb().closeResourceBoxes(
-  types: [R5ResourceType.Patient],
+  types: [R6ResourceType.Patient],
 );
 ```
 

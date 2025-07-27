@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
-        R5ResourceType,
+        R6ResourceType,
         ResearchStudy,
         ResearchStudyAssociatedParty,
         ResearchStudyComparisonGroup,
@@ -12,7 +12,7 @@ import 'package:fhir_r5/fhir_r5.dart'
         ResearchStudyRecruitment,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [ResearchStudyBuilder]
@@ -69,7 +69,7 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
     this.result,
   }) : super(
           objectPath: 'ResearchStudy',
-          resourceType: R5ResourceType.ResearchStudy,
+          resourceType: R6ResourceType.ResearchStudy,
         );
 
   /// An empty constructor for partial usage.

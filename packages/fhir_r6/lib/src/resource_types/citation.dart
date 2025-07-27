@@ -60,7 +60,7 @@ class Citation extends MetadataResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.Citation,
+          resourceType: R6ResourceType.Citation,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

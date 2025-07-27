@@ -45,7 +45,7 @@ class SubstanceDefinition extends DomainResource {
     this.protein,
     this.sourceMaterial,
   }) : super(
-          resourceType: R5ResourceType.SubstanceDefinition,
+          resourceType: R6ResourceType.SubstanceDefinition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

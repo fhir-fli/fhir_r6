@@ -51,7 +51,7 @@ class DiagnosticReport extends DomainResource {
     this.presentedForm,
   })  : effectiveX = effectiveX ?? effectiveDateTime ?? effectivePeriod,
         super(
-          resourceType: R5ResourceType.DiagnosticReport,
+          resourceType: R6ResourceType.DiagnosticReport,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

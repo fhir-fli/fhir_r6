@@ -48,7 +48,7 @@ class GraphDefinition extends CanonicalResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.GraphDefinition,
+          resourceType: R6ResourceType.GraphDefinition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -30,7 +30,7 @@ class InventoryReport extends DomainResource {
     this.inventoryListing,
     this.note,
   }) : super(
-          resourceType: R5ResourceType.InventoryReport,
+          resourceType: R6ResourceType.InventoryReport,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

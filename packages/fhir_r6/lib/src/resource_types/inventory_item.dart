@@ -35,7 +35,7 @@ class InventoryItem extends DomainResource {
     this.instance,
     this.productReference,
   }) : super(
-          resourceType: R5ResourceType.InventoryItem,
+          resourceType: R6ResourceType.InventoryItem,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

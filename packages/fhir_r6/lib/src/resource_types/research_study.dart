@@ -57,7 +57,7 @@ class ResearchStudy extends DomainResource {
     this.outcomeMeasure,
     this.result,
   }) : super(
-          resourceType: R5ResourceType.ResearchStudy,
+          resourceType: R6ResourceType.ResearchStudy,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

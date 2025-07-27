@@ -63,7 +63,7 @@ class ObservationDefinition extends MetadataResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.ObservationDefinition,
+          resourceType: R6ResourceType.ObservationDefinition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

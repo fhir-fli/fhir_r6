@@ -64,7 +64,7 @@ class CodeSystem extends MetadataResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.CodeSystem,
+          resourceType: R6ResourceType.CodeSystem,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

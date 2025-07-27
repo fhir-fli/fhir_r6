@@ -57,7 +57,7 @@ class SearchParameter extends CanonicalResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.SearchParameter,
+          resourceType: R6ResourceType.SearchParameter,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

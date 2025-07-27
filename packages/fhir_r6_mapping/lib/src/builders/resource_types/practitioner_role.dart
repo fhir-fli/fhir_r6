@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
-    show PractitionerRole, R5ResourceType, yamlMapToJson, yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6/fhir_r6.dart'
+    show PractitionerRole, R6ResourceType, yamlMapToJson, yamlToJson;
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [PractitionerRoleBuilder]
@@ -36,7 +36,7 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
     this.endpoint,
   }) : super(
           objectPath: 'PractitionerRole',
-          resourceType: R5ResourceType.PractitionerRole,
+          resourceType: R6ResourceType.PractitionerRole,
         );
 
   /// An empty constructor for partial usage.

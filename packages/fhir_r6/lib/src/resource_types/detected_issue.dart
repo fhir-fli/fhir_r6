@@ -40,7 +40,7 @@ class DetectedIssue extends DomainResource {
     this.mitigation,
   })  : identifiedX = identifiedX ?? identifiedDateTime ?? identifiedPeriod,
         super(
-          resourceType: R5ResourceType.DetectedIssue,
+          resourceType: R6ResourceType.DetectedIssue,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

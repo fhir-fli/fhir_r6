@@ -1,14 +1,14 @@
 import 'dart:convert';
-import 'package:fhir_r5/fhir_r5.dart'
+import 'package:fhir_r6/fhir_r6.dart'
     show
         FamilyMemberHistory,
         FamilyMemberHistoryCondition,
         FamilyMemberHistoryParticipant,
         FamilyMemberHistoryProcedure,
-        R5ResourceType,
+        R6ResourceType,
         yamlMapToJson,
         yamlToJson;
-import 'package:fhir_r5_mapping/fhir_r5_mapping.dart';
+import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [FamilyMemberHistoryBuilder]
@@ -67,7 +67,7 @@ class FamilyMemberHistoryBuilder extends DomainResourceBuilder {
             deceasedString,
         super(
           objectPath: 'FamilyMemberHistory',
-          resourceType: R5ResourceType.FamilyMemberHistory,
+          resourceType: R6ResourceType.FamilyMemberHistory,
         );
 
   /// An empty constructor for partial usage.

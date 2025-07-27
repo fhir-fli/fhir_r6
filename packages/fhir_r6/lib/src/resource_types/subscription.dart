@@ -38,7 +38,7 @@ class Subscription extends DomainResource {
     this.content,
     this.maxCount,
   }) : super(
-          resourceType: R5ResourceType.Subscription,
+          resourceType: R6ResourceType.Subscription,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

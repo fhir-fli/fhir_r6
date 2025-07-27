@@ -21,7 +21,7 @@ class Binary extends Resource {
     this.securityContext,
     this.data,
   }) : super(
-          resourceType: R5ResourceType.Binary,
+          resourceType: R6ResourceType.Binary,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

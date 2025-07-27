@@ -45,7 +45,7 @@ class Communication extends DomainResource {
     this.payload,
     this.note,
   }) : super(
-          resourceType: R5ResourceType.Communication,
+          resourceType: R6ResourceType.Communication,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

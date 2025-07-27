@@ -49,7 +49,7 @@ class ActorDefinition extends CanonicalResource {
             versionAlgorithmString ??
             versionAlgorithmCoding,
         super(
-          resourceType: R5ResourceType.ActorDefinition,
+          resourceType: R6ResourceType.ActorDefinition,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -44,7 +44,7 @@ class EvidenceReport extends MetadataResource {
     this.section,
   })  : citeAsX = citeAsX ?? citeAsReference ?? citeAsMarkdown,
         super(
-          resourceType: R5ResourceType.EvidenceReport,
+          resourceType: R6ResourceType.EvidenceReport,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument

@@ -35,7 +35,7 @@ class VerificationResult extends DomainResource {
     this.attestation,
     this.validator,
   }) : super(
-          resourceType: R5ResourceType.VerificationResult,
+          resourceType: R6ResourceType.VerificationResult,
         );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
