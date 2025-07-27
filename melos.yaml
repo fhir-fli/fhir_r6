@@ -1,4 +1,4 @@
-name: fhir_r5
+name: fhir_r6
 
 packages:
   - apps/**

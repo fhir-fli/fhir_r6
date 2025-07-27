@@ -1,4 +1,4 @@
-name: fhirr5
+name: fhirr6
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -7,11 +7,11 @@ dependencies:
 
 dependency_overrides:
   fhir_r5:
-    path: packages/fhir_r5
+    path: packages/fhir_r6
   fhir_r5_at_rest:
-    path: packages/fhir_r5_at_rest
+    path: packages/fhir_r6_at_rest
   fhir_r5_path:
-    path: packages/fhir_r5_path
+    path: packages/fhir_r6_path
 
 dev_dependencies:
   melos: ^6.3.2

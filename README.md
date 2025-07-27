@@ -1,6 +1,6 @@
 # Fhir R4
 
-## fhir_r5
+## fhir_r6
 R4b Version of the FHIR Specification
 
 ### Big Update, Breaking changes for 0.3.0-1
@@ -20,12 +20,12 @@ R4b Version of the FHIR Specification
 ## Updated Package
 - This was originally multiple different packages, and each package supported all FHIR versions. This became too big and broke [pub.dev](pub.dev). I have therefore grouped them together by FHIR version instead of by functionality.
 - This library now contains
-    - [fhir_r5](https://fhir-fli.github.io/fhir_fli_documentation/docs/core/fhir_r5)
-    - [fhir_r5_at_rest](https://fhir-fli.github.io/fhir_fli_documentation/docs/at_rest/fhir_r5_at_rest)
-    - [fhir_r5_db](https://fhir-fli.github.io/fhir_fli_documentation/docs/fhir_r5_db)
-    - [fhir_r5_bulk](https://fhir-fli.github.io/fhir_fli_documentation/docs/fhir_r5_bulk)
-    - [fhir_r5_path](https://fhir-fli.github.io/fhir_fli_documentation/docs/fhir_r5_path)
-    - [fhir_r5_utils](https://fhir-fli.github.io/fhir_fli_documentation/docs/fhir_r5_utils)
+    - [fhir_r6](https://fhir-fli.github.io/fhir_fli_documentation/docs/core/fhir_r6)
+    - [fhir_r6_at_rest](https://fhir-fli.github.io/fhir_fli_documentation/docs/at_rest/fhir_r6_at_rest)
+    - [fhir_r6_db](https://fhir-fli.github.io/fhir_fli_documentation/docs/fhir_r6_db)
+    - [fhir_r6_bulk](https://fhir-fli.github.io/fhir_fli_documentation/docs/fhir_r6_bulk)
+    - [fhir_r6_path](https://fhir-fli.github.io/fhir_fli_documentation/docs/fhir_r6_path)
+    - [fhir_r6_utils](https://fhir-fli.github.io/fhir_fli_documentation/docs/fhir_r6_utils)
 
 - Follow the links for the individual README files.
 
