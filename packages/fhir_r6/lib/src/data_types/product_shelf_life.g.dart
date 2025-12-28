@@ -13,7 +13,7 @@ abstract class $ProductShelfLifeCopyWith<T> extends $BackboneTypeCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    FhirDuration? periodX,
+    PeriodXProductShelfLife? periodX,
     List<CodeableConcept>? specialPrecautionsForStorage,
     bool? disallowExtensions,
   });
@@ -50,7 +50,7 @@ class _$ProductShelfLifeCopyWithImpl<T>
             : type as CodeableConcept?,
         periodX: identical(periodX, fhirSentinel)
             ? _value.periodX
-            : periodX as FhirDuration?,
+            : periodX as PeriodXProductShelfLife?,
         specialPrecautionsForStorage:
             identical(specialPrecautionsForStorage, fhirSentinel)
                 ? _value.specialPrecautionsForStorage

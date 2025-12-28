@@ -147,7 +147,7 @@ class ResourceVersionPolicyBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/versioning-policy',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'No VersionId Support',
     ),
@@ -161,7 +161,7 @@ class ResourceVersionPolicyBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/versioning-policy',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Versioned',
     ),
@@ -175,7 +175,7 @@ class ResourceVersionPolicyBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/versioning-policy',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'VersionId tracked fully',
     ),

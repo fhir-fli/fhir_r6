@@ -1,8 +1,8 @@
 {
     "resourceType": "StructureMap",
-    "id": "R3toR4conversionforCareConnectMedicationStatementLastIssueDateextension",
+    "id": "R3toR6conversionforCareConnectMedicationStatementLastIssueDateextension",
     "url": "http://fhir.nhs.uk/StructureMap/MedicationStatementLastIssueDate-Extension-3to4",
-    "name": "R3 to R4 conversion for CareConnect MedicationStatementLastIssueDate extension",
+    "name": "R3 to R6 conversion for CareConnect MedicationStatementLastIssueDate extension",
     "status": "draft",
     "structure": [
         {

@@ -131,7 +131,7 @@ class SubscriptionPayloadContent extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/subscription-payload-content',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Empty',
     ),
@@ -144,7 +144,7 @@ class SubscriptionPayloadContent extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/subscription-payload-content',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Id-only',
     ),
@@ -158,7 +158,7 @@ class SubscriptionPayloadContent extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/subscription-payload-content',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Full-resource',
     ),

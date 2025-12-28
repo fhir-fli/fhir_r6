@@ -138,7 +138,7 @@ class EligibilityRequestPurpose extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/eligibilityrequest-purpose',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Coverage auth-requirements',
     ),
@@ -151,7 +151,7 @@ class EligibilityRequestPurpose extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/eligibilityrequest-purpose',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Coverage benefits',
     ),
@@ -165,7 +165,7 @@ class EligibilityRequestPurpose extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/eligibilityrequest-purpose',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Coverage Discovery',
     ),
@@ -179,7 +179,7 @@ class EligibilityRequestPurpose extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/eligibilityrequest-purpose',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Coverage Validation',
     ),

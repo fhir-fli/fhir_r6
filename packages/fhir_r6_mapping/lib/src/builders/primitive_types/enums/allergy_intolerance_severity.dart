@@ -148,7 +148,7 @@ class AllergyIntoleranceSeverityBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/reaction-event-severity',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Mild',
     ),
@@ -162,7 +162,7 @@ class AllergyIntoleranceSeverityBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/reaction-event-severity',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Moderate',
     ),
@@ -176,7 +176,7 @@ class AllergyIntoleranceSeverityBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/reaction-event-severity',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Severe',
     ),

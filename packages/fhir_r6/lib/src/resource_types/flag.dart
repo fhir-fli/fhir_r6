@@ -21,13 +21,14 @@ class Flag extends DomainResource {
     super.extension_,
     super.modifierExtension,
     this.identifier,
-    required this.status,
+    this.status,
     this.category,
     required this.code,
     required this.subject,
     this.period,
     this.encounter,
     this.author,
+    this.supportingInfo,
   }) : super(
           resourceType: R6ResourceType.Flag,
         );
@@ -94,7 +95,7 @@ class Flag extends DomainResource {
         json,
         'status',
         FlagStatus.fromJson,
-      )!,
+      ),
       category: (json['category'] as List<dynamic>?)
           ?.map<CodeableConcept>(
             (v) => CodeableConcept.fromJson(
@@ -127,6 +128,13 @@ class Flag extends DomainResource {
         'author',
         Reference.fromJson,
       ),
+      supportingInfo: (json['supportingInfo'] as List<dynamic>?)
+          ?.map<Reference>(
+            (v) => Reference.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -180,7 +188,7 @@ class Flag extends DomainResource {
 
   /// [status]
   /// Supports basic workflow.
-  final FlagStatus status;
+  final FlagStatus? status;
 
   /// [category]
   /// Allows a flag to be divided into different categories like clinical,
@@ -211,6 +219,11 @@ class Flag extends DomainResource {
   /// [author]
   /// The person, organization or device that created the flag.
   final Reference? author;
+
+  /// [supportingInfo]
+  /// Additional information that may be relevant to the flag, such as why
+  /// the flag was created or how to guide management of the flag.
+  final List<Reference>? supportingInfo;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -339,6 +352,10 @@ class Flag extends DomainResource {
       'author',
       author,
     );
+    addField(
+      'supportingInfo',
+      supportingInfo,
+    );
     return json;
   }
 
@@ -362,6 +379,7 @@ class Flag extends DomainResource {
       'period',
       'encounter',
       'author',
+      'supportingInfo',
     ];
   }
 
@@ -411,7 +429,9 @@ class Flag extends DomainResource {
           fields.addAll(identifier!);
         }
       case 'status':
-        fields.add(status);
+        if (status != null) {
+          fields.add(status!);
+        }
       case 'category':
         if (category != null) {
           fields.addAll(category!);
@@ -431,6 +451,10 @@ class Flag extends DomainResource {
       case 'author':
         if (author != null) {
           fields.add(author!);
+        }
+      case 'supportingInfo':
+        if (supportingInfo != null) {
+          fields.addAll(supportingInfo!);
         }
       default:
         if (checkValid) {
@@ -565,6 +589,12 @@ class Flag extends DomainResource {
     if (!equalsDeepWithNull(
       author,
       o.author,
+    )) {
+      return false;
+    }
+    if (!listEquals<Reference>(
+      supportingInfo,
+      o.supportingInfo,
     )) {
       return false;
     }

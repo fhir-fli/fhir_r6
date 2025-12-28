@@ -25,7 +25,7 @@ abstract class $InvoiceCopyWith<T> extends $DomainResourceCopyWith<T> {
     Reference? recipient,
     FhirDateTime? date,
     FhirDateTime? creation,
-    FhirDate? periodX,
+    PeriodXInvoice? periodX,
     List<InvoiceParticipant>? participant,
     Reference? issuer,
     Reference? account,
@@ -120,7 +120,7 @@ class _$InvoiceCopyWithImpl<T> implements $InvoiceCopyWith<T> {
             : creation as FhirDateTime?,
         periodX: identical(periodX, fhirSentinel)
             ? _value.periodX
-            : periodX as FhirDate?,
+            : periodX as PeriodXInvoice?,
         participant: identical(participant, fhirSentinel)
             ? _value.participant
             : participant as List<InvoiceParticipant>?,
@@ -227,8 +227,8 @@ abstract class $InvoiceLineItemCopyWith<T> extends $BackboneElementCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     FhirPositiveInt? sequence,
-    FhirDate? servicedX,
-    Reference? chargeItemX,
+    ServicedXInvoiceLineItem? servicedX,
+    ChargeItemXInvoiceLineItem? chargeItemX,
     List<MonetaryComponent>? priceComponent,
     bool? disallowExtensions,
   });
@@ -265,10 +265,11 @@ class _$InvoiceLineItemCopyWithImpl<T> implements $InvoiceLineItemCopyWith<T> {
             : sequence as FhirPositiveInt?,
         servicedX: identical(servicedX, fhirSentinel)
             ? _value.servicedX
-            : servicedX as FhirDate?,
+            : servicedX as ServicedXInvoiceLineItem?,
         chargeItemX: identical(chargeItemX, fhirSentinel)
             ? _value.chargeItemX
-            : (chargeItemX as Reference?) ?? _value.chargeItemX,
+            : (chargeItemX as ChargeItemXInvoiceLineItem?) ??
+                _value.chargeItemX,
         priceComponent: identical(priceComponent, fhirSentinel)
             ? _value.priceComponent
             : priceComponent as List<MonetaryComponent>?,

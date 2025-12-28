@@ -137,7 +137,7 @@ class FamilyHistoryStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/history-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Partial',
     ),
@@ -150,7 +150,7 @@ class FamilyHistoryStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/history-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Completed',
     ),
@@ -163,7 +163,7 @@ class FamilyHistoryStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/history-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Entered in Error',
     ),
@@ -176,7 +176,7 @@ class FamilyHistoryStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/history-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Health Unknown',
     ),

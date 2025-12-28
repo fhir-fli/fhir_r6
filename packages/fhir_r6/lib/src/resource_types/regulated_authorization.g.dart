@@ -159,7 +159,7 @@ abstract class $RegulatedAuthorizationCaseCopyWith<T>
     Identifier? identifier,
     CodeableConcept? type,
     CodeableConcept? status,
-    Period? dateX,
+    DateXRegulatedAuthorizationCase? dateX,
     List<RegulatedAuthorizationCase>? application,
     bool? disallowExtensions,
   });
@@ -202,7 +202,9 @@ class _$RegulatedAuthorizationCaseCopyWithImpl<T>
         status: identical(status, fhirSentinel)
             ? _value.status
             : status as CodeableConcept?,
-        dateX: identical(dateX, fhirSentinel) ? _value.dateX : dateX as Period?,
+        dateX: identical(dateX, fhirSentinel)
+            ? _value.dateX
+            : dateX as DateXRegulatedAuthorizationCase?,
         application: identical(application, fhirSentinel)
             ? _value.application
             : application as List<RegulatedAuthorizationCase>?,

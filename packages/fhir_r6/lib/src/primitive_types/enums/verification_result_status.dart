@@ -158,7 +158,7 @@ class VerificationResultStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/verificationresult-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Attested',
     ),
@@ -171,7 +171,7 @@ class VerificationResultStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/verificationresult-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Validated',
     ),
@@ -184,7 +184,7 @@ class VerificationResultStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/verificationresult-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'In process',
     ),
@@ -197,7 +197,7 @@ class VerificationResultStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/verificationresult-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Requires revalidation',
     ),
@@ -210,7 +210,7 @@ class VerificationResultStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/verificationresult-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Validation failed',
     ),
@@ -223,7 +223,7 @@ class VerificationResultStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/verificationresult-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Re-Validation failed',
     ),
@@ -237,7 +237,7 @@ class VerificationResultStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/verificationresult-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Entered in Error',
     ),

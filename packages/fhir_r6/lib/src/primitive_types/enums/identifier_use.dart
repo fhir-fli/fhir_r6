@@ -144,7 +144,7 @@ class IdentifierUse extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/identifier-use',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Usual',
     ),
@@ -157,7 +157,7 @@ class IdentifierUse extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/identifier-use',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Official',
     ),
@@ -170,7 +170,7 @@ class IdentifierUse extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/identifier-use',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Temp',
     ),
@@ -183,7 +183,7 @@ class IdentifierUse extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/identifier-use',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Secondary',
     ),
@@ -196,7 +196,7 @@ class IdentifierUse extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/identifier-use',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Old',
     ),

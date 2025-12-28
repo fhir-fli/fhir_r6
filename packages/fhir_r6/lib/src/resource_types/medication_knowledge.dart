@@ -23,7 +23,7 @@ class MedicationKnowledge extends DomainResource {
     this.code,
     this.status,
     this.author,
-    this.intendedJurisdiction,
+    this.jurisdiction,
     this.name,
     this.relatedMedicationKnowledge,
     this.associatedMedication,
@@ -106,24 +106,24 @@ class MedicationKnowledge extends DomainResource {
         'code',
         CodeableConcept.fromJson,
       ),
-      status: JsonParser.parsePrimitive<MedicationKnowledgeStatusCodes>(
+      status: JsonParser.parsePrimitive<PublicationStatus>(
         json,
         'status',
-        MedicationKnowledgeStatusCodes.fromJson,
+        PublicationStatus.fromJson,
       ),
-      author: JsonParser.parseObject<Reference>(
+      author: JsonParser.parseObject<ContactDetail>(
         json,
         'author',
-        Reference.fromJson,
+        ContactDetail.fromJson,
       ),
-      intendedJurisdiction: (json['intendedJurisdiction'] as List<dynamic>?)
+      jurisdiction: (json['jurisdiction'] as List<dynamic>?)
           ?.map<CodeableConcept>(
             (v) => CodeableConcept.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
           .toList(),
-      name: JsonParser.parsePrimitiveList<FhirString>(
+      name: JsonParser.parsePrimitive<FhirString>(
         json,
         'name',
         FhirString.fromJson,
@@ -285,22 +285,22 @@ class MedicationKnowledge extends DomainResource {
   /// MedicationKnowledge is in active use within the drug database or
   /// inventory system. The status refers to the validity about the
   /// information of the medication and not to its medicinal properties.
-  final MedicationKnowledgeStatusCodes? status;
+  final PublicationStatus? status;
 
   /// [author]
   /// The creator or owner of the knowledge or information about the
   /// medication.
-  final Reference? author;
+  final ContactDetail? author;
 
-  /// [intendedJurisdiction]
+  /// [jurisdiction]
   /// Lists the jurisdictions that this medication knowledge was written for.
-  final List<CodeableConcept>? intendedJurisdiction;
+  final List<CodeableConcept>? jurisdiction;
 
   /// [name]
   /// All of the names for a medication, for example, the name(s) given to a
   /// medication in different countries. For example, acetaminophen and
   /// paracetamol or salbutamol and albuterol.
-  final List<FhirString>? name;
+  final FhirString? name;
 
   /// [relatedMedicationKnowledge]
   /// Associated or related medications. For example, if the medication is a
@@ -484,8 +484,8 @@ class MedicationKnowledge extends DomainResource {
       author,
     );
     addField(
-      'intendedJurisdiction',
-      intendedJurisdiction,
+      'jurisdiction',
+      jurisdiction,
     );
     addField(
       'name',
@@ -566,7 +566,7 @@ class MedicationKnowledge extends DomainResource {
       'code',
       'status',
       'author',
-      'intendedJurisdiction',
+      'jurisdiction',
       'name',
       'relatedMedicationKnowledge',
       'associatedMedication',
@@ -642,13 +642,13 @@ class MedicationKnowledge extends DomainResource {
         if (author != null) {
           fields.add(author!);
         }
-      case 'intendedJurisdiction':
-        if (intendedJurisdiction != null) {
-          fields.addAll(intendedJurisdiction!);
+      case 'jurisdiction':
+        if (jurisdiction != null) {
+          fields.addAll(jurisdiction!);
         }
       case 'name':
         if (name != null) {
-          fields.addAll(name!);
+          fields.add(name!);
         }
       case 'relatedMedicationKnowledge':
         if (relatedMedicationKnowledge != null) {
@@ -820,12 +820,12 @@ class MedicationKnowledge extends DomainResource {
       return false;
     }
     if (!listEquals<CodeableConcept>(
-      intendedJurisdiction,
-      o.intendedJurisdiction,
+      jurisdiction,
+      o.jurisdiction,
     )) {
       return false;
     }
-    if (!listEquals<FhirString>(
+    if (!equalsDeepWithNull(
       name,
       o.name,
     )) {

@@ -20,7 +20,7 @@ abstract class $DeviceAssociationCopyWith<T>
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
     Reference? device,
-    List<CodeableConcept>? category,
+    List<CodeableConcept>? relationship,
     CodeableConcept? status,
     List<CodeableConcept>? statusReason,
     Reference? subject,
@@ -50,7 +50,7 @@ class _$DeviceAssociationCopyWithImpl<T>
     Object? modifierExtension = fhirSentinel,
     Object? identifier = fhirSentinel,
     Object? device = fhirSentinel,
-    Object? category = fhirSentinel,
+    Object? relationship = fhirSentinel,
     Object? status = fhirSentinel,
     Object? statusReason = fhirSentinel,
     Object? subject = fhirSentinel,
@@ -85,9 +85,9 @@ class _$DeviceAssociationCopyWithImpl<T>
         device: identical(device, fhirSentinel)
             ? _value.device
             : (device as Reference?) ?? _value.device,
-        category: identical(category, fhirSentinel)
-            ? _value.category
-            : category as List<CodeableConcept>?,
+        relationship: identical(relationship, fhirSentinel)
+            ? _value.relationship
+            : relationship as List<CodeableConcept>?,
         status: identical(status, fhirSentinel)
             ? _value.status
             : (status as CodeableConcept?) ?? _value.status,

@@ -35,9 +35,6 @@ import 'package:yaml/yaml.dart';
 /// bottle or from a list of medications the patient, clinician or other
 /// party maintains. Medication administration is more formal and is not
 /// missing detailed information.
-///
-/// The MedicationStatement resource was previously called
-/// MedicationStatement.
 class MedicationStatementBuilder extends DomainResourceBuilder {
   /// Primary constructor for
   /// [MedicationStatementBuilder]
@@ -63,6 +60,7 @@ class MedicationStatementBuilder extends DomainResourceBuilder {
     PeriodBuilder? effectivePeriod,
     TimingBuilder? effectiveTiming,
     this.dateAsserted,
+    this.author,
     this.informationSource,
     this.derivedFrom,
     this.reason,
@@ -223,6 +221,12 @@ class MedicationStatementBuilder extends DomainResourceBuilder {
         'dateAsserted',
         FhirDateTimeBuilder.fromJson,
         '$objectPath.dateAsserted',
+      ),
+      author: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'author',
+        ReferenceBuilder.fromJson,
+        '$objectPath.author',
       ),
       informationSource: (json['informationSource'] as List<dynamic>?)
           ?.map<ReferenceBuilder>(
@@ -403,6 +407,11 @@ class MedicationStatementBuilder extends DomainResourceBuilder {
   /// source.
   FhirDateTimeBuilder? dateAsserted;
 
+  /// [author]
+  /// The individual, organization, or device that created the statement and
+  /// has responsibility for its content.
+  ReferenceBuilder? author;
+
   /// [informationSource]
   /// The person or organization that provided the information about the
   /// taking of this medication. Note: Use derivedFrom when a
@@ -505,6 +514,7 @@ class MedicationStatementBuilder extends DomainResourceBuilder {
     }
 
     addField('dateAsserted', dateAsserted);
+    addField('author', author);
     addField('informationSource', informationSource);
     addField('derivedFrom', derivedFrom);
     addField('reason', reason);
@@ -537,6 +547,7 @@ class MedicationStatementBuilder extends DomainResourceBuilder {
       'encounter',
       'effectiveX',
       'dateAsserted',
+      'author',
       'informationSource',
       'derivedFrom',
       'reason',
@@ -640,6 +651,10 @@ class MedicationStatementBuilder extends DomainResourceBuilder {
       case 'dateAsserted':
         if (dateAsserted != null) {
           fields.add(dateAsserted!);
+        }
+      case 'author':
+        if (author != null) {
+          fields.add(author!);
         }
       case 'informationSource':
         if (informationSource != null) {
@@ -994,6 +1009,14 @@ class MedicationStatementBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'author':
+        {
+          if (child is ReferenceBuilder) {
+            author = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'informationSource':
         {
           if (child is List<ReferenceBuilder>) {
@@ -1173,6 +1196,8 @@ class MedicationStatementBuilder extends DomainResourceBuilder {
         return ['TimingBuilder'];
       case 'dateAsserted':
         return ['FhirDateTimeBuilder'];
+      case 'author':
+        return ['ReferenceBuilder'];
       case 'informationSource':
         return ['ReferenceBuilder'];
       case 'derivedFrom':
@@ -1296,6 +1321,11 @@ class MedicationStatementBuilder extends DomainResourceBuilder {
           dateAsserted = FhirDateTimeBuilder.empty();
           return;
         }
+      case 'author':
+        {
+          author = ReferenceBuilder.empty();
+          return;
+        }
       case 'informationSource':
         {
           informationSource = <ReferenceBuilder>[];
@@ -1362,6 +1392,7 @@ class MedicationStatementBuilder extends DomainResourceBuilder {
     ReferenceBuilder? encounter,
     EffectiveXMedicationStatementBuilder? effectiveX,
     FhirDateTimeBuilder? dateAsserted,
+    ReferenceBuilder? author,
     List<ReferenceBuilder>? informationSource,
     List<ReferenceBuilder>? derivedFrom,
     List<CodeableReferenceBuilder>? reason,
@@ -1401,6 +1432,7 @@ class MedicationStatementBuilder extends DomainResourceBuilder {
           effectiveTiming ??
           this.effectiveX,
       dateAsserted: dateAsserted ?? this.dateAsserted,
+      author: author ?? this.author,
       informationSource: informationSource ?? this.informationSource,
       derivedFrom: derivedFrom ?? this.derivedFrom,
       reason: reason ?? this.reason,
@@ -1536,6 +1568,12 @@ class MedicationStatementBuilder extends DomainResourceBuilder {
     if (!equalsDeepWithNull(
       dateAsserted,
       o.dateAsserted,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      author,
+      o.author,
     )) {
       return false;
     }

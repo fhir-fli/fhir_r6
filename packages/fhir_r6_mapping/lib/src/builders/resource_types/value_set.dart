@@ -2898,10 +2898,10 @@ class ValueSetIncludeBuilder extends BackboneElementBuilder {
         FhirCanonicalBuilder.fromJson,
         '$objectPath.valueSet',
       ),
-      copyright: JsonParser.parsePrimitive<FhirStringBuilder>(
+      copyright: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
         json,
         'copyright',
-        FhirStringBuilder.fromJson,
+        FhirMarkdownBuilder.fromJson,
         '$objectPath.copyright',
       ),
     );
@@ -2983,7 +2983,7 @@ class ValueSetIncludeBuilder extends BackboneElementBuilder {
   /// associated ValueSet.compose.include.version element is not present); or
   /// the code system and version combination (if the associated
   /// ValueSet.compose.include.version element is present).
-  FhirStringBuilder? copyright;
+  FhirMarkdownBuilder? copyright;
 
   /// Converts a [ValueSetIncludeBuilder]
   /// to [ValueSetInclude]
@@ -3298,14 +3298,14 @@ class ValueSetIncludeBuilder extends BackboneElementBuilder {
         }
       case 'copyright':
         {
-          if (child is FhirStringBuilder) {
+          if (child is FhirMarkdownBuilder) {
             copyright = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
               if (converted != null) {
                 copyright = converted;
                 return;
@@ -3343,7 +3343,7 @@ class ValueSetIncludeBuilder extends BackboneElementBuilder {
       case 'valueSet':
         return ['FhirCanonicalBuilder'];
       case 'copyright':
-        return ['FhirStringBuilder'];
+        return ['FhirMarkdownBuilder'];
       default:
         return <String>[];
     }
@@ -3396,7 +3396,7 @@ class ValueSetIncludeBuilder extends BackboneElementBuilder {
         }
       case 'copyright':
         {
-          copyright = FhirStringBuilder.empty();
+          copyright = FhirMarkdownBuilder.empty();
           return;
         }
       default:
@@ -3416,7 +3416,7 @@ class ValueSetIncludeBuilder extends BackboneElementBuilder {
     List<ValueSetConceptBuilder>? concept,
     List<ValueSetFilterBuilder>? filter,
     List<FhirCanonicalBuilder>? valueSet,
-    FhirStringBuilder? copyright,
+    FhirMarkdownBuilder? copyright,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -4742,12 +4742,17 @@ class ValueSetFilterBuilder extends BackboneElementBuilder {
   FilterOperatorBuilder? op;
 
   /// [value]
-  /// The match value may be either a code defined by the system, or a string
-  /// value, which is a regex match on the literal string of the property
-  /// value (if the filter represents a property defined in CodeSystem) or of
-  /// the system filter value (if the filter represents a filter defined in
-  /// CodeSystem) when the operation is 'regex', or one of the values (true
-  /// and false), when the operation is 'exists'.
+  /// ValueSet.compose.include.filter.value is represented as a string, and
+  /// the string value must be one of the three types below:
+  /// When the filter operation (ValueSet.compose.include.filter.op) is equal
+  /// to "regex", the value (ValueSet.compose.include.filter.value) is a
+  /// regex expression. This is used to match string values (including
+  /// integer and decimal, if necessary).
+  /// When the filter operation (ValueSet.compose.include.filter.op) is equal
+  /// to "exists", the value (ValueSet.compose.include.filter.value) is a
+  /// boolean and must be equal to "true" or "false".
+  /// For all other filter operations (ValueSet.compose.include.filter.op)
+  /// the value (ValueSet.compose.include.filter.value) represents a code.
   FhirStringBuilder? value;
 
   /// Converts a [ValueSetFilterBuilder]
@@ -9471,16 +9476,16 @@ class ValueSetScopeBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      inclusionCriteria: JsonParser.parsePrimitive<FhirStringBuilder>(
+      inclusionCriteria: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
         json,
         'inclusionCriteria',
-        FhirStringBuilder.fromJson,
+        FhirMarkdownBuilder.fromJson,
         '$objectPath.inclusionCriteria',
       ),
-      exclusionCriteria: JsonParser.parsePrimitive<FhirStringBuilder>(
+      exclusionCriteria: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
         json,
         'exclusionCriteria',
-        FhirStringBuilder.fromJson,
+        FhirMarkdownBuilder.fromJson,
         '$objectPath.exclusionCriteria',
       ),
     );
@@ -9530,11 +9535,11 @@ class ValueSetScopeBuilder extends BackboneElementBuilder {
 
   /// [inclusionCriteria]
   /// Criteria describing which concepts or codes should be included and why.
-  FhirStringBuilder? inclusionCriteria;
+  FhirMarkdownBuilder? inclusionCriteria;
 
   /// [exclusionCriteria]
   /// Criteria describing which concepts or codes should be excluded and why.
-  FhirStringBuilder? exclusionCriteria;
+  FhirMarkdownBuilder? exclusionCriteria;
 
   /// Converts a [ValueSetScopeBuilder]
   /// to [ValueSetScope]
@@ -9704,14 +9709,14 @@ class ValueSetScopeBuilder extends BackboneElementBuilder {
         }
       case 'inclusionCriteria':
         {
-          if (child is FhirStringBuilder) {
+          if (child is FhirMarkdownBuilder) {
             inclusionCriteria = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
               if (converted != null) {
                 inclusionCriteria = converted;
                 return;
@@ -9724,14 +9729,14 @@ class ValueSetScopeBuilder extends BackboneElementBuilder {
         }
       case 'exclusionCriteria':
         {
-          if (child is FhirStringBuilder) {
+          if (child is FhirMarkdownBuilder) {
             exclusionCriteria = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
               if (converted != null) {
                 exclusionCriteria = converted;
                 return;
@@ -9759,9 +9764,9 @@ class ValueSetScopeBuilder extends BackboneElementBuilder {
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
       case 'inclusionCriteria':
-        return ['FhirStringBuilder'];
+        return ['FhirMarkdownBuilder'];
       case 'exclusionCriteria':
-        return ['FhirStringBuilder'];
+        return ['FhirMarkdownBuilder'];
       default:
         return <String>[];
     }
@@ -9789,12 +9794,12 @@ class ValueSetScopeBuilder extends BackboneElementBuilder {
         }
       case 'inclusionCriteria':
         {
-          inclusionCriteria = FhirStringBuilder.empty();
+          inclusionCriteria = FhirMarkdownBuilder.empty();
           return;
         }
       case 'exclusionCriteria':
         {
-          exclusionCriteria = FhirStringBuilder.empty();
+          exclusionCriteria = FhirMarkdownBuilder.empty();
           return;
         }
       default:
@@ -9809,8 +9814,8 @@ class ValueSetScopeBuilder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    FhirStringBuilder? inclusionCriteria,
-    FhirStringBuilder? exclusionCriteria,
+    FhirMarkdownBuilder? inclusionCriteria,
+    FhirMarkdownBuilder? exclusionCriteria,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,

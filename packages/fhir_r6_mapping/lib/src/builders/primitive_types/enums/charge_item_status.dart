@@ -174,7 +174,7 @@ class ChargeItemStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/chargeitem-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Planned',
     ),
@@ -187,7 +187,7 @@ class ChargeItemStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/chargeitem-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Billable',
     ),
@@ -200,7 +200,7 @@ class ChargeItemStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/chargeitem-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Not billable',
     ),
@@ -213,7 +213,7 @@ class ChargeItemStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/chargeitem-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Aborted',
     ),
@@ -226,7 +226,7 @@ class ChargeItemStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/chargeitem-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Billed',
     ),
@@ -239,7 +239,7 @@ class ChargeItemStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/chargeitem-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Entered in Error',
     ),
@@ -252,7 +252,7 @@ class ChargeItemStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/chargeitem-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Unknown',
     ),

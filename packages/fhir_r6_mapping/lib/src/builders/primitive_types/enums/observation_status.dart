@@ -6,6 +6,9 @@ enum ObservationStatusBuilderEnum {
   /// registered
   registered,
 
+  /// specimen-in-process
+  specimenInProcess,
+
   /// preliminary
   preliminary,
 
@@ -18,6 +21,9 @@ enum ObservationStatusBuilderEnum {
   /// corrected
   corrected,
 
+  /// appended
+  appended,
+
   /// cancelled
   cancelled,
 
@@ -26,6 +32,9 @@ enum ObservationStatusBuilderEnum {
 
   /// unknown
   unknown,
+
+  /// cannot-be-obtained
+  cannotBeObtained,
   ;
 
   /// Converts the enum value to a string.
@@ -37,6 +46,8 @@ enum ObservationStatusBuilderEnum {
     switch (this) {
       case ObservationStatusBuilderEnum.registered:
         return 'registered';
+      case ObservationStatusBuilderEnum.specimenInProcess:
+        return 'specimen-in-process';
       case ObservationStatusBuilderEnum.preliminary:
         return 'preliminary';
       case ObservationStatusBuilderEnum.final_:
@@ -45,12 +56,16 @@ enum ObservationStatusBuilderEnum {
         return 'amended';
       case ObservationStatusBuilderEnum.corrected:
         return 'corrected';
+      case ObservationStatusBuilderEnum.appended:
+        return 'appended';
       case ObservationStatusBuilderEnum.cancelled:
         return 'cancelled';
       case ObservationStatusBuilderEnum.enteredInError:
         return 'entered-in-error';
       case ObservationStatusBuilderEnum.unknown:
         return 'unknown';
+      case ObservationStatusBuilderEnum.cannotBeObtained:
+        return 'cannot-be-obtained';
     }
   }
 
@@ -74,6 +89,8 @@ enum ObservationStatusBuilderEnum {
     switch (value) {
       case 'registered':
         return ObservationStatusBuilderEnum.registered;
+      case 'specimen-in-process':
+        return ObservationStatusBuilderEnum.specimenInProcess;
       case 'preliminary':
         return ObservationStatusBuilderEnum.preliminary;
       case 'final':
@@ -82,12 +99,16 @@ enum ObservationStatusBuilderEnum {
         return ObservationStatusBuilderEnum.amended;
       case 'corrected':
         return ObservationStatusBuilderEnum.corrected;
+      case 'appended':
+        return ObservationStatusBuilderEnum.appended;
       case 'cancelled':
         return ObservationStatusBuilderEnum.cancelled;
       case 'entered-in-error':
         return ObservationStatusBuilderEnum.enteredInError;
       case 'unknown':
         return ObservationStatusBuilderEnum.unknown;
+      case 'cannot-be-obtained':
+        return ObservationStatusBuilderEnum.cannotBeObtained;
     }
     return null;
   }
@@ -181,9 +202,23 @@ class ObservationStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/observation-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Registered',
+    ),
+  );
+
+  /// specimen_in_process
+  static ObservationStatusBuilder specimenInProcess =
+      ObservationStatusBuilder._(
+    valueString: 'specimen-in-process',
+    valueEnum: ObservationStatusBuilderEnum.specimenInProcess,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/observation-status',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'Specimen-in-Process',
     ),
   );
 
@@ -194,7 +229,7 @@ class ObservationStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/observation-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Preliminary',
     ),
@@ -207,7 +242,7 @@ class ObservationStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/observation-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Final',
     ),
@@ -220,7 +255,7 @@ class ObservationStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/observation-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Amended',
     ),
@@ -233,9 +268,22 @@ class ObservationStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/observation-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Corrected',
+    ),
+  );
+
+  /// appended
+  static ObservationStatusBuilder appended = ObservationStatusBuilder._(
+    valueString: 'appended',
+    valueEnum: ObservationStatusBuilderEnum.appended,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/observation-status',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'Appended',
     ),
   );
 
@@ -246,7 +294,7 @@ class ObservationStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/observation-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Cancelled',
     ),
@@ -259,7 +307,7 @@ class ObservationStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/observation-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Entered in Error',
     ),
@@ -272,9 +320,22 @@ class ObservationStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/observation-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Unknown',
+    ),
+  );
+
+  /// cannot_be_obtained
+  static ObservationStatusBuilder cannotBeObtained = ObservationStatusBuilder._(
+    valueString: 'cannot-be-obtained',
+    valueEnum: ObservationStatusBuilderEnum.cannotBeObtained,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/observation-status',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'Cannot be obtained',
     ),
   );
 
@@ -287,13 +348,16 @@ class ObservationStatusBuilder extends FhirCodeEnumBuilder {
   /// List of all enum-like values
   static List<ObservationStatusBuilder> values = [
     registered,
+    specimenInProcess,
     preliminary,
     final_,
     amended,
     corrected,
+    appended,
     cancelled,
     enteredInError,
     unknown,
+    cannotBeObtained,
   ];
 
   /// Returns the enum value with an element attached

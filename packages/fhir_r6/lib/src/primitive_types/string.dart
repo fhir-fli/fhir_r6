@@ -37,6 +37,7 @@ class FhirString extends PrimitiveType
         AllowedXCoverageEligibilityResponseBenefit,
         UsedXCoverageEligibilityResponseBenefit,
         ValueXDeviceProperty,
+        VersionAlgorithmXDeviceDefinition,
         ValueXDeviceDefinitionProperty,
         VersionAlgorithmXEventDefinition,
         VersionAlgorithmXEvidence,
@@ -51,6 +52,7 @@ class FhirString extends PrimitiveType
         PerformedXFamilyMemberHistoryProcedure,
         DetailXGoalTarget,
         VersionAlgorithmXGraphDefinition,
+        VersionAlgorithmXGroup,
         OccurrenceXImmunization,
         VersionAlgorithmXImplementationGuide,
         SourceXImplementationGuidePage,
@@ -60,7 +62,15 @@ class FhirString extends PrimitiveType
         SourceXMedicationKnowledgeMedicineClassification,
         ValueXMedicationKnowledgeDrugCharacteristic,
         VersionAlgorithmXMessageDefinition,
-        SequenceXMolecularSequenceStartingSequence,
+        DescriptionXMolecularDefinitionGenomeAssembly,
+        ArmXMolecularDefinitionStartCytoband,
+        RegionXMolecularDefinitionStartCytoband,
+        BandXMolecularDefinitionStartCytoband,
+        SubBandXMolecularDefinitionStartCytoband,
+        ArmXMolecularDefinitionEndCytoband,
+        RegionXMolecularDefinitionEndCytoband,
+        BandXMolecularDefinitionEndCytoband,
+        SubBandXMolecularDefinitionEndCytoband,
         VersionAlgorithmXNamingSystem,
         ValueXNutritionProductCharacteristic,
         ValueXObservation,
@@ -156,7 +166,7 @@ class FhirString extends PrimitiveType
 
   /// Constructs a [FhirString] from a JSON [Map].
   factory FhirString.fromJson(Map<String, dynamic> json) {
-    final rawValue = json['value'] as String?;
+    final rawValue = json['value'];
     final elementJson = json['_value'] as Map<String, dynamic>?;
     final parsedElement =
         elementJson == null ? null : Element.fromJson(elementJson);

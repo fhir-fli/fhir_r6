@@ -159,7 +159,7 @@ class SlotStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/slotstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Busy',
     ),
@@ -172,7 +172,7 @@ class SlotStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/slotstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Free',
     ),
@@ -185,7 +185,7 @@ class SlotStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/slotstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Busy (Unavailable)',
     ),
@@ -198,7 +198,7 @@ class SlotStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/slotstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Busy (Tentative)',
     ),
@@ -211,7 +211,7 @@ class SlotStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/slotstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Entered in error',
     ),

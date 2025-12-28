@@ -6,13 +6,13 @@ environment:
 dependencies:
 
 dependency_overrides:
-  fhir_r5:
+  fhir_r6:
     path: packages/fhir_r6
-  fhir_r5_at_rest:
+  fhir_r6_at_rest:
     path: packages/fhir_r6_at_rest
-  fhir_r5_path:
+  fhir_r6_path:
     path: packages/fhir_r6_path
 
 dev_dependencies:
-  melos: ^6.3.2
-  very_good_analysis: ^7.0.0
+  melos: ^7.3.0
+  very_good_analysis: ^10.0.0

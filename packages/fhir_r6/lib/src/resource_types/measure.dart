@@ -47,6 +47,7 @@ class Measure extends MetadataResource {
     super.approvalDate,
     super.lastReviewDate,
     super.effectivePeriod,
+    this.reportingFrequency,
     super.topic,
     super.author,
     super.editor,
@@ -57,6 +58,7 @@ class Measure extends MetadataResource {
     this.disclaimer,
     this.scoring,
     this.scoringUnit,
+    this.scoringPrecision,
     this.compositeScoring,
     this.type,
     this.riskAdjustment,
@@ -64,6 +66,7 @@ class Measure extends MetadataResource {
     this.rationale,
     this.clinicalRecommendationStatement,
     this.improvementNotation,
+    this.improvementNotationGuidance,
     this.term,
     this.guidance,
     this.group,
@@ -259,6 +262,11 @@ class Measure extends MetadataResource {
         'effectivePeriod',
         Period.fromJson,
       ),
+      reportingFrequency: JsonParser.parseObject<Quantity>(
+        json,
+        'reportingFrequency',
+        Quantity.fromJson,
+      ),
       topic: (json['topic'] as List<dynamic>?)
           ?.map<CodeableConcept>(
             (v) => CodeableConcept.fromJson(
@@ -321,6 +329,11 @@ class Measure extends MetadataResource {
         'scoringUnit',
         CodeableConcept.fromJson,
       ),
+      scoringPrecision: JsonParser.parsePrimitive<FhirPositiveInt>(
+        json,
+        'scoringPrecision',
+        FhirPositiveInt.fromJson,
+      ),
       compositeScoring: JsonParser.parseObject<CodeableConcept>(
         json,
         'compositeScoring',
@@ -357,6 +370,11 @@ class Measure extends MetadataResource {
         json,
         'improvementNotation',
         CodeableConcept.fromJson,
+      ),
+      improvementNotationGuidance: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'improvementNotationGuidance',
+        FhirMarkdown.fromJson,
       ),
       term: (json['term'] as List<dynamic>?)
           ?.map<MeasureTerm>(
@@ -505,6 +523,11 @@ class Measure extends MetadataResource {
   /// 'Some rights reserved').
   final FhirString? copyrightLabel;
 
+  /// [reportingFrequency]
+  /// The frequency that this measure should be reported, usually specified
+  /// by the program it is being submitted to.
+  final Quantity? reportingFrequency;
+
   /// [library_]
   /// A reference to a Library resource containing the formal logic used by
   /// the measure.
@@ -516,26 +539,37 @@ class Measure extends MetadataResource {
   final FhirMarkdown? disclaimer;
 
   /// [scoring]
-  /// Indicates how the calculation is performed for the measure, including
-  /// proportion, ratio, continuous-variable, and cohort. The value set is
-  /// extensible, allowing additional measure scoring types to be
-  /// represented.
+  /// Deprecated, use group.scoring. Indicates how the calculation is
+  /// performed for the measure, including proportion, ratio,
+  /// continuous-variable, and cohort. The value set is extensible, allowing
+  /// additional measure scoring types to be represented.
   final CodeableConcept? scoring;
 
   /// [scoringUnit]
-  /// Defines the expected units of measure for the measure score. This
-  /// element SHOULD be specified as a UCUM unit.
+  /// Deprecated, use group.scoringUnit. Defines the expected units of
+  /// measure for the measure score. This element SHOULD be specified as a
+  /// UCUM unit.
   final CodeableConcept? scoringUnit;
 
+  /// [scoringPrecision]
+  /// Deprecated, use group.scoringPrecision) When the score is a decimal
+  /// value this should be used to specify the expected minimum number of
+  /// digits after the decimal point to use for the precision of the value.
+  /// When a scoringUnit is also specified, this value is the expected
+  /// minimum number of digits after the decimal point when the score is
+  /// expressed in the units specified.
+  final FhirPositiveInt? scoringPrecision;
+
   /// [compositeScoring]
-  /// If this is a composite measure, the scoring method used to combine the
-  /// component measures to determine the composite score.
+  /// Deprecated, use group.compositeScoring. If this is a composite measure,
+  /// the scoring method used to combine the component measures to determine
+  /// the composite score.
   final CodeableConcept? compositeScoring;
 
   /// [type]
-  /// Indicates whether the measure is used to examine a process, an outcome
-  /// over time, a patient-reported outcome, or a structure measure such as
-  /// utilization.
+  /// Deprecated, use group.type. Indicates whether the measure is used to
+  /// examine a process, an outcome over time, a patient-reported outcome, or
+  /// a structure measure such as utilization.
   final List<CodeableConcept>? type;
 
   /// [riskAdjustment]
@@ -550,9 +584,9 @@ class Measure extends MetadataResource {
   final FhirMarkdown? rateAggregation;
 
   /// [rationale]
-  /// Provides a succinct statement of the need for the measure. Usually
-  /// includes statements pertaining to importance criterion: impact, gap in
-  /// care, and evidence.
+  /// Provides a detailed justification of the need for the measure including
+  /// statements pertaining to importance criterion: impact, gap in care, and
+  /// evidence.
   final FhirMarkdown? rationale;
 
   /// [clinicalRecommendationStatement]
@@ -561,10 +595,16 @@ class Measure extends MetadataResource {
   final FhirMarkdown? clinicalRecommendationStatement;
 
   /// [improvementNotation]
-  /// Information on whether an increase or decrease in score is the
-  /// preferred result (e.g., a higher score indicates better quality OR a
-  /// lower score indicates better quality OR quality is within a range).
+  /// Deprecated, use group.improvementNotation. Information on whether an
+  /// increase or decrease in score is the preferred result (e.g., a higher
+  /// score indicates better quality OR a lower score indicates better
+  /// quality OR quality is within a range).
   final CodeableConcept? improvementNotation;
+
+  /// [improvementNotationGuidance]
+  /// Deprecated, use group.improvementNotationGuidance. Narrative text to
+  /// explain the improvement notation and how to interpret it.
+  final FhirMarkdown? improvementNotationGuidance;
 
   /// [term]
   /// Provides a description of an individual term used within the measure.
@@ -785,6 +825,10 @@ class Measure extends MetadataResource {
       effectivePeriod,
     );
     addField(
+      'reportingFrequency',
+      reportingFrequency,
+    );
+    addField(
       'topic',
       topic,
     );
@@ -825,6 +869,10 @@ class Measure extends MetadataResource {
       scoringUnit,
     );
     addField(
+      'scoringPrecision',
+      scoringPrecision,
+    );
+    addField(
       'compositeScoring',
       compositeScoring,
     );
@@ -851,6 +899,10 @@ class Measure extends MetadataResource {
     addField(
       'improvementNotation',
       improvementNotation,
+    );
+    addField(
+      'improvementNotationGuidance',
+      improvementNotationGuidance,
     );
     addField(
       'term',
@@ -907,6 +959,7 @@ class Measure extends MetadataResource {
       'approvalDate',
       'lastReviewDate',
       'effectivePeriod',
+      'reportingFrequency',
       'topic',
       'author',
       'editor',
@@ -917,6 +970,7 @@ class Measure extends MetadataResource {
       'disclaimer',
       'scoring',
       'scoringUnit',
+      'scoringPrecision',
       'compositeScoring',
       'type',
       'riskAdjustment',
@@ -924,6 +978,7 @@ class Measure extends MetadataResource {
       'rationale',
       'clinicalRecommendationStatement',
       'improvementNotation',
+      'improvementNotationGuidance',
       'term',
       'guidance',
       'group',
@@ -1084,6 +1139,10 @@ class Measure extends MetadataResource {
         if (effectivePeriod != null) {
           fields.add(effectivePeriod!);
         }
+      case 'reportingFrequency':
+        if (reportingFrequency != null) {
+          fields.add(reportingFrequency!);
+        }
       case 'topic':
         if (topic != null) {
           fields.addAll(topic!);
@@ -1124,6 +1183,10 @@ class Measure extends MetadataResource {
         if (scoringUnit != null) {
           fields.add(scoringUnit!);
         }
+      case 'scoringPrecision':
+        if (scoringPrecision != null) {
+          fields.add(scoringPrecision!);
+        }
       case 'compositeScoring':
         if (compositeScoring != null) {
           fields.add(compositeScoring!);
@@ -1151,6 +1214,10 @@ class Measure extends MetadataResource {
       case 'improvementNotation':
         if (improvementNotation != null) {
           fields.add(improvementNotation!);
+        }
+      case 'improvementNotationGuidance':
+        if (improvementNotationGuidance != null) {
+          fields.add(improvementNotationGuidance!);
         }
       case 'term':
         if (term != null) {
@@ -1400,6 +1467,12 @@ class Measure extends MetadataResource {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      reportingFrequency,
+      o.reportingFrequency,
+    )) {
+      return false;
+    }
     if (!listEquals<CodeableConcept>(
       topic,
       o.topic,
@@ -1461,6 +1534,12 @@ class Measure extends MetadataResource {
       return false;
     }
     if (!equalsDeepWithNull(
+      scoringPrecision,
+      o.scoringPrecision,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       compositeScoring,
       o.compositeScoring,
     )) {
@@ -1499,6 +1578,12 @@ class Measure extends MetadataResource {
     if (!equalsDeepWithNull(
       improvementNotation,
       o.improvementNotation,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      improvementNotationGuidance,
+      o.improvementNotationGuidance,
     )) {
       return false;
     }
@@ -1853,8 +1938,12 @@ class MeasureGroup extends BackboneElement {
     this.basis,
     this.scoring,
     this.scoringUnit,
+    this.scoringPrecision,
+    this.compositeScoring,
+    this.component,
     this.rateAggregation,
     this.improvementNotation,
+    this.improvementNotationGuidance,
     this.library_,
     this.population,
     this.stratifier,
@@ -1930,6 +2019,23 @@ class MeasureGroup extends BackboneElement {
         'scoringUnit',
         CodeableConcept.fromJson,
       ),
+      scoringPrecision: JsonParser.parsePrimitive<FhirPositiveInt>(
+        json,
+        'scoringPrecision',
+        FhirPositiveInt.fromJson,
+      ),
+      compositeScoring: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'compositeScoring',
+        CodeableConcept.fromJson,
+      ),
+      component: (json['component'] as List<dynamic>?)
+          ?.map<MeasureComponent>(
+            (v) => MeasureComponent.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       rateAggregation: JsonParser.parsePrimitive<FhirMarkdown>(
         json,
         'rateAggregation',
@@ -1939,6 +2045,11 @@ class MeasureGroup extends BackboneElement {
         json,
         'improvementNotation',
         CodeableConcept.fromJson,
+      ),
+      improvementNotationGuidance: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'improvementNotationGuidance',
+        FhirMarkdown.fromJson,
       ),
       library_: JsonParser.parsePrimitiveList<FhirCanonical>(
         json,
@@ -2027,8 +2138,7 @@ class MeasureGroup extends BackboneElement {
 
   /// [subjectX]
   /// The intended subjects for the measure. If this element is not provided,
-  /// a Patient subject is assumed, but the subject of the measure can be
-  /// anything.
+  /// the root subject is used to determine the group.
   final SubjectXMeasureGroup? subjectX;
 
   /// Getter for [subjectCodeableConcept] as a CodeableConcept
@@ -2062,6 +2172,23 @@ class MeasureGroup extends BackboneElement {
   /// element SHOULD be specified as a UCUM unit.
   final CodeableConcept? scoringUnit;
 
+  /// [scoringPrecision]
+  /// When the score is a decimal value this should be used to specify the
+  /// expected minimum number of digits after the decimal point to use for
+  /// the precision of the value. When a scoringUnit is also specified, this
+  /// value is the expected minimum number of digits after the decimal point
+  /// when the score is expressed in the units specified.
+  final FhirPositiveInt? scoringPrecision;
+
+  /// [compositeScoring]
+  /// If this is a composite measure, the scoring method used to combine the
+  /// component measures to determine the composite score.
+  final CodeableConcept? compositeScoring;
+
+  /// [component]
+  /// If this is a composite measure, a component of the composite.
+  final List<MeasureComponent>? component;
+
   /// [rateAggregation]
   /// Describes how to combine the information calculated, based on logic in
   /// each of several populations, into one summarized result.
@@ -2071,7 +2198,14 @@ class MeasureGroup extends BackboneElement {
   /// Information on whether an increase or decrease in score is the
   /// preferred result (e.g., a higher score indicates better quality OR a
   /// lower score indicates better quality OR quality is within a range).
+  /// Exercise caution when using any values besides increase or decrease for
+  /// improvementNotation.
   final CodeableConcept? improvementNotation;
+
+  /// [improvementNotationGuidance]
+  /// Narrative text to explain the improvement notation and how to interpret
+  /// it.
+  final FhirMarkdown? improvementNotationGuidance;
 
   /// [library_]
   /// A reference to a Library resource containing the formal logic used by
@@ -2199,12 +2333,28 @@ class MeasureGroup extends BackboneElement {
       scoringUnit,
     );
     addField(
+      'scoringPrecision',
+      scoringPrecision,
+    );
+    addField(
+      'compositeScoring',
+      compositeScoring,
+    );
+    addField(
+      'component',
+      component,
+    );
+    addField(
       'rateAggregation',
       rateAggregation,
     );
     addField(
       'improvementNotation',
       improvementNotation,
+    );
+    addField(
+      'improvementNotationGuidance',
+      improvementNotationGuidance,
     );
     addField(
       'library',
@@ -2236,8 +2386,12 @@ class MeasureGroup extends BackboneElement {
       'basis',
       'scoring',
       'scoringUnit',
+      'scoringPrecision',
+      'compositeScoring',
+      'component',
       'rateAggregation',
       'improvementNotation',
+      'improvementNotationGuidance',
       'library',
       'population',
       'stratifier',
@@ -2305,6 +2459,18 @@ class MeasureGroup extends BackboneElement {
         if (scoringUnit != null) {
           fields.add(scoringUnit!);
         }
+      case 'scoringPrecision':
+        if (scoringPrecision != null) {
+          fields.add(scoringPrecision!);
+        }
+      case 'compositeScoring':
+        if (compositeScoring != null) {
+          fields.add(compositeScoring!);
+        }
+      case 'component':
+        if (component != null) {
+          fields.addAll(component!);
+        }
       case 'rateAggregation':
         if (rateAggregation != null) {
           fields.add(rateAggregation!);
@@ -2312,6 +2478,10 @@ class MeasureGroup extends BackboneElement {
       case 'improvementNotation':
         if (improvementNotation != null) {
           fields.add(improvementNotation!);
+        }
+      case 'improvementNotationGuidance':
+        if (improvementNotationGuidance != null) {
+          fields.add(improvementNotationGuidance!);
         }
       case 'library':
         if (library_ != null) {
@@ -2433,6 +2603,24 @@ class MeasureGroup extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
+      scoringPrecision,
+      o.scoringPrecision,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      compositeScoring,
+      o.compositeScoring,
+    )) {
+      return false;
+    }
+    if (!listEquals<MeasureComponent>(
+      component,
+      o.component,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       rateAggregation,
       o.rateAggregation,
     )) {
@@ -2441,6 +2629,12 @@ class MeasureGroup extends BackboneElement {
     if (!equalsDeepWithNull(
       improvementNotation,
       o.improvementNotation,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      improvementNotationGuidance,
+      o.improvementNotationGuidance,
     )) {
       return false;
     }
@@ -2459,6 +2653,336 @@ class MeasureGroup extends BackboneElement {
     if (!listEquals<MeasureStratifier>(
       stratifier,
       o.stratifier,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [MeasureComponent]
+/// If this is a composite measure, a component of the composite.
+class MeasureComponent extends BackboneElement {
+  /// Primary constructor for
+  /// [MeasureComponent]
+
+  const MeasureComponent({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.measure,
+    this.groupId,
+    this.weight,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory MeasureComponent.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return MeasureComponent(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      measure: JsonParser.parsePrimitive<FhirCanonical>(
+        json,
+        'measure',
+        FhirCanonical.fromJson,
+      ),
+      groupId: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'groupId',
+        FhirString.fromJson,
+      ),
+      weight: JsonParser.parsePrimitive<FhirDecimal>(
+        json,
+        'weight',
+        FhirDecimal.fromJson,
+      ),
+    );
+  }
+
+  /// Deserialize [MeasureComponent]
+  /// from a [String] or [YamlMap] object
+  factory MeasureComponent.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return MeasureComponent.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return MeasureComponent.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'MeasureComponent '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [MeasureComponent]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory MeasureComponent.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return MeasureComponent.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'MeasureComponent';
+
+  /// [measure]
+  /// The measure that contains the definition of the component calculation.
+  final FhirCanonical? measure;
+
+  /// [groupId]
+  /// Specifies the id of a particular group within the measure referenced by
+  /// the related artifact resource.
+  final FhirString? groupId;
+
+  /// [weight]
+  /// What is the weight of the contribution of this measure to the overall
+  /// score.
+  final FhirDecimal? weight;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'measure',
+      measure,
+    );
+    addField(
+      'groupId',
+      groupId,
+    );
+    addField(
+      'weight',
+      weight,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'measure',
+      'groupId',
+      'weight',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'measure':
+        if (measure != null) {
+          fields.add(measure!);
+        }
+      case 'groupId':
+        if (groupId != null) {
+          fields.add(groupId!);
+        }
+      case 'weight':
+        if (weight != null) {
+          fields.add(weight!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  MeasureComponent clone() => copyWith();
+
+  /// Copy function for [MeasureComponent]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $MeasureComponentCopyWith<MeasureComponent> get copyWith =>
+      _$MeasureComponentCopyWithImpl<MeasureComponent>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! MeasureComponent) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      measure,
+      o.measure,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      groupId,
+      o.groupId,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      weight,
+      o.weight,
     )) {
       return false;
     }
@@ -2925,6 +3449,8 @@ class MeasureStratifier extends BackboneElement {
     this.description,
     this.criteria,
     this.groupDefinition,
+    this.valueSet,
+    this.unit,
     this.component,
     super.disallowExtensions,
   }) : super();
@@ -2977,6 +3503,16 @@ class MeasureStratifier extends BackboneElement {
         json,
         'groupDefinition',
         Reference.fromJson,
+      ),
+      valueSet: JsonParser.parsePrimitive<FhirCanonical>(
+        json,
+        'valueSet',
+        FhirCanonical.fromJson,
+      ),
+      unit: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'unit',
+        FhirString.fromJson,
       ),
       component: (json['component'] as List<dynamic>?)
           ?.map<MeasureComponent>(
@@ -3056,6 +3592,21 @@ class MeasureStratifier extends BackboneElement {
   /// A Group resource that defines this population as a set of
   /// characteristics.
   final Reference? groupDefinition;
+
+  /// [valueSet]
+  /// A value set defining the set of possible values for stratum in this
+  /// stratifier. If criteria and valueSet are both present, they SHALL be
+  /// consistent (i.e. criteria expressions SHALL produce stratum values that
+  /// are codes in the value set referenced by this element). Note that this
+  /// MAY be strictly at the code level (e.g. an Age Range code that is just
+  /// the string value `01Y--05Y` with the system ignored).
+  final FhirCanonical? valueSet;
+
+  /// [unit]
+  /// Indicates what units, if any, stratifier values are expected to be
+  /// expressed in. This element SHOULD be specified in UCUM units or
+  /// calendar units.
+  final FhirString? unit;
 
   /// [component]
   /// A component of the stratifier criteria for the measure report,
@@ -3158,6 +3709,14 @@ class MeasureStratifier extends BackboneElement {
       groupDefinition,
     );
     addField(
+      'valueSet',
+      valueSet,
+    );
+    addField(
+      'unit',
+      unit,
+    );
+    addField(
       'component',
       component,
     );
@@ -3176,6 +3735,8 @@ class MeasureStratifier extends BackboneElement {
       'description',
       'criteria',
       'groupDefinition',
+      'valueSet',
+      'unit',
       'component',
     ];
   }
@@ -3220,6 +3781,14 @@ class MeasureStratifier extends BackboneElement {
       case 'groupDefinition':
         if (groupDefinition != null) {
           fields.add(groupDefinition!);
+        }
+      case 'valueSet':
+        if (valueSet != null) {
+          fields.add(valueSet!);
+        }
+      case 'unit':
+        if (unit != null) {
+          fields.add(unit!);
         }
       case 'component':
         if (component != null) {
@@ -3314,6 +3883,18 @@ class MeasureStratifier extends BackboneElement {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      valueSet,
+      o.valueSet,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      unit,
+      o.unit,
+    )) {
+      return false;
+    }
     if (!listEquals<MeasureComponent>(
       component,
       o.component,
@@ -3324,15 +3905,15 @@ class MeasureStratifier extends BackboneElement {
   }
 }
 
-/// [MeasureComponent]
+/// [MeasureComponent1]
 /// A component of the stratifier criteria for the measure report,
 /// specified as either the name of a valid CQL expression defined within a
 /// referenced library or a valid FHIR Resource Path.
-class MeasureComponent extends BackboneElement {
+class MeasureComponent1 extends BackboneElement {
   /// Primary constructor for
-  /// [MeasureComponent]
+  /// [MeasureComponent1]
 
-  const MeasureComponent({
+  const MeasureComponent1({
     super.id,
     super.extension_,
     super.modifierExtension,
@@ -3341,14 +3922,16 @@ class MeasureComponent extends BackboneElement {
     this.description,
     this.criteria,
     this.groupDefinition,
+    this.valueSet,
+    this.unit,
     super.disallowExtensions,
   }) : super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory MeasureComponent.fromJson(
+  factory MeasureComponent1.fromJson(
     Map<String, dynamic> json,
   ) {
-    return MeasureComponent(
+    return MeasureComponent1(
       id: JsonParser.parsePrimitive<FhirString>(
         json,
         'id',
@@ -3393,25 +3976,35 @@ class MeasureComponent extends BackboneElement {
         'groupDefinition',
         Reference.fromJson,
       ),
+      valueSet: JsonParser.parsePrimitive<FhirCanonical>(
+        json,
+        'valueSet',
+        FhirCanonical.fromJson,
+      ),
+      unit: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'unit',
+        FhirString.fromJson,
+      ),
     );
   }
 
-  /// Deserialize [MeasureComponent]
+  /// Deserialize [MeasureComponent1]
   /// from a [String] or [YamlMap] object
-  factory MeasureComponent.fromYaml(
+  factory MeasureComponent1.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return MeasureComponent.fromJson(
+      return MeasureComponent1.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return MeasureComponent.fromJson(
+      return MeasureComponent1.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'MeasureComponent '
+        'MeasureComponent1 '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -3419,16 +4012,16 @@ class MeasureComponent extends BackboneElement {
   }
 
   /// Factory constructor for
-  /// [MeasureComponent]
+  /// [MeasureComponent1]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory MeasureComponent.fromJsonString(
+  factory MeasureComponent1.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return MeasureComponent.fromJson(json);
+      return MeasureComponent1.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -3436,7 +4029,7 @@ class MeasureComponent extends BackboneElement {
   }
 
   @override
-  String get fhirType => 'MeasureComponent';
+  String get fhirType => 'MeasureComponent1';
 
   /// [linkId]
   /// An identifier that is unique within the Measure allowing linkage to the
@@ -3465,6 +4058,21 @@ class MeasureComponent extends BackboneElement {
   /// A Group resource that defines this population as a set of
   /// characteristics.
   final Reference? groupDefinition;
+
+  /// [valueSet]
+  /// A value set defining the set of possible values for stratum in this
+  /// stratifier. If criteria and valueSet are both present, they SHALL be
+  /// consistent (i.e. criteria expressions SHALL produce stratum values that
+  /// are codes in the value set referenced by this element). Note that this
+  /// MAY be strictly at the code level (e.g. an Age Range code that is just
+  /// the string value `01Y--05Y` with the system ignored).
+  final FhirCanonical? valueSet;
+
+  /// [unit]
+  /// Indicates what units, if any, stratifier values are expected to be
+  /// expressed in. This element SHOULD be specified in UCUM units or
+  /// calendar units.
+  final FhirString? unit;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -3560,6 +4168,14 @@ class MeasureComponent extends BackboneElement {
       'groupDefinition',
       groupDefinition,
     );
+    addField(
+      'valueSet',
+      valueSet,
+    );
+    addField(
+      'unit',
+      unit,
+    );
     return json;
   }
 
@@ -3575,6 +4191,8 @@ class MeasureComponent extends BackboneElement {
       'description',
       'criteria',
       'groupDefinition',
+      'valueSet',
+      'unit',
     ];
   }
 
@@ -3619,6 +4237,14 @@ class MeasureComponent extends BackboneElement {
         if (groupDefinition != null) {
           fields.add(groupDefinition!);
         }
+      case 'valueSet':
+        if (valueSet != null) {
+          fields.add(valueSet!);
+        }
+      case 'unit':
+        if (unit != null) {
+          fields.add(unit!);
+        }
       default:
         if (checkValid) {
           throw ArgumentError('Invalid name: $fieldName');
@@ -3638,16 +4264,16 @@ class MeasureComponent extends BackboneElement {
   }
 
   @override
-  MeasureComponent clone() => copyWith();
+  MeasureComponent1 clone() => copyWith();
 
-  /// Copy function for [MeasureComponent]
+  /// Copy function for [MeasureComponent1]
   /// Returns a copy of the current instance with the provided fields modified.
   /// If a field is not provided, it will retain its original value.
   /// If a null is provided, this will clearn the field, unless the
   /// field is required, in which case it will keep its current value.
   @override
-  $MeasureComponentCopyWith<MeasureComponent> get copyWith =>
-      _$MeasureComponentCopyWithImpl<MeasureComponent>(
+  $MeasureComponent1CopyWith<MeasureComponent1> get copyWith =>
+      _$MeasureComponent1CopyWithImpl<MeasureComponent1>(
         this,
         (value) => value,
       );
@@ -3655,7 +4281,7 @@ class MeasureComponent extends BackboneElement {
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBase? o) {
-    if (o is! MeasureComponent) {
+    if (o is! MeasureComponent1) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -3708,6 +4334,18 @@ class MeasureComponent extends BackboneElement {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      valueSet,
+      o.valueSet,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      unit,
+      o.unit,
+    )) {
+      return false;
+    }
     return true;
   }
 }
@@ -3729,6 +4367,8 @@ class MeasureSupplementalData extends BackboneElement {
     this.usage,
     this.description,
     required this.criteria,
+    this.valueSet,
+    this.unit,
     super.disallowExtensions,
   }) : super();
 
@@ -3783,6 +4423,16 @@ class MeasureSupplementalData extends BackboneElement {
         'criteria',
         FhirExpression.fromJson,
       )!,
+      valueSet: JsonParser.parsePrimitive<FhirCanonical>(
+        json,
+        'valueSet',
+        FhirCanonical.fromJson,
+      ),
+      unit: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'unit',
+        FhirString.fromJson,
+      ),
     );
   }
 
@@ -3859,6 +4509,22 @@ class MeasureSupplementalData extends BackboneElement {
   /// be a path to a specific data element. The criteria defines the data to
   /// be returned for this element.
   final FhirExpression criteria;
+
+  /// [valueSet]
+  /// A value set defining the set of possible values for supplemental data
+  /// in this element. If criteria and valueSet are both present, they SHALL
+  /// be consistent (i.e. criteria expressions SHALL produce supplemental
+  /// data values that are codes in the value set referenced by this
+  /// element). Note that this MAY be strictly at the code level (e.g. an Age
+  /// Range code that is just the string value `01Y--05Y` with the system
+  /// ignored).
+  final FhirCanonical? valueSet;
+
+  /// [unit]
+  /// Indicates what units, if any, supplemental data values are expected to
+  /// be expressed in. This element SHOULD be specified in UCUM units or
+  /// calendar units.
+  final FhirString? unit;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -3954,6 +4620,14 @@ class MeasureSupplementalData extends BackboneElement {
       'criteria',
       criteria,
     );
+    addField(
+      'valueSet',
+      valueSet,
+    );
+    addField(
+      'unit',
+      unit,
+    );
     return json;
   }
 
@@ -3969,6 +4643,8 @@ class MeasureSupplementalData extends BackboneElement {
       'usage',
       'description',
       'criteria',
+      'valueSet',
+      'unit',
     ];
   }
 
@@ -4011,6 +4687,14 @@ class MeasureSupplementalData extends BackboneElement {
         }
       case 'criteria':
         fields.add(criteria);
+      case 'valueSet':
+        if (valueSet != null) {
+          fields.add(valueSet!);
+        }
+      case 'unit':
+        if (unit != null) {
+          fields.add(unit!);
+        }
       default:
         if (checkValid) {
           throw ArgumentError('Invalid name: $fieldName');
@@ -4097,6 +4781,18 @@ class MeasureSupplementalData extends BackboneElement {
     if (!equalsDeepWithNull(
       criteria,
       o.criteria,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      valueSet,
+      o.valueSet,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      unit,
+      o.unit,
     )) {
       return false;
     }

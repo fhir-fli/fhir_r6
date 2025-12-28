@@ -21,7 +21,7 @@ abstract class $MessageDefinitionCopyWith<T>
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXMessageDefinition? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     List<FhirCanonical>? replaces,
@@ -38,7 +38,7 @@ abstract class $MessageDefinitionCopyWith<T>
     FhirString? copyrightLabel,
     FhirCanonical? base,
     List<FhirCanonical>? parent,
-    Coding? eventX,
+    EventXMessageDefinition? eventX,
     MessageSignificanceCategory? category,
     List<MessageDefinitionFocus>? focus,
     MessageheaderResponseRequest? responseRequired,
@@ -122,7 +122,7 @@ class _$MessageDefinitionCopyWithImpl<T>
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXMessageDefinition?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -171,7 +171,7 @@ class _$MessageDefinitionCopyWithImpl<T>
             : parent as List<FhirCanonical>?,
         eventX: identical(eventX, fhirSentinel)
             ? _value.eventX
-            : (eventX as Coding?) ?? _value.eventX,
+            : (eventX as EventXMessageDefinition?) ?? _value.eventX,
         category: identical(category, fhirSentinel)
             ? _value.category
             : category as MessageSignificanceCategory?,

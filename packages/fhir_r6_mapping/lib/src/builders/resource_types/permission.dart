@@ -3,8 +3,10 @@ import 'package:fhir_r6/fhir_r6.dart'
     show
         Permission,
         PermissionActivity,
+        PermissionActor,
         PermissionData,
         PermissionJustification,
+        PermissionLimit,
         PermissionResource,
         PermissionRule,
         R6ResourceType,
@@ -14,7 +16,8 @@ import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [PermissionBuilder]
-/// Permission resource holds access rules for a given data and context.
+/// Permission resource holds access rules for a given data and access
+/// request context.
 class PermissionBuilder extends DomainResourceBuilder {
   /// Primary constructor for
   /// [PermissionBuilder]
@@ -28,6 +31,7 @@ class PermissionBuilder extends DomainResourceBuilder {
     super.contained,
     super.extension_,
     super.modifierExtension,
+    this.identifier,
     this.status,
     this.asserter,
     this.date,
@@ -109,6 +113,16 @@ class PermissionBuilder extends DomainResourceBuilder {
               {
                 ...v as Map<String, dynamic>,
                 'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      identifier: (json['identifier'] as List<dynamic>?)
+          ?.map<IdentifierBuilder>(
+            (v) => IdentifierBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.identifier',
               },
             ),
           )
@@ -204,6 +218,10 @@ class PermissionBuilder extends DomainResourceBuilder {
   @override
   String get fhirType => 'Permission';
 
+  /// [identifier]
+  /// A unique identifier assigned to this permission.
+  List<IdentifierBuilder>? identifier;
+
   /// [status]
   /// Status.
   PermissionStatusBuilder? status;
@@ -278,6 +296,7 @@ class PermissionBuilder extends DomainResourceBuilder {
     addField('contained', contained);
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
+    addField('identifier', identifier);
     addField('status', status);
     addField('asserter', asserter);
     addField('date', date);
@@ -300,6 +319,7 @@ class PermissionBuilder extends DomainResourceBuilder {
       'contained',
       'extension',
       'modifierExtension',
+      'identifier',
       'status',
       'asserter',
       'date',
@@ -350,6 +370,10 @@ class PermissionBuilder extends DomainResourceBuilder {
       case 'modifierExtension':
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
+        }
+      case 'identifier':
+        if (identifier != null) {
+          fields.addAll(identifier!);
         }
       case 'status':
         if (status != null) {
@@ -535,6 +559,22 @@ class PermissionBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'identifier':
+        {
+          if (child is List<IdentifierBuilder>) {
+            // Replace or create new list
+            identifier = child;
+            return;
+          } else if (child is IdentifierBuilder) {
+            // Add single element to existing list or create new list
+            identifier = [
+              ...(identifier ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'status':
         {
           if (child is PermissionStatusBuilder) {
@@ -696,6 +736,8 @@ class PermissionBuilder extends DomainResourceBuilder {
         return ['FhirExtensionBuilder'];
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
+      case 'identifier':
+        return ['IdentifierBuilder'];
       case 'status':
         return ['FhirCodeEnumBuilder'];
       case 'asserter':
@@ -760,6 +802,11 @@ class PermissionBuilder extends DomainResourceBuilder {
           modifierExtension = <FhirExtensionBuilder>[];
           return;
         }
+      case 'identifier':
+        {
+          identifier = <IdentifierBuilder>[];
+          return;
+        }
       case 'status':
         {
           status = PermissionStatusBuilder.empty();
@@ -812,6 +859,7 @@ class PermissionBuilder extends DomainResourceBuilder {
     List<ResourceBuilder>? contained,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
+    List<IdentifierBuilder>? identifier,
     PermissionStatusBuilder? status,
     ReferenceBuilder? asserter,
     List<FhirDateTimeBuilder>? date,
@@ -834,6 +882,7 @@ class PermissionBuilder extends DomainResourceBuilder {
       contained: contained ?? this.contained,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
+      identifier: identifier ?? this.identifier,
       status: status ?? this.status,
       asserter: asserter ?? this.asserter,
       date: date ?? this.date,
@@ -912,6 +961,12 @@ class PermissionBuilder extends DomainResourceBuilder {
     if (!listEquals<FhirExtensionBuilder>(
       modifierExtension,
       o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!listEquals<IdentifierBuilder>(
+      identifier,
+      o.identifier,
     )) {
       return false;
     }
@@ -1439,6 +1494,7 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
     super.id,
     super.extension_,
     super.modifierExtension,
+    this.import_,
     this.type,
     this.data,
     this.activity,
@@ -1484,6 +1540,12 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
+      import_: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'import',
+        ReferenceBuilder.fromJson,
+        '$objectPath.import',
+      ),
       type: JsonParser.parsePrimitive<ConsentProvisionTypeBuilder>(
         json,
         'type',
@@ -1511,8 +1573,8 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
           )
           .toList(),
       limit: (json['limit'] as List<dynamic>?)
-          ?.map<CodeableConceptBuilder>(
-            (v) => CodeableConceptBuilder.fromJson(
+          ?.map<PermissionLimitBuilder>(
+            (v) => PermissionLimitBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
                 'objectPath': '$objectPath.limit',
@@ -1565,6 +1627,10 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
   @override
   String get fhirType => 'PermissionRule';
 
+  /// [import_]
+  /// This rule is expressed in another Permission resource.
+  ReferenceBuilder? import_;
+
   /// [type]
   /// deny | permit.
   ConsentProvisionTypeBuilder? type;
@@ -1580,8 +1646,8 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
   List<PermissionActivityBuilder>? activity;
 
   /// [limit]
-  /// What limits apply to the use of the data.
-  List<CodeableConceptBuilder>? limit;
+  /// What restrictions must be applied to the use of the data by the actor.
+  List<PermissionLimitBuilder>? limit;
 
   /// Converts a [PermissionRuleBuilder]
   /// to [PermissionRule]
@@ -1622,6 +1688,7 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
     addField('id', id);
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
+    addField('import', import_);
     addField('type', type);
     addField('data', data);
     addField('activity', activity);
@@ -1636,6 +1703,7 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
       'id',
       'extension',
       'modifierExtension',
+      'import',
       'type',
       'data',
       'activity',
@@ -1663,6 +1731,10 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
       case 'modifierExtension':
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
+        }
+      case 'import':
+        if (import_ != null) {
+          fields.add(import_!);
         }
       case 'type':
         if (type != null) {
@@ -1761,6 +1833,14 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'import':
+        {
+          if (child is ReferenceBuilder) {
+            import_ = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'type':
         {
           if (child is ConsentProvisionTypeBuilder) {
@@ -1818,11 +1898,11 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
         }
       case 'limit':
         {
-          if (child is List<CodeableConceptBuilder>) {
+          if (child is List<PermissionLimitBuilder>) {
             // Replace or create new list
             limit = child;
             return;
-          } else if (child is CodeableConceptBuilder) {
+          } else if (child is PermissionLimitBuilder) {
             // Add single element to existing list or create new list
             limit = [
               ...(limit ?? []),
@@ -1848,6 +1928,8 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
+      case 'import':
+        return ['ReferenceBuilder'];
       case 'type':
         return ['FhirCodeEnumBuilder'];
       case 'data':
@@ -1855,7 +1937,7 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
       case 'activity':
         return ['PermissionActivityBuilder'];
       case 'limit':
-        return ['CodeableConceptBuilder'];
+        return ['PermissionLimitBuilder'];
       default:
         return <String>[];
     }
@@ -1881,6 +1963,11 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
           modifierExtension = <FhirExtensionBuilder>[];
           return;
         }
+      case 'import':
+        {
+          import_ = ReferenceBuilder.empty();
+          return;
+        }
       case 'type':
         {
           type = ConsentProvisionTypeBuilder.empty();
@@ -1898,7 +1985,7 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
         }
       case 'limit':
         {
-          limit = <CodeableConceptBuilder>[];
+          limit = <PermissionLimitBuilder>[];
           return;
         }
       default:
@@ -1913,10 +2000,11 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
+    ReferenceBuilder? import_,
     ConsentProvisionTypeBuilder? type,
     List<PermissionDataBuilder>? data,
     List<PermissionActivityBuilder>? activity,
-    List<CodeableConceptBuilder>? limit,
+    List<PermissionLimitBuilder>? limit,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -1928,6 +2016,7 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
+      import_: import_ ?? this.import_,
       type: type ?? this.type,
       data: data ?? this.data,
       activity: activity ?? this.activity,
@@ -1977,6 +2066,12 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
+      import_,
+      o.import_,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       type,
       o.type,
     )) {
@@ -1994,7 +2089,7 @@ class PermissionRuleBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConceptBuilder>(
+    if (!listEquals<PermissionLimitBuilder>(
       limit,
       o.limit,
     )) {
@@ -2080,16 +2175,12 @@ class PermissionDataBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      period: (json['period'] as List<dynamic>?)
-          ?.map<PeriodBuilder>(
-            (v) => PeriodBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.period',
-              },
-            ),
-          )
-          .toList(),
+      period: JsonParser.parseObject<PeriodBuilder>(
+        json,
+        'period',
+        PeriodBuilder.fromJson,
+        '$objectPath.period',
+      ),
       expression: JsonParser.parseObject<FhirExpressionBuilder>(
         json,
         'expression',
@@ -2153,7 +2244,7 @@ class PermissionDataBuilder extends BackboneElementBuilder {
   /// [period]
   /// Clinical or Operational Relevant period of time that bounds the data
   /// controlled by this rule.
-  List<PeriodBuilder>? period;
+  PeriodBuilder? period;
 
   /// [expression]
   /// Used when other data selection elements are insufficient.
@@ -2250,7 +2341,7 @@ class PermissionDataBuilder extends BackboneElementBuilder {
         }
       case 'period':
         if (period != null) {
-          fields.addAll(period!);
+          fields.add(period!);
         }
       case 'expression':
         if (expression != null) {
@@ -2371,16 +2462,8 @@ class PermissionDataBuilder extends BackboneElementBuilder {
         }
       case 'period':
         {
-          if (child is List<PeriodBuilder>) {
-            // Replace or create new list
+          if (child is PeriodBuilder) {
             period = child;
-            return;
-          } else if (child is PeriodBuilder) {
-            // Add single element to existing list or create new list
-            period = [
-              ...(period ?? []),
-              child,
-            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -2454,7 +2537,7 @@ class PermissionDataBuilder extends BackboneElementBuilder {
         }
       case 'period':
         {
-          period = <PeriodBuilder>[];
+          period = PeriodBuilder.empty();
           return;
         }
       case 'expression':
@@ -2476,7 +2559,7 @@ class PermissionDataBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     List<PermissionResourceBuilder>? resource,
     List<CodingBuilder>? security,
-    List<PeriodBuilder>? period,
+    PeriodBuilder? period,
     FhirExpressionBuilder? expression,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -2549,7 +2632,7 @@ class PermissionDataBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!listEquals<PeriodBuilder>(
+    if (!equalsDeepWithNull(
       period,
       o.period,
     )) {
@@ -3083,8 +3166,8 @@ class PermissionActivityBuilder extends BackboneElementBuilder {
           )
           .toList(),
       actor: (json['actor'] as List<dynamic>?)
-          ?.map<ReferenceBuilder>(
-            (v) => ReferenceBuilder.fromJson(
+          ?.map<PermissionActorBuilder>(
+            (v) => PermissionActorBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
                 'objectPath': '$objectPath.actor',
@@ -3158,8 +3241,9 @@ class PermissionActivityBuilder extends BackboneElementBuilder {
   String get fhirType => 'PermissionActivity';
 
   /// [actor]
-  /// The actor(s) authorized for the defined activity.
-  List<ReferenceBuilder>? actor;
+  /// Who or what is controlled by this rule. Use group to identify a set of
+  /// actors by some property they share (e.g. 'admitting officers').
+  List<PermissionActorBuilder>? actor;
 
   /// [action]
   /// Actions controlled by this Rule.
@@ -3343,11 +3427,11 @@ class PermissionActivityBuilder extends BackboneElementBuilder {
         }
       case 'actor':
         {
-          if (child is List<ReferenceBuilder>) {
+          if (child is List<PermissionActorBuilder>) {
             // Replace or create new list
             actor = child;
             return;
-          } else if (child is ReferenceBuilder) {
+          } else if (child is PermissionActorBuilder) {
             // Add single element to existing list or create new list
             actor = [
               ...(actor ?? []),
@@ -3406,7 +3490,7 @@ class PermissionActivityBuilder extends BackboneElementBuilder {
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
       case 'actor':
-        return ['ReferenceBuilder'];
+        return ['PermissionActorBuilder'];
       case 'action':
         return ['CodeableConceptBuilder'];
       case 'purpose':
@@ -3438,7 +3522,7 @@ class PermissionActivityBuilder extends BackboneElementBuilder {
         }
       case 'actor':
         {
-          actor = <ReferenceBuilder>[];
+          actor = <PermissionActorBuilder>[];
           return;
         }
       case 'action':
@@ -3463,7 +3547,7 @@ class PermissionActivityBuilder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    List<ReferenceBuilder>? actor,
+    List<PermissionActorBuilder>? actor,
     List<CodeableConceptBuilder>? action,
     List<CodeableConceptBuilder>? purpose,
     Map<String, dynamic>? userData,
@@ -3524,7 +3608,7 @@ class PermissionActivityBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!listEquals<ReferenceBuilder>(
+    if (!listEquals<PermissionActorBuilder>(
       actor,
       o.actor,
     )) {
@@ -3539,6 +3623,1001 @@ class PermissionActivityBuilder extends BackboneElementBuilder {
     if (!listEquals<CodeableConceptBuilder>(
       purpose,
       o.purpose,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [PermissionActorBuilder]
+/// Who or what is controlled by this rule. Use group to identify a set of
+/// actors by some property they share (e.g. 'admitting officers').
+class PermissionActorBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [PermissionActorBuilder]
+
+  PermissionActorBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.role,
+    this.reference,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'Permission.rule.activity.actor',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory PermissionActorBuilder.empty() => PermissionActorBuilder();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory PermissionActorBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'Permission.rule.activity.actor';
+    return PermissionActorBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      role: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'role',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.role',
+      ),
+      reference: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'reference',
+        ReferenceBuilder.fromJson,
+        '$objectPath.reference',
+      ),
+    );
+  }
+
+  /// Deserialize [PermissionActorBuilder]
+  /// from a [String] or [YamlMap] object
+  factory PermissionActorBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return PermissionActorBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return PermissionActorBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'PermissionActorBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [PermissionActorBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory PermissionActorBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return PermissionActorBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'PermissionActor';
+
+  /// [role]
+  /// How the individual is involved in the activity that is described in the
+  /// rule.
+  CodeableConceptBuilder? role;
+
+  /// [reference]
+  /// The actor(s) authorized for the defined activity.
+  ReferenceBuilder? reference;
+
+  /// Converts a [PermissionActorBuilder]
+  /// to [PermissionActor]
+  @override
+  PermissionActor build() => PermissionActor.fromJson(toJson());
+
+  /// Converts a [PermissionActorBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('role', role);
+    addField('reference', reference);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'role',
+      'reference',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'role':
+        if (role != null) {
+          fields.add(role!);
+        }
+      case 'reference':
+        if (reference != null) {
+          fields.add(reference!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'role':
+        {
+          if (child is CodeableConceptBuilder) {
+            role = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'reference':
+        {
+          if (child is ReferenceBuilder) {
+            reference = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'role':
+        return ['CodeableConceptBuilder'];
+      case 'reference':
+        return ['ReferenceBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [PermissionActorBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'role':
+        {
+          role = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'reference':
+        {
+          reference = ReferenceBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  PermissionActorBuilder clone() => throw UnimplementedError();
+  @override
+  PermissionActorBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    CodeableConceptBuilder? role,
+    ReferenceBuilder? reference,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = PermissionActorBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      role: role ?? this.role,
+      reference: reference ?? this.reference,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! PermissionActorBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      role,
+      o.role,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reference,
+      o.reference,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [PermissionLimitBuilder]
+/// What restrictions must be applied to the use of the data by the actor.
+class PermissionLimitBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [PermissionLimitBuilder]
+
+  PermissionLimitBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.control,
+    this.tag,
+    this.element,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'Permission.rule.limit',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory PermissionLimitBuilder.empty() => PermissionLimitBuilder();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory PermissionLimitBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'Permission.rule.limit';
+    return PermissionLimitBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      control: (json['control'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.control',
+              },
+            ),
+          )
+          .toList(),
+      tag: (json['tag'] as List<dynamic>?)
+          ?.map<CodingBuilder>(
+            (v) => CodingBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.tag',
+              },
+            ),
+          )
+          .toList(),
+      element: JsonParser.parsePrimitiveList<FhirStringBuilder>(
+        json,
+        'element',
+        FhirStringBuilder.fromJson,
+        '$objectPath.element',
+      ),
+    );
+  }
+
+  /// Deserialize [PermissionLimitBuilder]
+  /// from a [String] or [YamlMap] object
+  factory PermissionLimitBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return PermissionLimitBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return PermissionLimitBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'PermissionLimitBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [PermissionLimitBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory PermissionLimitBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return PermissionLimitBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'PermissionLimit';
+
+  /// [control]
+  /// One or more coded restriction such as a refrain or obligation.
+  List<CodeableConceptBuilder>? control;
+
+  /// [tag]
+  /// When this rule authorized data use, any data that is tagged with the
+  /// code here must be redacted from the data provided for that authorized
+  /// use.
+  List<CodingBuilder>? tag;
+
+  /// [element]
+  /// When this rule authorized data use, the data at the path indicated
+  /// here, must be redacted from the authorized data provided for that
+  /// authorized use.
+  List<FhirStringBuilder>? element;
+
+  /// Converts a [PermissionLimitBuilder]
+  /// to [PermissionLimit]
+  @override
+  PermissionLimit build() => PermissionLimit.fromJson(toJson());
+
+  /// Converts a [PermissionLimitBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('control', control);
+    addField('tag', tag);
+    addField('element', element);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'control',
+      'tag',
+      'element',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'control':
+        if (control != null) {
+          fields.addAll(control!);
+        }
+      case 'tag':
+        if (tag != null) {
+          fields.addAll(tag!);
+        }
+      case 'element':
+        if (element != null) {
+          fields.addAll(element!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'control':
+        {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
+            control = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            control = [
+              ...(control ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'tag':
+        {
+          if (child is List<CodingBuilder>) {
+            // Replace or create new list
+            tag = child;
+            return;
+          } else if (child is CodingBuilder) {
+            // Add single element to existing list or create new list
+            tag = [
+              ...(tag ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'element':
+        {
+          if (child is List<FhirStringBuilder>) {
+            // Replace or create new list
+            element = child;
+            return;
+          } else if (child is FhirStringBuilder) {
+            // Add single element to existing list or create new list
+            element = [
+              ...(element ?? []),
+              child,
+            ];
+            return;
+          } else if (child is List<PrimitiveTypeBuilder>) {
+            // Try to convert list of primitive types
+            final convertedList = <FhirStringBuilder>[];
+            for (final element in child) {
+              try {
+                final stringValue = element.toString();
+                final converted = FhirStringBuilder.tryParse(stringValue);
+                if (converted != null) {
+                  convertedList.add(converted);
+                }
+              } catch (e) {
+                // Continue if conversion fails
+              }
+            }
+            if (convertedList.isNotEmpty) {
+              element = convertedList;
+              return;
+            }
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert a single primitive
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                element = [
+                  ...(element ?? []),
+                  converted,
+                ];
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'control':
+        return ['CodeableConceptBuilder'];
+      case 'tag':
+        return ['CodingBuilder'];
+      case 'element':
+        return ['FhirStringBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [PermissionLimitBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'control':
+        {
+          control = <CodeableConceptBuilder>[];
+          return;
+        }
+      case 'tag':
+        {
+          tag = <CodingBuilder>[];
+          return;
+        }
+      case 'element':
+        {
+          element = <FhirStringBuilder>[];
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  PermissionLimitBuilder clone() => throw UnimplementedError();
+  @override
+  PermissionLimitBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    List<CodeableConceptBuilder>? control,
+    List<CodingBuilder>? tag,
+    List<FhirStringBuilder>? element,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = PermissionLimitBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      control: control ?? this.control,
+      tag: tag ?? this.tag,
+      element: element ?? this.element,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! PermissionLimitBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConceptBuilder>(
+      control,
+      o.control,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodingBuilder>(
+      tag,
+      o.tag,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirStringBuilder>(
+      element,
+      o.element,
     )) {
       return false;
     }

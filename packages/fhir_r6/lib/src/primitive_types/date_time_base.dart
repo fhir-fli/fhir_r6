@@ -246,7 +246,13 @@ abstract class FhirDateTimeBase extends PrimitiveType
           millisecond == null) {
         buffer.write('T');
       }
-      buffer.write('Z');
+      // Preserve original format: if timeZoneOffset is 0, use +00:00; if null,
+      // use Z
+      if (timeZoneOffset != null && timeZoneOffset == 0) {
+        buffer.write('+00:00');
+      } else {
+        buffer.write('Z');
+      }
     } else if (timeZoneOffset != null) {
       if (hour == null &&
           minute == null &&
@@ -839,7 +845,7 @@ abstract class FhirDateTimeBase extends PrimitiveType
   @override
   bool equalsDeep(FhirBase? other) =>
       other is FhirDateTimeBase &&
-      other.valueString == valueString &&
+      (_compare(Comparator.equal, other) ?? false) &&
       ((element == null && other.element == null) ||
           (element != null && element!.equalsDeep(other.element)));
 
@@ -953,7 +959,13 @@ abstract class FhirDateTimeBase extends PrimitiveType
       'timeZoneOffset': T == FhirDate
           ? null
           : match.namedGroup('timezone')?.stringToTimeZoneOffset,
-      'isUtc': (match.namedGroup('timezone')?.contains('Z') ?? false) ? 0 : 1,
+      'isUtc': (match.namedGroup('timezone')?.contains('Z') ?? false) ||
+              (T != FhirDate &&
+                  (match.namedGroup('timezone')?.stringToTimeZoneOffset ?? 0) ==
+                      0 &&
+                  match.namedGroup('timezone') != null)
+          ? 0
+          : 1,
     };
   }
 

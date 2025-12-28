@@ -9,6 +9,9 @@ enum ImagingSelectionStatusEnum {
   /// entered-in-error
   enteredInError,
 
+  /// inactive
+  inactive,
+
   /// unknown
   unknown,
   ;
@@ -24,6 +27,8 @@ enum ImagingSelectionStatusEnum {
         return 'available';
       case ImagingSelectionStatusEnum.enteredInError:
         return 'entered-in-error';
+      case ImagingSelectionStatusEnum.inactive:
+        return 'inactive';
       case ImagingSelectionStatusEnum.unknown:
         return 'unknown';
     }
@@ -47,6 +52,8 @@ enum ImagingSelectionStatusEnum {
         return ImagingSelectionStatusEnum.available;
       case 'entered-in-error':
         return ImagingSelectionStatusEnum.enteredInError;
+      case 'inactive':
+        return ImagingSelectionStatusEnum.inactive;
       case 'unknown':
         return ImagingSelectionStatusEnum.unknown;
     }
@@ -130,7 +137,7 @@ class ImagingSelectionStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/imagingselection-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Available',
     ),
@@ -143,9 +150,22 @@ class ImagingSelectionStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/imagingselection-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Entered in Error',
+    ),
+  );
+
+  /// inactive
+  static const ImagingSelectionStatus inactive = ImagingSelectionStatus._(
+    valueString: 'inactive',
+    valueEnum: ImagingSelectionStatusEnum.inactive,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/imagingselection-status',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Inactive',
     ),
   );
 
@@ -156,7 +176,7 @@ class ImagingSelectionStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/imagingselection-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Unknown',
     ),
@@ -166,6 +186,7 @@ class ImagingSelectionStatus extends FhirCodeEnum {
   static final List<ImagingSelectionStatus> values = [
     available,
     enteredInError,
+    inactive,
     unknown,
   ];
 

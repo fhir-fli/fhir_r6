@@ -149,7 +149,7 @@ class SubscriptionNotificationType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/subscription-notification-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Handshake',
     ),
@@ -164,7 +164,7 @@ class SubscriptionNotificationType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/subscription-notification-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Heartbeat',
     ),
@@ -179,7 +179,7 @@ class SubscriptionNotificationType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/subscription-notification-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Event Notification',
     ),
@@ -194,7 +194,7 @@ class SubscriptionNotificationType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/subscription-notification-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Query Status',
     ),
@@ -209,7 +209,7 @@ class SubscriptionNotificationType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/subscription-notification-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Query Event',
     ),

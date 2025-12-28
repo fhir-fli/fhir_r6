@@ -29,11 +29,12 @@ abstract class $DocumentReferenceCopyWith<T>
     Reference? subject,
     List<Reference>? context,
     List<CodeableReference>? event,
+    List<Reference>? related,
     List<CodeableReference>? bodySite,
     CodeableConcept? facilityType,
     CodeableConcept? practiceSetting,
     Period? period,
-    FhirInstant? date,
+    FhirDateTime? date,
     List<Reference>? author,
     List<DocumentReferenceAttester>? attester,
     Reference? custodian,
@@ -73,6 +74,7 @@ class _$DocumentReferenceCopyWithImpl<T>
     Object? subject = fhirSentinel,
     Object? context = fhirSentinel,
     Object? event = fhirSentinel,
+    Object? related = fhirSentinel,
     Object? bodySite = fhirSentinel,
     Object? facilityType = fhirSentinel,
     Object? practiceSetting = fhirSentinel,
@@ -140,6 +142,9 @@ class _$DocumentReferenceCopyWithImpl<T>
         event: identical(event, fhirSentinel)
             ? _value.event
             : event as List<CodeableReference>?,
+        related: identical(related, fhirSentinel)
+            ? _value.related
+            : related as List<Reference>?,
         bodySite: identical(bodySite, fhirSentinel)
             ? _value.bodySite
             : bodySite as List<CodeableReference>?,
@@ -152,7 +157,7 @@ class _$DocumentReferenceCopyWithImpl<T>
         period:
             identical(period, fhirSentinel) ? _value.period : period as Period?,
         date:
-            identical(date, fhirSentinel) ? _value.date : date as FhirInstant?,
+            identical(date, fhirSentinel) ? _value.date : date as FhirDateTime?,
         author: identical(author, fhirSentinel)
             ? _value.author
             : author as List<Reference>?,
@@ -381,7 +386,7 @@ abstract class $DocumentReferenceProfileCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    Coding? valueX,
+    ValueXDocumentReferenceProfile? valueX,
     bool? disallowExtensions,
   });
 }
@@ -412,7 +417,7 @@ class _$DocumentReferenceProfileCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as Coding?) ?? _value.valueX,
+            : (valueX as ValueXDocumentReferenceProfile?) ?? _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

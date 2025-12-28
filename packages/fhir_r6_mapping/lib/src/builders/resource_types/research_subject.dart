@@ -3,7 +3,8 @@ import 'package:fhir_r6/fhir_r6.dart'
     show
         R6ResourceType,
         ResearchSubject,
-        ResearchSubjectProgress,
+        ResearchSubjectSubjectMilestone,
+        ResearchSubjectSubjectState,
         yamlMapToJson,
         yamlToJson;
 import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
@@ -27,10 +28,11 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
     super.modifierExtension,
     this.identifier,
     this.status,
-    this.progress,
     this.period,
     this.study,
     this.subject,
+    this.subjectState,
+    this.subjectMilestone,
     this.assignedComparisonGroup,
     this.actualComparisonGroup,
     this.consent,
@@ -129,16 +131,6 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
         PublicationStatusBuilder.fromJson,
         '$objectPath.status',
       ),
-      progress: (json['progress'] as List<dynamic>?)
-          ?.map<ResearchSubjectProgressBuilder>(
-            (v) => ResearchSubjectProgressBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.progress',
-              },
-            ),
-          )
-          .toList(),
       period: JsonParser.parseObject<PeriodBuilder>(
         json,
         'period',
@@ -157,6 +149,26 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
         ReferenceBuilder.fromJson,
         '$objectPath.subject',
       ),
+      subjectState: (json['subjectState'] as List<dynamic>?)
+          ?.map<ResearchSubjectSubjectStateBuilder>(
+            (v) => ResearchSubjectSubjectStateBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.subjectState',
+              },
+            ),
+          )
+          .toList(),
+      subjectMilestone: (json['subjectMilestone'] as List<dynamic>?)
+          ?.map<ResearchSubjectSubjectMilestoneBuilder>(
+            (v) => ResearchSubjectSubjectMilestoneBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.subjectMilestone',
+              },
+            ),
+          )
+          .toList(),
       assignedComparisonGroup: JsonParser.parsePrimitive<FhirIdBuilder>(
         json,
         'assignedComparisonGroup',
@@ -232,11 +244,6 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
   /// The publication state of the resource (not of the subject).
   PublicationStatusBuilder? status;
 
-  /// [progress]
-  /// The current state (status) of the subject and resons for status change
-  /// where appropriate.
-  List<ResearchSubjectProgressBuilder>? progress;
-
   /// [period]
   /// The dates the subject began and ended their participation in the study.
   PeriodBuilder? period;
@@ -248,6 +255,15 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
   /// [subject]
   /// The record of the person, animal or other entity involved in the study.
   ReferenceBuilder? subject;
+
+  /// [subjectState]
+  /// A duration in the lifecycle of the ResearchSubject within a
+  /// ResearchStudy.
+  List<ResearchSubjectSubjectStateBuilder>? subjectState;
+
+  /// [subjectMilestone]
+  /// A significant event in the progress of a ResearchSubject.
+  List<ResearchSubjectSubjectMilestoneBuilder>? subjectMilestone;
 
   /// [assignedComparisonGroup]
   /// The name of the arm in the study the subject is expected to follow as
@@ -311,10 +327,11 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
     addField('modifierExtension', modifierExtension);
     addField('identifier', identifier);
     addField('status', status);
-    addField('progress', progress);
     addField('period', period);
     addField('study', study);
     addField('subject', subject);
+    addField('subjectState', subjectState);
+    addField('subjectMilestone', subjectMilestone);
     addField('assignedComparisonGroup', assignedComparisonGroup);
     addField('actualComparisonGroup', actualComparisonGroup);
     addField('consent', consent);
@@ -335,10 +352,11 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
       'modifierExtension',
       'identifier',
       'status',
-      'progress',
       'period',
       'study',
       'subject',
+      'subjectState',
+      'subjectMilestone',
       'assignedComparisonGroup',
       'actualComparisonGroup',
       'consent',
@@ -394,10 +412,6 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
         if (status != null) {
           fields.add(status!);
         }
-      case 'progress':
-        if (progress != null) {
-          fields.addAll(progress!);
-        }
       case 'period':
         if (period != null) {
           fields.add(period!);
@@ -409,6 +423,14 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
       case 'subject':
         if (subject != null) {
           fields.add(subject!);
+        }
+      case 'subjectState':
+        if (subjectState != null) {
+          fields.addAll(subjectState!);
+        }
+      case 'subjectMilestone':
+        if (subjectMilestone != null) {
+          fields.addAll(subjectMilestone!);
         }
       case 'assignedComparisonGroup':
         if (assignedComparisonGroup != null) {
@@ -617,22 +639,6 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'progress':
-        {
-          if (child is List<ResearchSubjectProgressBuilder>) {
-            // Replace or create new list
-            progress = child;
-            return;
-          } else if (child is ResearchSubjectProgressBuilder) {
-            // Add single element to existing list or create new list
-            progress = [
-              ...(progress ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
       case 'period':
         {
           if (child is PeriodBuilder) {
@@ -653,6 +659,38 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
         {
           if (child is ReferenceBuilder) {
             subject = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'subjectState':
+        {
+          if (child is List<ResearchSubjectSubjectStateBuilder>) {
+            // Replace or create new list
+            subjectState = child;
+            return;
+          } else if (child is ResearchSubjectSubjectStateBuilder) {
+            // Add single element to existing list or create new list
+            subjectState = [
+              ...(subjectState ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'subjectMilestone':
+        {
+          if (child is List<ResearchSubjectSubjectMilestoneBuilder>) {
+            // Replace or create new list
+            subjectMilestone = child;
+            return;
+          } else if (child is ResearchSubjectSubjectMilestoneBuilder) {
+            // Add single element to existing list or create new list
+            subjectMilestone = [
+              ...(subjectMilestone ?? []),
+              child,
+            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -743,14 +781,16 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
         return ['IdentifierBuilder'];
       case 'status':
         return ['FhirCodeEnumBuilder'];
-      case 'progress':
-        return ['ResearchSubjectProgressBuilder'];
       case 'period':
         return ['PeriodBuilder'];
       case 'study':
         return ['ReferenceBuilder'];
       case 'subject':
         return ['ReferenceBuilder'];
+      case 'subjectState':
+        return ['ResearchSubjectSubjectStateBuilder'];
+      case 'subjectMilestone':
+        return ['ResearchSubjectSubjectMilestoneBuilder'];
       case 'assignedComparisonGroup':
         return ['FhirIdBuilder'];
       case 'actualComparisonGroup':
@@ -817,11 +857,6 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
           status = PublicationStatusBuilder.empty();
           return;
         }
-      case 'progress':
-        {
-          progress = <ResearchSubjectProgressBuilder>[];
-          return;
-        }
       case 'period':
         {
           period = PeriodBuilder.empty();
@@ -835,6 +870,16 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
       case 'subject':
         {
           subject = ReferenceBuilder.empty();
+          return;
+        }
+      case 'subjectState':
+        {
+          subjectState = <ResearchSubjectSubjectStateBuilder>[];
+          return;
+        }
+      case 'subjectMilestone':
+        {
+          subjectMilestone = <ResearchSubjectSubjectMilestoneBuilder>[];
           return;
         }
       case 'assignedComparisonGroup':
@@ -871,10 +916,11 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     List<IdentifierBuilder>? identifier,
     PublicationStatusBuilder? status,
-    List<ResearchSubjectProgressBuilder>? progress,
     PeriodBuilder? period,
     ReferenceBuilder? study,
     ReferenceBuilder? subject,
+    List<ResearchSubjectSubjectStateBuilder>? subjectState,
+    List<ResearchSubjectSubjectMilestoneBuilder>? subjectMilestone,
     FhirIdBuilder? assignedComparisonGroup,
     FhirIdBuilder? actualComparisonGroup,
     List<ReferenceBuilder>? consent,
@@ -895,10 +941,11 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
       modifierExtension: modifierExtension ?? this.modifierExtension,
       identifier: identifier ?? this.identifier,
       status: status ?? this.status,
-      progress: progress ?? this.progress,
       period: period ?? this.period,
       study: study ?? this.study,
       subject: subject ?? this.subject,
+      subjectState: subjectState ?? this.subjectState,
+      subjectMilestone: subjectMilestone ?? this.subjectMilestone,
       assignedComparisonGroup:
           assignedComparisonGroup ?? this.assignedComparisonGroup,
       actualComparisonGroup:
@@ -990,12 +1037,6 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<ResearchSubjectProgressBuilder>(
-      progress,
-      o.progress,
-    )) {
-      return false;
-    }
     if (!equalsDeepWithNull(
       period,
       o.period,
@@ -1011,6 +1052,18 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
     if (!equalsDeepWithNull(
       subject,
       o.subject,
+    )) {
+      return false;
+    }
+    if (!listEquals<ResearchSubjectSubjectStateBuilder>(
+      subjectState,
+      o.subjectState,
+    )) {
+      return false;
+    }
+    if (!listEquals<ResearchSubjectSubjectMilestoneBuilder>(
+      subjectMilestone,
+      o.subjectMilestone,
     )) {
       return false;
     }
@@ -1036,39 +1089,40 @@ class ResearchSubjectBuilder extends DomainResourceBuilder {
   }
 }
 
-/// [ResearchSubjectProgressBuilder]
-/// The current state (status) of the subject and resons for status change
-/// where appropriate.
-class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
+/// [ResearchSubjectSubjectStateBuilder]
+/// A duration in the lifecycle of the ResearchSubject within a
+/// ResearchStudy.
+class ResearchSubjectSubjectStateBuilder extends BackboneElementBuilder {
   /// Primary constructor for
-  /// [ResearchSubjectProgressBuilder]
+  /// [ResearchSubjectSubjectStateBuilder]
 
-  ResearchSubjectProgressBuilder({
+  ResearchSubjectSubjectStateBuilder({
     super.id,
     super.extension_,
     super.modifierExtension,
-    this.type,
-    this.subjectState,
-    this.milestone,
-    this.reason,
+    this.code,
     this.startDate,
     this.endDate,
+    this.reason,
     super.disallowExtensions,
   }) : super(
-          objectPath: 'ResearchSubject.progress',
+          objectPath: 'ResearchSubject.subjectState',
         );
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
-  factory ResearchSubjectProgressBuilder.empty() =>
-      ResearchSubjectProgressBuilder();
+  factory ResearchSubjectSubjectStateBuilder.empty() =>
+      ResearchSubjectSubjectStateBuilder(
+        code: CodeableConceptBuilder.empty(),
+        startDate: FhirDateTimeBuilder.empty(),
+      );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory ResearchSubjectProgressBuilder.fromJson(
+  factory ResearchSubjectSubjectStateBuilder.fromJson(
     Map<String, dynamic> json,
   ) {
-    const objectPath = 'ResearchSubject.progress';
-    return ResearchSubjectProgressBuilder(
+    const objectPath = 'ResearchSubject.subjectState';
+    return ResearchSubjectSubjectStateBuilder(
       id: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'id',
@@ -1095,29 +1149,11 @@ class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      type: JsonParser.parseObject<CodeableConceptBuilder>(
+      code: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
-        'type',
+        'code',
         CodeableConceptBuilder.fromJson,
-        '$objectPath.type',
-      ),
-      subjectState: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'subjectState',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.subjectState',
-      ),
-      milestone: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'milestone',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.milestone',
-      ),
-      reason: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'reason',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.reason',
+        '$objectPath.code',
       ),
       startDate: JsonParser.parsePrimitive<FhirDateTimeBuilder>(
         json,
@@ -1131,25 +1167,31 @@ class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
         FhirDateTimeBuilder.fromJson,
         '$objectPath.endDate',
       ),
+      reason: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'reason',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.reason',
+      ),
     );
   }
 
-  /// Deserialize [ResearchSubjectProgressBuilder]
+  /// Deserialize [ResearchSubjectSubjectStateBuilder]
   /// from a [String] or [YamlMap] object
-  factory ResearchSubjectProgressBuilder.fromYaml(
+  factory ResearchSubjectSubjectStateBuilder.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return ResearchSubjectProgressBuilder.fromJson(
+      return ResearchSubjectSubjectStateBuilder.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return ResearchSubjectProgressBuilder.fromJson(
+      return ResearchSubjectSubjectStateBuilder.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'ResearchSubjectProgressBuilder '
+        'ResearchSubjectSubjectStateBuilder '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -1157,16 +1199,16 @@ class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
   }
 
   /// Factory constructor for
-  /// [ResearchSubjectProgressBuilder]
+  /// [ResearchSubjectSubjectStateBuilder]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory ResearchSubjectProgressBuilder.fromJsonString(
+  factory ResearchSubjectSubjectStateBuilder.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return ResearchSubjectProgressBuilder.fromJson(json);
+      return ResearchSubjectSubjectStateBuilder.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -1174,40 +1216,33 @@ class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
   }
 
   @override
-  String get fhirType => 'ResearchSubjectProgress';
+  String get fhirType => 'ResearchSubjectSubjectState';
 
-  /// [type]
+  /// [code]
   /// Identifies the aspect of the subject's journey that the state refers
   /// to.
-  CodeableConceptBuilder? type;
+  CodeableConceptBuilder? code;
 
-  /// [subjectState]
-  /// The current state of the subject.
-  CodeableConceptBuilder? subjectState;
+  /// [startDate]
+  /// The date a research subject entered the given state.
+  FhirDateTimeBuilder? startDate;
 
-  /// [milestone]
-  /// The milestones the subject has passed through.
-  CodeableConceptBuilder? milestone;
+  /// [endDate]
+  /// The date a research subject exited or left the given state.
+  FhirDateTimeBuilder? endDate;
 
   /// [reason]
   /// The reason for the state change. If coded it should follow the formal
   /// subject state model.
   CodeableConceptBuilder? reason;
 
-  /// [startDate]
-  /// The date when the new status started.
-  FhirDateTimeBuilder? startDate;
-
-  /// [endDate]
-  /// The date when the state ended.
-  FhirDateTimeBuilder? endDate;
-
-  /// Converts a [ResearchSubjectProgressBuilder]
-  /// to [ResearchSubjectProgress]
+  /// Converts a [ResearchSubjectSubjectStateBuilder]
+  /// to [ResearchSubjectSubjectState]
   @override
-  ResearchSubjectProgress build() => ResearchSubjectProgress.fromJson(toJson());
+  ResearchSubjectSubjectState build() =>
+      ResearchSubjectSubjectState.fromJson(toJson());
 
-  /// Converts a [ResearchSubjectProgressBuilder]
+  /// Converts a [ResearchSubjectSubjectStateBuilder]
   /// to a [Map<String, dynamic>]
   @override
   Map<String, dynamic> toJson() {
@@ -1241,12 +1276,10 @@ class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
     addField('id', id);
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
-    addField('type', type);
-    addField('subjectState', subjectState);
-    addField('milestone', milestone);
-    addField('reason', reason);
+    addField('code', code);
     addField('startDate', startDate);
     addField('endDate', endDate);
+    addField('reason', reason);
     return json;
   }
 
@@ -1257,12 +1290,10 @@ class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
       'id',
       'extension',
       'modifierExtension',
-      'type',
-      'subjectState',
-      'milestone',
-      'reason',
+      'code',
       'startDate',
       'endDate',
+      'reason',
     ];
   }
 
@@ -1287,21 +1318,9 @@ class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
         }
-      case 'type':
-        if (type != null) {
-          fields.add(type!);
-        }
-      case 'subjectState':
-        if (subjectState != null) {
-          fields.add(subjectState!);
-        }
-      case 'milestone':
-        if (milestone != null) {
-          fields.add(milestone!);
-        }
-      case 'reason':
-        if (reason != null) {
-          fields.add(reason!);
+      case 'code':
+        if (code != null) {
+          fields.add(code!);
         }
       case 'startDate':
         if (startDate != null) {
@@ -1310,6 +1329,10 @@ class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
       case 'endDate':
         if (endDate != null) {
           fields.add(endDate!);
+        }
+      case 'reason':
+        if (reason != null) {
+          fields.add(reason!);
         }
       default:
         if (checkValid) {
@@ -1392,34 +1415,10 @@ class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'type':
+      case 'code':
         {
           if (child is CodeableConceptBuilder) {
-            type = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'subjectState':
-        {
-          if (child is CodeableConceptBuilder) {
-            subjectState = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'milestone':
-        {
-          if (child is CodeableConceptBuilder) {
-            milestone = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'reason':
-        {
-          if (child is CodeableConceptBuilder) {
-            reason = child;
+            code = child;
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -1464,6 +1463,14 @@ class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'reason':
+        {
+          if (child is CodeableConceptBuilder) {
+            reason = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -1480,24 +1487,20 @@ class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
-      case 'type':
-        return ['CodeableConceptBuilder'];
-      case 'subjectState':
-        return ['CodeableConceptBuilder'];
-      case 'milestone':
-        return ['CodeableConceptBuilder'];
-      case 'reason':
+      case 'code':
         return ['CodeableConceptBuilder'];
       case 'startDate':
         return ['FhirDateTimeBuilder'];
       case 'endDate':
         return ['FhirDateTimeBuilder'];
+      case 'reason':
+        return ['CodeableConceptBuilder'];
       default:
         return <String>[];
     }
   }
 
-  /// Creates a new [ResearchSubjectProgressBuilder]
+  /// Creates a new [ResearchSubjectSubjectStateBuilder]
   ///  with a chosen field set to an empty object.
   @override
   void createProperty(String propertyName) {
@@ -1517,24 +1520,9 @@ class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
           modifierExtension = <FhirExtensionBuilder>[];
           return;
         }
-      case 'type':
+      case 'code':
         {
-          type = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'subjectState':
-        {
-          subjectState = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'milestone':
-        {
-          milestone = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'reason':
-        {
-          reason = CodeableConceptBuilder.empty();
+          code = CodeableConceptBuilder.empty();
           return;
         }
       case 'startDate':
@@ -1547,24 +1535,27 @@ class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
           endDate = FhirDateTimeBuilder.empty();
           return;
         }
+      case 'reason':
+        {
+          reason = CodeableConceptBuilder.empty();
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
   }
 
   @override
-  ResearchSubjectProgressBuilder clone() => throw UnimplementedError();
+  ResearchSubjectSubjectStateBuilder clone() => throw UnimplementedError();
   @override
-  ResearchSubjectProgressBuilder copyWith({
+  ResearchSubjectSubjectStateBuilder copyWith({
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    CodeableConceptBuilder? type,
-    CodeableConceptBuilder? subjectState,
-    CodeableConceptBuilder? milestone,
-    CodeableConceptBuilder? reason,
+    CodeableConceptBuilder? code,
     FhirDateTimeBuilder? startDate,
     FhirDateTimeBuilder? endDate,
+    CodeableConceptBuilder? reason,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -1572,16 +1563,14 @@ class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
     String? objectPath,
   }) {
     final newObjectPath = this.objectPath;
-    final newResult = ResearchSubjectProgressBuilder(
+    final newResult = ResearchSubjectSubjectStateBuilder(
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
-      type: type ?? this.type,
-      subjectState: subjectState ?? this.subjectState,
-      milestone: milestone ?? this.milestone,
-      reason: reason ?? this.reason,
+      code: code ?? this.code,
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
+      reason: reason ?? this.reason,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -1603,7 +1592,7 @@ class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! ResearchSubjectProgressBuilder) {
+    if (o is! ResearchSubjectSubjectStateBuilder) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -1627,26 +1616,8 @@ class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      type,
-      o.type,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      subjectState,
-      o.subjectState,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      milestone,
-      o.milestone,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      reason,
-      o.reason,
+      code,
+      o.code,
     )) {
       return false;
     }
@@ -1659,6 +1630,524 @@ class ResearchSubjectProgressBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       endDate,
       o.endDate,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reason,
+      o.reason,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [ResearchSubjectSubjectMilestoneBuilder]
+/// A significant event in the progress of a ResearchSubject.
+class ResearchSubjectSubjectMilestoneBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [ResearchSubjectSubjectMilestoneBuilder]
+
+  ResearchSubjectSubjectMilestoneBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.milestone,
+    this.date,
+    this.reason,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'ResearchSubject.subjectMilestone',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory ResearchSubjectSubjectMilestoneBuilder.empty() =>
+      ResearchSubjectSubjectMilestoneBuilder(
+        milestone: <CodeableConceptBuilder>[],
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory ResearchSubjectSubjectMilestoneBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'ResearchSubject.subjectMilestone';
+    return ResearchSubjectSubjectMilestoneBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      milestone: (json['milestone'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.milestone',
+              },
+            ),
+          )
+          .toList(),
+      date: JsonParser.parsePrimitive<FhirDateTimeBuilder>(
+        json,
+        'date',
+        FhirDateTimeBuilder.fromJson,
+        '$objectPath.date',
+      ),
+      reason: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'reason',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.reason',
+      ),
+    );
+  }
+
+  /// Deserialize [ResearchSubjectSubjectMilestoneBuilder]
+  /// from a [String] or [YamlMap] object
+  factory ResearchSubjectSubjectMilestoneBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return ResearchSubjectSubjectMilestoneBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return ResearchSubjectSubjectMilestoneBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'ResearchSubjectSubjectMilestoneBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [ResearchSubjectSubjectMilestoneBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory ResearchSubjectSubjectMilestoneBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return ResearchSubjectSubjectMilestoneBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'ResearchSubjectSubjectMilestone';
+
+  /// [milestone]
+  /// A specific event in the research subjects journey through a research
+  /// study.
+  List<CodeableConceptBuilder>? milestone;
+
+  /// [date]
+  /// The date/time when this milestone event was completed.
+  FhirDateTimeBuilder? date;
+
+  /// [reason]
+  /// A rationale that provides additional clarification for the milestone
+  /// that was captured or documented.
+  CodeableConceptBuilder? reason;
+
+  /// Converts a [ResearchSubjectSubjectMilestoneBuilder]
+  /// to [ResearchSubjectSubjectMilestone]
+  @override
+  ResearchSubjectSubjectMilestone build() =>
+      ResearchSubjectSubjectMilestone.fromJson(toJson());
+
+  /// Converts a [ResearchSubjectSubjectMilestoneBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('milestone', milestone);
+    addField('date', date);
+    addField('reason', reason);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'milestone',
+      'date',
+      'reason',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'milestone':
+        if (milestone != null) {
+          fields.addAll(milestone!);
+        }
+      case 'date':
+        if (date != null) {
+          fields.add(date!);
+        }
+      case 'reason':
+        if (reason != null) {
+          fields.add(reason!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'milestone':
+        {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
+            milestone = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            milestone = [
+              ...(milestone ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'date':
+        {
+          if (child is FhirDateTimeBuilder) {
+            date = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirDateTimeBuilder.tryParse(stringValue);
+              if (converted != null) {
+                date = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'reason':
+        {
+          if (child is CodeableConceptBuilder) {
+            reason = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'milestone':
+        return ['CodeableConceptBuilder'];
+      case 'date':
+        return ['FhirDateTimeBuilder'];
+      case 'reason':
+        return ['CodeableConceptBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [ResearchSubjectSubjectMilestoneBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'milestone':
+        {
+          milestone = <CodeableConceptBuilder>[];
+          return;
+        }
+      case 'date':
+        {
+          date = FhirDateTimeBuilder.empty();
+          return;
+        }
+      case 'reason':
+        {
+          reason = CodeableConceptBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  ResearchSubjectSubjectMilestoneBuilder clone() => throw UnimplementedError();
+  @override
+  ResearchSubjectSubjectMilestoneBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    List<CodeableConceptBuilder>? milestone,
+    FhirDateTimeBuilder? date,
+    CodeableConceptBuilder? reason,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = ResearchSubjectSubjectMilestoneBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      milestone: milestone ?? this.milestone,
+      date: date ?? this.date,
+      reason: reason ?? this.reason,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! ResearchSubjectSubjectMilestoneBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConceptBuilder>(
+      milestone,
+      o.milestone,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      date,
+      o.date,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reason,
+      o.reason,
     )) {
       return false;
     }

@@ -10,7 +10,7 @@ import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [SupplyDeliveryBuilder]
-/// Record of delivery of what is supplied.
+/// Record of movement of supplies from one location to another.
 class SupplyDeliveryBuilder extends DomainResourceBuilder {
   /// Primary constructor for
   /// [SupplyDeliveryBuilder]
@@ -30,6 +30,7 @@ class SupplyDeliveryBuilder extends DomainResourceBuilder {
     this.status,
     this.patient,
     this.type,
+    this.stage,
     this.suppliedItem,
     OccurrenceXSupplyDeliveryBuilder? occurrenceX,
     FhirDateTimeBuilder? occurrenceDateTime,
@@ -49,7 +50,10 @@ class SupplyDeliveryBuilder extends DomainResourceBuilder {
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
-  factory SupplyDeliveryBuilder.empty() => SupplyDeliveryBuilder();
+  factory SupplyDeliveryBuilder.empty() => SupplyDeliveryBuilder(
+        status: SupplyDeliveryStatusBuilder.values.first,
+        stage: CodeableConceptBuilder.empty(),
+      );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
   factory SupplyDeliveryBuilder.fromJson(
@@ -164,6 +168,12 @@ class SupplyDeliveryBuilder extends DomainResourceBuilder {
         'type',
         CodeableConceptBuilder.fromJson,
         '$objectPath.type',
+      ),
+      stage: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'stage',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.stage',
       ),
       suppliedItem: (json['suppliedItem'] as List<dynamic>?)
           ?.map<SupplyDeliverySuppliedItemBuilder>(
@@ -280,6 +290,13 @@ class SupplyDeliveryBuilder extends DomainResourceBuilder {
   /// Medication, Device, Biologically Derived Product.
   CodeableConceptBuilder? type;
 
+  /// [stage]
+  /// Indicates the stage of the delivery. In case the delivery is tracked
+  /// only at the specific events (e.g. receipt), this resource represents
+  /// the stage represented, not the entire history nor previous delivery
+  /// stages.
+  CodeableConceptBuilder? stage;
+
   /// [suppliedItem]
   /// The item that is being delivered or has been supplied.
   List<SupplyDeliverySuppliedItemBuilder>? suppliedItem;
@@ -303,8 +320,8 @@ class SupplyDeliveryBuilder extends DomainResourceBuilder {
   ReferenceBuilder? supplier;
 
   /// [destination]
-  /// Identification of the facility/location where the delivery was shipped
-  /// to.
+  /// Identification of the facility, location or person where the delivery
+  /// is shipped to.
   ReferenceBuilder? destination;
 
   /// [receiver]
@@ -362,6 +379,7 @@ class SupplyDeliveryBuilder extends DomainResourceBuilder {
     addField('status', status);
     addField('patient', patient);
     addField('type', type);
+    addField('stage', stage);
     addField('suppliedItem', suppliedItem);
     if (occurrenceX != null) {
       final fhirType = occurrenceX!.fhirType;
@@ -392,6 +410,7 @@ class SupplyDeliveryBuilder extends DomainResourceBuilder {
       'status',
       'patient',
       'type',
+      'stage',
       'suppliedItem',
       'occurrenceX',
       'supplier',
@@ -464,6 +483,10 @@ class SupplyDeliveryBuilder extends DomainResourceBuilder {
       case 'type':
         if (type != null) {
           fields.add(type!);
+        }
+      case 'stage':
+        if (stage != null) {
+          fields.add(stage!);
         }
       case 'suppliedItem':
         if (suppliedItem != null) {
@@ -744,6 +767,14 @@ class SupplyDeliveryBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'stage':
+        {
+          if (child is CodeableConceptBuilder) {
+            stage = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'suppliedItem':
         {
           if (child is List<SupplyDeliverySuppliedItemBuilder>) {
@@ -879,6 +910,8 @@ class SupplyDeliveryBuilder extends DomainResourceBuilder {
         return ['ReferenceBuilder'];
       case 'type':
         return ['CodeableConceptBuilder'];
+      case 'stage':
+        return ['CodeableConceptBuilder'];
       case 'suppliedItem':
         return ['SupplyDeliverySuppliedItemBuilder'];
       case 'occurrence':
@@ -980,6 +1013,11 @@ class SupplyDeliveryBuilder extends DomainResourceBuilder {
           type = CodeableConceptBuilder.empty();
           return;
         }
+      case 'stage':
+        {
+          stage = CodeableConceptBuilder.empty();
+          return;
+        }
       case 'suppliedItem':
         {
           suppliedItem = <SupplyDeliverySuppliedItemBuilder>[];
@@ -1040,6 +1078,7 @@ class SupplyDeliveryBuilder extends DomainResourceBuilder {
     SupplyDeliveryStatusBuilder? status,
     ReferenceBuilder? patient,
     CodeableConceptBuilder? type,
+    CodeableConceptBuilder? stage,
     List<SupplyDeliverySuppliedItemBuilder>? suppliedItem,
     OccurrenceXSupplyDeliveryBuilder? occurrenceX,
     ReferenceBuilder? supplier,
@@ -1069,6 +1108,7 @@ class SupplyDeliveryBuilder extends DomainResourceBuilder {
       status: status ?? this.status,
       patient: patient ?? this.patient,
       type: type ?? this.type,
+      stage: stage ?? this.stage,
       suppliedItem: suppliedItem ?? this.suppliedItem,
       occurrenceX: occurrenceX ??
           occurrenceDateTime ??
@@ -1188,6 +1228,12 @@ class SupplyDeliveryBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      stage,
+      o.stage,
+    )) {
+      return false;
+    }
     if (!listEquals<SupplyDeliverySuppliedItemBuilder>(
       suppliedItem,
       o.suppliedItem,
@@ -1233,6 +1279,7 @@ class SupplyDeliverySuppliedItemBuilder extends BackboneElementBuilder {
     super.extension_,
     super.modifierExtension,
     this.quantity,
+    this.condition,
     ItemXSupplyDeliverySuppliedItemBuilder? itemX,
     CodeableConceptBuilder? itemCodeableConcept,
     ReferenceBuilder? itemReference,
@@ -1284,6 +1331,12 @@ class SupplyDeliverySuppliedItemBuilder extends BackboneElementBuilder {
         'quantity',
         QuantityBuilder.fromJson,
         '$objectPath.quantity',
+      ),
+      condition: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'condition',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.condition',
       ),
       itemX:
           JsonParser.parsePolymorphic<ItemXSupplyDeliverySuppliedItemBuilder>(
@@ -1344,6 +1397,12 @@ class SupplyDeliverySuppliedItemBuilder extends BackboneElementBuilder {
   /// included.
   QuantityBuilder? quantity;
 
+  /// [condition]
+  /// The condition in which the supplied item was at the event (shipment, or
+  /// receipt, etc.). For example, to indicate when the supplied item is not
+  /// suitable for use (e.g., damaged or out of temperature control).
+  CodeableConceptBuilder? condition;
+
   /// [itemX]
   /// Identifies the medication, substance, device or biologically derived
   /// product being supplied. This is either a link to a resource
@@ -1399,6 +1458,7 @@ class SupplyDeliverySuppliedItemBuilder extends BackboneElementBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('quantity', quantity);
+    addField('condition', condition);
     if (itemX != null) {
       final fhirType = itemX!.fhirType;
       addField('item${fhirType.capitalizeFirstLetter()}', itemX);
@@ -1415,6 +1475,7 @@ class SupplyDeliverySuppliedItemBuilder extends BackboneElementBuilder {
       'extension',
       'modifierExtension',
       'quantity',
+      'condition',
       'itemX',
     ];
   }
@@ -1443,6 +1504,10 @@ class SupplyDeliverySuppliedItemBuilder extends BackboneElementBuilder {
       case 'quantity':
         if (quantity != null) {
           fields.add(quantity!);
+        }
+      case 'condition':
+        if (condition != null) {
+          fields.add(condition!);
         }
       case 'item':
         if (itemX != null) {
@@ -1549,6 +1614,14 @@ class SupplyDeliverySuppliedItemBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'condition':
+        {
+          if (child is CodeableConceptBuilder) {
+            condition = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'item':
       case 'itemX':
         {
@@ -1603,6 +1676,8 @@ class SupplyDeliverySuppliedItemBuilder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'quantity':
         return ['QuantityBuilder'];
+      case 'condition':
+        return ['CodeableConceptBuilder'];
       case 'item':
       case 'itemX':
         return [
@@ -1643,6 +1718,11 @@ class SupplyDeliverySuppliedItemBuilder extends BackboneElementBuilder {
           quantity = QuantityBuilder.empty();
           return;
         }
+      case 'condition':
+        {
+          condition = CodeableConceptBuilder.empty();
+          return;
+        }
       case 'item':
       case 'itemX':
       case 'itemCodeableConcept':
@@ -1668,6 +1748,7 @@ class SupplyDeliverySuppliedItemBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     QuantityBuilder? quantity,
+    CodeableConceptBuilder? condition,
     ItemXSupplyDeliverySuppliedItemBuilder? itemX,
     CodeableConceptBuilder? itemCodeableConcept,
     ReferenceBuilder? itemReference,
@@ -1683,6 +1764,7 @@ class SupplyDeliverySuppliedItemBuilder extends BackboneElementBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       quantity: quantity ?? this.quantity,
+      condition: condition ?? this.condition,
       itemX: itemX ?? itemCodeableConcept ?? itemReference ?? this.itemX,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
@@ -1731,6 +1813,12 @@ class SupplyDeliverySuppliedItemBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       quantity,
       o.quantity,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      condition,
+      o.condition,
     )) {
       return false;
     }

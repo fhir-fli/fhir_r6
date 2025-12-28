@@ -33,7 +33,7 @@ class MedicationAdministration extends DomainResource {
     required this.subject,
     this.encounter,
     this.supportingInformation,
-    required this.occurenceX,
+    required this.occurrenceX,
     this.recorded,
     this.isSubPotent,
     this.subPotentReason,
@@ -161,13 +161,13 @@ class MedicationAdministration extends DomainResource {
             ),
           )
           .toList(),
-      occurenceX:
-          JsonParser.parsePolymorphic<OccurenceXMedicationAdministration>(
+      occurrenceX:
+          JsonParser.parsePolymorphic<OccurrenceXMedicationAdministration>(
         json,
         {
-          'occurenceDateTime': FhirDateTime.fromJson,
-          'occurencePeriod': Period.fromJson,
-          'occurenceTiming': Timing.fromJson,
+          'occurrenceDateTime': FhirDateTime.fromJson,
+          'occurrencePeriod': Period.fromJson,
+          'occurrenceTiming': Timing.fromJson,
         },
       )!,
       recorded: JsonParser.parsePrimitive<FhirDateTime>(
@@ -337,21 +337,21 @@ class MedicationAdministration extends DomainResource {
   /// be included using this attribute.
   final List<Reference>? supportingInformation;
 
-  /// [occurenceX]
+  /// [occurrenceX]
   /// A specific date/time or interval of time during which the
   /// administration took place (or did not take place). For many
   /// administrations, such as swallowing a tablet the use of dateTime is
   /// more appropriate.
-  final OccurenceXMedicationAdministration occurenceX;
+  final OccurrenceXMedicationAdministration occurrenceX;
 
-  /// Getter for [occurenceDateTime] as a FhirDateTime
-  FhirDateTime? get occurenceDateTime => occurenceX.isAs<FhirDateTime>();
+  /// Getter for [occurrenceDateTime] as a FhirDateTime
+  FhirDateTime? get occurrenceDateTime => occurrenceX.isAs<FhirDateTime>();
 
-  /// Getter for [occurencePeriod] as a Period
-  Period? get occurencePeriod => occurenceX.isAs<Period>();
+  /// Getter for [occurrencePeriod] as a Period
+  Period? get occurrencePeriod => occurrenceX.isAs<Period>();
 
-  /// Getter for [occurenceTiming] as a Timing
-  Timing? get occurenceTiming => occurenceX.isAs<Timing>();
+  /// Getter for [occurrenceTiming] as a Timing
+  Timing? get occurrenceTiming => occurrenceX.isAs<Timing>();
 
   /// [recorded]
   /// The date the occurrence of the MedicationAdministration was first
@@ -540,10 +540,10 @@ class MedicationAdministration extends DomainResource {
       'supportingInformation',
       supportingInformation,
     );
-    final occurenceXFhirType = occurenceX.fhirType;
+    final occurrenceXFhirType = occurrenceX.fhirType;
     addField(
-      'occurence${occurenceXFhirType.capitalize()}',
-      occurenceX,
+      'occurrence${occurrenceXFhirType.capitalize()}',
+      occurrenceX,
     );
 
     addField(
@@ -611,7 +611,7 @@ class MedicationAdministration extends DomainResource {
       'subject',
       'encounter',
       'supportingInformation',
-      'occurenceX',
+      'occurrenceX',
       'recorded',
       'isSubPotent',
       'subPotentReason',
@@ -700,21 +700,21 @@ class MedicationAdministration extends DomainResource {
         if (supportingInformation != null) {
           fields.addAll(supportingInformation!);
         }
-      case 'occurence':
-        fields.add(occurenceX);
-      case 'occurenceX':
-        fields.add(occurenceX);
-      case 'occurenceDateTime':
-        if (occurenceX is FhirDateTime) {
-          fields.add(occurenceX);
+      case 'occurrence':
+        fields.add(occurrenceX);
+      case 'occurrenceX':
+        fields.add(occurrenceX);
+      case 'occurrenceDateTime':
+        if (occurrenceX is FhirDateTime) {
+          fields.add(occurrenceX);
         }
-      case 'occurencePeriod':
-        if (occurenceX is Period) {
-          fields.add(occurenceX);
+      case 'occurrencePeriod':
+        if (occurrenceX is Period) {
+          fields.add(occurrenceX);
         }
-      case 'occurenceTiming':
-        if (occurenceX is Timing) {
-          fields.add(occurenceX);
+      case 'occurrenceTiming':
+        if (occurrenceX is Timing) {
+          fields.add(occurrenceX);
         }
       case 'recorded':
         if (recorded != null) {
@@ -906,8 +906,8 @@ class MedicationAdministration extends DomainResource {
       return false;
     }
     if (!equalsDeepWithNull(
-      occurenceX,
-      o.occurenceX,
+      occurrenceX,
+      o.occurrenceX,
     )) {
       return false;
     }

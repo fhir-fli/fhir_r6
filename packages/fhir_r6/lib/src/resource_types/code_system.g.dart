@@ -20,7 +20,7 @@ abstract class $CodeSystemCopyWith<T> extends $MetadataResourceCopyWith<T> {
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXCodeSystem? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     PublicationStatus? status,
@@ -142,7 +142,7 @@ class _$CodeSystemCopyWithImpl<T> implements $CodeSystemCopyWith<T> {
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXCodeSystem?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -546,7 +546,7 @@ abstract class $CodeSystemProperty1CopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     FhirCode? code,
-    FhirCode? valueX,
+    ValueXCodeSystemProperty? valueX,
     bool? disallowExtensions,
   });
 }
@@ -581,7 +581,7 @@ class _$CodeSystemProperty1CopyWithImpl<T>
             : (code as FhirCode?) ?? _value.code,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as FhirCode?) ?? _value.valueX,
+            : (valueX as ValueXCodeSystemProperty?) ?? _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

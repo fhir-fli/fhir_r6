@@ -32,7 +32,7 @@ abstract class $DeviceRequestCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<DeviceRequestParameter>? parameter,
     Reference? subject,
     Reference? encounter,
-    FhirDateTime? occurrenceX,
+    OccurrenceXDeviceRequest? occurrenceX,
     FhirDateTime? authoredOn,
     Reference? requester,
     CodeableReference? performer,
@@ -158,7 +158,7 @@ class _$DeviceRequestCopyWithImpl<T> implements $DeviceRequestCopyWith<T> {
             : encounter as Reference?,
         occurrenceX: identical(occurrenceX, fhirSentinel)
             ? _value.occurrenceX
-            : occurrenceX as FhirDateTime?,
+            : occurrenceX as OccurrenceXDeviceRequest?,
         authoredOn: identical(authoredOn, fhirSentinel)
             ? _value.authoredOn
             : authoredOn as FhirDateTime?,
@@ -210,7 +210,7 @@ abstract class $DeviceRequestParameterCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? code,
-    CodeableConcept? valueX,
+    ValueXDeviceRequestParameter? valueX,
     bool? disallowExtensions,
   });
 }
@@ -245,7 +245,7 @@ class _$DeviceRequestParameterCopyWithImpl<T>
             : code as CodeableConcept?,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : valueX as CodeableConcept?,
+            : valueX as ValueXDeviceRequestParameter?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

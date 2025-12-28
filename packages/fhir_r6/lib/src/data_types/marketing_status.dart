@@ -5,9 +5,8 @@ import 'package:yaml/yaml.dart';
 part 'marketing_status.g.dart';
 
 /// [MarketingStatus]
-/// The marketing status describes the date when a medicinal product is
-/// actually put on the market or the date as of which it is no longer
-/// available.
+/// The marketing status describes the date when an item is actually put on
+/// the market or the date as of which it is no longer available.
 class MarketingStatus extends BackboneType {
   /// Primary constructor for
   /// [MarketingStatus]
@@ -119,43 +118,28 @@ class MarketingStatus extends BackboneType {
   String get fhirType => 'MarketingStatus';
 
   /// [country]
-  /// The country in which the marketing authorization has been granted shall
-  /// be specified It should be specified using the ISO 3166 ‑ 1 alpha-2 code
-  /// elements.
+  /// The country in which the marketing status applies.
   final CodeableConcept? country;
 
   /// [jurisdiction]
-  /// Where a Medicines Regulatory Agency has granted a marketing
-  /// authorization for which specific provisions within a jurisdiction
-  /// apply, the jurisdiction can be specified using an appropriate
-  /// controlled terminology The controlled term and the controlled term
-  /// identifier shall be specified.
+  /// The jurisdiction in which the marketing status applies.
   final CodeableConcept? jurisdiction;
 
   /// [status]
   /// This attribute provides information on the status of the marketing of
-  /// the medicinal product See ISO/TS 20443 for more information and
-  /// examples.
+  /// the item.
   final CodeableConcept status;
 
   /// [dateRange]
-  /// The date when the Medicinal Product is placed on the market by the
-  /// Marketing Authorization Holder (or where applicable, the
-  /// manufacturer/distributor) in a country and/or jurisdiction shall be
-  /// provided A complete date consisting of day, month and year shall be
-  /// specified using the ISO 8601 date format NOTE “Placed on the market”
-  /// refers to the release of the Medicinal Product into the distribution
-  /// chain.
+  /// The dates that the item is made available on the market by the owner
+  /// (or where applicable, the manufacturer/distributor) in a country and/or
+  /// jurisdiction. Note that “on the market” refers to the release of the
+  /// item into the distribution chain.
   final Period? dateRange;
 
   /// [restoreDate]
-  /// The date when the Medicinal Product is placed on the market by the
-  /// Marketing Authorization Holder (or where applicable, the
-  /// manufacturer/distributor) in a country and/or jurisdiction shall be
-  /// provided A complete date consisting of day, month and year shall be
-  /// specified using the ISO 8601 date format NOTE “Placed on the market”
-  /// refers to the release of the Medicinal Product into the distribution
-  /// chain.
+  /// The date when the item is due to be placed back on the market by the
+  /// owner, manufacturer or distributor, after a suspension.
   final FhirDateTime? restoreDate;
   @override
   Map<String, dynamic> toJson() {

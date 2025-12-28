@@ -12,11 +12,29 @@ enum InteractionTriggerBuilderEnum {
   /// update
   update,
 
+  /// update-conditional
+  updateConditional,
+
   /// patch
   patch,
 
+  /// patch-conditional
+  patchConditional,
+
   /// delete
   delete,
+
+  /// delete-conditional-single
+  deleteConditionalSingle,
+
+  /// delete-conditional-multiple
+  deleteConditionalMultiple,
+
+  /// delete-history
+  deleteHistory,
+
+  /// delete-history-version
+  deleteHistoryVersion,
 
   /// history
   history,
@@ -32,6 +50,9 @@ enum InteractionTriggerBuilderEnum {
 
   /// create
   create,
+
+  /// create-conditional
+  createConditional,
 
   /// search
   search,
@@ -71,10 +92,22 @@ enum InteractionTriggerBuilderEnum {
         return 'vread';
       case InteractionTriggerBuilderEnum.update:
         return 'update';
+      case InteractionTriggerBuilderEnum.updateConditional:
+        return 'update-conditional';
       case InteractionTriggerBuilderEnum.patch:
         return 'patch';
+      case InteractionTriggerBuilderEnum.patchConditional:
+        return 'patch-conditional';
       case InteractionTriggerBuilderEnum.delete:
         return 'delete';
+      case InteractionTriggerBuilderEnum.deleteConditionalSingle:
+        return 'delete-conditional-single';
+      case InteractionTriggerBuilderEnum.deleteConditionalMultiple:
+        return 'delete-conditional-multiple';
+      case InteractionTriggerBuilderEnum.deleteHistory:
+        return 'delete-history';
+      case InteractionTriggerBuilderEnum.deleteHistoryVersion:
+        return 'delete-history-version';
       case InteractionTriggerBuilderEnum.history:
         return 'history';
       case InteractionTriggerBuilderEnum.historyInstance:
@@ -85,6 +118,8 @@ enum InteractionTriggerBuilderEnum {
         return 'history-system';
       case InteractionTriggerBuilderEnum.create:
         return 'create';
+      case InteractionTriggerBuilderEnum.createConditional:
+        return 'create-conditional';
       case InteractionTriggerBuilderEnum.search:
         return 'search';
       case InteractionTriggerBuilderEnum.searchType:
@@ -128,10 +163,22 @@ enum InteractionTriggerBuilderEnum {
         return InteractionTriggerBuilderEnum.vread;
       case 'update':
         return InteractionTriggerBuilderEnum.update;
+      case 'update-conditional':
+        return InteractionTriggerBuilderEnum.updateConditional;
       case 'patch':
         return InteractionTriggerBuilderEnum.patch;
+      case 'patch-conditional':
+        return InteractionTriggerBuilderEnum.patchConditional;
       case 'delete':
         return InteractionTriggerBuilderEnum.delete;
+      case 'delete-conditional-single':
+        return InteractionTriggerBuilderEnum.deleteConditionalSingle;
+      case 'delete-conditional-multiple':
+        return InteractionTriggerBuilderEnum.deleteConditionalMultiple;
+      case 'delete-history':
+        return InteractionTriggerBuilderEnum.deleteHistory;
+      case 'delete-history-version':
+        return InteractionTriggerBuilderEnum.deleteHistoryVersion;
       case 'history':
         return InteractionTriggerBuilderEnum.history;
       case 'history-instance':
@@ -142,6 +189,8 @@ enum InteractionTriggerBuilderEnum {
         return InteractionTriggerBuilderEnum.historySystem;
       case 'create':
         return InteractionTriggerBuilderEnum.create;
+      case 'create-conditional':
+        return InteractionTriggerBuilderEnum.createConditional;
       case 'search':
         return InteractionTriggerBuilderEnum.search;
       case 'search-type':
@@ -251,7 +300,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'read',
     ),
@@ -264,7 +313,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'vread',
     ),
@@ -277,9 +326,23 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'update',
+    ),
+  );
+
+  /// update_conditional
+  static InteractionTriggerBuilder updateConditional =
+      InteractionTriggerBuilder._(
+    valueString: 'update-conditional',
+    valueEnum: InteractionTriggerBuilderEnum.updateConditional,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'update-conditional',
     ),
   );
 
@@ -290,9 +353,23 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'patch',
+    ),
+  );
+
+  /// patch_conditional
+  static InteractionTriggerBuilder patchConditional =
+      InteractionTriggerBuilder._(
+    valueString: 'patch-conditional',
+    valueEnum: InteractionTriggerBuilderEnum.patchConditional,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'patch-conditional',
     ),
   );
 
@@ -303,9 +380,64 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'delete',
+    ),
+  );
+
+  /// delete_conditional_single
+  static InteractionTriggerBuilder deleteConditionalSingle =
+      InteractionTriggerBuilder._(
+    valueString: 'delete-conditional-single',
+    valueEnum: InteractionTriggerBuilderEnum.deleteConditionalSingle,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'delete-conditional-single',
+    ),
+  );
+
+  /// delete_conditional_multiple
+  static InteractionTriggerBuilder deleteConditionalMultiple =
+      InteractionTriggerBuilder._(
+    valueString: 'delete-conditional-multiple',
+    valueEnum: InteractionTriggerBuilderEnum.deleteConditionalMultiple,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'delete-conditional-multiple',
+    ),
+  );
+
+  /// delete_history
+  static InteractionTriggerBuilder deleteHistory = InteractionTriggerBuilder._(
+    valueString: 'delete-history',
+    valueEnum: InteractionTriggerBuilderEnum.deleteHistory,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'delete-history',
+    ),
+  );
+
+  /// delete_history_version
+  static InteractionTriggerBuilder deleteHistoryVersion =
+      InteractionTriggerBuilder._(
+    valueString: 'delete-history-version',
+    valueEnum: InteractionTriggerBuilderEnum.deleteHistoryVersion,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'delete-history-version',
     ),
   );
 
@@ -316,7 +448,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'history',
     ),
@@ -330,7 +462,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'history-instance',
     ),
@@ -343,7 +475,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'history-type',
     ),
@@ -356,7 +488,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'history-system',
     ),
@@ -369,9 +501,23 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'create',
+    ),
+  );
+
+  /// create_conditional
+  static InteractionTriggerBuilder createConditional =
+      InteractionTriggerBuilder._(
+    valueString: 'create-conditional',
+    valueEnum: InteractionTriggerBuilderEnum.createConditional,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'create-conditional',
     ),
   );
 
@@ -382,7 +528,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'search',
     ),
@@ -395,7 +541,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'search-type',
     ),
@@ -408,7 +554,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'search-system',
     ),
@@ -422,7 +568,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'search-compartment',
     ),
@@ -435,7 +581,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'capabilities',
     ),
@@ -448,7 +594,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'transaction',
     ),
@@ -461,7 +607,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'batch',
     ),
@@ -474,7 +620,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'operation',
     ),
@@ -491,13 +637,20 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     read,
     vread,
     update,
+    updateConditional,
     patch,
+    patchConditional,
     delete,
+    deleteConditionalSingle,
+    deleteConditionalMultiple,
+    deleteHistory,
+    deleteHistoryVersion,
     history,
     historyInstance,
     historyType,
     historySystem,
     create,
+    createConditional,
     search,
     searchType,
     searchSystem,

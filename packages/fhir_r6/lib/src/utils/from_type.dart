@@ -260,6 +260,10 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : TimingRepeat.fromJson(value);
+    case 'relativetime':
+      return value is! Map<String, dynamic>
+          ? null
+          : RelativeTime.fromJson(value);
     case 'fhirmeta':
       return value is! Map<String, dynamic> ? null : FhirMeta.fromJson(value);
     case 'meta':
@@ -492,14 +496,6 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : AccountProcedure.fromJson(value);
-    case 'accountrelatedaccount':
-      return value is! Map<String, dynamic>
-          ? null
-          : AccountRelatedAccount.fromJson(value);
-    case 'account_relatedaccount':
-      return value is! Map<String, dynamic>
-          ? null
-          : AccountRelatedAccount.fromJson(value);
     case 'accountbalance':
       return value is! Map<String, dynamic>
           ? null
@@ -596,50 +592,10 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : AdverseEventCausality.fromJson(value);
-    case 'adverseeventcontributingfactor':
-      return value is! Map<String, dynamic>
-          ? null
-          : AdverseEventContributingFactor.fromJson(value);
-    case 'adverseevent_contributingfactor':
-      return value is! Map<String, dynamic>
-          ? null
-          : AdverseEventContributingFactor.fromJson(value);
-    case 'adverseeventpreventiveaction':
-      return value is! Map<String, dynamic>
-          ? null
-          : AdverseEventPreventiveAction.fromJson(value);
-    case 'adverseevent_preventiveaction':
-      return value is! Map<String, dynamic>
-          ? null
-          : AdverseEventPreventiveAction.fromJson(value);
-    case 'adverseeventmitigatingaction':
-      return value is! Map<String, dynamic>
-          ? null
-          : AdverseEventMitigatingAction.fromJson(value);
-    case 'adverseevent_mitigatingaction':
-      return value is! Map<String, dynamic>
-          ? null
-          : AdverseEventMitigatingAction.fromJson(value);
-    case 'adverseeventsupportinginfo':
-      return value is! Map<String, dynamic>
-          ? null
-          : AdverseEventSupportingInfo.fromJson(value);
-    case 'adverseevent_supportinginfo':
-      return value is! Map<String, dynamic>
-          ? null
-          : AdverseEventSupportingInfo.fromJson(value);
     case 'allergyintolerance':
       return value is! Map<String, dynamic>
           ? null
           : AllergyIntolerance.fromJson(value);
-    case 'allergyintoleranceparticipant':
-      return value is! Map<String, dynamic>
-          ? null
-          : AllergyIntoleranceParticipant.fromJson(value);
-    case 'allergyintolerance_participant':
-      return value is! Map<String, dynamic>
-          ? null
-          : AllergyIntoleranceParticipant.fromJson(value);
     case 'allergyintolerancereaction':
       return value is! Map<String, dynamic>
           ? null
@@ -700,6 +656,14 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : ArtifactAssessment.fromJson(value);
+    case 'artifactassessmentrelatesto':
+      return value is! Map<String, dynamic>
+          ? null
+          : ArtifactAssessmentRelatesTo.fromJson(value);
+    case 'artifactassessment_relatesto':
+      return value is! Map<String, dynamic>
+          ? null
+          : ArtifactAssessmentRelatesTo.fromJson(value);
     case 'artifactassessmentcontent':
       return value is! Map<String, dynamic>
           ? null
@@ -1036,6 +1000,14 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : CitationStatusDate.fromJson(value);
+    case 'citationrelatesto':
+      return value is! Map<String, dynamic>
+          ? null
+          : CitationRelatesTo.fromJson(value);
+    case 'citation_relatesto':
+      return value is! Map<String, dynamic>
+          ? null
+          : CitationRelatesTo.fromJson(value);
     case 'citationcitedartifact':
       return value is! Map<String, dynamic>
           ? null
@@ -1044,14 +1016,6 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : CitationCitedArtifact.fromJson(value);
-    case 'citationversion':
-      return value is! Map<String, dynamic>
-          ? null
-          : CitationVersion.fromJson(value);
-    case 'citation_version':
-      return value is! Map<String, dynamic>
-          ? null
-          : CitationVersion.fromJson(value);
     case 'citationstatusdate1':
       return value is! Map<String, dynamic>
           ? null
@@ -1084,14 +1048,14 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : CitationPart.fromJson(value);
-    case 'citationrelatesto':
+    case 'citationrelatesto1':
       return value is! Map<String, dynamic>
           ? null
-          : CitationRelatesTo.fromJson(value);
-    case 'citation_relatesto':
+          : CitationRelatesTo1.fromJson(value);
+    case 'citation_relatesto1':
       return value is! Map<String, dynamic>
           ? null
-          : CitationRelatesTo.fromJson(value);
+          : CitationRelatesTo1.fromJson(value);
     case 'citationpublicationform':
       return value is! Map<String, dynamic>
           ? null
@@ -1374,18 +1338,18 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : ClaimResponseError.fromJson(value);
-    case 'clinicalimpression':
+    case 'clinicalassessment':
       return value is! Map<String, dynamic>
           ? null
-          : ClinicalImpression.fromJson(value);
-    case 'clinicalimpressionfinding':
+          : ClinicalAssessment.fromJson(value);
+    case 'clinicalassessmentfinding':
       return value is! Map<String, dynamic>
           ? null
-          : ClinicalImpressionFinding.fromJson(value);
-    case 'clinicalimpression_finding':
+          : ClinicalAssessmentFinding.fromJson(value);
+    case 'clinicalassessment_finding':
       return value is! Map<String, dynamic>
           ? null
-          : ClinicalImpressionFinding.fromJson(value);
+          : ClinicalAssessmentFinding.fromJson(value);
     case 'clinicalusedefinition':
       return value is! Map<String, dynamic>
           ? null
@@ -1536,6 +1500,14 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : CompositionAttester.fromJson(value);
+    case 'compositionrelatesto':
+      return value is! Map<String, dynamic>
+          ? null
+          : CompositionRelatesTo.fromJson(value);
+    case 'composition_relatesto':
+      return value is! Map<String, dynamic>
+          ? null
+          : CompositionRelatesTo.fromJson(value);
     case 'compositionevent':
       return value is! Map<String, dynamic>
           ? null
@@ -1620,14 +1592,6 @@ FhirBase? fromType(dynamic value, String type) {
           : ConceptMapUnmapped.fromJson(value);
     case 'condition':
       return value is! Map<String, dynamic> ? null : Condition.fromJson(value);
-    case 'conditionparticipant':
-      return value is! Map<String, dynamic>
-          ? null
-          : ConditionParticipant.fromJson(value);
-    case 'condition_participant':
-      return value is! Map<String, dynamic>
-          ? null
-          : ConditionParticipant.fromJson(value);
     case 'conditionstage':
       return value is! Map<String, dynamic>
           ? null
@@ -1640,14 +1604,6 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : ConditionDefinition.fromJson(value);
-    case 'conditiondefinitionobservation':
-      return value is! Map<String, dynamic>
-          ? null
-          : ConditionDefinitionObservation.fromJson(value);
-    case 'conditiondefinition_observation':
-      return value is! Map<String, dynamic>
-          ? null
-          : ConditionDefinitionObservation.fromJson(value);
     case 'conditiondefinitionmedication':
       return value is! Map<String, dynamic>
           ? null
@@ -2000,14 +1956,14 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic> ? null : DeviceName.fromJson(value);
     case 'device_name':
       return value is! Map<String, dynamic> ? null : DeviceName.fromJson(value);
-    case 'deviceversion':
+    case 'devicedeviceversion':
       return value is! Map<String, dynamic>
           ? null
-          : DeviceVersion.fromJson(value);
-    case 'device_version':
+          : DeviceDeviceVersion.fromJson(value);
+    case 'device_deviceversion':
       return value is! Map<String, dynamic>
           ? null
-          : DeviceVersion.fromJson(value);
+          : DeviceDeviceVersion.fromJson(value);
     case 'deviceconformsto':
       return value is! Map<String, dynamic>
           ? null
@@ -2024,6 +1980,34 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : DeviceProperty.fromJson(value);
+    case 'deviceadditive':
+      return value is! Map<String, dynamic>
+          ? null
+          : DeviceAdditive.fromJson(value);
+    case 'device_additive':
+      return value is! Map<String, dynamic>
+          ? null
+          : DeviceAdditive.fromJson(value);
+    case 'devicealert':
+      return value is! Map<String, dynamic>
+          ? null
+          : DeviceAlert.fromJson(value);
+    case 'devicealertcondition':
+      return value is! Map<String, dynamic>
+          ? null
+          : DeviceAlertCondition.fromJson(value);
+    case 'devicealert_condition':
+      return value is! Map<String, dynamic>
+          ? null
+          : DeviceAlertCondition.fromJson(value);
+    case 'devicealertsignal':
+      return value is! Map<String, dynamic>
+          ? null
+          : DeviceAlertSignal.fromJson(value);
+    case 'devicealert_signal':
+      return value is! Map<String, dynamic>
+          ? null
+          : DeviceAlertSignal.fromJson(value);
     case 'deviceassociation':
       return value is! Map<String, dynamic>
           ? null
@@ -2112,14 +2096,14 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : DeviceDefinitionDistributor.fromJson(value);
-    case 'devicedefinitionversion':
+    case 'devicedefinitiondeviceversion':
       return value is! Map<String, dynamic>
           ? null
-          : DeviceDefinitionVersion.fromJson(value);
-    case 'devicedefinition_version':
+          : DeviceDefinitionDeviceVersion.fromJson(value);
+    case 'devicedefinition_deviceversion':
       return value is! Map<String, dynamic>
           ? null
-          : DeviceDefinitionVersion.fromJson(value);
+          : DeviceDefinitionDeviceVersion.fromJson(value);
     case 'devicedefinitionproperty':
       return value is! Map<String, dynamic>
           ? null
@@ -2384,6 +2368,14 @@ FhirBase? fromType(dynamic value, String type) {
           : EventDefinition.fromJson(value);
     case 'evidence':
       return value is! Map<String, dynamic> ? null : Evidence.fromJson(value);
+    case 'evidencerelatesto':
+      return value is! Map<String, dynamic>
+          ? null
+          : EvidenceRelatesTo.fromJson(value);
+    case 'evidence_relatesto':
+      return value is! Map<String, dynamic>
+          ? null
+          : EvidenceRelatesTo.fromJson(value);
     case 'evidencevariabledefinition':
       return value is! Map<String, dynamic>
           ? null
@@ -2444,82 +2436,22 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : EvidenceCertainty.fromJson(value);
-    case 'evidencereport':
+    case 'evidencevariablerelatesto':
       return value is! Map<String, dynamic>
           ? null
-          : EvidenceReport.fromJson(value);
-    case 'evidencereportsubject':
+          : EvidenceVariableRelatesTo.fromJson(value);
+    case 'evidencevariable_relatesto':
       return value is! Map<String, dynamic>
           ? null
-          : EvidenceReportSubject.fromJson(value);
-    case 'evidencereport_subject':
+          : EvidenceVariableRelatesTo.fromJson(value);
+    case 'evidencevariabledefinitionmodifier':
       return value is! Map<String, dynamic>
           ? null
-          : EvidenceReportSubject.fromJson(value);
-    case 'evidencereportcharacteristic':
+          : EvidenceVariableDefinitionModifier.fromJson(value);
+    case 'evidencevariable_definitionmodifier':
       return value is! Map<String, dynamic>
           ? null
-          : EvidenceReportCharacteristic.fromJson(value);
-    case 'evidencereport_characteristic':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceReportCharacteristic.fromJson(value);
-    case 'evidencereportrelatesto':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceReportRelatesTo.fromJson(value);
-    case 'evidencereport_relatesto':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceReportRelatesTo.fromJson(value);
-    case 'evidencereporttarget':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceReportTarget.fromJson(value);
-    case 'evidencereport_target':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceReportTarget.fromJson(value);
-    case 'evidencereportsection':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceReportSection.fromJson(value);
-    case 'evidencereport_section':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceReportSection.fromJson(value);
-    case 'evidencevariablecharacteristic':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceVariableCharacteristic.fromJson(value);
-    case 'evidencevariable_characteristic':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceVariableCharacteristic.fromJson(value);
-    case 'evidencevariabledefinitionbytypeandvalue':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceVariableDefinitionByTypeAndValue.fromJson(value);
-    case 'evidencevariable_definitionbytypeandvalue':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceVariableDefinitionByTypeAndValue.fromJson(value);
-    case 'evidencevariabledefinitionbycombination':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceVariableDefinitionByCombination.fromJson(value);
-    case 'evidencevariable_definitionbycombination':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceVariableDefinitionByCombination.fromJson(value);
-    case 'evidencevariabletimefromevent':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceVariableTimeFromEvent.fromJson(value);
-    case 'evidencevariable_timefromevent':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceVariableTimeFromEvent.fromJson(value);
+          : EvidenceVariableDefinitionModifier.fromJson(value);
     case 'evidencevariablecategory':
       return value is! Map<String, dynamic>
           ? null
@@ -2528,6 +2460,22 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : EvidenceVariableCategory.fromJson(value);
+    case 'evidencevariabledatastorage':
+      return value is! Map<String, dynamic>
+          ? null
+          : EvidenceVariableDataStorage.fromJson(value);
+    case 'evidencevariable_datastorage':
+      return value is! Map<String, dynamic>
+          ? null
+          : EvidenceVariableDataStorage.fromJson(value);
+    case 'evidencevariableconstraint':
+      return value is! Map<String, dynamic>
+          ? null
+          : EvidenceVariableConstraint.fromJson(value);
+    case 'evidencevariable_constraint':
+      return value is! Map<String, dynamic>
+          ? null
+          : EvidenceVariableConstraint.fromJson(value);
     case 'examplescenario':
       return value is! Map<String, dynamic>
           ? null
@@ -2872,6 +2820,14 @@ FhirBase? fromType(dynamic value, String type) {
           : GenomicStudyDevice.fromJson(value);
     case 'goal':
       return value is! Map<String, dynamic> ? null : Goal.fromJson(value);
+    case 'goalacceptance':
+      return value is! Map<String, dynamic>
+          ? null
+          : GoalAcceptance.fromJson(value);
+    case 'goal_acceptance':
+      return value is! Map<String, dynamic>
+          ? null
+          : GoalAcceptance.fromJson(value);
     case 'goaltarget':
       return value is! Map<String, dynamic> ? null : GoalTarget.fromJson(value);
     case 'goal_target':
@@ -3194,38 +3150,6 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : InsurancePlan.fromJson(value);
-    case 'insuranceplancoverage':
-      return value is! Map<String, dynamic>
-          ? null
-          : InsurancePlanCoverage.fromJson(value);
-    case 'insuranceplan_coverage':
-      return value is! Map<String, dynamic>
-          ? null
-          : InsurancePlanCoverage.fromJson(value);
-    case 'insuranceplanbenefit':
-      return value is! Map<String, dynamic>
-          ? null
-          : InsurancePlanBenefit.fromJson(value);
-    case 'insuranceplan_benefit':
-      return value is! Map<String, dynamic>
-          ? null
-          : InsurancePlanBenefit.fromJson(value);
-    case 'insuranceplanlimit':
-      return value is! Map<String, dynamic>
-          ? null
-          : InsurancePlanLimit.fromJson(value);
-    case 'insuranceplan_limit':
-      return value is! Map<String, dynamic>
-          ? null
-          : InsurancePlanLimit.fromJson(value);
-    case 'insuranceplanplan':
-      return value is! Map<String, dynamic>
-          ? null
-          : InsurancePlanPlan.fromJson(value);
-    case 'insuranceplan_plan':
-      return value is! Map<String, dynamic>
-          ? null
-          : InsurancePlanPlan.fromJson(value);
     case 'insuranceplangeneralcost':
       return value is! Map<String, dynamic>
           ? null
@@ -3242,14 +3166,14 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : InsurancePlanSpecificCost.fromJson(value);
-    case 'insuranceplanbenefit1':
+    case 'insuranceplanbenefit':
       return value is! Map<String, dynamic>
           ? null
-          : InsurancePlanBenefit1.fromJson(value);
-    case 'insuranceplan_benefit1':
+          : InsurancePlanBenefit.fromJson(value);
+    case 'insuranceplan_benefit':
       return value is! Map<String, dynamic>
           ? null
-          : InsurancePlanBenefit1.fromJson(value);
+          : InsurancePlanBenefit.fromJson(value);
     case 'insuranceplancost':
       return value is! Map<String, dynamic>
           ? null
@@ -3258,6 +3182,42 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : InsurancePlanCost.fromJson(value);
+    case 'insuranceproduct':
+      return value is! Map<String, dynamic>
+          ? null
+          : InsuranceProduct.fromJson(value);
+    case 'insuranceproductcoverage':
+      return value is! Map<String, dynamic>
+          ? null
+          : InsuranceProductCoverage.fromJson(value);
+    case 'insuranceproduct_coverage':
+      return value is! Map<String, dynamic>
+          ? null
+          : InsuranceProductCoverage.fromJson(value);
+    case 'insuranceproductbenefit':
+      return value is! Map<String, dynamic>
+          ? null
+          : InsuranceProductBenefit.fromJson(value);
+    case 'insuranceproduct_benefit':
+      return value is! Map<String, dynamic>
+          ? null
+          : InsuranceProductBenefit.fromJson(value);
+    case 'insuranceproductlimit':
+      return value is! Map<String, dynamic>
+          ? null
+          : InsuranceProductLimit.fromJson(value);
+    case 'insuranceproduct_limit':
+      return value is! Map<String, dynamic>
+          ? null
+          : InsuranceProductLimit.fromJson(value);
+    case 'insuranceproductrelated':
+      return value is! Map<String, dynamic>
+          ? null
+          : InsuranceProductRelated.fromJson(value);
+    case 'insuranceproduct_related':
+      return value is! Map<String, dynamic>
+          ? null
+          : InsuranceProductRelated.fromJson(value);
     case 'inventoryitem':
       return value is! Map<String, dynamic>
           ? null
@@ -3424,6 +3384,14 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : MeasureGroup.fromJson(value);
+    case 'measurecomponent':
+      return value is! Map<String, dynamic>
+          ? null
+          : MeasureComponent.fromJson(value);
+    case 'measure_component':
+      return value is! Map<String, dynamic>
+          ? null
+          : MeasureComponent.fromJson(value);
     case 'measurepopulation':
       return value is! Map<String, dynamic>
           ? null
@@ -3440,14 +3408,14 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : MeasureStratifier.fromJson(value);
-    case 'measurecomponent':
+    case 'measurecomponent1':
       return value is! Map<String, dynamic>
           ? null
-          : MeasureComponent.fromJson(value);
-    case 'measure_component':
+          : MeasureComponent1.fromJson(value);
+    case 'measure_component1':
       return value is! Map<String, dynamic>
           ? null
-          : MeasureComponent.fromJson(value);
+          : MeasureComponent1.fromJson(value);
     case 'measuresupplementaldata':
       return value is! Map<String, dynamic>
           ? null
@@ -3862,10 +3830,190 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : MessageHeaderResponse.fromJson(value);
+    case 'moleculardefinition':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinition.fromJson(value);
+    case 'moleculardefinitionlocation':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionLocation.fromJson(value);
+    case 'moleculardefinition_location':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionLocation.fromJson(value);
+    case 'moleculardefinitionsequencelocation':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionSequenceLocation.fromJson(value);
+    case 'moleculardefinition_sequencelocation':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionSequenceLocation.fromJson(value);
+    case 'moleculardefinitioncoordinateinterval':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateInterval.fromJson(value);
+    case 'moleculardefinition_coordinateinterval':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateInterval.fromJson(value);
+    case 'moleculardefinitioncoordinatesystem':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateSystem.fromJson(value);
+    case 'moleculardefinition_coordinatesystem':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateSystem.fromJson(value);
+    case 'moleculardefinitioncytobandlocation':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCytobandLocation.fromJson(value);
+    case 'moleculardefinition_cytobandlocation':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCytobandLocation.fromJson(value);
+    case 'moleculardefinitiongenomeassembly':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionGenomeAssembly.fromJson(value);
+    case 'moleculardefinition_genomeassembly':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionGenomeAssembly.fromJson(value);
+    case 'moleculardefinitioncytobandinterval':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCytobandInterval.fromJson(value);
+    case 'moleculardefinition_cytobandinterval':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCytobandInterval.fromJson(value);
+    case 'moleculardefinitionstartcytoband':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionStartCytoband.fromJson(value);
+    case 'moleculardefinition_startcytoband':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionStartCytoband.fromJson(value);
+    case 'moleculardefinitionendcytoband':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionEndCytoband.fromJson(value);
+    case 'moleculardefinition_endcytoband':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionEndCytoband.fromJson(value);
+    case 'moleculardefinitionrepresentation':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionRepresentation.fromJson(value);
+    case 'moleculardefinition_representation':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionRepresentation.fromJson(value);
+    case 'moleculardefinitionliteral':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionLiteral.fromJson(value);
+    case 'moleculardefinition_literal':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionLiteral.fromJson(value);
+    case 'moleculardefinitionextracted':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionExtracted.fromJson(value);
+    case 'moleculardefinition_extracted':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionExtracted.fromJson(value);
+    case 'moleculardefinitioncoordinateinterval1':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateInterval1.fromJson(value);
+    case 'moleculardefinition_coordinateinterval1':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateInterval1.fromJson(value);
+    case 'moleculardefinitioncoordinatesystem1':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateSystem1.fromJson(value);
+    case 'moleculardefinition_coordinatesystem1':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateSystem1.fromJson(value);
+    case 'moleculardefinitionrepeated':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionRepeated.fromJson(value);
+    case 'moleculardefinition_repeated':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionRepeated.fromJson(value);
+    case 'moleculardefinitionconcatenated':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionConcatenated.fromJson(value);
+    case 'moleculardefinition_concatenated':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionConcatenated.fromJson(value);
+    case 'moleculardefinitionsequenceelement':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionSequenceElement.fromJson(value);
+    case 'moleculardefinition_sequenceelement':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionSequenceElement.fromJson(value);
+    case 'moleculardefinitionrelative':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionRelative.fromJson(value);
+    case 'moleculardefinition_relative':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionRelative.fromJson(value);
+    case 'moleculardefinitionedit':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionEdit.fromJson(value);
+    case 'moleculardefinition_edit':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionEdit.fromJson(value);
+    case 'moleculardefinitioncoordinateinterval2':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateInterval2.fromJson(value);
+    case 'moleculardefinition_coordinateinterval2':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateInterval2.fromJson(value);
+    case 'moleculardefinitioncoordinatesystem2':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateSystem2.fromJson(value);
+    case 'moleculardefinition_coordinatesystem2':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateSystem2.fromJson(value);
     case 'molecularsequence':
       return value is! Map<String, dynamic>
           ? null
           : MolecularSequence.fromJson(value);
+    case 'molecularsequenceliteral':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularSequenceLiteral.fromJson(value);
+    case 'molecularsequence_literal':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularSequenceLiteral.fromJson(value);
     case 'molecularsequencerelative':
       return value is! Map<String, dynamic>
           ? null
@@ -3874,14 +4022,6 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : MolecularSequenceRelative.fromJson(value);
-    case 'molecularsequencestartingsequence':
-      return value is! Map<String, dynamic>
-          ? null
-          : MolecularSequenceStartingSequence.fromJson(value);
-    case 'molecularsequence_startingsequence':
-      return value is! Map<String, dynamic>
-          ? null
-          : MolecularSequenceStartingSequence.fromJson(value);
     case 'molecularsequenceedit':
       return value is! Map<String, dynamic>
           ? null
@@ -3890,6 +4030,38 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : MolecularSequenceEdit.fromJson(value);
+    case 'molecularsequenceextracted':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularSequenceExtracted.fromJson(value);
+    case 'molecularsequence_extracted':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularSequenceExtracted.fromJson(value);
+    case 'molecularsequencerepeated':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularSequenceRepeated.fromJson(value);
+    case 'molecularsequence_repeated':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularSequenceRepeated.fromJson(value);
+    case 'molecularsequenceconcatenated':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularSequenceConcatenated.fromJson(value);
+    case 'molecularsequence_concatenated':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularSequenceConcatenated.fromJson(value);
+    case 'molecularsequencesequenceelement':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularSequenceSequenceElement.fromJson(value);
+    case 'molecularsequence_sequenceelement':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularSequenceSequenceElement.fromJson(value);
     case 'namingsystem':
       return value is! Map<String, dynamic>
           ? null
@@ -3906,6 +4078,14 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : NutritionIntake.fromJson(value);
+    case 'nutritionintakenutritionitem':
+      return value is! Map<String, dynamic>
+          ? null
+          : NutritionIntakeNutritionItem.fromJson(value);
+    case 'nutritionintake_nutritionitem':
+      return value is! Map<String, dynamic>
+          ? null
+          : NutritionIntakeNutritionItem.fromJson(value);
     case 'nutritionintakeconsumeditem':
       return value is! Map<String, dynamic>
           ? null
@@ -3914,14 +4094,22 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : NutritionIntakeConsumedItem.fromJson(value);
-    case 'nutritionintakeingredientlabel':
+    case 'nutritionintaketotalintake':
       return value is! Map<String, dynamic>
           ? null
-          : NutritionIntakeIngredientLabel.fromJson(value);
-    case 'nutritionintake_ingredientlabel':
+          : NutritionIntakeTotalIntake.fromJson(value);
+    case 'nutritionintake_totalintake':
       return value is! Map<String, dynamic>
           ? null
-          : NutritionIntakeIngredientLabel.fromJson(value);
+          : NutritionIntakeTotalIntake.fromJson(value);
+    case 'nutritionintakenotconsumeditem':
+      return value is! Map<String, dynamic>
+          ? null
+          : NutritionIntakeNotConsumedItem.fromJson(value);
+    case 'nutritionintake_notconsumeditem':
+      return value is! Map<String, dynamic>
+          ? null
+          : NutritionIntakeNotConsumedItem.fromJson(value);
     case 'nutritionintakeperformer':
       return value is! Map<String, dynamic>
           ? null
@@ -3990,14 +4178,6 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : NutritionOrderEnteralFormula.fromJson(value);
-    case 'nutritionorderadditive':
-      return value is! Map<String, dynamic>
-          ? null
-          : NutritionOrderAdditive.fromJson(value);
-    case 'nutritionorder_additive':
-      return value is! Map<String, dynamic>
-          ? null
-          : NutritionOrderAdditive.fromJson(value);
     case 'nutritionorderadministration':
       return value is! Map<String, dynamic>
           ? null
@@ -4014,6 +4194,14 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : NutritionOrderSchedule2.fromJson(value);
+    case 'nutritionorderadditive':
+      return value is! Map<String, dynamic>
+          ? null
+          : NutritionOrderAdditive.fromJson(value);
+    case 'nutritionorder_additive':
+      return value is! Map<String, dynamic>
+          ? null
+          : NutritionOrderAdditive.fromJson(value);
     case 'nutritionproduct':
       return value is! Map<String, dynamic>
           ? null
@@ -4300,6 +4488,22 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : PermissionActivity.fromJson(value);
+    case 'permissionactor':
+      return value is! Map<String, dynamic>
+          ? null
+          : PermissionActor.fromJson(value);
+    case 'permission_actor':
+      return value is! Map<String, dynamic>
+          ? null
+          : PermissionActor.fromJson(value);
+    case 'permissionlimit':
+      return value is! Map<String, dynamic>
+          ? null
+          : PermissionLimit.fromJson(value);
+    case 'permission_limit':
+      return value is! Map<String, dynamic>
+          ? null
+          : PermissionLimit.fromJson(value);
     case 'person':
       return value is! Map<String, dynamic> ? null : Person.fromJson(value);
     case 'personcommunication':
@@ -4314,6 +4518,10 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic> ? null : PersonLink.fromJson(value);
     case 'person_link':
       return value is! Map<String, dynamic> ? null : PersonLink.fromJson(value);
+    case 'personalrelationship':
+      return value is! Map<String, dynamic>
+          ? null
+          : PersonalRelationship.fromJson(value);
     case 'plandefinition':
       return value is! Map<String, dynamic>
           ? null
@@ -4610,6 +4818,22 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : Requirements.fromJson(value);
+    case 'requirementsimports':
+      return value is! Map<String, dynamic>
+          ? null
+          : RequirementsImports.fromJson(value);
+    case 'requirements_imports':
+      return value is! Map<String, dynamic>
+          ? null
+          : RequirementsImports.fromJson(value);
+    case 'requirementsactor':
+      return value is! Map<String, dynamic>
+          ? null
+          : RequirementsActor.fromJson(value);
+    case 'requirements_actor':
+      return value is! Map<String, dynamic>
+          ? null
+          : RequirementsActor.fromJson(value);
     case 'requirementsstatement':
       return value is! Map<String, dynamic>
           ? null
@@ -4618,6 +4842,22 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : RequirementsStatement.fromJson(value);
+    case 'requirementsderivedfrom':
+      return value is! Map<String, dynamic>
+          ? null
+          : RequirementsDerivedFrom.fromJson(value);
+    case 'requirements_derivedfrom':
+      return value is! Map<String, dynamic>
+          ? null
+          : RequirementsDerivedFrom.fromJson(value);
+    case 'requirementspartof':
+      return value is! Map<String, dynamic>
+          ? null
+          : RequirementsPartOf.fromJson(value);
+    case 'requirements_partof':
+      return value is! Map<String, dynamic>
+          ? null
+          : RequirementsPartOf.fromJson(value);
     case 'researchstudy':
       return value is! Map<String, dynamic>
           ? null
@@ -4630,6 +4870,14 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : ResearchStudyLabel.fromJson(value);
+    case 'researchstudyrelatesto':
+      return value is! Map<String, dynamic>
+          ? null
+          : ResearchStudyRelatesTo.fromJson(value);
+    case 'researchstudy_relatesto':
+      return value is! Map<String, dynamic>
+          ? null
+          : ResearchStudyRelatesTo.fromJson(value);
     case 'researchstudyassociatedparty':
       return value is! Map<String, dynamic>
           ? null
@@ -4678,18 +4926,34 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : ResearchStudyOutcomeMeasure.fromJson(value);
+    case 'researchstudyeventhandling':
+      return value is! Map<String, dynamic>
+          ? null
+          : ResearchStudyEventHandling.fromJson(value);
+    case 'researchstudy_eventhandling':
+      return value is! Map<String, dynamic>
+          ? null
+          : ResearchStudyEventHandling.fromJson(value);
     case 'researchsubject':
       return value is! Map<String, dynamic>
           ? null
           : ResearchSubject.fromJson(value);
-    case 'researchsubjectprogress':
+    case 'researchsubjectsubjectstate':
       return value is! Map<String, dynamic>
           ? null
-          : ResearchSubjectProgress.fromJson(value);
-    case 'researchsubject_progress':
+          : ResearchSubjectSubjectState.fromJson(value);
+    case 'researchsubject_subjectstate':
       return value is! Map<String, dynamic>
           ? null
-          : ResearchSubjectProgress.fromJson(value);
+          : ResearchSubjectSubjectState.fromJson(value);
+    case 'researchsubjectsubjectmilestone':
+      return value is! Map<String, dynamic>
+          ? null
+          : ResearchSubjectSubjectMilestone.fromJson(value);
+    case 'researchsubject_subjectmilestone':
+      return value is! Map<String, dynamic>
+          ? null
+          : ResearchSubjectSubjectMilestone.fromJson(value);
     case 'riskassessment':
       return value is! Map<String, dynamic>
           ? null
@@ -4960,18 +5224,26 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : SubscriptionStatusNotificationEvent.fromJson(value);
+    case 'subscriptionstatusrelatedquery':
+      return value is! Map<String, dynamic>
+          ? null
+          : SubscriptionStatusRelatedQuery.fromJson(value);
+    case 'subscriptionstatus_relatedquery':
+      return value is! Map<String, dynamic>
+          ? null
+          : SubscriptionStatusRelatedQuery.fromJson(value);
     case 'subscriptiontopic':
       return value is! Map<String, dynamic>
           ? null
           : SubscriptionTopic.fromJson(value);
-    case 'subscriptiontopicresourcetrigger':
+    case 'subscriptiontopictrigger':
       return value is! Map<String, dynamic>
           ? null
-          : SubscriptionTopicResourceTrigger.fromJson(value);
-    case 'subscriptiontopic_resourcetrigger':
+          : SubscriptionTopicTrigger.fromJson(value);
+    case 'subscriptiontopic_trigger':
       return value is! Map<String, dynamic>
           ? null
-          : SubscriptionTopicResourceTrigger.fromJson(value);
+          : SubscriptionTopicTrigger.fromJson(value);
     case 'subscriptiontopicquerycriteria':
       return value is! Map<String, dynamic>
           ? null
@@ -4980,14 +5252,6 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : SubscriptionTopicQueryCriteria.fromJson(value);
-    case 'subscriptiontopiceventtrigger':
-      return value is! Map<String, dynamic>
-          ? null
-          : SubscriptionTopicEventTrigger.fromJson(value);
-    case 'subscriptiontopic_eventtrigger':
-      return value is! Map<String, dynamic>
-          ? null
-          : SubscriptionTopicEventTrigger.fromJson(value);
     case 'subscriptiontopiccanfilterby':
       return value is! Map<String, dynamic>
           ? null
@@ -5004,16 +5268,16 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : SubscriptionTopicNotificationShape.fromJson(value);
+    case 'subscriptiontopicrelatedquery':
+      return value is! Map<String, dynamic>
+          ? null
+          : SubscriptionTopicRelatedQuery.fromJson(value);
+    case 'subscriptiontopic_relatedquery':
+      return value is! Map<String, dynamic>
+          ? null
+          : SubscriptionTopicRelatedQuery.fromJson(value);
     case 'substance':
       return value is! Map<String, dynamic> ? null : Substance.fromJson(value);
-    case 'substanceingredient':
-      return value is! Map<String, dynamic>
-          ? null
-          : SubstanceIngredient.fromJson(value);
-    case 'substance_ingredient':
-      return value is! Map<String, dynamic>
-          ? null
-          : SubstanceIngredient.fromJson(value);
     case 'substancedefinition':
       return value is! Map<String, dynamic>
           ? null
@@ -5372,6 +5636,14 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : TerminologyCapabilitiesFilter.fromJson(value);
+    case 'terminologycapabilitiessupplements':
+      return value is! Map<String, dynamic>
+          ? null
+          : TerminologyCapabilitiesSupplements.fromJson(value);
+    case 'terminologycapabilities_supplements':
+      return value is! Map<String, dynamic>
+          ? null
+          : TerminologyCapabilitiesSupplements.fromJson(value);
     case 'terminologycapabilitiesexpansion':
       return value is! Map<String, dynamic>
           ? null
@@ -5414,6 +5686,14 @@ FhirBase? fromType(dynamic value, String type) {
           : TerminologyCapabilitiesClosure.fromJson(value);
     case 'testplan':
       return value is! Map<String, dynamic> ? null : TestPlan.fromJson(value);
+    case 'testplanscope':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestPlanScope.fromJson(value);
+    case 'testplan_scope':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestPlanScope.fromJson(value);
     case 'testplandependency':
       return value is! Map<String, dynamic>
           ? null
@@ -5430,6 +5710,22 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : TestPlanTestCase.fromJson(value);
+    case 'testplanscope1':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestPlanScope1.fromJson(value);
+    case 'testplan_scope1':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestPlanScope1.fromJson(value);
+    case 'testplanrequirement':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestPlanRequirement.fromJson(value);
+    case 'testplan_requirement':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestPlanRequirement.fromJson(value);
     case 'testplandependency1':
       return value is! Map<String, dynamic>
           ? null
@@ -5480,6 +5776,14 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : TestReportParticipant.fromJson(value);
+    case 'testreportparameter':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestReportParameter.fromJson(value);
+    case 'testreport_parameter':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestReportParameter.fromJson(value);
     case 'testreportsetup':
       return value is! Map<String, dynamic>
           ? null
@@ -5554,22 +5858,14 @@ FhirBase? fromType(dynamic value, String type) {
           : TestReportAction2.fromJson(value);
     case 'testscript':
       return value is! Map<String, dynamic> ? null : TestScript.fromJson(value);
-    case 'testscriptorigin':
+    case 'testscripttestsystem':
       return value is! Map<String, dynamic>
           ? null
-          : TestScriptOrigin.fromJson(value);
-    case 'testscript_origin':
+          : TestScriptTestSystem.fromJson(value);
+    case 'testscript_testsystem':
       return value is! Map<String, dynamic>
           ? null
-          : TestScriptOrigin.fromJson(value);
-    case 'testscriptdestination':
-      return value is! Map<String, dynamic>
-          ? null
-          : TestScriptDestination.fromJson(value);
-    case 'testscript_destination':
-      return value is! Map<String, dynamic>
-          ? null
-          : TestScriptDestination.fromJson(value);
+          : TestScriptTestSystem.fromJson(value);
     case 'testscriptmetadata':
       return value is! Map<String, dynamic>
           ? null
@@ -5634,6 +5930,22 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : TestScriptAction.fromJson(value);
+    case 'testscriptcommon':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestScriptCommon.fromJson(value);
+    case 'testscript_common':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestScriptCommon.fromJson(value);
+    case 'testscriptparameter':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestScriptParameter.fromJson(value);
+    case 'testscript_parameter':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestScriptParameter.fromJson(value);
     case 'testscriptoperation':
       return value is! Map<String, dynamic>
           ? null
@@ -5698,6 +6010,30 @@ FhirBase? fromType(dynamic value, String type) {
       return value is! Map<String, dynamic>
           ? null
           : TestScriptAction2.fromJson(value);
+    case 'testscriptcommon1':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestScriptCommon1.fromJson(value);
+    case 'testscript_common1':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestScriptCommon1.fromJson(value);
+    case 'testscriptparameter1':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestScriptParameter1.fromJson(value);
+    case 'testscript_parameter1':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestScriptParameter1.fromJson(value);
+    case 'testscriptaction3':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestScriptAction3.fromJson(value);
+    case 'testscript_action3':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestScriptAction3.fromJson(value);
     case 'transport':
       return value is! Map<String, dynamic> ? null : Transport.fromJson(value);
     case 'transportrestriction':

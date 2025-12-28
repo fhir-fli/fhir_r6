@@ -183,9 +183,7 @@ class _$SubstanceReferenceInformationGeneElementCopyWithImpl<T>
   final T Function(SubstanceReferenceInformationGeneElement) _then;
 
   _$SubstanceReferenceInformationGeneElementCopyWithImpl(
-    this._value,
-    this._then,
-  );
+      this._value, this._then);
 
   @override
   T call({
@@ -246,7 +244,7 @@ abstract class $SubstanceReferenceInformationTargetCopyWith<T>
     CodeableConcept? interaction,
     CodeableConcept? organism,
     CodeableConcept? organismType,
-    Quantity? amountX,
+    AmountXSubstanceReferenceInformationTarget? amountX,
     CodeableConcept? amountType,
     List<Reference>? source,
     bool? disallowExtensions,
@@ -301,7 +299,7 @@ class _$SubstanceReferenceInformationTargetCopyWithImpl<T>
             : organismType as CodeableConcept?,
         amountX: identical(amountX, fhirSentinel)
             ? _value.amountX
-            : amountX as Quantity?,
+            : amountX as AmountXSubstanceReferenceInformationTarget?,
         amountType: identical(amountType, fhirSentinel)
             ? _value.amountType
             : amountType as CodeableConcept?,

@@ -28,6 +28,7 @@ class SupplyRequestBuilder extends DomainResourceBuilder {
     super.modifierExtension,
     this.identifier,
     this.status,
+    this.intent,
     this.basedOn,
     this.category,
     this.priority,
@@ -57,6 +58,7 @@ class SupplyRequestBuilder extends DomainResourceBuilder {
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
   factory SupplyRequestBuilder.empty() => SupplyRequestBuilder(
+        intent: RequestIntentBuilder.values.first,
         item: CodeableReferenceBuilder.empty(),
         quantity: QuantityBuilder.empty(),
       );
@@ -142,6 +144,12 @@ class SupplyRequestBuilder extends DomainResourceBuilder {
         'status',
         SupplyRequestStatusBuilder.fromJson,
         '$objectPath.status',
+      ),
+      intent: JsonParser.parsePrimitive<RequestIntentBuilder>(
+        json,
+        'intent',
+        RequestIntentBuilder.fromJson,
+        '$objectPath.intent',
       ),
       basedOn: (json['basedOn'] as List<dynamic>?)
           ?.map<ReferenceBuilder>(
@@ -301,6 +309,10 @@ class SupplyRequestBuilder extends DomainResourceBuilder {
   /// Status of the supply request.
   SupplyRequestStatusBuilder? status;
 
+  /// [intent]
+  /// Whether the request is a proposal, plan, or an original order.
+  RequestIntentBuilder? intent;
+
   /// [basedOn]
   /// Plan/proposal/order fulfilled by this request.
   List<ReferenceBuilder>? basedOn;
@@ -420,6 +432,7 @@ class SupplyRequestBuilder extends DomainResourceBuilder {
     addField('modifierExtension', modifierExtension);
     addField('identifier', identifier);
     addField('status', status);
+    addField('intent', intent);
     addField('basedOn', basedOn);
     addField('category', category);
     addField('priority', priority);
@@ -455,6 +468,7 @@ class SupplyRequestBuilder extends DomainResourceBuilder {
       'modifierExtension',
       'identifier',
       'status',
+      'intent',
       'basedOn',
       'category',
       'priority',
@@ -520,6 +534,10 @@ class SupplyRequestBuilder extends DomainResourceBuilder {
       case 'status':
         if (status != null) {
           fields.add(status!);
+        }
+      case 'intent':
+        if (intent != null) {
+          fields.add(intent!);
         }
       case 'basedOn':
         if (basedOn != null) {
@@ -788,6 +806,29 @@ class SupplyRequestBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'intent':
+        {
+          if (child is RequestIntentBuilder) {
+            intent = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For enums, try to create directly from the string value
+              try {
+                final converted = RequestIntentBuilder(stringValue);
+                intent = converted;
+                return;
+              } catch (e) {
+                // Continue if enum creation fails
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'basedOn':
         {
           if (child is List<ReferenceBuilder>) {
@@ -1030,6 +1071,8 @@ class SupplyRequestBuilder extends DomainResourceBuilder {
         return ['IdentifierBuilder'];
       case 'status':
         return ['FhirCodeEnumBuilder'];
+      case 'intent':
+        return ['FhirCodeEnumBuilder'];
       case 'basedOn':
         return ['ReferenceBuilder'];
       case 'category':
@@ -1127,6 +1170,11 @@ class SupplyRequestBuilder extends DomainResourceBuilder {
       case 'status':
         {
           status = SupplyRequestStatusBuilder.empty();
+          return;
+        }
+      case 'intent':
+        {
+          intent = RequestIntentBuilder.empty();
           return;
         }
       case 'basedOn':
@@ -1230,6 +1278,7 @@ class SupplyRequestBuilder extends DomainResourceBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     List<IdentifierBuilder>? identifier,
     SupplyRequestStatusBuilder? status,
+    RequestIntentBuilder? intent,
     List<ReferenceBuilder>? basedOn,
     CodeableConceptBuilder? category,
     RequestPriorityBuilder? priority,
@@ -1264,6 +1313,7 @@ class SupplyRequestBuilder extends DomainResourceBuilder {
       modifierExtension: modifierExtension ?? this.modifierExtension,
       identifier: identifier ?? this.identifier,
       status: status ?? this.status,
+      intent: intent ?? this.intent,
       basedOn: basedOn ?? this.basedOn,
       category: category ?? this.category,
       priority: priority ?? this.priority,
@@ -1365,6 +1415,12 @@ class SupplyRequestBuilder extends DomainResourceBuilder {
     if (!equalsDeepWithNull(
       status,
       o.status,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      intent,
+      o.intent,
     )) {
       return false;
     }

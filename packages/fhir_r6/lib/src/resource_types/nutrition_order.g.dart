@@ -19,8 +19,6 @@ abstract class $NutritionOrderCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
     List<FhirCanonical>? instantiatesCanonical,
-    List<FhirUri>? instantiatesUri,
-    List<FhirUri>? instantiates,
     List<Reference>? basedOn,
     Identifier? groupIdentifier,
     RequestStatus? status,
@@ -30,7 +28,7 @@ abstract class $NutritionOrderCopyWith<T> extends $DomainResourceCopyWith<T> {
     Reference? encounter,
     List<Reference>? supportingInformation,
     FhirDateTime? dateTime,
-    Reference? orderer,
+    Reference? requester,
     List<CodeableReference>? performer,
     List<Reference>? allergyIntolerance,
     List<CodeableConcept>? foodPreferenceModifier,
@@ -39,6 +37,7 @@ abstract class $NutritionOrderCopyWith<T> extends $DomainResourceCopyWith<T> {
     NutritionOrderOralDiet? oralDiet,
     List<NutritionOrderSupplement>? supplement,
     NutritionOrderEnteralFormula? enteralFormula,
+    List<NutritionOrderAdditive>? additive,
     List<Annotation>? note,
     bool? disallowExtensions,
   });
@@ -62,8 +61,6 @@ class _$NutritionOrderCopyWithImpl<T> implements $NutritionOrderCopyWith<T> {
     Object? modifierExtension = fhirSentinel,
     Object? identifier = fhirSentinel,
     Object? instantiatesCanonical = fhirSentinel,
-    Object? instantiatesUri = fhirSentinel,
-    Object? instantiates = fhirSentinel,
     Object? basedOn = fhirSentinel,
     Object? groupIdentifier = fhirSentinel,
     Object? status = fhirSentinel,
@@ -73,7 +70,7 @@ class _$NutritionOrderCopyWithImpl<T> implements $NutritionOrderCopyWith<T> {
     Object? encounter = fhirSentinel,
     Object? supportingInformation = fhirSentinel,
     Object? dateTime = fhirSentinel,
-    Object? orderer = fhirSentinel,
+    Object? requester = fhirSentinel,
     Object? performer = fhirSentinel,
     Object? allergyIntolerance = fhirSentinel,
     Object? foodPreferenceModifier = fhirSentinel,
@@ -82,6 +79,7 @@ class _$NutritionOrderCopyWithImpl<T> implements $NutritionOrderCopyWith<T> {
     Object? oralDiet = fhirSentinel,
     Object? supplement = fhirSentinel,
     Object? enteralFormula = fhirSentinel,
+    Object? additive = fhirSentinel,
     Object? note = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -111,12 +109,6 @@ class _$NutritionOrderCopyWithImpl<T> implements $NutritionOrderCopyWith<T> {
         instantiatesCanonical: identical(instantiatesCanonical, fhirSentinel)
             ? _value.instantiatesCanonical
             : instantiatesCanonical as List<FhirCanonical>?,
-        instantiatesUri: identical(instantiatesUri, fhirSentinel)
-            ? _value.instantiatesUri
-            : instantiatesUri as List<FhirUri>?,
-        instantiates: identical(instantiates, fhirSentinel)
-            ? _value.instantiates
-            : instantiates as List<FhirUri>?,
         basedOn: identical(basedOn, fhirSentinel)
             ? _value.basedOn
             : basedOn as List<Reference>?,
@@ -144,9 +136,9 @@ class _$NutritionOrderCopyWithImpl<T> implements $NutritionOrderCopyWith<T> {
         dateTime: identical(dateTime, fhirSentinel)
             ? _value.dateTime
             : (dateTime as FhirDateTime?) ?? _value.dateTime,
-        orderer: identical(orderer, fhirSentinel)
-            ? _value.orderer
-            : orderer as Reference?,
+        requester: identical(requester, fhirSentinel)
+            ? _value.requester
+            : requester as Reference?,
         performer: identical(performer, fhirSentinel)
             ? _value.performer
             : performer as List<CodeableReference>?,
@@ -171,6 +163,9 @@ class _$NutritionOrderCopyWithImpl<T> implements $NutritionOrderCopyWith<T> {
         enteralFormula: identical(enteralFormula, fhirSentinel)
             ? _value.enteralFormula
             : enteralFormula as NutritionOrderEnteralFormula?,
+        additive: identical(additive, fhirSentinel)
+            ? _value.additive
+            : additive as List<NutritionOrderAdditive>?,
         note: identical(note, fhirSentinel)
             ? _value.note
             : note as List<Annotation>?,
@@ -198,8 +193,8 @@ abstract class $NutritionOrderOralDietCopyWith<T>
     NutritionOrderSchedule? schedule,
     List<NutritionOrderNutrient>? nutrient,
     List<NutritionOrderTexture>? texture,
-    List<CodeableConcept>? fluidConsistencyType,
     FhirString? instruction,
+    Quantity? caloricDensity,
     bool? disallowExtensions,
   });
 }
@@ -220,8 +215,8 @@ class _$NutritionOrderOralDietCopyWithImpl<T>
     Object? schedule = fhirSentinel,
     Object? nutrient = fhirSentinel,
     Object? texture = fhirSentinel,
-    Object? fluidConsistencyType = fhirSentinel,
     Object? instruction = fhirSentinel,
+    Object? caloricDensity = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -245,12 +240,12 @@ class _$NutritionOrderOralDietCopyWithImpl<T>
         texture: identical(texture, fhirSentinel)
             ? _value.texture
             : texture as List<NutritionOrderTexture>?,
-        fluidConsistencyType: identical(fluidConsistencyType, fhirSentinel)
-            ? _value.fluidConsistencyType
-            : fluidConsistencyType as List<CodeableConcept>?,
         instruction: identical(instruction, fhirSentinel)
             ? _value.instruction
             : instruction as FhirString?,
+        caloricDensity: identical(caloricDensity, fhirSentinel)
+            ? _value.caloricDensity
+            : caloricDensity as Quantity?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -400,7 +395,7 @@ abstract class $NutritionOrderTextureCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? modifier,
-    CodeableConcept? foodType,
+    CodeableConcept? type,
     bool? disallowExtensions,
   });
 }
@@ -418,7 +413,7 @@ class _$NutritionOrderTextureCopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? modifier = fhirSentinel,
-    Object? foodType = fhirSentinel,
+    Object? type = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -433,9 +428,9 @@ class _$NutritionOrderTextureCopyWithImpl<T>
         modifier: identical(modifier, fhirSentinel)
             ? _value.modifier
             : modifier as CodeableConcept?,
-        foodType: identical(foodType, fhirSentinel)
-            ? _value.foodType
-            : foodType as CodeableConcept?,
+        type: identical(type, fhirSentinel)
+            ? _value.type
+            : type as CodeableConcept?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -464,6 +459,7 @@ abstract class $NutritionOrderSupplementCopyWith<T>
     NutritionOrderSchedule? schedule,
     Quantity? quantity,
     FhirString? instruction,
+    Quantity? caloricDensity,
     bool? disallowExtensions,
   });
 }
@@ -485,6 +481,7 @@ class _$NutritionOrderSupplementCopyWithImpl<T>
     Object? schedule = fhirSentinel,
     Object? quantity = fhirSentinel,
     Object? instruction = fhirSentinel,
+    Object? caloricDensity = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -511,6 +508,9 @@ class _$NutritionOrderSupplementCopyWithImpl<T>
         instruction: identical(instruction, fhirSentinel)
             ? _value.instruction
             : instruction as FhirString?,
+        caloricDensity: identical(caloricDensity, fhirSentinel)
+            ? _value.caloricDensity
+            : caloricDensity as Quantity?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -600,14 +600,13 @@ abstract class $NutritionOrderEnteralFormulaCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    CodeableReference? baseFormulaType,
-    FhirString? baseFormulaProductName,
+    CodeableReference? type,
+    FhirString? productName,
     List<CodeableReference>? deliveryDevice,
-    List<NutritionOrderAdditive>? additive,
     Quantity? caloricDensity,
-    CodeableConcept? routeOfAdministration,
+    List<CodeableConcept>? routeOfAdministration,
     List<NutritionOrderAdministration>? administration,
-    Quantity? maxVolumeToDeliver,
+    Quantity? maxVolumeToAdminister,
     FhirMarkdown? administrationInstruction,
     bool? disallowExtensions,
   });
@@ -625,14 +624,13 @@ class _$NutritionOrderEnteralFormulaCopyWithImpl<T>
     Object? id = fhirSentinel,
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
-    Object? baseFormulaType = fhirSentinel,
-    Object? baseFormulaProductName = fhirSentinel,
+    Object? type = fhirSentinel,
+    Object? productName = fhirSentinel,
     Object? deliveryDevice = fhirSentinel,
-    Object? additive = fhirSentinel,
     Object? caloricDensity = fhirSentinel,
     Object? routeOfAdministration = fhirSentinel,
     Object? administration = fhirSentinel,
-    Object? maxVolumeToDeliver = fhirSentinel,
+    Object? maxVolumeToAdminister = fhirSentinel,
     Object? administrationInstruction = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -645,30 +643,27 @@ class _$NutritionOrderEnteralFormulaCopyWithImpl<T>
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
-        baseFormulaType: identical(baseFormulaType, fhirSentinel)
-            ? _value.baseFormulaType
-            : baseFormulaType as CodeableReference?,
-        baseFormulaProductName: identical(baseFormulaProductName, fhirSentinel)
-            ? _value.baseFormulaProductName
-            : baseFormulaProductName as FhirString?,
+        type: identical(type, fhirSentinel)
+            ? _value.type
+            : type as CodeableReference?,
+        productName: identical(productName, fhirSentinel)
+            ? _value.productName
+            : productName as FhirString?,
         deliveryDevice: identical(deliveryDevice, fhirSentinel)
             ? _value.deliveryDevice
             : deliveryDevice as List<CodeableReference>?,
-        additive: identical(additive, fhirSentinel)
-            ? _value.additive
-            : additive as List<NutritionOrderAdditive>?,
         caloricDensity: identical(caloricDensity, fhirSentinel)
             ? _value.caloricDensity
             : caloricDensity as Quantity?,
         routeOfAdministration: identical(routeOfAdministration, fhirSentinel)
             ? _value.routeOfAdministration
-            : routeOfAdministration as CodeableConcept?,
+            : routeOfAdministration as List<CodeableConcept>?,
         administration: identical(administration, fhirSentinel)
             ? _value.administration
             : administration as List<NutritionOrderAdministration>?,
-        maxVolumeToDeliver: identical(maxVolumeToDeliver, fhirSentinel)
-            ? _value.maxVolumeToDeliver
-            : maxVolumeToDeliver as Quantity?,
+        maxVolumeToAdminister: identical(maxVolumeToAdminister, fhirSentinel)
+            ? _value.maxVolumeToAdminister
+            : maxVolumeToAdminister as Quantity?,
         administrationInstruction:
             identical(administrationInstruction, fhirSentinel)
                 ? _value.administrationInstruction
@@ -691,71 +686,6 @@ extension NutritionOrderEnteralFormulaCopyWithExtension
           );
 }
 
-abstract class $NutritionOrderAdditiveCopyWith<T>
-    extends $BackboneElementCopyWith<T> {
-  @override
-  T call({
-    FhirString? id,
-    List<FhirExtension>? extension_,
-    List<FhirExtension>? modifierExtension,
-    CodeableReference? type,
-    FhirString? productName,
-    Quantity? quantity,
-    bool? disallowExtensions,
-  });
-}
-
-class _$NutritionOrderAdditiveCopyWithImpl<T>
-    implements $NutritionOrderAdditiveCopyWith<T> {
-  final NutritionOrderAdditive _value;
-  final T Function(NutritionOrderAdditive) _then;
-
-  _$NutritionOrderAdditiveCopyWithImpl(this._value, this._then);
-
-  @override
-  T call({
-    Object? id = fhirSentinel,
-    Object? extension_ = fhirSentinel,
-    Object? modifierExtension = fhirSentinel,
-    Object? type = fhirSentinel,
-    Object? productName = fhirSentinel,
-    Object? quantity = fhirSentinel,
-    Object? disallowExtensions = fhirSentinel,
-  }) {
-    return _then(
-      NutritionOrderAdditive(
-        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
-        extension_: identical(extension_, fhirSentinel)
-            ? _value.extension_
-            : extension_ as List<FhirExtension>?,
-        modifierExtension: identical(modifierExtension, fhirSentinel)
-            ? _value.modifierExtension
-            : modifierExtension as List<FhirExtension>?,
-        type: identical(type, fhirSentinel)
-            ? _value.type
-            : type as CodeableReference?,
-        productName: identical(productName, fhirSentinel)
-            ? _value.productName
-            : productName as FhirString?,
-        quantity: identical(quantity, fhirSentinel)
-            ? _value.quantity
-            : quantity as Quantity?,
-        disallowExtensions: identical(disallowExtensions, fhirSentinel)
-            ? _value.disallowExtensions
-            : disallowExtensions as bool?,
-      ),
-    );
-  }
-}
-
-extension NutritionOrderAdditiveCopyWithExtension on NutritionOrderAdditive {
-  $NutritionOrderAdditiveCopyWith<NutritionOrderAdditive> get copyWith =>
-      _$NutritionOrderAdditiveCopyWithImpl<NutritionOrderAdditive>(
-        this,
-        (value) => value,
-      );
-}
-
 abstract class $NutritionOrderAdministrationCopyWith<T>
     extends $BackboneElementCopyWith<T> {
   @override
@@ -765,7 +695,7 @@ abstract class $NutritionOrderAdministrationCopyWith<T>
     List<FhirExtension>? modifierExtension,
     NutritionOrderSchedule? schedule,
     Quantity? quantity,
-    Quantity? rateX,
+    RateXNutritionOrderAdministration? rateX,
     bool? disallowExtensions,
   });
 }
@@ -802,8 +732,9 @@ class _$NutritionOrderAdministrationCopyWithImpl<T>
         quantity: identical(quantity, fhirSentinel)
             ? _value.quantity
             : quantity as Quantity?,
-        rateX:
-            identical(rateX, fhirSentinel) ? _value.rateX : rateX as Quantity?,
+        rateX: identical(rateX, fhirSentinel)
+            ? _value.rateX
+            : rateX as RateXNutritionOrderAdministration?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -882,6 +813,76 @@ class _$NutritionOrderSchedule2CopyWithImpl<T>
 extension NutritionOrderSchedule2CopyWithExtension on NutritionOrderSchedule2 {
   $NutritionOrderSchedule2CopyWith<NutritionOrderSchedule2> get copyWith =>
       _$NutritionOrderSchedule2CopyWithImpl<NutritionOrderSchedule2>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $NutritionOrderAdditiveCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    CodeableReference? modularType,
+    FhirString? productName,
+    Quantity? quantity,
+    List<CodeableConcept>? routeOfAdministration,
+    bool? disallowExtensions,
+  });
+}
+
+class _$NutritionOrderAdditiveCopyWithImpl<T>
+    implements $NutritionOrderAdditiveCopyWith<T> {
+  final NutritionOrderAdditive _value;
+  final T Function(NutritionOrderAdditive) _then;
+
+  _$NutritionOrderAdditiveCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? modularType = fhirSentinel,
+    Object? productName = fhirSentinel,
+    Object? quantity = fhirSentinel,
+    Object? routeOfAdministration = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      NutritionOrderAdditive(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        modularType: identical(modularType, fhirSentinel)
+            ? _value.modularType
+            : modularType as CodeableReference?,
+        productName: identical(productName, fhirSentinel)
+            ? _value.productName
+            : productName as FhirString?,
+        quantity: identical(quantity, fhirSentinel)
+            ? _value.quantity
+            : quantity as Quantity?,
+        routeOfAdministration: identical(routeOfAdministration, fhirSentinel)
+            ? _value.routeOfAdministration
+            : routeOfAdministration as List<CodeableConcept>?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension NutritionOrderAdditiveCopyWithExtension on NutritionOrderAdditive {
+  $NutritionOrderAdditiveCopyWith<NutritionOrderAdditive> get copyWith =>
+      _$NutritionOrderAdditiveCopyWithImpl<NutritionOrderAdditive>(
         this,
         (value) => value,
       );

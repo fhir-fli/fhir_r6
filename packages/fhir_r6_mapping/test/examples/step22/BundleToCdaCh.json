@@ -1596,7 +1596,7 @@
         {
             "name": "CompositionClinicalDocumentCH",
             "typeMode": "none",
-            "documentation": "_________________________ Template Type not specified  ___________________\r\nsource: http://hl7.org/fhir/R4/person.html\r\ntarget: https://art-decor.org/art-decor/decor-templates--hl7chcda-?id=2.16.756.5.30.1.1.10.9.36",
+            "documentation": "_________________________ Template Type not specified  ___________________\r\nsource: http://hl7.org/fhir/R6/person.html\r\ntarget: https://art-decor.org/art-decor/decor-templates--hl7chcda-?id=2.16.756.5.30.1.1.10.9.36",
             "input": [
                 {
                     "name": "bundle",

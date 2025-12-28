@@ -48,6 +48,7 @@ class ConsentBuilder extends DomainResourceBuilder {
     this.policyText,
     this.verification,
     this.decision,
+    this.provisionReference,
     this.provision,
   }) : super(
           objectPath: 'Consent',
@@ -272,6 +273,16 @@ class ConsentBuilder extends DomainResourceBuilder {
         ConsentProvisionTypeBuilder.fromJson,
         '$objectPath.decision',
       ),
+      provisionReference: (json['provisionReference'] as List<dynamic>?)
+          ?.map<ReferenceBuilder>(
+            (v) => ReferenceBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.provisionReference',
+              },
+            ),
+          )
+          .toList(),
       provision: (json['provision'] as List<dynamic>?)
           ?.map<ConsentProvisionBuilder>(
             (v) => ConsentProvisionBuilder.fromJson(
@@ -341,8 +352,8 @@ class ConsentBuilder extends DomainResourceBuilder {
   List<CodeableConceptBuilder>? category;
 
   /// [subject]
-  /// The patient/healthcare practitioner or group of persons to whom this
-  /// consent applies.
+  /// The patient, healthcare practitioner, research subject, or a group of
+  /// persons to whom this consent applies.
   ReferenceBuilder? subject;
 
   /// [date]
@@ -411,6 +422,11 @@ class ConsentBuilder extends DomainResourceBuilder {
   /// Action to take - permit or deny - as default.
   ConsentProvisionTypeBuilder? decision;
 
+  /// [provisionReference]
+  /// Alternate for the provision structure using the Permission resource.
+  /// Only one of Permission and .provision may be used in a resource.
+  List<ReferenceBuilder>? provisionReference;
+
   /// [provision]
   /// An exception to the base policy of this consent. An exception can be an
   /// addition or removal of access permissions.
@@ -478,6 +494,7 @@ class ConsentBuilder extends DomainResourceBuilder {
     addField('policyText', policyText);
     addField('verification', verification);
     addField('decision', decision);
+    addField('provisionReference', provisionReference);
     addField('provision', provision);
     return json;
   }
@@ -511,6 +528,7 @@ class ConsentBuilder extends DomainResourceBuilder {
       'policyText',
       'verification',
       'decision',
+      'provisionReference',
       'provision',
     ];
   }
@@ -623,6 +641,10 @@ class ConsentBuilder extends DomainResourceBuilder {
       case 'decision':
         if (decision != null) {
           fields.add(decision!);
+        }
+      case 'provisionReference':
+        if (provisionReference != null) {
+          fields.addAll(provisionReference!);
         }
       case 'provision':
         if (provision != null) {
@@ -1050,6 +1072,22 @@ class ConsentBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'provisionReference':
+        {
+          if (child is List<ReferenceBuilder>) {
+            // Replace or create new list
+            provisionReference = child;
+            return;
+          } else if (child is ReferenceBuilder) {
+            // Add single element to existing list or create new list
+            provisionReference = [
+              ...(provisionReference ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'provision':
         {
           if (child is List<ConsentProvisionBuilder>) {
@@ -1126,6 +1164,8 @@ class ConsentBuilder extends DomainResourceBuilder {
         return ['ConsentVerificationBuilder'];
       case 'decision':
         return ['FhirCodeEnumBuilder'];
+      case 'provisionReference':
+        return ['ReferenceBuilder'];
       case 'provision':
         return ['ConsentProvisionBuilder'];
       default:
@@ -1263,6 +1303,11 @@ class ConsentBuilder extends DomainResourceBuilder {
           decision = ConsentProvisionTypeBuilder.empty();
           return;
         }
+      case 'provisionReference':
+        {
+          provisionReference = <ReferenceBuilder>[];
+          return;
+        }
       case 'provision':
         {
           provision = <ConsentProvisionBuilder>[];
@@ -1302,6 +1347,7 @@ class ConsentBuilder extends DomainResourceBuilder {
     List<ReferenceBuilder>? policyText,
     List<ConsentVerificationBuilder>? verification,
     ConsentProvisionTypeBuilder? decision,
+    List<ReferenceBuilder>? provisionReference,
     List<ConsentProvisionBuilder>? provision,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -1335,6 +1381,7 @@ class ConsentBuilder extends DomainResourceBuilder {
       policyText: policyText ?? this.policyText,
       verification: verification ?? this.verification,
       decision: decision ?? this.decision,
+      provisionReference: provisionReference ?? this.provisionReference,
       provision: provision ?? this.provision,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
@@ -1512,6 +1559,12 @@ class ConsentBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
+    if (!listEquals<ReferenceBuilder>(
+      provisionReference,
+      o.provisionReference,
+    )) {
+      return false;
+    }
     if (!listEquals<ConsentProvisionBuilder>(
       provision,
       o.provision,
@@ -1536,7 +1589,7 @@ class ConsentPolicyBasisBuilder extends BackboneElementBuilder {
     super.extension_,
     super.modifierExtension,
     this.reference,
-    this.url,
+    this.uri,
     super.disallowExtensions,
   }) : super(
           objectPath: 'Consent.policyBasis',
@@ -1584,11 +1637,11 @@ class ConsentPolicyBasisBuilder extends BackboneElementBuilder {
         ReferenceBuilder.fromJson,
         '$objectPath.reference',
       ),
-      url: JsonParser.parsePrimitive<FhirUrlBuilder>(
+      uri: JsonParser.parsePrimitive<FhirUriBuilder>(
         json,
-        'url',
-        FhirUrlBuilder.fromJson,
-        '$objectPath.url',
+        'uri',
+        FhirUriBuilder.fromJson,
+        '$objectPath.uri',
       ),
     );
   }
@@ -1640,10 +1693,10 @@ class ConsentPolicyBasisBuilder extends BackboneElementBuilder {
   /// for this Consent.
   ReferenceBuilder? reference;
 
-  /// [url]
-  /// A URL that links to a computable version of the policy the organization
+  /// [uri]
+  /// A URI that links to a computable version of the policy the organization
   /// will enforce for this Consent.
-  FhirUrlBuilder? url;
+  FhirUriBuilder? uri;
 
   /// Converts a [ConsentPolicyBasisBuilder]
   /// to [ConsentPolicyBasis]
@@ -1685,7 +1738,7 @@ class ConsentPolicyBasisBuilder extends BackboneElementBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('reference', reference);
-    addField('url', url);
+    addField('uri', uri);
     return json;
   }
 
@@ -1697,7 +1750,7 @@ class ConsentPolicyBasisBuilder extends BackboneElementBuilder {
       'extension',
       'modifierExtension',
       'reference',
-      'url',
+      'uri',
     ];
   }
 
@@ -1726,9 +1779,9 @@ class ConsentPolicyBasisBuilder extends BackboneElementBuilder {
         if (reference != null) {
           fields.add(reference!);
         }
-      case 'url':
-        if (url != null) {
-          fields.add(url!);
+      case 'uri':
+        if (uri != null) {
+          fields.add(uri!);
         }
       default:
         if (checkValid) {
@@ -1819,18 +1872,18 @@ class ConsentPolicyBasisBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'url':
+      case 'uri':
         {
-          if (child is FhirUrlBuilder) {
-            url = child;
+          if (child is FhirUriBuilder) {
+            uri = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
-              final converted = FhirUrlBuilder.tryParse(stringValue);
+              final converted = FhirUriBuilder.tryParse(stringValue);
               if (converted != null) {
-                url = converted;
+                uri = converted;
                 return;
               }
             } catch (e) {
@@ -1857,8 +1910,8 @@ class ConsentPolicyBasisBuilder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'reference':
         return ['ReferenceBuilder'];
-      case 'url':
-        return ['FhirUrlBuilder'];
+      case 'uri':
+        return ['FhirUriBuilder'];
       default:
         return <String>[];
     }
@@ -1889,9 +1942,9 @@ class ConsentPolicyBasisBuilder extends BackboneElementBuilder {
           reference = ReferenceBuilder.empty();
           return;
         }
-      case 'url':
+      case 'uri':
         {
-          url = FhirUrlBuilder.empty();
+          uri = FhirUriBuilder.empty();
           return;
         }
       default:
@@ -1907,7 +1960,7 @@ class ConsentPolicyBasisBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     ReferenceBuilder? reference,
-    FhirUrlBuilder? url,
+    FhirUriBuilder? uri,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -1920,7 +1973,7 @@ class ConsentPolicyBasisBuilder extends BackboneElementBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       reference: reference ?? this.reference,
-      url: url ?? this.url,
+      uri: uri ?? this.uri,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -1972,8 +2025,8 @@ class ConsentPolicyBasisBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      url,
-      o.url,
+      uri,
+      o.uri,
     )) {
       return false;
     }

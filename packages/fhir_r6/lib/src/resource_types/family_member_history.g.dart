@@ -19,8 +19,6 @@ abstract class $FamilyMemberHistoryCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
-    List<FhirCanonical>? instantiatesCanonical,
-    List<FhirUri>? instantiatesUri,
     FamilyHistoryStatus? status,
     CodeableConcept? dataAbsentReason,
     Reference? patient,
@@ -29,10 +27,10 @@ abstract class $FamilyMemberHistoryCopyWith<T>
     FhirString? name,
     CodeableConcept? relationship,
     CodeableConcept? sex,
-    Period? bornX,
-    Age? ageX,
+    BornXFamilyMemberHistory? bornX,
+    AgeXFamilyMemberHistory? ageX,
     FhirBoolean? estimatedAge,
-    FhirBoolean? deceasedX,
+    DeceasedXFamilyMemberHistory? deceasedX,
     List<CodeableReference>? reason,
     List<Annotation>? note,
     List<FamilyMemberHistoryCondition>? condition,
@@ -59,8 +57,6 @@ class _$FamilyMemberHistoryCopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? identifier = fhirSentinel,
-    Object? instantiatesCanonical = fhirSentinel,
-    Object? instantiatesUri = fhirSentinel,
     Object? status = fhirSentinel,
     Object? dataAbsentReason = fhirSentinel,
     Object? patient = fhirSentinel,
@@ -102,12 +98,6 @@ class _$FamilyMemberHistoryCopyWithImpl<T>
         identifier: identical(identifier, fhirSentinel)
             ? _value.identifier
             : identifier as List<Identifier>?,
-        instantiatesCanonical: identical(instantiatesCanonical, fhirSentinel)
-            ? _value.instantiatesCanonical
-            : instantiatesCanonical as List<FhirCanonical>?,
-        instantiatesUri: identical(instantiatesUri, fhirSentinel)
-            ? _value.instantiatesUri
-            : instantiatesUri as List<FhirUri>?,
         status: identical(status, fhirSentinel)
             ? _value.status
             : (status as FamilyHistoryStatus?) ?? _value.status,
@@ -128,14 +118,18 @@ class _$FamilyMemberHistoryCopyWithImpl<T>
             : (relationship as CodeableConcept?) ?? _value.relationship,
         sex:
             identical(sex, fhirSentinel) ? _value.sex : sex as CodeableConcept?,
-        bornX: identical(bornX, fhirSentinel) ? _value.bornX : bornX as Period?,
-        ageX: identical(ageX, fhirSentinel) ? _value.ageX : ageX as Age?,
+        bornX: identical(bornX, fhirSentinel)
+            ? _value.bornX
+            : bornX as BornXFamilyMemberHistory?,
+        ageX: identical(ageX, fhirSentinel)
+            ? _value.ageX
+            : ageX as AgeXFamilyMemberHistory?,
         estimatedAge: identical(estimatedAge, fhirSentinel)
             ? _value.estimatedAge
             : estimatedAge as FhirBoolean?,
         deceasedX: identical(deceasedX, fhirSentinel)
             ? _value.deceasedX
-            : deceasedX as FhirBoolean?,
+            : deceasedX as DeceasedXFamilyMemberHistory?,
         reason: identical(reason, fhirSentinel)
             ? _value.reason
             : reason as List<CodeableReference>?,
@@ -233,7 +227,7 @@ abstract class $FamilyMemberHistoryConditionCopyWith<T>
     CodeableConcept? code,
     CodeableConcept? outcome,
     FhirBoolean? contributedToDeath,
-    Age? onsetX,
+    OnsetXFamilyMemberHistoryCondition? onsetX,
     List<Annotation>? note,
     bool? disallowExtensions,
   });
@@ -276,8 +270,9 @@ class _$FamilyMemberHistoryConditionCopyWithImpl<T>
         contributedToDeath: identical(contributedToDeath, fhirSentinel)
             ? _value.contributedToDeath
             : contributedToDeath as FhirBoolean?,
-        onsetX:
-            identical(onsetX, fhirSentinel) ? _value.onsetX : onsetX as Age?,
+        onsetX: identical(onsetX, fhirSentinel)
+            ? _value.onsetX
+            : onsetX as OnsetXFamilyMemberHistoryCondition?,
         note: identical(note, fhirSentinel)
             ? _value.note
             : note as List<Annotation>?,
@@ -309,7 +304,7 @@ abstract class $FamilyMemberHistoryProcedureCopyWith<T>
     CodeableConcept? code,
     CodeableConcept? outcome,
     FhirBoolean? contributedToDeath,
-    Age? performedX,
+    PerformedXFamilyMemberHistoryProcedure? performedX,
     List<Annotation>? note,
     bool? disallowExtensions,
   });
@@ -354,7 +349,7 @@ class _$FamilyMemberHistoryProcedureCopyWithImpl<T>
             : contributedToDeath as FhirBoolean?,
         performedX: identical(performedX, fhirSentinel)
             ? _value.performedX
-            : performedX as Age?,
+            : performedX as PerformedXFamilyMemberHistoryProcedure?,
         note: identical(note, fhirSentinel)
             ? _value.note
             : note as List<Annotation>?,

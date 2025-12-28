@@ -429,8 +429,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
     );
   }
 
-  ///  An actual enum that can be used for
-  /// VersionIndependentResourceTypesAllBuilder
+  ///  An actual enum that can be used for VersionIndependentResourceTypesAllBuilder
   final VersionIndependentResourceTypesAllBuilderEnum? valueEnum;
 
   /// BodySite
@@ -442,7 +441,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'BodySite',
     ),
@@ -457,7 +456,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'CatalogEntry',
     ),
@@ -472,7 +471,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Conformance',
     ),
@@ -487,7 +486,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'DataElement',
     ),
@@ -502,7 +501,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'DeviceComponent',
     ),
@@ -517,7 +516,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'DeviceUseRequest',
     ),
@@ -532,7 +531,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'DeviceUseStatement',
     ),
@@ -547,7 +546,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'DiagnosticOrder',
     ),
@@ -562,7 +561,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'DocumentManifest',
     ),
@@ -578,7 +577,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'EffectEvidenceSynthesis',
     ),
@@ -593,7 +592,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'EligibilityRequest',
     ),
@@ -609,7 +608,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'EligibilityResponse',
     ),
@@ -624,7 +623,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'ExpansionProfile',
     ),
@@ -639,7 +638,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'ImagingManifest',
     ),
@@ -655,7 +654,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'ImagingObjectSelection',
     ),
@@ -670,7 +669,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Media',
     ),
@@ -685,7 +684,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'MedicationOrder',
     ),
@@ -700,7 +699,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'MedicationUsage',
     ),
@@ -715,7 +714,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'MedicinalProduct',
     ),
@@ -732,7 +731,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'MedicinalProductAuthorization',
     ),
@@ -749,7 +748,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'MedicinalProductContraindication',
     ),
@@ -765,7 +764,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'MedicinalProductIndication',
     ),
@@ -781,7 +780,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'MedicinalProductIngredient',
     ),
@@ -797,7 +796,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'MedicinalProductInteraction',
     ),
@@ -814,7 +813,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'MedicinalProductManufactured',
     ),
@@ -830,7 +829,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'MedicinalProductPackaged',
     ),
@@ -847,7 +846,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'MedicinalProductPharmaceutical',
     ),
@@ -864,7 +863,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'MedicinalProductUndesirableEffect',
     ),
@@ -879,7 +878,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Order',
     ),
@@ -894,7 +893,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'OrderResponse',
     ),
@@ -909,7 +908,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'ProcedureRequest',
     ),
@@ -924,7 +923,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'ProcessRequest',
     ),
@@ -939,7 +938,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'ProcessResponse',
     ),
@@ -954,7 +953,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'ReferralRequest',
     ),
@@ -969,7 +968,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'RequestGroup',
     ),
@@ -984,7 +983,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'ResearchDefinition',
     ),
@@ -1000,7 +999,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'ResearchElementDefinition',
     ),
@@ -1016,7 +1015,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'RiskEvidenceSynthesis',
     ),
@@ -1031,7 +1030,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Sequence',
     ),
@@ -1046,7 +1045,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'ServiceDefinition',
     ),
@@ -1062,7 +1061,7 @@ class VersionIndependentResourceTypesAllBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/version-independent-all-resource-types',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'SubstanceSpecification',
     ),

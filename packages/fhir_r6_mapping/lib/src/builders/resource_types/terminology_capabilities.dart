@@ -10,6 +10,7 @@ import 'package:fhir_r6/fhir_r6.dart'
         TerminologyCapabilitiesImplementation,
         TerminologyCapabilitiesParameter,
         TerminologyCapabilitiesSoftware,
+        TerminologyCapabilitiesSupplements,
         TerminologyCapabilitiesTranslation,
         TerminologyCapabilitiesValidateCode,
         TerminologyCapabilitiesVersion,
@@ -60,6 +61,7 @@ class TerminologyCapabilitiesBuilder extends CanonicalResourceBuilder {
     this.implementation,
     this.lockedDate,
     this.codeSystem,
+    this.supplements,
     this.expansion,
     this.codeSearch,
     this.validateCode,
@@ -304,6 +306,13 @@ class TerminologyCapabilitiesBuilder extends CanonicalResourceBuilder {
             ),
           )
           .toList(),
+      supplements:
+          JsonParser.parseObject<TerminologyCapabilitiesSupplementsBuilder>(
+        json,
+        'supplements',
+        TerminologyCapabilitiesSupplementsBuilder.fromJson,
+        '$objectPath.supplements',
+      ),
       expansion:
           JsonParser.parseObject<TerminologyCapabilitiesExpansionBuilder>(
         json,
@@ -459,6 +468,10 @@ class TerminologyCapabilitiesBuilder extends CanonicalResourceBuilder {
   /// can make about support for any CodeSystem resource.
   List<TerminologyCapabilitiesCodeSystemBuilder>? codeSystem;
 
+  /// [supplements]
+  /// Information about how the system supports CodeSystem supplements.
+  TerminologyCapabilitiesSupplementsBuilder? supplements;
+
   /// [expansion]
   /// Information about the
   /// [ValueSet/$expand](valueset-operation-expand.html) operation.
@@ -558,6 +571,7 @@ class TerminologyCapabilitiesBuilder extends CanonicalResourceBuilder {
     addField('implementation', implementation);
     addField('lockedDate', lockedDate);
     addField('codeSystem', codeSystem);
+    addField('supplements', supplements);
     addField('expansion', expansion);
     addField('codeSearch', codeSearch);
     addField('validateCode', validateCode);
@@ -600,6 +614,7 @@ class TerminologyCapabilitiesBuilder extends CanonicalResourceBuilder {
       'implementation',
       'lockedDate',
       'codeSystem',
+      'supplements',
       'expansion',
       'codeSearch',
       'validateCode',
@@ -748,6 +763,10 @@ class TerminologyCapabilitiesBuilder extends CanonicalResourceBuilder {
       case 'codeSystem':
         if (codeSystem != null) {
           fields.addAll(codeSystem!);
+        }
+      case 'supplements':
+        if (supplements != null) {
+          fields.add(supplements!);
         }
       case 'expansion':
         if (expansion != null) {
@@ -1343,6 +1362,14 @@ class TerminologyCapabilitiesBuilder extends CanonicalResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'supplements':
+        {
+          if (child is TerminologyCapabilitiesSupplementsBuilder) {
+            supplements = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'expansion':
         {
           if (child is TerminologyCapabilitiesExpansionBuilder) {
@@ -1476,6 +1503,8 @@ class TerminologyCapabilitiesBuilder extends CanonicalResourceBuilder {
         return ['FhirBooleanBuilder'];
       case 'codeSystem':
         return ['TerminologyCapabilitiesCodeSystemBuilder'];
+      case 'supplements':
+        return ['TerminologyCapabilitiesSupplementsBuilder'];
       case 'expansion':
         return ['TerminologyCapabilitiesExpansionBuilder'];
       case 'codeSearch':
@@ -1653,6 +1682,11 @@ class TerminologyCapabilitiesBuilder extends CanonicalResourceBuilder {
           codeSystem = <TerminologyCapabilitiesCodeSystemBuilder>[];
           return;
         }
+      case 'supplements':
+        {
+          supplements = TerminologyCapabilitiesSupplementsBuilder.empty();
+          return;
+        }
       case 'expansion':
         {
           expansion = TerminologyCapabilitiesExpansionBuilder.empty();
@@ -1717,6 +1751,7 @@ class TerminologyCapabilitiesBuilder extends CanonicalResourceBuilder {
     TerminologyCapabilitiesImplementationBuilder? implementation,
     FhirBooleanBuilder? lockedDate,
     List<TerminologyCapabilitiesCodeSystemBuilder>? codeSystem,
+    TerminologyCapabilitiesSupplementsBuilder? supplements,
     TerminologyCapabilitiesExpansionBuilder? expansion,
     CodeSearchSupportBuilder? codeSearch,
     TerminologyCapabilitiesValidateCodeBuilder? validateCode,
@@ -1764,6 +1799,7 @@ class TerminologyCapabilitiesBuilder extends CanonicalResourceBuilder {
       implementation: implementation ?? this.implementation,
       lockedDate: lockedDate ?? this.lockedDate,
       codeSystem: codeSystem ?? this.codeSystem,
+      supplements: supplements ?? this.supplements,
       expansion: expansion ?? this.expansion,
       codeSearch: codeSearch ?? this.codeSearch,
       validateCode: validateCode ?? this.validateCode,
@@ -1972,6 +2008,12 @@ class TerminologyCapabilitiesBuilder extends CanonicalResourceBuilder {
     if (!listEquals<TerminologyCapabilitiesCodeSystemBuilder>(
       codeSystem,
       o.codeSystem,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      supplements,
+      o.supplements,
     )) {
       return false;
     }
@@ -2505,7 +2547,7 @@ class TerminologyCapabilitiesImplementationBuilder
   /// For Builder classes, no fields are required
   factory TerminologyCapabilitiesImplementationBuilder.empty() =>
       TerminologyCapabilitiesImplementationBuilder(
-        description: FhirStringBuilder.empty(),
+        description: FhirMarkdownBuilder.empty(),
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -2540,10 +2582,10 @@ class TerminologyCapabilitiesImplementationBuilder
             ),
           )
           .toList(),
-      description: JsonParser.parsePrimitive<FhirStringBuilder>(
+      description: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
         json,
         'description',
-        FhirStringBuilder.fromJson,
+        FhirMarkdownBuilder.fromJson,
         '$objectPath.description',
       ),
       url: JsonParser.parsePrimitive<FhirUrlBuilder>(
@@ -2600,7 +2642,7 @@ class TerminologyCapabilitiesImplementationBuilder
   /// [description]
   /// Information about the specific installation that this terminology
   /// capability statement relates to.
-  FhirStringBuilder? description;
+  FhirMarkdownBuilder? description;
 
   /// [url]
   /// An absolute base URL for the implementation.
@@ -2775,14 +2817,14 @@ class TerminologyCapabilitiesImplementationBuilder
         }
       case 'description':
         {
-          if (child is FhirStringBuilder) {
+          if (child is FhirMarkdownBuilder) {
             description = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
               if (converted != null) {
                 description = converted;
                 return;
@@ -2830,7 +2872,7 @@ class TerminologyCapabilitiesImplementationBuilder
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
       case 'description':
-        return ['FhirStringBuilder'];
+        return ['FhirMarkdownBuilder'];
       case 'url':
         return ['FhirUrlBuilder'];
       default:
@@ -2860,7 +2902,7 @@ class TerminologyCapabilitiesImplementationBuilder
         }
       case 'description':
         {
-          description = FhirStringBuilder.empty();
+          description = FhirMarkdownBuilder.empty();
           return;
         }
       case 'url':
@@ -2881,7 +2923,7 @@ class TerminologyCapabilitiesImplementationBuilder
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    FhirStringBuilder? description,
+    FhirMarkdownBuilder? description,
     FhirUrlBuilder? url,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -3615,10 +3657,10 @@ class TerminologyCapabilitiesVersionBuilder extends BackboneElementBuilder {
         FhirBooleanBuilder.fromJson,
         '$objectPath.compositional',
       ),
-      language: JsonParser.parsePrimitiveList<CommonLanguagesBuilder>(
+      language: JsonParser.parsePrimitiveList<AllLanguagesBuilder>(
         json,
         'language',
-        CommonLanguagesBuilder.fromJson,
+        AllLanguagesBuilder.fromJson,
         '$objectPath.language',
       ),
       filter: (json['filter'] as List<dynamic>?)
@@ -3697,7 +3739,7 @@ class TerminologyCapabilitiesVersionBuilder extends BackboneElementBuilder {
 
   /// [language]
   /// Language Displays supported.
-  List<CommonLanguagesBuilder>? language;
+  List<AllLanguagesBuilder>? language;
 
   /// [filter]
   /// Filter Properties supported.
@@ -3960,11 +4002,11 @@ class TerminologyCapabilitiesVersionBuilder extends BackboneElementBuilder {
         }
       case 'language':
         {
-          if (child is List<CommonLanguagesBuilder>) {
+          if (child is List<AllLanguagesBuilder>) {
             // Replace or create new list
             language = child;
             return;
-          } else if (child is CommonLanguagesBuilder) {
+          } else if (child is AllLanguagesBuilder) {
             // Add single element to existing list or create new list
             language = [
               ...(language ?? []),
@@ -3973,13 +4015,13 @@ class TerminologyCapabilitiesVersionBuilder extends BackboneElementBuilder {
             return;
           } else if (child is List<PrimitiveTypeBuilder>) {
             // Try to convert list of primitive types
-            final convertedList = <CommonLanguagesBuilder>[];
+            final convertedList = <AllLanguagesBuilder>[];
             for (final element in child) {
               try {
                 final stringValue = element.toString();
                 // For enums, try to create directly from the string value
                 try {
-                  final converted = CommonLanguagesBuilder(stringValue);
+                  final converted = AllLanguagesBuilder(stringValue);
                   convertedList.add(converted);
                 } catch (e) {
                   // Continue if enum creation fails
@@ -3998,7 +4040,7 @@ class TerminologyCapabilitiesVersionBuilder extends BackboneElementBuilder {
               final stringValue = child.toString();
               // For enums, try to create directly from the string value
               try {
-                final converted = CommonLanguagesBuilder(stringValue);
+                final converted = AllLanguagesBuilder(stringValue);
                 language = [
                   ...(language ?? []),
                   converted,
@@ -4148,7 +4190,7 @@ class TerminologyCapabilitiesVersionBuilder extends BackboneElementBuilder {
         }
       case 'language':
         {
-          language = <CommonLanguagesBuilder>[];
+          language = <AllLanguagesBuilder>[];
           return;
         }
       case 'filter':
@@ -4176,7 +4218,7 @@ class TerminologyCapabilitiesVersionBuilder extends BackboneElementBuilder {
     FhirStringBuilder? code,
     FhirBooleanBuilder? isDefault,
     FhirBooleanBuilder? compositional,
-    List<CommonLanguagesBuilder>? language,
+    List<AllLanguagesBuilder>? language,
     List<TerminologyCapabilitiesFilterBuilder>? filter,
     List<FhirCodeBuilder>? property,
     Map<String, dynamic>? userData,
@@ -4258,7 +4300,7 @@ class TerminologyCapabilitiesVersionBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!listEquals<CommonLanguagesBuilder>(
+    if (!listEquals<AllLanguagesBuilder>(
       language,
       o.language,
     )) {
@@ -4773,6 +4815,430 @@ class TerminologyCapabilitiesFilterBuilder extends BackboneElementBuilder {
     if (!listEquals<FhirCodeBuilder>(
       op,
       o.op,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [TerminologyCapabilitiesSupplementsBuilder]
+/// Information about how the system supports CodeSystem supplements.
+class TerminologyCapabilitiesSupplementsBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [TerminologyCapabilitiesSupplementsBuilder]
+
+  TerminologyCapabilitiesSupplementsBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.globals,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'TerminologyCapabilities.supplements',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory TerminologyCapabilitiesSupplementsBuilder.empty() =>
+      TerminologyCapabilitiesSupplementsBuilder();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory TerminologyCapabilitiesSupplementsBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'TerminologyCapabilities.supplements';
+    return TerminologyCapabilitiesSupplementsBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      globals: JsonParser.parsePrimitive<GlobalLangPackSupportVSBuilder>(
+        json,
+        'globals',
+        GlobalLangPackSupportVSBuilder.fromJson,
+        '$objectPath.globals',
+      ),
+    );
+  }
+
+  /// Deserialize [TerminologyCapabilitiesSupplementsBuilder]
+  /// from a [String] or [YamlMap] object
+  factory TerminologyCapabilitiesSupplementsBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return TerminologyCapabilitiesSupplementsBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return TerminologyCapabilitiesSupplementsBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'TerminologyCapabilitiesSupplementsBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [TerminologyCapabilitiesSupplementsBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory TerminologyCapabilitiesSupplementsBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return TerminologyCapabilitiesSupplementsBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'TerminologyCapabilitiesSupplements';
+
+  /// [globals]
+  /// Codes that describes how the server implements global language packs -
+  /// that is, supplements that contain only designations for a single
+  /// language that are marked as intended by the extension
+  /// http://hl7.org/fhir/StructureDefinition/codesystem-globalLangPack for
+  /// use with all value sets and codesystem without explicit reference.
+  GlobalLangPackSupportVSBuilder? globals;
+
+  /// Converts a [TerminologyCapabilitiesSupplementsBuilder]
+  /// to [TerminologyCapabilitiesSupplements]
+  @override
+  TerminologyCapabilitiesSupplements build() =>
+      TerminologyCapabilitiesSupplements.fromJson(toJson());
+
+  /// Converts a [TerminologyCapabilitiesSupplementsBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('globals', globals);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'globals',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'globals':
+        if (globals != null) {
+          fields.add(globals!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'globals':
+        {
+          if (child is GlobalLangPackSupportVSBuilder) {
+            globals = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For enums, try to create directly from the string value
+              try {
+                final converted = GlobalLangPackSupportVSBuilder(stringValue);
+                globals = converted;
+                return;
+              } catch (e) {
+                // Continue if enum creation fails
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'globals':
+        return ['FhirCodeEnumBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [TerminologyCapabilitiesSupplementsBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'globals':
+        {
+          globals = GlobalLangPackSupportVSBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  TerminologyCapabilitiesSupplementsBuilder clone() =>
+      throw UnimplementedError();
+  @override
+  TerminologyCapabilitiesSupplementsBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    GlobalLangPackSupportVSBuilder? globals,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = TerminologyCapabilitiesSupplementsBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      globals: globals ?? this.globals,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! TerminologyCapabilitiesSupplementsBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      globals,
+      o.globals,
     )) {
       return false;
     }
@@ -5467,10 +5933,10 @@ class TerminologyCapabilitiesParameterBuilder extends BackboneElementBuilder {
         FhirCodeBuilder.fromJson,
         '$objectPath.name',
       ),
-      documentation: JsonParser.parsePrimitive<FhirStringBuilder>(
+      documentation: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
         json,
         'documentation',
-        FhirStringBuilder.fromJson,
+        FhirMarkdownBuilder.fromJson,
         '$objectPath.documentation',
       ),
     );
@@ -5524,7 +5990,7 @@ class TerminologyCapabilitiesParameterBuilder extends BackboneElementBuilder {
 
   /// [documentation]
   /// Description of support for parameter.
-  FhirStringBuilder? documentation;
+  FhirMarkdownBuilder? documentation;
 
   /// Converts a [TerminologyCapabilitiesParameterBuilder]
   /// to [TerminologyCapabilitiesParameter]
@@ -5715,14 +6181,14 @@ class TerminologyCapabilitiesParameterBuilder extends BackboneElementBuilder {
         }
       case 'documentation':
         {
-          if (child is FhirStringBuilder) {
+          if (child is FhirMarkdownBuilder) {
             documentation = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
               if (converted != null) {
                 documentation = converted;
                 return;
@@ -5752,7 +6218,7 @@ class TerminologyCapabilitiesParameterBuilder extends BackboneElementBuilder {
       case 'name':
         return ['FhirCodeBuilder'];
       case 'documentation':
-        return ['FhirStringBuilder'];
+        return ['FhirMarkdownBuilder'];
       default:
         return <String>[];
     }
@@ -5785,7 +6251,7 @@ class TerminologyCapabilitiesParameterBuilder extends BackboneElementBuilder {
         }
       case 'documentation':
         {
-          documentation = FhirStringBuilder.empty();
+          documentation = FhirMarkdownBuilder.empty();
           return;
         }
       default:
@@ -5801,7 +6267,7 @@ class TerminologyCapabilitiesParameterBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     FhirCodeBuilder? name,
-    FhirStringBuilder? documentation,
+    FhirMarkdownBuilder? documentation,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,

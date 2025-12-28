@@ -32,17 +32,15 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
     super.modifierExtension,
     EventXMessageHeaderBuilder? eventX,
     CodingBuilder? eventCoding,
+    FhirUriBuilder? eventUri,
     FhirCanonicalBuilder? eventCanonical,
     this.destination,
-    this.sender,
-    this.author,
     this.source,
-    this.responsible,
     this.reason,
     this.response,
     this.focus,
     this.definition,
-  })  : eventX = eventX ?? eventCoding ?? eventCanonical,
+  })  : eventX = eventX ?? eventCoding ?? eventUri ?? eventCanonical,
         super(
           objectPath: 'MessageHeader',
           resourceType: R6ResourceType.MessageHeader,
@@ -125,6 +123,7 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
         json,
         {
           'eventCoding': CodingBuilder.fromJson,
+          'eventUri': FhirUriBuilder.fromJson,
           'eventCanonical': FhirCanonicalBuilder.fromJson,
         },
         objectPath,
@@ -139,29 +138,11 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      sender: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'sender',
-        ReferenceBuilder.fromJson,
-        '$objectPath.sender',
-      ),
-      author: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'author',
-        ReferenceBuilder.fromJson,
-        '$objectPath.author',
-      ),
       source: JsonParser.parseObject<MessageHeaderSourceBuilder>(
         json,
         'source',
         MessageHeaderSourceBuilder.fromJson,
         '$objectPath.source',
-      ),
-      responsible: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'responsible',
-        ReferenceBuilder.fromJson,
-        '$objectPath.responsible',
       ),
       reason: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
@@ -239,12 +220,15 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
   /// [eventX]
   /// Code that identifies the event this message represents and connects it
   /// with its definition. Events defined as part of the FHIR specification
-  /// are defined by the implementation. Alternatively a canonical uri to the
-  /// EventDefinition.
+  /// are defined by the implementation. Alternatively a uri , canonical uri
+  /// to the EventDefinition or SubscriptionTopic.
   EventXMessageHeaderBuilder? eventX;
 
   /// Getter for [eventCoding] as a CodingBuilder
   CodingBuilder? get eventCoding => eventX?.isAs<CodingBuilder>();
+
+  /// Getter for [eventUri] as a FhirUriBuilder
+  FhirUriBuilder? get eventUri => eventX?.isAs<FhirUriBuilder>();
 
   /// Getter for [eventCanonical] as a FhirCanonicalBuilder
   FhirCanonicalBuilder? get eventCanonical =>
@@ -254,26 +238,9 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
   /// The destination application which the message is intended for.
   List<MessageHeaderDestinationBuilder>? destination;
 
-  /// [sender]
-  /// Identifies the sending system to allow the use of a trust relationship.
-  ReferenceBuilder? sender;
-
-  /// [author]
-  /// The logical author of the message - the personor device that decided
-  /// the described event should happen. When there is more than one
-  /// candidate, pick the most proximal to the MessageHeader. Can provide
-  /// other authors in extensions.
-  ReferenceBuilder? author;
-
   /// [source]
   /// The source application from which this message originated.
   MessageHeaderSourceBuilder? source;
-
-  /// [responsible]
-  /// The person or organization that accepts overall responsibility for the
-  /// contents of the message. The implication is that the message event
-  /// happened under the policies of the responsible party.
-  ReferenceBuilder? responsible;
 
   /// [reason]
   /// Coded indication of the cause for the event - indicates a reason for
@@ -345,10 +312,7 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
     }
 
     addField('destination', destination);
-    addField('sender', sender);
-    addField('author', author);
     addField('source', source);
-    addField('responsible', responsible);
     addField('reason', reason);
     addField('response', response);
     addField('focus', focus);
@@ -370,10 +334,7 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
       'modifierExtension',
       'eventX',
       'destination',
-      'sender',
-      'author',
       'source',
-      'responsible',
       'reason',
       'response',
       'focus',
@@ -434,6 +395,10 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
         if (eventX is CodingBuilder) {
           fields.add(eventX!);
         }
+      case 'eventUri':
+        if (eventX is FhirUriBuilder) {
+          fields.add(eventX!);
+        }
       case 'eventCanonical':
         if (eventX is FhirCanonicalBuilder) {
           fields.add(eventX!);
@@ -442,21 +407,9 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
         if (destination != null) {
           fields.addAll(destination!);
         }
-      case 'sender':
-        if (sender != null) {
-          fields.add(sender!);
-        }
-      case 'author':
-        if (author != null) {
-          fields.add(author!);
-        }
       case 'source':
         if (source != null) {
           fields.add(source!);
-        }
-      case 'responsible':
-        if (responsible != null) {
-          fields.add(responsible!);
         }
       case 'reason':
         if (reason != null) {
@@ -641,6 +594,10 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
               eventX = child;
               return;
             }
+            if (child is FhirUriBuilder) {
+              eventX = child;
+              return;
+            }
             if (child is FhirCanonicalBuilder) {
               eventX = child;
               return;
@@ -651,6 +608,15 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
       case 'eventCoding':
         {
           if (child is CodingBuilder) {
+            eventX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'eventUri':
+        {
+          if (child is FhirUriBuilder) {
             eventX = child;
             return;
           } else {
@@ -682,34 +648,10 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'sender':
-        {
-          if (child is ReferenceBuilder) {
-            sender = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'author':
-        {
-          if (child is ReferenceBuilder) {
-            author = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
       case 'source':
         {
           if (child is MessageHeaderSourceBuilder) {
             source = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'responsible':
-        {
-          if (child is ReferenceBuilder) {
-            responsible = child;
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -796,22 +738,19 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
       case 'eventX':
         return [
           'CodingBuilder',
+          'FhirUriBuilder',
           'FhirCanonicalBuilder',
         ];
       case 'eventCoding':
         return ['CodingBuilder'];
+      case 'eventUri':
+        return ['FhirUriBuilder'];
       case 'eventCanonical':
         return ['FhirCanonicalBuilder'];
       case 'destination':
         return ['MessageHeaderDestinationBuilder'];
-      case 'sender':
-        return ['ReferenceBuilder'];
-      case 'author':
-        return ['ReferenceBuilder'];
       case 'source':
         return ['MessageHeaderSourceBuilder'];
-      case 'responsible':
-        return ['ReferenceBuilder'];
       case 'reason':
         return ['CodeableConceptBuilder'];
       case 'response':
@@ -877,6 +816,11 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
           eventX = CodingBuilder.empty();
           return;
         }
+      case 'eventUri':
+        {
+          eventX = FhirUriBuilder.empty();
+          return;
+        }
       case 'eventCanonical':
         {
           eventX = FhirCanonicalBuilder.empty();
@@ -887,24 +831,9 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
           destination = <MessageHeaderDestinationBuilder>[];
           return;
         }
-      case 'sender':
-        {
-          sender = ReferenceBuilder.empty();
-          return;
-        }
-      case 'author':
-        {
-          author = ReferenceBuilder.empty();
-          return;
-        }
       case 'source':
         {
           source = MessageHeaderSourceBuilder.empty();
-          return;
-        }
-      case 'responsible':
-        {
-          responsible = ReferenceBuilder.empty();
           return;
         }
       case 'reason':
@@ -946,15 +875,13 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     EventXMessageHeaderBuilder? eventX,
     List<MessageHeaderDestinationBuilder>? destination,
-    ReferenceBuilder? sender,
-    ReferenceBuilder? author,
     MessageHeaderSourceBuilder? source,
-    ReferenceBuilder? responsible,
     CodeableConceptBuilder? reason,
     MessageHeaderResponseBuilder? response,
     List<ReferenceBuilder>? focus,
     FhirCanonicalBuilder? definition,
     CodingBuilder? eventCoding,
+    FhirUriBuilder? eventUri,
     FhirCanonicalBuilder? eventCanonical,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -971,12 +898,10 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
       contained: contained ?? this.contained,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
-      eventX: eventX ?? eventCoding ?? eventCanonical ?? this.eventX,
+      eventX:
+          eventX ?? eventCoding ?? eventUri ?? eventCanonical ?? this.eventX,
       destination: destination ?? this.destination,
-      sender: sender ?? this.sender,
-      author: author ?? this.author,
       source: source ?? this.source,
-      responsible: responsible ?? this.responsible,
       reason: reason ?? this.reason,
       response: response ?? this.response,
       focus: focus ?? this.focus,
@@ -1068,26 +993,8 @@ class MessageHeaderBuilder extends DomainResourceBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      sender,
-      o.sender,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      author,
-      o.author,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
       source,
       o.source,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      responsible,
-      o.responsible,
     )) {
       return false;
     }
@@ -1133,7 +1040,6 @@ class MessageHeaderDestinationBuilder extends BackboneElementBuilder {
     FhirUrlBuilder? endpointUrl,
     ReferenceBuilder? endpointReference,
     this.name,
-    this.target,
     this.receiver,
     super.disallowExtensions,
   })  : endpointX = endpointX ?? endpointUrl ?? endpointReference,
@@ -1192,12 +1098,6 @@ class MessageHeaderDestinationBuilder extends BackboneElementBuilder {
         'name',
         FhirStringBuilder.fromJson,
         '$objectPath.name',
-      ),
-      target: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'target',
-        ReferenceBuilder.fromJson,
-        '$objectPath.target',
       ),
       receiver: JsonParser.parseObject<ReferenceBuilder>(
         json,
@@ -1265,11 +1165,6 @@ class MessageHeaderDestinationBuilder extends BackboneElementBuilder {
   /// Human-readable name for the target system.
   FhirStringBuilder? name;
 
-  /// [target]
-  /// Identifies the target end system in situations where the initial
-  /// message transmission is to an intermediary system.
-  ReferenceBuilder? target;
-
   /// [receiver]
   /// Allows data conveyed by a message to be addressed to a particular
   /// person or department when routing to a specific application isn't
@@ -1322,7 +1217,6 @@ class MessageHeaderDestinationBuilder extends BackboneElementBuilder {
     }
 
     addField('name', name);
-    addField('target', target);
     addField('receiver', receiver);
     return json;
   }
@@ -1336,7 +1230,6 @@ class MessageHeaderDestinationBuilder extends BackboneElementBuilder {
       'modifierExtension',
       'endpointX',
       'name',
-      'target',
       'receiver',
     ];
   }
@@ -1381,10 +1274,6 @@ class MessageHeaderDestinationBuilder extends BackboneElementBuilder {
       case 'name':
         if (name != null) {
           fields.add(name!);
-        }
-      case 'target':
-        if (target != null) {
-          fields.add(target!);
         }
       case 'receiver':
         if (receiver != null) {
@@ -1527,14 +1416,6 @@ class MessageHeaderDestinationBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'target':
-        {
-          if (child is ReferenceBuilder) {
-            target = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
       case 'receiver':
         {
           if (child is ReferenceBuilder) {
@@ -1571,8 +1452,6 @@ class MessageHeaderDestinationBuilder extends BackboneElementBuilder {
         return ['ReferenceBuilder'];
       case 'name':
         return ['FhirStringBuilder'];
-      case 'target':
-        return ['ReferenceBuilder'];
       case 'receiver':
         return ['ReferenceBuilder'];
       default:
@@ -1617,11 +1496,6 @@ class MessageHeaderDestinationBuilder extends BackboneElementBuilder {
           name = FhirStringBuilder.empty();
           return;
         }
-      case 'target':
-        {
-          target = ReferenceBuilder.empty();
-          return;
-        }
       case 'receiver':
         {
           receiver = ReferenceBuilder.empty();
@@ -1641,7 +1515,6 @@ class MessageHeaderDestinationBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     EndpointXMessageHeaderDestinationBuilder? endpointX,
     FhirStringBuilder? name,
-    ReferenceBuilder? target,
     ReferenceBuilder? receiver,
     FhirUrlBuilder? endpointUrl,
     ReferenceBuilder? endpointReference,
@@ -1659,7 +1532,6 @@ class MessageHeaderDestinationBuilder extends BackboneElementBuilder {
       endpointX:
           endpointX ?? endpointUrl ?? endpointReference ?? this.endpointX,
       name: name ?? this.name,
-      target: target ?? this.target,
       receiver: receiver ?? this.receiver,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
@@ -1718,12 +1590,6 @@ class MessageHeaderDestinationBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      target,
-      o.target,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
       receiver,
       o.receiver,
     )) {
@@ -1750,6 +1616,7 @@ class MessageHeaderSourceBuilder extends BackboneElementBuilder {
     this.software,
     this.version,
     this.contact,
+    this.sender,
     super.disallowExtensions,
   })  : endpointX = endpointX ?? endpointUrl ?? endpointReference,
         super(
@@ -1825,6 +1692,12 @@ class MessageHeaderSourceBuilder extends BackboneElementBuilder {
         ContactPointBuilder.fromJson,
         '$objectPath.contact',
       ),
+      sender: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'sender',
+        ReferenceBuilder.fromJson,
+        '$objectPath.sender',
+      ),
     );
   }
 
@@ -1899,6 +1772,10 @@ class MessageHeaderSourceBuilder extends BackboneElementBuilder {
   /// issues with message communications.
   ContactPointBuilder? contact;
 
+  /// [sender]
+  /// Identifies the sending entity to allow the use of a trust relationship.
+  ReferenceBuilder? sender;
+
   /// Converts a [MessageHeaderSourceBuilder]
   /// to [MessageHeaderSource]
   @override
@@ -1947,6 +1824,7 @@ class MessageHeaderSourceBuilder extends BackboneElementBuilder {
     addField('software', software);
     addField('version', version);
     addField('contact', contact);
+    addField('sender', sender);
     return json;
   }
 
@@ -1962,6 +1840,7 @@ class MessageHeaderSourceBuilder extends BackboneElementBuilder {
       'software',
       'version',
       'contact',
+      'sender',
     ];
   }
 
@@ -2017,6 +1896,10 @@ class MessageHeaderSourceBuilder extends BackboneElementBuilder {
       case 'contact':
         if (contact != null) {
           fields.add(contact!);
+        }
+      case 'sender':
+        if (sender != null) {
+          fields.add(sender!);
         }
       default:
         if (checkValid) {
@@ -2203,6 +2086,14 @@ class MessageHeaderSourceBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'sender':
+        {
+          if (child is ReferenceBuilder) {
+            sender = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -2237,6 +2128,8 @@ class MessageHeaderSourceBuilder extends BackboneElementBuilder {
         return ['FhirStringBuilder'];
       case 'contact':
         return ['ContactPointBuilder'];
+      case 'sender':
+        return ['ReferenceBuilder'];
       default:
         return <String>[];
     }
@@ -2294,6 +2187,11 @@ class MessageHeaderSourceBuilder extends BackboneElementBuilder {
           contact = ContactPointBuilder.empty();
           return;
         }
+      case 'sender':
+        {
+          sender = ReferenceBuilder.empty();
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
@@ -2311,6 +2209,7 @@ class MessageHeaderSourceBuilder extends BackboneElementBuilder {
     FhirStringBuilder? software,
     FhirStringBuilder? version,
     ContactPointBuilder? contact,
+    ReferenceBuilder? sender,
     FhirUrlBuilder? endpointUrl,
     ReferenceBuilder? endpointReference,
     Map<String, dynamic>? userData,
@@ -2330,6 +2229,7 @@ class MessageHeaderSourceBuilder extends BackboneElementBuilder {
       software: software ?? this.software,
       version: version ?? this.version,
       contact: contact ?? this.contact,
+      sender: sender ?? this.sender,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -2401,6 +2301,12 @@ class MessageHeaderSourceBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       contact,
       o.contact,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      sender,
+      o.sender,
     )) {
       return false;
     }

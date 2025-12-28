@@ -5,9 +5,7 @@ import 'package:yaml/yaml.dart';
 part 'communication_request.g.dart';
 
 /// [CommunicationRequest]
-/// A request to convey information; e.g. the CDS system proposes that an
-/// alert be sent to a responsible provider, the CDS system proposes that
-/// the public health agency be notified about a reportable condition.
+/// A request to convey information from a sender to a recipient.
 class CommunicationRequest extends DomainResource {
   /// Primary constructor for
   /// [CommunicationRequest]
@@ -1077,8 +1075,8 @@ class CommunicationRequestPayload extends BackboneElement {
   String get fhirType => 'CommunicationRequestPayload';
 
   /// [contentX]
-  /// The communicated content (or for multi-part communications, one portion
-  /// of the communication).
+  /// The content (or for multi-part communications, one portion of the
+  /// communication) to be communicated.
   final ContentXCommunicationRequestPayload contentX;
 
   /// Getter for [contentAttachment] as a Attachment

@@ -561,9 +561,11 @@ class SubscriptionStatusNotificationEvent extends BackboneElement {
     super.extension_,
     super.modifierExtension,
     required this.eventNumber,
+    this.triggerEvent,
     this.timestamp,
     this.focus,
     this.additionalContext,
+    this.relatedQuery,
     super.disallowExtensions,
   }) : super();
 
@@ -596,6 +598,13 @@ class SubscriptionStatusNotificationEvent extends BackboneElement {
         'eventNumber',
         FhirInteger64.fromJson,
       )!,
+      triggerEvent: (json['triggerEvent'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       timestamp: JsonParser.parsePrimitive<FhirInstant>(
         json,
         'timestamp',
@@ -609,6 +618,13 @@ class SubscriptionStatusNotificationEvent extends BackboneElement {
       additionalContext: (json['additionalContext'] as List<dynamic>?)
           ?.map<Reference>(
             (v) => Reference.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      relatedQuery: (json['relatedQuery'] as List<dynamic>?)
+          ?.map<SubscriptionStatusRelatedQuery>(
+            (v) => SubscriptionStatusRelatedQuery.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -663,6 +679,11 @@ class SubscriptionStatusNotificationEvent extends BackboneElement {
   /// or a relative event number for this notification.
   final FhirInteger64 eventNumber;
 
+  /// [triggerEvent]
+  /// If present, one or more event codes specifying the events which
+  /// triggered this notification.
+  final List<CodeableConcept>? triggerEvent;
+
   /// [timestamp]
   /// The actual time this event occurred on the server.
   final FhirInstant? timestamp;
@@ -679,6 +700,12 @@ class SubscriptionStatusNotificationEvent extends BackboneElement {
   /// (e.g., the Patient relevant to an Encounter), however it MAY refer to
   /// non-FHIR objects.
   final List<Reference>? additionalContext;
+
+  /// [relatedQuery]
+  /// Queries and codes that could be included with notifications of this
+  /// shape. Servers MAY include these queries if supported and desired in
+  /// the workflow.
+  final List<SubscriptionStatusRelatedQuery>? relatedQuery;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -759,6 +786,10 @@ class SubscriptionStatusNotificationEvent extends BackboneElement {
       eventNumber,
     );
     addField(
+      'triggerEvent',
+      triggerEvent,
+    );
+    addField(
       'timestamp',
       timestamp,
     );
@@ -769,6 +800,10 @@ class SubscriptionStatusNotificationEvent extends BackboneElement {
     addField(
       'additionalContext',
       additionalContext,
+    );
+    addField(
+      'relatedQuery',
+      relatedQuery,
     );
     return json;
   }
@@ -781,9 +816,11 @@ class SubscriptionStatusNotificationEvent extends BackboneElement {
       'extension',
       'modifierExtension',
       'eventNumber',
+      'triggerEvent',
       'timestamp',
       'focus',
       'additionalContext',
+      'relatedQuery',
     ];
   }
 
@@ -810,6 +847,10 @@ class SubscriptionStatusNotificationEvent extends BackboneElement {
         }
       case 'eventNumber':
         fields.add(eventNumber);
+      case 'triggerEvent':
+        if (triggerEvent != null) {
+          fields.addAll(triggerEvent!);
+        }
       case 'timestamp':
         if (timestamp != null) {
           fields.add(timestamp!);
@@ -821,6 +862,10 @@ class SubscriptionStatusNotificationEvent extends BackboneElement {
       case 'additionalContext':
         if (additionalContext != null) {
           fields.addAll(additionalContext!);
+        }
+      case 'relatedQuery':
+        if (relatedQuery != null) {
+          fields.addAll(relatedQuery!);
         }
       default:
         if (checkValid) {
@@ -889,6 +934,12 @@ class SubscriptionStatusNotificationEvent extends BackboneElement {
     )) {
       return false;
     }
+    if (!listEquals<CodeableConcept>(
+      triggerEvent,
+      o.triggerEvent,
+    )) {
+      return false;
+    }
     if (!equalsDeepWithNull(
       timestamp,
       o.timestamp,
@@ -904,6 +955,321 @@ class SubscriptionStatusNotificationEvent extends BackboneElement {
     if (!listEquals<Reference>(
       additionalContext,
       o.additionalContext,
+    )) {
+      return false;
+    }
+    if (!listEquals<SubscriptionStatusRelatedQuery>(
+      relatedQuery,
+      o.relatedQuery,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [SubscriptionStatusRelatedQuery]
+/// Queries and codes that could be included with notifications of this
+/// shape. Servers MAY include these queries if supported and desired in
+/// the workflow.
+class SubscriptionStatusRelatedQuery extends BackboneElement {
+  /// Primary constructor for
+  /// [SubscriptionStatusRelatedQuery]
+
+  const SubscriptionStatusRelatedQuery({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.queryType,
+    required this.query,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory SubscriptionStatusRelatedQuery.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return SubscriptionStatusRelatedQuery(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      queryType: JsonParser.parseObject<Coding>(
+        json,
+        'queryType',
+        Coding.fromJson,
+      ),
+      query: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'query',
+        FhirString.fromJson,
+      )!,
+    );
+  }
+
+  /// Deserialize [SubscriptionStatusRelatedQuery]
+  /// from a [String] or [YamlMap] object
+  factory SubscriptionStatusRelatedQuery.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return SubscriptionStatusRelatedQuery.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return SubscriptionStatusRelatedQuery.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'SubscriptionStatusRelatedQuery '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [SubscriptionStatusRelatedQuery]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory SubscriptionStatusRelatedQuery.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return SubscriptionStatusRelatedQuery.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'SubscriptionStatusRelatedQuery';
+
+  /// [queryType]
+  /// Coded value(s) used to describe the type of information that evaluating
+  /// this query will provide. Subscribers can use the values to ensure the
+  /// data they request are relevant and necessary for their use.
+  final Coding? queryType;
+
+  /// [query]
+  /// Query a subscriber can use to retrieve additional information. The
+  /// exact contents of the query MAY depend on the value of the `queryType`,
+  /// however this SHOULD be a query suitable for use as an HTTP GET request
+  /// (either fully-qualified or partial).
+  final FhirString query;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'queryType',
+      queryType,
+    );
+    addField(
+      'query',
+      query,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'queryType',
+      'query',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'queryType':
+        if (queryType != null) {
+          fields.add(queryType!);
+        }
+      case 'query':
+        fields.add(query);
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  SubscriptionStatusRelatedQuery clone() => copyWith();
+
+  /// Copy function for [SubscriptionStatusRelatedQuery]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $SubscriptionStatusRelatedQueryCopyWith<SubscriptionStatusRelatedQuery>
+      get copyWith => _$SubscriptionStatusRelatedQueryCopyWithImpl<
+              SubscriptionStatusRelatedQuery>(
+            this,
+            (value) => value,
+          );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! SubscriptionStatusRelatedQuery) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      queryType,
+      o.queryType,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      query,
+      o.query,
     )) {
       return false;
     }

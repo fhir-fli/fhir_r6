@@ -5,7 +5,9 @@ import 'package:yaml/yaml.dart';
 part 'monetary_component.g.dart';
 
 /// [MonetaryComponent]
-/// Availability data for an {item}.
+/// Financial line items use this datatype to commonly categorize the
+/// value, and other factors that may effect how the value should be
+/// interpreted.
 class MonetaryComponent extends DataType {
   /// Primary constructor for
   /// [MonetaryComponent]
@@ -103,20 +105,23 @@ class MonetaryComponent extends DataType {
   String get fhirType => 'MonetaryComponent';
 
   /// [type]
-  /// base | surcharge | deduction | discount | tax | informational.
+  /// The type of monetary component, what the value is to be used for and
+  /// how that should be applied in its context. e.g. A surchange would
+  /// increase the cost, a deduction would reduce the cost.
   final PriceComponentType type;
 
   /// [code]
-  /// Codes may be used to differentiate between kinds of taxes, surcharges,
-  /// discounts etc.
+  /// A codable breakdown of the type of monetary component. e.g. State Tax,
+  /// Federal Tax, VIP-Discount.
   final CodeableConcept? code;
 
   /// [factor]
-  /// Factor used for calculating this component.
+  /// The factor that has been applied to the base price (in another monetary
+  /// component value) when performing calculations.
   final FhirDecimal? factor;
 
   /// [amount]
-  /// Explicit value amount to be used.
+  /// The explicit value amount of the component (based on type/code).
   final Money? amount;
   @override
   Map<String, dynamic> toJson() {

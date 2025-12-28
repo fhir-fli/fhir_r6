@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'dart:convert';
 import 'package:fhir_r6/fhir_r6.dart'
     show VirtualServiceDetail, yamlMapToJson, yamlToJson;
@@ -7,7 +5,8 @@ import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [VirtualServiceDetailBuilder]
-/// Virtual Service Contact Details.
+/// The set of values required to describe a virtual service's connection
+/// details, including some limitations of the service.
 class VirtualServiceDetailBuilder extends DataTypeBuilder {
   /// Primary constructor for
   /// [VirtualServiceDetailBuilder]
@@ -165,15 +164,18 @@ class VirtualServiceDetailBuilder extends DataTypeBuilder {
       addressX?.isAs<ExtendedContactDetailBuilder>();
 
   /// [additionalInfo]
-  /// Address to see alternative connection details.
+  /// A web address that provides additional details on the call, such as
+  /// alternative/regional call in numbers, or other associated services.
   List<FhirUrlBuilder>? additionalInfo;
 
   /// [maxParticipants]
-  /// Maximum number of participants supported by the virtual service.
+  /// Maximum number of participants supported by the virtual service where
+  /// there are limitations imposed.
   FhirPositiveIntBuilder? maxParticipants;
 
   /// [sessionKey]
-  /// Session Key required by the virtual service.
+  /// Some systems require an additional factor/value be provided to access
+  /// the service.
   FhirStringBuilder? sessionKey;
 
   /// Converts a [VirtualServiceDetailBuilder]

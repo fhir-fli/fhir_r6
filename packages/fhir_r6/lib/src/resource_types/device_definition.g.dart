@@ -17,29 +17,41 @@ abstract class $DeviceDefinitionCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<Resource>? contained,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirMarkdown? description,
+    FhirUri? url,
     List<Identifier>? identifier,
-    List<DeviceDefinitionUdiDeviceIdentifier>? udiDeviceIdentifier,
-    List<DeviceDefinitionRegulatoryIdentifier>? regulatoryIdentifier,
+    FhirString? version,
+    VersionAlgorithmXDeviceDefinition? versionAlgorithmX,
+    FhirString? name,
+    FhirString? title,
+    PublicationStatus? status,
+    FhirBoolean? experimental,
     FhirString? partNumber,
     Reference? manufacturer,
-    List<DeviceDefinitionDeviceName>? deviceName,
     FhirString? modelNumber,
+    FhirDateTime? date,
+    List<ContactDetail>? contact,
+    FhirString? publisher,
+    List<UsageContext>? useContext,
+    List<CodeableConcept>? jurisdiction,
+    FhirMarkdown? purpose,
+    FhirMarkdown? copyright,
+    FhirString? copyrightLabel,
+    List<DeviceDefinitionUdiDeviceIdentifier>? udiDeviceIdentifier,
+    List<DeviceDefinitionRegulatoryIdentifier>? regulatoryIdentifier,
+    List<DeviceDefinitionDeviceName>? deviceName,
     List<DeviceDefinitionClassification>? classification,
     List<DeviceDefinitionConformsTo>? conformsTo,
     List<DeviceDefinitionHasPart>? hasPart,
     List<DeviceDefinitionPackaging>? packaging,
-    List<DeviceDefinitionVersion>? version,
+    List<DeviceDefinitionDeviceVersion>? deviceVersion,
     List<CodeableConcept>? safety,
     List<ProductShelfLife>? shelfLifeStorage,
-    List<CodeableConcept>? languageCode,
+    List<AllLanguages>? outputLanguage,
     List<DeviceDefinitionProperty>? property,
-    Reference? owner,
-    List<ContactPoint>? contact,
     List<DeviceDefinitionLink>? link,
     List<Annotation>? note,
     List<DeviceDefinitionMaterial>? material,
-    List<DeviceProductionIdentifierInUDI>? productionIdentifierInUDI,
+    List<CodeableConcept>? productionIdentifierInUDI,
     DeviceDefinitionGuideline? guideline,
     DeviceDefinitionCorrectiveAction? correctiveAction,
     List<DeviceDefinitionChargeItem>? chargeItem,
@@ -64,25 +76,37 @@ class _$DeviceDefinitionCopyWithImpl<T>
     Object? contained = fhirSentinel,
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
-    Object? description = fhirSentinel,
+    Object? url = fhirSentinel,
     Object? identifier = fhirSentinel,
-    Object? udiDeviceIdentifier = fhirSentinel,
-    Object? regulatoryIdentifier = fhirSentinel,
+    Object? version = fhirSentinel,
+    Object? versionAlgorithmX = fhirSentinel,
+    Object? name = fhirSentinel,
+    Object? title = fhirSentinel,
+    Object? status = fhirSentinel,
+    Object? experimental = fhirSentinel,
     Object? partNumber = fhirSentinel,
     Object? manufacturer = fhirSentinel,
-    Object? deviceName = fhirSentinel,
     Object? modelNumber = fhirSentinel,
+    Object? date = fhirSentinel,
+    Object? contact = fhirSentinel,
+    Object? publisher = fhirSentinel,
+    Object? useContext = fhirSentinel,
+    Object? jurisdiction = fhirSentinel,
+    Object? purpose = fhirSentinel,
+    Object? copyright = fhirSentinel,
+    Object? copyrightLabel = fhirSentinel,
+    Object? udiDeviceIdentifier = fhirSentinel,
+    Object? regulatoryIdentifier = fhirSentinel,
+    Object? deviceName = fhirSentinel,
     Object? classification = fhirSentinel,
     Object? conformsTo = fhirSentinel,
     Object? hasPart = fhirSentinel,
     Object? packaging = fhirSentinel,
-    Object? version = fhirSentinel,
+    Object? deviceVersion = fhirSentinel,
     Object? safety = fhirSentinel,
     Object? shelfLifeStorage = fhirSentinel,
-    Object? languageCode = fhirSentinel,
+    Object? outputLanguage = fhirSentinel,
     Object? property = fhirSentinel,
-    Object? owner = fhirSentinel,
-    Object? contact = fhirSentinel,
     Object? link = fhirSentinel,
     Object? note = fhirSentinel,
     Object? material = fhirSentinel,
@@ -112,12 +136,58 @@ class _$DeviceDefinitionCopyWithImpl<T>
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
-        description: identical(description, fhirSentinel)
-            ? _value.description
-            : description as FhirMarkdown?,
+        url: identical(url, fhirSentinel) ? _value.url : url as FhirUri?,
         identifier: identical(identifier, fhirSentinel)
             ? _value.identifier
             : identifier as List<Identifier>?,
+        version: identical(version, fhirSentinel)
+            ? _value.version
+            : version as FhirString?,
+        versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
+            ? _value.versionAlgorithmX
+            : versionAlgorithmX as VersionAlgorithmXDeviceDefinition?,
+        name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
+        title: identical(title, fhirSentinel)
+            ? _value.title
+            : title as FhirString?,
+        status: identical(status, fhirSentinel)
+            ? _value.status
+            : (status as PublicationStatus?) ?? _value.status,
+        experimental: identical(experimental, fhirSentinel)
+            ? _value.experimental
+            : experimental as FhirBoolean?,
+        partNumber: identical(partNumber, fhirSentinel)
+            ? _value.partNumber
+            : partNumber as FhirString?,
+        manufacturer: identical(manufacturer, fhirSentinel)
+            ? _value.manufacturer
+            : manufacturer as Reference?,
+        modelNumber: identical(modelNumber, fhirSentinel)
+            ? _value.modelNumber
+            : modelNumber as FhirString?,
+        date:
+            identical(date, fhirSentinel) ? _value.date : date as FhirDateTime?,
+        contact: identical(contact, fhirSentinel)
+            ? _value.contact
+            : contact as List<ContactDetail>?,
+        publisher: identical(publisher, fhirSentinel)
+            ? _value.publisher
+            : publisher as FhirString?,
+        useContext: identical(useContext, fhirSentinel)
+            ? _value.useContext
+            : useContext as List<UsageContext>?,
+        jurisdiction: identical(jurisdiction, fhirSentinel)
+            ? _value.jurisdiction
+            : jurisdiction as List<CodeableConcept>?,
+        purpose: identical(purpose, fhirSentinel)
+            ? _value.purpose
+            : purpose as FhirMarkdown?,
+        copyright: identical(copyright, fhirSentinel)
+            ? _value.copyright
+            : copyright as FhirMarkdown?,
+        copyrightLabel: identical(copyrightLabel, fhirSentinel)
+            ? _value.copyrightLabel
+            : copyrightLabel as FhirString?,
         udiDeviceIdentifier: identical(udiDeviceIdentifier, fhirSentinel)
             ? _value.udiDeviceIdentifier
             : udiDeviceIdentifier as List<DeviceDefinitionUdiDeviceIdentifier>?,
@@ -125,18 +195,9 @@ class _$DeviceDefinitionCopyWithImpl<T>
             ? _value.regulatoryIdentifier
             : regulatoryIdentifier
                 as List<DeviceDefinitionRegulatoryIdentifier>?,
-        partNumber: identical(partNumber, fhirSentinel)
-            ? _value.partNumber
-            : partNumber as FhirString?,
-        manufacturer: identical(manufacturer, fhirSentinel)
-            ? _value.manufacturer
-            : manufacturer as Reference?,
         deviceName: identical(deviceName, fhirSentinel)
             ? _value.deviceName
             : deviceName as List<DeviceDefinitionDeviceName>?,
-        modelNumber: identical(modelNumber, fhirSentinel)
-            ? _value.modelNumber
-            : modelNumber as FhirString?,
         classification: identical(classification, fhirSentinel)
             ? _value.classification
             : classification as List<DeviceDefinitionClassification>?,
@@ -149,26 +210,21 @@ class _$DeviceDefinitionCopyWithImpl<T>
         packaging: identical(packaging, fhirSentinel)
             ? _value.packaging
             : packaging as List<DeviceDefinitionPackaging>?,
-        version: identical(version, fhirSentinel)
-            ? _value.version
-            : version as List<DeviceDefinitionVersion>?,
+        deviceVersion: identical(deviceVersion, fhirSentinel)
+            ? _value.deviceVersion
+            : deviceVersion as List<DeviceDefinitionDeviceVersion>?,
         safety: identical(safety, fhirSentinel)
             ? _value.safety
             : safety as List<CodeableConcept>?,
         shelfLifeStorage: identical(shelfLifeStorage, fhirSentinel)
             ? _value.shelfLifeStorage
             : shelfLifeStorage as List<ProductShelfLife>?,
-        languageCode: identical(languageCode, fhirSentinel)
-            ? _value.languageCode
-            : languageCode as List<CodeableConcept>?,
+        outputLanguage: identical(outputLanguage, fhirSentinel)
+            ? _value.outputLanguage
+            : outputLanguage as List<AllLanguages>?,
         property: identical(property, fhirSentinel)
             ? _value.property
             : property as List<DeviceDefinitionProperty>?,
-        owner:
-            identical(owner, fhirSentinel) ? _value.owner : owner as Reference?,
-        contact: identical(contact, fhirSentinel)
-            ? _value.contact
-            : contact as List<ContactPoint>?,
         link: identical(link, fhirSentinel)
             ? _value.link
             : link as List<DeviceDefinitionLink>?,
@@ -181,8 +237,7 @@ class _$DeviceDefinitionCopyWithImpl<T>
         productionIdentifierInUDI:
             identical(productionIdentifierInUDI, fhirSentinel)
                 ? _value.productionIdentifierInUDI
-                : productionIdentifierInUDI
-                    as List<DeviceProductionIdentifierInUDI>?,
+                : productionIdentifierInUDI as List<CodeableConcept>?,
         guideline: identical(guideline, fhirSentinel)
             ? _value.guideline
             : guideline as DeviceDefinitionGuideline?,
@@ -423,7 +478,7 @@ abstract class $DeviceDefinitionDeviceNameCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     FhirString? name,
-    DeviceNameType? type,
+    CodeableConcept? type,
     bool? disallowExtensions,
   });
 }
@@ -458,7 +513,7 @@ class _$DeviceDefinitionDeviceNameCopyWithImpl<T>
             : (name as FhirString?) ?? _value.name,
         type: identical(type, fhirSentinel)
             ? _value.type
-            : (type as DeviceNameType?) ?? _value.type,
+            : (type as CodeableConcept?) ?? _value.type,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -812,7 +867,7 @@ extension DeviceDefinitionDistributorCopyWithExtension
           );
 }
 
-abstract class $DeviceDefinitionVersionCopyWith<T>
+abstract class $DeviceDefinitionDeviceVersionCopyWith<T>
     extends $BackboneElementCopyWith<T> {
   @override
   T call({
@@ -826,12 +881,12 @@ abstract class $DeviceDefinitionVersionCopyWith<T>
   });
 }
 
-class _$DeviceDefinitionVersionCopyWithImpl<T>
-    implements $DeviceDefinitionVersionCopyWith<T> {
-  final DeviceDefinitionVersion _value;
-  final T Function(DeviceDefinitionVersion) _then;
+class _$DeviceDefinitionDeviceVersionCopyWithImpl<T>
+    implements $DeviceDefinitionDeviceVersionCopyWith<T> {
+  final DeviceDefinitionDeviceVersion _value;
+  final T Function(DeviceDefinitionDeviceVersion) _then;
 
-  _$DeviceDefinitionVersionCopyWithImpl(this._value, this._then);
+  _$DeviceDefinitionDeviceVersionCopyWithImpl(this._value, this._then);
 
   @override
   T call({
@@ -844,7 +899,7 @@ class _$DeviceDefinitionVersionCopyWithImpl<T>
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
-      DeviceDefinitionVersion(
+      DeviceDefinitionDeviceVersion(
         id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
         extension_: identical(extension_, fhirSentinel)
             ? _value.extension_
@@ -869,12 +924,14 @@ class _$DeviceDefinitionVersionCopyWithImpl<T>
   }
 }
 
-extension DeviceDefinitionVersionCopyWithExtension on DeviceDefinitionVersion {
-  $DeviceDefinitionVersionCopyWith<DeviceDefinitionVersion> get copyWith =>
-      _$DeviceDefinitionVersionCopyWithImpl<DeviceDefinitionVersion>(
-        this,
-        (value) => value,
-      );
+extension DeviceDefinitionDeviceVersionCopyWithExtension
+    on DeviceDefinitionDeviceVersion {
+  $DeviceDefinitionDeviceVersionCopyWith<DeviceDefinitionDeviceVersion>
+      get copyWith => _$DeviceDefinitionDeviceVersionCopyWithImpl<
+              DeviceDefinitionDeviceVersion>(
+            this,
+            (value) => value,
+          );
 }
 
 abstract class $DeviceDefinitionPropertyCopyWith<T>
@@ -885,7 +942,7 @@ abstract class $DeviceDefinitionPropertyCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    Quantity? valueX,
+    ValueXDeviceDefinitionProperty? valueX,
     bool? disallowExtensions,
   });
 }
@@ -920,7 +977,7 @@ class _$DeviceDefinitionPropertyCopyWithImpl<T>
             : (type as CodeableConcept?) ?? _value.type,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as Quantity?) ?? _value.valueX,
+            : (valueX as ValueXDeviceDefinitionProperty?) ?? _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

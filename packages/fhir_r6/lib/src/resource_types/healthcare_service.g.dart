@@ -38,8 +38,9 @@ abstract class $HealthcareServiceCopyWith<T>
     List<CodeableConcept>? characteristic,
     List<CodeableConcept>? communication,
     List<CodeableConcept>? referralMethod,
+    FhirBoolean? referralRequired,
     FhirBoolean? appointmentRequired,
-    List<Availability>? availability,
+    Availability? availability,
     List<Reference>? endpoint,
     bool? disallowExtensions,
   });
@@ -82,6 +83,7 @@ class _$HealthcareServiceCopyWithImpl<T>
     Object? characteristic = fhirSentinel,
     Object? communication = fhirSentinel,
     Object? referralMethod = fhirSentinel,
+    Object? referralRequired = fhirSentinel,
     Object? appointmentRequired = fhirSentinel,
     Object? availability = fhirSentinel,
     Object? endpoint = fhirSentinel,
@@ -165,12 +167,15 @@ class _$HealthcareServiceCopyWithImpl<T>
         referralMethod: identical(referralMethod, fhirSentinel)
             ? _value.referralMethod
             : referralMethod as List<CodeableConcept>?,
+        referralRequired: identical(referralRequired, fhirSentinel)
+            ? _value.referralRequired
+            : referralRequired as FhirBoolean?,
         appointmentRequired: identical(appointmentRequired, fhirSentinel)
             ? _value.appointmentRequired
             : appointmentRequired as FhirBoolean?,
         availability: identical(availability, fhirSentinel)
             ? _value.availability
-            : availability as List<Availability>?,
+            : availability as Availability?,
         endpoint: identical(endpoint, fhirSentinel)
             ? _value.endpoint
             : endpoint as List<Reference>?,
@@ -195,7 +200,9 @@ abstract class $HealthcareServiceEligibilityCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? code,
+    ValueXHealthcareServiceEligibility? valueX,
     FhirMarkdown? comment,
+    FhirMarkdown? period,
     bool? disallowExtensions,
   });
 }
@@ -213,7 +220,9 @@ class _$HealthcareServiceEligibilityCopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? code = fhirSentinel,
+    Object? valueX = fhirSentinel,
     Object? comment = fhirSentinel,
+    Object? period = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -228,9 +237,15 @@ class _$HealthcareServiceEligibilityCopyWithImpl<T>
         code: identical(code, fhirSentinel)
             ? _value.code
             : code as CodeableConcept?,
+        valueX: identical(valueX, fhirSentinel)
+            ? _value.valueX
+            : valueX as ValueXHealthcareServiceEligibility?,
         comment: identical(comment, fhirSentinel)
             ? _value.comment
             : comment as FhirMarkdown?,
+        period: identical(period, fhirSentinel)
+            ? _value.period
+            : period as FhirMarkdown?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

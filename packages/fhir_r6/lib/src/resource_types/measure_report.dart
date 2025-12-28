@@ -22,6 +22,8 @@ class MeasureReport extends DomainResource {
     super.extension_,
     super.modifierExtension,
     this.identifier,
+    this.category,
+    this.messages,
     required this.status,
     required this.type,
     this.dataUpdateType,
@@ -100,6 +102,16 @@ class MeasureReport extends DomainResource {
             ),
           )
           .toList(),
+      category: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'category',
+        CodeableConcept.fromJson,
+      ),
+      messages: JsonParser.parseObject<Reference>(
+        json,
+        'messages',
+        Reference.fromJson,
+      ),
       status: JsonParser.parsePrimitive<MeasureReportStatus>(
         json,
         'status',
@@ -140,11 +152,13 @@ class MeasureReport extends DomainResource {
         'reportingVendor',
         Reference.fromJson,
       ),
-      location: JsonParser.parseObject<Reference>(
-        json,
-        'location',
-        Reference.fromJson,
-      ),
+      location: (json['location'] as List<dynamic>?)
+          ?.map<Reference>(
+            (v) => Reference.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       period: JsonParser.parseObject<Period>(
         json,
         'period',
@@ -237,6 +251,18 @@ class MeasureReport extends DomainResource {
   /// model, design or an instance.
   final List<Identifier>? identifier;
 
+  /// [category]
+  /// The category of measure report instance this is such as Data Exchange
+  /// for Quality Measures (DEQM), Risk Adjustment, or Value-Based
+  /// Performance.
+  final CodeableConcept? category;
+
+  /// [messages]
+  /// A reference to an OperationOutcome that contains any information,
+  /// warning, and/or error messages that were generated while processing an
+  /// operation such as $evaluate.
+  final Reference? messages;
+
   /// [status]
   /// The MeasureReport status. No data will be available until the
   /// MeasureReport status is complete.
@@ -271,7 +297,7 @@ class MeasureReport extends DomainResource {
   final Reference? subject;
 
   /// [date]
-  /// The date this measure was calculated.
+  /// The date this measure report was generated.
   final FhirDateTime? date;
 
   /// [reporter]
@@ -288,7 +314,7 @@ class MeasureReport extends DomainResource {
 
   /// [location]
   /// A reference to the location for which the data is being reported.
-  final Reference? location;
+  final List<Reference>? location;
 
   /// [period]
   /// The reporting period for which the report was calculated.
@@ -301,21 +327,22 @@ class MeasureReport extends DomainResource {
   final Reference? inputParameters;
 
   /// [scoring]
-  /// Indicates how the calculation is performed for the measure, including
-  /// proportion, ratio, continuous-variable, and cohort. The value set is
-  /// extensible, allowing additional measure scoring types to be
-  /// represented. It is expected to be the same as the scoring element on
-  /// the referenced Measure.
+  /// Deprecated, use group.scoring. Indicates how the calculation is
+  /// performed for the measure, including proportion, ratio,
+  /// continuous-variable, and cohort. The value set is extensible, allowing
+  /// additional measure scoring types to be represented. It is expected to
+  /// be the same as the scoring element on the referenced Measure.
   final CodeableConcept? scoring;
 
   /// [improvementNotation]
-  /// Whether improvement in the measure is noted by an increase or decrease
-  /// in the measure score.
+  /// Deprecated, use group.improvementNotation. Whether improvement in the
+  /// measure is noted by an increase or decrease in the measure score.
   final CodeableConcept? improvementNotation;
 
   /// [group]
   /// The results of the calculation, one for each population group in the
-  /// measure.
+  /// measure. A MeasureReport SHALL have a group element corresponding to
+  /// each group element defined in the Measure being reported.
   final List<MeasureReportGroup>? group;
 
   /// [supplementalData]
@@ -433,6 +460,14 @@ class MeasureReport extends DomainResource {
       identifier,
     );
     addField(
+      'category',
+      category,
+    );
+    addField(
+      'messages',
+      messages,
+    );
+    addField(
       'status',
       status,
     );
@@ -512,6 +547,8 @@ class MeasureReport extends DomainResource {
       'extension',
       'modifierExtension',
       'identifier',
+      'category',
+      'messages',
       'status',
       'type',
       'dataUpdateType',
@@ -576,6 +613,14 @@ class MeasureReport extends DomainResource {
         if (identifier != null) {
           fields.addAll(identifier!);
         }
+      case 'category':
+        if (category != null) {
+          fields.add(category!);
+        }
+      case 'messages':
+        if (messages != null) {
+          fields.add(messages!);
+        }
       case 'status':
         fields.add(status);
       case 'type':
@@ -606,7 +651,7 @@ class MeasureReport extends DomainResource {
         }
       case 'location':
         if (location != null) {
-          fields.add(location!);
+          fields.addAll(location!);
         }
       case 'period':
         fields.add(period);
@@ -730,6 +775,18 @@ class MeasureReport extends DomainResource {
       return false;
     }
     if (!equalsDeepWithNull(
+      category,
+      o.category,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      messages,
+      o.messages,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       status,
       o.status,
     )) {
@@ -777,7 +834,7 @@ class MeasureReport extends DomainResource {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<Reference>(
       location,
       o.location,
     )) {
@@ -831,7 +888,8 @@ class MeasureReport extends DomainResource {
 
 /// [MeasureReportGroup]
 /// The results of the calculation, one for each population group in the
-/// measure.
+/// measure. A MeasureReport SHALL have a group element corresponding to
+/// each group element defined in the Measure being reported.
 class MeasureReportGroup extends BackboneElement {
   /// Primary constructor for
   /// [MeasureReportGroup]
@@ -841,8 +899,13 @@ class MeasureReportGroup extends BackboneElement {
     super.extension_,
     super.modifierExtension,
     this.linkId,
+    this.calculatedDate,
     this.code,
+    this.description,
     this.subject,
+    this.scoring,
+    this.improvementNotation,
+    this.improvementNotationGuidance,
     this.population,
     MeasureScoreXMeasureReportGroup? measureScoreX,
     Quantity? measureScoreQuantity,
@@ -851,6 +914,7 @@ class MeasureReportGroup extends BackboneElement {
     Period? measureScorePeriod,
     Range? measureScoreRange,
     FhirDuration? measureScoreDuration,
+    FhirBoolean? measureScoreBoolean,
     this.stratifier,
     super.disallowExtensions,
   })  : measureScoreX = measureScoreX ??
@@ -859,7 +923,8 @@ class MeasureReportGroup extends BackboneElement {
             measureScoreCodeableConcept ??
             measureScorePeriod ??
             measureScoreRange ??
-            measureScoreDuration,
+            measureScoreDuration ??
+            measureScoreBoolean,
         super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -891,15 +956,40 @@ class MeasureReportGroup extends BackboneElement {
         'linkId',
         FhirString.fromJson,
       ),
+      calculatedDate: JsonParser.parsePrimitive<FhirDateTime>(
+        json,
+        'calculatedDate',
+        FhirDateTime.fromJson,
+      ),
       code: JsonParser.parseObject<CodeableConcept>(
         json,
         'code',
         CodeableConcept.fromJson,
       ),
+      description: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'description',
+        FhirMarkdown.fromJson,
+      ),
       subject: JsonParser.parseObject<Reference>(
         json,
         'subject',
         Reference.fromJson,
+      ),
+      scoring: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'scoring',
+        CodeableConcept.fromJson,
+      ),
+      improvementNotation: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'improvementNotation',
+        CodeableConcept.fromJson,
+      ),
+      improvementNotationGuidance: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'improvementNotationGuidance',
+        FhirMarkdown.fromJson,
       ),
       population: (json['population'] as List<dynamic>?)
           ?.map<MeasureReportPopulation>(
@@ -918,6 +1008,7 @@ class MeasureReportGroup extends BackboneElement {
           'measureScorePeriod': Period.fromJson,
           'measureScoreRange': Range.fromJson,
           'measureScoreDuration': FhirDuration.fromJson,
+          'measureScoreBoolean': FhirBoolean.fromJson,
         },
       ),
       stratifier: (json['stratifier'] as List<dynamic>?)
@@ -974,22 +1065,55 @@ class MeasureReportGroup extends BackboneElement {
 
   /// [linkId]
   /// The group from the Measure that corresponds to this group in the
-  /// MeasureReport resource.
+  /// MeasureReport resource. This element SHALL be populated based on the
+  /// corresponding element in the Measure being reported.
   final FhirString? linkId;
+
+  /// [calculatedDate]
+  /// The date the Measure Report was calculated.
+  final FhirDateTime? calculatedDate;
 
   /// [code]
   /// The meaning of the population group as defined in the measure
-  /// definition.
+  /// definition. This element SHALL be populated with at least the codings
+  /// in the code of the corresponding group in the Measure being reported.
   final CodeableConcept? code;
+
+  /// [description]
+  /// The human readable description of this population group. This element
+  /// SHOULD be populated based on the description of the corresponding group
+  /// in the Measure being reported.
+  final FhirMarkdown? description;
 
   /// [subject]
   /// Optional subject identifying the individual or individuals the report
   /// is for.
   final Reference? subject;
 
+  /// [scoring]
+  /// Indicates how the calculation is performed for the measure, including
+  /// proportion, ratio, continuous-variable, and cohort. The value set is
+  /// extensible, allowing additional measure scoring types to be
+  /// represented. It is expected to be the same as the scoring element on
+  /// the referenced Measure.
+  final CodeableConcept? scoring;
+
+  /// [improvementNotation]
+  /// Whether improvement in the measure is noted by an increase or decrease
+  /// in the measure score. Exercise caution when using any values besides
+  /// increase or decrease for improvementNotation.
+  final CodeableConcept? improvementNotation;
+
+  /// [improvementNotationGuidance]
+  /// Narrative text to explain the improvement notation and how to interpret
+  /// it.
+  final FhirMarkdown? improvementNotationGuidance;
+
   /// [population]
   /// The populations that make up the population group, one for each type of
-  /// population appropriate for the measure.
+  /// population appropriate for the measure. Each group in the MeasureReport
+  /// SHALL have populations as defined in the corresponding group of the
+  /// Measure being reported.
   final List<MeasureReportPopulation>? population;
 
   /// [measureScoreX]
@@ -1017,9 +1141,14 @@ class MeasureReportGroup extends BackboneElement {
   /// Getter for [measureScoreDuration] as a FhirDuration
   FhirDuration? get measureScoreDuration => measureScoreX?.isAs<FhirDuration>();
 
+  /// Getter for [measureScoreBoolean] as a FhirBoolean
+  FhirBoolean? get measureScoreBoolean => measureScoreX?.isAs<FhirBoolean>();
+
   /// [stratifier]
-  /// When a measure includes multiple stratifiers, there will be a
-  /// stratifier group for each stratifier defined by the measure.
+  /// The stratification results for this measure group, calculated as
+  /// defined by the stratifier element of the measure being reported. Each
+  /// group in the MeasureReport SHALL have stratifiers as defined in the
+  /// corresponding group of the Measure being reported.
   final List<MeasureReportStratifier>? stratifier;
   @override
   Map<String, dynamic> toJson() {
@@ -1101,12 +1230,32 @@ class MeasureReportGroup extends BackboneElement {
       linkId,
     );
     addField(
+      'calculatedDate',
+      calculatedDate,
+    );
+    addField(
       'code',
       code,
     );
     addField(
+      'description',
+      description,
+    );
+    addField(
       'subject',
       subject,
+    );
+    addField(
+      'scoring',
+      scoring,
+    );
+    addField(
+      'improvementNotation',
+      improvementNotation,
+    );
+    addField(
+      'improvementNotationGuidance',
+      improvementNotationGuidance,
     );
     addField(
       'population',
@@ -1135,8 +1284,13 @@ class MeasureReportGroup extends BackboneElement {
       'extension',
       'modifierExtension',
       'linkId',
+      'calculatedDate',
       'code',
+      'description',
       'subject',
+      'scoring',
+      'improvementNotation',
+      'improvementNotationGuidance',
       'population',
       'measureScoreX',
       'stratifier',
@@ -1168,13 +1322,33 @@ class MeasureReportGroup extends BackboneElement {
         if (linkId != null) {
           fields.add(linkId!);
         }
+      case 'calculatedDate':
+        if (calculatedDate != null) {
+          fields.add(calculatedDate!);
+        }
       case 'code':
         if (code != null) {
           fields.add(code!);
         }
+      case 'description':
+        if (description != null) {
+          fields.add(description!);
+        }
       case 'subject':
         if (subject != null) {
           fields.add(subject!);
+        }
+      case 'scoring':
+        if (scoring != null) {
+          fields.add(scoring!);
+        }
+      case 'improvementNotation':
+        if (improvementNotation != null) {
+          fields.add(improvementNotation!);
+        }
+      case 'improvementNotationGuidance':
+        if (improvementNotationGuidance != null) {
+          fields.add(improvementNotationGuidance!);
         }
       case 'population':
         if (population != null) {
@@ -1206,6 +1380,10 @@ class MeasureReportGroup extends BackboneElement {
         }
       case 'measureScoreDuration':
         if (measureScoreX is FhirDuration) {
+          fields.add(measureScoreX!);
+        }
+      case 'measureScoreBoolean':
+        if (measureScoreX is FhirBoolean) {
           fields.add(measureScoreX!);
         }
       case 'stratifier':
@@ -1278,14 +1456,44 @@ class MeasureReportGroup extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
+      calculatedDate,
+      o.calculatedDate,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       code,
       o.code,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
+      description,
+      o.description,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       subject,
       o.subject,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      scoring,
+      o.scoring,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      improvementNotation,
+      o.improvementNotation,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      improvementNotationGuidance,
+      o.improvementNotationGuidance,
     )) {
       return false;
     }
@@ -1313,7 +1521,9 @@ class MeasureReportGroup extends BackboneElement {
 
 /// [MeasureReportPopulation]
 /// The populations that make up the population group, one for each type of
-/// population appropriate for the measure.
+/// population appropriate for the measure. Each group in the MeasureReport
+/// SHALL have populations as defined in the corresponding group of the
+/// Measure being reported.
 class MeasureReportPopulation extends BackboneElement {
   /// Primary constructor for
   /// [MeasureReportPopulation]
@@ -1324,7 +1534,9 @@ class MeasureReportPopulation extends BackboneElement {
     super.modifierExtension,
     this.linkId,
     this.code,
+    this.description,
     this.count,
+    this.countQuantity,
     this.subjectResults,
     this.subjectReport,
     this.subjects,
@@ -1365,10 +1577,20 @@ class MeasureReportPopulation extends BackboneElement {
         'code',
         CodeableConcept.fromJson,
       ),
+      description: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'description',
+        FhirMarkdown.fromJson,
+      ),
       count: JsonParser.parsePrimitive<FhirInteger>(
         json,
         'count',
         FhirInteger.fromJson,
+      ),
+      countQuantity: JsonParser.parseObject<Quantity>(
+        json,
+        'countQuantity',
+        Quantity.fromJson,
       ),
       subjectResults: JsonParser.parseObject<Reference>(
         json,
@@ -1434,16 +1656,32 @@ class MeasureReportPopulation extends BackboneElement {
 
   /// [linkId]
   /// The population from the Measure that corresponds to this population in
-  /// the MeasureReport resource.
+  /// the MeasureReport resource. This element SHALL be populated based on
+  /// the corresponding element in the Measure being reported.
   final FhirString? linkId;
 
   /// [code]
-  /// The type of the population.
+  /// The type of the population. This element SHALL be populated with at
+  /// least the codings in the code element of the corresponding population
+  /// in the Measure group being reported.
   final CodeableConcept? code;
+
+  /// [description]
+  /// The human readable description of this population criteria. This
+  /// element SHOULD be populated based on the description element of the
+  /// corresponding population in the Measure group being reported.
+  final FhirMarkdown? description;
 
   /// [count]
   /// The number of members of the population.
   final FhirInteger? count;
+
+  /// [countQuantity]
+  /// The number of members of the population, specified as a quantity to
+  /// support identifying units, as well as to support some composite measure
+  /// calculation use cases where the resulting count of the population is a
+  /// decimal value.
+  final Quantity? countQuantity;
 
   /// [subjectResults]
   /// This element refers to a List of individual level MeasureReport
@@ -1542,8 +1780,16 @@ class MeasureReportPopulation extends BackboneElement {
       code,
     );
     addField(
+      'description',
+      description,
+    );
+    addField(
       'count',
       count,
+    );
+    addField(
+      'countQuantity',
+      countQuantity,
     );
     addField(
       'subjectResults',
@@ -1569,7 +1815,9 @@ class MeasureReportPopulation extends BackboneElement {
       'modifierExtension',
       'linkId',
       'code',
+      'description',
       'count',
+      'countQuantity',
       'subjectResults',
       'subjectReport',
       'subjects',
@@ -1605,9 +1853,17 @@ class MeasureReportPopulation extends BackboneElement {
         if (code != null) {
           fields.add(code!);
         }
+      case 'description':
+        if (description != null) {
+          fields.add(description!);
+        }
       case 'count':
         if (count != null) {
           fields.add(count!);
+        }
+      case 'countQuantity':
+        if (countQuantity != null) {
+          fields.add(countQuantity!);
         }
       case 'subjectResults':
         if (subjectResults != null) {
@@ -1693,8 +1949,20 @@ class MeasureReportPopulation extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
+      description,
+      o.description,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       count,
       o.count,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      countQuantity,
+      o.countQuantity,
     )) {
       return false;
     }
@@ -1721,8 +1989,10 @@ class MeasureReportPopulation extends BackboneElement {
 }
 
 /// [MeasureReportStratifier]
-/// When a measure includes multiple stratifiers, there will be a
-/// stratifier group for each stratifier defined by the measure.
+/// The stratification results for this measure group, calculated as
+/// defined by the stratifier element of the measure being reported. Each
+/// group in the MeasureReport SHALL have stratifiers as defined in the
+/// corresponding group of the Measure being reported.
 class MeasureReportStratifier extends BackboneElement {
   /// Primary constructor for
   /// [MeasureReportStratifier]
@@ -1733,6 +2003,7 @@ class MeasureReportStratifier extends BackboneElement {
     super.modifierExtension,
     this.linkId,
     this.code,
+    this.description,
     this.stratum,
     super.disallowExtensions,
   }) : super();
@@ -1770,6 +2041,11 @@ class MeasureReportStratifier extends BackboneElement {
         json,
         'code',
         CodeableConcept.fromJson,
+      ),
+      description: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'description',
+        FhirMarkdown.fromJson,
       ),
       stratum: (json['stratum'] as List<dynamic>?)
           ?.map<MeasureReportStratum>(
@@ -1825,12 +2101,22 @@ class MeasureReportStratifier extends BackboneElement {
 
   /// [linkId]
   /// The stratifier from the Measure that corresponds to this stratifier in
-  /// the MeasureReport resource.
+  /// the MeasureReport resource. This element SHALL be populated based on
+  /// the corresponding element in the Measure being reported.
   final FhirString? linkId;
 
   /// [code]
   /// The meaning of this stratifier, as defined in the measure definition.
+  /// This element SHALL be populated with at least the codings in the code
+  /// element of the corresponding stratifier in the Measure group being
+  /// reported.
   final CodeableConcept? code;
+
+  /// [description]
+  /// The human readable description of this stratifier criteria. This
+  /// element SHOULD be populated with the description element of the
+  /// corresponding stratifier in the Measure group being reported.
+  final FhirMarkdown? description;
 
   /// [stratum]
   /// This element contains the results for a single stratum within the
@@ -1921,6 +2207,10 @@ class MeasureReportStratifier extends BackboneElement {
       code,
     );
     addField(
+      'description',
+      description,
+    );
+    addField(
       'stratum',
       stratum,
     );
@@ -1936,6 +2226,7 @@ class MeasureReportStratifier extends BackboneElement {
       'modifierExtension',
       'linkId',
       'code',
+      'description',
       'stratum',
     ];
   }
@@ -1968,6 +2259,10 @@ class MeasureReportStratifier extends BackboneElement {
       case 'code':
         if (code != null) {
           fields.add(code!);
+        }
+      case 'description':
+        if (description != null) {
+          fields.add(description!);
         }
       case 'stratum':
         if (stratum != null) {
@@ -2044,6 +2339,12 @@ class MeasureReportStratifier extends BackboneElement {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      description,
+      o.description,
+    )) {
+      return false;
+    }
     if (!listEquals<MeasureReportStratum>(
       stratum,
       o.stratum,
@@ -2081,6 +2382,7 @@ class MeasureReportStratum extends BackboneElement {
     Period? measureScorePeriod,
     Range? measureScoreRange,
     FhirDuration? measureScoreDuration,
+    FhirBoolean? measureScoreBoolean,
     super.disallowExtensions,
   })  : valueX = valueX ??
             valueCodeableConcept ??
@@ -2094,7 +2396,8 @@ class MeasureReportStratum extends BackboneElement {
             measureScoreCodeableConcept ??
             measureScorePeriod ??
             measureScoreRange ??
-            measureScoreDuration,
+            measureScoreDuration ??
+            measureScoreBoolean,
         super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -2155,6 +2458,7 @@ class MeasureReportStratum extends BackboneElement {
           'measureScorePeriod': Period.fromJson,
           'measureScoreRange': Range.fromJson,
           'measureScoreDuration': FhirDuration.fromJson,
+          'measureScoreBoolean': FhirBoolean.fromJson,
         },
       ),
     );
@@ -2229,7 +2533,8 @@ class MeasureReportStratum extends BackboneElement {
 
   /// [population]
   /// The populations that make up the stratum, one for each type of
-  /// population appropriate to the measure.
+  /// population appropriate to the measure. For each stratifier, systems MAY
+  /// provide population breakdowns in addition to the stratified scores.
   final List<MeasureReportPopulation>? population;
 
   /// [measureScoreX]
@@ -2256,6 +2561,9 @@ class MeasureReportStratum extends BackboneElement {
 
   /// Getter for [measureScoreDuration] as a FhirDuration
   FhirDuration? get measureScoreDuration => measureScoreX?.isAs<FhirDuration>();
+
+  /// Getter for [measureScoreBoolean] as a FhirBoolean
+  FhirBoolean? get measureScoreBoolean => measureScoreX?.isAs<FhirBoolean>();
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -2453,6 +2761,10 @@ class MeasureReportStratum extends BackboneElement {
         if (measureScoreX is FhirDuration) {
           fields.add(measureScoreX!);
         }
+      case 'measureScoreBoolean':
+        if (measureScoreX is FhirBoolean) {
+          fields.add(measureScoreX!);
+        }
       default:
         if (checkValid) {
           throw ArgumentError('Invalid name: $fieldName');
@@ -2552,6 +2864,7 @@ class MeasureReportComponent extends BackboneElement {
     super.modifierExtension,
     this.linkId,
     required this.code,
+    this.description,
     required this.valueX,
     super.disallowExtensions,
   }) : super();
@@ -2590,6 +2903,11 @@ class MeasureReportComponent extends BackboneElement {
         'code',
         CodeableConcept.fromJson,
       )!,
+      description: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'description',
+        FhirMarkdown.fromJson,
+      ),
       valueX: JsonParser.parsePolymorphic<ValueXMeasureReportComponent>(
         json,
         {
@@ -2647,12 +2965,22 @@ class MeasureReportComponent extends BackboneElement {
 
   /// [linkId]
   /// The stratifier component from the Measure that corresponds to this
-  /// stratifier component in the MeasureReport resource.
+  /// stratifier component in the MeasureReport resource. This element SHALL
+  /// be populated based on the corresponding element in the Measure being
+  /// reported.
   final FhirString? linkId;
 
   /// [code]
-  /// The code for the stratum component value.
+  /// The code for the stratum component value. This element SHALL be
+  /// populated with at least the codings in the code element of the
+  /// corresponding component of the stratifier being reported.
   final CodeableConcept code;
+
+  /// [description]
+  /// The human readable description of this stratifier criteria component.
+  /// This element MAY be populated with the description of the corresponding
+  /// component of the stratifier being reported.
+  final FhirMarkdown? description;
 
   /// [valueX]
   /// The stratum component value.
@@ -2755,6 +3083,10 @@ class MeasureReportComponent extends BackboneElement {
       'code',
       code,
     );
+    addField(
+      'description',
+      description,
+    );
     final valueXFhirType = valueX.fhirType;
     addField(
       'value${valueXFhirType.capitalize()}',
@@ -2773,6 +3105,7 @@ class MeasureReportComponent extends BackboneElement {
       'modifierExtension',
       'linkId',
       'code',
+      'description',
       'valueX',
     ];
   }
@@ -2804,6 +3137,10 @@ class MeasureReportComponent extends BackboneElement {
         }
       case 'code':
         fields.add(code);
+      case 'description':
+        if (description != null) {
+          fields.add(description!);
+        }
       case 'value':
         fields.add(valueX);
       case 'valueX':
@@ -2900,6 +3237,12 @@ class MeasureReportComponent extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
+      description,
+      o.description,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       valueX,
       o.valueX,
     )) {
@@ -2911,7 +3254,8 @@ class MeasureReportComponent extends BackboneElement {
 
 /// [MeasureReportPopulation1]
 /// The populations that make up the stratum, one for each type of
-/// population appropriate to the measure.
+/// population appropriate to the measure. For each stratifier, systems MAY
+/// provide population breakdowns in addition to the stratified scores.
 class MeasureReportPopulation1 extends BackboneElement {
   /// Primary constructor for
   /// [MeasureReportPopulation1]
@@ -2923,6 +3267,7 @@ class MeasureReportPopulation1 extends BackboneElement {
     this.linkId,
     this.code,
     this.count,
+    this.countQuantity,
     this.subjectResults,
     this.subjectReport,
     this.subjects,
@@ -2967,6 +3312,11 @@ class MeasureReportPopulation1 extends BackboneElement {
         json,
         'count',
         FhirInteger.fromJson,
+      ),
+      countQuantity: JsonParser.parseObject<Quantity>(
+        json,
+        'countQuantity',
+        Quantity.fromJson,
       ),
       subjectResults: JsonParser.parseObject<Reference>(
         json,
@@ -3032,16 +3382,26 @@ class MeasureReportPopulation1 extends BackboneElement {
 
   /// [linkId]
   /// The population from the Measure that corresponds to this population in
-  /// the MeasureReport resource.
+  /// the MeasureReport resource. This element SHALL be populated with the
+  /// linkId corresponding to the population being reported.
   final FhirString? linkId;
 
   /// [code]
-  /// The type of the population.
+  /// The type of the population. This element SHALL be populated with at
+  /// least the codings in the code element of the corresponding population
+  /// being reported.
   final CodeableConcept? code;
 
   /// [count]
   /// The number of members of the population in this stratum.
   final FhirInteger? count;
+
+  /// [countQuantity]
+  /// The number of members of the population in this stratum, specified as a
+  /// quantity to support identifying units, as well as to support some
+  /// composite measure calculation use cases where the resulting count of
+  /// the population is a decimal value.
+  final Quantity? countQuantity;
 
   /// [subjectResults]
   /// This element refers to a List of individual level MeasureReport
@@ -3144,6 +3504,10 @@ class MeasureReportPopulation1 extends BackboneElement {
       count,
     );
     addField(
+      'countQuantity',
+      countQuantity,
+    );
+    addField(
       'subjectResults',
       subjectResults,
     );
@@ -3168,6 +3532,7 @@ class MeasureReportPopulation1 extends BackboneElement {
       'linkId',
       'code',
       'count',
+      'countQuantity',
       'subjectResults',
       'subjectReport',
       'subjects',
@@ -3206,6 +3571,10 @@ class MeasureReportPopulation1 extends BackboneElement {
       case 'count':
         if (count != null) {
           fields.add(count!);
+        }
+      case 'countQuantity':
+        if (countQuantity != null) {
+          fields.add(countQuantity!);
         }
       case 'subjectResults':
         if (subjectResults != null) {
@@ -3293,6 +3662,12 @@ class MeasureReportPopulation1 extends BackboneElement {
     if (!equalsDeepWithNull(
       count,
       o.count,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      countQuantity,
+      o.countQuantity,
     )) {
       return false;
     }

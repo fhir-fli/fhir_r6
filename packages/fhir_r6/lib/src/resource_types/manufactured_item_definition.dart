@@ -236,7 +236,7 @@ class ManufacturedItemDefinition extends DomainResource {
   final List<ManufacturedItemDefinitionProperty>? property;
 
   /// [component]
-  /// Physical parts of the manufactured item, that it is intrisically made
+  /// Physical parts of the manufactured item, that it is intrinsically made
   /// from. This is distinct from the ingredients that are part of its
   /// chemical makeup.
   final List<ManufacturedItemDefinitionComponent>? component;
@@ -1015,7 +1015,7 @@ class ManufacturedItemDefinitionProperty extends BackboneElement {
 }
 
 /// [ManufacturedItemDefinitionComponent]
-/// Physical parts of the manufactured item, that it is intrisically made
+/// Physical parts of the manufactured item, that it is intrinsically made
 /// from. This is distinct from the ingredients that are part of its
 /// chemical makeup.
 class ManufacturedItemDefinitionComponent extends BackboneElement {
@@ -1155,7 +1155,7 @@ class ManufacturedItemDefinitionComponent extends BackboneElement {
 
   /// [amount]
   /// The measurable amount of total quantity of all substances in the
-  /// component, expressable in different ways (e.g. by mass or volume).
+  /// component, expressible in different ways (e.g. by mass or volume).
   final List<Quantity>? amount;
 
   /// [constituent]
@@ -1554,7 +1554,7 @@ class ManufacturedItemDefinitionConstituent extends BackboneElement {
   String get fhirType => 'ManufacturedItemDefinitionConstituent';
 
   /// [amount]
-  /// The measurable amount of the substance, expressable in different ways
+  /// The measurable amount of the substance, expressible in different ways
   /// (e.g. by mass or volume).
   final List<Quantity>? amount;
 

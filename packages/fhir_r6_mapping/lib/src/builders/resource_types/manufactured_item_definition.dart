@@ -289,7 +289,7 @@ class ManufacturedItemDefinitionBuilder extends DomainResourceBuilder {
   List<ManufacturedItemDefinitionPropertyBuilder>? property;
 
   /// [component]
-  /// Physical parts of the manufactured item, that it is intrisically made
+  /// Physical parts of the manufactured item, that it is intrinsically made
   /// from. This is distinct from the ingredients that are part of its
   /// chemical makeup.
   List<ManufacturedItemDefinitionComponentBuilder>? component;
@@ -1798,7 +1798,7 @@ class ManufacturedItemDefinitionPropertyBuilder extends BackboneElementBuilder {
 }
 
 /// [ManufacturedItemDefinitionComponentBuilder]
-/// Physical parts of the manufactured item, that it is intrisically made
+/// Physical parts of the manufactured item, that it is intrinsically made
 /// from. This is distinct from the ingredients that are part of its
 /// chemical makeup.
 class ManufacturedItemDefinitionComponentBuilder
@@ -1972,7 +1972,7 @@ class ManufacturedItemDefinitionComponentBuilder
 
   /// [amount]
   /// The measurable amount of total quantity of all substances in the
-  /// component, expressable in different ways (e.g. by mass or volume).
+  /// component, expressible in different ways (e.g. by mass or volume).
   List<QuantityBuilder>? amount;
 
   /// [constituent]
@@ -2620,7 +2620,7 @@ class ManufacturedItemDefinitionConstituentBuilder
   String get fhirType => 'ManufacturedItemDefinitionConstituent';
 
   /// [amount]
-  /// The measurable amount of the substance, expressable in different ways
+  /// The measurable amount of the substance, expressible in different ways
   /// (e.g. by mass or volume).
   List<QuantityBuilder>? amount;
 

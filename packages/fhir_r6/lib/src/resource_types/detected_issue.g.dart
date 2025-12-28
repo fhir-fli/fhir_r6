@@ -21,15 +21,17 @@ abstract class $DetectedIssueCopyWith<T> extends $DomainResourceCopyWith<T> {
     DetectedIssueStatus? status,
     List<CodeableConcept>? category,
     CodeableConcept? code,
-    DetectedIssueSeverity? severity,
+    CodeableConcept? severity,
     Reference? subject,
     Reference? encounter,
-    FhirDateTime? identifiedX,
+    IdentifiedXDetectedIssue? identifiedX,
     Reference? author,
     List<Reference>? implicated,
     List<DetectedIssueEvidence>? evidence,
     FhirMarkdown? detail,
     FhirUri? reference,
+    CodeableConcept? qualityOfEvidence,
+    CodeableConcept? managementCode,
     List<DetectedIssueMitigation>? mitigation,
     bool? disallowExtensions,
   });
@@ -64,6 +66,8 @@ class _$DetectedIssueCopyWithImpl<T> implements $DetectedIssueCopyWith<T> {
     Object? evidence = fhirSentinel,
     Object? detail = fhirSentinel,
     Object? reference = fhirSentinel,
+    Object? qualityOfEvidence = fhirSentinel,
+    Object? managementCode = fhirSentinel,
     Object? mitigation = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -101,7 +105,7 @@ class _$DetectedIssueCopyWithImpl<T> implements $DetectedIssueCopyWith<T> {
             : code as CodeableConcept?,
         severity: identical(severity, fhirSentinel)
             ? _value.severity
-            : severity as DetectedIssueSeverity?,
+            : severity as CodeableConcept?,
         subject: identical(subject, fhirSentinel)
             ? _value.subject
             : subject as Reference?,
@@ -110,7 +114,7 @@ class _$DetectedIssueCopyWithImpl<T> implements $DetectedIssueCopyWith<T> {
             : encounter as Reference?,
         identifiedX: identical(identifiedX, fhirSentinel)
             ? _value.identifiedX
-            : identifiedX as FhirDateTime?,
+            : identifiedX as IdentifiedXDetectedIssue?,
         author: identical(author, fhirSentinel)
             ? _value.author
             : author as Reference?,
@@ -126,6 +130,12 @@ class _$DetectedIssueCopyWithImpl<T> implements $DetectedIssueCopyWith<T> {
         reference: identical(reference, fhirSentinel)
             ? _value.reference
             : reference as FhirUri?,
+        qualityOfEvidence: identical(qualityOfEvidence, fhirSentinel)
+            ? _value.qualityOfEvidence
+            : qualityOfEvidence as CodeableConcept?,
+        managementCode: identical(managementCode, fhirSentinel)
+            ? _value.managementCode
+            : managementCode as CodeableConcept?,
         mitigation: identical(mitigation, fhirSentinel)
             ? _value.mitigation
             : mitigation as List<DetectedIssueMitigation>?,

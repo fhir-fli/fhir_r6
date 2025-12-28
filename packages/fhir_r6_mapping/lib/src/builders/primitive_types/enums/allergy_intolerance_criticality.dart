@@ -149,7 +149,7 @@ class AllergyIntoleranceCriticalityBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Low Risk',
     ),
@@ -164,7 +164,7 @@ class AllergyIntoleranceCriticalityBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'High Risk',
     ),
@@ -179,7 +179,7 @@ class AllergyIntoleranceCriticalityBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Unable to Assess Risk',
     ),

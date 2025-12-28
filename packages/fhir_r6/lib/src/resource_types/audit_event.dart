@@ -20,8 +20,8 @@ class AuditEvent extends DomainResource {
     super.contained,
     super.extension_,
     super.modifierExtension,
-    this.category,
-    required this.code,
+    required this.type,
+    this.subtype,
     this.action,
     this.severity,
     OccurredXAuditEvent? occurredX,
@@ -92,18 +92,18 @@ class AuditEvent extends DomainResource {
             ),
           )
           .toList(),
-      category: (json['category'] as List<dynamic>?)
+      type: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'type',
+        CodeableConcept.fromJson,
+      )!,
+      subtype: (json['subtype'] as List<dynamic>?)
           ?.map<CodeableConcept>(
             (v) => CodeableConcept.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
           .toList(),
-      code: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'code',
-        CodeableConcept.fromJson,
-      )!,
       action: JsonParser.parsePrimitive<AuditEventAction>(
         json,
         'action',
@@ -219,13 +219,15 @@ class AuditEvent extends DomainResource {
   @override
   String get fhirType => 'AuditEvent';
 
-  /// [category]
-  /// Classification of the type of event.
-  final List<CodeableConcept>? category;
+  /// [type]
+  /// Partitions the audit event into one or more categories that can be used
+  /// to filter searching, to govern access control and/or to guide system
+  /// behavior.
+  final CodeableConcept type;
 
-  /// [code]
-  /// Describes what happened. The most specific code for the event.
-  final CodeableConcept code;
+  /// [subtype]
+  /// Describes what happened. The most specific codes for the event.
+  final List<CodeableConcept>? subtype;
 
   /// [action]
   /// Indicator for type of action performed during the event that generated
@@ -262,7 +264,7 @@ class AuditEvent extends DomainResource {
   final List<CodeableConcept>? authorization;
 
   /// [basedOn]
-  /// Allows tracing of authorizatino for the events and tracking whether
+  /// Allows tracing of authorization for the events and tracking whether
   /// proposals/recommendations were acted upon.
   final List<Reference>? basedOn;
 
@@ -387,12 +389,12 @@ class AuditEvent extends DomainResource {
       modifierExtension,
     );
     addField(
-      'category',
-      category,
+      'type',
+      type,
     );
     addField(
-      'code',
-      code,
+      'subtype',
+      subtype,
     );
     addField(
       'action',
@@ -461,8 +463,8 @@ class AuditEvent extends DomainResource {
       'contained',
       'extension',
       'modifierExtension',
-      'category',
-      'code',
+      'type',
+      'subtype',
       'action',
       'severity',
       'occurredX',
@@ -519,12 +521,12 @@ class AuditEvent extends DomainResource {
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
         }
-      case 'category':
-        if (category != null) {
-          fields.addAll(category!);
+      case 'type':
+        fields.add(type);
+      case 'subtype':
+        if (subtype != null) {
+          fields.addAll(subtype!);
         }
-      case 'code':
-        fields.add(code);
       case 'action':
         if (action != null) {
           fields.add(action!);
@@ -664,15 +666,15 @@ class AuditEvent extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
-      category,
-      o.category,
+    if (!equalsDeepWithNull(
+      type,
+      o.type,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      code,
-      o.code,
+    if (!listEquals<CodeableConcept>(
+      subtype,
+      o.subtype,
     )) {
       return false;
     }
@@ -1896,6 +1898,7 @@ class AuditEventEntity extends BackboneElement {
     this.what,
     this.role,
     this.securityLabel,
+    this.description,
     this.query,
     this.detail,
     this.agent,
@@ -1943,6 +1946,11 @@ class AuditEventEntity extends BackboneElement {
             ),
           )
           .toList(),
+      description: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'description',
+        FhirString.fromJson,
+      ),
       query: JsonParser.parsePrimitive<FhirBase64Binary>(
         json,
         'query',
@@ -2020,6 +2028,10 @@ class AuditEventEntity extends BackboneElement {
   /// [securityLabel]
   /// Security labels for the identified entity.
   final List<CodeableConcept>? securityLabel;
+
+  /// [description]
+  /// Text that describes the entity in more detail.
+  final FhirString? description;
 
   /// [query]
   /// The query parameters for a query-type entities.
@@ -2126,6 +2138,10 @@ class AuditEventEntity extends BackboneElement {
       securityLabel,
     );
     addField(
+      'description',
+      description,
+    );
+    addField(
       'query',
       query,
     );
@@ -2150,6 +2166,7 @@ class AuditEventEntity extends BackboneElement {
       'what',
       'role',
       'securityLabel',
+      'description',
       'query',
       'detail',
       'agent',
@@ -2188,6 +2205,10 @@ class AuditEventEntity extends BackboneElement {
       case 'securityLabel':
         if (securityLabel != null) {
           fields.addAll(securityLabel!);
+        }
+      case 'description':
+        if (description != null) {
+          fields.add(description!);
         }
       case 'query':
         if (query != null) {
@@ -2275,6 +2296,12 @@ class AuditEventEntity extends BackboneElement {
     if (!listEquals<CodeableConcept>(
       securityLabel,
       o.securityLabel,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      description,
+      o.description,
     )) {
       return false;
     }
@@ -2407,7 +2434,9 @@ class AuditEventDetail extends BackboneElement {
   String get fhirType => 'AuditEventDetail';
 
   /// [type]
-  /// The type of extra detail provided in the value.
+  /// The name of extra detail provided in the value. This element is the tag
+  /// for the value. Where a simple string is used for the tag name, use the
+  /// CodeableConcept.display element.
   final CodeableConcept type;
 
   /// [valueX]

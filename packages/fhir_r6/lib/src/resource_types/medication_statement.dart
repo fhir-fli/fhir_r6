@@ -30,9 +30,6 @@ part 'medication_statement.g.dart';
 /// bottle or from a list of medications the patient, clinician or other
 /// party maintains. Medication administration is more formal and is not
 /// missing detailed information.
-///
-/// The MedicationStatement resource was previously called
-/// MedicationStatement.
 class MedicationStatement extends DomainResource {
   /// Primary constructor for
   /// [MedicationStatement]
@@ -58,6 +55,7 @@ class MedicationStatement extends DomainResource {
     Period? effectivePeriod,
     Timing? effectiveTiming,
     this.dateAsserted,
+    this.author,
     this.informationSource,
     this.derivedFrom,
     this.reason,
@@ -178,6 +176,11 @@ class MedicationStatement extends DomainResource {
         json,
         'dateAsserted',
         FhirDateTime.fromJson,
+      ),
+      author: JsonParser.parseObject<Reference>(
+        json,
+        'author',
+        Reference.fromJson,
       ),
       informationSource: (json['informationSource'] as List<dynamic>?)
           ?.map<Reference>(
@@ -336,6 +339,11 @@ class MedicationStatement extends DomainResource {
   /// The date when the Medication Statement was asserted by the information
   /// source.
   final FhirDateTime? dateAsserted;
+
+  /// [author]
+  /// The individual, organization, or device that created the statement and
+  /// has responsibility for its content.
+  final Reference? author;
 
   /// [informationSource]
   /// The person or organization that provided the information about the
@@ -517,6 +525,10 @@ class MedicationStatement extends DomainResource {
       dateAsserted,
     );
     addField(
+      'author',
+      author,
+    );
+    addField(
       'informationSource',
       informationSource,
     );
@@ -572,6 +584,7 @@ class MedicationStatement extends DomainResource {
       'encounter',
       'effectiveX',
       'dateAsserted',
+      'author',
       'informationSource',
       'derivedFrom',
       'reason',
@@ -665,6 +678,10 @@ class MedicationStatement extends DomainResource {
       case 'dateAsserted':
         if (dateAsserted != null) {
           fields.add(dateAsserted!);
+        }
+      case 'author':
+        if (author != null) {
+          fields.add(author!);
         }
       case 'informationSource':
         if (informationSource != null) {
@@ -838,6 +855,12 @@ class MedicationStatement extends DomainResource {
     if (!equalsDeepWithNull(
       dateAsserted,
       o.dateAsserted,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      author,
+      o.author,
     )) {
       return false;
     }

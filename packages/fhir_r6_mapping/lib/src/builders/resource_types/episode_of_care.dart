@@ -35,7 +35,7 @@ class EpisodeOfCareBuilder extends DomainResourceBuilder {
     this.type,
     this.reason,
     this.diagnosis,
-    this.patient,
+    this.subject,
     this.managingOrganization,
     this.period,
     this.referralRequest,
@@ -51,7 +51,7 @@ class EpisodeOfCareBuilder extends DomainResourceBuilder {
   /// For Builder classes, no fields are required
   factory EpisodeOfCareBuilder.empty() => EpisodeOfCareBuilder(
         status: EpisodeOfCareStatusBuilder.values.first,
-        patient: ReferenceBuilder.empty(),
+        subject: ReferenceBuilder.empty(),
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -176,11 +176,11 @@ class EpisodeOfCareBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      patient: JsonParser.parseObject<ReferenceBuilder>(
+      subject: JsonParser.parseObject<ReferenceBuilder>(
         json,
-        'patient',
+        'subject',
         ReferenceBuilder.fromJson,
-        '$objectPath.patient',
+        '$objectPath.subject',
       ),
       managingOrganization: JsonParser.parseObject<ReferenceBuilder>(
         json,
@@ -305,9 +305,9 @@ class EpisodeOfCareBuilder extends DomainResourceBuilder {
   /// of care.
   List<EpisodeOfCareDiagnosisBuilder>? diagnosis;
 
-  /// [patient]
-  /// The patient who is the focus of this episode of care.
-  ReferenceBuilder? patient;
+  /// [subject]
+  /// The patient/group who is the focus of this episode of care.
+  ReferenceBuilder? subject;
 
   /// [managingOrganization]
   /// The organization that has assumed the specific responsibilities for
@@ -391,7 +391,7 @@ class EpisodeOfCareBuilder extends DomainResourceBuilder {
     addField('type', type);
     addField('reason', reason);
     addField('diagnosis', diagnosis);
-    addField('patient', patient);
+    addField('subject', subject);
     addField('managingOrganization', managingOrganization);
     addField('period', period);
     addField('referralRequest', referralRequest);
@@ -419,7 +419,7 @@ class EpisodeOfCareBuilder extends DomainResourceBuilder {
       'type',
       'reason',
       'diagnosis',
-      'patient',
+      'subject',
       'managingOrganization',
       'period',
       'referralRequest',
@@ -494,9 +494,9 @@ class EpisodeOfCareBuilder extends DomainResourceBuilder {
         if (diagnosis != null) {
           fields.addAll(diagnosis!);
         }
-      case 'patient':
-        if (patient != null) {
-          fields.add(patient!);
+      case 'subject':
+        if (subject != null) {
+          fields.add(subject!);
         }
       case 'managingOrganization':
         if (managingOrganization != null) {
@@ -781,10 +781,10 @@ class EpisodeOfCareBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'patient':
+      case 'subject':
         {
           if (child is ReferenceBuilder) {
-            patient = child;
+            subject = child;
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -899,7 +899,7 @@ class EpisodeOfCareBuilder extends DomainResourceBuilder {
         return ['EpisodeOfCareReasonBuilder'];
       case 'diagnosis':
         return ['EpisodeOfCareDiagnosisBuilder'];
-      case 'patient':
+      case 'subject':
         return ['ReferenceBuilder'];
       case 'managingOrganization':
         return ['ReferenceBuilder'];
@@ -993,9 +993,9 @@ class EpisodeOfCareBuilder extends DomainResourceBuilder {
           diagnosis = <EpisodeOfCareDiagnosisBuilder>[];
           return;
         }
-      case 'patient':
+      case 'subject':
         {
-          patient = ReferenceBuilder.empty();
+          subject = ReferenceBuilder.empty();
           return;
         }
       case 'managingOrganization':
@@ -1051,7 +1051,7 @@ class EpisodeOfCareBuilder extends DomainResourceBuilder {
     List<CodeableConceptBuilder>? type,
     List<EpisodeOfCareReasonBuilder>? reason,
     List<EpisodeOfCareDiagnosisBuilder>? diagnosis,
-    ReferenceBuilder? patient,
+    ReferenceBuilder? subject,
     ReferenceBuilder? managingOrganization,
     PeriodBuilder? period,
     List<ReferenceBuilder>? referralRequest,
@@ -1079,7 +1079,7 @@ class EpisodeOfCareBuilder extends DomainResourceBuilder {
       type: type ?? this.type,
       reason: reason ?? this.reason,
       diagnosis: diagnosis ?? this.diagnosis,
-      patient: patient ?? this.patient,
+      subject: subject ?? this.subject,
       managingOrganization: managingOrganization ?? this.managingOrganization,
       period: period ?? this.period,
       referralRequest: referralRequest ?? this.referralRequest,
@@ -1197,8 +1197,8 @@ class EpisodeOfCareBuilder extends DomainResourceBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      patient,
-      o.patient,
+      subject,
+      o.subject,
     )) {
       return false;
     }
@@ -1759,12 +1759,16 @@ class EpisodeOfCareReasonBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      use: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'use',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.use',
-      ),
+      use: (json['use'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.use',
+              },
+            ),
+          )
+          .toList(),
       value: (json['value'] as List<dynamic>?)
           ?.map<CodeableReferenceBuilder>(
             (v) => CodeableReferenceBuilder.fromJson(
@@ -1823,7 +1827,7 @@ class EpisodeOfCareReasonBuilder extends BackboneElementBuilder {
   /// [use]
   /// What the reason value should be used as e.g. Chief Complaint, Health
   /// Concern, Health Maintenance (including screening).
-  CodeableConceptBuilder? use;
+  List<CodeableConceptBuilder>? use;
 
   /// [value]
   /// The medical reason that is expected to be addressed during the episode
@@ -1909,7 +1913,7 @@ class EpisodeOfCareReasonBuilder extends BackboneElementBuilder {
         }
       case 'use':
         if (use != null) {
-          fields.add(use!);
+          fields.addAll(use!);
         }
       case 'value':
         if (value != null) {
@@ -1998,8 +2002,16 @@ class EpisodeOfCareReasonBuilder extends BackboneElementBuilder {
         }
       case 'use':
         {
-          if (child is CodeableConceptBuilder) {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
             use = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            use = [
+              ...(use ?? []),
+              child,
+            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -2067,7 +2079,7 @@ class EpisodeOfCareReasonBuilder extends BackboneElementBuilder {
         }
       case 'use':
         {
-          use = CodeableConceptBuilder.empty();
+          use = <CodeableConceptBuilder>[];
           return;
         }
       case 'value':
@@ -2087,7 +2099,7 @@ class EpisodeOfCareReasonBuilder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    CodeableConceptBuilder? use,
+    List<CodeableConceptBuilder>? use,
     List<CodeableReferenceBuilder>? value,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -2146,7 +2158,7 @@ class EpisodeOfCareReasonBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<CodeableConceptBuilder>(
       use,
       o.use,
     )) {
@@ -2227,12 +2239,16 @@ class EpisodeOfCareDiagnosisBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      use: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'use',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.use',
-      ),
+      use: (json['use'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.use',
+              },
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -2286,7 +2302,7 @@ class EpisodeOfCareDiagnosisBuilder extends BackboneElementBuilder {
   /// [use]
   /// Role that this diagnosis has within the episode of care (e.g.
   /// admission, billing, discharge …).
-  CodeableConceptBuilder? use;
+  List<CodeableConceptBuilder>? use;
 
   /// Converts a [EpisodeOfCareDiagnosisBuilder]
   /// to [EpisodeOfCareDiagnosis]
@@ -2371,7 +2387,7 @@ class EpisodeOfCareDiagnosisBuilder extends BackboneElementBuilder {
         }
       case 'use':
         if (use != null) {
-          fields.add(use!);
+          fields.addAll(use!);
         }
       default:
         if (checkValid) {
@@ -2472,8 +2488,16 @@ class EpisodeOfCareDiagnosisBuilder extends BackboneElementBuilder {
         }
       case 'use':
         {
-          if (child is CodeableConceptBuilder) {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
             use = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            use = [
+              ...(use ?? []),
+              child,
+            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -2530,7 +2554,7 @@ class EpisodeOfCareDiagnosisBuilder extends BackboneElementBuilder {
         }
       case 'use':
         {
-          use = CodeableConceptBuilder.empty();
+          use = <CodeableConceptBuilder>[];
           return;
         }
       default:
@@ -2546,7 +2570,7 @@ class EpisodeOfCareDiagnosisBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     List<CodeableReferenceBuilder>? condition,
-    CodeableConceptBuilder? use,
+    List<CodeableConceptBuilder>? use,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -2610,7 +2634,7 @@ class EpisodeOfCareDiagnosisBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<CodeableConceptBuilder>(
       use,
       o.use,
     )) {

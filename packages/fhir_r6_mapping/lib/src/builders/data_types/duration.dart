@@ -10,6 +10,7 @@ class FhirDurationBuilder extends QuantityBuilder
     implements
         TimingXActivityDefinitionBuilder,
         DueXGoalTargetBuilder,
+        DurationXGroupCharacteristicBuilder,
         ValueXInventoryItemCharacteristicBuilder,
         MeasureScoreXMeasureReportGroupBuilder,
         MeasureScoreXMeasureReportStratumBuilder,
@@ -19,6 +20,7 @@ class FhirDurationBuilder extends QuantityBuilder
         TimingXRequestOrchestrationActionBuilder,
         OffsetXRequestOrchestrationRelatedActionBuilder,
         FastingStatusXSpecimenCollectionBuilder,
+        TimeXSpecimenProcessingBuilder,
         ValueXTaskInputBuilder,
         ValueXTaskOutputBuilder,
         ValueXTransportInputBuilder,
@@ -31,6 +33,7 @@ class FhirDurationBuilder extends QuantityBuilder
         ValueXElementDefinitionExampleBuilder,
         ValueXExtensionBuilder,
         PeriodXProductShelfLifeBuilder,
+        OffsetXRelativeTimeBuilder,
         BoundsXTimingRepeatBuilder {
   /// Primary constructor for
   /// [FhirDurationBuilder]

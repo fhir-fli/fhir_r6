@@ -21,6 +21,7 @@ class VisionPrescription extends DomainResource {
     super.extension_,
     super.modifierExtension,
     this.identifier,
+    this.basedOn,
     required this.status,
     required this.created,
     required this.patient,
@@ -86,6 +87,13 @@ class VisionPrescription extends DomainResource {
       identifier: (json['identifier'] as List<dynamic>?)
           ?.map<Identifier>(
             (v) => Identifier.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      basedOn: (json['basedOn'] as List<dynamic>?)
+          ?.map<Reference>(
+            (v) => Reference.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -175,6 +183,10 @@ class VisionPrescription extends DomainResource {
   /// [identifier]
   /// A unique identifier assigned to this vision prescription.
   final List<Identifier>? identifier;
+
+  /// [basedOn]
+  /// Plan/proposal/order/request fulfilled by this prescription.
+  final List<Reference>? basedOn;
 
   /// [status]
   /// The status of the resource instance.
@@ -309,6 +321,10 @@ class VisionPrescription extends DomainResource {
       identifier,
     );
     addField(
+      'basedOn',
+      basedOn,
+    );
+    addField(
       'status',
       status,
     );
@@ -352,6 +368,7 @@ class VisionPrescription extends DomainResource {
       'extension',
       'modifierExtension',
       'identifier',
+      'basedOn',
       'status',
       'created',
       'patient',
@@ -406,6 +423,10 @@ class VisionPrescription extends DomainResource {
       case 'identifier':
         if (identifier != null) {
           fields.addAll(identifier!);
+        }
+      case 'basedOn':
+        if (basedOn != null) {
+          fields.addAll(basedOn!);
         }
       case 'status':
         fields.add(status);
@@ -515,6 +536,12 @@ class VisionPrescription extends DomainResource {
     if (!listEquals<Identifier>(
       identifier,
       o.identifier,
+    )) {
+      return false;
+    }
+    if (!listEquals<Reference>(
+      basedOn,
+      o.basedOn,
     )) {
       return false;
     }

@@ -5,9 +5,9 @@ import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [ActorDefinitionBuilder]
-/// Describes an actor - a human or an application that plays a role in
-/// data exchange, and that may have obligations associated with the role
-/// the actor plays.
+/// Provides a definition of an actor - a system, individual, non-system
+/// device, or collective - that plays a role in a process, such as data
+/// exchange, along with associated obligations.
 class ActorDefinitionBuilder extends CanonicalResourceBuilder {
   /// Primary constructor for
   /// [ActorDefinitionBuilder]
@@ -43,8 +43,7 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
     this.type,
     this.documentation,
     this.reference,
-    this.capabilities,
-    this.derivedFrom,
+    this.baseDefinition,
   })  : versionAlgorithmX = versionAlgorithmX ??
             versionAlgorithmString ??
             versionAlgorithmCoding,
@@ -57,7 +56,7 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
   /// For Builder classes, no fields are required
   factory ActorDefinitionBuilder.empty() => ActorDefinitionBuilder(
         status: PublicationStatusBuilder.values.first,
-        type: ExampleScenarioActorTypeBuilder.values.first,
+        type: ActorDefinitionActorTypeBuilder.values.first,
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -247,10 +246,10 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.copyrightLabel',
       ),
-      type: JsonParser.parsePrimitive<ExampleScenarioActorTypeBuilder>(
+      type: JsonParser.parsePrimitive<ActorDefinitionActorTypeBuilder>(
         json,
         'type',
-        ExampleScenarioActorTypeBuilder.fromJson,
+        ActorDefinitionActorTypeBuilder.fromJson,
         '$objectPath.type',
       ),
       documentation: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
@@ -265,17 +264,11 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
         FhirUrlBuilder.fromJson,
         '$objectPath.reference',
       ),
-      capabilities: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
+      baseDefinition: JsonParser.parsePrimitiveList<FhirCanonicalBuilder>(
         json,
-        'capabilities',
+        'baseDefinition',
         FhirCanonicalBuilder.fromJson,
-        '$objectPath.capabilities',
-      ),
-      derivedFrom: JsonParser.parsePrimitiveList<FhirCanonicalBuilder>(
-        json,
-        'derivedFrom',
-        FhirCanonicalBuilder.fromJson,
-        '$objectPath.derivedFrom',
+        '$objectPath.baseDefinition',
       ),
     );
   }
@@ -371,10 +364,11 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
 
   /// [type]
   /// Whether the actor represents a human or an appliction.
-  ExampleScenarioActorTypeBuilder? type;
+  ActorDefinitionActorTypeBuilder? type;
 
   /// [documentation]
-  /// Documentation about the functionality of the actor.
+  /// Details describing the nature of the actor as well as boundaries that
+  /// distinguish this type of actor from other actors.
   FhirMarkdownBuilder? documentation;
 
   /// [reference]
@@ -382,15 +376,11 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
   /// description and documentation.
   List<FhirUrlBuilder>? reference;
 
-  /// [capabilities]
-  /// The capability statement for the actor (if the concept is applicable).
-  FhirCanonicalBuilder? capabilities;
-
-  /// [derivedFrom]
-  /// A url that identifies the definition of this actor in another IG (which
-  /// IG must be listed in the dependencies). This actor inherits all the
-  /// obligations etc. as defined in the other IG.
-  List<FhirCanonicalBuilder>? derivedFrom;
+  /// [baseDefinition]
+  /// An ActorDefinition that is a super-type of this actor. This actor
+  /// inherits all of the obligations that apply to the referenced actor
+  /// definition and can be used wherever the referenced ActorDefinition can.
+  List<FhirCanonicalBuilder>? baseDefinition;
 
   /// Converts a [ActorDefinitionBuilder]
   /// to [ActorDefinition]
@@ -464,8 +454,7 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
     addField('type', type);
     addField('documentation', documentation);
     addField('reference', reference);
-    addField('capabilities', capabilities);
-    addField('derivedFrom', derivedFrom);
+    addField('baseDefinition', baseDefinition);
     return json;
   }
 
@@ -501,8 +490,7 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
       'type',
       'documentation',
       'reference',
-      'capabilities',
-      'derivedFrom',
+      'baseDefinition',
     ];
   }
 
@@ -639,13 +627,9 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
         if (reference != null) {
           fields.addAll(reference!);
         }
-      case 'capabilities':
-        if (capabilities != null) {
-          fields.add(capabilities!);
-        }
-      case 'derivedFrom':
-        if (derivedFrom != null) {
-          fields.addAll(derivedFrom!);
+      case 'baseDefinition':
+        if (baseDefinition != null) {
+          fields.addAll(baseDefinition!);
         }
       default:
         if (checkValid) {
@@ -1148,7 +1132,7 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
         }
       case 'type':
         {
-          if (child is ExampleScenarioActorTypeBuilder) {
+          if (child is ActorDefinitionActorTypeBuilder) {
             type = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
@@ -1157,7 +1141,7 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
               final stringValue = child.toString();
               // For enums, try to create directly from the string value
               try {
-                final converted = ExampleScenarioActorTypeBuilder(stringValue);
+                final converted = ActorDefinitionActorTypeBuilder(stringValue);
                 type = converted;
                 return;
               } catch (e) {
@@ -1238,36 +1222,16 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'capabilities':
-        {
-          if (child is FhirCanonicalBuilder) {
-            capabilities = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirCanonicalBuilder.tryParse(stringValue);
-              if (converted != null) {
-                capabilities = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'derivedFrom':
+      case 'baseDefinition':
         {
           if (child is List<FhirCanonicalBuilder>) {
             // Replace or create new list
-            derivedFrom = child;
+            baseDefinition = child;
             return;
           } else if (child is FhirCanonicalBuilder) {
             // Add single element to existing list or create new list
-            derivedFrom = [
-              ...(derivedFrom ?? []),
+            baseDefinition = [
+              ...(baseDefinition ?? []),
               child,
             ];
             return;
@@ -1286,7 +1250,7 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
               }
             }
             if (convertedList.isNotEmpty) {
-              derivedFrom = convertedList;
+              baseDefinition = convertedList;
               return;
             }
           } else if (child is PrimitiveTypeBuilder) {
@@ -1295,8 +1259,8 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
               final stringValue = child.toString();
               final converted = FhirCanonicalBuilder.tryParse(stringValue);
               if (converted != null) {
-                derivedFrom = [
-                  ...(derivedFrom ?? []),
+                baseDefinition = [
+                  ...(baseDefinition ?? []),
                   converted,
                 ];
                 return;
@@ -1381,9 +1345,7 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
         return ['FhirMarkdownBuilder'];
       case 'reference':
         return ['FhirUrlBuilder'];
-      case 'capabilities':
-        return ['FhirCanonicalBuilder'];
-      case 'derivedFrom':
+      case 'baseDefinition':
         return ['FhirCanonicalBuilder'];
       default:
         return <String>[];
@@ -1529,7 +1491,7 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
         }
       case 'type':
         {
-          type = ExampleScenarioActorTypeBuilder.empty();
+          type = ActorDefinitionActorTypeBuilder.empty();
           return;
         }
       case 'documentation':
@@ -1542,14 +1504,9 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
           reference = <FhirUrlBuilder>[];
           return;
         }
-      case 'capabilities':
+      case 'baseDefinition':
         {
-          capabilities = FhirCanonicalBuilder.empty();
-          return;
-        }
-      case 'derivedFrom':
-        {
-          derivedFrom = <FhirCanonicalBuilder>[];
+          baseDefinition = <FhirCanonicalBuilder>[];
           return;
         }
       default:
@@ -1586,11 +1543,10 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
     FhirMarkdownBuilder? purpose,
     FhirMarkdownBuilder? copyright,
     FhirStringBuilder? copyrightLabel,
-    ExampleScenarioActorTypeBuilder? type,
+    ActorDefinitionActorTypeBuilder? type,
     FhirMarkdownBuilder? documentation,
     List<FhirUrlBuilder>? reference,
-    FhirCanonicalBuilder? capabilities,
-    List<FhirCanonicalBuilder>? derivedFrom,
+    List<FhirCanonicalBuilder>? baseDefinition,
     FhirStringBuilder? versionAlgorithmString,
     CodingBuilder? versionAlgorithmCoding,
     Map<String, dynamic>? userData,
@@ -1631,8 +1587,7 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
       type: type ?? this.type,
       documentation: documentation ?? this.documentation,
       reference: reference ?? this.reference,
-      capabilities: capabilities ?? this.capabilities,
-      derivedFrom: derivedFrom ?? this.derivedFrom,
+      baseDefinition: baseDefinition ?? this.baseDefinition,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -1827,15 +1782,9 @@ class ActorDefinitionBuilder extends CanonicalResourceBuilder {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      capabilities,
-      o.capabilities,
-    )) {
-      return false;
-    }
     if (!listEquals<FhirCanonicalBuilder>(
-      derivedFrom,
-      o.derivedFrom,
+      baseDefinition,
+      o.baseDefinition,
     )) {
       return false;
     }

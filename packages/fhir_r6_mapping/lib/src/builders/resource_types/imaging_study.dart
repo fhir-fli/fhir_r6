@@ -17,7 +17,7 @@ import 'package:yaml/yaml.dart';
 /// Service-Object Pair Instances (SOP Instances - images or other data)
 /// acquired or produced in a common context. A series is of only one
 /// modality (e.g. X-ray, CT, MR, ultrasound), but a study may have
-/// multiple series of different modalities.
+/// multiple series of different modality values.
 class ImagingStudyBuilder extends DomainResourceBuilder {
   /// Primary constructor for
   /// [ImagingStudyBuilder]
@@ -41,13 +41,13 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
     this.partOf,
     this.referrer,
     this.endpoint,
-    this.numberOfSeries,
-    this.numberOfInstances,
     this.procedure,
     this.location,
     this.reason,
     this.note,
     this.description,
+    this.numberOfSeries,
+    this.numberOfInstances,
     this.series,
   }) : super(
           objectPath: 'ImagingStudy',
@@ -207,18 +207,6 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      numberOfSeries: JsonParser.parsePrimitive<FhirUnsignedIntBuilder>(
-        json,
-        'numberOfSeries',
-        FhirUnsignedIntBuilder.fromJson,
-        '$objectPath.numberOfSeries',
-      ),
-      numberOfInstances: JsonParser.parsePrimitive<FhirUnsignedIntBuilder>(
-        json,
-        'numberOfInstances',
-        FhirUnsignedIntBuilder.fromJson,
-        '$objectPath.numberOfInstances',
-      ),
       procedure: (json['procedure'] as List<dynamic>?)
           ?.map<CodeableReferenceBuilder>(
             (v) => CodeableReferenceBuilder.fromJson(
@@ -260,6 +248,18 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
         'description',
         FhirStringBuilder.fromJson,
         '$objectPath.description',
+      ),
+      numberOfSeries: JsonParser.parsePrimitive<FhirUnsignedIntBuilder>(
+        json,
+        'numberOfSeries',
+        FhirUnsignedIntBuilder.fromJson,
+        '$objectPath.numberOfSeries',
+      ),
+      numberOfInstances: JsonParser.parsePrimitive<FhirUnsignedIntBuilder>(
+        json,
+        'numberOfInstances',
+        FhirUnsignedIntBuilder.fromJson,
+        '$objectPath.numberOfInstances',
       ),
       series: (json['series'] as List<dynamic>?)
           ?.map<ImagingStudySeriesBuilder>(
@@ -317,18 +317,21 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
   String get fhirType => 'ImagingStudy';
 
   /// [identifier]
-  /// Identifiers for the ImagingStudy such as DICOM Study Instance UID.
+  /// Business identifiers assigned to this imaging study by the performer
+  /// and/or other systems. These identifiers remain constant as the resource
+  /// is updated and propagates from server to server. Typically this will
+  /// include the DICOM Study Instance UID.
   List<IdentifierBuilder>? identifier;
 
   /// [status]
-  /// The current state of the ImagingStudy resource. This is not the status
-  /// of any ServiceRequest or Task resources associated with the
-  /// ImagingStudy.
+  /// The current state of the imaging study. This is distinct from the
+  /// status of any service request or task associated with the imaging
+  /// study.
   ImagingStudyStatusBuilder? status;
 
   /// [modality]
-  /// A list of all the distinct values of series.modality. This may include
-  /// both acquisition and non-acquisition modalities.
+  /// All the distinct values of series.modality. This may be either an
+  /// acquisition or a non-acquisition modality.
   List<CodeableConceptBuilder>? modality;
 
   /// [subject]
@@ -345,8 +348,8 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
   FhirDateTimeBuilder? started;
 
   /// [basedOn]
-  /// A list of the diagnostic requests that resulted in this imaging study
-  /// being performed.
+  /// A plan or order that is fulfilled in whole or in part by this imaging
+  /// study.
   List<ReferenceBuilder>? basedOn;
 
   /// [partOf]
@@ -355,7 +358,7 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
   List<ReferenceBuilder>? partOf;
 
   /// [referrer]
-  /// The requesting/referring physician.
+  /// The referring physician.
   ReferenceBuilder? referrer;
 
   /// [endpoint]
@@ -366,50 +369,45 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
   /// Endpoint.connectionType.
   List<ReferenceBuilder>? endpoint;
 
-  /// [numberOfSeries]
-  /// Number of Series in the Study. This value given may be larger than the
-  /// number of series elements this Resource contains due to resource
-  /// availability, security, or other factors. This element should be
-  /// present if any series elements are present.
-  FhirUnsignedIntBuilder? numberOfSeries;
-
-  /// [numberOfInstances]
-  /// Number of SOP Instances in Study. This value given may be larger than
-  /// the number of instance elements this resource contains due to resource
-  /// availability, security, or other factors. This element should be
-  /// present if any instance elements are present.
-  FhirUnsignedIntBuilder? numberOfInstances;
-
   /// [procedure]
-  /// This field corresponds to the DICOM Procedure Code Sequence
-  /// (0008,1032). This is different from the FHIR Procedure resource that
-  /// may include the ImagingStudy.
+  /// A procedure or set of procedures during which this imaging study data
+  /// was created.
   List<CodeableReferenceBuilder>? procedure;
 
   /// [location]
-  /// The principal physical location where the ImagingStudy was performed.
+  /// The principal physical location where the imaging study was performed.
   ReferenceBuilder? location;
 
   /// [reason]
-  /// Description of clinical condition indicating why the ImagingStudy was
-  /// requested, and/or Indicates another resource whose existence justifies
-  /// this Study.
+  /// Describes why the imaging study occurred in coded or textual form or
+  /// indicates another resource whose existence justifies this imaging
+  /// study.
   List<CodeableReferenceBuilder>? reason;
 
   /// [note]
-  /// Per the recommended DICOM mapping, this element is derived from the
-  /// Study Description attribute (0008,1030). Observations or findings about
-  /// the imaging study should be recorded in another resource, e.g.
-  /// Observation, and not in this element.
+  /// Comments made about the imaging study by the performer, subject or
+  /// other participants.
   List<AnnotationBuilder>? note;
 
   /// [description]
-  /// The Imaging Manager description of the study. Institution-generated
-  /// description or classification of the Study (component) performed.
+  /// Description or classification of the imaging study.
   FhirStringBuilder? description;
 
+  /// [numberOfSeries]
+  /// Number of known Series in the Study. This value might be present even
+  /// if the ImagingStudy.series element is empty or only partially
+  /// populated.
+  FhirUnsignedIntBuilder? numberOfSeries;
+
+  /// [numberOfInstances]
+  /// Number of known SOP Instances in Study. This value might be present
+  /// even if the ImagingStudy.series.instance elements are empty or only
+  /// partially populated.
+  FhirUnsignedIntBuilder? numberOfInstances;
+
   /// [series]
-  /// Each study has one or more series of images or other content.
+  /// The set of Series belonging to the study. Each Series contains a set of
+  /// SOP Instances, which could be images, waveforms, or other content.
   List<ImagingStudySeriesBuilder>? series;
 
   /// Converts a [ImagingStudyBuilder]
@@ -467,13 +465,13 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
     addField('partOf', partOf);
     addField('referrer', referrer);
     addField('endpoint', endpoint);
-    addField('numberOfSeries', numberOfSeries);
-    addField('numberOfInstances', numberOfInstances);
     addField('procedure', procedure);
     addField('location', location);
     addField('reason', reason);
     addField('note', note);
     addField('description', description);
+    addField('numberOfSeries', numberOfSeries);
+    addField('numberOfInstances', numberOfInstances);
     addField('series', series);
     return json;
   }
@@ -500,13 +498,13 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
       'partOf',
       'referrer',
       'endpoint',
-      'numberOfSeries',
-      'numberOfInstances',
       'procedure',
       'location',
       'reason',
       'note',
       'description',
+      'numberOfSeries',
+      'numberOfInstances',
       'series',
     ];
   }
@@ -592,14 +590,6 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
         if (endpoint != null) {
           fields.addAll(endpoint!);
         }
-      case 'numberOfSeries':
-        if (numberOfSeries != null) {
-          fields.add(numberOfSeries!);
-        }
-      case 'numberOfInstances':
-        if (numberOfInstances != null) {
-          fields.add(numberOfInstances!);
-        }
       case 'procedure':
         if (procedure != null) {
           fields.addAll(procedure!);
@@ -619,6 +609,14 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
       case 'description':
         if (description != null) {
           fields.add(description!);
+        }
+      case 'numberOfSeries':
+        if (numberOfSeries != null) {
+          fields.add(numberOfSeries!);
+        }
+      case 'numberOfInstances':
+        if (numberOfInstances != null) {
+          fields.add(numberOfInstances!);
         }
       case 'series':
         if (series != null) {
@@ -927,56 +925,6 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'numberOfSeries':
-        {
-          if (child is FhirUnsignedIntBuilder) {
-            numberOfSeries = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              // For number types,
-              // first parse to num then pass the number directly
-              final numValue = num.tryParse(stringValue);
-              if (numValue != null) {
-                final converted = FhirUnsignedIntBuilder.tryParse(numValue);
-                if (converted != null) {
-                  numberOfSeries = converted;
-                  return;
-                }
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'numberOfInstances':
-        {
-          if (child is FhirUnsignedIntBuilder) {
-            numberOfInstances = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              // For number types,
-              // first parse to num then pass the number directly
-              final numValue = num.tryParse(stringValue);
-              if (numValue != null) {
-                final converted = FhirUnsignedIntBuilder.tryParse(numValue);
-                if (converted != null) {
-                  numberOfInstances = converted;
-                  return;
-                }
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
       case 'procedure':
         {
           if (child is List<CodeableReferenceBuilder>) {
@@ -1053,6 +1001,56 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'numberOfSeries':
+        {
+          if (child is FhirUnsignedIntBuilder) {
+            numberOfSeries = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For number types,
+              // first parse to num then pass the number directly
+              final numValue = num.tryParse(stringValue);
+              if (numValue != null) {
+                final converted = FhirUnsignedIntBuilder.tryParse(numValue);
+                if (converted != null) {
+                  numberOfSeries = converted;
+                  return;
+                }
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'numberOfInstances':
+        {
+          if (child is FhirUnsignedIntBuilder) {
+            numberOfInstances = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For number types,
+              // first parse to num then pass the number directly
+              final numValue = num.tryParse(stringValue);
+              if (numValue != null) {
+                final converted = FhirUnsignedIntBuilder.tryParse(numValue);
+                if (converted != null) {
+                  numberOfInstances = converted;
+                  return;
+                }
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'series':
         {
           if (child is List<ImagingStudySeriesBuilder>) {
@@ -1115,10 +1113,6 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
         return ['ReferenceBuilder'];
       case 'endpoint':
         return ['ReferenceBuilder'];
-      case 'numberOfSeries':
-        return ['FhirUnsignedIntBuilder'];
-      case 'numberOfInstances':
-        return ['FhirUnsignedIntBuilder'];
       case 'procedure':
         return ['CodeableReferenceBuilder'];
       case 'location':
@@ -1129,6 +1123,10 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
         return ['AnnotationBuilder'];
       case 'description':
         return ['FhirStringBuilder'];
+      case 'numberOfSeries':
+        return ['FhirUnsignedIntBuilder'];
+      case 'numberOfInstances':
+        return ['FhirUnsignedIntBuilder'];
       case 'series':
         return ['ImagingStudySeriesBuilder'];
       default:
@@ -1231,16 +1229,6 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
           endpoint = <ReferenceBuilder>[];
           return;
         }
-      case 'numberOfSeries':
-        {
-          numberOfSeries = FhirUnsignedIntBuilder.empty();
-          return;
-        }
-      case 'numberOfInstances':
-        {
-          numberOfInstances = FhirUnsignedIntBuilder.empty();
-          return;
-        }
       case 'procedure':
         {
           procedure = <CodeableReferenceBuilder>[];
@@ -1264,6 +1252,16 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
       case 'description':
         {
           description = FhirStringBuilder.empty();
+          return;
+        }
+      case 'numberOfSeries':
+        {
+          numberOfSeries = FhirUnsignedIntBuilder.empty();
+          return;
+        }
+      case 'numberOfInstances':
+        {
+          numberOfInstances = FhirUnsignedIntBuilder.empty();
           return;
         }
       case 'series':
@@ -1298,13 +1296,13 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
     List<ReferenceBuilder>? partOf,
     ReferenceBuilder? referrer,
     List<ReferenceBuilder>? endpoint,
-    FhirUnsignedIntBuilder? numberOfSeries,
-    FhirUnsignedIntBuilder? numberOfInstances,
     List<CodeableReferenceBuilder>? procedure,
     ReferenceBuilder? location,
     List<CodeableReferenceBuilder>? reason,
     List<AnnotationBuilder>? note,
     FhirStringBuilder? description,
+    FhirUnsignedIntBuilder? numberOfSeries,
+    FhirUnsignedIntBuilder? numberOfInstances,
     List<ImagingStudySeriesBuilder>? series,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -1331,13 +1329,13 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
       partOf: partOf ?? this.partOf,
       referrer: referrer ?? this.referrer,
       endpoint: endpoint ?? this.endpoint,
-      numberOfSeries: numberOfSeries ?? this.numberOfSeries,
-      numberOfInstances: numberOfInstances ?? this.numberOfInstances,
       procedure: procedure ?? this.procedure,
       location: location ?? this.location,
       reason: reason ?? this.reason,
       note: note ?? this.note,
       description: description ?? this.description,
+      numberOfSeries: numberOfSeries ?? this.numberOfSeries,
+      numberOfInstances: numberOfInstances ?? this.numberOfInstances,
       series: series ?? this.series,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
@@ -1473,18 +1471,6 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      numberOfSeries,
-      o.numberOfSeries,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      numberOfInstances,
-      o.numberOfInstances,
-    )) {
-      return false;
-    }
     if (!listEquals<CodeableReferenceBuilder>(
       procedure,
       o.procedure,
@@ -1515,6 +1501,18 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      numberOfSeries,
+      o.numberOfSeries,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      numberOfInstances,
+      o.numberOfInstances,
+    )) {
+      return false;
+    }
     if (!listEquals<ImagingStudySeriesBuilder>(
       series,
       o.series,
@@ -1526,7 +1524,8 @@ class ImagingStudyBuilder extends DomainResourceBuilder {
 }
 
 /// [ImagingStudySeriesBuilder]
-/// Each study has one or more series of images or other content.
+/// The set of Series belonging to the study. Each Series contains a set of
+/// SOP Instances, which could be images, waveforms, or other content.
 class ImagingStudySeriesBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [ImagingStudySeriesBuilder]
@@ -1725,7 +1724,7 @@ class ImagingStudySeriesBuilder extends BackboneElementBuilder {
   String get fhirType => 'ImagingStudySeries';
 
   /// [uid]
-  /// The DICOM Series Instance UID for the series.
+  /// The DICOM Series Instance UID of the series.
   FhirIdBuilder? uid;
 
   /// [number]
@@ -1733,39 +1732,38 @@ class ImagingStudySeriesBuilder extends BackboneElementBuilder {
   FhirUnsignedIntBuilder? number;
 
   /// [modality]
-  /// The distinct modality for this series. This may include both
+  /// The distinct modality for this series. This MAY include both
   /// acquisition and non-acquisition modalities.
   CodeableConceptBuilder? modality;
 
   /// [description]
-  /// A description of the series.
+  /// Description or classification of the series.
   FhirStringBuilder? description;
 
   /// [numberOfInstances]
-  /// Number of SOP Instances in the Study. The value given may be larger
+  /// Number of SOP Instances in the Study. The value given MAY be larger
   /// than the number of instance elements this resource contains due to
-  /// resource availability, security, or other factors. This element should
+  /// resource availability, security, or other factors. This element SHOULD
   /// be present if any instance elements are present.
   FhirUnsignedIntBuilder? numberOfInstances;
 
   /// [endpoint]
-  /// The network service providing access (e.g., query, view, or retrieval)
-  /// for this series. See implementation notes for information about using
-  /// DICOM endpoints. A series-level endpoint, if present, has precedence
-  /// over a study-level endpoint with the same Endpoint.connectionType.
+  /// The network service providing access for the study. See implementation
+  /// notes for information about [using DICOM
+  /// endpoints](imagingstudy.html#endpoints).
   List<ReferenceBuilder>? endpoint;
 
   /// [bodySite]
-  /// The anatomic structures examined. See DICOM Part 16 Annex L
-  /// (http://dicom.nema.org/medical/dicom/current/output/chtml/part16/chapter_L.html)
-  /// for DICOM to SNOMED-CT mappings. The bodySite may indicate the
-  /// laterality of body part imaged; if so, it shall be consistent with any
+  /// The anatomic structures examined. See [DICOM Part 16 Annex
+  /// L](http://dicom.nema.org/medical/dicom/current/output/chtml/part16/chapter_L.html)
+  /// for DICOM to SNOMED-CT mappings. The bodySite MAY indicate the
+  /// laterality of body part imaged; if so, it SHALL be consistent with any
   /// content of ImagingStudy.series.laterality.
   CodeableReferenceBuilder? bodySite;
 
   /// [laterality]
   /// The laterality of the (possibly paired) anatomic structures examined.
-  /// E.g., the left knee, both lungs, or unpaired abdomen. If present, shall
+  /// E.g., the left knee, both lungs, or unpaired abdomen. If present, SHALL
   /// be consistent with any laterality information indicated in
   /// ImagingStudy.series.bodySite.
   CodeableConceptBuilder? laterality;
@@ -2971,7 +2969,7 @@ class ImagingStudyInstanceBuilder extends BackboneElementBuilder {
   /// For Builder classes, no fields are required
   factory ImagingStudyInstanceBuilder.empty() => ImagingStudyInstanceBuilder(
         uid: FhirIdBuilder.empty(),
-        sopClass: CodingBuilder.empty(),
+        sopClass: FhirOidBuilder.empty(),
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -3012,10 +3010,10 @@ class ImagingStudyInstanceBuilder extends BackboneElementBuilder {
         FhirIdBuilder.fromJson,
         '$objectPath.uid',
       ),
-      sopClass: JsonParser.parseObject<CodingBuilder>(
+      sopClass: JsonParser.parsePrimitive<FhirOidBuilder>(
         json,
         'sopClass',
-        CodingBuilder.fromJson,
+        FhirOidBuilder.fromJson,
         '$objectPath.sopClass',
       ),
       number: JsonParser.parsePrimitive<FhirUnsignedIntBuilder>(
@@ -3081,7 +3079,7 @@ class ImagingStudyInstanceBuilder extends BackboneElementBuilder {
 
   /// [sopClass]
   /// DICOM instance type.
-  CodingBuilder? sopClass;
+  FhirOidBuilder? sopClass;
 
   /// [number]
   /// The number of instance in the series.
@@ -3291,9 +3289,21 @@ class ImagingStudyInstanceBuilder extends BackboneElementBuilder {
         }
       case 'sopClass':
         {
-          if (child is CodingBuilder) {
+          if (child is FhirOidBuilder) {
             sopClass = child;
             return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirOidBuilder.tryParse(stringValue);
+              if (converted != null) {
+                sopClass = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -3361,7 +3371,7 @@ class ImagingStudyInstanceBuilder extends BackboneElementBuilder {
       case 'uid':
         return ['FhirIdBuilder'];
       case 'sopClass':
-        return ['CodingBuilder'];
+        return ['FhirOidBuilder'];
       case 'number':
         return ['FhirUnsignedIntBuilder'];
       case 'title':
@@ -3398,7 +3408,7 @@ class ImagingStudyInstanceBuilder extends BackboneElementBuilder {
         }
       case 'sopClass':
         {
-          sopClass = CodingBuilder.empty();
+          sopClass = FhirOidBuilder.empty();
           return;
         }
       case 'number':
@@ -3424,7 +3434,7 @@ class ImagingStudyInstanceBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     FhirIdBuilder? uid,
-    CodingBuilder? sopClass,
+    FhirOidBuilder? sopClass,
     FhirUnsignedIntBuilder? number,
     FhirStringBuilder? title,
     Map<String, dynamic>? userData,

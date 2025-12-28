@@ -10,13 +10,15 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchComposition extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Composition]
+  @override
   SearchComposition identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -27,18 +29,21 @@ class SearchComposition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}type'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['type'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [Composition]
+  @override
   SearchComposition date(
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}date'] = value.toString();
+    parameters['date'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -49,8 +54,9 @@ class SearchComposition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}category'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['category'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -61,8 +67,9 @@ class SearchComposition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}event_code'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['event_code'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -72,8 +79,8 @@ class SearchComposition extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}period'] =
-        value.toString();
+    parameters['period'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -84,20 +91,23 @@ class SearchComposition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}section'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['section'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [Composition]
+  @override
   SearchComposition status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -110,8 +120,8 @@ class SearchComposition extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}title'] =
-        value.toString();
+    parameters['title'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -121,7 +131,8 @@ class SearchComposition extends SearchResource {
     FhirUri value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}url'] = value.toString();
+    parameters['url'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -132,8 +143,9 @@ class SearchComposition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}version'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['version'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

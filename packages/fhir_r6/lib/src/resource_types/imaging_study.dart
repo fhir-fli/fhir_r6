@@ -10,7 +10,7 @@ part 'imaging_study.g.dart';
 /// Service-Object Pair Instances (SOP Instances - images or other data)
 /// acquired or produced in a common context. A series is of only one
 /// modality (e.g. X-ray, CT, MR, ultrasound), but a study may have
-/// multiple series of different modalities.
+/// multiple series of different modality values.
 class ImagingStudy extends DomainResource {
   /// Primary constructor for
   /// [ImagingStudy]
@@ -34,13 +34,13 @@ class ImagingStudy extends DomainResource {
     this.partOf,
     this.referrer,
     this.endpoint,
-    this.numberOfSeries,
-    this.numberOfInstances,
     this.procedure,
     this.location,
     this.reason,
     this.note,
     this.description,
+    this.numberOfSeries,
+    this.numberOfInstances,
     this.series,
   }) : super(
           resourceType: R6ResourceType.ImagingStudy,
@@ -157,16 +157,6 @@ class ImagingStudy extends DomainResource {
             ),
           )
           .toList(),
-      numberOfSeries: JsonParser.parsePrimitive<FhirUnsignedInt>(
-        json,
-        'numberOfSeries',
-        FhirUnsignedInt.fromJson,
-      ),
-      numberOfInstances: JsonParser.parsePrimitive<FhirUnsignedInt>(
-        json,
-        'numberOfInstances',
-        FhirUnsignedInt.fromJson,
-      ),
       procedure: (json['procedure'] as List<dynamic>?)
           ?.map<CodeableReference>(
             (v) => CodeableReference.fromJson(
@@ -197,6 +187,16 @@ class ImagingStudy extends DomainResource {
         json,
         'description',
         FhirString.fromJson,
+      ),
+      numberOfSeries: JsonParser.parsePrimitive<FhirUnsignedInt>(
+        json,
+        'numberOfSeries',
+        FhirUnsignedInt.fromJson,
+      ),
+      numberOfInstances: JsonParser.parsePrimitive<FhirUnsignedInt>(
+        json,
+        'numberOfInstances',
+        FhirUnsignedInt.fromJson,
       ),
       series: (json['series'] as List<dynamic>?)
           ?.map<ImagingStudySeries>(
@@ -251,18 +251,21 @@ class ImagingStudy extends DomainResource {
   String get fhirType => 'ImagingStudy';
 
   /// [identifier]
-  /// Identifiers for the ImagingStudy such as DICOM Study Instance UID.
+  /// Business identifiers assigned to this imaging study by the performer
+  /// and/or other systems. These identifiers remain constant as the resource
+  /// is updated and propagates from server to server. Typically this will
+  /// include the DICOM Study Instance UID.
   final List<Identifier>? identifier;
 
   /// [status]
-  /// The current state of the ImagingStudy resource. This is not the status
-  /// of any ServiceRequest or Task resources associated with the
-  /// ImagingStudy.
+  /// The current state of the imaging study. This is distinct from the
+  /// status of any service request or task associated with the imaging
+  /// study.
   final ImagingStudyStatus status;
 
   /// [modality]
-  /// A list of all the distinct values of series.modality. This may include
-  /// both acquisition and non-acquisition modalities.
+  /// All the distinct values of series.modality. This may be either an
+  /// acquisition or a non-acquisition modality.
   final List<CodeableConcept>? modality;
 
   /// [subject]
@@ -279,8 +282,8 @@ class ImagingStudy extends DomainResource {
   final FhirDateTime? started;
 
   /// [basedOn]
-  /// A list of the diagnostic requests that resulted in this imaging study
-  /// being performed.
+  /// A plan or order that is fulfilled in whole or in part by this imaging
+  /// study.
   final List<Reference>? basedOn;
 
   /// [partOf]
@@ -289,7 +292,7 @@ class ImagingStudy extends DomainResource {
   final List<Reference>? partOf;
 
   /// [referrer]
-  /// The requesting/referring physician.
+  /// The referring physician.
   final Reference? referrer;
 
   /// [endpoint]
@@ -300,50 +303,45 @@ class ImagingStudy extends DomainResource {
   /// Endpoint.connectionType.
   final List<Reference>? endpoint;
 
-  /// [numberOfSeries]
-  /// Number of Series in the Study. This value given may be larger than the
-  /// number of series elements this Resource contains due to resource
-  /// availability, security, or other factors. This element should be
-  /// present if any series elements are present.
-  final FhirUnsignedInt? numberOfSeries;
-
-  /// [numberOfInstances]
-  /// Number of SOP Instances in Study. This value given may be larger than
-  /// the number of instance elements this resource contains due to resource
-  /// availability, security, or other factors. This element should be
-  /// present if any instance elements are present.
-  final FhirUnsignedInt? numberOfInstances;
-
   /// [procedure]
-  /// This field corresponds to the DICOM Procedure Code Sequence
-  /// (0008,1032). This is different from the FHIR Procedure resource that
-  /// may include the ImagingStudy.
+  /// A procedure or set of procedures during which this imaging study data
+  /// was created.
   final List<CodeableReference>? procedure;
 
   /// [location]
-  /// The principal physical location where the ImagingStudy was performed.
+  /// The principal physical location where the imaging study was performed.
   final Reference? location;
 
   /// [reason]
-  /// Description of clinical condition indicating why the ImagingStudy was
-  /// requested, and/or Indicates another resource whose existence justifies
-  /// this Study.
+  /// Describes why the imaging study occurred in coded or textual form or
+  /// indicates another resource whose existence justifies this imaging
+  /// study.
   final List<CodeableReference>? reason;
 
   /// [note]
-  /// Per the recommended DICOM mapping, this element is derived from the
-  /// Study Description attribute (0008,1030). Observations or findings about
-  /// the imaging study should be recorded in another resource, e.g.
-  /// Observation, and not in this element.
+  /// Comments made about the imaging study by the performer, subject or
+  /// other participants.
   final List<Annotation>? note;
 
   /// [description]
-  /// The Imaging Manager description of the study. Institution-generated
-  /// description or classification of the Study (component) performed.
+  /// Description or classification of the imaging study.
   final FhirString? description;
 
+  /// [numberOfSeries]
+  /// Number of known Series in the Study. This value might be present even
+  /// if the ImagingStudy.series element is empty or only partially
+  /// populated.
+  final FhirUnsignedInt? numberOfSeries;
+
+  /// [numberOfInstances]
+  /// Number of known SOP Instances in Study. This value might be present
+  /// even if the ImagingStudy.series.instance elements are empty or only
+  /// partially populated.
+  final FhirUnsignedInt? numberOfInstances;
+
   /// [series]
-  /// Each study has one or more series of images or other content.
+  /// The set of Series belonging to the study. Each Series contains a set of
+  /// SOP Instances, which could be images, waveforms, or other content.
   final List<ImagingStudySeries>? series;
   @override
   Map<String, dynamic> toJson() {
@@ -482,14 +480,6 @@ class ImagingStudy extends DomainResource {
       endpoint,
     );
     addField(
-      'numberOfSeries',
-      numberOfSeries,
-    );
-    addField(
-      'numberOfInstances',
-      numberOfInstances,
-    );
-    addField(
       'procedure',
       procedure,
     );
@@ -508,6 +498,14 @@ class ImagingStudy extends DomainResource {
     addField(
       'description',
       description,
+    );
+    addField(
+      'numberOfSeries',
+      numberOfSeries,
+    );
+    addField(
+      'numberOfInstances',
+      numberOfInstances,
     );
     addField(
       'series',
@@ -538,13 +536,13 @@ class ImagingStudy extends DomainResource {
       'partOf',
       'referrer',
       'endpoint',
-      'numberOfSeries',
-      'numberOfInstances',
       'procedure',
       'location',
       'reason',
       'note',
       'description',
+      'numberOfSeries',
+      'numberOfInstances',
       'series',
     ];
   }
@@ -626,14 +624,6 @@ class ImagingStudy extends DomainResource {
         if (endpoint != null) {
           fields.addAll(endpoint!);
         }
-      case 'numberOfSeries':
-        if (numberOfSeries != null) {
-          fields.add(numberOfSeries!);
-        }
-      case 'numberOfInstances':
-        if (numberOfInstances != null) {
-          fields.add(numberOfInstances!);
-        }
       case 'procedure':
         if (procedure != null) {
           fields.addAll(procedure!);
@@ -653,6 +643,14 @@ class ImagingStudy extends DomainResource {
       case 'description':
         if (description != null) {
           fields.add(description!);
+        }
+      case 'numberOfSeries':
+        if (numberOfSeries != null) {
+          fields.add(numberOfSeries!);
+        }
+      case 'numberOfInstances':
+        if (numberOfInstances != null) {
+          fields.add(numberOfInstances!);
         }
       case 'series':
         if (series != null) {
@@ -807,18 +805,6 @@ class ImagingStudy extends DomainResource {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      numberOfSeries,
-      o.numberOfSeries,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      numberOfInstances,
-      o.numberOfInstances,
-    )) {
-      return false;
-    }
     if (!listEquals<CodeableReference>(
       procedure,
       o.procedure,
@@ -849,6 +835,18 @@ class ImagingStudy extends DomainResource {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      numberOfSeries,
+      o.numberOfSeries,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      numberOfInstances,
+      o.numberOfInstances,
+    )) {
+      return false;
+    }
     if (!listEquals<ImagingStudySeries>(
       series,
       o.series,
@@ -860,7 +858,8 @@ class ImagingStudy extends DomainResource {
 }
 
 /// [ImagingStudySeries]
-/// Each study has one or more series of images or other content.
+/// The set of Series belonging to the study. Each Series contains a set of
+/// SOP Instances, which could be images, waveforms, or other content.
 class ImagingStudySeries extends BackboneElement {
   /// Primary constructor for
   /// [ImagingStudySeries]
@@ -1022,7 +1021,7 @@ class ImagingStudySeries extends BackboneElement {
   String get fhirType => 'ImagingStudySeries';
 
   /// [uid]
-  /// The DICOM Series Instance UID for the series.
+  /// The DICOM Series Instance UID of the series.
   final FhirId uid;
 
   /// [number]
@@ -1030,39 +1029,38 @@ class ImagingStudySeries extends BackboneElement {
   final FhirUnsignedInt? number;
 
   /// [modality]
-  /// The distinct modality for this series. This may include both
+  /// The distinct modality for this series. This MAY include both
   /// acquisition and non-acquisition modalities.
   final CodeableConcept modality;
 
   /// [description]
-  /// A description of the series.
+  /// Description or classification of the series.
   final FhirString? description;
 
   /// [numberOfInstances]
-  /// Number of SOP Instances in the Study. The value given may be larger
+  /// Number of SOP Instances in the Study. The value given MAY be larger
   /// than the number of instance elements this resource contains due to
-  /// resource availability, security, or other factors. This element should
+  /// resource availability, security, or other factors. This element SHOULD
   /// be present if any instance elements are present.
   final FhirUnsignedInt? numberOfInstances;
 
   /// [endpoint]
-  /// The network service providing access (e.g., query, view, or retrieval)
-  /// for this series. See implementation notes for information about using
-  /// DICOM endpoints. A series-level endpoint, if present, has precedence
-  /// over a study-level endpoint with the same Endpoint.connectionType.
+  /// The network service providing access for the study. See implementation
+  /// notes for information about [using DICOM
+  /// endpoints](imagingstudy.html#endpoints).
   final List<Reference>? endpoint;
 
   /// [bodySite]
-  /// The anatomic structures examined. See DICOM Part 16 Annex L
-  /// (http://dicom.nema.org/medical/dicom/current/output/chtml/part16/chapter_L.html)
-  /// for DICOM to SNOMED-CT mappings. The bodySite may indicate the
-  /// laterality of body part imaged; if so, it shall be consistent with any
+  /// The anatomic structures examined. See [DICOM Part 16 Annex
+  /// L](http://dicom.nema.org/medical/dicom/current/output/chtml/part16/chapter_L.html)
+  /// for DICOM to SNOMED-CT mappings. The bodySite MAY indicate the
+  /// laterality of body part imaged; if so, it SHALL be consistent with any
   /// content of ImagingStudy.series.laterality.
   final CodeableReference? bodySite;
 
   /// [laterality]
   /// The laterality of the (possibly paired) anatomic structures examined.
-  /// E.g., the left knee, both lungs, or unpaired abdomen. If present, shall
+  /// E.g., the left knee, both lungs, or unpaired abdomen. If present, SHALL
   /// be consistent with any laterality information indicated in
   /// ImagingStudy.series.bodySite.
   final CodeableConcept? laterality;
@@ -1779,10 +1777,10 @@ class ImagingStudyInstance extends BackboneElement {
         'uid',
         FhirId.fromJson,
       )!,
-      sopClass: JsonParser.parseObject<Coding>(
+      sopClass: JsonParser.parsePrimitive<FhirOid>(
         json,
         'sopClass',
-        Coding.fromJson,
+        FhirOid.fromJson,
       )!,
       number: JsonParser.parsePrimitive<FhirUnsignedInt>(
         json,
@@ -1845,7 +1843,7 @@ class ImagingStudyInstance extends BackboneElement {
 
   /// [sopClass]
   /// DICOM instance type.
-  final Coding sopClass;
+  final FhirOid sopClass;
 
   /// [number]
   /// The number of instance in the series.

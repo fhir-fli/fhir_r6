@@ -25,7 +25,7 @@ abstract class $RiskAssessmentCopyWith<T> extends $DomainResourceCopyWith<T> {
     CodeableConcept? code,
     Reference? subject,
     Reference? encounter,
-    FhirDateTime? occurrenceX,
+    OccurrenceXRiskAssessment? occurrenceX,
     Reference? condition,
     Reference? performer,
     List<CodeableReference>? reason,
@@ -117,7 +117,7 @@ class _$RiskAssessmentCopyWithImpl<T> implements $RiskAssessmentCopyWith<T> {
             : encounter as Reference?,
         occurrenceX: identical(occurrenceX, fhirSentinel)
             ? _value.occurrenceX
-            : occurrenceX as FhirDateTime?,
+            : occurrenceX as OccurrenceXRiskAssessment?,
         condition: identical(condition, fhirSentinel)
             ? _value.condition
             : condition as Reference?,
@@ -160,10 +160,10 @@ abstract class $RiskAssessmentPredictionCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? outcome,
-    FhirDecimal? probabilityX,
+    ProbabilityXRiskAssessmentPrediction? probabilityX,
     CodeableConcept? qualitativeRisk,
     FhirDecimal? relativeRisk,
-    Period? whenX,
+    WhenXRiskAssessmentPrediction? whenX,
     FhirString? rationale,
     bool? disallowExtensions,
   });
@@ -203,14 +203,16 @@ class _$RiskAssessmentPredictionCopyWithImpl<T>
             : outcome as CodeableConcept?,
         probabilityX: identical(probabilityX, fhirSentinel)
             ? _value.probabilityX
-            : probabilityX as FhirDecimal?,
+            : probabilityX as ProbabilityXRiskAssessmentPrediction?,
         qualitativeRisk: identical(qualitativeRisk, fhirSentinel)
             ? _value.qualitativeRisk
             : qualitativeRisk as CodeableConcept?,
         relativeRisk: identical(relativeRisk, fhirSentinel)
             ? _value.relativeRisk
             : relativeRisk as FhirDecimal?,
-        whenX: identical(whenX, fhirSentinel) ? _value.whenX : whenX as Period?,
+        whenX: identical(whenX, fhirSentinel)
+            ? _value.whenX
+            : whenX as WhenXRiskAssessmentPrediction?,
         rationale: identical(rationale, fhirSentinel)
             ? _value.rationale
             : rationale as FhirString?,

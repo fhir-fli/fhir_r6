@@ -496,12 +496,14 @@ class MedicationRequestBuilder extends DomainResourceBuilder {
   RequestPriorityBuilder? priority;
 
   /// [doNotPerform]
-  /// If true, indicates that the provider is asking for the patient to
-  /// either stop taking or to not start taking the specified medication. For
-  /// example, the patient is taking an existing medication and the provider
-  /// is changing their medication. They want to create two seperate
-  /// requests: one to stop using the current medication and another to start
-  /// the new medication.
+  /// If true, indicates the provider is ordering a patient should not take
+  /// the specified medication. The reason for this order can be provided in
+  /// the .reason element. A MedicationRequest with .doNotPerform = true will
+  /// not result in any dispense or administration. A request not to take or
+  /// administer medication is a standalone request, and does not update any
+  /// other medication request. When true, active orders that may exist for
+  /// the same medication are expected to be canceled/ended, and new orders
+  /// for the same medication are not expected.
   FhirBooleanBuilder? doNotPerform;
 
   /// [medication]
@@ -517,8 +519,13 @@ class MedicationRequestBuilder extends DomainResourceBuilder {
 
   /// [informationSource]
   /// The person or organization who provided the information about this
-  /// request, if the source is someone other than the requestor. This is
-  /// often used when the MedicationRequest is reported by another person.
+  /// request, if the source is someone other than the requestor. The
+  /// informationSource element is generally used when details of a
+  /// prescription are being reported by someone who is not the requestor,
+  /// e.g., I indicate that I received a prescription for a med out of my
+  /// jurisdiction and the details are recorded in the system as a
+  /// MedicationRequest. Normally when this element is populated, the
+  /// .reported element would be set to "true".
   List<ReferenceBuilder>? informationSource;
 
   /// [encounter]

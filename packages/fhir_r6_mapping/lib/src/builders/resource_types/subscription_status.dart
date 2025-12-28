@@ -4,6 +4,7 @@ import 'package:fhir_r6/fhir_r6.dart'
         R6ResourceType,
         SubscriptionStatus,
         SubscriptionStatusNotificationEvent,
+        SubscriptionStatusRelatedQuery,
         yamlMapToJson,
         yamlToJson;
 import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
@@ -975,9 +976,11 @@ class SubscriptionStatusNotificationEventBuilder
     super.extension_,
     super.modifierExtension,
     this.eventNumber,
+    this.triggerEvent,
     this.timestamp,
     this.focus,
     this.additionalContext,
+    this.relatedQuery,
     super.disallowExtensions,
   }) : super(
           objectPath: 'SubscriptionStatus.notificationEvent',
@@ -1028,6 +1031,16 @@ class SubscriptionStatusNotificationEventBuilder
         FhirInteger64Builder.fromJson,
         '$objectPath.eventNumber',
       ),
+      triggerEvent: (json['triggerEvent'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.triggerEvent',
+              },
+            ),
+          )
+          .toList(),
       timestamp: JsonParser.parsePrimitive<FhirInstantBuilder>(
         json,
         'timestamp',
@@ -1046,6 +1059,16 @@ class SubscriptionStatusNotificationEventBuilder
               {
                 ...v as Map<String, dynamic>,
                 'objectPath': '$objectPath.additionalContext',
+              },
+            ),
+          )
+          .toList(),
+      relatedQuery: (json['relatedQuery'] as List<dynamic>?)
+          ?.map<SubscriptionStatusRelatedQueryBuilder>(
+            (v) => SubscriptionStatusRelatedQueryBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.relatedQuery',
               },
             ),
           )
@@ -1100,6 +1123,11 @@ class SubscriptionStatusNotificationEventBuilder
   /// or a relative event number for this notification.
   FhirInteger64Builder? eventNumber;
 
+  /// [triggerEvent]
+  /// If present, one or more event codes specifying the events which
+  /// triggered this notification.
+  List<CodeableConceptBuilder>? triggerEvent;
+
   /// [timestamp]
   /// The actual time this event occurred on the server.
   FhirInstantBuilder? timestamp;
@@ -1116,6 +1144,12 @@ class SubscriptionStatusNotificationEventBuilder
   /// (e.g., the Patient relevant to an Encounter), however it MAY refer to
   /// non-FHIR objects.
   List<ReferenceBuilder>? additionalContext;
+
+  /// [relatedQuery]
+  /// Queries and codes that could be included with notifications of this
+  /// shape. Servers MAY include these queries if supported and desired in
+  /// the workflow.
+  List<SubscriptionStatusRelatedQueryBuilder>? relatedQuery;
 
   /// Converts a [SubscriptionStatusNotificationEventBuilder]
   /// to [SubscriptionStatusNotificationEvent]
@@ -1158,9 +1192,11 @@ class SubscriptionStatusNotificationEventBuilder
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('eventNumber', eventNumber);
+    addField('triggerEvent', triggerEvent);
     addField('timestamp', timestamp);
     addField('focus', focus);
     addField('additionalContext', additionalContext);
+    addField('relatedQuery', relatedQuery);
     return json;
   }
 
@@ -1172,9 +1208,11 @@ class SubscriptionStatusNotificationEventBuilder
       'extension',
       'modifierExtension',
       'eventNumber',
+      'triggerEvent',
       'timestamp',
       'focus',
       'additionalContext',
+      'relatedQuery',
     ];
   }
 
@@ -1203,6 +1241,10 @@ class SubscriptionStatusNotificationEventBuilder
         if (eventNumber != null) {
           fields.add(eventNumber!);
         }
+      case 'triggerEvent':
+        if (triggerEvent != null) {
+          fields.addAll(triggerEvent!);
+        }
       case 'timestamp':
         if (timestamp != null) {
           fields.add(timestamp!);
@@ -1214,6 +1256,10 @@ class SubscriptionStatusNotificationEventBuilder
       case 'additionalContext':
         if (additionalContext != null) {
           fields.addAll(additionalContext!);
+        }
+      case 'relatedQuery':
+        if (relatedQuery != null) {
+          fields.addAll(relatedQuery!);
         }
       default:
         if (checkValid) {
@@ -1316,6 +1362,22 @@ class SubscriptionStatusNotificationEventBuilder
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'triggerEvent':
+        {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
+            triggerEvent = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            triggerEvent = [
+              ...(triggerEvent ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'timestamp':
         {
           if (child is FhirInstantBuilder) {
@@ -1360,6 +1422,22 @@ class SubscriptionStatusNotificationEventBuilder
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'relatedQuery':
+        {
+          if (child is List<SubscriptionStatusRelatedQueryBuilder>) {
+            // Replace or create new list
+            relatedQuery = child;
+            return;
+          } else if (child is SubscriptionStatusRelatedQueryBuilder) {
+            // Add single element to existing list or create new list
+            relatedQuery = [
+              ...(relatedQuery ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -1378,12 +1456,16 @@ class SubscriptionStatusNotificationEventBuilder
         return ['FhirExtensionBuilder'];
       case 'eventNumber':
         return ['FhirInteger64Builder'];
+      case 'triggerEvent':
+        return ['CodeableConceptBuilder'];
       case 'timestamp':
         return ['FhirInstantBuilder'];
       case 'focus':
         return ['ReferenceBuilder'];
       case 'additionalContext':
         return ['ReferenceBuilder'];
+      case 'relatedQuery':
+        return ['SubscriptionStatusRelatedQueryBuilder'];
       default:
         return <String>[];
     }
@@ -1414,6 +1496,11 @@ class SubscriptionStatusNotificationEventBuilder
           eventNumber = FhirInteger64Builder.empty();
           return;
         }
+      case 'triggerEvent':
+        {
+          triggerEvent = <CodeableConceptBuilder>[];
+          return;
+        }
       case 'timestamp':
         {
           timestamp = FhirInstantBuilder.empty();
@@ -1427,6 +1514,11 @@ class SubscriptionStatusNotificationEventBuilder
       case 'additionalContext':
         {
           additionalContext = <ReferenceBuilder>[];
+          return;
+        }
+      case 'relatedQuery':
+        {
+          relatedQuery = <SubscriptionStatusRelatedQueryBuilder>[];
           return;
         }
       default:
@@ -1443,9 +1535,11 @@ class SubscriptionStatusNotificationEventBuilder
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     FhirInteger64Builder? eventNumber,
+    List<CodeableConceptBuilder>? triggerEvent,
     FhirInstantBuilder? timestamp,
     ReferenceBuilder? focus,
     List<ReferenceBuilder>? additionalContext,
+    List<SubscriptionStatusRelatedQueryBuilder>? relatedQuery,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -1458,9 +1552,11 @@ class SubscriptionStatusNotificationEventBuilder
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       eventNumber: eventNumber ?? this.eventNumber,
+      triggerEvent: triggerEvent ?? this.triggerEvent,
       timestamp: timestamp ?? this.timestamp,
       focus: focus ?? this.focus,
       additionalContext: additionalContext ?? this.additionalContext,
+      relatedQuery: relatedQuery ?? this.relatedQuery,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -1511,6 +1607,12 @@ class SubscriptionStatusNotificationEventBuilder
     )) {
       return false;
     }
+    if (!listEquals<CodeableConceptBuilder>(
+      triggerEvent,
+      o.triggerEvent,
+    )) {
+      return false;
+    }
     if (!equalsDeepWithNull(
       timestamp,
       o.timestamp,
@@ -1526,6 +1628,477 @@ class SubscriptionStatusNotificationEventBuilder
     if (!listEquals<ReferenceBuilder>(
       additionalContext,
       o.additionalContext,
+    )) {
+      return false;
+    }
+    if (!listEquals<SubscriptionStatusRelatedQueryBuilder>(
+      relatedQuery,
+      o.relatedQuery,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [SubscriptionStatusRelatedQueryBuilder]
+/// Queries and codes that could be included with notifications of this
+/// shape. Servers MAY include these queries if supported and desired in
+/// the workflow.
+class SubscriptionStatusRelatedQueryBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [SubscriptionStatusRelatedQueryBuilder]
+
+  SubscriptionStatusRelatedQueryBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.queryType,
+    this.query,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'SubscriptionStatus.notificationEvent.relatedQuery',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory SubscriptionStatusRelatedQueryBuilder.empty() =>
+      SubscriptionStatusRelatedQueryBuilder(
+        query: FhirStringBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory SubscriptionStatusRelatedQueryBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'SubscriptionStatus.notificationEvent.relatedQuery';
+    return SubscriptionStatusRelatedQueryBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      queryType: JsonParser.parseObject<CodingBuilder>(
+        json,
+        'queryType',
+        CodingBuilder.fromJson,
+        '$objectPath.queryType',
+      ),
+      query: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'query',
+        FhirStringBuilder.fromJson,
+        '$objectPath.query',
+      ),
+    );
+  }
+
+  /// Deserialize [SubscriptionStatusRelatedQueryBuilder]
+  /// from a [String] or [YamlMap] object
+  factory SubscriptionStatusRelatedQueryBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return SubscriptionStatusRelatedQueryBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return SubscriptionStatusRelatedQueryBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'SubscriptionStatusRelatedQueryBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [SubscriptionStatusRelatedQueryBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory SubscriptionStatusRelatedQueryBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return SubscriptionStatusRelatedQueryBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'SubscriptionStatusRelatedQuery';
+
+  /// [queryType]
+  /// Coded value(s) used to describe the type of information that evaluating
+  /// this query will provide. Subscribers can use the values to ensure the
+  /// data they request are relevant and necessary for their use.
+  CodingBuilder? queryType;
+
+  /// [query]
+  /// Query a subscriber can use to retrieve additional information. The
+  /// exact contents of the query MAY depend on the value of the `queryType`,
+  /// however this SHOULD be a query suitable for use as an HTTP GET request
+  /// (either fully-qualified or partial).
+  FhirStringBuilder? query;
+
+  /// Converts a [SubscriptionStatusRelatedQueryBuilder]
+  /// to [SubscriptionStatusRelatedQuery]
+  @override
+  SubscriptionStatusRelatedQuery build() =>
+      SubscriptionStatusRelatedQuery.fromJson(toJson());
+
+  /// Converts a [SubscriptionStatusRelatedQueryBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('queryType', queryType);
+    addField('query', query);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'queryType',
+      'query',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'queryType':
+        if (queryType != null) {
+          fields.add(queryType!);
+        }
+      case 'query':
+        if (query != null) {
+          fields.add(query!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'queryType':
+        {
+          if (child is CodingBuilder) {
+            queryType = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'query':
+        {
+          if (child is FhirStringBuilder) {
+            query = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                query = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'queryType':
+        return ['CodingBuilder'];
+      case 'query':
+        return ['FhirStringBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [SubscriptionStatusRelatedQueryBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'queryType':
+        {
+          queryType = CodingBuilder.empty();
+          return;
+        }
+      case 'query':
+        {
+          query = FhirStringBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  SubscriptionStatusRelatedQueryBuilder clone() => throw UnimplementedError();
+  @override
+  SubscriptionStatusRelatedQueryBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    CodingBuilder? queryType,
+    FhirStringBuilder? query,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = SubscriptionStatusRelatedQueryBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      queryType: queryType ?? this.queryType,
+      query: query ?? this.query,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! SubscriptionStatusRelatedQueryBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      queryType,
+      o.queryType,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      query,
+      o.query,
     )) {
       return false;
     }

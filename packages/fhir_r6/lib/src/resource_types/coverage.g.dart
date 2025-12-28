@@ -303,7 +303,7 @@ abstract class $CoverageCostToBeneficiaryCopyWith<T>
     CodeableConcept? network,
     CodeableConcept? unit,
     CodeableConcept? term,
-    Quantity? valueX,
+    ValueXCoverageCostToBeneficiary? valueX,
     List<CoverageException>? exception,
     bool? disallowExtensions,
   });
@@ -356,7 +356,7 @@ class _$CoverageCostToBeneficiaryCopyWithImpl<T>
             : term as CodeableConcept?,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : valueX as Quantity?,
+            : valueX as ValueXCoverageCostToBeneficiary?,
         exception: identical(exception, fhirSentinel)
             ? _value.exception
             : exception as List<CoverageException>?,

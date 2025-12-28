@@ -1,6 +1,12 @@
 import 'dart:convert';
 import 'package:fhir_r6/fhir_r6.dart'
-    show Goal, GoalTarget, R6ResourceType, yamlMapToJson, yamlToJson;
+    show
+        Goal,
+        GoalAcceptance,
+        GoalTarget,
+        R6ResourceType,
+        yamlMapToJson,
+        yamlToJson;
 import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
@@ -33,13 +39,13 @@ class GoalBuilder extends DomainResourceBuilder {
     StartXGoalBuilder? startX,
     FhirDateBuilder? startDate,
     CodeableConceptBuilder? startCodeableConcept,
+    this.acceptance,
     this.target,
     this.statusDate,
     this.statusReason,
     this.source,
     this.addresses,
     this.note,
-    this.outcome,
   })  : startX = startX ?? startDate ?? startCodeableConcept,
         super(
           objectPath: 'Goal',
@@ -184,6 +190,16 @@ class GoalBuilder extends DomainResourceBuilder {
         },
         objectPath,
       ),
+      acceptance: (json['acceptance'] as List<dynamic>?)
+          ?.map<GoalAcceptanceBuilder>(
+            (v) => GoalAcceptanceBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.acceptance',
+              },
+            ),
+          )
+          .toList(),
       target: (json['target'] as List<dynamic>?)
           ?.map<GoalTargetBuilder>(
             (v) => GoalTargetBuilder.fromJson(
@@ -200,12 +216,16 @@ class GoalBuilder extends DomainResourceBuilder {
         FhirDateBuilder.fromJson,
         '$objectPath.statusDate',
       ),
-      statusReason: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'statusReason',
-        FhirStringBuilder.fromJson,
-        '$objectPath.statusReason',
-      ),
+      statusReason: (json['statusReason'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.statusReason',
+              },
+            ),
+          )
+          .toList(),
       source: JsonParser.parseObject<ReferenceBuilder>(
         json,
         'source',
@@ -228,16 +248,6 @@ class GoalBuilder extends DomainResourceBuilder {
               {
                 ...v as Map<String, dynamic>,
                 'objectPath': '$objectPath.note',
-              },
-            ),
-          )
-          .toList(),
-      outcome: (json['outcome'] as List<dynamic>?)
-          ?.map<CodeableReferenceBuilder>(
-            (v) => CodeableReferenceBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.outcome',
               },
             ),
           )
@@ -338,36 +348,36 @@ class GoalBuilder extends DomainResourceBuilder {
   CodeableConceptBuilder? get startCodeableConcept =>
       startX?.isAs<CodeableConceptBuilder>();
 
+  /// [acceptance]
+  /// Information about the acceptance and relative priority assigned to the
+  /// goal by the patient, practitioners and other stakeholders.
+  List<GoalAcceptanceBuilder>? acceptance;
+
   /// [target]
   /// Indicates what should be done by when.
   List<GoalTargetBuilder>? target;
 
   /// [statusDate]
-  /// Identifies when the current status. I.e. When initially created, when
-  /// achieved, when cancelled, etc.
+  /// Identifies when the current achievement status took effect. I.e. When
+  /// achieved, when improving, etc.
   FhirDateBuilder? statusDate;
 
   /// [statusReason]
-  /// Captures the reason for the current status.
-  FhirStringBuilder? statusReason;
+  /// Captures the reason for the current lifecycle status.
+  List<CodeableConceptBuilder>? statusReason;
 
   /// [source]
   /// Indicates whose goal this is - patient goal, practitioner goal, etc.
   ReferenceBuilder? source;
 
   /// [addresses]
-  /// The identified conditions and other health record elements that are
-  /// intended to be addressed by the goal.
+  /// The identified conditions and other resources that provide the context
+  /// for why the goal exists.
   List<ReferenceBuilder>? addresses;
 
   /// [note]
   /// Any comments related to the goal.
   List<AnnotationBuilder>? note;
-
-  /// [outcome]
-  /// Identifies the change (or lack of change) at the point when the status
-  /// of the goal is assessed.
-  List<CodeableReferenceBuilder>? outcome;
 
   /// Converts a [GoalBuilder]
   /// to [Goal]
@@ -427,13 +437,13 @@ class GoalBuilder extends DomainResourceBuilder {
       addField('start${fhirType.capitalizeFirstLetter()}', startX);
     }
 
+    addField('acceptance', acceptance);
     addField('target', target);
     addField('statusDate', statusDate);
     addField('statusReason', statusReason);
     addField('source', source);
     addField('addresses', addresses);
     addField('note', note);
-    addField('outcome', outcome);
     return json;
   }
 
@@ -458,13 +468,13 @@ class GoalBuilder extends DomainResourceBuilder {
       'description',
       'subject',
       'startX',
+      'acceptance',
       'target',
       'statusDate',
       'statusReason',
       'source',
       'addresses',
       'note',
-      'outcome',
     ];
   }
 
@@ -557,6 +567,10 @@ class GoalBuilder extends DomainResourceBuilder {
         if (startX is CodeableConceptBuilder) {
           fields.add(startX!);
         }
+      case 'acceptance':
+        if (acceptance != null) {
+          fields.addAll(acceptance!);
+        }
       case 'target':
         if (target != null) {
           fields.addAll(target!);
@@ -567,7 +581,7 @@ class GoalBuilder extends DomainResourceBuilder {
         }
       case 'statusReason':
         if (statusReason != null) {
-          fields.add(statusReason!);
+          fields.addAll(statusReason!);
         }
       case 'source':
         if (source != null) {
@@ -580,10 +594,6 @@ class GoalBuilder extends DomainResourceBuilder {
       case 'note':
         if (note != null) {
           fields.addAll(note!);
-        }
-      case 'outcome':
-        if (outcome != null) {
-          fields.addAll(outcome!);
         }
       default:
         if (checkValid) {
@@ -884,6 +894,22 @@ class GoalBuilder extends DomainResourceBuilder {
             throw Exception('Invalid child type for $childName');
           }
         }
+      case 'acceptance':
+        {
+          if (child is List<GoalAcceptanceBuilder>) {
+            // Replace or create new list
+            acceptance = child;
+            return;
+          } else if (child is GoalAcceptanceBuilder) {
+            // Add single element to existing list or create new list
+            acceptance = [
+              ...(acceptance ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'target':
         {
           if (child is List<GoalTargetBuilder>) {
@@ -922,21 +948,17 @@ class GoalBuilder extends DomainResourceBuilder {
         }
       case 'statusReason':
         {
-          if (child is FhirStringBuilder) {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
             statusReason = child;
             return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                statusReason = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            statusReason = [
+              ...(statusReason ?? []),
+              child,
+            ];
+            return;
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -974,22 +996,6 @@ class GoalBuilder extends DomainResourceBuilder {
             // Add single element to existing list or create new list
             note = [
               ...(note ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'outcome':
-        {
-          if (child is List<CodeableReferenceBuilder>) {
-            // Replace or create new list
-            outcome = child;
-            return;
-          } else if (child is CodeableReferenceBuilder) {
-            // Add single element to existing list or create new list
-            outcome = [
-              ...(outcome ?? []),
               child,
             ];
             return;
@@ -1048,20 +1054,20 @@ class GoalBuilder extends DomainResourceBuilder {
         return ['FhirDateBuilder'];
       case 'startCodeableConcept':
         return ['CodeableConceptBuilder'];
+      case 'acceptance':
+        return ['GoalAcceptanceBuilder'];
       case 'target':
         return ['GoalTargetBuilder'];
       case 'statusDate':
         return ['FhirDateBuilder'];
       case 'statusReason':
-        return ['FhirStringBuilder'];
+        return ['CodeableConceptBuilder'];
       case 'source':
         return ['ReferenceBuilder'];
       case 'addresses':
         return ['ReferenceBuilder'];
       case 'note':
         return ['AnnotationBuilder'];
-      case 'outcome':
-        return ['CodeableReferenceBuilder'];
       default:
         return <String>[];
     }
@@ -1164,6 +1170,11 @@ class GoalBuilder extends DomainResourceBuilder {
           startX = CodeableConceptBuilder.empty();
           return;
         }
+      case 'acceptance':
+        {
+          acceptance = <GoalAcceptanceBuilder>[];
+          return;
+        }
       case 'target':
         {
           target = <GoalTargetBuilder>[];
@@ -1176,7 +1187,7 @@ class GoalBuilder extends DomainResourceBuilder {
         }
       case 'statusReason':
         {
-          statusReason = FhirStringBuilder.empty();
+          statusReason = <CodeableConceptBuilder>[];
           return;
         }
       case 'source':
@@ -1192,11 +1203,6 @@ class GoalBuilder extends DomainResourceBuilder {
       case 'note':
         {
           note = <AnnotationBuilder>[];
-          return;
-        }
-      case 'outcome':
-        {
-          outcome = <CodeableReferenceBuilder>[];
           return;
         }
       default:
@@ -1225,13 +1231,13 @@ class GoalBuilder extends DomainResourceBuilder {
     CodeableConceptBuilder? description,
     ReferenceBuilder? subject,
     StartXGoalBuilder? startX,
+    List<GoalAcceptanceBuilder>? acceptance,
     List<GoalTargetBuilder>? target,
     FhirDateBuilder? statusDate,
-    FhirStringBuilder? statusReason,
+    List<CodeableConceptBuilder>? statusReason,
     ReferenceBuilder? source,
     List<ReferenceBuilder>? addresses,
     List<AnnotationBuilder>? note,
-    List<CodeableReferenceBuilder>? outcome,
     FhirDateBuilder? startDate,
     CodeableConceptBuilder? startCodeableConcept,
     Map<String, dynamic>? userData,
@@ -1258,13 +1264,13 @@ class GoalBuilder extends DomainResourceBuilder {
       description: description ?? this.description,
       subject: subject ?? this.subject,
       startX: startX ?? startDate ?? startCodeableConcept ?? this.startX,
+      acceptance: acceptance ?? this.acceptance,
       target: target ?? this.target,
       statusDate: statusDate ?? this.statusDate,
       statusReason: statusReason ?? this.statusReason,
       source: source ?? this.source,
       addresses: addresses ?? this.addresses,
       note: note ?? this.note,
-      outcome: outcome ?? this.outcome,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -1393,6 +1399,12 @@ class GoalBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
+    if (!listEquals<GoalAcceptanceBuilder>(
+      acceptance,
+      o.acceptance,
+    )) {
+      return false;
+    }
     if (!listEquals<GoalTargetBuilder>(
       target,
       o.target,
@@ -1405,7 +1417,7 @@ class GoalBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<CodeableConceptBuilder>(
       statusReason,
       o.statusReason,
     )) {
@@ -1429,9 +1441,505 @@ class GoalBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<CodeableReferenceBuilder>(
-      outcome,
-      o.outcome,
+    return true;
+  }
+}
+
+/// [GoalAcceptanceBuilder]
+/// Information about the acceptance and relative priority assigned to the
+/// goal by the patient, practitioners and other stakeholders.
+class GoalAcceptanceBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [GoalAcceptanceBuilder]
+
+  GoalAcceptanceBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.participant,
+    this.status,
+    this.priority,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'Goal.acceptance',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory GoalAcceptanceBuilder.empty() => GoalAcceptanceBuilder(
+        participant: ReferenceBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory GoalAcceptanceBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'Goal.acceptance';
+    return GoalAcceptanceBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      participant: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'participant',
+        ReferenceBuilder.fromJson,
+        '$objectPath.participant',
+      ),
+      status: JsonParser.parsePrimitive<GoalAcceptStatusBuilder>(
+        json,
+        'status',
+        GoalAcceptStatusBuilder.fromJson,
+        '$objectPath.status',
+      ),
+      priority: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'priority',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.priority',
+      ),
+    );
+  }
+
+  /// Deserialize [GoalAcceptanceBuilder]
+  /// from a [String] or [YamlMap] object
+  factory GoalAcceptanceBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return GoalAcceptanceBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return GoalAcceptanceBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'GoalAcceptanceBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [GoalAcceptanceBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory GoalAcceptanceBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return GoalAcceptanceBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'GoalAcceptance';
+
+  /// [participant]
+  /// The person ororganization whose acceptance/priority is being reflected.
+  ReferenceBuilder? participant;
+
+  /// [status]
+  /// Indicates whether the specified individual has accepted the goal or
+  /// not.
+  GoalAcceptStatusBuilder? status;
+
+  /// [priority]
+  /// Indicates the relative priority assigned to the goal by the
+  /// stakeholder.
+  CodeableConceptBuilder? priority;
+
+  /// Converts a [GoalAcceptanceBuilder]
+  /// to [GoalAcceptance]
+  @override
+  GoalAcceptance build() => GoalAcceptance.fromJson(toJson());
+
+  /// Converts a [GoalAcceptanceBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('participant', participant);
+    addField('status', status);
+    addField('priority', priority);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'participant',
+      'status',
+      'priority',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'participant':
+        if (participant != null) {
+          fields.add(participant!);
+        }
+      case 'status':
+        if (status != null) {
+          fields.add(status!);
+        }
+      case 'priority':
+        if (priority != null) {
+          fields.add(priority!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'participant':
+        {
+          if (child is ReferenceBuilder) {
+            participant = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'status':
+        {
+          if (child is GoalAcceptStatusBuilder) {
+            status = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For enums, try to create directly from the string value
+              try {
+                final converted = GoalAcceptStatusBuilder(stringValue);
+                status = converted;
+                return;
+              } catch (e) {
+                // Continue if enum creation fails
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'priority':
+        {
+          if (child is CodeableConceptBuilder) {
+            priority = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'participant':
+        return ['ReferenceBuilder'];
+      case 'status':
+        return ['FhirCodeEnumBuilder'];
+      case 'priority':
+        return ['CodeableConceptBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [GoalAcceptanceBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'participant':
+        {
+          participant = ReferenceBuilder.empty();
+          return;
+        }
+      case 'status':
+        {
+          status = GoalAcceptStatusBuilder.empty();
+          return;
+        }
+      case 'priority':
+        {
+          priority = CodeableConceptBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  GoalAcceptanceBuilder clone() => throw UnimplementedError();
+  @override
+  GoalAcceptanceBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    ReferenceBuilder? participant,
+    GoalAcceptStatusBuilder? status,
+    CodeableConceptBuilder? priority,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = GoalAcceptanceBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      participant: participant ?? this.participant,
+      status: status ?? this.status,
+      priority: priority ?? this.priority,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! GoalAcceptanceBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      participant,
+      o.participant,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      status,
+      o.status,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      priority,
+      o.priority,
     )) {
       return false;
     }
@@ -1594,7 +2102,9 @@ class GoalTargetBuilder extends BackboneElementBuilder {
   /// values of the range can be specified. When a low value is missing, it
   /// indicates that the goal is achieved at any focus value at or below the
   /// high value. Similarly, if the high value is missing, it indicates that
-  /// the goal is achieved at any focus value at or above the low value.
+  /// the goal is achieved at any focus value at or above the low value. A
+  /// CodeableConcept target value could be Positive, Negative, Abnormal,
+  /// Normal, Present, Absent, Yes, No.
   DetailXGoalTargetBuilder? detailX;
 
   /// Getter for [detailQuantity] as a QuantityBuilder

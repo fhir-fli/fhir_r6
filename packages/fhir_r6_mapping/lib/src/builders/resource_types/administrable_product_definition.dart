@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'dart:convert';
 import 'package:fhir_r6/fhir_r6.dart'
     show
@@ -306,7 +304,7 @@ class AdministrableProductDefinitionBuilder extends DomainResourceBuilder {
   /// [ingredient]
   /// The ingredients of this administrable medicinal product. This is only
   /// needed if the ingredients are not specified either using
-  /// ManufacturedItemDefiniton (via
+  /// ManufacturedItemDefinition (via
   /// AdministrableProductDefinition.producedFrom) to state which component
   /// items are used to make this, or using by incoming references from the
   /// Ingredient resource, to state in detail which substances exist within
@@ -324,7 +322,7 @@ class AdministrableProductDefinitionBuilder extends DomainResourceBuilder {
   /// for administration e.g. effervescent blue liquid, to be swallowed.
   /// Intended to be used when the other structured properties of this
   /// resource are insufficient or cannot be supported. It is not intended to
-  /// duplicate information already carried elswehere.
+  /// duplicate information already carried elsewhere.
   FhirMarkdownBuilder? description;
 
   /// [property]
@@ -333,7 +331,7 @@ class AdministrableProductDefinitionBuilder extends DomainResourceBuilder {
 
   /// [routeOfAdministration]
   /// The path by which the product is taken into or makes contact with the
-  /// body. In some regions this is referred to as the licenced or approved
+  /// body. In some regions this is referred to as the licensed or approved
   /// route. RouteOfAdministration cannot be used when the 'formOf' product
   /// already uses MedicinalProductDefinition.route (and vice versa).
   List<AdministrableProductDefinitionRouteOfAdministrationBuilder>?
@@ -1920,7 +1918,7 @@ class AdministrableProductDefinitionPropertyBuilder
 
 /// [AdministrableProductDefinitionRouteOfAdministrationBuilder]
 /// The path by which the product is taken into or makes contact with the
-/// body. In some regions this is referred to as the licenced or approved
+/// body. In some regions this is referred to as the licensed or approved
 /// route. RouteOfAdministration cannot be used when the 'formOf' product
 /// already uses MedicinalProductDefinition.route (and vice versa).
 class AdministrableProductDefinitionRouteOfAdministrationBuilder

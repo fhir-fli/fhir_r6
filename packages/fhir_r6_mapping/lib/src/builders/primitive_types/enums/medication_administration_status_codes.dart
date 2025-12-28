@@ -1,4 +1,4 @@
-// ignore_for_file: unused_element_parameter, non_constant_identifier_names, lines_longer_than_80_chars
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for MedicationAdministrationStatusCodes
@@ -164,8 +164,7 @@ class MedicationAdministrationStatusCodesBuilder extends FhirCodeEnumBuilder {
     );
   }
 
-  ///  An actual enum that can be used for
-  /// MedicationAdministrationStatusCodesBuilder
+  ///  An actual enum that can be used for MedicationAdministrationStatusCodesBuilder
   final MedicationAdministrationStatusCodesBuilderEnum? valueEnum;
 
   /// in_progress
@@ -176,7 +175,7 @@ class MedicationAdministrationStatusCodesBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/medication-admin-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'In Progress',
     ),
@@ -190,7 +189,7 @@ class MedicationAdministrationStatusCodesBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/medication-admin-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Not Done',
     ),
@@ -204,7 +203,7 @@ class MedicationAdministrationStatusCodesBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/medication-admin-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'On Hold',
     ),
@@ -218,7 +217,7 @@ class MedicationAdministrationStatusCodesBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/medication-admin-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Completed',
     ),
@@ -232,7 +231,7 @@ class MedicationAdministrationStatusCodesBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/medication-admin-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Entered in Error',
     ),
@@ -246,7 +245,7 @@ class MedicationAdministrationStatusCodesBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/medication-admin-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Stopped',
     ),
@@ -260,7 +259,7 @@ class MedicationAdministrationStatusCodesBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/medication-admin-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Unknown',
     ),

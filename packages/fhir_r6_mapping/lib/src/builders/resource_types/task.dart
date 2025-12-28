@@ -13,7 +13,12 @@ import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [TaskBuilder]
-/// A task to be performed.
+/// A task to be performed as a part of a workflow and the related
+/// informations like inputs, outputs and execution progress. While very
+/// simple workflows can be implemented with [Request](request.html) alone,
+/// most workflows would require a Task (explicit or contained) as a means
+/// to track the execution progress (i.e. inputs, outputs, status). Please
+/// refer to [Fulfillment/Execution](request.html#fulfillment).
 class TaskBuilder extends DomainResourceBuilder {
   /// Primary constructor for
   /// [TaskBuilder]
@@ -228,10 +233,10 @@ class TaskBuilder extends DomainResourceBuilder {
         CodeableConceptBuilder.fromJson,
         '$objectPath.code',
       ),
-      description: JsonParser.parsePrimitive<FhirStringBuilder>(
+      description: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
         json,
         'description',
-        FhirStringBuilder.fromJson,
+        FhirMarkdownBuilder.fromJson,
         '$objectPath.description',
       ),
       focus: JsonParser.parseObject<ReferenceBuilder>(
@@ -478,7 +483,7 @@ class TaskBuilder extends DomainResourceBuilder {
 
   /// [intent]
   /// Indicates the "level" of actionability associated with the Task, i.e.
-  /// i+R[9]Cs this a proposed task, a planned task, an actionable task, etc.
+  /// this a proposed task, a planned task, an actionable task, etc.
   TaskIntentBuilder? intent;
 
   /// [priority]
@@ -497,7 +502,7 @@ class TaskBuilder extends DomainResourceBuilder {
 
   /// [description]
   /// A free-text description of what is to be performed.
-  FhirStringBuilder? description;
+  FhirMarkdownBuilder? description;
 
   /// [focus]
   /// The request being fulfilled or the resource being manipulated (changed,
@@ -565,7 +570,7 @@ class TaskBuilder extends DomainResourceBuilder {
   List<ReferenceBuilder>? insurance;
 
   /// [note]
-  /// Free-text information captured about the task as it progresses.
+  /// Free-text information about the task during its lifecycle.
   List<AnnotationBuilder>? note;
 
   /// [relevantHistory]
@@ -1258,14 +1263,14 @@ class TaskBuilder extends DomainResourceBuilder {
         }
       case 'description':
         {
-          if (child is FhirStringBuilder) {
+          if (child is FhirMarkdownBuilder) {
             description = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
               if (converted != null) {
                 description = converted;
                 return;
@@ -1569,7 +1574,7 @@ class TaskBuilder extends DomainResourceBuilder {
       case 'code':
         return ['CodeableConceptBuilder'];
       case 'description':
-        return ['FhirStringBuilder'];
+        return ['FhirMarkdownBuilder'];
       case 'focus':
         return ['ReferenceBuilder'];
       case 'for':
@@ -1725,7 +1730,7 @@ class TaskBuilder extends DomainResourceBuilder {
         }
       case 'description':
         {
-          description = FhirStringBuilder.empty();
+          description = FhirMarkdownBuilder.empty();
           return;
         }
       case 'focus':
@@ -1853,7 +1858,7 @@ class TaskBuilder extends DomainResourceBuilder {
     RequestPriorityBuilder? priority,
     FhirBooleanBuilder? doNotPerform,
     CodeableConceptBuilder? code,
-    FhirStringBuilder? description,
+    FhirMarkdownBuilder? description,
     ReferenceBuilder? focus,
     ReferenceBuilder? for_,
     ReferenceBuilder? encounter,
@@ -3436,8 +3441,7 @@ class TaskInputBuilder extends BackboneElementBuilder {
   String get fhirType => 'TaskInput';
 
   /// [type]
-  /// A code or description indicating how the input is intended to be used
-  /// as part of the task execution.
+  /// A code or description to distinguish between inputs.
   CodeableConceptBuilder? type;
 
   /// [valueX]
@@ -5693,7 +5697,7 @@ class TaskOutputBuilder extends BackboneElementBuilder {
   String get fhirType => 'TaskOutput';
 
   /// [type]
-  /// The name of the Output parameter.
+  /// A code or description to distinguish between outputs.
   CodeableConceptBuilder? type;
 
   /// [valueX]

@@ -23,8 +23,9 @@ abstract class $SupplyDeliveryCopyWith<T> extends $DomainResourceCopyWith<T> {
     SupplyDeliveryStatus? status,
     Reference? patient,
     CodeableConcept? type,
+    CodeableConcept? stage,
     List<SupplyDeliverySuppliedItem>? suppliedItem,
-    FhirDateTime? occurrenceX,
+    OccurrenceXSupplyDelivery? occurrenceX,
     Reference? supplier,
     Reference? destination,
     List<Reference>? receiver,
@@ -54,6 +55,7 @@ class _$SupplyDeliveryCopyWithImpl<T> implements $SupplyDeliveryCopyWith<T> {
     Object? status = fhirSentinel,
     Object? patient = fhirSentinel,
     Object? type = fhirSentinel,
+    Object? stage = fhirSentinel,
     Object? suppliedItem = fhirSentinel,
     Object? occurrenceX = fhirSentinel,
     Object? supplier = fhirSentinel,
@@ -92,19 +94,22 @@ class _$SupplyDeliveryCopyWithImpl<T> implements $SupplyDeliveryCopyWith<T> {
             : partOf as List<Reference>?,
         status: identical(status, fhirSentinel)
             ? _value.status
-            : status as SupplyDeliveryStatus?,
+            : (status as SupplyDeliveryStatus?) ?? _value.status,
         patient: identical(patient, fhirSentinel)
             ? _value.patient
             : patient as Reference?,
         type: identical(type, fhirSentinel)
             ? _value.type
             : type as CodeableConcept?,
+        stage: identical(stage, fhirSentinel)
+            ? _value.stage
+            : (stage as CodeableConcept?) ?? _value.stage,
         suppliedItem: identical(suppliedItem, fhirSentinel)
             ? _value.suppliedItem
             : suppliedItem as List<SupplyDeliverySuppliedItem>?,
         occurrenceX: identical(occurrenceX, fhirSentinel)
             ? _value.occurrenceX
-            : occurrenceX as FhirDateTime?,
+            : occurrenceX as OccurrenceXSupplyDelivery?,
         supplier: identical(supplier, fhirSentinel)
             ? _value.supplier
             : supplier as Reference?,
@@ -135,7 +140,8 @@ abstract class $SupplyDeliverySuppliedItemCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     Quantity? quantity,
-    CodeableConcept? itemX,
+    CodeableConcept? condition,
+    ItemXSupplyDeliverySuppliedItem? itemX,
     bool? disallowExtensions,
   });
 }
@@ -153,6 +159,7 @@ class _$SupplyDeliverySuppliedItemCopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? quantity = fhirSentinel,
+    Object? condition = fhirSentinel,
     Object? itemX = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -168,9 +175,12 @@ class _$SupplyDeliverySuppliedItemCopyWithImpl<T>
         quantity: identical(quantity, fhirSentinel)
             ? _value.quantity
             : quantity as Quantity?,
+        condition: identical(condition, fhirSentinel)
+            ? _value.condition
+            : condition as CodeableConcept?,
         itemX: identical(itemX, fhirSentinel)
             ? _value.itemX
-            : itemX as CodeableConcept?,
+            : itemX as ItemXSupplyDeliverySuppliedItem?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

@@ -1204,7 +1204,7 @@ class QuestionnaireResponseItemBuilder extends BackboneElementBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.linkId',
       ),
-      definition: JsonParser.parsePrimitive<FhirUriBuilder>(
+      definition: JsonParser.parsePrimitiveList<FhirUriBuilder>(
         json,
         'definition',
         FhirUriBuilder.fromJson,
@@ -1289,7 +1289,7 @@ class QuestionnaireResponseItemBuilder extends BackboneElementBuilder {
   /// [definition]
   /// A reference to an [ElementDefinition](elementdefinition.html) that
   /// provides the details for the item.
-  FhirUriBuilder? definition;
+  List<FhirUriBuilder>? definition;
 
   /// [text]
   /// Text that is displayed above the contents of the group or as the text
@@ -1394,7 +1394,7 @@ class QuestionnaireResponseItemBuilder extends BackboneElementBuilder {
         }
       case 'definition':
         if (definition != null) {
-          fields.add(definition!);
+          fields.addAll(definition!);
         }
       case 'text':
         if (text != null) {
@@ -1511,16 +1511,45 @@ class QuestionnaireResponseItemBuilder extends BackboneElementBuilder {
         }
       case 'definition':
         {
-          if (child is FhirUriBuilder) {
+          if (child is List<FhirUriBuilder>) {
+            // Replace or create new list
             definition = child;
             return;
+          } else if (child is FhirUriBuilder) {
+            // Add single element to existing list or create new list
+            definition = [
+              ...(definition ?? []),
+              child,
+            ];
+            return;
+          } else if (child is List<PrimitiveTypeBuilder>) {
+            // Try to convert list of primitive types
+            final convertedList = <FhirUriBuilder>[];
+            for (final element in child) {
+              try {
+                final stringValue = element.toString();
+                final converted = FhirUriBuilder.tryParse(stringValue);
+                if (converted != null) {
+                  convertedList.add(converted);
+                }
+              } catch (e) {
+                // Continue if conversion fails
+              }
+            }
+            if (convertedList.isNotEmpty) {
+              definition = convertedList;
+              return;
+            }
           } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
+            // Try to convert a single primitive
             try {
               final stringValue = child.toString();
               final converted = FhirUriBuilder.tryParse(stringValue);
               if (converted != null) {
-                definition = converted;
+                definition = [
+                  ...(definition ?? []),
+                  converted,
+                ];
                 return;
               }
             } catch (e) {
@@ -1639,7 +1668,7 @@ class QuestionnaireResponseItemBuilder extends BackboneElementBuilder {
         }
       case 'definition':
         {
-          definition = FhirUriBuilder.empty();
+          definition = <FhirUriBuilder>[];
           return;
         }
       case 'text':
@@ -1670,7 +1699,7 @@ class QuestionnaireResponseItemBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     FhirStringBuilder? linkId,
-    FhirUriBuilder? definition,
+    List<FhirUriBuilder>? definition,
     FhirStringBuilder? text,
     List<QuestionnaireResponseAnswerBuilder>? answer,
     List<QuestionnaireResponseItemBuilder>? item,
@@ -1740,7 +1769,7 @@ class QuestionnaireResponseItemBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<FhirUriBuilder>(
       definition,
       o.definition,
     )) {

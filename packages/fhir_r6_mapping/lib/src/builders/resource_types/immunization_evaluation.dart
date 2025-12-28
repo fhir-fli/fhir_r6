@@ -191,16 +191,16 @@ class ImmunizationEvaluationBuilder extends DomainResourceBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.series',
       ),
-      doseNumber: JsonParser.parsePrimitive<FhirStringBuilder>(
+      doseNumber: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
         'doseNumber',
-        FhirStringBuilder.fromJson,
+        CodeableConceptBuilder.fromJson,
         '$objectPath.doseNumber',
       ),
-      seriesDoses: JsonParser.parsePrimitive<FhirStringBuilder>(
+      seriesDoses: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
         'seriesDoses',
-        FhirStringBuilder.fromJson,
+        CodeableConceptBuilder.fromJson,
         '$objectPath.seriesDoses',
       ),
     );
@@ -300,12 +300,12 @@ class ImmunizationEvaluationBuilder extends DomainResourceBuilder {
   /// [doseNumber]
   /// Nominal position in a series as determined by the outcome of the
   /// evaluation process.
-  FhirStringBuilder? doseNumber;
+  CodeableConceptBuilder? doseNumber;
 
   /// [seriesDoses]
   /// The recommended number of doses to achieve immunity as determined by
   /// the outcome of the evaluation process.
-  FhirStringBuilder? seriesDoses;
+  CodeableConceptBuilder? seriesDoses;
 
   /// Converts a [ImmunizationEvaluationBuilder]
   /// to [ImmunizationEvaluation]
@@ -803,41 +803,17 @@ class ImmunizationEvaluationBuilder extends DomainResourceBuilder {
         }
       case 'doseNumber':
         {
-          if (child is FhirStringBuilder) {
+          if (child is CodeableConceptBuilder) {
             doseNumber = child;
             return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                doseNumber = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
       case 'seriesDoses':
         {
-          if (child is FhirStringBuilder) {
+          if (child is CodeableConceptBuilder) {
             seriesDoses = child;
             return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                seriesDoses = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -890,9 +866,9 @@ class ImmunizationEvaluationBuilder extends DomainResourceBuilder {
       case 'series':
         return ['FhirStringBuilder'];
       case 'doseNumber':
-        return ['FhirStringBuilder'];
+        return ['CodeableConceptBuilder'];
       case 'seriesDoses':
-        return ['FhirStringBuilder'];
+        return ['CodeableConceptBuilder'];
       default:
         return <String>[];
     }
@@ -1000,12 +976,12 @@ class ImmunizationEvaluationBuilder extends DomainResourceBuilder {
         }
       case 'doseNumber':
         {
-          doseNumber = FhirStringBuilder.empty();
+          doseNumber = CodeableConceptBuilder.empty();
           return;
         }
       case 'seriesDoses':
         {
-          seriesDoses = FhirStringBuilder.empty();
+          seriesDoses = CodeableConceptBuilder.empty();
           return;
         }
       default:
@@ -1036,8 +1012,8 @@ class ImmunizationEvaluationBuilder extends DomainResourceBuilder {
     List<CodeableConceptBuilder>? doseStatusReason,
     FhirMarkdownBuilder? description,
     FhirStringBuilder? series,
-    FhirStringBuilder? doseNumber,
-    FhirStringBuilder? seriesDoses,
+    CodeableConceptBuilder? doseNumber,
+    CodeableConceptBuilder? seriesDoses,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,

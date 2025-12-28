@@ -7,8 +7,6 @@ part 'organization.g.dart';
 /// [Organization]
 /// A formally or informally recognized grouping of people or organizations
 /// formed for the purpose of achieving some form of collective action.
-/// Includes companies, institutions, corporations, departments, community
-/// groups, healthcare practice groups, payer/insurer, etc.
 class Organization extends DomainResource {
   /// Primary constructor for
   /// [Organization]
@@ -656,6 +654,7 @@ class OrganizationQualification extends BackboneElement {
     super.modifierExtension,
     this.identifier,
     required this.code,
+    this.status,
     this.period,
     this.issuer,
     super.disallowExtensions,
@@ -697,6 +696,11 @@ class OrganizationQualification extends BackboneElement {
         'code',
         CodeableConcept.fromJson,
       )!,
+      status: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'status',
+        CodeableConcept.fromJson,
+      ),
       period: JsonParser.parseObject<Period>(
         json,
         'period',
@@ -759,6 +763,16 @@ class OrganizationQualification extends BackboneElement {
   /// [code]
   /// Coded representation of the qualification.
   final CodeableConcept code;
+
+  /// [status]
+  /// Qualifications often take time to attain and might be tracked during
+  /// this time, and completed qualifications might not always be valid. This
+  /// status concept has some overlap with period and both should be
+  /// considered together. Refer to the descriptions of the codes for how the
+  /// period should be interpreted. If a qualification is revoked or
+  /// otherwise cancelled, then the period is likely to be ignored, and might
+  /// be related to when it was active.
+  final CodeableConcept? status;
 
   /// [period]
   /// Period during which the qualification is valid.
@@ -851,6 +865,10 @@ class OrganizationQualification extends BackboneElement {
       code,
     );
     addField(
+      'status',
+      status,
+    );
+    addField(
       'period',
       period,
     );
@@ -870,6 +888,7 @@ class OrganizationQualification extends BackboneElement {
       'modifierExtension',
       'identifier',
       'code',
+      'status',
       'period',
       'issuer',
     ];
@@ -902,6 +921,10 @@ class OrganizationQualification extends BackboneElement {
         }
       case 'code':
         fields.add(code);
+      case 'status':
+        if (status != null) {
+          fields.add(status!);
+        }
       case 'period':
         if (period != null) {
           fields.add(period!);
@@ -978,6 +1001,12 @@ class OrganizationQualification extends BackboneElement {
     if (!equalsDeepWithNull(
       code,
       o.code,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      status,
+      o.status,
     )) {
       return false;
     }

@@ -4,7 +4,7 @@
     "url": "http://fhir.ch/ig/cda-fhir-maps/StructureMap/BundleToCda",
     "name": "BundleToCda",
     "status": "draft",
-    "description": "CDA document\r\n2020-01-16 Oliver Egger, copyright ahdis ag, Apache License\r\nCDA:  http://build.fhir.org/ig/ahdis/cda-core-2.0/branches/master/index.html\r\nFHIR: http://hl7.org/fhir/r4/",
+    "description": "CDA document\r\n2020-01-16 Oliver Egger, copyright ahdis ag, Apache License\r\nCDA:  http://build.fhir.org/ig/ahdis/cda-core-2.0/branches/master/index.html\r\nFHIR: http://hl7.org/fhir/r6/",
     "structure": [
         {
             "url": "http://hl7.org/fhir/cda/StructureDefinition/ClinicalDocument",

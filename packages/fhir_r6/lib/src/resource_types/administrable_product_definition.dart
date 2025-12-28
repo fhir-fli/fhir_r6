@@ -248,7 +248,7 @@ class AdministrableProductDefinition extends DomainResource {
   /// [ingredient]
   /// The ingredients of this administrable medicinal product. This is only
   /// needed if the ingredients are not specified either using
-  /// ManufacturedItemDefiniton (via
+  /// ManufacturedItemDefinition (via
   /// AdministrableProductDefinition.producedFrom) to state which component
   /// items are used to make this, or using by incoming references from the
   /// Ingredient resource, to state in detail which substances exist within
@@ -266,7 +266,7 @@ class AdministrableProductDefinition extends DomainResource {
   /// for administration e.g. effervescent blue liquid, to be swallowed.
   /// Intended to be used when the other structured properties of this
   /// resource are insufficient or cannot be supported. It is not intended to
-  /// duplicate information already carried elswehere.
+  /// duplicate information already carried elsewhere.
   final FhirMarkdown? description;
 
   /// [property]
@@ -275,7 +275,7 @@ class AdministrableProductDefinition extends DomainResource {
 
   /// [routeOfAdministration]
   /// The path by which the product is taken into or makes contact with the
-  /// body. In some regions this is referred to as the licenced or approved
+  /// body. In some regions this is referred to as the licensed or approved
   /// route. RouteOfAdministration cannot be used when the 'formOf' product
   /// already uses MedicinalProductDefinition.route (and vice versa).
   final List<AdministrableProductDefinitionRouteOfAdministration>
@@ -1096,7 +1096,7 @@ class AdministrableProductDefinitionProperty extends BackboneElement {
 
 /// [AdministrableProductDefinitionRouteOfAdministration]
 /// The path by which the product is taken into or makes contact with the
-/// body. In some regions this is referred to as the licenced or approved
+/// body. In some regions this is referred to as the licensed or approved
 /// route. RouteOfAdministration cannot be used when the 'formOf' product
 /// already uses MedicinalProductDefinition.route (and vice versa).
 class AdministrableProductDefinitionRouteOfAdministration

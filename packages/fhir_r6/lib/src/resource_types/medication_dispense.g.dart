@@ -35,6 +35,7 @@ abstract class $MedicationDispenseCopyWith<T>
     CodeableConcept? type,
     Quantity? quantity,
     Quantity? daysSupply,
+    FhirPositiveInt? fillNumber,
     FhirDateTime? recorded,
     FhirDateTime? whenPrepared,
     FhirDateTime? whenHandedOver,
@@ -83,6 +84,7 @@ class _$MedicationDispenseCopyWithImpl<T>
     Object? type = fhirSentinel,
     Object? quantity = fhirSentinel,
     Object? daysSupply = fhirSentinel,
+    Object? fillNumber = fhirSentinel,
     Object? recorded = fhirSentinel,
     Object? whenPrepared = fhirSentinel,
     Object? whenHandedOver = fhirSentinel,
@@ -167,6 +169,9 @@ class _$MedicationDispenseCopyWithImpl<T>
         daysSupply: identical(daysSupply, fhirSentinel)
             ? _value.daysSupply
             : daysSupply as Quantity?,
+        fillNumber: identical(fillNumber, fhirSentinel)
+            ? _value.fillNumber
+            : fillNumber as FhirPositiveInt?,
         recorded: identical(recorded, fhirSentinel)
             ? _value.recorded
             : recorded as FhirDateTime?,

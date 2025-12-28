@@ -9,8 +9,8 @@ enum ImagingSelection2DGraphicTypeEnum {
   /// polyline
   polyline,
 
-  /// interpolated
-  interpolated,
+  /// multipoint
+  multipoint,
 
   /// circle
   circle,
@@ -30,8 +30,8 @@ enum ImagingSelection2DGraphicTypeEnum {
         return 'point';
       case ImagingSelection2DGraphicTypeEnum.polyline:
         return 'polyline';
-      case ImagingSelection2DGraphicTypeEnum.interpolated:
-        return 'interpolated';
+      case ImagingSelection2DGraphicTypeEnum.multipoint:
+        return 'multipoint';
       case ImagingSelection2DGraphicTypeEnum.circle:
         return 'circle';
       case ImagingSelection2DGraphicTypeEnum.ellipse:
@@ -57,8 +57,8 @@ enum ImagingSelection2DGraphicTypeEnum {
         return ImagingSelection2DGraphicTypeEnum.point;
       case 'polyline':
         return ImagingSelection2DGraphicTypeEnum.polyline;
-      case 'interpolated':
-        return ImagingSelection2DGraphicTypeEnum.interpolated;
+      case 'multipoint':
+        return ImagingSelection2DGraphicTypeEnum.multipoint;
       case 'circle':
         return ImagingSelection2DGraphicTypeEnum.circle;
       case 'ellipse':
@@ -149,7 +149,7 @@ class ImagingSelection2DGraphicType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'POINT',
     ),
@@ -164,24 +164,24 @@ class ImagingSelection2DGraphicType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'POLYLINE',
     ),
   );
 
-  /// interpolated
-  static const ImagingSelection2DGraphicType interpolated =
+  /// multipoint
+  static const ImagingSelection2DGraphicType multipoint =
       ImagingSelection2DGraphicType._(
-    valueString: 'interpolated',
-    valueEnum: ImagingSelection2DGraphicTypeEnum.interpolated,
+    valueString: 'multipoint',
+    valueEnum: ImagingSelection2DGraphicTypeEnum.multipoint,
     system: FhirUri._(
       valueString:
           'http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
-      valueString: 'INTERPOLATED',
+      valueString: 'MULTIPOINT',
     ),
   );
 
@@ -194,7 +194,7 @@ class ImagingSelection2DGraphicType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'CIRCLE',
     ),
@@ -209,7 +209,7 @@ class ImagingSelection2DGraphicType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ELLIPSE',
     ),
@@ -219,7 +219,7 @@ class ImagingSelection2DGraphicType extends FhirCodeEnum {
   static final List<ImagingSelection2DGraphicType> values = [
     point,
     polyline,
-    interpolated,
+    multipoint,
     circle,
     ellipse,
   ];

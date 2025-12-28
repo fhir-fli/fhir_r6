@@ -1,4 +1,4 @@
-map "http://fhir.nhs.uk/StructureMap/MedicationStatementLastIssueDate-Extension-3to4" = "R3 to R4 conversion for CareConnect MedicationStatementLastIssueDate extension"
+map "http://fhir.nhs.uk/StructureMap/MedicationStatementLastIssueDate-Extension-3to4" = "R3 to R6 conversion for CareConnect MedicationStatementLastIssueDate extension"
 uses "http://hl7.org/fhir/StructureDefinition/MedicationStatement" alias MedicationStatement as source
 uses "http://hl7.org/fhir/StructureDefinition/MedicationStatement" alias MedicationStatement as target
 

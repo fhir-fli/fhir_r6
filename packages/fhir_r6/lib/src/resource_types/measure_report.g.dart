@@ -18,6 +18,8 @@ abstract class $MeasureReportCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
+    CodeableConcept? category,
+    Reference? messages,
     MeasureReportStatus? status,
     MeasureReportType? type,
     SubmitDataUpdateType? dataUpdateType,
@@ -26,7 +28,7 @@ abstract class $MeasureReportCopyWith<T> extends $DomainResourceCopyWith<T> {
     FhirDateTime? date,
     Reference? reporter,
     Reference? reportingVendor,
-    Reference? location,
+    List<Reference>? location,
     Period? period,
     Reference? inputParameters,
     CodeableConcept? scoring,
@@ -55,6 +57,8 @@ class _$MeasureReportCopyWithImpl<T> implements $MeasureReportCopyWith<T> {
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? identifier = fhirSentinel,
+    Object? category = fhirSentinel,
+    Object? messages = fhirSentinel,
     Object? status = fhirSentinel,
     Object? type = fhirSentinel,
     Object? dataUpdateType = fhirSentinel,
@@ -96,6 +100,12 @@ class _$MeasureReportCopyWithImpl<T> implements $MeasureReportCopyWith<T> {
         identifier: identical(identifier, fhirSentinel)
             ? _value.identifier
             : identifier as List<Identifier>?,
+        category: identical(category, fhirSentinel)
+            ? _value.category
+            : category as CodeableConcept?,
+        messages: identical(messages, fhirSentinel)
+            ? _value.messages
+            : messages as Reference?,
         status: identical(status, fhirSentinel)
             ? _value.status
             : (status as MeasureReportStatus?) ?? _value.status,
@@ -121,7 +131,7 @@ class _$MeasureReportCopyWithImpl<T> implements $MeasureReportCopyWith<T> {
             : reportingVendor as Reference?,
         location: identical(location, fhirSentinel)
             ? _value.location
-            : location as Reference?,
+            : location as List<Reference>?,
         period: identical(period, fhirSentinel)
             ? _value.period
             : (period as Period?) ?? _value.period,
@@ -164,10 +174,15 @@ abstract class $MeasureReportGroupCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     FhirString? linkId,
+    FhirDateTime? calculatedDate,
     CodeableConcept? code,
+    FhirMarkdown? description,
     Reference? subject,
+    CodeableConcept? scoring,
+    CodeableConcept? improvementNotation,
+    FhirMarkdown? improvementNotationGuidance,
     List<MeasureReportPopulation>? population,
-    Quantity? measureScoreX,
+    MeasureScoreXMeasureReportGroup? measureScoreX,
     List<MeasureReportStratifier>? stratifier,
     bool? disallowExtensions,
   });
@@ -186,8 +201,13 @@ class _$MeasureReportGroupCopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? linkId = fhirSentinel,
+    Object? calculatedDate = fhirSentinel,
     Object? code = fhirSentinel,
+    Object? description = fhirSentinel,
     Object? subject = fhirSentinel,
+    Object? scoring = fhirSentinel,
+    Object? improvementNotation = fhirSentinel,
+    Object? improvementNotationGuidance = fhirSentinel,
     Object? population = fhirSentinel,
     Object? measureScoreX = fhirSentinel,
     Object? stratifier = fhirSentinel,
@@ -205,18 +225,34 @@ class _$MeasureReportGroupCopyWithImpl<T>
         linkId: identical(linkId, fhirSentinel)
             ? _value.linkId
             : linkId as FhirString?,
+        calculatedDate: identical(calculatedDate, fhirSentinel)
+            ? _value.calculatedDate
+            : calculatedDate as FhirDateTime?,
         code: identical(code, fhirSentinel)
             ? _value.code
             : code as CodeableConcept?,
+        description: identical(description, fhirSentinel)
+            ? _value.description
+            : description as FhirMarkdown?,
         subject: identical(subject, fhirSentinel)
             ? _value.subject
             : subject as Reference?,
+        scoring: identical(scoring, fhirSentinel)
+            ? _value.scoring
+            : scoring as CodeableConcept?,
+        improvementNotation: identical(improvementNotation, fhirSentinel)
+            ? _value.improvementNotation
+            : improvementNotation as CodeableConcept?,
+        improvementNotationGuidance:
+            identical(improvementNotationGuidance, fhirSentinel)
+                ? _value.improvementNotationGuidance
+                : improvementNotationGuidance as FhirMarkdown?,
         population: identical(population, fhirSentinel)
             ? _value.population
             : population as List<MeasureReportPopulation>?,
         measureScoreX: identical(measureScoreX, fhirSentinel)
             ? _value.measureScoreX
-            : measureScoreX as Quantity?,
+            : measureScoreX as MeasureScoreXMeasureReportGroup?,
         stratifier: identical(stratifier, fhirSentinel)
             ? _value.stratifier
             : stratifier as List<MeasureReportStratifier>?,
@@ -245,7 +281,9 @@ abstract class $MeasureReportPopulationCopyWith<T>
     List<FhirExtension>? modifierExtension,
     FhirString? linkId,
     CodeableConcept? code,
+    FhirMarkdown? description,
     FhirInteger? count,
+    Quantity? countQuantity,
     Reference? subjectResults,
     List<Reference>? subjectReport,
     Reference? subjects,
@@ -267,7 +305,9 @@ class _$MeasureReportPopulationCopyWithImpl<T>
     Object? modifierExtension = fhirSentinel,
     Object? linkId = fhirSentinel,
     Object? code = fhirSentinel,
+    Object? description = fhirSentinel,
     Object? count = fhirSentinel,
+    Object? countQuantity = fhirSentinel,
     Object? subjectResults = fhirSentinel,
     Object? subjectReport = fhirSentinel,
     Object? subjects = fhirSentinel,
@@ -288,9 +328,15 @@ class _$MeasureReportPopulationCopyWithImpl<T>
         code: identical(code, fhirSentinel)
             ? _value.code
             : code as CodeableConcept?,
+        description: identical(description, fhirSentinel)
+            ? _value.description
+            : description as FhirMarkdown?,
         count: identical(count, fhirSentinel)
             ? _value.count
             : count as FhirInteger?,
+        countQuantity: identical(countQuantity, fhirSentinel)
+            ? _value.countQuantity
+            : countQuantity as Quantity?,
         subjectResults: identical(subjectResults, fhirSentinel)
             ? _value.subjectResults
             : subjectResults as Reference?,
@@ -325,6 +371,7 @@ abstract class $MeasureReportStratifierCopyWith<T>
     List<FhirExtension>? modifierExtension,
     FhirString? linkId,
     CodeableConcept? code,
+    FhirMarkdown? description,
     List<MeasureReportStratum>? stratum,
     bool? disallowExtensions,
   });
@@ -344,6 +391,7 @@ class _$MeasureReportStratifierCopyWithImpl<T>
     Object? modifierExtension = fhirSentinel,
     Object? linkId = fhirSentinel,
     Object? code = fhirSentinel,
+    Object? description = fhirSentinel,
     Object? stratum = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -362,6 +410,9 @@ class _$MeasureReportStratifierCopyWithImpl<T>
         code: identical(code, fhirSentinel)
             ? _value.code
             : code as CodeableConcept?,
+        description: identical(description, fhirSentinel)
+            ? _value.description
+            : description as FhirMarkdown?,
         stratum: identical(stratum, fhirSentinel)
             ? _value.stratum
             : stratum as List<MeasureReportStratum>?,
@@ -388,10 +439,10 @@ abstract class $MeasureReportStratumCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    CodeableConcept? valueX,
+    ValueXMeasureReportStratum? valueX,
     List<MeasureReportComponent>? component,
     List<MeasureReportPopulation>? population,
-    Quantity? measureScoreX,
+    MeasureScoreXMeasureReportStratum? measureScoreX,
     bool? disallowExtensions,
   });
 }
@@ -425,7 +476,7 @@ class _$MeasureReportStratumCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : valueX as CodeableConcept?,
+            : valueX as ValueXMeasureReportStratum?,
         component: identical(component, fhirSentinel)
             ? _value.component
             : component as List<MeasureReportComponent>?,
@@ -434,7 +485,7 @@ class _$MeasureReportStratumCopyWithImpl<T>
             : population as List<MeasureReportPopulation>?,
         measureScoreX: identical(measureScoreX, fhirSentinel)
             ? _value.measureScoreX
-            : measureScoreX as Quantity?,
+            : measureScoreX as MeasureScoreXMeasureReportStratum?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -460,7 +511,8 @@ abstract class $MeasureReportComponentCopyWith<T>
     List<FhirExtension>? modifierExtension,
     FhirString? linkId,
     CodeableConcept? code,
-    CodeableConcept? valueX,
+    FhirMarkdown? description,
+    ValueXMeasureReportComponent? valueX,
     bool? disallowExtensions,
   });
 }
@@ -479,6 +531,7 @@ class _$MeasureReportComponentCopyWithImpl<T>
     Object? modifierExtension = fhirSentinel,
     Object? linkId = fhirSentinel,
     Object? code = fhirSentinel,
+    Object? description = fhirSentinel,
     Object? valueX = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -497,9 +550,12 @@ class _$MeasureReportComponentCopyWithImpl<T>
         code: identical(code, fhirSentinel)
             ? _value.code
             : (code as CodeableConcept?) ?? _value.code,
+        description: identical(description, fhirSentinel)
+            ? _value.description
+            : description as FhirMarkdown?,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as CodeableConcept?) ?? _value.valueX,
+            : (valueX as ValueXMeasureReportComponent?) ?? _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -526,6 +582,7 @@ abstract class $MeasureReportPopulation1CopyWith<T>
     FhirString? linkId,
     CodeableConcept? code,
     FhirInteger? count,
+    Quantity? countQuantity,
     Reference? subjectResults,
     List<Reference>? subjectReport,
     Reference? subjects,
@@ -548,6 +605,7 @@ class _$MeasureReportPopulation1CopyWithImpl<T>
     Object? linkId = fhirSentinel,
     Object? code = fhirSentinel,
     Object? count = fhirSentinel,
+    Object? countQuantity = fhirSentinel,
     Object? subjectResults = fhirSentinel,
     Object? subjectReport = fhirSentinel,
     Object? subjects = fhirSentinel,
@@ -571,6 +629,9 @@ class _$MeasureReportPopulation1CopyWithImpl<T>
         count: identical(count, fhirSentinel)
             ? _value.count
             : count as FhirInteger?,
+        countQuantity: identical(countQuantity, fhirSentinel)
+            ? _value.countQuantity
+            : countQuantity as Quantity?,
         subjectResults: identical(subjectResults, fhirSentinel)
             ? _value.subjectResults
             : subjectResults as Reference?,

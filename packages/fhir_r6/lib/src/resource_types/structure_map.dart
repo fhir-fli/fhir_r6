@@ -2776,10 +2776,10 @@ class StructureMapSource extends BackboneElement {
         'context',
         FhirId.fromJson,
       )!,
-      min: JsonParser.parsePrimitive<FhirInteger>(
+      min: JsonParser.parsePrimitive<FhirUnsignedInt>(
         json,
         'min',
-        FhirInteger.fromJson,
+        FhirUnsignedInt.fromJson,
       ),
       max: JsonParser.parsePrimitive<FhirString>(
         json,
@@ -2878,7 +2878,7 @@ class StructureMapSource extends BackboneElement {
   /// [min]
   /// Specified minimum cardinality for the element. This is optional; if
   /// present, it acts an implicit check on the input content.
-  final FhirInteger? min;
+  final FhirUnsignedInt? min;
 
   /// [max]
   /// Specified maximum cardinality for the element - a number or a "*". This

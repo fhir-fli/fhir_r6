@@ -5,7 +5,7 @@ import 'package:yaml/yaml.dart';
 part 'supply_delivery.g.dart';
 
 /// [SupplyDelivery]
-/// Record of delivery of what is supplied.
+/// Record of movement of supplies from one location to another.
 class SupplyDelivery extends DomainResource {
   /// Primary constructor for
   /// [SupplyDelivery]
@@ -22,9 +22,10 @@ class SupplyDelivery extends DomainResource {
     this.identifier,
     this.basedOn,
     this.partOf,
-    this.status,
+    required this.status,
     this.patient,
     this.type,
+    required this.stage,
     this.suppliedItem,
     OccurrenceXSupplyDelivery? occurrenceX,
     FhirDateTime? occurrenceDateTime,
@@ -117,7 +118,7 @@ class SupplyDelivery extends DomainResource {
         json,
         'status',
         SupplyDeliveryStatus.fromJson,
-      ),
+      )!,
       patient: JsonParser.parseObject<Reference>(
         json,
         'patient',
@@ -128,6 +129,11 @@ class SupplyDelivery extends DomainResource {
         'type',
         CodeableConcept.fromJson,
       ),
+      stage: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'stage',
+        CodeableConcept.fromJson,
+      )!,
       suppliedItem: (json['suppliedItem'] as List<dynamic>?)
           ?.map<SupplyDeliverySuppliedItem>(
             (v) => SupplyDeliverySuppliedItem.fromJson(
@@ -221,7 +227,7 @@ class SupplyDelivery extends DomainResource {
 
   /// [status]
   /// A code specifying the state of the dispense event.
-  final SupplyDeliveryStatus? status;
+  final SupplyDeliveryStatus status;
 
   /// [patient]
   /// A link to a resource representing the person whom the delivered item is
@@ -232,6 +238,13 @@ class SupplyDelivery extends DomainResource {
   /// Indicates the type of supply being provided. Examples include:
   /// Medication, Device, Biologically Derived Product.
   final CodeableConcept? type;
+
+  /// [stage]
+  /// Indicates the stage of the delivery. In case the delivery is tracked
+  /// only at the specific events (e.g. receipt), this resource represents
+  /// the stage represented, not the entire history nor previous delivery
+  /// stages.
+  final CodeableConcept stage;
 
   /// [suppliedItem]
   /// The item that is being delivered or has been supplied.
@@ -255,8 +268,8 @@ class SupplyDelivery extends DomainResource {
   final Reference? supplier;
 
   /// [destination]
-  /// Identification of the facility/location where the delivery was shipped
-  /// to.
+  /// Identification of the facility, location or person where the delivery
+  /// is shipped to.
   final Reference? destination;
 
   /// [receiver]
@@ -383,6 +396,10 @@ class SupplyDelivery extends DomainResource {
       type,
     );
     addField(
+      'stage',
+      stage,
+    );
+    addField(
       'suppliedItem',
       suppliedItem,
     );
@@ -427,6 +444,7 @@ class SupplyDelivery extends DomainResource {
       'status',
       'patient',
       'type',
+      'stage',
       'suppliedItem',
       'occurrenceX',
       'supplier',
@@ -489,9 +507,7 @@ class SupplyDelivery extends DomainResource {
           fields.addAll(partOf!);
         }
       case 'status':
-        if (status != null) {
-          fields.add(status!);
-        }
+        fields.add(status);
       case 'patient':
         if (patient != null) {
           fields.add(patient!);
@@ -500,6 +516,8 @@ class SupplyDelivery extends DomainResource {
         if (type != null) {
           fields.add(type!);
         }
+      case 'stage':
+        fields.add(stage);
       case 'suppliedItem':
         if (suppliedItem != null) {
           fields.addAll(suppliedItem!);
@@ -657,6 +675,12 @@ class SupplyDelivery extends DomainResource {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      stage,
+      o.stage,
+    )) {
+      return false;
+    }
     if (!listEquals<SupplyDeliverySuppliedItem>(
       suppliedItem,
       o.suppliedItem,
@@ -702,6 +726,7 @@ class SupplyDeliverySuppliedItem extends BackboneElement {
     super.extension_,
     super.modifierExtension,
     this.quantity,
+    this.condition,
     ItemXSupplyDeliverySuppliedItem? itemX,
     CodeableConcept? itemCodeableConcept,
     Reference? itemReference,
@@ -737,6 +762,11 @@ class SupplyDeliverySuppliedItem extends BackboneElement {
         json,
         'quantity',
         Quantity.fromJson,
+      ),
+      condition: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'condition',
+        CodeableConcept.fromJson,
       ),
       itemX: JsonParser.parsePolymorphic<ItemXSupplyDeliverySuppliedItem>(
         json,
@@ -794,6 +824,12 @@ class SupplyDeliverySuppliedItem extends BackboneElement {
   /// The amount of the item that has been supplied. Unit of measure may be
   /// included.
   final Quantity? quantity;
+
+  /// [condition]
+  /// The condition in which the supplied item was at the event (shipment, or
+  /// receipt, etc.). For example, to indicate when the supplied item is not
+  /// suitable for use (e.g., damaged or out of temperature control).
+  final CodeableConcept? condition;
 
   /// [itemX]
   /// Identifies the medication, substance, device or biologically derived
@@ -886,6 +922,10 @@ class SupplyDeliverySuppliedItem extends BackboneElement {
       'quantity',
       quantity,
     );
+    addField(
+      'condition',
+      condition,
+    );
     if (itemX != null) {
       final fhirType = itemX!.fhirType;
       addField(
@@ -905,6 +945,7 @@ class SupplyDeliverySuppliedItem extends BackboneElement {
       'extension',
       'modifierExtension',
       'quantity',
+      'condition',
       'itemX',
     ];
   }
@@ -933,6 +974,10 @@ class SupplyDeliverySuppliedItem extends BackboneElement {
       case 'quantity':
         if (quantity != null) {
           fields.add(quantity!);
+        }
+      case 'condition':
+        if (condition != null) {
+          fields.add(condition!);
         }
       case 'item':
         fields.add(itemX!);
@@ -1009,6 +1054,12 @@ class SupplyDeliverySuppliedItem extends BackboneElement {
     if (!equalsDeepWithNull(
       quantity,
       o.quantity,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      condition,
+      o.condition,
     )) {
       return false;
     }

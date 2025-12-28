@@ -14,6 +14,9 @@ enum BindingStrengthBuilderEnum {
 
   /// example
   example,
+
+  /// descriptive
+  descriptive,
   ;
 
   /// Converts the enum value to a string.
@@ -31,6 +34,8 @@ enum BindingStrengthBuilderEnum {
         return 'preferred';
       case BindingStrengthBuilderEnum.example:
         return 'example';
+      case BindingStrengthBuilderEnum.descriptive:
+        return 'descriptive';
     }
   }
 
@@ -60,6 +65,8 @@ enum BindingStrengthBuilderEnum {
         return BindingStrengthBuilderEnum.preferred;
       case 'example':
         return BindingStrengthBuilderEnum.example;
+      case 'descriptive':
+        return BindingStrengthBuilderEnum.descriptive;
     }
     return null;
   }
@@ -154,7 +161,7 @@ class BindingStrengthBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/binding-strength',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Required',
     ),
@@ -167,7 +174,7 @@ class BindingStrengthBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/binding-strength',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Extensible',
     ),
@@ -180,7 +187,7 @@ class BindingStrengthBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/binding-strength',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Preferred',
     ),
@@ -193,9 +200,22 @@ class BindingStrengthBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/binding-strength',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Example',
+    ),
+  );
+
+  /// descriptive
+  static BindingStrengthBuilder descriptive = BindingStrengthBuilder._(
+    valueString: 'descriptive',
+    valueEnum: BindingStrengthBuilderEnum.descriptive,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/binding-strength',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'descriptive',
     ),
   );
 
@@ -211,6 +231,7 @@ class BindingStrengthBuilder extends FhirCodeEnumBuilder {
     extensible,
     preferred,
     example,
+    descriptive,
   ];
 
   /// Returns the enum value with an element attached

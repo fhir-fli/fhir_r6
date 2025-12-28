@@ -10,25 +10,29 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchTask extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Task]
+  @override
   SearchTask identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [code] in the resource
   /// [Task]
+  @override
   SearchTask code(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}code'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['code'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -38,8 +42,8 @@ class SearchTask extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}authored_on'] =
-        value.toString();
+    parameters['authored_on'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -50,8 +54,9 @@ class SearchTask extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}business_status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['business_status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -62,8 +67,9 @@ class SearchTask extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}group_identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['group_identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -74,8 +80,9 @@ class SearchTask extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}intent'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['intent'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -85,8 +92,8 @@ class SearchTask extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}modified'] =
-        value.toString();
+    parameters['modified'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -97,8 +104,9 @@ class SearchTask extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}performer'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['performer'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -108,32 +116,36 @@ class SearchTask extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}period'] =
-        value.toString();
+    parameters['period'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [priority] in the resource
   /// [Task]
+  @override
   SearchTask priority(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}priority'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['priority'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [Task]
+  @override
   SearchTask status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

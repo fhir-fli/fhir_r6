@@ -26,10 +26,6 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : AccountProcedure.fromJson(value);
-    case 'account.relatedaccount':
-      return value is! Map<String, dynamic>
-          ? null
-          : AccountRelatedAccount.fromJson(value);
     case 'account.balance':
       return value is! Map<String, dynamic>
           ? null
@@ -86,30 +82,10 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : AdverseEventCausality.fromJson(value);
-    case 'adverseevent.contributingfactor':
-      return value is! Map<String, dynamic>
-          ? null
-          : AdverseEventContributingFactor.fromJson(value);
-    case 'adverseevent.preventiveaction':
-      return value is! Map<String, dynamic>
-          ? null
-          : AdverseEventPreventiveAction.fromJson(value);
-    case 'adverseevent.mitigatingaction':
-      return value is! Map<String, dynamic>
-          ? null
-          : AdverseEventMitigatingAction.fromJson(value);
-    case 'adverseevent.supportinginfo':
-      return value is! Map<String, dynamic>
-          ? null
-          : AdverseEventSupportingInfo.fromJson(value);
     case 'allergyintolerance':
       return value is! Map<String, dynamic>
           ? null
           : AllergyIntolerance.fromJson(value);
-    case 'allergyintolerance.participant':
-      return value is! Map<String, dynamic>
-          ? null
-          : AllergyIntoleranceParticipant.fromJson(value);
     case 'allergyintolerance.reaction':
       return value is! Map<String, dynamic>
           ? null
@@ -146,6 +122,10 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : ArtifactAssessment.fromJson(value);
+    case 'artifactassessment.relatesto':
+      return value is! Map<String, dynamic>
+          ? null
+          : ArtifactAssessmentRelatesTo.fromJson(value);
     case 'artifactassessment.content':
       return value is! Map<String, dynamic>
           ? null
@@ -332,14 +312,14 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : CitationStatusDate.fromJson(value);
+    case 'citation.relatesto':
+      return value is! Map<String, dynamic>
+          ? null
+          : CitationRelatesTo.fromJson(value);
     case 'citation.citedartifact':
       return value is! Map<String, dynamic>
           ? null
           : CitationCitedArtifact.fromJson(value);
-    case 'citation.citedartifact.version':
-      return value is! Map<String, dynamic>
-          ? null
-          : CitationVersion.fromJson(value);
     case 'citation.citedartifact.statusdate':
       return value is! Map<String, dynamic>
           ? null
@@ -359,7 +339,7 @@ FhirBase? fromPath(String? path, dynamic value) {
     case 'citation.citedartifact.relatesto':
       return value is! Map<String, dynamic>
           ? null
-          : CitationRelatesTo.fromJson(value);
+          : CitationRelatesTo1.fromJson(value);
     case 'citation.citedartifact.publicationform':
       return value is! Map<String, dynamic>
           ? null
@@ -504,14 +484,14 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : ClaimResponseError.fromJson(value);
-    case 'clinicalimpression':
+    case 'clinicalassessment':
       return value is! Map<String, dynamic>
           ? null
-          : ClinicalImpression.fromJson(value);
-    case 'clinicalimpression.finding':
+          : ClinicalAssessment.fromJson(value);
+    case 'clinicalassessment.finding':
       return value is! Map<String, dynamic>
           ? null
-          : ClinicalImpressionFinding.fromJson(value);
+          : ClinicalAssessmentFinding.fromJson(value);
     case 'clinicalusedefinition':
       return value is! Map<String, dynamic>
           ? null
@@ -598,6 +578,10 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : CompositionAttester.fromJson(value);
+    case 'composition.relatesto':
+      return value is! Map<String, dynamic>
+          ? null
+          : CompositionRelatesTo.fromJson(value);
     case 'composition.event':
       return value is! Map<String, dynamic>
           ? null
@@ -642,10 +626,6 @@ FhirBase? fromPath(String? path, dynamic value) {
           : ConceptMapUnmapped.fromJson(value);
     case 'condition':
       return value is! Map<String, dynamic> ? null : Condition.fromJson(value);
-    case 'condition.participant':
-      return value is! Map<String, dynamic>
-          ? null
-          : ConditionParticipant.fromJson(value);
     case 'condition.stage':
       return value is! Map<String, dynamic>
           ? null
@@ -654,10 +634,6 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : ConditionDefinition.fromJson(value);
-    case 'conditiondefinition.observation':
-      return value is! Map<String, dynamic>
-          ? null
-          : ConditionDefinitionObservation.fromJson(value);
     case 'conditiondefinition.medication':
       return value is! Map<String, dynamic>
           ? null
@@ -844,10 +820,10 @@ FhirBase? fromPath(String? path, dynamic value) {
           : DeviceUdiCarrier.fromJson(value);
     case 'device.name':
       return value is! Map<String, dynamic> ? null : DeviceName.fromJson(value);
-    case 'device.version':
+    case 'device.deviceversion':
       return value is! Map<String, dynamic>
           ? null
-          : DeviceVersion.fromJson(value);
+          : DeviceDeviceVersion.fromJson(value);
     case 'device.conformsto':
       return value is! Map<String, dynamic>
           ? null
@@ -856,6 +832,22 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : DeviceProperty.fromJson(value);
+    case 'device.additive':
+      return value is! Map<String, dynamic>
+          ? null
+          : DeviceAdditive.fromJson(value);
+    case 'devicealert':
+      return value is! Map<String, dynamic>
+          ? null
+          : DeviceAlert.fromJson(value);
+    case 'devicealert.condition':
+      return value is! Map<String, dynamic>
+          ? null
+          : DeviceAlertCondition.fromJson(value);
+    case 'devicealert.signal':
+      return value is! Map<String, dynamic>
+          ? null
+          : DeviceAlertSignal.fromJson(value);
     case 'deviceassociation':
       return value is! Map<String, dynamic>
           ? null
@@ -904,10 +896,10 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : DeviceDefinitionDistributor.fromJson(value);
-    case 'devicedefinition.version':
+    case 'devicedefinition.deviceversion':
       return value is! Map<String, dynamic>
           ? null
-          : DeviceDefinitionVersion.fromJson(value);
+          : DeviceDefinitionDeviceVersion.fromJson(value);
     case 'devicedefinition.property':
       return value is! Map<String, dynamic>
           ? null
@@ -1064,6 +1056,10 @@ FhirBase? fromPath(String? path, dynamic value) {
           : EventDefinition.fromJson(value);
     case 'evidence':
       return value is! Map<String, dynamic> ? null : Evidence.fromJson(value);
+    case 'evidence.relatesto':
+      return value is! Map<String, dynamic>
+          ? null
+          : EvidenceRelatesTo.fromJson(value);
     case 'evidence.variabledefinition':
       return value is! Map<String, dynamic>
           ? null
@@ -1092,54 +1088,30 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : EvidenceCertainty.fromJson(value);
-    case 'evidencereport':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceReport.fromJson(value);
-    case 'evidencereport.subject':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceReportSubject.fromJson(value);
-    case 'evidencereport.subject.characteristic':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceReportCharacteristic.fromJson(value);
-    case 'evidencereport.relatesto':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceReportRelatesTo.fromJson(value);
-    case 'evidencereport.relatesto.target':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceReportTarget.fromJson(value);
-    case 'evidencereport.section':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceReportSection.fromJson(value);
     case 'evidencevariable':
       return value is! Map<String, dynamic>
           ? null
           : EvidenceVariable.fromJson(value);
-    case 'evidencevariable.characteristic':
+    case 'evidencevariable.relatesto':
       return value is! Map<String, dynamic>
           ? null
-          : EvidenceVariableCharacteristic.fromJson(value);
-    case 'evidencevariable.characteristic.definitionbytypeandvalue':
+          : EvidenceVariableRelatesTo.fromJson(value);
+    case 'evidencevariable.definitionmodifier':
       return value is! Map<String, dynamic>
           ? null
-          : EvidenceVariableDefinitionByTypeAndValue.fromJson(value);
-    case 'evidencevariable.characteristic.definitionbycombination':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceVariableDefinitionByCombination.fromJson(value);
-    case 'evidencevariable.characteristic.timefromevent':
-      return value is! Map<String, dynamic>
-          ? null
-          : EvidenceVariableTimeFromEvent.fromJson(value);
+          : EvidenceVariableDefinitionModifier.fromJson(value);
     case 'evidencevariable.category':
       return value is! Map<String, dynamic>
           ? null
           : EvidenceVariableCategory.fromJson(value);
+    case 'evidencevariable.datastorage':
+      return value is! Map<String, dynamic>
+          ? null
+          : EvidenceVariableDataStorage.fromJson(value);
+    case 'evidencevariable.constraint':
+      return value is! Map<String, dynamic>
+          ? null
+          : EvidenceVariableConstraint.fromJson(value);
     case 'examplescenario':
       return value is! Map<String, dynamic>
           ? null
@@ -1324,6 +1296,10 @@ FhirBase? fromPath(String? path, dynamic value) {
           : GenomicStudyDevice.fromJson(value);
     case 'goal':
       return value is! Map<String, dynamic> ? null : Goal.fromJson(value);
+    case 'goal.acceptance':
+      return value is! Map<String, dynamic>
+          ? null
+          : GoalAcceptance.fromJson(value);
     case 'goal.target':
       return value is! Map<String, dynamic> ? null : GoalTarget.fromJson(value);
     case 'graphdefinition':
@@ -1380,7 +1356,7 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : ImagingSelectionImageRegion2D.fromJson(value);
-    case 'imagingselection.instance.imageregion3d':
+    case 'imagingselection.imageregion3d':
       return value is! Map<String, dynamic>
           ? null
           : ImagingSelectionImageRegion3D.fromJson(value);
@@ -1506,38 +1482,42 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : InsurancePlan.fromJson(value);
-    case 'insuranceplan.coverage':
-      return value is! Map<String, dynamic>
-          ? null
-          : InsurancePlanCoverage.fromJson(value);
-    case 'insuranceplan.coverage.benefit':
-      return value is! Map<String, dynamic>
-          ? null
-          : InsurancePlanBenefit.fromJson(value);
-    case 'insuranceplan.coverage.benefit.limit':
-      return value is! Map<String, dynamic>
-          ? null
-          : InsurancePlanLimit.fromJson(value);
-    case 'insuranceplan.plan':
-      return value is! Map<String, dynamic>
-          ? null
-          : InsurancePlanPlan.fromJson(value);
-    case 'insuranceplan.plan.generalcost':
+    case 'insuranceplan.generalcost':
       return value is! Map<String, dynamic>
           ? null
           : InsurancePlanGeneralCost.fromJson(value);
-    case 'insuranceplan.plan.specificcost':
+    case 'insuranceplan.specificcost':
       return value is! Map<String, dynamic>
           ? null
           : InsurancePlanSpecificCost.fromJson(value);
-    case 'insuranceplan.plan.specificcost.benefit':
+    case 'insuranceplan.specificcost.benefit':
       return value is! Map<String, dynamic>
           ? null
-          : InsurancePlanBenefit1.fromJson(value);
-    case 'insuranceplan.plan.specificcost.benefit.cost':
+          : InsurancePlanBenefit.fromJson(value);
+    case 'insuranceplan.specificcost.benefit.cost':
       return value is! Map<String, dynamic>
           ? null
           : InsurancePlanCost.fromJson(value);
+    case 'insuranceproduct':
+      return value is! Map<String, dynamic>
+          ? null
+          : InsuranceProduct.fromJson(value);
+    case 'insuranceproduct.coverage':
+      return value is! Map<String, dynamic>
+          ? null
+          : InsuranceProductCoverage.fromJson(value);
+    case 'insuranceproduct.coverage.benefit':
+      return value is! Map<String, dynamic>
+          ? null
+          : InsuranceProductBenefit.fromJson(value);
+    case 'insuranceproduct.coverage.benefit.limit':
+      return value is! Map<String, dynamic>
+          ? null
+          : InsuranceProductLimit.fromJson(value);
+    case 'insuranceproduct.related':
+      return value is! Map<String, dynamic>
+          ? null
+          : InsuranceProductRelated.fromJson(value);
     case 'inventoryitem':
       return value is! Map<String, dynamic>
           ? null
@@ -1632,6 +1612,10 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : MeasureGroup.fromJson(value);
+    case 'measure.group.component':
+      return value is! Map<String, dynamic>
+          ? null
+          : MeasureComponent.fromJson(value);
     case 'measure.group.population':
       return value is! Map<String, dynamic>
           ? null
@@ -1643,7 +1627,7 @@ FhirBase? fromPath(String? path, dynamic value) {
     case 'measure.group.stratifier.component':
       return value is! Map<String, dynamic>
           ? null
-          : MeasureComponent.fromJson(value);
+          : MeasureComponent1.fromJson(value);
     case 'measure.supplementaldata':
       return value is! Map<String, dynamic>
           ? null
@@ -1870,22 +1854,126 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : MessageHeaderResponse.fromJson(value);
+    case 'moleculardefinition':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinition.fromJson(value);
+    case 'moleculardefinition.location':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionLocation.fromJson(value);
+    case 'moleculardefinition.location.sequencelocation':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionSequenceLocation.fromJson(value);
+    case 'moleculardefinition.location.sequencelocation.coordinateinterval':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateInterval.fromJson(value);
+    case 'moleculardefinition.location.sequencelocation.coordinateinterval.coordinatesystem':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateSystem.fromJson(value);
+    case 'moleculardefinition.location.cytobandlocation':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCytobandLocation.fromJson(value);
+    case 'moleculardefinition.location.cytobandlocation.genomeassembly':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionGenomeAssembly.fromJson(value);
+    case 'moleculardefinition.location.cytobandlocation.cytobandinterval':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCytobandInterval.fromJson(value);
+    case 'moleculardefinition.location.cytobandlocation.cytobandinterval.startcytoband':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionStartCytoband.fromJson(value);
+    case 'moleculardefinition.location.cytobandlocation.cytobandinterval.endcytoband':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionEndCytoband.fromJson(value);
+    case 'moleculardefinition.representation':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionRepresentation.fromJson(value);
+    case 'moleculardefinition.representation.literal':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionLiteral.fromJson(value);
+    case 'moleculardefinition.representation.extracted':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionExtracted.fromJson(value);
+    case 'moleculardefinition.representation.extracted.coordinateinterval':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateInterval1.fromJson(value);
+    case 'moleculardefinition.representation.extracted.coordinateinterval.coordinatesystem':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateSystem1.fromJson(value);
+    case 'moleculardefinition.representation.repeated':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionRepeated.fromJson(value);
+    case 'moleculardefinition.representation.concatenated':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionConcatenated.fromJson(value);
+    case 'moleculardefinition.representation.concatenated.sequenceelement':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionSequenceElement.fromJson(value);
+    case 'moleculardefinition.representation.relative':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionRelative.fromJson(value);
+    case 'moleculardefinition.representation.relative.edit':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionEdit.fromJson(value);
+    case 'moleculardefinition.representation.relative.edit.coordinateinterval':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateInterval2.fromJson(value);
+    case 'moleculardefinition.representation.relative.edit.coordinateinterval.coordinatesystem':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularDefinitionCoordinateSystem2.fromJson(value);
     case 'molecularsequence':
       return value is! Map<String, dynamic>
           ? null
           : MolecularSequence.fromJson(value);
+    case 'molecularsequence.literal':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularSequenceLiteral.fromJson(value);
     case 'molecularsequence.relative':
       return value is! Map<String, dynamic>
           ? null
           : MolecularSequenceRelative.fromJson(value);
-    case 'molecularsequence.relative.startingsequence':
-      return value is! Map<String, dynamic>
-          ? null
-          : MolecularSequenceStartingSequence.fromJson(value);
     case 'molecularsequence.relative.edit':
       return value is! Map<String, dynamic>
           ? null
           : MolecularSequenceEdit.fromJson(value);
+    case 'molecularsequence.extracted':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularSequenceExtracted.fromJson(value);
+    case 'molecularsequence.repeated':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularSequenceRepeated.fromJson(value);
+    case 'molecularsequence.concatenated':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularSequenceConcatenated.fromJson(value);
+    case 'molecularsequence.concatenated.sequenceelement':
+      return value is! Map<String, dynamic>
+          ? null
+          : MolecularSequenceSequenceElement.fromJson(value);
     case 'namingsystem':
       return value is! Map<String, dynamic>
           ? null
@@ -1898,14 +1986,22 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : NutritionIntake.fromJson(value);
-    case 'nutritionintake.consumeditem':
+    case 'nutritionintake.nutritionitem':
+      return value is! Map<String, dynamic>
+          ? null
+          : NutritionIntakeNutritionItem.fromJson(value);
+    case 'nutritionintake.nutritionitem.consumeditem':
       return value is! Map<String, dynamic>
           ? null
           : NutritionIntakeConsumedItem.fromJson(value);
-    case 'nutritionintake.ingredientlabel':
+    case 'nutritionintake.nutritionitem.consumeditem.totalintake':
       return value is! Map<String, dynamic>
           ? null
-          : NutritionIntakeIngredientLabel.fromJson(value);
+          : NutritionIntakeTotalIntake.fromJson(value);
+    case 'nutritionintake.nutritionitem.notconsumeditem':
+      return value is! Map<String, dynamic>
+          ? null
+          : NutritionIntakeNotConsumedItem.fromJson(value);
     case 'nutritionintake.performer':
       return value is! Map<String, dynamic>
           ? null
@@ -1942,10 +2038,6 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : NutritionOrderEnteralFormula.fromJson(value);
-    case 'nutritionorder.enteralformula.additive':
-      return value is! Map<String, dynamic>
-          ? null
-          : NutritionOrderAdditive.fromJson(value);
     case 'nutritionorder.enteralformula.administration':
       return value is! Map<String, dynamic>
           ? null
@@ -1954,6 +2046,10 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : NutritionOrderSchedule2.fromJson(value);
+    case 'nutritionorder.additive':
+      return value is! Map<String, dynamic>
+          ? null
+          : NutritionOrderAdditive.fromJson(value);
     case 'nutritionproduct':
       return value is! Map<String, dynamic>
           ? null
@@ -2120,6 +2216,14 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : PermissionActivity.fromJson(value);
+    case 'permission.rule.activity.actor':
+      return value is! Map<String, dynamic>
+          ? null
+          : PermissionActor.fromJson(value);
+    case 'permission.rule.limit':
+      return value is! Map<String, dynamic>
+          ? null
+          : PermissionLimit.fromJson(value);
     case 'person':
       return value is! Map<String, dynamic> ? null : Person.fromJson(value);
     case 'person.communication':
@@ -2128,6 +2232,10 @@ FhirBase? fromPath(String? path, dynamic value) {
           : PersonCommunication.fromJson(value);
     case 'person.link':
       return value is! Map<String, dynamic> ? null : PersonLink.fromJson(value);
+    case 'personalrelationship':
+      return value is! Map<String, dynamic>
+          ? null
+          : PersonalRelationship.fromJson(value);
     case 'plandefinition':
       return value is! Map<String, dynamic>
           ? null
@@ -2296,10 +2404,26 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : Requirements.fromJson(value);
+    case 'requirements.imports':
+      return value is! Map<String, dynamic>
+          ? null
+          : RequirementsImports.fromJson(value);
+    case 'requirements.actor':
+      return value is! Map<String, dynamic>
+          ? null
+          : RequirementsActor.fromJson(value);
     case 'requirements.statement':
       return value is! Map<String, dynamic>
           ? null
           : RequirementsStatement.fromJson(value);
+    case 'requirements.statement.derivedfrom':
+      return value is! Map<String, dynamic>
+          ? null
+          : RequirementsDerivedFrom.fromJson(value);
+    case 'requirements.statement.partof':
+      return value is! Map<String, dynamic>
+          ? null
+          : RequirementsPartOf.fromJson(value);
     case 'researchstudy':
       return value is! Map<String, dynamic>
           ? null
@@ -2308,6 +2432,10 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : ResearchStudyLabel.fromJson(value);
+    case 'researchstudy.relatesto':
+      return value is! Map<String, dynamic>
+          ? null
+          : ResearchStudyRelatesTo.fromJson(value);
     case 'researchstudy.associatedparty':
       return value is! Map<String, dynamic>
           ? null
@@ -2328,18 +2456,26 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : ResearchStudyObjective.fromJson(value);
-    case 'researchstudy.outcomemeasure':
+    case 'researchstudy.objective.outcomemeasure':
       return value is! Map<String, dynamic>
           ? null
           : ResearchStudyOutcomeMeasure.fromJson(value);
+    case 'researchstudy.objective.outcomemeasure.eventhandling':
+      return value is! Map<String, dynamic>
+          ? null
+          : ResearchStudyEventHandling.fromJson(value);
     case 'researchsubject':
       return value is! Map<String, dynamic>
           ? null
           : ResearchSubject.fromJson(value);
-    case 'researchsubject.progress':
+    case 'researchsubject.subjectstate':
       return value is! Map<String, dynamic>
           ? null
-          : ResearchSubjectProgress.fromJson(value);
+          : ResearchSubjectSubjectState.fromJson(value);
+    case 'researchsubject.subjectmilestone':
+      return value is! Map<String, dynamic>
+          ? null
+          : ResearchSubjectSubjectMilestone.fromJson(value);
     case 'riskassessment':
       return value is! Map<String, dynamic>
           ? null
@@ -2494,36 +2630,36 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : SubscriptionStatusNotificationEvent.fromJson(value);
+    case 'subscriptionstatus.notificationevent.relatedquery':
+      return value is! Map<String, dynamic>
+          ? null
+          : SubscriptionStatusRelatedQuery.fromJson(value);
     case 'subscriptiontopic':
       return value is! Map<String, dynamic>
           ? null
           : SubscriptionTopic.fromJson(value);
-    case 'subscriptiontopic.resourcetrigger':
+    case 'subscriptiontopic.trigger':
       return value is! Map<String, dynamic>
           ? null
-          : SubscriptionTopicResourceTrigger.fromJson(value);
-    case 'subscriptiontopic.resourcetrigger.querycriteria':
+          : SubscriptionTopicTrigger.fromJson(value);
+    case 'subscriptiontopic.trigger.querycriteria':
       return value is! Map<String, dynamic>
           ? null
           : SubscriptionTopicQueryCriteria.fromJson(value);
-    case 'subscriptiontopic.eventtrigger':
-      return value is! Map<String, dynamic>
-          ? null
-          : SubscriptionTopicEventTrigger.fromJson(value);
-    case 'subscriptiontopic.canfilterby':
+    case 'subscriptiontopic.trigger.canfilterby':
       return value is! Map<String, dynamic>
           ? null
           : SubscriptionTopicCanFilterBy.fromJson(value);
-    case 'subscriptiontopic.notificationshape':
+    case 'subscriptiontopic.trigger.notificationshape':
       return value is! Map<String, dynamic>
           ? null
           : SubscriptionTopicNotificationShape.fromJson(value);
-    case 'substance':
-      return value is! Map<String, dynamic> ? null : Substance.fromJson(value);
-    case 'substance.ingredient':
+    case 'subscriptiontopic.trigger.notificationshape.relatedquery':
       return value is! Map<String, dynamic>
           ? null
-          : SubstanceIngredient.fromJson(value);
+          : SubscriptionTopicRelatedQuery.fromJson(value);
+    case 'substance':
+      return value is! Map<String, dynamic> ? null : Substance.fromJson(value);
     case 'substancedefinition':
       return value is! Map<String, dynamic>
           ? null
@@ -2722,6 +2858,10 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : TerminologyCapabilitiesFilter.fromJson(value);
+    case 'terminologycapabilities.supplements':
+      return value is! Map<String, dynamic>
+          ? null
+          : TerminologyCapabilitiesSupplements.fromJson(value);
     case 'terminologycapabilities.expansion':
       return value is! Map<String, dynamic>
           ? null
@@ -2744,6 +2884,10 @@ FhirBase? fromPath(String? path, dynamic value) {
           : TerminologyCapabilitiesClosure.fromJson(value);
     case 'testplan':
       return value is! Map<String, dynamic> ? null : TestPlan.fromJson(value);
+    case 'testplan.scope':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestPlanScope.fromJson(value);
     case 'testplan.dependency':
       return value is! Map<String, dynamic>
           ? null
@@ -2752,6 +2896,14 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : TestPlanTestCase.fromJson(value);
+    case 'testplan.testcase.scope':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestPlanScope1.fromJson(value);
+    case 'testplan.testcase.requirement':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestPlanRequirement.fromJson(value);
     case 'testplan.testcase.dependency':
       return value is! Map<String, dynamic>
           ? null
@@ -2778,6 +2930,10 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : TestReportParticipant.fromJson(value);
+    case 'testreport.parameter':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestReportParameter.fromJson(value);
     case 'testreport.setup':
       return value is! Map<String, dynamic>
           ? null
@@ -2816,14 +2972,10 @@ FhirBase? fromPath(String? path, dynamic value) {
           : TestReportAction2.fromJson(value);
     case 'testscript':
       return value is! Map<String, dynamic> ? null : TestScript.fromJson(value);
-    case 'testscript.origin':
+    case 'testscript.testsystem':
       return value is! Map<String, dynamic>
           ? null
-          : TestScriptOrigin.fromJson(value);
-    case 'testscript.destination':
-      return value is! Map<String, dynamic>
-          ? null
-          : TestScriptDestination.fromJson(value);
+          : TestScriptTestSystem.fromJson(value);
     case 'testscript.metadata':
       return value is! Map<String, dynamic>
           ? null
@@ -2856,6 +3008,14 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : TestScriptAction.fromJson(value);
+    case 'testscript.setup.action.common':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestScriptCommon.fromJson(value);
+    case 'testscript.setup.action.common.parameter':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestScriptParameter.fromJson(value);
     case 'testscript.setup.action.operation':
       return value is! Map<String, dynamic>
           ? null
@@ -2888,6 +3048,18 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : TestScriptAction2.fromJson(value);
+    case 'testscript.common':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestScriptCommon1.fromJson(value);
+    case 'testscript.common.parameter':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestScriptParameter1.fromJson(value);
+    case 'testscript.common.action':
+      return value is! Map<String, dynamic>
+          ? null
+          : TestScriptAction3.fromJson(value);
     case 'transport':
       return value is! Map<String, dynamic> ? null : Transport.fromJson(value);
     case 'transport.restriction':
@@ -3150,6 +3322,10 @@ FhirBase? fromPath(String? path, dynamic value) {
       return value is! Map<String, dynamic>
           ? null
           : RelatedArtifact.fromJson(value);
+    case 'relativetime':
+      return value is! Map<String, dynamic>
+          ? null
+          : RelativeTime.fromJson(value);
     case 'sampleddata':
       return value is! Map<String, dynamic>
           ? null
@@ -3195,8 +3371,6 @@ String? typeFromPath(String? path) {
       return 'AccountDiagnosis';
     case 'account.procedure':
       return 'AccountProcedure';
-    case 'account.relatedaccount':
-      return 'AccountRelatedAccount';
     case 'account.balance':
       return 'AccountBalance';
     case 'activitydefinition':
@@ -3225,18 +3399,8 @@ String? typeFromPath(String? path) {
       return 'AdverseEventSuspectEntity';
     case 'adverseevent.suspectentity.causality':
       return 'AdverseEventCausality';
-    case 'adverseevent.contributingfactor':
-      return 'AdverseEventContributingFactor';
-    case 'adverseevent.preventiveaction':
-      return 'AdverseEventPreventiveAction';
-    case 'adverseevent.mitigatingaction':
-      return 'AdverseEventMitigatingAction';
-    case 'adverseevent.supportinginfo':
-      return 'AdverseEventSupportingInfo';
     case 'allergyintolerance':
       return 'AllergyIntolerance';
-    case 'allergyintolerance.participant':
-      return 'AllergyIntoleranceParticipant';
     case 'allergyintolerance.reaction':
       return 'AllergyIntoleranceReaction';
     case 'appointment':
@@ -3255,6 +3419,8 @@ String? typeFromPath(String? path) {
       return 'AppointmentResponse';
     case 'artifactassessment':
       return 'ArtifactAssessment';
+    case 'artifactassessment.relatesto':
+      return 'ArtifactAssessmentRelatesTo';
     case 'artifactassessment.content':
       return 'ArtifactAssessmentContent';
     case 'auditevent':
@@ -3357,10 +3523,10 @@ String? typeFromPath(String? path) {
       return 'CitationClassification';
     case 'citation.statusdate':
       return 'CitationStatusDate';
+    case 'citation.relatesto':
+      return 'CitationRelatesTo';
     case 'citation.citedartifact':
       return 'CitationCitedArtifact';
-    case 'citation.citedartifact.version':
-      return 'CitationVersion';
     case 'citation.citedartifact.statusdate':
       return 'CitationStatusDate1';
     case 'citation.citedartifact.title':
@@ -3370,7 +3536,7 @@ String? typeFromPath(String? path) {
     case 'citation.citedartifact.part':
       return 'CitationPart';
     case 'citation.citedartifact.relatesto':
-      return 'CitationRelatesTo';
+      return 'CitationRelatesTo1';
     case 'citation.citedartifact.publicationform':
       return 'CitationPublicationForm';
     case 'citation.citedartifact.publicationform.publishedin':
@@ -3447,10 +3613,10 @@ String? typeFromPath(String? path) {
       return 'ClaimResponseInsurance';
     case 'claimresponse.error':
       return 'ClaimResponseError';
-    case 'clinicalimpression':
-      return 'ClinicalImpression';
-    case 'clinicalimpression.finding':
-      return 'ClinicalImpressionFinding';
+    case 'clinicalassessment':
+      return 'ClinicalAssessment';
+    case 'clinicalassessment.finding':
+      return 'ClinicalAssessmentFinding';
     case 'clinicalusedefinition':
       return 'ClinicalUseDefinition';
     case 'clinicalusedefinition.contraindication':
@@ -3495,6 +3661,8 @@ String? typeFromPath(String? path) {
       return 'Composition';
     case 'composition.attester':
       return 'CompositionAttester';
+    case 'composition.relatesto':
+      return 'CompositionRelatesTo';
     case 'composition.event':
       return 'CompositionEvent';
     case 'composition.section':
@@ -3519,14 +3687,10 @@ String? typeFromPath(String? path) {
       return 'ConceptMapUnmapped';
     case 'condition':
       return 'Condition';
-    case 'condition.participant':
-      return 'ConditionParticipant';
     case 'condition.stage':
       return 'ConditionStage';
     case 'conditiondefinition':
       return 'ConditionDefinition';
-    case 'conditiondefinition.observation':
-      return 'ConditionDefinitionObservation';
     case 'conditiondefinition.medication':
       return 'ConditionDefinitionMedication';
     case 'conditiondefinition.precondition':
@@ -3625,12 +3789,20 @@ String? typeFromPath(String? path) {
       return 'DeviceUdiCarrier';
     case 'device.name':
       return 'DeviceName';
-    case 'device.version':
-      return 'DeviceVersion';
+    case 'device.deviceversion':
+      return 'DeviceDeviceVersion';
     case 'device.conformsto':
       return 'DeviceConformsTo';
     case 'device.property':
       return 'DeviceProperty';
+    case 'device.additive':
+      return 'DeviceAdditive';
+    case 'devicealert':
+      return 'DeviceAlert';
+    case 'devicealert.condition':
+      return 'DeviceAlertCondition';
+    case 'devicealert.signal':
+      return 'DeviceAlertSignal';
     case 'deviceassociation':
       return 'DeviceAssociation';
     case 'deviceassociation.operation':
@@ -3655,8 +3827,8 @@ String? typeFromPath(String? path) {
       return 'DeviceDefinitionPackaging';
     case 'devicedefinition.packaging.distributor':
       return 'DeviceDefinitionDistributor';
-    case 'devicedefinition.version':
-      return 'DeviceDefinitionVersion';
+    case 'devicedefinition.deviceversion':
+      return 'DeviceDefinitionDeviceVersion';
     case 'devicedefinition.property':
       return 'DeviceDefinitionProperty';
     case 'devicedefinition.link':
@@ -3737,6 +3909,8 @@ String? typeFromPath(String? path) {
       return 'EventDefinition';
     case 'evidence':
       return 'Evidence';
+    case 'evidence.relatesto':
+      return 'EvidenceRelatesTo';
     case 'evidence.variabledefinition':
       return 'EvidenceVariableDefinition';
     case 'evidence.statistic':
@@ -3751,30 +3925,18 @@ String? typeFromPath(String? path) {
       return 'EvidenceModelCharacteristicVariable';
     case 'evidence.certainty':
       return 'EvidenceCertainty';
-    case 'evidencereport':
-      return 'EvidenceReport';
-    case 'evidencereport.subject':
-      return 'EvidenceReportSubject';
-    case 'evidencereport.subject.characteristic':
-      return 'EvidenceReportCharacteristic';
-    case 'evidencereport.relatesto':
-      return 'EvidenceReportRelatesTo';
-    case 'evidencereport.relatesto.target':
-      return 'EvidenceReportTarget';
-    case 'evidencereport.section':
-      return 'EvidenceReportSection';
     case 'evidencevariable':
       return 'EvidenceVariable';
-    case 'evidencevariable.characteristic':
-      return 'EvidenceVariableCharacteristic';
-    case 'evidencevariable.characteristic.definitionbytypeandvalue':
-      return 'EvidenceVariableDefinitionByTypeAndValue';
-    case 'evidencevariable.characteristic.definitionbycombination':
-      return 'EvidenceVariableDefinitionByCombination';
-    case 'evidencevariable.characteristic.timefromevent':
-      return 'EvidenceVariableTimeFromEvent';
+    case 'evidencevariable.relatesto':
+      return 'EvidenceVariableRelatesTo';
+    case 'evidencevariable.definitionmodifier':
+      return 'EvidenceVariableDefinitionModifier';
     case 'evidencevariable.category':
       return 'EvidenceVariableCategory';
+    case 'evidencevariable.datastorage':
+      return 'EvidenceVariableDataStorage';
+    case 'evidencevariable.constraint':
+      return 'EvidenceVariableConstraint';
     case 'examplescenario':
       return 'ExampleScenario';
     case 'examplescenario.actor':
@@ -3869,6 +4031,8 @@ String? typeFromPath(String? path) {
       return 'GenomicStudyDevice';
     case 'goal':
       return 'Goal';
+    case 'goal.acceptance':
+      return 'GoalAcceptance';
     case 'goal.target':
       return 'GoalTarget';
     case 'graphdefinition':
@@ -3899,7 +4063,7 @@ String? typeFromPath(String? path) {
       return 'ImagingSelectionInstance';
     case 'imagingselection.instance.imageregion2d':
       return 'ImagingSelectionImageRegion2D';
-    case 'imagingselection.instance.imageregion3d':
+    case 'imagingselection.imageregion3d':
       return 'ImagingSelectionImageRegion3D';
     case 'imagingstudy':
       return 'ImagingStudy';
@@ -3963,22 +4127,24 @@ String? typeFromPath(String? path) {
       return 'IngredientReferenceStrength';
     case 'insuranceplan':
       return 'InsurancePlan';
-    case 'insuranceplan.coverage':
-      return 'InsurancePlanCoverage';
-    case 'insuranceplan.coverage.benefit':
-      return 'InsurancePlanBenefit';
-    case 'insuranceplan.coverage.benefit.limit':
-      return 'InsurancePlanLimit';
-    case 'insuranceplan.plan':
-      return 'InsurancePlanPlan';
-    case 'insuranceplan.plan.generalcost':
+    case 'insuranceplan.generalcost':
       return 'InsurancePlanGeneralCost';
-    case 'insuranceplan.plan.specificcost':
+    case 'insuranceplan.specificcost':
       return 'InsurancePlanSpecificCost';
-    case 'insuranceplan.plan.specificcost.benefit':
-      return 'InsurancePlanBenefit1';
-    case 'insuranceplan.plan.specificcost.benefit.cost':
+    case 'insuranceplan.specificcost.benefit':
+      return 'InsurancePlanBenefit';
+    case 'insuranceplan.specificcost.benefit.cost':
       return 'InsurancePlanCost';
+    case 'insuranceproduct':
+      return 'InsuranceProduct';
+    case 'insuranceproduct.coverage':
+      return 'InsuranceProductCoverage';
+    case 'insuranceproduct.coverage.benefit':
+      return 'InsuranceProductBenefit';
+    case 'insuranceproduct.coverage.benefit.limit':
+      return 'InsuranceProductLimit';
+    case 'insuranceproduct.related':
+      return 'InsuranceProductRelated';
     case 'inventoryitem':
       return 'InventoryItem';
     case 'inventoryitem.name':
@@ -4033,12 +4199,14 @@ String? typeFromPath(String? path) {
       return 'MeasureTerm';
     case 'measure.group':
       return 'MeasureGroup';
+    case 'measure.group.component':
+      return 'MeasureComponent';
     case 'measure.group.population':
       return 'MeasurePopulation';
     case 'measure.group.stratifier':
       return 'MeasureStratifier';
     case 'measure.group.stratifier.component':
-      return 'MeasureComponent';
+      return 'MeasureComponent1';
     case 'measure.supplementaldata':
       return 'MeasureSupplementalData';
     case 'measurereport':
@@ -4153,24 +4321,80 @@ String? typeFromPath(String? path) {
       return 'MessageHeaderSource';
     case 'messageheader.response':
       return 'MessageHeaderResponse';
+    case 'moleculardefinition':
+      return 'MolecularDefinition';
+    case 'moleculardefinition.location':
+      return 'MolecularDefinitionLocation';
+    case 'moleculardefinition.location.sequencelocation':
+      return 'MolecularDefinitionSequenceLocation';
+    case 'moleculardefinition.location.sequencelocation.coordinateinterval':
+      return 'MolecularDefinitionCoordinateInterval';
+    case 'moleculardefinition.location.sequencelocation.coordinateinterval.coordinatesystem':
+      return 'MolecularDefinitionCoordinateSystem';
+    case 'moleculardefinition.location.cytobandlocation':
+      return 'MolecularDefinitionCytobandLocation';
+    case 'moleculardefinition.location.cytobandlocation.genomeassembly':
+      return 'MolecularDefinitionGenomeAssembly';
+    case 'moleculardefinition.location.cytobandlocation.cytobandinterval':
+      return 'MolecularDefinitionCytobandInterval';
+    case 'moleculardefinition.location.cytobandlocation.cytobandinterval.startcytoband':
+      return 'MolecularDefinitionStartCytoband';
+    case 'moleculardefinition.location.cytobandlocation.cytobandinterval.endcytoband':
+      return 'MolecularDefinitionEndCytoband';
+    case 'moleculardefinition.representation':
+      return 'MolecularDefinitionRepresentation';
+    case 'moleculardefinition.representation.literal':
+      return 'MolecularDefinitionLiteral';
+    case 'moleculardefinition.representation.extracted':
+      return 'MolecularDefinitionExtracted';
+    case 'moleculardefinition.representation.extracted.coordinateinterval':
+      return 'MolecularDefinitionCoordinateInterval1';
+    case 'moleculardefinition.representation.extracted.coordinateinterval.coordinatesystem':
+      return 'MolecularDefinitionCoordinateSystem1';
+    case 'moleculardefinition.representation.repeated':
+      return 'MolecularDefinitionRepeated';
+    case 'moleculardefinition.representation.concatenated':
+      return 'MolecularDefinitionConcatenated';
+    case 'moleculardefinition.representation.concatenated.sequenceelement':
+      return 'MolecularDefinitionSequenceElement';
+    case 'moleculardefinition.representation.relative':
+      return 'MolecularDefinitionRelative';
+    case 'moleculardefinition.representation.relative.edit':
+      return 'MolecularDefinitionEdit';
+    case 'moleculardefinition.representation.relative.edit.coordinateinterval':
+      return 'MolecularDefinitionCoordinateInterval2';
+    case 'moleculardefinition.representation.relative.edit.coordinateinterval.coordinatesystem':
+      return 'MolecularDefinitionCoordinateSystem2';
     case 'molecularsequence':
       return 'MolecularSequence';
+    case 'molecularsequence.literal':
+      return 'MolecularSequenceLiteral';
     case 'molecularsequence.relative':
       return 'MolecularSequenceRelative';
-    case 'molecularsequence.relative.startingsequence':
-      return 'MolecularSequenceStartingSequence';
     case 'molecularsequence.relative.edit':
       return 'MolecularSequenceEdit';
+    case 'molecularsequence.extracted':
+      return 'MolecularSequenceExtracted';
+    case 'molecularsequence.repeated':
+      return 'MolecularSequenceRepeated';
+    case 'molecularsequence.concatenated':
+      return 'MolecularSequenceConcatenated';
+    case 'molecularsequence.concatenated.sequenceelement':
+      return 'MolecularSequenceSequenceElement';
     case 'namingsystem':
       return 'NamingSystem';
     case 'namingsystem.uniqueid':
       return 'NamingSystemUniqueId';
     case 'nutritionintake':
       return 'NutritionIntake';
-    case 'nutritionintake.consumeditem':
+    case 'nutritionintake.nutritionitem':
+      return 'NutritionIntakeNutritionItem';
+    case 'nutritionintake.nutritionitem.consumeditem':
       return 'NutritionIntakeConsumedItem';
-    case 'nutritionintake.ingredientlabel':
-      return 'NutritionIntakeIngredientLabel';
+    case 'nutritionintake.nutritionitem.consumeditem.totalintake':
+      return 'NutritionIntakeTotalIntake';
+    case 'nutritionintake.nutritionitem.notconsumeditem':
+      return 'NutritionIntakeNotConsumedItem';
     case 'nutritionintake.performer':
       return 'NutritionIntakePerformer';
     case 'nutritionorder':
@@ -4189,12 +4413,12 @@ String? typeFromPath(String? path) {
       return 'NutritionOrderSchedule1';
     case 'nutritionorder.enteralformula':
       return 'NutritionOrderEnteralFormula';
-    case 'nutritionorder.enteralformula.additive':
-      return 'NutritionOrderAdditive';
     case 'nutritionorder.enteralformula.administration':
       return 'NutritionOrderAdministration';
     case 'nutritionorder.enteralformula.administration.schedule':
       return 'NutritionOrderSchedule2';
+    case 'nutritionorder.additive':
+      return 'NutritionOrderAdditive';
     case 'nutritionproduct':
       return 'NutritionProduct';
     case 'nutritionproduct.nutrient':
@@ -4281,12 +4505,18 @@ String? typeFromPath(String? path) {
       return 'PermissionResource';
     case 'permission.rule.activity':
       return 'PermissionActivity';
+    case 'permission.rule.activity.actor':
+      return 'PermissionActor';
+    case 'permission.rule.limit':
+      return 'PermissionLimit';
     case 'person':
       return 'Person';
     case 'person.communication':
       return 'PersonCommunication';
     case 'person.link':
       return 'PersonLink';
+    case 'personalrelationship':
+      return 'PersonalRelationship';
     case 'plandefinition':
       return 'PlanDefinition';
     case 'plandefinition.goal':
@@ -4373,12 +4603,22 @@ String? typeFromPath(String? path) {
       return 'RequestOrchestrationDynamicValue';
     case 'requirements':
       return 'Requirements';
+    case 'requirements.imports':
+      return 'RequirementsImports';
+    case 'requirements.actor':
+      return 'RequirementsActor';
     case 'requirements.statement':
       return 'RequirementsStatement';
+    case 'requirements.statement.derivedfrom':
+      return 'RequirementsDerivedFrom';
+    case 'requirements.statement.partof':
+      return 'RequirementsPartOf';
     case 'researchstudy':
       return 'ResearchStudy';
     case 'researchstudy.label':
       return 'ResearchStudyLabel';
+    case 'researchstudy.relatesto':
+      return 'ResearchStudyRelatesTo';
     case 'researchstudy.associatedparty':
       return 'ResearchStudyAssociatedParty';
     case 'researchstudy.progressstatus':
@@ -4389,12 +4629,16 @@ String? typeFromPath(String? path) {
       return 'ResearchStudyComparisonGroup';
     case 'researchstudy.objective':
       return 'ResearchStudyObjective';
-    case 'researchstudy.outcomemeasure':
+    case 'researchstudy.objective.outcomemeasure':
       return 'ResearchStudyOutcomeMeasure';
+    case 'researchstudy.objective.outcomemeasure.eventhandling':
+      return 'ResearchStudyEventHandling';
     case 'researchsubject':
       return 'ResearchSubject';
-    case 'researchsubject.progress':
-      return 'ResearchSubjectProgress';
+    case 'researchsubject.subjectstate':
+      return 'ResearchSubjectSubjectState';
+    case 'researchsubject.subjectmilestone':
+      return 'ResearchSubjectSubjectMilestone';
     case 'riskassessment':
       return 'RiskAssessment';
     case 'riskassessment.prediction':
@@ -4475,22 +4719,22 @@ String? typeFromPath(String? path) {
       return 'SubscriptionStatus';
     case 'subscriptionstatus.notificationevent':
       return 'SubscriptionStatusNotificationEvent';
+    case 'subscriptionstatus.notificationevent.relatedquery':
+      return 'SubscriptionStatusRelatedQuery';
     case 'subscriptiontopic':
       return 'SubscriptionTopic';
-    case 'subscriptiontopic.resourcetrigger':
-      return 'SubscriptionTopicResourceTrigger';
-    case 'subscriptiontopic.resourcetrigger.querycriteria':
+    case 'subscriptiontopic.trigger':
+      return 'SubscriptionTopicTrigger';
+    case 'subscriptiontopic.trigger.querycriteria':
       return 'SubscriptionTopicQueryCriteria';
-    case 'subscriptiontopic.eventtrigger':
-      return 'SubscriptionTopicEventTrigger';
-    case 'subscriptiontopic.canfilterby':
+    case 'subscriptiontopic.trigger.canfilterby':
       return 'SubscriptionTopicCanFilterBy';
-    case 'subscriptiontopic.notificationshape':
+    case 'subscriptiontopic.trigger.notificationshape':
       return 'SubscriptionTopicNotificationShape';
+    case 'subscriptiontopic.trigger.notificationshape.relatedquery':
+      return 'SubscriptionTopicRelatedQuery';
     case 'substance':
       return 'Substance';
-    case 'substance.ingredient':
-      return 'SubstanceIngredient';
     case 'substancedefinition':
       return 'SubstanceDefinition';
     case 'substancedefinition.moiety':
@@ -4593,6 +4837,8 @@ String? typeFromPath(String? path) {
       return 'TerminologyCapabilitiesVersion';
     case 'terminologycapabilities.codesystem.version.filter':
       return 'TerminologyCapabilitiesFilter';
+    case 'terminologycapabilities.supplements':
+      return 'TerminologyCapabilitiesSupplements';
     case 'terminologycapabilities.expansion':
       return 'TerminologyCapabilitiesExpansion';
     case 'terminologycapabilities.expansion.parameter':
@@ -4605,10 +4851,16 @@ String? typeFromPath(String? path) {
       return 'TerminologyCapabilitiesClosure';
     case 'testplan':
       return 'TestPlan';
+    case 'testplan.scope':
+      return 'TestPlanScope';
     case 'testplan.dependency':
       return 'TestPlanDependency';
     case 'testplan.testcase':
       return 'TestPlanTestCase';
+    case 'testplan.testcase.scope':
+      return 'TestPlanScope1';
+    case 'testplan.testcase.requirement':
+      return 'TestPlanRequirement';
     case 'testplan.testcase.dependency':
       return 'TestPlanDependency1';
     case 'testplan.testcase.testrun':
@@ -4623,6 +4875,8 @@ String? typeFromPath(String? path) {
       return 'TestReport';
     case 'testreport.participant':
       return 'TestReportParticipant';
+    case 'testreport.parameter':
+      return 'TestReportParameter';
     case 'testreport.setup':
       return 'TestReportSetup';
     case 'testreport.setup.action':
@@ -4643,10 +4897,8 @@ String? typeFromPath(String? path) {
       return 'TestReportAction2';
     case 'testscript':
       return 'TestScript';
-    case 'testscript.origin':
-      return 'TestScriptOrigin';
-    case 'testscript.destination':
-      return 'TestScriptDestination';
+    case 'testscript.testsystem':
+      return 'TestScriptTestSystem';
     case 'testscript.metadata':
       return 'TestScriptMetadata';
     case 'testscript.metadata.link':
@@ -4663,6 +4915,10 @@ String? typeFromPath(String? path) {
       return 'TestScriptSetup';
     case 'testscript.setup.action':
       return 'TestScriptAction';
+    case 'testscript.setup.action.common':
+      return 'TestScriptCommon';
+    case 'testscript.setup.action.common.parameter':
+      return 'TestScriptParameter';
     case 'testscript.setup.action.operation':
       return 'TestScriptOperation';
     case 'testscript.setup.action.operation.requestheader':
@@ -4679,6 +4935,12 @@ String? typeFromPath(String? path) {
       return 'TestScriptTeardown';
     case 'testscript.teardown.action':
       return 'TestScriptAction2';
+    case 'testscript.common':
+      return 'TestScriptCommon1';
+    case 'testscript.common.parameter':
+      return 'TestScriptParameter1';
+    case 'testscript.common.action':
+      return 'TestScriptAction3';
     case 'transport':
       return 'Transport';
     case 'transport.restriction':
@@ -4831,6 +5093,8 @@ String? typeFromPath(String? path) {
       return 'Reference';
     case 'relatedartifact':
       return 'RelatedArtifact';
+    case 'relativetime':
+      return 'RelativeTime';
     case 'sampleddata':
       return 'SampledData';
     case 'signature':

@@ -1,4 +1,4 @@
-map "http://fhir.nhs.uk/StructureMap/AllergyIntoleranceExtension-coding-sctdescid-3to4" = "R3 to R4 conversion for STU3 Extension-coding-sctdescid in AllergyIntolerance.code"
+map "http://fhir.nhs.uk/StructureMap/AllergyIntoleranceExtension-coding-sctdescid-3to4" = "R3 to R6 conversion for STU3 Extension-coding-sctdescid in AllergyIntolerance.code"
 uses "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance" alias AllergyIntolerance as source
 uses "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance" alias AllergyIntolerance as target
 

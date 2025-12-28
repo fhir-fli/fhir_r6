@@ -225,10 +225,11 @@ class MedicationBuilder extends DomainResourceBuilder {
 
   /// [code]
   /// A code (or set of codes) that specify this medication, or a textual
-  /// description if no code is available. Usage note: This could be a
-  /// standard medication code such as a code from RxNorm, SNOMED CT, IDMP
-  /// etc. It could also be a national or local formulary code, optionally
-  /// with translations to other code systems.
+  /// description. Usage note: This could be a standard medication code such
+  /// as a code from RxNorm, SNOMED CT, IDMP etc. It could also be a national
+  /// or local formulary code, optionally with translations to other code
+  /// systems. The name of the medication can be conveyed in the code.text
+  /// even if it is different from any of the coding displayName values.
   CodeableConceptBuilder? code;
 
   /// [status]
@@ -266,7 +267,9 @@ class MedicationBuilder extends DomainResourceBuilder {
 
   /// [definition]
   /// A reference to a knowledge resource that provides more information
-  /// about this medication.
+  /// about this medication. This element can be used to help with Cross
+  /// Border use cases and separately it may also be useful if someone needs
+  /// to drill into more medication specific information.
   ReferenceBuilder? definition;
 
   /// Converts a [MedicationBuilder]

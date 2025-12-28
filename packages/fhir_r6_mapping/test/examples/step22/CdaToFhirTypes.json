@@ -100,7 +100,7 @@
     "url": "http://fhir.ch/ig/cda-fhir-maps/StructureMap/CdaToFhirTypes",
     "name": "CdaToFhirTypes",
     "status": "draft",
-    "description": "Adapted from https://github.com/HL7/ccda-to-fhir/tree/master/mappings\r\nCDA:  http://build.fhir.org/ig/ahdis/cda-core-2.0/branches/master/index.html\r\nFHIR: http://hl7.org/fhir/r4/",
+    "description": "Adapted from https://github.com/HL7/ccda-to-fhir/tree/master/mappings\r\nCDA:  http://build.fhir.org/ig/ahdis/cda-core-2.0/branches/master/index.html\r\nFHIR: http://hl7.org/fhir/r6/",
     "structure": [
         {
             "url": "http://hl7.org/fhir/cda/StructureDefinition/ED",

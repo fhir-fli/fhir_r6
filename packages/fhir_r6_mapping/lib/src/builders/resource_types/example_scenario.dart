@@ -17,7 +17,12 @@ import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [ExampleScenarioBuilder]
-/// Example of workflow instance.
+/// A computable description of the actors, interactions between those
+/// actors that would occur, and concrete examples of the data that would
+/// be exchanged in a specific hypothetical exchange, typically used to
+/// help demonstrate the interoperability expectations of a specification.
+/// This resource is used to illustrate a specific time-based exchange, not
+/// to define in general terms how exchanges can/should occur.
 class ExampleScenarioBuilder extends CanonicalResourceBuilder {
   /// Primary constructor for
   /// [ExampleScenarioBuilder]
@@ -349,7 +354,9 @@ class ExampleScenarioBuilder extends CanonicalResourceBuilder {
       versionAlgorithmX?.isAs<CodingBuilder>();
 
   /// [name]
-  /// Temporarily retained for tooling purposes.
+  /// A natural language name identifying the ExampleScenario. This name
+  /// should be usable as an identifier for the resource by machine
+  /// processing applications such as code generation.
   FhirStringBuilder? name;
 
   /// [title]
@@ -1700,6 +1707,7 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
     this.type,
     this.title,
     this.description,
+    this.definition,
     super.disallowExtensions,
   }) : super(
           objectPath: 'ExampleScenario.actor',
@@ -1709,7 +1717,6 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
   /// For Builder classes, no fields are required
   factory ExampleScenarioActorBuilder.empty() => ExampleScenarioActorBuilder(
         key: FhirStringBuilder.empty(),
-        type: ExampleScenarioActorTypeBuilder.values.first,
         title: FhirStringBuilder.empty(),
       );
 
@@ -1751,10 +1758,10 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.key',
       ),
-      type: JsonParser.parsePrimitive<ExampleScenarioActorTypeBuilder>(
+      type: JsonParser.parsePrimitive<ActorDefinitionActorTypeBuilder>(
         json,
         'type',
-        ExampleScenarioActorTypeBuilder.fromJson,
+        ActorDefinitionActorTypeBuilder.fromJson,
         '$objectPath.type',
       ),
       title: JsonParser.parsePrimitive<FhirStringBuilder>(
@@ -1768,6 +1775,12 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
         'description',
         FhirMarkdownBuilder.fromJson,
         '$objectPath.description',
+      ),
+      definition: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
+        json,
+        'definition',
+        FhirCanonicalBuilder.fromJson,
+        '$objectPath.definition',
       ),
     );
   }
@@ -1821,7 +1834,7 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
 
   /// [type]
   /// The category of actor - person or system.
-  ExampleScenarioActorTypeBuilder? type;
+  ActorDefinitionActorTypeBuilder? type;
 
   /// [title]
   /// The human-readable name for the actor used when rendering the scenario.
@@ -1830,6 +1843,10 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
   /// [description]
   /// An explanation of who/what the actor is and its role in the scenario.
   FhirMarkdownBuilder? description;
+
+  /// [definition]
+  /// The formal definition of the actor in the scenario.
+  FhirCanonicalBuilder? definition;
 
   /// Converts a [ExampleScenarioActorBuilder]
   /// to [ExampleScenarioActor]
@@ -1874,6 +1891,7 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
     addField('type', type);
     addField('title', title);
     addField('description', description);
+    addField('definition', definition);
     return json;
   }
 
@@ -1888,6 +1906,7 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
       'type',
       'title',
       'description',
+      'definition',
     ];
   }
 
@@ -1927,6 +1946,10 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
       case 'description':
         if (description != null) {
           fields.add(description!);
+        }
+      case 'definition':
+        if (definition != null) {
+          fields.add(definition!);
         }
       default:
         if (checkValid) {
@@ -2031,7 +2054,7 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          if (child is ExampleScenarioActorTypeBuilder) {
+          if (child is ActorDefinitionActorTypeBuilder) {
             type = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
@@ -2040,7 +2063,7 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
               final stringValue = child.toString();
               // For enums, try to create directly from the string value
               try {
-                final converted = ExampleScenarioActorTypeBuilder(stringValue);
+                final converted = ActorDefinitionActorTypeBuilder(stringValue);
                 type = converted;
                 return;
               } catch (e) {
@@ -2092,6 +2115,26 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'definition':
+        {
+          if (child is FhirCanonicalBuilder) {
+            definition = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirCanonicalBuilder.tryParse(stringValue);
+              if (converted != null) {
+                definition = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -2116,6 +2159,8 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
         return ['FhirStringBuilder'];
       case 'description':
         return ['FhirMarkdownBuilder'];
+      case 'definition':
+        return ['FhirCanonicalBuilder'];
       default:
         return <String>[];
     }
@@ -2148,7 +2193,7 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          type = ExampleScenarioActorTypeBuilder.empty();
+          type = ActorDefinitionActorTypeBuilder.empty();
           return;
         }
       case 'title':
@@ -2159,6 +2204,11 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
       case 'description':
         {
           description = FhirMarkdownBuilder.empty();
+          return;
+        }
+      case 'definition':
+        {
+          definition = FhirCanonicalBuilder.empty();
           return;
         }
       default:
@@ -2174,9 +2224,10 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     FhirStringBuilder? key,
-    ExampleScenarioActorTypeBuilder? type,
+    ActorDefinitionActorTypeBuilder? type,
     FhirStringBuilder? title,
     FhirMarkdownBuilder? description,
+    FhirCanonicalBuilder? definition,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -2192,6 +2243,7 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
       type: type ?? this.type,
       title: title ?? this.title,
       description: description ?? this.description,
+      definition: definition ?? this.definition,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -2257,6 +2309,12 @@ class ExampleScenarioActorBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       description,
       o.description,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      definition,
+      o.definition,
     )) {
       return false;
     }

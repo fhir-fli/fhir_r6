@@ -21,7 +21,7 @@ abstract class $ExampleScenarioCopyWith<T>
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXExampleScenario? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     PublicationStatus? status,
@@ -109,7 +109,7 @@ class _$ExampleScenarioCopyWithImpl<T> implements $ExampleScenarioCopyWith<T> {
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXExampleScenario?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -176,9 +176,10 @@ abstract class $ExampleScenarioActorCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     FhirString? key,
-    ExampleScenarioActorType? type,
+    ActorDefinitionActorType? type,
     FhirString? title,
     FhirMarkdown? description,
+    FhirCanonical? definition,
     bool? disallowExtensions,
   });
 }
@@ -199,6 +200,7 @@ class _$ExampleScenarioActorCopyWithImpl<T>
     Object? type = fhirSentinel,
     Object? title = fhirSentinel,
     Object? description = fhirSentinel,
+    Object? definition = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -215,13 +217,16 @@ class _$ExampleScenarioActorCopyWithImpl<T>
             : (key as FhirString?) ?? _value.key,
         type: identical(type, fhirSentinel)
             ? _value.type
-            : (type as ExampleScenarioActorType?) ?? _value.type,
+            : type as ActorDefinitionActorType?,
         title: identical(title, fhirSentinel)
             ? _value.title
             : (title as FhirString?) ?? _value.title,
         description: identical(description, fhirSentinel)
             ? _value.description
             : description as FhirMarkdown?,
+        definition: identical(definition, fhirSentinel)
+            ? _value.definition
+            : definition as FhirCanonical?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -248,7 +253,7 @@ abstract class $ExampleScenarioInstanceCopyWith<T>
     FhirString? key,
     Coding? structureType,
     FhirString? structureVersion,
-    FhirCanonical? structureProfileX,
+    StructureProfileXExampleScenarioInstance? structureProfileX,
     FhirString? title,
     FhirMarkdown? description,
     Reference? content,
@@ -301,7 +306,7 @@ class _$ExampleScenarioInstanceCopyWithImpl<T>
             : structureVersion as FhirString?,
         structureProfileX: identical(structureProfileX, fhirSentinel)
             ? _value.structureProfileX
-            : structureProfileX as FhirCanonical?,
+            : structureProfileX as StructureProfileXExampleScenarioInstance?,
         title: identical(title, fhirSentinel)
             ? _value.title
             : (title as FhirString?) ?? _value.title,

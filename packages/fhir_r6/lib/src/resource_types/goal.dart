@@ -33,13 +33,13 @@ class Goal extends DomainResource {
     StartXGoal? startX,
     FhirDate? startDate,
     CodeableConcept? startCodeableConcept,
+    this.acceptance,
     this.target,
     this.statusDate,
     this.statusReason,
     this.source,
     this.addresses,
     this.note,
-    this.outcome,
   })  : startX = startX ?? startDate ?? startCodeableConcept,
         super(
           resourceType: R6ResourceType.Goal,
@@ -147,6 +147,13 @@ class Goal extends DomainResource {
           'startCodeableConcept': CodeableConcept.fromJson,
         },
       ),
+      acceptance: (json['acceptance'] as List<dynamic>?)
+          ?.map<GoalAcceptance>(
+            (v) => GoalAcceptance.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       target: (json['target'] as List<dynamic>?)
           ?.map<GoalTarget>(
             (v) => GoalTarget.fromJson(
@@ -159,11 +166,13 @@ class Goal extends DomainResource {
         'statusDate',
         FhirDate.fromJson,
       ),
-      statusReason: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'statusReason',
-        FhirString.fromJson,
-      ),
+      statusReason: (json['statusReason'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       source: JsonParser.parseObject<Reference>(
         json,
         'source',
@@ -179,13 +188,6 @@ class Goal extends DomainResource {
       note: (json['note'] as List<dynamic>?)
           ?.map<Annotation>(
             (v) => Annotation.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      outcome: (json['outcome'] as List<dynamic>?)
-          ?.map<CodeableReference>(
-            (v) => CodeableReference.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -285,36 +287,36 @@ class Goal extends DomainResource {
   /// Getter for [startCodeableConcept] as a CodeableConcept
   CodeableConcept? get startCodeableConcept => startX?.isAs<CodeableConcept>();
 
+  /// [acceptance]
+  /// Information about the acceptance and relative priority assigned to the
+  /// goal by the patient, practitioners and other stakeholders.
+  final List<GoalAcceptance>? acceptance;
+
   /// [target]
   /// Indicates what should be done by when.
   final List<GoalTarget>? target;
 
   /// [statusDate]
-  /// Identifies when the current status. I.e. When initially created, when
-  /// achieved, when cancelled, etc.
+  /// Identifies when the current achievement status took effect. I.e. When
+  /// achieved, when improving, etc.
   final FhirDate? statusDate;
 
   /// [statusReason]
-  /// Captures the reason for the current status.
-  final FhirString? statusReason;
+  /// Captures the reason for the current lifecycle status.
+  final List<CodeableConcept>? statusReason;
 
   /// [source]
   /// Indicates whose goal this is - patient goal, practitioner goal, etc.
   final Reference? source;
 
   /// [addresses]
-  /// The identified conditions and other health record elements that are
-  /// intended to be addressed by the goal.
+  /// The identified conditions and other resources that provide the context
+  /// for why the goal exists.
   final List<Reference>? addresses;
 
   /// [note]
   /// Any comments related to the goal.
   final List<Annotation>? note;
-
-  /// [outcome]
-  /// Identifies the change (or lack of change) at the point when the status
-  /// of the goal is assessed.
-  final List<CodeableReference>? outcome;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -452,6 +454,10 @@ class Goal extends DomainResource {
     }
 
     addField(
+      'acceptance',
+      acceptance,
+    );
+    addField(
       'target',
       target,
     );
@@ -474,10 +480,6 @@ class Goal extends DomainResource {
     addField(
       'note',
       note,
-    );
-    addField(
-      'outcome',
-      outcome,
     );
     return json;
   }
@@ -503,13 +505,13 @@ class Goal extends DomainResource {
       'description',
       'subject',
       'startX',
+      'acceptance',
       'target',
       'statusDate',
       'statusReason',
       'source',
       'addresses',
       'note',
-      'outcome',
     ];
   }
 
@@ -592,6 +594,10 @@ class Goal extends DomainResource {
         if (startX is CodeableConcept) {
           fields.add(startX!);
         }
+      case 'acceptance':
+        if (acceptance != null) {
+          fields.addAll(acceptance!);
+        }
       case 'target':
         if (target != null) {
           fields.addAll(target!);
@@ -602,7 +608,7 @@ class Goal extends DomainResource {
         }
       case 'statusReason':
         if (statusReason != null) {
-          fields.add(statusReason!);
+          fields.addAll(statusReason!);
         }
       case 'source':
         if (source != null) {
@@ -615,10 +621,6 @@ class Goal extends DomainResource {
       case 'note':
         if (note != null) {
           fields.addAll(note!);
-        }
-      case 'outcome':
-        if (outcome != null) {
-          fields.addAll(outcome!);
         }
       default:
         if (checkValid) {
@@ -762,6 +764,12 @@ class Goal extends DomainResource {
     )) {
       return false;
     }
+    if (!listEquals<GoalAcceptance>(
+      acceptance,
+      o.acceptance,
+    )) {
+      return false;
+    }
     if (!listEquals<GoalTarget>(
       target,
       o.target,
@@ -774,7 +782,7 @@ class Goal extends DomainResource {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<CodeableConcept>(
       statusReason,
       o.statusReason,
     )) {
@@ -798,9 +806,332 @@ class Goal extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<CodeableReference>(
-      outcome,
-      o.outcome,
+    return true;
+  }
+}
+
+/// [GoalAcceptance]
+/// Information about the acceptance and relative priority assigned to the
+/// goal by the patient, practitioners and other stakeholders.
+class GoalAcceptance extends BackboneElement {
+  /// Primary constructor for
+  /// [GoalAcceptance]
+
+  const GoalAcceptance({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    required this.participant,
+    this.status,
+    this.priority,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory GoalAcceptance.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return GoalAcceptance(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      participant: JsonParser.parseObject<Reference>(
+        json,
+        'participant',
+        Reference.fromJson,
+      )!,
+      status: JsonParser.parsePrimitive<GoalAcceptStatus>(
+        json,
+        'status',
+        GoalAcceptStatus.fromJson,
+      ),
+      priority: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'priority',
+        CodeableConcept.fromJson,
+      ),
+    );
+  }
+
+  /// Deserialize [GoalAcceptance]
+  /// from a [String] or [YamlMap] object
+  factory GoalAcceptance.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return GoalAcceptance.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return GoalAcceptance.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'GoalAcceptance '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [GoalAcceptance]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory GoalAcceptance.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return GoalAcceptance.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'GoalAcceptance';
+
+  /// [participant]
+  /// The person ororganization whose acceptance/priority is being reflected.
+  final Reference participant;
+
+  /// [status]
+  /// Indicates whether the specified individual has accepted the goal or
+  /// not.
+  final GoalAcceptStatus? status;
+
+  /// [priority]
+  /// Indicates the relative priority assigned to the goal by the
+  /// stakeholder.
+  final CodeableConcept? priority;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'participant',
+      participant,
+    );
+    addField(
+      'status',
+      status,
+    );
+    addField(
+      'priority',
+      priority,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'participant',
+      'status',
+      'priority',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'participant':
+        fields.add(participant);
+      case 'status':
+        if (status != null) {
+          fields.add(status!);
+        }
+      case 'priority':
+        if (priority != null) {
+          fields.add(priority!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  GoalAcceptance clone() => copyWith();
+
+  /// Copy function for [GoalAcceptance]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $GoalAcceptanceCopyWith<GoalAcceptance> get copyWith =>
+      _$GoalAcceptanceCopyWithImpl<GoalAcceptance>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! GoalAcceptance) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      participant,
+      o.participant,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      status,
+      o.status,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      priority,
+      o.priority,
     )) {
       return false;
     }
@@ -946,7 +1277,9 @@ class GoalTarget extends BackboneElement {
   /// values of the range can be specified. When a low value is missing, it
   /// indicates that the goal is achieved at any focus value at or below the
   /// high value. Similarly, if the high value is missing, it indicates that
-  /// the goal is achieved at any focus value at or above the low value.
+  /// the goal is achieved at any focus value at or above the low value. A
+  /// CodeableConcept target value could be Positive, Negative, Abnormal,
+  /// Normal, Present, Absent, Yes, No.
   final DetailXGoalTarget? detailX;
 
   /// Getter for [detailQuantity] as a Quantity

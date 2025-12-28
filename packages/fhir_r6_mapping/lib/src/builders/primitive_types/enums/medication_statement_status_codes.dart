@@ -1,4 +1,4 @@
-// ignore_for_file: unused_element_parameter, non_constant_identifier_names, lines_longer_than_80_chars
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for MedicationStatementStatusCodes
@@ -147,7 +147,7 @@ class MedicationStatementStatusCodesBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/medication-statement-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Recorded',
     ),
@@ -161,7 +161,7 @@ class MedicationStatementStatusCodesBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/medication-statement-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Entered in Error',
     ),
@@ -175,7 +175,7 @@ class MedicationStatementStatusCodesBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/medication-statement-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Draft',
     ),

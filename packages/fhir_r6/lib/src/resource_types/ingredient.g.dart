@@ -249,9 +249,9 @@ abstract class $IngredientStrengthCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    Ratio? presentationX,
+    PresentationXIngredientStrength? presentationX,
     FhirString? textPresentation,
-    Ratio? concentrationX,
+    ConcentrationXIngredientStrength? concentrationX,
     FhirString? textConcentration,
     CodeableConcept? basis,
     FhirString? measurementPoint,
@@ -294,13 +294,13 @@ class _$IngredientStrengthCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         presentationX: identical(presentationX, fhirSentinel)
             ? _value.presentationX
-            : presentationX as Ratio?,
+            : presentationX as PresentationXIngredientStrength?,
         textPresentation: identical(textPresentation, fhirSentinel)
             ? _value.textPresentation
             : textPresentation as FhirString?,
         concentrationX: identical(concentrationX, fhirSentinel)
             ? _value.concentrationX
-            : concentrationX as Ratio?,
+            : concentrationX as ConcentrationXIngredientStrength?,
         textConcentration: identical(textConcentration, fhirSentinel)
             ? _value.textConcentration
             : textConcentration as FhirString?,
@@ -340,7 +340,7 @@ abstract class $IngredientReferenceStrengthCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableReference? substance,
-    Ratio? strengthX,
+    StrengthXIngredientReferenceStrength? strengthX,
     FhirString? measurementPoint,
     List<CodeableConcept>? country,
     bool? disallowExtensions,
@@ -379,7 +379,8 @@ class _$IngredientReferenceStrengthCopyWithImpl<T>
             : (substance as CodeableReference?) ?? _value.substance,
         strengthX: identical(strengthX, fhirSentinel)
             ? _value.strengthX
-            : (strengthX as Ratio?) ?? _value.strengthX,
+            : (strengthX as StrengthXIngredientReferenceStrength?) ??
+                _value.strengthX,
         measurementPoint: identical(measurementPoint, fhirSentinel)
             ? _value.measurementPoint
             : measurementPoint as FhirString?,

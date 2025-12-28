@@ -1,4 +1,4 @@
-// ignore_for_file: unused_element_parameter, non_constant_identifier_names, lines_longer_than_80_chars
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for ContractResourcePublicationStatusCodes
@@ -233,7 +233,7 @@ class ContractResourcePublicationStatusCodesBuilder
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/contract-publicationstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Amended',
     ),
@@ -247,7 +247,7 @@ class ContractResourcePublicationStatusCodesBuilder
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/contract-publicationstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Appended',
     ),
@@ -261,7 +261,7 @@ class ContractResourcePublicationStatusCodesBuilder
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/contract-publicationstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Cancelled',
     ),
@@ -275,7 +275,7 @@ class ContractResourcePublicationStatusCodesBuilder
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/contract-publicationstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Disputed',
     ),
@@ -289,7 +289,7 @@ class ContractResourcePublicationStatusCodesBuilder
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/contract-publicationstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Entered in Error',
     ),
@@ -303,7 +303,7 @@ class ContractResourcePublicationStatusCodesBuilder
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/contract-publicationstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Executable',
     ),
@@ -317,7 +317,7 @@ class ContractResourcePublicationStatusCodesBuilder
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/contract-publicationstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Executed',
     ),
@@ -331,7 +331,7 @@ class ContractResourcePublicationStatusCodesBuilder
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/contract-publicationstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Negotiable',
     ),
@@ -345,7 +345,7 @@ class ContractResourcePublicationStatusCodesBuilder
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/contract-publicationstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Offered',
     ),
@@ -359,7 +359,7 @@ class ContractResourcePublicationStatusCodesBuilder
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/contract-publicationstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Policy',
     ),
@@ -373,7 +373,7 @@ class ContractResourcePublicationStatusCodesBuilder
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/contract-publicationstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Rejected',
     ),
@@ -387,7 +387,7 @@ class ContractResourcePublicationStatusCodesBuilder
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/contract-publicationstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Renewed',
     ),
@@ -401,7 +401,7 @@ class ContractResourcePublicationStatusCodesBuilder
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/contract-publicationstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Revoked',
     ),
@@ -415,7 +415,7 @@ class ContractResourcePublicationStatusCodesBuilder
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/contract-publicationstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Resolved',
     ),
@@ -429,7 +429,7 @@ class ContractResourcePublicationStatusCodesBuilder
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/contract-publicationstatus',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Terminated',
     ),

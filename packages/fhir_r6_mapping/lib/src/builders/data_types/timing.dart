@@ -14,13 +14,13 @@ import 'package:yaml/yaml.dart';
 class TimingBuilder extends BackboneTypeBuilder
     implements
         TimingXActivityDefinitionBuilder,
-        OccurrenceXAdverseEventBuilder,
-        CoverageXCareTeamParticipantBuilder,
+        EffectiveXCareTeamParticipantBuilder,
         OccurrenceXChargeItemBuilder,
         OccurrenceXContractActionBuilder,
+        IdentifiedXDetectedIssueBuilder,
         OccurrenceXDeviceRequestBuilder,
         TimingXDeviceUsageBuilder,
-        OccurenceXMedicationAdministrationBuilder,
+        OccurrenceXMedicationAdministrationBuilder,
         EffectiveXMedicationStatementBuilder,
         EffectiveXObservationBuilder,
         ValueXParametersParameterBuilder,

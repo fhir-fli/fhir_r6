@@ -15,20 +15,23 @@ class SearchSubstanceDefinition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}classification'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['classification'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [code] in the resource
   /// [SubstanceDefinition]
+  @override
   SearchSubstanceDefinition code(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}code'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['code'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -39,25 +42,29 @@ class SearchSubstanceDefinition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}domain'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['domain'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [identifier] in the resource
   /// [SubstanceDefinition]
+  @override
   SearchSubstanceDefinition identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a string search for [name] in the resource
   /// [SubstanceDefinition]
+  @override
   SearchSubstanceDefinition name(
     FhirString value, {
     SearchModifier? modifier,
@@ -65,7 +72,8 @@ class SearchSubstanceDefinition extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}name'] = value.toString();
+    parameters['name'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

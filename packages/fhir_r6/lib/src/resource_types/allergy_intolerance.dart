@@ -36,8 +36,9 @@ class AllergyIntolerance extends DomainResource {
     Range? onsetRange,
     FhirString? onsetString,
     this.recordedDate,
-    this.participant,
-    this.lastOccurrence,
+    this.recorder,
+    this.asserter,
+    this.lastReactionOccurrence,
     this.note,
     this.reaction,
   })  : onsetX = onsetX ??
@@ -163,16 +164,19 @@ class AllergyIntolerance extends DomainResource {
         'recordedDate',
         FhirDateTime.fromJson,
       ),
-      participant: (json['participant'] as List<dynamic>?)
-          ?.map<AllergyIntoleranceParticipant>(
-            (v) => AllergyIntoleranceParticipant.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      lastOccurrence: JsonParser.parsePrimitive<FhirDateTime>(
+      recorder: JsonParser.parseObject<Reference>(
         json,
-        'lastOccurrence',
+        'recorder',
+        Reference.fromJson,
+      ),
+      asserter: JsonParser.parseObject<Reference>(
+        json,
+        'asserter',
+        Reference.fromJson,
+      ),
+      lastReactionOccurrence: JsonParser.parsePrimitive<FhirDateTime>(
+        json,
+        'lastReactionOccurrence',
         FhirDateTime.fromJson,
       ),
       note: (json['note'] as List<dynamic>?)
@@ -319,15 +323,19 @@ class AllergyIntolerance extends DomainResource {
   /// date.
   final FhirDateTime? recordedDate;
 
-  /// [participant]
-  /// Indicates who or what participated in the activities related to the
-  /// allergy or intolerance and how they were involved.
-  final List<AllergyIntoleranceParticipant>? participant;
+  /// [recorder]
+  /// Individual who recorded the record and takes responsibility for its
+  /// content.
+  final Reference? recorder;
 
-  /// [lastOccurrence]
+  /// [asserter]
+  /// The source of the information about the allergy that is recorded.
+  final Reference? asserter;
+
+  /// [lastReactionOccurrence]
   /// Represents the date and/or time of the last known occurrence of a
   /// reaction event.
-  final FhirDateTime? lastOccurrence;
+  final FhirDateTime? lastReactionOccurrence;
 
   /// [note]
   /// Additional narrative about the propensity for the Adverse Reaction, not
@@ -483,12 +491,16 @@ class AllergyIntolerance extends DomainResource {
       recordedDate,
     );
     addField(
-      'participant',
-      participant,
+      'recorder',
+      recorder,
     );
     addField(
-      'lastOccurrence',
-      lastOccurrence,
+      'asserter',
+      asserter,
+    );
+    addField(
+      'lastReactionOccurrence',
+      lastReactionOccurrence,
     );
     addField(
       'note',
@@ -524,8 +536,9 @@ class AllergyIntolerance extends DomainResource {
       'encounter',
       'onsetX',
       'recordedDate',
-      'participant',
-      'lastOccurrence',
+      'recorder',
+      'asserter',
+      'lastReactionOccurrence',
       'note',
       'reaction',
     ];
@@ -634,13 +647,17 @@ class AllergyIntolerance extends DomainResource {
         if (recordedDate != null) {
           fields.add(recordedDate!);
         }
-      case 'participant':
-        if (participant != null) {
-          fields.addAll(participant!);
+      case 'recorder':
+        if (recorder != null) {
+          fields.add(recorder!);
         }
-      case 'lastOccurrence':
-        if (lastOccurrence != null) {
-          fields.add(lastOccurrence!);
+      case 'asserter':
+        if (asserter != null) {
+          fields.add(asserter!);
+        }
+      case 'lastReactionOccurrence':
+        if (lastReactionOccurrence != null) {
+          fields.add(lastReactionOccurrence!);
         }
       case 'note':
         if (note != null) {
@@ -805,15 +822,21 @@ class AllergyIntolerance extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<AllergyIntoleranceParticipant>(
-      participant,
-      o.participant,
+    if (!equalsDeepWithNull(
+      recorder,
+      o.recorder,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
-      lastOccurrence,
-      o.lastOccurrence,
+      asserter,
+      o.asserter,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      lastReactionOccurrence,
+      o.lastReactionOccurrence,
     )) {
       return false;
     }
@@ -826,311 +849,6 @@ class AllergyIntolerance extends DomainResource {
     if (!listEquals<AllergyIntoleranceReaction>(
       reaction,
       o.reaction,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [AllergyIntoleranceParticipant]
-/// Indicates who or what participated in the activities related to the
-/// allergy or intolerance and how they were involved.
-class AllergyIntoleranceParticipant extends BackboneElement {
-  /// Primary constructor for
-  /// [AllergyIntoleranceParticipant]
-
-  const AllergyIntoleranceParticipant({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.function_,
-    required this.actor,
-    super.disallowExtensions,
-  }) : super();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory AllergyIntoleranceParticipant.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return AllergyIntoleranceParticipant(
-      id: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'id',
-        FhirString.fromJson,
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      function_: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'function',
-        CodeableConcept.fromJson,
-      ),
-      actor: JsonParser.parseObject<Reference>(
-        json,
-        'actor',
-        Reference.fromJson,
-      )!,
-    );
-  }
-
-  /// Deserialize [AllergyIntoleranceParticipant]
-  /// from a [String] or [YamlMap] object
-  factory AllergyIntoleranceParticipant.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return AllergyIntoleranceParticipant.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return AllergyIntoleranceParticipant.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'AllergyIntoleranceParticipant '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [AllergyIntoleranceParticipant]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory AllergyIntoleranceParticipant.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return AllergyIntoleranceParticipant.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'AllergyIntoleranceParticipant';
-
-  /// [function_]
-  /// Distinguishes the type of involvement of the actor in the activities
-  /// related to the allergy or intolerance.
-  final CodeableConcept? function_;
-
-  /// [actor]
-  /// Indicates who or what participated in the activities related to the
-  /// allergy or intolerance.
-  final Reference actor;
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    bool isNonEmpty(dynamic val) {
-      if (val == null) return false;
-      if (val is List && val.isEmpty) return false;
-      if (val is Map && val.isEmpty) return false;
-      return true;
-    }
-
-    void addField(String key, dynamic field) {
-      if (field == null) return;
-      if (!(field is FhirBase? || field is List<FhirBase>?)) {
-        throw ArgumentError('"field" must be a FhirBase type');
-      }
-      if (field is PrimitiveType) {
-        final fieldMap = field.toJson();
-        final val = fieldMap['value'];
-        final ext = fieldMap['_value'];
-        final hasVal = isNonEmpty(val);
-        final hasExt = isNonEmpty(ext);
-        if (hasVal) json[key] = val;
-        if (hasExt) json['_$key'] = ext;
-      } else if (field is List<FhirBase>) {
-        if (field.isEmpty) return;
-        final isPrimitive = field.first is PrimitiveType;
-        final tempList = <dynamic>[];
-        final tempExtensions = <dynamic>[];
-        for (final e in field) {
-          final itemMap = e.toJson();
-          if (!isNonEmpty(itemMap)) {
-            continue;
-          }
-          if (isPrimitive) {
-            final v = itemMap['value'];
-            final x = itemMap['_value'];
-            tempList.add(v);
-            tempExtensions.add(x);
-          } else {
-            tempList.add(itemMap);
-          }
-        }
-        if (tempList.isEmpty) return;
-        if (isPrimitive) {
-          final hasAnyValues = tempList.any((v) => v != null);
-          if (hasAnyValues) {
-            json[key] = tempList;
-          }
-          final anyExt = tempExtensions.any(isNonEmpty);
-          if (anyExt) {
-            json['_$key'] = tempExtensions;
-          }
-        } else {
-          json[key] = tempList;
-        }
-      } else if (field is FhirBase) {
-        final subMap = field.toJson();
-        if (isNonEmpty(subMap)) {
-          json[key] = subMap;
-        }
-      }
-    }
-
-    addField(
-      'id',
-      id,
-    );
-    addField(
-      'extension',
-      extension_,
-    );
-    addField(
-      'modifierExtension',
-      modifierExtension,
-    );
-    addField(
-      'function',
-      function_,
-    );
-    addField(
-      'actor',
-      actor,
-    );
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'function',
-      'actor',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBase> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBase>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'function':
-        if (function_ != null) {
-          fields.add(function_!);
-        }
-      case 'actor':
-        fields.add(actor);
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBase? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  AllergyIntoleranceParticipant clone() => copyWith();
-
-  /// Copy function for [AllergyIntoleranceParticipant]
-  /// Returns a copy of the current instance with the provided fields modified.
-  /// If a field is not provided, it will retain its original value.
-  /// If a null is provided, this will clearn the field, unless the
-  /// field is required, in which case it will keep its current value.
-  @override
-  $AllergyIntoleranceParticipantCopyWith<AllergyIntoleranceParticipant>
-      get copyWith => _$AllergyIntoleranceParticipantCopyWithImpl<
-              AllergyIntoleranceParticipant>(
-            this,
-            (value) => value,
-          );
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBase? o) {
-    if (o is! AllergyIntoleranceParticipant) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      function_,
-      o.function_,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      actor,
-      o.actor,
     )) {
       return false;
     }

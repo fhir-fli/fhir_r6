@@ -10,13 +10,15 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchInventoryReport extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [InventoryReport]
+  @override
   SearchInventoryReport identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -27,20 +29,23 @@ class SearchInventoryReport extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}item'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['item'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [InventoryReport]
+  @override
   SearchInventoryReport status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

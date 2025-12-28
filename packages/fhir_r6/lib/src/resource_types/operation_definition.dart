@@ -41,6 +41,7 @@ class OperationDefinition extends CanonicalResource {
     this.copyright,
     this.copyrightLabel,
     this.affectsState,
+    this.synchronicity,
     required this.code,
     this.comment,
     this.base,
@@ -216,6 +217,11 @@ class OperationDefinition extends CanonicalResource {
         'affectsState',
         FhirBoolean.fromJson,
       ),
+      synchronicity: JsonParser.parsePrimitive<FhirCode>(
+        json,
+        'synchronicity',
+        FhirCode.fromJson,
+      ),
       code: JsonParser.parsePrimitive<FhirCode>(
         json,
         'code',
@@ -375,6 +381,12 @@ class OperationDefinition extends CanonicalResource {
   /// Whether the operation affects state. Side effects such as producing
   /// audit trail entries do not count as 'affecting state'.
   final FhirBoolean? affectsState;
+
+  /// [synchronicity]
+  /// Indicates that this operation must always be handled as synchronous or
+  /// asynchronous, or that the server must provide both options, and clients
+  /// can choose.
+  final FhirCode? synchronicity;
 
   /// [code]
   /// The label that is recommended to be used in the URL for this operation.
@@ -611,6 +623,10 @@ class OperationDefinition extends CanonicalResource {
       affectsState,
     );
     addField(
+      'synchronicity',
+      synchronicity,
+    );
+    addField(
       'code',
       code,
     );
@@ -688,6 +704,7 @@ class OperationDefinition extends CanonicalResource {
       'copyright',
       'copyrightLabel',
       'affectsState',
+      'synchronicity',
       'code',
       'comment',
       'base',
@@ -822,6 +839,10 @@ class OperationDefinition extends CanonicalResource {
       case 'affectsState':
         if (affectsState != null) {
           fields.add(affectsState!);
+        }
+      case 'synchronicity':
+        if (synchronicity != null) {
+          fields.add(synchronicity!);
         }
       case 'code':
         fields.add(code);
@@ -1063,6 +1084,12 @@ class OperationDefinition extends CanonicalResource {
       return false;
     }
     if (!equalsDeepWithNull(
+      synchronicity,
+      o.synchronicity,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       code,
       o.code,
     )) {
@@ -1197,10 +1224,10 @@ class OperationDefinitionParameter extends BackboneElement {
         'scope',
         OperationParameterScope.fromJson,
       ),
-      min: JsonParser.parsePrimitive<FhirInteger>(
+      min: JsonParser.parsePrimitive<FhirUnsignedInt>(
         json,
         'min',
-        FhirInteger.fromJson,
+        FhirUnsignedInt.fromJson,
       )!,
       max: JsonParser.parsePrimitive<FhirString>(
         json,
@@ -1312,7 +1339,7 @@ class OperationDefinitionParameter extends BackboneElement {
   /// [min]
   /// The minimum number of times this parameter SHALL appear in the request
   /// or response.
-  final FhirInteger min;
+  final FhirUnsignedInt min;
 
   /// [max]
   /// The maximum number of times this element is permitted to appear in the

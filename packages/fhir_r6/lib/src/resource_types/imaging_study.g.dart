@@ -27,13 +27,13 @@ abstract class $ImagingStudyCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<Reference>? partOf,
     Reference? referrer,
     List<Reference>? endpoint,
-    FhirUnsignedInt? numberOfSeries,
-    FhirUnsignedInt? numberOfInstances,
     List<CodeableReference>? procedure,
     Reference? location,
     List<CodeableReference>? reason,
     List<Annotation>? note,
     FhirString? description,
+    FhirUnsignedInt? numberOfSeries,
+    FhirUnsignedInt? numberOfInstances,
     List<ImagingStudySeries>? series,
     bool? disallowExtensions,
   });
@@ -65,13 +65,13 @@ class _$ImagingStudyCopyWithImpl<T> implements $ImagingStudyCopyWith<T> {
     Object? partOf = fhirSentinel,
     Object? referrer = fhirSentinel,
     Object? endpoint = fhirSentinel,
-    Object? numberOfSeries = fhirSentinel,
-    Object? numberOfInstances = fhirSentinel,
     Object? procedure = fhirSentinel,
     Object? location = fhirSentinel,
     Object? reason = fhirSentinel,
     Object? note = fhirSentinel,
     Object? description = fhirSentinel,
+    Object? numberOfSeries = fhirSentinel,
+    Object? numberOfInstances = fhirSentinel,
     Object? series = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -125,12 +125,6 @@ class _$ImagingStudyCopyWithImpl<T> implements $ImagingStudyCopyWith<T> {
         endpoint: identical(endpoint, fhirSentinel)
             ? _value.endpoint
             : endpoint as List<Reference>?,
-        numberOfSeries: identical(numberOfSeries, fhirSentinel)
-            ? _value.numberOfSeries
-            : numberOfSeries as FhirUnsignedInt?,
-        numberOfInstances: identical(numberOfInstances, fhirSentinel)
-            ? _value.numberOfInstances
-            : numberOfInstances as FhirUnsignedInt?,
         procedure: identical(procedure, fhirSentinel)
             ? _value.procedure
             : procedure as List<CodeableReference>?,
@@ -146,6 +140,12 @@ class _$ImagingStudyCopyWithImpl<T> implements $ImagingStudyCopyWith<T> {
         description: identical(description, fhirSentinel)
             ? _value.description
             : description as FhirString?,
+        numberOfSeries: identical(numberOfSeries, fhirSentinel)
+            ? _value.numberOfSeries
+            : numberOfSeries as FhirUnsignedInt?,
+        numberOfInstances: identical(numberOfInstances, fhirSentinel)
+            ? _value.numberOfInstances
+            : numberOfInstances as FhirUnsignedInt?,
         series: identical(series, fhirSentinel)
             ? _value.series
             : series as List<ImagingStudySeries>?,
@@ -340,7 +340,7 @@ abstract class $ImagingStudyInstanceCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     FhirId? uid,
-    Coding? sopClass,
+    FhirOid? sopClass,
     FhirUnsignedInt? number,
     FhirString? title,
     bool? disallowExtensions,
@@ -379,7 +379,7 @@ class _$ImagingStudyInstanceCopyWithImpl<T>
             : (uid as FhirId?) ?? _value.uid,
         sopClass: identical(sopClass, fhirSentinel)
             ? _value.sopClass
-            : (sopClass as Coding?) ?? _value.sopClass,
+            : (sopClass as FhirOid?) ?? _value.sopClass,
         number: identical(number, fhirSentinel)
             ? _value.number
             : number as FhirUnsignedInt?,

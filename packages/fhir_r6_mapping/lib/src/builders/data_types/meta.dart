@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'dart:convert';
 import 'package:fhir_r6/fhir_r6.dart' show FhirMeta, yamlMapToJson, yamlToJson;
 import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
@@ -163,11 +161,12 @@ class FhirMetaBuilder extends DataTypeBuilder
   FhirInstantBuilder? lastUpdated;
 
   /// [source]
-  /// A uri that identifies the source system of the resource. This provides
-  /// a minimal amount of [Provenance](provenance.html#) information that can
+  /// A uri that identifies the data source of the resource. This provides a
+  /// minimal amount of [Provenance](provenance.html#) information that can
   /// be used to track or differentiate the source of information in the
-  /// resource. The source may identify another FHIR server, document,
-  /// message, database, etc.
+  /// resource. The source may identify another server, document, message,
+  /// database, etc. It can also refer to portions of a structure, such as a
+  /// section, segment, row, etc.
   FhirUriBuilder? source;
 
   /// [profile]

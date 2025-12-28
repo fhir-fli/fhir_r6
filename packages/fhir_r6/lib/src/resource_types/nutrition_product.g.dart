@@ -22,8 +22,9 @@ abstract class $NutritionProductCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<CodeableConcept>? category,
     List<Reference>? manufacturer,
     List<NutritionProductNutrient>? nutrient,
+    FhirMarkdown? ingredientSummary,
     List<NutritionProductIngredient>? ingredient,
-    List<CodeableReference>? knownAllergen,
+    Quantity? energy,
     List<NutritionProductCharacteristic>? characteristic,
     List<NutritionProductInstance>? instance,
     List<Annotation>? note,
@@ -53,8 +54,9 @@ class _$NutritionProductCopyWithImpl<T>
     Object? category = fhirSentinel,
     Object? manufacturer = fhirSentinel,
     Object? nutrient = fhirSentinel,
+    Object? ingredientSummary = fhirSentinel,
     Object? ingredient = fhirSentinel,
-    Object? knownAllergen = fhirSentinel,
+    Object? energy = fhirSentinel,
     Object? characteristic = fhirSentinel,
     Object? instance = fhirSentinel,
     Object? note = fhirSentinel,
@@ -95,12 +97,15 @@ class _$NutritionProductCopyWithImpl<T>
         nutrient: identical(nutrient, fhirSentinel)
             ? _value.nutrient
             : nutrient as List<NutritionProductNutrient>?,
+        ingredientSummary: identical(ingredientSummary, fhirSentinel)
+            ? _value.ingredientSummary
+            : ingredientSummary as FhirMarkdown?,
         ingredient: identical(ingredient, fhirSentinel)
             ? _value.ingredient
             : ingredient as List<NutritionProductIngredient>?,
-        knownAllergen: identical(knownAllergen, fhirSentinel)
-            ? _value.knownAllergen
-            : knownAllergen as List<CodeableReference>?,
+        energy: identical(energy, fhirSentinel)
+            ? _value.energy
+            : energy as Quantity?,
         characteristic: identical(characteristic, fhirSentinel)
             ? _value.characteristic
             : characteristic as List<NutritionProductCharacteristic>?,
@@ -131,7 +136,7 @@ abstract class $NutritionProductNutrientCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableReference? item,
-    List<Ratio>? amount,
+    AmountXNutritionProductNutrient? amountX,
     bool? disallowExtensions,
   });
 }
@@ -149,7 +154,7 @@ class _$NutritionProductNutrientCopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? item = fhirSentinel,
-    Object? amount = fhirSentinel,
+    Object? amountX = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -163,10 +168,10 @@ class _$NutritionProductNutrientCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         item: identical(item, fhirSentinel)
             ? _value.item
-            : item as CodeableReference?,
-        amount: identical(amount, fhirSentinel)
-            ? _value.amount
-            : amount as List<Ratio>?,
+            : (item as CodeableReference?) ?? _value.item,
+        amountX: identical(amountX, fhirSentinel)
+            ? _value.amountX
+            : amountX as AmountXNutritionProductNutrient?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -192,7 +197,8 @@ abstract class $NutritionProductIngredientCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableReference? item,
-    List<Ratio>? amount,
+    AmountXNutritionProductIngredient? amountX,
+    FhirBoolean? allergen,
     bool? disallowExtensions,
   });
 }
@@ -210,7 +216,8 @@ class _$NutritionProductIngredientCopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? item = fhirSentinel,
-    Object? amount = fhirSentinel,
+    Object? amountX = fhirSentinel,
+    Object? allergen = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -225,9 +232,12 @@ class _$NutritionProductIngredientCopyWithImpl<T>
         item: identical(item, fhirSentinel)
             ? _value.item
             : (item as CodeableReference?) ?? _value.item,
-        amount: identical(amount, fhirSentinel)
-            ? _value.amount
-            : amount as List<Ratio>?,
+        amountX: identical(amountX, fhirSentinel)
+            ? _value.amountX
+            : amountX as AmountXNutritionProductIngredient?,
+        allergen: identical(allergen, fhirSentinel)
+            ? _value.allergen
+            : allergen as FhirBoolean?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -254,7 +264,7 @@ abstract class $NutritionProductCharacteristicCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    CodeableConcept? valueX,
+    ValueXNutritionProductCharacteristic? valueX,
     bool? disallowExtensions,
   });
 }
@@ -289,7 +299,8 @@ class _$NutritionProductCharacteristicCopyWithImpl<T>
             : (type as CodeableConcept?) ?? _value.type,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as CodeableConcept?) ?? _value.valueX,
+            : (valueX as ValueXNutritionProductCharacteristic?) ??
+                _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

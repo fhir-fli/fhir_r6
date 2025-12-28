@@ -167,7 +167,7 @@ class ImmunizationEvaluationStatusCodes extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/immunization-evaluation-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'In Progress',
     ),
@@ -182,7 +182,7 @@ class ImmunizationEvaluationStatusCodes extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/immunization-evaluation-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Not Done',
     ),
@@ -197,7 +197,7 @@ class ImmunizationEvaluationStatusCodes extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/immunization-evaluation-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'On Hold',
     ),
@@ -212,7 +212,7 @@ class ImmunizationEvaluationStatusCodes extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/immunization-evaluation-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Completed',
     ),
@@ -227,7 +227,7 @@ class ImmunizationEvaluationStatusCodes extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/immunization-evaluation-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Entered in Error',
     ),
@@ -242,7 +242,7 @@ class ImmunizationEvaluationStatusCodes extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/immunization-evaluation-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Stopped',
     ),
@@ -257,7 +257,7 @@ class ImmunizationEvaluationStatusCodes extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/immunization-evaluation-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Unknown',
     ),

@@ -10,7 +10,10 @@ import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [AvailabilityBuilder]
-/// Availability data for an {item}.
+/// Availability data for an {item}, declaring what days/times are
+/// available, and any exceptions. The exceptions could be textual only,
+/// e.g. Public holidays, or could be time period specific and indicate a
+/// specific years dates.
 class AvailabilityBuilder extends DataTypeBuilder
     implements
         ValueXParametersParameterBuilder,
@@ -29,6 +32,7 @@ class AvailabilityBuilder extends DataTypeBuilder
   AvailabilityBuilder({
     super.id,
     super.extension_,
+    this.period,
     this.availableTime,
     this.notAvailableTime,
     super.disallowExtensions,
@@ -61,6 +65,12 @@ class AvailabilityBuilder extends DataTypeBuilder
             ),
           )
           .toList(),
+      period: JsonParser.parseObject<PeriodBuilder>(
+        json,
+        'period',
+        PeriodBuilder.fromJson,
+        '$objectPath.period',
+      ),
       availableTime: (json['availableTime'] as List<dynamic>?)
           ?.map<AvailabilityAvailableTimeBuilder>(
             (v) => AvailabilityAvailableTimeBuilder.fromJson(
@@ -126,12 +136,19 @@ class AvailabilityBuilder extends DataTypeBuilder
   @override
   String get fhirType => 'Availability';
 
+  /// [period]
+  /// The period of time when the availability is applicable. For example,
+  /// you might use this property to indicate the period during the holiday
+  /// season when you close an hour early.
+  PeriodBuilder? period;
+
   /// [availableTime]
-  /// Times the {item} is available.
+  /// A collection of times that the {item} is available.
   List<AvailabilityAvailableTimeBuilder>? availableTime;
 
   /// [notAvailableTime]
-  /// Not available during this time due to provided reason.
+  /// The {item} is not available during this period of time due to the
+  /// provided reason.
   List<AvailabilityNotAvailableTimeBuilder>? notAvailableTime;
 
   /// Converts a [AvailabilityBuilder]
@@ -172,6 +189,7 @@ class AvailabilityBuilder extends DataTypeBuilder
 
     addField('id', id);
     addField('extension', extension_);
+    addField('period', period);
     addField('availableTime', availableTime);
     addField('notAvailableTime', notAvailableTime);
     return json;
@@ -183,6 +201,7 @@ class AvailabilityBuilder extends DataTypeBuilder
     return [
       'id',
       'extension',
+      'period',
       'availableTime',
       'notAvailableTime',
     ];
@@ -204,6 +223,10 @@ class AvailabilityBuilder extends DataTypeBuilder
       case 'extension':
         if (extension_ != null) {
           fields.addAll(extension_!);
+        }
+      case 'period':
+        if (period != null) {
+          fields.add(period!);
         }
       case 'availableTime':
         if (availableTime != null) {
@@ -278,6 +301,14 @@ class AvailabilityBuilder extends DataTypeBuilder
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'period':
+        {
+          if (child is PeriodBuilder) {
+            period = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'availableTime':
         {
           if (child is List<AvailabilityAvailableTimeBuilder>) {
@@ -324,6 +355,8 @@ class AvailabilityBuilder extends DataTypeBuilder
         return ['FhirStringBuilder'];
       case 'extension':
         return ['FhirExtensionBuilder'];
+      case 'period':
+        return ['PeriodBuilder'];
       case 'availableTime':
         return ['AvailabilityAvailableTimeBuilder'];
       case 'notAvailableTime':
@@ -348,6 +381,11 @@ class AvailabilityBuilder extends DataTypeBuilder
           extension_ = <FhirExtensionBuilder>[];
           return;
         }
+      case 'period':
+        {
+          period = PeriodBuilder.empty();
+          return;
+        }
       case 'availableTime':
         {
           availableTime = <AvailabilityAvailableTimeBuilder>[];
@@ -369,6 +407,7 @@ class AvailabilityBuilder extends DataTypeBuilder
   AvailabilityBuilder copyWith({
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
+    PeriodBuilder? period,
     List<AvailabilityAvailableTimeBuilder>? availableTime,
     List<AvailabilityNotAvailableTimeBuilder>? notAvailableTime,
     Map<String, dynamic>? userData,
@@ -381,6 +420,7 @@ class AvailabilityBuilder extends DataTypeBuilder
     final newResult = AvailabilityBuilder(
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
+      period: period ?? this.period,
       availableTime: availableTime ?? this.availableTime,
       notAvailableTime: notAvailableTime ?? this.notAvailableTime,
     )..objectPath = newObjectPath;
@@ -421,6 +461,12 @@ class AvailabilityBuilder extends DataTypeBuilder
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      period,
+      o.period,
+    )) {
+      return false;
+    }
     if (!listEquals<AvailabilityAvailableTimeBuilder>(
       availableTime,
       o.availableTime,
@@ -438,7 +484,7 @@ class AvailabilityBuilder extends DataTypeBuilder
 }
 
 /// [AvailabilityAvailableTimeBuilder]
-/// Times the {item} is available.
+/// A collection of times that the {item} is available.
 class AvailabilityAvailableTimeBuilder extends ElementBuilder {
   /// Primary constructor for
   /// [AvailabilityAvailableTimeBuilder]
@@ -552,19 +598,23 @@ class AvailabilityAvailableTimeBuilder extends ElementBuilder {
   String get fhirType => 'AvailabilityAvailableTime';
 
   /// [daysOfWeek]
-  /// mon | tue | wed | thu | fri | sat | sun.
+  /// Indicates which days of the week are available between the start and
+  /// end Times.
   List<DaysOfWeekBuilder>? daysOfWeek;
 
   /// [allDay]
-  /// Always available? i.e. 24 hour service.
+  /// Is this always available? (hence times are irrelevant) i.e. 24 hour
+  /// service.
   FhirBooleanBuilder? allDay;
 
   /// [availableStartTime]
-  /// Opening time of day (ignored if allDay = true).
+  /// The opening time of day. Note: If the AllDay flag is set, then this
+  /// time is ignored.
   FhirTimeBuilder? availableStartTime;
 
   /// [availableEndTime]
-  /// Closing time of day (ignored if allDay = true).
+  /// The closing time of day. Note: If the AllDay flag is set, then this
+  /// time is ignored.
   FhirTimeBuilder? availableEndTime;
 
   /// Converts a [AvailabilityAvailableTimeBuilder]
@@ -997,7 +1047,8 @@ class AvailabilityAvailableTimeBuilder extends ElementBuilder {
 }
 
 /// [AvailabilityNotAvailableTimeBuilder]
-/// Not available during this time due to provided reason.
+/// The {item} is not available during this period of time due to the
+/// provided reason.
 class AvailabilityNotAvailableTimeBuilder extends ElementBuilder {
   /// Primary constructor for
   /// [AvailabilityNotAvailableTimeBuilder]
@@ -1097,11 +1148,13 @@ class AvailabilityNotAvailableTimeBuilder extends ElementBuilder {
   String get fhirType => 'AvailabilityNotAvailableTime';
 
   /// [description]
-  /// Reason presented to the user explaining why time not available.
+  /// The reason that can be presented to the user as to why this time is not
+  /// available.
   FhirStringBuilder? description;
 
   /// [during]
-  /// Service not available during this period.
+  /// The {item} is not available (seasonally or for a public holiday) during
+  /// this period.
   PeriodBuilder? during;
 
   /// Converts a [AvailabilityNotAvailableTimeBuilder]

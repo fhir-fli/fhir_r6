@@ -155,7 +155,7 @@ class AssertionManualCompletionTypeBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/assert-manual-completion-codes',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Fail',
     ),
@@ -170,7 +170,7 @@ class AssertionManualCompletionTypeBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/assert-manual-completion-codes',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Pass',
     ),
@@ -185,7 +185,7 @@ class AssertionManualCompletionTypeBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/assert-manual-completion-codes',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Skip',
     ),
@@ -200,7 +200,7 @@ class AssertionManualCompletionTypeBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/assert-manual-completion-codes',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Stop',
     ),

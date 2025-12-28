@@ -21,7 +21,7 @@ abstract class $CapabilityStatementCopyWith<T>
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXCapabilityStatement? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     PublicationStatus? status,
@@ -31,6 +31,7 @@ abstract class $CapabilityStatementCopyWith<T>
     List<ContactDetail>? contact,
     FhirMarkdown? description,
     List<UsageContext>? useContext,
+    List<FhirCanonical>? actorDefinition,
     List<CodeableConcept>? jurisdiction,
     FhirMarkdown? purpose,
     FhirMarkdown? copyright,
@@ -41,8 +42,8 @@ abstract class $CapabilityStatementCopyWith<T>
     CapabilityStatementSoftware? software,
     CapabilityStatementImplementation? implementation,
     FHIRVersion? fhirVersion,
-    List<FhirCode>? format,
-    List<FhirCode>? patchFormat,
+    List<SupplementedMimeTypes>? format,
+    List<PatchMimeTypes>? patchFormat,
     List<AllLanguages>? acceptLanguage,
     List<FhirCanonical>? implementationGuide,
     List<CapabilityStatementRest>? rest,
@@ -82,6 +83,7 @@ class _$CapabilityStatementCopyWithImpl<T>
     Object? contact = fhirSentinel,
     Object? description = fhirSentinel,
     Object? useContext = fhirSentinel,
+    Object? actorDefinition = fhirSentinel,
     Object? jurisdiction = fhirSentinel,
     Object? purpose = fhirSentinel,
     Object? copyright = fhirSentinel,
@@ -130,7 +132,7 @@ class _$CapabilityStatementCopyWithImpl<T>
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXCapabilityStatement?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -156,6 +158,9 @@ class _$CapabilityStatementCopyWithImpl<T>
         useContext: identical(useContext, fhirSentinel)
             ? _value.useContext
             : useContext as List<UsageContext>?,
+        actorDefinition: identical(actorDefinition, fhirSentinel)
+            ? _value.actorDefinition
+            : actorDefinition as List<FhirCanonical>?,
         jurisdiction: identical(jurisdiction, fhirSentinel)
             ? _value.jurisdiction
             : jurisdiction as List<CodeableConcept>?,
@@ -188,10 +193,10 @@ class _$CapabilityStatementCopyWithImpl<T>
             : (fhirVersion as FHIRVersion?) ?? _value.fhirVersion,
         format: identical(format, fhirSentinel)
             ? _value.format
-            : (format as List<FhirCode>?) ?? _value.format,
+            : (format as List<SupplementedMimeTypes>?) ?? _value.format,
         patchFormat: identical(patchFormat, fhirSentinel)
             ? _value.patchFormat
-            : patchFormat as List<FhirCode>?,
+            : patchFormat as List<PatchMimeTypes>?,
         acceptLanguage: identical(acceptLanguage, fhirSentinel)
             ? _value.acceptLanguage
             : acceptLanguage as List<AllLanguages>?,
@@ -515,7 +520,8 @@ abstract class $CapabilityStatementResourceCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirCode? type,
+    ExtendedResourceTypes? type,
+    FhirCanonical? definition,
     FhirCanonical? profile,
     List<FhirCanonical>? supportedProfile,
     FhirMarkdown? documentation,
@@ -550,6 +556,7 @@ class _$CapabilityStatementResourceCopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? type = fhirSentinel,
+    Object? definition = fhirSentinel,
     Object? profile = fhirSentinel,
     Object? supportedProfile = fhirSentinel,
     Object? documentation = fhirSentinel,
@@ -580,7 +587,10 @@ class _$CapabilityStatementResourceCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         type: identical(type, fhirSentinel)
             ? _value.type
-            : (type as FhirCode?) ?? _value.type,
+            : (type as ExtendedResourceTypes?) ?? _value.type,
+        definition: identical(definition, fhirSentinel)
+            ? _value.definition
+            : definition as FhirCanonical?,
         profile: identical(profile, fhirSentinel)
             ? _value.profile
             : profile as FhirCanonical?,

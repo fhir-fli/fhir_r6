@@ -20,12 +20,13 @@ abstract class $ArtifactAssessmentCopyWith<T>
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
     FhirString? title,
-    Reference? citeAsX,
+    FhirMarkdown? citeAs,
+    ArtifactXArtifactAssessment? artifactX,
+    List<ArtifactAssessmentRelatesTo>? relatesTo,
     FhirDateTime? date,
     FhirMarkdown? copyright,
     FhirDate? approvalDate,
     FhirDate? lastReviewDate,
-    Reference? artifactX,
     List<ArtifactAssessmentContent>? content,
     ArtifactAssessmentWorkflowStatus? workflowStatus,
     ArtifactAssessmentDisposition? disposition,
@@ -52,12 +53,13 @@ class _$ArtifactAssessmentCopyWithImpl<T>
     Object? modifierExtension = fhirSentinel,
     Object? identifier = fhirSentinel,
     Object? title = fhirSentinel,
-    Object? citeAsX = fhirSentinel,
+    Object? citeAs = fhirSentinel,
+    Object? artifactX = fhirSentinel,
+    Object? relatesTo = fhirSentinel,
     Object? date = fhirSentinel,
     Object? copyright = fhirSentinel,
     Object? approvalDate = fhirSentinel,
     Object? lastReviewDate = fhirSentinel,
-    Object? artifactX = fhirSentinel,
     Object? content = fhirSentinel,
     Object? workflowStatus = fhirSentinel,
     Object? disposition = fhirSentinel,
@@ -89,9 +91,15 @@ class _$ArtifactAssessmentCopyWithImpl<T>
         title: identical(title, fhirSentinel)
             ? _value.title
             : title as FhirString?,
-        citeAsX: identical(citeAsX, fhirSentinel)
-            ? _value.citeAsX
-            : citeAsX as Reference?,
+        citeAs: identical(citeAs, fhirSentinel)
+            ? _value.citeAs
+            : citeAs as FhirMarkdown?,
+        artifactX: identical(artifactX, fhirSentinel)
+            ? _value.artifactX
+            : (artifactX as ArtifactXArtifactAssessment?) ?? _value.artifactX,
+        relatesTo: identical(relatesTo, fhirSentinel)
+            ? _value.relatesTo
+            : relatesTo as List<ArtifactAssessmentRelatesTo>?,
         date:
             identical(date, fhirSentinel) ? _value.date : date as FhirDateTime?,
         copyright: identical(copyright, fhirSentinel)
@@ -103,9 +111,6 @@ class _$ArtifactAssessmentCopyWithImpl<T>
         lastReviewDate: identical(lastReviewDate, fhirSentinel)
             ? _value.lastReviewDate
             : lastReviewDate as FhirDate?,
-        artifactX: identical(artifactX, fhirSentinel)
-            ? _value.artifactX
-            : (artifactX as Reference?) ?? _value.artifactX,
         content: identical(content, fhirSentinel)
             ? _value.content
             : content as List<ArtifactAssessmentContent>?,
@@ -128,6 +133,69 @@ extension ArtifactAssessmentCopyWithExtension on ArtifactAssessment {
       );
 }
 
+abstract class $ArtifactAssessmentRelatesToCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    ArtifactRelationshipType? type,
+    TargetXArtifactAssessmentRelatesTo? targetX,
+    bool? disallowExtensions,
+  });
+}
+
+class _$ArtifactAssessmentRelatesToCopyWithImpl<T>
+    implements $ArtifactAssessmentRelatesToCopyWith<T> {
+  final ArtifactAssessmentRelatesTo _value;
+  final T Function(ArtifactAssessmentRelatesTo) _then;
+
+  _$ArtifactAssessmentRelatesToCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? type = fhirSentinel,
+    Object? targetX = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      ArtifactAssessmentRelatesTo(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        type: identical(type, fhirSentinel)
+            ? _value.type
+            : (type as ArtifactRelationshipType?) ?? _value.type,
+        targetX: identical(targetX, fhirSentinel)
+            ? _value.targetX
+            : (targetX as TargetXArtifactAssessmentRelatesTo?) ??
+                _value.targetX,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension ArtifactAssessmentRelatesToCopyWithExtension
+    on ArtifactAssessmentRelatesTo {
+  $ArtifactAssessmentRelatesToCopyWith<ArtifactAssessmentRelatesTo>
+      get copyWith => _$ArtifactAssessmentRelatesToCopyWithImpl<
+              ArtifactAssessmentRelatesTo>(
+            this,
+            (value) => value,
+          );
+}
+
 abstract class $ArtifactAssessmentContentCopyWith<T>
     extends $BackboneElementCopyWith<T> {
   @override
@@ -135,14 +203,13 @@ abstract class $ArtifactAssessmentContentCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    ArtifactAssessmentInformationType? informationType,
     FhirMarkdown? summary,
     CodeableConcept? type,
     List<CodeableConcept>? classifier,
     Quantity? quantity,
-    Reference? author,
+    List<Reference>? author,
     List<FhirUri>? path,
-    List<RelatedArtifact>? relatedArtifact,
+    List<ArtifactAssessmentRelatesTo>? relatesTo,
     FhirBoolean? freeToShare,
     List<ArtifactAssessmentContent>? component,
     bool? disallowExtensions,
@@ -161,14 +228,13 @@ class _$ArtifactAssessmentContentCopyWithImpl<T>
     Object? id = fhirSentinel,
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
-    Object? informationType = fhirSentinel,
     Object? summary = fhirSentinel,
     Object? type = fhirSentinel,
     Object? classifier = fhirSentinel,
     Object? quantity = fhirSentinel,
     Object? author = fhirSentinel,
     Object? path = fhirSentinel,
-    Object? relatedArtifact = fhirSentinel,
+    Object? relatesTo = fhirSentinel,
     Object? freeToShare = fhirSentinel,
     Object? component = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
@@ -182,9 +248,6 @@ class _$ArtifactAssessmentContentCopyWithImpl<T>
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
-        informationType: identical(informationType, fhirSentinel)
-            ? _value.informationType
-            : informationType as ArtifactAssessmentInformationType?,
         summary: identical(summary, fhirSentinel)
             ? _value.summary
             : summary as FhirMarkdown?,
@@ -199,13 +262,13 @@ class _$ArtifactAssessmentContentCopyWithImpl<T>
             : quantity as Quantity?,
         author: identical(author, fhirSentinel)
             ? _value.author
-            : author as Reference?,
+            : author as List<Reference>?,
         path: identical(path, fhirSentinel)
             ? _value.path
             : path as List<FhirUri>?,
-        relatedArtifact: identical(relatedArtifact, fhirSentinel)
-            ? _value.relatedArtifact
-            : relatedArtifact as List<RelatedArtifact>?,
+        relatesTo: identical(relatesTo, fhirSentinel)
+            ? _value.relatesTo
+            : relatesTo as List<ArtifactAssessmentRelatesTo>?,
         freeToShare: identical(freeToShare, fhirSentinel)
             ? _value.freeToShare
             : freeToShare as FhirBoolean?,

@@ -21,7 +21,7 @@ class DeviceAssociation extends DomainResource {
     super.modifierExtension,
     this.identifier,
     required this.device,
-    this.category,
+    this.relationship,
     required this.status,
     this.statusReason,
     this.subject,
@@ -95,7 +95,7 @@ class DeviceAssociation extends DomainResource {
         'device',
         Reference.fromJson,
       )!,
-      category: (json['category'] as List<dynamic>?)
+      relationship: (json['relationship'] as List<dynamic>?)
           ?.map<CodeableConcept>(
             (v) => CodeableConcept.fromJson(
               {...v as Map<String, dynamic>},
@@ -189,9 +189,9 @@ class DeviceAssociation extends DomainResource {
   /// Reference to the devices associated with the patient or group.
   final Reference device;
 
-  /// [category]
+  /// [relationship]
   /// Describes the relationship between the device and subject.
-  final List<CodeableConcept>? category;
+  final List<CodeableConcept>? relationship;
 
   /// [status]
   /// Indicates the state of the Device association.
@@ -323,8 +323,8 @@ class DeviceAssociation extends DomainResource {
       device,
     );
     addField(
-      'category',
-      category,
+      'relationship',
+      relationship,
     );
     addField(
       'status',
@@ -367,7 +367,7 @@ class DeviceAssociation extends DomainResource {
       'modifierExtension',
       'identifier',
       'device',
-      'category',
+      'relationship',
       'status',
       'statusReason',
       'subject',
@@ -424,9 +424,9 @@ class DeviceAssociation extends DomainResource {
         }
       case 'device':
         fields.add(device);
-      case 'category':
-        if (category != null) {
-          fields.addAll(category!);
+      case 'relationship':
+        if (relationship != null) {
+          fields.addAll(relationship!);
         }
       case 'status':
         fields.add(status);
@@ -552,8 +552,8 @@ class DeviceAssociation extends DomainResource {
       return false;
     }
     if (!listEquals<CodeableConcept>(
-      category,
-      o.category,
+      relationship,
+      o.relationship,
     )) {
       return false;
     }

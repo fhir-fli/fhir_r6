@@ -90,11 +90,13 @@ class BiologicallyDerivedProduct extends DomainResource {
             ),
           )
           .toList(),
-      productCategory: JsonParser.parseObject<Coding>(
-        json,
-        'productCategory',
-        Coding.fromJson,
-      ),
+      productCategory: (json['productCategory'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       productCode: JsonParser.parseObject<CodeableConcept>(
         json,
         'productCode',
@@ -211,8 +213,10 @@ class BiologicallyDerivedProduct extends DomainResource {
   String get fhirType => 'BiologicallyDerivedProduct';
 
   /// [productCategory]
-  /// Broad category of this product.
-  final Coding? productCategory;
+  /// A category or classification of the product. Products may be assigned
+  /// multiple categories, for example a human heart valve can be categorized
+  /// as an 'MPHO' and 'tissue'.
+  final List<CodeableConcept>? productCategory;
 
   /// [productCode]
   /// A codified value that systematically supports characterization and
@@ -252,7 +256,7 @@ class BiologicallyDerivedProduct extends DomainResource {
   final FhirString? division;
 
   /// [productStatus]
-  /// Whether the product is currently available.
+  /// The current status of the product.
   final Coding? productStatus;
 
   /// [expirationDate]
@@ -494,7 +498,7 @@ class BiologicallyDerivedProduct extends DomainResource {
         }
       case 'productCategory':
         if (productCategory != null) {
-          fields.add(productCategory!);
+          fields.addAll(productCategory!);
         }
       case 'productCode':
         if (productCode != null) {
@@ -634,7 +638,7 @@ class BiologicallyDerivedProduct extends DomainResource {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<CodeableConcept>(
       productCategory,
       o.productCategory,
     )) {
@@ -731,6 +735,7 @@ class BiologicallyDerivedProductCollection extends BackboneElement {
     CollectedXBiologicallyDerivedProductCollection? collectedX,
     FhirDateTime? collectedDateTime,
     Period? collectedPeriod,
+    this.procedure,
     super.disallowExtensions,
   })  : collectedX = collectedX ?? collectedDateTime ?? collectedPeriod,
         super();
@@ -776,6 +781,11 @@ class BiologicallyDerivedProductCollection extends BackboneElement {
           'collectedDateTime': FhirDateTime.fromJson,
           'collectedPeriod': Period.fromJson,
         },
+      ),
+      procedure: JsonParser.parseObject<Reference>(
+        json,
+        'procedure',
+        Reference.fromJson,
       ),
     );
   }
@@ -840,6 +850,10 @@ class BiologicallyDerivedProductCollection extends BackboneElement {
 
   /// Getter for [collectedPeriod] as a Period
   Period? get collectedPeriod => collectedX?.isAs<Period>();
+
+  /// [procedure]
+  /// The procedure performed to collect the biologically derived product.
+  final Reference? procedure;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -931,6 +945,10 @@ class BiologicallyDerivedProductCollection extends BackboneElement {
       );
     }
 
+    addField(
+      'procedure',
+      procedure,
+    );
     return json;
   }
 
@@ -944,6 +962,7 @@ class BiologicallyDerivedProductCollection extends BackboneElement {
       'collector',
       'source',
       'collectedX',
+      'procedure',
     ];
   }
 
@@ -987,6 +1006,10 @@ class BiologicallyDerivedProductCollection extends BackboneElement {
       case 'collectedPeriod':
         if (collectedX is Period) {
           fields.add(collectedX!);
+        }
+      case 'procedure':
+        if (procedure != null) {
+          fields.add(procedure!);
         }
       default:
         if (checkValid) {
@@ -1064,6 +1087,12 @@ class BiologicallyDerivedProductCollection extends BackboneElement {
     if (!equalsDeepWithNull(
       collectedX,
       o.collectedX,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      procedure,
+      o.procedure,
     )) {
       return false;
     }

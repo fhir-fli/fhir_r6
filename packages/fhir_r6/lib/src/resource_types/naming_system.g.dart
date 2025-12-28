@@ -20,7 +20,7 @@ abstract class $NamingSystemCopyWith<T> extends $MetadataResourceCopyWith<T> {
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXNamingSystem? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     PublicationStatus? status,
@@ -130,7 +130,7 @@ class _$NamingSystemCopyWithImpl<T> implements $NamingSystemCopyWith<T> {
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXNamingSystem?,
         name: identical(name, fhirSentinel)
             ? _value.name
             : (name as FhirString?) ?? _value.name,

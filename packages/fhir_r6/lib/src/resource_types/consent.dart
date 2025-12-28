@@ -39,6 +39,7 @@ class Consent extends DomainResource {
     this.policyText,
     this.verification,
     this.decision,
+    this.provisionReference,
     this.provision,
   }) : super(
           resourceType: R6ResourceType.Consent,
@@ -202,6 +203,13 @@ class Consent extends DomainResource {
         'decision',
         ConsentProvisionType.fromJson,
       ),
+      provisionReference: (json['provisionReference'] as List<dynamic>?)
+          ?.map<Reference>(
+            (v) => Reference.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       provision: (json['provision'] as List<dynamic>?)
           ?.map<ConsentProvision>(
             (v) => ConsentProvision.fromJson(
@@ -268,8 +276,8 @@ class Consent extends DomainResource {
   final List<CodeableConcept>? category;
 
   /// [subject]
-  /// The patient/healthcare practitioner or group of persons to whom this
-  /// consent applies.
+  /// The patient, healthcare practitioner, research subject, or a group of
+  /// persons to whom this consent applies.
   final Reference? subject;
 
   /// [date]
@@ -337,6 +345,11 @@ class Consent extends DomainResource {
   /// [decision]
   /// Action to take - permit or deny - as default.
   final ConsentProvisionType? decision;
+
+  /// [provisionReference]
+  /// Alternate for the provision structure using the Permission resource.
+  /// Only one of Permission and .provision may be used in a resource.
+  final List<Reference>? provisionReference;
 
   /// [provision]
   /// An exception to the base policy of this consent. An exception can be an
@@ -507,6 +520,10 @@ class Consent extends DomainResource {
       decision,
     );
     addField(
+      'provisionReference',
+      provisionReference,
+    );
+    addField(
       'provision',
       provision,
     );
@@ -542,6 +559,7 @@ class Consent extends DomainResource {
       'policyText',
       'verification',
       'decision',
+      'provisionReference',
       'provision',
     ];
   }
@@ -652,6 +670,10 @@ class Consent extends DomainResource {
       case 'decision':
         if (decision != null) {
           fields.add(decision!);
+        }
+      case 'provisionReference':
+        if (provisionReference != null) {
+          fields.addAll(provisionReference!);
         }
       case 'provision':
         if (provision != null) {
@@ -847,6 +869,12 @@ class Consent extends DomainResource {
     )) {
       return false;
     }
+    if (!listEquals<Reference>(
+      provisionReference,
+      o.provisionReference,
+    )) {
+      return false;
+    }
     if (!listEquals<ConsentProvision>(
       provision,
       o.provision,
@@ -871,7 +899,7 @@ class ConsentPolicyBasis extends BackboneElement {
     super.extension_,
     super.modifierExtension,
     this.reference,
-    this.url,
+    this.uri,
     super.disallowExtensions,
   }) : super();
 
@@ -904,10 +932,10 @@ class ConsentPolicyBasis extends BackboneElement {
         'reference',
         Reference.fromJson,
       ),
-      url: JsonParser.parsePrimitive<FhirUrl>(
+      uri: JsonParser.parsePrimitive<FhirUri>(
         json,
-        'url',
-        FhirUrl.fromJson,
+        'uri',
+        FhirUri.fromJson,
       ),
     );
   }
@@ -959,10 +987,10 @@ class ConsentPolicyBasis extends BackboneElement {
   /// for this Consent.
   final Reference? reference;
 
-  /// [url]
-  /// A URL that links to a computable version of the policy the organization
+  /// [uri]
+  /// A URI that links to a computable version of the policy the organization
   /// will enforce for this Consent.
-  final FhirUrl? url;
+  final FhirUri? uri;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1043,8 +1071,8 @@ class ConsentPolicyBasis extends BackboneElement {
       reference,
     );
     addField(
-      'url',
-      url,
+      'uri',
+      uri,
     );
     return json;
   }
@@ -1057,7 +1085,7 @@ class ConsentPolicyBasis extends BackboneElement {
       'extension',
       'modifierExtension',
       'reference',
-      'url',
+      'uri',
     ];
   }
 
@@ -1086,9 +1114,9 @@ class ConsentPolicyBasis extends BackboneElement {
         if (reference != null) {
           fields.add(reference!);
         }
-      case 'url':
-        if (url != null) {
-          fields.add(url!);
+      case 'uri':
+        if (uri != null) {
+          fields.add(uri!);
         }
       default:
         if (checkValid) {
@@ -1156,8 +1184,8 @@ class ConsentPolicyBasis extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
-      url,
-      o.url,
+      uri,
+      o.uri,
     )) {
       return false;
     }

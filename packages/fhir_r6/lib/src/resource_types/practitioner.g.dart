@@ -23,7 +23,7 @@ abstract class $PractitionerCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<ContactPoint>? telecom,
     AdministrativeGender? gender,
     FhirDate? birthDate,
-    FhirBoolean? deceasedX,
+    DeceasedXPractitioner? deceasedX,
     List<Address>? address,
     List<Attachment>? photo,
     List<PractitionerQualification>? qualification,
@@ -101,7 +101,7 @@ class _$PractitionerCopyWithImpl<T> implements $PractitionerCopyWith<T> {
             : birthDate as FhirDate?,
         deceasedX: identical(deceasedX, fhirSentinel)
             ? _value.deceasedX
-            : deceasedX as FhirBoolean?,
+            : deceasedX as DeceasedXPractitioner?,
         address: identical(address, fhirSentinel)
             ? _value.address
             : address as List<Address>?,
@@ -136,6 +136,7 @@ abstract class $PractitionerQualificationCopyWith<T>
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
     CodeableConcept? code,
+    CodeableConcept? status,
     Period? period,
     Reference? issuer,
     bool? disallowExtensions,
@@ -156,6 +157,7 @@ class _$PractitionerQualificationCopyWithImpl<T>
     Object? modifierExtension = fhirSentinel,
     Object? identifier = fhirSentinel,
     Object? code = fhirSentinel,
+    Object? status = fhirSentinel,
     Object? period = fhirSentinel,
     Object? issuer = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
@@ -175,6 +177,9 @@ class _$PractitionerQualificationCopyWithImpl<T>
         code: identical(code, fhirSentinel)
             ? _value.code
             : (code as CodeableConcept?) ?? _value.code,
+        status: identical(status, fhirSentinel)
+            ? _value.status
+            : status as CodeableConcept?,
         period:
             identical(period, fhirSentinel) ? _value.period : period as Period?,
         issuer: identical(issuer, fhirSentinel)

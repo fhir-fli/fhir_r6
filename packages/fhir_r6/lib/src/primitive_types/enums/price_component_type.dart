@@ -9,9 +9,6 @@ enum PriceComponentTypeEnum {
   /// surcharge
   surcharge,
 
-  /// deduction
-  deduction,
-
   /// discount
   discount,
 
@@ -33,8 +30,6 @@ enum PriceComponentTypeEnum {
         return 'base';
       case PriceComponentTypeEnum.surcharge:
         return 'surcharge';
-      case PriceComponentTypeEnum.deduction:
-        return 'deduction';
       case PriceComponentTypeEnum.discount:
         return 'discount';
       case PriceComponentTypeEnum.tax:
@@ -62,8 +57,6 @@ enum PriceComponentTypeEnum {
         return PriceComponentTypeEnum.base;
       case 'surcharge':
         return PriceComponentTypeEnum.surcharge;
-      case 'deduction':
-        return PriceComponentTypeEnum.deduction;
       case 'discount':
         return PriceComponentTypeEnum.discount;
       case 'tax':
@@ -151,7 +144,7 @@ class PriceComponentType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/price-component-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'base price',
     ),
@@ -164,22 +157,9 @@ class PriceComponentType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/price-component-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
-      valueString: 'surcharge',
-    ),
-  );
-
-  /// deduction
-  static const PriceComponentType deduction = PriceComponentType._(
-    valueString: 'deduction',
-    valueEnum: PriceComponentTypeEnum.deduction,
-    system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/price-component-type',
-    ),
-    version: FhirString._(valueString: '5.0.0'),
-    display: FhirString._(
-      valueString: 'deduction',
+      valueString: 'Surcharge',
     ),
   );
 
@@ -190,9 +170,9 @@ class PriceComponentType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/price-component-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
-      valueString: 'discount',
+      valueString: 'Discount',
     ),
   );
 
@@ -203,9 +183,9 @@ class PriceComponentType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/price-component-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
-      valueString: 'tax',
+      valueString: 'Tax',
     ),
   );
 
@@ -216,9 +196,9 @@ class PriceComponentType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/price-component-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
-      valueString: 'informational',
+      valueString: 'Informational',
     ),
   );
 
@@ -226,7 +206,6 @@ class PriceComponentType extends FhirCodeEnum {
   static final List<PriceComponentType> values = [
     base,
     surcharge,
-    deduction,
     discount,
     tax,
     informational,

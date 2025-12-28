@@ -6,6 +6,9 @@ enum DetectedIssueStatusEnum {
   /// registered
   registered,
 
+  /// specimen-in-process
+  specimenInProcess,
+
   /// preliminary
   preliminary,
 
@@ -18,6 +21,9 @@ enum DetectedIssueStatusEnum {
   /// corrected
   corrected,
 
+  /// appended
+  appended,
+
   /// cancelled
   cancelled,
 
@@ -26,6 +32,9 @@ enum DetectedIssueStatusEnum {
 
   /// unknown
   unknown,
+
+  /// cannot-be-obtained
+  cannotBeObtained,
 
   /// mitigated
   mitigated,
@@ -40,6 +49,8 @@ enum DetectedIssueStatusEnum {
     switch (this) {
       case DetectedIssueStatusEnum.registered:
         return 'registered';
+      case DetectedIssueStatusEnum.specimenInProcess:
+        return 'specimen-in-process';
       case DetectedIssueStatusEnum.preliminary:
         return 'preliminary';
       case DetectedIssueStatusEnum.final_:
@@ -48,12 +59,16 @@ enum DetectedIssueStatusEnum {
         return 'amended';
       case DetectedIssueStatusEnum.corrected:
         return 'corrected';
+      case DetectedIssueStatusEnum.appended:
+        return 'appended';
       case DetectedIssueStatusEnum.cancelled:
         return 'cancelled';
       case DetectedIssueStatusEnum.enteredInError:
         return 'entered-in-error';
       case DetectedIssueStatusEnum.unknown:
         return 'unknown';
+      case DetectedIssueStatusEnum.cannotBeObtained:
+        return 'cannot-be-obtained';
       case DetectedIssueStatusEnum.mitigated:
         return 'mitigated';
     }
@@ -75,6 +90,8 @@ enum DetectedIssueStatusEnum {
     switch (value) {
       case 'registered':
         return DetectedIssueStatusEnum.registered;
+      case 'specimen-in-process':
+        return DetectedIssueStatusEnum.specimenInProcess;
       case 'preliminary':
         return DetectedIssueStatusEnum.preliminary;
       case 'final':
@@ -83,12 +100,16 @@ enum DetectedIssueStatusEnum {
         return DetectedIssueStatusEnum.amended;
       case 'corrected':
         return DetectedIssueStatusEnum.corrected;
+      case 'appended':
+        return DetectedIssueStatusEnum.appended;
       case 'cancelled':
         return DetectedIssueStatusEnum.cancelled;
       case 'entered-in-error':
         return DetectedIssueStatusEnum.enteredInError;
       case 'unknown':
         return DetectedIssueStatusEnum.unknown;
+      case 'cannot-be-obtained':
+        return DetectedIssueStatusEnum.cannotBeObtained;
       case 'mitigated':
         return DetectedIssueStatusEnum.mitigated;
     }
@@ -172,9 +193,22 @@ class DetectedIssueStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Registered',
+    ),
+  );
+
+  /// specimen_in_process
+  static const DetectedIssueStatus specimenInProcess = DetectedIssueStatus._(
+    valueString: 'specimen-in-process',
+    valueEnum: DetectedIssueStatusEnum.specimenInProcess,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Specimen-in-Process',
     ),
   );
 
@@ -185,7 +219,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Preliminary',
     ),
@@ -198,7 +232,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Final',
     ),
@@ -211,7 +245,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Amended',
     ),
@@ -224,9 +258,22 @@ class DetectedIssueStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Corrected',
+    ),
+  );
+
+  /// appended
+  static const DetectedIssueStatus appended = DetectedIssueStatus._(
+    valueString: 'appended',
+    valueEnum: DetectedIssueStatusEnum.appended,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Appended',
     ),
   );
 
@@ -237,7 +284,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Cancelled',
     ),
@@ -250,7 +297,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Entered in Error',
     ),
@@ -263,9 +310,22 @@ class DetectedIssueStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Unknown',
+    ),
+  );
+
+  /// cannot_be_obtained
+  static const DetectedIssueStatus cannotBeObtained = DetectedIssueStatus._(
+    valueString: 'cannot-be-obtained',
+    valueEnum: DetectedIssueStatusEnum.cannotBeObtained,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Cannot be obtained',
     ),
   );
 
@@ -276,7 +336,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Mitigated',
     ),
@@ -285,13 +345,16 @@ class DetectedIssueStatus extends FhirCodeEnum {
   /// List of all enum-like values
   static final List<DetectedIssueStatus> values = [
     registered,
+    specimenInProcess,
     preliminary,
     final_,
     amended,
     corrected,
+    appended,
     cancelled,
     enteredInError,
     unknown,
+    cannotBeObtained,
     mitigated,
   ];
 

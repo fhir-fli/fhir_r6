@@ -10,13 +10,15 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchServiceRequest extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [ServiceRequest]
+  @override
   SearchServiceRequest identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -26,8 +28,8 @@ class SearchServiceRequest extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}authored'] =
-        value.toString();
+    parameters['authored'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -38,8 +40,9 @@ class SearchServiceRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}body_site'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['body_site'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -50,8 +53,9 @@ class SearchServiceRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}category'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['category'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -62,8 +66,22 @@ class SearchServiceRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}code_concept'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['code_concept'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a token search for [groupOrIdentifier] in the resource
+  /// [ServiceRequest]
+  SearchServiceRequest groupOrIdentifier(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    parameters['group_or_identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -73,8 +91,8 @@ class SearchServiceRequest extends SearchResource {
     FhirUri value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}instantiates_uri'] =
-        value.toString();
+    parameters['instantiates_uri'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -85,8 +103,22 @@ class SearchServiceRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}intent'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['intent'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a token search for [locationCode] in the resource
+  /// [ServiceRequest]
+  SearchServiceRequest locationCode(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    parameters['location_code'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -96,8 +128,8 @@ class SearchServiceRequest extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}occurrence'] =
-        value.toString();
+    parameters['occurrence'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -108,20 +140,23 @@ class SearchServiceRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}performer_type'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['performer_type'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [priority] in the resource
   /// [ServiceRequest]
+  @override
   SearchServiceRequest priority(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}priority'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['priority'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -132,20 +167,23 @@ class SearchServiceRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}requisition'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['requisition'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [ServiceRequest]
+  @override
   SearchServiceRequest status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

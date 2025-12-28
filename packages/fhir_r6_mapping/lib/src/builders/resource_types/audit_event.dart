@@ -29,8 +29,8 @@ class AuditEventBuilder extends DomainResourceBuilder {
     super.contained,
     super.extension_,
     super.modifierExtension,
-    this.category,
-    this.code,
+    this.type,
+    this.subtype,
     this.action,
     this.severity,
     OccurredXAuditEventBuilder? occurredX,
@@ -54,7 +54,7 @@ class AuditEventBuilder extends DomainResourceBuilder {
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
   factory AuditEventBuilder.empty() => AuditEventBuilder(
-        code: CodeableConceptBuilder.empty(),
+        type: CodeableConceptBuilder.empty(),
         recorded: FhirInstantBuilder.empty(),
         agent: <AuditEventAgentBuilder>[],
         source: AuditEventSourceBuilder.empty(),
@@ -126,22 +126,22 @@ class AuditEventBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      category: (json['category'] as List<dynamic>?)
+      type: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'type',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.type',
+      ),
+      subtype: (json['subtype'] as List<dynamic>?)
           ?.map<CodeableConceptBuilder>(
             (v) => CodeableConceptBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.category',
+                'objectPath': '$objectPath.subtype',
               },
             ),
           )
           .toList(),
-      code: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'code',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.code',
-      ),
       action: JsonParser.parsePrimitive<AuditEventActionBuilder>(
         json,
         'action',
@@ -277,13 +277,15 @@ class AuditEventBuilder extends DomainResourceBuilder {
   @override
   String get fhirType => 'AuditEvent';
 
-  /// [category]
-  /// Classification of the type of event.
-  List<CodeableConceptBuilder>? category;
+  /// [type]
+  /// Partitions the audit event into one or more categories that can be used
+  /// to filter searching, to govern access control and/or to guide system
+  /// behavior.
+  CodeableConceptBuilder? type;
 
-  /// [code]
-  /// Describes what happened. The most specific code for the event.
-  CodeableConceptBuilder? code;
+  /// [subtype]
+  /// Describes what happened. The most specific codes for the event.
+  List<CodeableConceptBuilder>? subtype;
 
   /// [action]
   /// Indicator for type of action performed during the event that generated
@@ -321,7 +323,7 @@ class AuditEventBuilder extends DomainResourceBuilder {
   List<CodeableConceptBuilder>? authorization;
 
   /// [basedOn]
-  /// Allows tracing of authorizatino for the events and tracking whether
+  /// Allows tracing of authorization for the events and tracking whether
   /// proposals/recommendations were acted upon.
   List<ReferenceBuilder>? basedOn;
 
@@ -395,8 +397,8 @@ class AuditEventBuilder extends DomainResourceBuilder {
     addField('contained', contained);
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
-    addField('category', category);
-    addField('code', code);
+    addField('type', type);
+    addField('subtype', subtype);
     addField('action', action);
     addField('severity', severity);
     if (occurredX != null) {
@@ -428,8 +430,8 @@ class AuditEventBuilder extends DomainResourceBuilder {
       'contained',
       'extension',
       'modifierExtension',
-      'category',
-      'code',
+      'type',
+      'subtype',
       'action',
       'severity',
       'occurredX',
@@ -486,13 +488,13 @@ class AuditEventBuilder extends DomainResourceBuilder {
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
         }
-      case 'category':
-        if (category != null) {
-          fields.addAll(category!);
+      case 'type':
+        if (type != null) {
+          fields.add(type!);
         }
-      case 'code':
-        if (code != null) {
-          fields.add(code!);
+      case 'subtype':
+        if (subtype != null) {
+          fields.addAll(subtype!);
         }
       case 'action':
         if (action != null) {
@@ -710,26 +712,26 @@ class AuditEventBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'category':
+      case 'type':
         {
-          if (child is List<CodeableConceptBuilder>) {
-            // Replace or create new list
-            category = child;
-            return;
-          } else if (child is CodeableConceptBuilder) {
-            // Add single element to existing list or create new list
-            category = [
-              ...(category ?? []),
-              child,
-            ];
+          if (child is CodeableConceptBuilder) {
+            type = child;
             return;
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'code':
+      case 'subtype':
         {
-          if (child is CodeableConceptBuilder) {
-            code = child;
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
+            subtype = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            subtype = [
+              ...(subtype ?? []),
+              child,
+            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -958,9 +960,9 @@ class AuditEventBuilder extends DomainResourceBuilder {
         return ['FhirExtensionBuilder'];
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
-      case 'category':
+      case 'type':
         return ['CodeableConceptBuilder'];
-      case 'code':
+      case 'subtype':
         return ['CodeableConceptBuilder'];
       case 'action':
         return ['FhirCodeEnumBuilder'];
@@ -1044,14 +1046,14 @@ class AuditEventBuilder extends DomainResourceBuilder {
           modifierExtension = <FhirExtensionBuilder>[];
           return;
         }
-      case 'category':
+      case 'type':
         {
-          category = <CodeableConceptBuilder>[];
+          type = CodeableConceptBuilder.empty();
           return;
         }
-      case 'code':
+      case 'subtype':
         {
-          code = CodeableConceptBuilder.empty();
+          subtype = <CodeableConceptBuilder>[];
           return;
         }
       case 'action':
@@ -1138,8 +1140,8 @@ class AuditEventBuilder extends DomainResourceBuilder {
     List<ResourceBuilder>? contained,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    List<CodeableConceptBuilder>? category,
-    CodeableConceptBuilder? code,
+    CodeableConceptBuilder? type,
+    List<CodeableConceptBuilder>? subtype,
     AuditEventActionBuilder? action,
     AuditEventSeverityBuilder? severity,
     OccurredXAuditEventBuilder? occurredX,
@@ -1169,8 +1171,8 @@ class AuditEventBuilder extends DomainResourceBuilder {
       contained: contained ?? this.contained,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
-      category: category ?? this.category,
-      code: code ?? this.code,
+      type: type ?? this.type,
+      subtype: subtype ?? this.subtype,
       action: action ?? this.action,
       severity: severity ?? this.severity,
       occurredX:
@@ -1258,15 +1260,15 @@ class AuditEventBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConceptBuilder>(
-      category,
-      o.category,
+    if (!equalsDeepWithNull(
+      type,
+      o.type,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      code,
-      o.code,
+    if (!listEquals<CodeableConceptBuilder>(
+      subtype,
+      o.subtype,
     )) {
       return false;
     }
@@ -3192,6 +3194,7 @@ class AuditEventEntityBuilder extends BackboneElementBuilder {
     this.what,
     this.role,
     this.securityLabel,
+    this.description,
     this.query,
     this.detail,
     this.agent,
@@ -3258,6 +3261,12 @@ class AuditEventEntityBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
+      description: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'description',
+        FhirStringBuilder.fromJson,
+        '$objectPath.description',
+      ),
       query: JsonParser.parsePrimitive<FhirBase64BinaryBuilder>(
         json,
         'query',
@@ -3343,6 +3352,10 @@ class AuditEventEntityBuilder extends BackboneElementBuilder {
   /// Security labels for the identified entity.
   List<CodeableConceptBuilder>? securityLabel;
 
+  /// [description]
+  /// Text that describes the entity in more detail.
+  FhirStringBuilder? description;
+
   /// [query]
   /// The query parameters for a query-type entities.
   FhirBase64BinaryBuilder? query;
@@ -3403,6 +3416,7 @@ class AuditEventEntityBuilder extends BackboneElementBuilder {
     addField('what', what);
     addField('role', role);
     addField('securityLabel', securityLabel);
+    addField('description', description);
     addField('query', query);
     addField('detail', detail);
     addField('agent', agent);
@@ -3419,6 +3433,7 @@ class AuditEventEntityBuilder extends BackboneElementBuilder {
       'what',
       'role',
       'securityLabel',
+      'description',
       'query',
       'detail',
       'agent',
@@ -3457,6 +3472,10 @@ class AuditEventEntityBuilder extends BackboneElementBuilder {
       case 'securityLabel':
         if (securityLabel != null) {
           fields.addAll(securityLabel!);
+        }
+      case 'description':
+        if (description != null) {
+          fields.add(description!);
         }
       case 'query':
         if (query != null) {
@@ -3583,6 +3602,26 @@ class AuditEventEntityBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'description':
+        {
+          if (child is FhirStringBuilder) {
+            description = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                description = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'query':
         {
           if (child is FhirBase64BinaryBuilder) {
@@ -3657,6 +3696,8 @@ class AuditEventEntityBuilder extends BackboneElementBuilder {
         return ['CodeableConceptBuilder'];
       case 'securityLabel':
         return ['CodeableConceptBuilder'];
+      case 'description':
+        return ['FhirStringBuilder'];
       case 'query':
         return ['FhirBase64BinaryBuilder'];
       case 'detail':
@@ -3703,6 +3744,11 @@ class AuditEventEntityBuilder extends BackboneElementBuilder {
           securityLabel = <CodeableConceptBuilder>[];
           return;
         }
+      case 'description':
+        {
+          description = FhirStringBuilder.empty();
+          return;
+        }
       case 'query':
         {
           query = FhirBase64BinaryBuilder.empty();
@@ -3733,6 +3779,7 @@ class AuditEventEntityBuilder extends BackboneElementBuilder {
     ReferenceBuilder? what,
     CodeableConceptBuilder? role,
     List<CodeableConceptBuilder>? securityLabel,
+    FhirStringBuilder? description,
     FhirBase64BinaryBuilder? query,
     List<AuditEventDetailBuilder>? detail,
     List<AuditEventAgentBuilder>? agent,
@@ -3750,6 +3797,7 @@ class AuditEventEntityBuilder extends BackboneElementBuilder {
       what: what ?? this.what,
       role: role ?? this.role,
       securityLabel: securityLabel ?? this.securityLabel,
+      description: description ?? this.description,
       query: query ?? this.query,
       detail: detail ?? this.detail,
       agent: agent ?? this.agent,
@@ -3812,6 +3860,12 @@ class AuditEventEntityBuilder extends BackboneElementBuilder {
     if (!listEquals<CodeableConceptBuilder>(
       securityLabel,
       o.securityLabel,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      description,
+      o.description,
     )) {
       return false;
     }
@@ -3986,7 +4040,9 @@ class AuditEventDetailBuilder extends BackboneElementBuilder {
   String get fhirType => 'AuditEventDetail';
 
   /// [type]
-  /// The type of extra detail provided in the value.
+  /// The name of extra detail provided in the value. This element is the tag
+  /// for the value. Where a simple string is used for the tag name, use the
+  /// CodeableConcept.display element.
   CodeableConceptBuilder? type;
 
   /// [valueX]

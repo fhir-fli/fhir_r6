@@ -6,20 +6,24 @@ import 'package:fhir_r6/fhir_r6.dart'
         TestScriptAction,
         TestScriptAction1,
         TestScriptAction2,
+        TestScriptAction3,
         TestScriptAssert,
         TestScriptCapability,
-        TestScriptDestination,
+        TestScriptCommon,
+        TestScriptCommon1,
         TestScriptFixture,
         TestScriptLink,
         TestScriptMetadata,
         TestScriptOperation,
-        TestScriptOrigin,
+        TestScriptParameter,
+        TestScriptParameter1,
         TestScriptRequestHeader,
         TestScriptRequirement,
         TestScriptScope,
         TestScriptSetup,
         TestScriptTeardown,
         TestScriptTest,
+        TestScriptTestSystem,
         TestScriptVariable,
         yamlMapToJson,
         yamlToJson;
@@ -61,8 +65,7 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
     this.purpose,
     this.copyright,
     this.copyrightLabel,
-    this.origin,
-    this.destination,
+    this.testSystem,
     this.metadata,
     this.scope,
     this.fixture,
@@ -71,6 +74,7 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
     this.setup,
     this.test,
     this.teardown,
+    this.common,
   })  : versionAlgorithmX = versionAlgorithmX ??
             versionAlgorithmString ??
             versionAlgorithmCoding,
@@ -273,22 +277,12 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.copyrightLabel',
       ),
-      origin: (json['origin'] as List<dynamic>?)
-          ?.map<TestScriptOriginBuilder>(
-            (v) => TestScriptOriginBuilder.fromJson(
+      testSystem: (json['testSystem'] as List<dynamic>?)
+          ?.map<TestScriptTestSystemBuilder>(
+            (v) => TestScriptTestSystemBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.origin',
-              },
-            ),
-          )
-          .toList(),
-      destination: (json['destination'] as List<dynamic>?)
-          ?.map<TestScriptDestinationBuilder>(
-            (v) => TestScriptDestinationBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.destination',
+                'objectPath': '$objectPath.testSystem',
               },
             ),
           )
@@ -357,6 +351,16 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
         TestScriptTeardownBuilder.fromJson,
         '$objectPath.teardown',
       ),
+      common: (json['common'] as List<dynamic>?)
+          ?.map<TestScriptCommonBuilder>(
+            (v) => TestScriptCommonBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.common',
+              },
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -449,15 +453,10 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
   /// 'Some rights reserved').
   FhirStringBuilder? copyrightLabel;
 
-  /// [origin]
+  /// [testSystem]
   /// An abstract server used in operations within this test script in the
   /// origin element.
-  List<TestScriptOriginBuilder>? origin;
-
-  /// [destination]
-  /// An abstract server used in operations within this test script in the
-  /// destination element.
-  List<TestScriptDestinationBuilder>? destination;
+  List<TestScriptTestSystemBuilder>? testSystem;
 
   /// [metadata]
   /// The required capability must exist and are assumed to function
@@ -496,6 +495,10 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
   /// A series of operations required to clean up after all the tests are
   /// executed (successfully or otherwise).
   TestScriptTeardownBuilder? teardown;
+
+  /// [common]
+  /// A common collection of actions that can be re-used in a TestScript.
+  List<TestScriptCommonBuilder>? common;
 
   /// Converts a [TestScriptBuilder]
   /// to [TestScript]
@@ -566,8 +569,7 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
     addField('purpose', purpose);
     addField('copyright', copyright);
     addField('copyrightLabel', copyrightLabel);
-    addField('origin', origin);
-    addField('destination', destination);
+    addField('testSystem', testSystem);
     addField('metadata', metadata);
     addField('scope', scope);
     addField('fixture', fixture);
@@ -576,6 +578,7 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
     addField('setup', setup);
     addField('test', test);
     addField('teardown', teardown);
+    addField('common', common);
     return json;
   }
 
@@ -608,8 +611,7 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
       'purpose',
       'copyright',
       'copyrightLabel',
-      'origin',
-      'destination',
+      'testSystem',
       'metadata',
       'scope',
       'fixture',
@@ -618,6 +620,7 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
       'setup',
       'test',
       'teardown',
+      'common',
     ];
   }
 
@@ -742,13 +745,9 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
         if (copyrightLabel != null) {
           fields.add(copyrightLabel!);
         }
-      case 'origin':
-        if (origin != null) {
-          fields.addAll(origin!);
-        }
-      case 'destination':
-        if (destination != null) {
-          fields.addAll(destination!);
+      case 'testSystem':
+        if (testSystem != null) {
+          fields.addAll(testSystem!);
         }
       case 'metadata':
         if (metadata != null) {
@@ -781,6 +780,10 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
       case 'teardown':
         if (teardown != null) {
           fields.add(teardown!);
+        }
+      case 'common':
+        if (common != null) {
+          fields.addAll(common!);
         }
       default:
         if (checkValid) {
@@ -1281,32 +1284,16 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'origin':
+      case 'testSystem':
         {
-          if (child is List<TestScriptOriginBuilder>) {
+          if (child is List<TestScriptTestSystemBuilder>) {
             // Replace or create new list
-            origin = child;
+            testSystem = child;
             return;
-          } else if (child is TestScriptOriginBuilder) {
+          } else if (child is TestScriptTestSystemBuilder) {
             // Add single element to existing list or create new list
-            origin = [
-              ...(origin ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'destination':
-        {
-          if (child is List<TestScriptDestinationBuilder>) {
-            // Replace or create new list
-            destination = child;
-            return;
-          } else if (child is TestScriptDestinationBuilder) {
-            // Add single element to existing list or create new list
-            destination = [
-              ...(destination ?? []),
+            testSystem = [
+              ...(testSystem ?? []),
               child,
             ];
             return;
@@ -1450,6 +1437,22 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'common':
+        {
+          if (child is List<TestScriptCommonBuilder>) {
+            // Replace or create new list
+            common = child;
+            return;
+          } else if (child is TestScriptCommonBuilder) {
+            // Add single element to existing list or create new list
+            common = [
+              ...(common ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -1518,10 +1521,8 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
         return ['FhirMarkdownBuilder'];
       case 'copyrightLabel':
         return ['FhirStringBuilder'];
-      case 'origin':
-        return ['TestScriptOriginBuilder'];
-      case 'destination':
-        return ['TestScriptDestinationBuilder'];
+      case 'testSystem':
+        return ['TestScriptTestSystemBuilder'];
       case 'metadata':
         return ['TestScriptMetadataBuilder'];
       case 'scope':
@@ -1538,6 +1539,8 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
         return ['TestScriptTestBuilder'];
       case 'teardown':
         return ['TestScriptTeardownBuilder'];
+      case 'common':
+        return ['TestScriptCommonBuilder'];
       default:
         return <String>[];
     }
@@ -1680,14 +1683,9 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
           copyrightLabel = FhirStringBuilder.empty();
           return;
         }
-      case 'origin':
+      case 'testSystem':
         {
-          origin = <TestScriptOriginBuilder>[];
-          return;
-        }
-      case 'destination':
-        {
-          destination = <TestScriptDestinationBuilder>[];
+          testSystem = <TestScriptTestSystemBuilder>[];
           return;
         }
       case 'metadata':
@@ -1730,6 +1728,11 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
           teardown = TestScriptTeardownBuilder.empty();
           return;
         }
+      case 'common':
+        {
+          common = <TestScriptCommonBuilder>[];
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
@@ -1764,8 +1767,7 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
     FhirMarkdownBuilder? purpose,
     FhirMarkdownBuilder? copyright,
     FhirStringBuilder? copyrightLabel,
-    List<TestScriptOriginBuilder>? origin,
-    List<TestScriptDestinationBuilder>? destination,
+    List<TestScriptTestSystemBuilder>? testSystem,
     TestScriptMetadataBuilder? metadata,
     List<TestScriptScopeBuilder>? scope,
     List<TestScriptFixtureBuilder>? fixture,
@@ -1774,6 +1776,7 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
     TestScriptSetupBuilder? setup,
     List<TestScriptTestBuilder>? test,
     TestScriptTeardownBuilder? teardown,
+    List<TestScriptCommonBuilder>? common,
     FhirStringBuilder? versionAlgorithmString,
     CodingBuilder? versionAlgorithmCoding,
     Map<String, dynamic>? userData,
@@ -1811,8 +1814,7 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
       purpose: purpose ?? this.purpose,
       copyright: copyright ?? this.copyright,
       copyrightLabel: copyrightLabel ?? this.copyrightLabel,
-      origin: origin ?? this.origin,
-      destination: destination ?? this.destination,
+      testSystem: testSystem ?? this.testSystem,
       metadata: metadata ?? this.metadata,
       scope: scope ?? this.scope,
       fixture: fixture ?? this.fixture,
@@ -1821,6 +1823,7 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
       setup: setup ?? this.setup,
       test: test ?? this.test,
       teardown: teardown ?? this.teardown,
+      common: common ?? this.common,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -1997,15 +2000,9 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<TestScriptOriginBuilder>(
-      origin,
-      o.origin,
-    )) {
-      return false;
-    }
-    if (!listEquals<TestScriptDestinationBuilder>(
-      destination,
-      o.destination,
+    if (!listEquals<TestScriptTestSystemBuilder>(
+      testSystem,
+      o.testSystem,
     )) {
       return false;
     }
@@ -2057,42 +2054,50 @@ class TestScriptBuilder extends CanonicalResourceBuilder {
     )) {
       return false;
     }
+    if (!listEquals<TestScriptCommonBuilder>(
+      common,
+      o.common,
+    )) {
+      return false;
+    }
     return true;
   }
 }
 
-/// [TestScriptOriginBuilder]
+/// [TestScriptTestSystemBuilder]
 /// An abstract server used in operations within this test script in the
 /// origin element.
-class TestScriptOriginBuilder extends BackboneElementBuilder {
+class TestScriptTestSystemBuilder extends BackboneElementBuilder {
   /// Primary constructor for
-  /// [TestScriptOriginBuilder]
+  /// [TestScriptTestSystemBuilder]
 
-  TestScriptOriginBuilder({
+  TestScriptTestSystemBuilder({
     super.id,
     super.extension_,
     super.modifierExtension,
     this.index,
-    this.profile,
+    this.title,
+    this.actor,
+    this.description,
     this.url,
     super.disallowExtensions,
   }) : super(
-          objectPath: 'TestScript.origin',
+          objectPath: 'TestScript.testSystem',
         );
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
-  factory TestScriptOriginBuilder.empty() => TestScriptOriginBuilder(
-        index: FhirIntegerBuilder.empty(),
-        profile: CodingBuilder.empty(),
+  factory TestScriptTestSystemBuilder.empty() => TestScriptTestSystemBuilder(
+        index: FhirPositiveIntBuilder.empty(),
+        title: FhirStringBuilder.empty(),
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory TestScriptOriginBuilder.fromJson(
+  factory TestScriptTestSystemBuilder.fromJson(
     Map<String, dynamic> json,
   ) {
-    const objectPath = 'TestScript.origin';
-    return TestScriptOriginBuilder(
+    const objectPath = 'TestScript.testSystem';
+    return TestScriptTestSystemBuilder(
       id: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'id',
@@ -2119,17 +2124,29 @@ class TestScriptOriginBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      index: JsonParser.parsePrimitive<FhirIntegerBuilder>(
+      index: JsonParser.parsePrimitive<FhirPositiveIntBuilder>(
         json,
         'index',
-        FhirIntegerBuilder.fromJson,
+        FhirPositiveIntBuilder.fromJson,
         '$objectPath.index',
       ),
-      profile: JsonParser.parseObject<CodingBuilder>(
+      title: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
-        'profile',
-        CodingBuilder.fromJson,
-        '$objectPath.profile',
+        'title',
+        FhirStringBuilder.fromJson,
+        '$objectPath.title',
+      ),
+      actor: JsonParser.parsePrimitiveList<FhirCanonicalBuilder>(
+        json,
+        'actor',
+        FhirCanonicalBuilder.fromJson,
+        '$objectPath.actor',
+      ),
+      description: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+        json,
+        'description',
+        FhirMarkdownBuilder.fromJson,
+        '$objectPath.description',
       ),
       url: JsonParser.parsePrimitive<FhirUrlBuilder>(
         json,
@@ -2140,22 +2157,22 @@ class TestScriptOriginBuilder extends BackboneElementBuilder {
     );
   }
 
-  /// Deserialize [TestScriptOriginBuilder]
+  /// Deserialize [TestScriptTestSystemBuilder]
   /// from a [String] or [YamlMap] object
-  factory TestScriptOriginBuilder.fromYaml(
+  factory TestScriptTestSystemBuilder.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return TestScriptOriginBuilder.fromJson(
+      return TestScriptTestSystemBuilder.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return TestScriptOriginBuilder.fromJson(
+      return TestScriptTestSystemBuilder.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'TestScriptOriginBuilder '
+        'TestScriptTestSystemBuilder '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -2163,16 +2180,16 @@ class TestScriptOriginBuilder extends BackboneElementBuilder {
   }
 
   /// Factory constructor for
-  /// [TestScriptOriginBuilder]
+  /// [TestScriptTestSystemBuilder]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory TestScriptOriginBuilder.fromJsonString(
+  factory TestScriptTestSystemBuilder.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return TestScriptOriginBuilder.fromJson(json);
+      return TestScriptTestSystemBuilder.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -2180,27 +2197,39 @@ class TestScriptOriginBuilder extends BackboneElementBuilder {
   }
 
   @override
-  String get fhirType => 'TestScriptOrigin';
+  String get fhirType => 'TestScriptTestSystem';
 
   /// [index]
-  /// Abstract name given to an origin server in this test script. The name
-  /// is provided as a number starting at 1.
-  FhirIntegerBuilder? index;
+  /// Number for the test system that is unique within this test script.
+  /// Referenced by operation.origin and/or operation.destination.
+  FhirPositiveIntBuilder? index;
 
-  /// [profile]
-  /// The type of origin profile the test system supports.
-  CodingBuilder? profile;
+  /// [title]
+  /// A short human-friendly label for the test system that is unique within
+  /// this test script and may be used when rendering the script.
+  FhirStringBuilder? title;
+
+  /// [actor]
+  /// Reference to requirements that must be satisfied by the test system.
+  List<FhirCanonicalBuilder>? actor;
+
+  /// [description]
+  /// Additional information about the role and capabilities of the systems
+  /// that would participate in this portion of the script.
+  FhirMarkdownBuilder? description;
 
   /// [url]
-  /// The explicit url path of the origin server used in this test script.
+  /// The explicit url path of the test system used in this test script. If
+  /// populated, the test engine is not expected to prompt for or accept
+  /// external input of this value.
   FhirUrlBuilder? url;
 
-  /// Converts a [TestScriptOriginBuilder]
-  /// to [TestScriptOrigin]
+  /// Converts a [TestScriptTestSystemBuilder]
+  /// to [TestScriptTestSystem]
   @override
-  TestScriptOrigin build() => TestScriptOrigin.fromJson(toJson());
+  TestScriptTestSystem build() => TestScriptTestSystem.fromJson(toJson());
 
-  /// Converts a [TestScriptOriginBuilder]
+  /// Converts a [TestScriptTestSystemBuilder]
   /// to a [Map<String, dynamic>]
   @override
   Map<String, dynamic> toJson() {
@@ -2235,7 +2264,9 @@ class TestScriptOriginBuilder extends BackboneElementBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('index', index);
-    addField('profile', profile);
+    addField('title', title);
+    addField('actor', actor);
+    addField('description', description);
     addField('url', url);
     return json;
   }
@@ -2248,7 +2279,9 @@ class TestScriptOriginBuilder extends BackboneElementBuilder {
       'extension',
       'modifierExtension',
       'index',
-      'profile',
+      'title',
+      'actor',
+      'description',
       'url',
     ];
   }
@@ -2278,9 +2311,17 @@ class TestScriptOriginBuilder extends BackboneElementBuilder {
         if (index != null) {
           fields.add(index!);
         }
-      case 'profile':
-        if (profile != null) {
-          fields.add(profile!);
+      case 'title':
+        if (title != null) {
+          fields.add(title!);
+        }
+      case 'actor':
+        if (actor != null) {
+          fields.addAll(actor!);
+        }
+      case 'description':
+        if (description != null) {
+          fields.add(description!);
         }
       case 'url':
         if (url != null) {
@@ -2369,7 +2410,7 @@ class TestScriptOriginBuilder extends BackboneElementBuilder {
         }
       case 'index':
         {
-          if (child is FhirIntegerBuilder) {
+          if (child is FhirPositiveIntBuilder) {
             index = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
@@ -2380,7 +2421,7 @@ class TestScriptOriginBuilder extends BackboneElementBuilder {
               // first parse to num then pass the number directly
               final numValue = num.tryParse(stringValue);
               if (numValue != null) {
-                final converted = FhirIntegerBuilder.tryParse(numValue);
+                final converted = FhirPositiveIntBuilder.tryParse(numValue);
                 if (converted != null) {
                   index = converted;
                   return;
@@ -2392,450 +2433,10 @@ class TestScriptOriginBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'profile':
-        {
-          if (child is CodingBuilder) {
-            profile = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'url':
-        {
-          if (child is FhirUrlBuilder) {
-            url = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirUrlBuilder.tryParse(stringValue);
-              if (converted != null) {
-                url = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      default:
-        throw Exception('Cannot set child value for $childName');
-    }
-  }
-
-  /// Return the possible Dart types for the field named [fieldName].
-  /// For polymorphic fields, multiple types are possible.
-  @override
-  List<String> typeByElementName(String fieldName) {
-    switch (fieldName) {
-      case 'id':
-        return ['FhirStringBuilder'];
-      case 'extension':
-        return ['FhirExtensionBuilder'];
-      case 'modifierExtension':
-        return ['FhirExtensionBuilder'];
-      case 'index':
-        return ['FhirIntegerBuilder'];
-      case 'profile':
-        return ['CodingBuilder'];
-      case 'url':
-        return ['FhirUrlBuilder'];
-      default:
-        return <String>[];
-    }
-  }
-
-  /// Creates a new [TestScriptOriginBuilder]
-  ///  with a chosen field set to an empty object.
-  @override
-  void createProperty(String propertyName) {
-    switch (propertyName) {
-      case 'id':
-        {
-          id = FhirStringBuilder.empty();
-          return;
-        }
-      case 'extension':
-        {
-          extension_ = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'modifierExtension':
-        {
-          modifierExtension = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'index':
-        {
-          index = FhirIntegerBuilder.empty();
-          return;
-        }
-      case 'profile':
-        {
-          profile = CodingBuilder.empty();
-          return;
-        }
-      case 'url':
-        {
-          url = FhirUrlBuilder.empty();
-          return;
-        }
-      default:
-        throw ArgumentError('No matching property: $propertyName');
-    }
-  }
-
-  @override
-  TestScriptOriginBuilder clone() => throw UnimplementedError();
-  @override
-  TestScriptOriginBuilder copyWith({
-    FhirStringBuilder? id,
-    List<FhirExtensionBuilder>? extension_,
-    List<FhirExtensionBuilder>? modifierExtension,
-    FhirIntegerBuilder? index,
-    CodingBuilder? profile,
-    FhirUrlBuilder? url,
-    Map<String, dynamic>? userData,
-    List<String>? formatCommentsPre,
-    List<String>? formatCommentsPost,
-    List<dynamic>? annotations,
-    String? objectPath,
-  }) {
-    final newObjectPath = this.objectPath;
-    final newResult = TestScriptOriginBuilder(
-      id: id ?? this.id,
-      extension_: extension_ ?? this.extension_,
-      modifierExtension: modifierExtension ?? this.modifierExtension,
-      index: index ?? this.index,
-      profile: profile ?? this.profile,
-      url: url ?? this.url,
-    )..objectPath = newObjectPath;
-    // Copy user data and annotations
-    if (userData != null) {
-      newResult.userData = userData;
-    }
-    if (formatCommentsPre != null) {
-      newResult.formatCommentsPre = formatCommentsPre;
-    }
-    if (formatCommentsPost != null) {
-      newResult.formatCommentsPost = formatCommentsPost;
-    }
-    if (annotations != null) {
-      newResult.annotations = annotations;
-    }
-
-    return newResult;
-  }
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! TestScriptOriginBuilder) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      index,
-      o.index,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      profile,
-      o.profile,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      url,
-      o.url,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [TestScriptDestinationBuilder]
-/// An abstract server used in operations within this test script in the
-/// destination element.
-class TestScriptDestinationBuilder extends BackboneElementBuilder {
-  /// Primary constructor for
-  /// [TestScriptDestinationBuilder]
-
-  TestScriptDestinationBuilder({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.index,
-    this.profile,
-    this.url,
-    super.disallowExtensions,
-  }) : super(
-          objectPath: 'TestScript.destination',
-        );
-
-  /// An empty constructor for partial usage.
-  /// For Builder classes, no fields are required
-  factory TestScriptDestinationBuilder.empty() => TestScriptDestinationBuilder(
-        index: FhirIntegerBuilder.empty(),
-        profile: CodingBuilder.empty(),
-      );
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory TestScriptDestinationBuilder.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    const objectPath = 'TestScript.destination';
-    return TestScriptDestinationBuilder(
-      id: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'id',
-        FhirStringBuilder.fromJson,
-        '$objectPath.id',
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.extension',
-              },
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.modifierExtension',
-              },
-            ),
-          )
-          .toList(),
-      index: JsonParser.parsePrimitive<FhirIntegerBuilder>(
-        json,
-        'index',
-        FhirIntegerBuilder.fromJson,
-        '$objectPath.index',
-      ),
-      profile: JsonParser.parseObject<CodingBuilder>(
-        json,
-        'profile',
-        CodingBuilder.fromJson,
-        '$objectPath.profile',
-      ),
-      url: JsonParser.parsePrimitive<FhirUrlBuilder>(
-        json,
-        'url',
-        FhirUrlBuilder.fromJson,
-        '$objectPath.url',
-      ),
-    );
-  }
-
-  /// Deserialize [TestScriptDestinationBuilder]
-  /// from a [String] or [YamlMap] object
-  factory TestScriptDestinationBuilder.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return TestScriptDestinationBuilder.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return TestScriptDestinationBuilder.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'TestScriptDestinationBuilder '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [TestScriptDestinationBuilder]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory TestScriptDestinationBuilder.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return TestScriptDestinationBuilder.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'TestScriptDestination';
-
-  /// [index]
-  /// Abstract name given to a destination server in this test script. The
-  /// name is provided as a number starting at 1.
-  FhirIntegerBuilder? index;
-
-  /// [profile]
-  /// The type of destination profile the test system supports.
-  CodingBuilder? profile;
-
-  /// [url]
-  /// The explicit url path of the destination server used in this test
-  /// script.
-  FhirUrlBuilder? url;
-
-  /// Converts a [TestScriptDestinationBuilder]
-  /// to [TestScriptDestination]
-  @override
-  TestScriptDestination build() => TestScriptDestination.fromJson(toJson());
-
-  /// Converts a [TestScriptDestinationBuilder]
-  /// to a [Map<String, dynamic>]
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    void addField(String key, dynamic field) {
-      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
-        throw ArgumentError('"field" must be a FhirBaseBuilder type');
-      }
-      if (field == null) return;
-      if (field is PrimitiveTypeBuilder) {
-        json[key] = field.toJson()['value'];
-        if (field.toJson()['_value'] != null) {
-          json['_$key'] = field.toJson()['_value'];
-        }
-      } else if (field is List<FhirBaseBuilder>) {
-        if (field.isEmpty) return;
-        if (field.first is PrimitiveTypeBuilder) {
-          final fieldJson = field.map((e) => e.toJson()).toList();
-          json[key] = fieldJson.map((e) => e['value']).toList();
-          if (fieldJson.any((e) => e['_value'] != null)) {
-            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
-          }
-        } else {
-          json[key] = field.map((e) => e.toJson()).toList();
-        }
-      } else if (field is FhirBaseBuilder) {
-        json[key] = field.toJson();
-      }
-    }
-
-    addField('id', id);
-    addField('extension', extension_);
-    addField('modifierExtension', modifierExtension);
-    addField('index', index);
-    addField('profile', profile);
-    addField('url', url);
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'index',
-      'profile',
-      'url',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBaseBuilder> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBaseBuilder>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'index':
-        if (index != null) {
-          fields.add(index!);
-        }
-      case 'profile':
-        if (profile != null) {
-          fields.add(profile!);
-        }
-      case 'url':
-        if (url != null) {
-          fields.add(url!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBaseBuilder? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  void setChildByName(String childName, dynamic child) {
-    // child must be null, or a (List of) FhirBaseBuilder(s).
-    if (child == null) {
-      return; // In builders, setting to null is allowed
-    }
-    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
-      throw Exception('Cannot set child value for $childName');
-    }
-
-    switch (childName) {
-      case 'id':
+      case 'title':
         {
           if (child is FhirStringBuilder) {
-            id = child;
+            title = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
@@ -2843,7 +2444,7 @@ class TestScriptDestinationBuilder extends BackboneElementBuilder {
               final stringValue = child.toString();
               final converted = FhirStringBuilder.tryParse(stringValue);
               if (converted != null) {
-                id = converted;
+                title = converted;
                 return;
               }
             } catch (e) {
@@ -2852,56 +2453,48 @@ class TestScriptDestinationBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'extension':
+      case 'actor':
         {
-          if (child is List<FhirExtensionBuilder>) {
+          if (child is List<FhirCanonicalBuilder>) {
             // Replace or create new list
-            extension_ = child;
+            actor = child;
             return;
-          } else if (child is FhirExtensionBuilder) {
+          } else if (child is FhirCanonicalBuilder) {
             // Add single element to existing list or create new list
-            extension_ = [
-              ...(extension_ ?? []),
+            actor = [
+              ...(actor ?? []),
               child,
             ];
             return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'modifierExtension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            modifierExtension = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            modifierExtension = [
-              ...(modifierExtension ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'index':
-        {
-          if (child is FhirIntegerBuilder) {
-            index = child;
-            return;
+          } else if (child is List<PrimitiveTypeBuilder>) {
+            // Try to convert list of primitive types
+            final convertedList = <FhirCanonicalBuilder>[];
+            for (final element in child) {
+              try {
+                final stringValue = element.toString();
+                final converted = FhirCanonicalBuilder.tryParse(stringValue);
+                if (converted != null) {
+                  convertedList.add(converted);
+                }
+              } catch (e) {
+                // Continue if conversion fails
+              }
+            }
+            if (convertedList.isNotEmpty) {
+              actor = convertedList;
+              return;
+            }
           } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
+            // Try to convert a single primitive
             try {
               final stringValue = child.toString();
-              // For number types,
-              // first parse to num then pass the number directly
-              final numValue = num.tryParse(stringValue);
-              if (numValue != null) {
-                final converted = FhirIntegerBuilder.tryParse(numValue);
-                if (converted != null) {
-                  index = converted;
-                  return;
-                }
+              final converted = FhirCanonicalBuilder.tryParse(stringValue);
+              if (converted != null) {
+                actor = [
+                  ...(actor ?? []),
+                  converted,
+                ];
+                return;
               }
             } catch (e) {
               // Continue if conversion fails
@@ -2909,11 +2502,23 @@ class TestScriptDestinationBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'profile':
+      case 'description':
         {
-          if (child is CodingBuilder) {
-            profile = child;
+          if (child is FhirMarkdownBuilder) {
+            description = child;
             return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                description = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -2954,9 +2559,13 @@ class TestScriptDestinationBuilder extends BackboneElementBuilder {
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
       case 'index':
-        return ['FhirIntegerBuilder'];
-      case 'profile':
-        return ['CodingBuilder'];
+        return ['FhirPositiveIntBuilder'];
+      case 'title':
+        return ['FhirStringBuilder'];
+      case 'actor':
+        return ['FhirCanonicalBuilder'];
+      case 'description':
+        return ['FhirMarkdownBuilder'];
       case 'url':
         return ['FhirUrlBuilder'];
       default:
@@ -2964,7 +2573,7 @@ class TestScriptDestinationBuilder extends BackboneElementBuilder {
     }
   }
 
-  /// Creates a new [TestScriptDestinationBuilder]
+  /// Creates a new [TestScriptTestSystemBuilder]
   ///  with a chosen field set to an empty object.
   @override
   void createProperty(String propertyName) {
@@ -2986,12 +2595,22 @@ class TestScriptDestinationBuilder extends BackboneElementBuilder {
         }
       case 'index':
         {
-          index = FhirIntegerBuilder.empty();
+          index = FhirPositiveIntBuilder.empty();
           return;
         }
-      case 'profile':
+      case 'title':
         {
-          profile = CodingBuilder.empty();
+          title = FhirStringBuilder.empty();
+          return;
+        }
+      case 'actor':
+        {
+          actor = <FhirCanonicalBuilder>[];
+          return;
+        }
+      case 'description':
+        {
+          description = FhirMarkdownBuilder.empty();
           return;
         }
       case 'url':
@@ -3005,14 +2624,16 @@ class TestScriptDestinationBuilder extends BackboneElementBuilder {
   }
 
   @override
-  TestScriptDestinationBuilder clone() => throw UnimplementedError();
+  TestScriptTestSystemBuilder clone() => throw UnimplementedError();
   @override
-  TestScriptDestinationBuilder copyWith({
+  TestScriptTestSystemBuilder copyWith({
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    FhirIntegerBuilder? index,
-    CodingBuilder? profile,
+    FhirPositiveIntBuilder? index,
+    FhirStringBuilder? title,
+    List<FhirCanonicalBuilder>? actor,
+    FhirMarkdownBuilder? description,
     FhirUrlBuilder? url,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -3021,12 +2642,14 @@ class TestScriptDestinationBuilder extends BackboneElementBuilder {
     String? objectPath,
   }) {
     final newObjectPath = this.objectPath;
-    final newResult = TestScriptDestinationBuilder(
+    final newResult = TestScriptTestSystemBuilder(
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       index: index ?? this.index,
-      profile: profile ?? this.profile,
+      title: title ?? this.title,
+      actor: actor ?? this.actor,
+      description: description ?? this.description,
       url: url ?? this.url,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
@@ -3049,7 +2672,7 @@ class TestScriptDestinationBuilder extends BackboneElementBuilder {
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! TestScriptDestinationBuilder) {
+    if (o is! TestScriptTestSystemBuilder) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -3079,8 +2702,20 @@ class TestScriptDestinationBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      profile,
-      o.profile,
+      title,
+      o.title,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirCanonicalBuilder>(
+      actor,
+      o.actor,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      description,
+      o.description,
     )) {
       return false;
     }
@@ -6673,9 +6308,7 @@ class TestScriptSetupBuilder extends BackboneElementBuilder {
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
-  factory TestScriptSetupBuilder.empty() => TestScriptSetupBuilder(
-        action: <TestScriptActionBuilder>[],
-      );
+  factory TestScriptSetupBuilder.empty() => TestScriptSetupBuilder();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
   factory TestScriptSetupBuilder.fromJson(
@@ -6765,7 +6398,7 @@ class TestScriptSetupBuilder extends BackboneElementBuilder {
   String get fhirType => 'TestScriptSetup';
 
   /// [action]
-  /// Action would contain either an operation or an assertion.
+  /// Action would contain either a common or operation or an assertion.
   List<TestScriptActionBuilder>? action;
 
   /// Converts a [TestScriptSetupBuilder]
@@ -7072,7 +6705,7 @@ class TestScriptSetupBuilder extends BackboneElementBuilder {
 }
 
 /// [TestScriptActionBuilder]
-/// Action would contain either an operation or an assertion.
+/// Action would contain either a common or operation or an assertion.
 class TestScriptActionBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [TestScriptActionBuilder]
@@ -7081,6 +6714,7 @@ class TestScriptActionBuilder extends BackboneElementBuilder {
     super.id,
     super.extension_,
     super.modifierExtension,
+    this.common,
     this.operation,
     this.assert_,
     super.disallowExtensions,
@@ -7124,6 +6758,12 @@ class TestScriptActionBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
+      common: JsonParser.parseObject<TestScriptCommonBuilder>(
+        json,
+        'common',
+        TestScriptCommonBuilder.fromJson,
+        '$objectPath.common',
+      ),
       operation: JsonParser.parseObject<TestScriptOperationBuilder>(
         json,
         'operation',
@@ -7181,6 +6821,11 @@ class TestScriptActionBuilder extends BackboneElementBuilder {
   @override
   String get fhirType => 'TestScriptAction';
 
+  /// [common]
+  /// Links or references to common collection(s) of actions in this or an
+  /// external TestScript instance.
+  TestScriptCommonBuilder? common;
+
   /// [operation]
   /// The operation to perform.
   TestScriptOperationBuilder? operation;
@@ -7229,6 +6874,7 @@ class TestScriptActionBuilder extends BackboneElementBuilder {
     addField('id', id);
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
+    addField('common', common);
     addField('operation', operation);
     addField('assert', assert_);
     return json;
@@ -7241,6 +6887,7 @@ class TestScriptActionBuilder extends BackboneElementBuilder {
       'id',
       'extension',
       'modifierExtension',
+      'common',
       'operation',
       'assert',
     ];
@@ -7266,6 +6913,10 @@ class TestScriptActionBuilder extends BackboneElementBuilder {
       case 'modifierExtension':
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
+        }
+      case 'common':
+        if (common != null) {
+          fields.add(common!);
         }
       case 'operation':
         if (operation != null) {
@@ -7356,6 +7007,14 @@ class TestScriptActionBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'common':
+        {
+          if (child is TestScriptCommonBuilder) {
+            common = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'operation':
         {
           if (child is TestScriptOperationBuilder) {
@@ -7388,6 +7047,8 @@ class TestScriptActionBuilder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
+      case 'common':
+        return ['TestScriptCommonBuilder'];
       case 'operation':
         return ['TestScriptOperationBuilder'];
       case 'assert':
@@ -7417,6 +7078,11 @@ class TestScriptActionBuilder extends BackboneElementBuilder {
           modifierExtension = <FhirExtensionBuilder>[];
           return;
         }
+      case 'common':
+        {
+          common = TestScriptCommonBuilder.empty();
+          return;
+        }
       case 'operation':
         {
           operation = TestScriptOperationBuilder.empty();
@@ -7439,6 +7105,7 @@ class TestScriptActionBuilder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
+    TestScriptCommonBuilder? common,
     TestScriptOperationBuilder? operation,
     TestScriptAssertBuilder? assert_,
     Map<String, dynamic>? userData,
@@ -7452,6 +7119,7 @@ class TestScriptActionBuilder extends BackboneElementBuilder {
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
+      common: common ?? this.common,
       operation: operation ?? this.operation,
       assert_: assert_ ?? this.assert_,
     )..objectPath = newObjectPath;
@@ -7499,6 +7167,12 @@ class TestScriptActionBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
+      common,
+      o.common,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       operation,
       o.operation,
     )) {
@@ -7507,6 +7181,1002 @@ class TestScriptActionBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       assert_,
       o.assert_,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [TestScriptCommonBuilder]
+/// Links or references to common collection(s) of actions in this or an
+/// external TestScript instance.
+class TestScriptCommonBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [TestScriptCommonBuilder]
+
+  TestScriptCommonBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.testScript,
+    this.keyRef,
+    this.parameter,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'TestScript.setup.action.common',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory TestScriptCommonBuilder.empty() => TestScriptCommonBuilder(
+        keyRef: FhirIdBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory TestScriptCommonBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'TestScript.setup.action.common';
+    return TestScriptCommonBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      testScript: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
+        json,
+        'testScript',
+        FhirCanonicalBuilder.fromJson,
+        '$objectPath.testScript',
+      ),
+      keyRef: JsonParser.parsePrimitive<FhirIdBuilder>(
+        json,
+        'keyRef',
+        FhirIdBuilder.fromJson,
+        '$objectPath.keyRef',
+      ),
+      parameter: (json['parameter'] as List<dynamic>?)
+          ?.map<TestScriptParameterBuilder>(
+            (v) => TestScriptParameterBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.parameter',
+              },
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  /// Deserialize [TestScriptCommonBuilder]
+  /// from a [String] or [YamlMap] object
+  factory TestScriptCommonBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return TestScriptCommonBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return TestScriptCommonBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'TestScriptCommonBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [TestScriptCommonBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory TestScriptCommonBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return TestScriptCommonBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'TestScriptCommon';
+
+  /// [testScript]
+  /// Canonical reference providing traceability to the common TestScript
+  /// instance containing the commonKey.
+  FhirCanonicalBuilder? testScript;
+
+  /// [keyRef]
+  /// Common key reference that identifies the common collection of actions
+  /// to perform as defined the this or the common testScript.
+  FhirIdBuilder? keyRef;
+
+  /// [parameter]
+  /// Optional named parameter(s) to provide input values to the identified
+  /// common collection of actions from this or an external TestScript.
+  List<TestScriptParameterBuilder>? parameter;
+
+  /// Converts a [TestScriptCommonBuilder]
+  /// to [TestScriptCommon]
+  @override
+  TestScriptCommon build() => TestScriptCommon.fromJson(toJson());
+
+  /// Converts a [TestScriptCommonBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('testScript', testScript);
+    addField('keyRef', keyRef);
+    addField('parameter', parameter);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'testScript',
+      'keyRef',
+      'parameter',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'testScript':
+        if (testScript != null) {
+          fields.add(testScript!);
+        }
+      case 'keyRef':
+        if (keyRef != null) {
+          fields.add(keyRef!);
+        }
+      case 'parameter':
+        if (parameter != null) {
+          fields.addAll(parameter!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'testScript':
+        {
+          if (child is FhirCanonicalBuilder) {
+            testScript = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirCanonicalBuilder.tryParse(stringValue);
+              if (converted != null) {
+                testScript = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'keyRef':
+        {
+          if (child is FhirIdBuilder) {
+            keyRef = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirIdBuilder.tryParse(stringValue);
+              if (converted != null) {
+                keyRef = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'parameter':
+        {
+          if (child is List<TestScriptParameterBuilder>) {
+            // Replace or create new list
+            parameter = child;
+            return;
+          } else if (child is TestScriptParameterBuilder) {
+            // Add single element to existing list or create new list
+            parameter = [
+              ...(parameter ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'testScript':
+        return ['FhirCanonicalBuilder'];
+      case 'keyRef':
+        return ['FhirIdBuilder'];
+      case 'parameter':
+        return ['TestScriptParameterBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [TestScriptCommonBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'testScript':
+        {
+          testScript = FhirCanonicalBuilder.empty();
+          return;
+        }
+      case 'keyRef':
+        {
+          keyRef = FhirIdBuilder.empty();
+          return;
+        }
+      case 'parameter':
+        {
+          parameter = <TestScriptParameterBuilder>[];
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  TestScriptCommonBuilder clone() => throw UnimplementedError();
+  @override
+  TestScriptCommonBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    FhirCanonicalBuilder? testScript,
+    FhirIdBuilder? keyRef,
+    List<TestScriptParameterBuilder>? parameter,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = TestScriptCommonBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      testScript: testScript ?? this.testScript,
+      keyRef: keyRef ?? this.keyRef,
+      parameter: parameter ?? this.parameter,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! TestScriptCommonBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      testScript,
+      o.testScript,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      keyRef,
+      o.keyRef,
+    )) {
+      return false;
+    }
+    if (!listEquals<TestScriptParameterBuilder>(
+      parameter,
+      o.parameter,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [TestScriptParameterBuilder]
+/// Optional named parameter(s) to provide input values to the identified
+/// common collection of actions from this or an external TestScript.
+class TestScriptParameterBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [TestScriptParameterBuilder]
+
+  TestScriptParameterBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.name,
+    this.value,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'TestScript.setup.action.common.parameter',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory TestScriptParameterBuilder.empty() => TestScriptParameterBuilder(
+        name: FhirStringBuilder.empty(),
+        value: FhirStringBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory TestScriptParameterBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'TestScript.setup.action.common.parameter';
+    return TestScriptParameterBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      name: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'name',
+        FhirStringBuilder.fromJson,
+        '$objectPath.name',
+      ),
+      value: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'value',
+        FhirStringBuilder.fromJson,
+        '$objectPath.value',
+      ),
+    );
+  }
+
+  /// Deserialize [TestScriptParameterBuilder]
+  /// from a [String] or [YamlMap] object
+  factory TestScriptParameterBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return TestScriptParameterBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return TestScriptParameterBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'TestScriptParameterBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [TestScriptParameterBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory TestScriptParameterBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return TestScriptParameterBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'TestScriptParameter';
+
+  /// [name]
+  /// The name of this parameter from the identified common collection of
+  /// actions from this or an external TestScript.
+  FhirStringBuilder? name;
+
+  /// [value]
+  /// The value to assign to this parameter from the identified common
+  /// collection of actions from this or an external TestScript.
+  FhirStringBuilder? value;
+
+  /// Converts a [TestScriptParameterBuilder]
+  /// to [TestScriptParameter]
+  @override
+  TestScriptParameter build() => TestScriptParameter.fromJson(toJson());
+
+  /// Converts a [TestScriptParameterBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('name', name);
+    addField('value', value);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'name',
+      'value',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'name':
+        if (name != null) {
+          fields.add(name!);
+        }
+      case 'value':
+        if (value != null) {
+          fields.add(value!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'name':
+        {
+          if (child is FhirStringBuilder) {
+            name = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                name = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'value':
+        {
+          if (child is FhirStringBuilder) {
+            value = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                value = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'name':
+        return ['FhirStringBuilder'];
+      case 'value':
+        return ['FhirStringBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [TestScriptParameterBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'name':
+        {
+          name = FhirStringBuilder.empty();
+          return;
+        }
+      case 'value':
+        {
+          value = FhirStringBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  TestScriptParameterBuilder clone() => throw UnimplementedError();
+  @override
+  TestScriptParameterBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    FhirStringBuilder? name,
+    FhirStringBuilder? value,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = TestScriptParameterBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      name: name ?? this.name,
+      value: value ?? this.value,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! TestScriptParameterBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      name,
+      o.name,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      value,
+      o.value,
     )) {
       return false;
     }
@@ -7608,16 +8278,16 @@ class TestScriptOperationBuilder extends BackboneElementBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.description',
       ),
-      accept: JsonParser.parsePrimitive<FhirCodeBuilder>(
+      accept: JsonParser.parsePrimitive<SupplementedMimeTypesBuilder>(
         json,
         'accept',
-        FhirCodeBuilder.fromJson,
+        SupplementedMimeTypesBuilder.fromJson,
         '$objectPath.accept',
       ),
-      contentType: JsonParser.parsePrimitive<FhirCodeBuilder>(
+      contentType: JsonParser.parsePrimitive<SupplementedMimeTypesBuilder>(
         json,
         'contentType',
-        FhirCodeBuilder.fromJson,
+        SupplementedMimeTypesBuilder.fromJson,
         '$objectPath.contentType',
       ),
       destination: JsonParser.parsePrimitive<FhirIntegerBuilder>(
@@ -7756,16 +8426,16 @@ class TestScriptOperationBuilder extends BackboneElementBuilder {
 
   /// [accept]
   /// The mime-type to use for RESTful operation in the 'Accept' header.
-  FhirCodeBuilder? accept;
+  SupplementedMimeTypesBuilder? accept;
 
   /// [contentType]
   /// The mime-type to use for RESTful operation in the 'Content-Type'
   /// header.
-  FhirCodeBuilder? contentType;
+  SupplementedMimeTypesBuilder? contentType;
 
   /// [destination]
-  /// The server where the request message is destined for. Must be one of
-  /// the server numbers listed in TestScript.destination section.
+  /// The test system where the request message is destined. Must be one of
+  /// the test system indices listed in TestScript.testSystem section.
   FhirIntegerBuilder? destination;
 
   /// [encodeRequestUrl]
@@ -7781,8 +8451,8 @@ class TestScriptOperationBuilder extends BackboneElementBuilder {
   TestScriptRequestMethodCodeBuilder? method;
 
   /// [origin]
-  /// The server where the request message originates from. Must be one of
-  /// the server numbers listed in TestScript.origin section.
+  /// The test system where the request message originates. Must be one of
+  /// the test system indices listed in TestScript.testSystem section.
   FhirIntegerBuilder? origin;
 
   /// [params]
@@ -8141,17 +8811,20 @@ class TestScriptOperationBuilder extends BackboneElementBuilder {
         }
       case 'accept':
         {
-          if (child is FhirCodeBuilder) {
+          if (child is SupplementedMimeTypesBuilder) {
             accept = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
-              final converted = FhirCodeBuilder.tryParse(stringValue);
-              if (converted != null) {
+              // For enums, try to create directly from the string value
+              try {
+                final converted = SupplementedMimeTypesBuilder(stringValue);
                 accept = converted;
                 return;
+              } catch (e) {
+                // Continue if enum creation fails
               }
             } catch (e) {
               // Continue if conversion fails
@@ -8161,17 +8834,20 @@ class TestScriptOperationBuilder extends BackboneElementBuilder {
         }
       case 'contentType':
         {
-          if (child is FhirCodeBuilder) {
+          if (child is SupplementedMimeTypesBuilder) {
             contentType = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
-              final converted = FhirCodeBuilder.tryParse(stringValue);
-              if (converted != null) {
+              // For enums, try to create directly from the string value
+              try {
+                final converted = SupplementedMimeTypesBuilder(stringValue);
                 contentType = converted;
                 return;
+              } catch (e) {
+                // Continue if enum creation fails
               }
             } catch (e) {
               // Continue if conversion fails
@@ -8434,9 +9110,9 @@ class TestScriptOperationBuilder extends BackboneElementBuilder {
       case 'description':
         return ['FhirStringBuilder'];
       case 'accept':
-        return ['FhirCodeBuilder'];
+        return ['FhirCodeEnumBuilder'];
       case 'contentType':
-        return ['FhirCodeBuilder'];
+        return ['FhirCodeEnumBuilder'];
       case 'destination':
         return ['FhirIntegerBuilder'];
       case 'encodeRequestUrl':
@@ -8506,12 +9182,12 @@ class TestScriptOperationBuilder extends BackboneElementBuilder {
         }
       case 'accept':
         {
-          accept = FhirCodeBuilder.empty();
+          accept = SupplementedMimeTypesBuilder.empty();
           return;
         }
       case 'contentType':
         {
-          contentType = FhirCodeBuilder.empty();
+          contentType = SupplementedMimeTypesBuilder.empty();
           return;
         }
       case 'destination':
@@ -8585,8 +9261,8 @@ class TestScriptOperationBuilder extends BackboneElementBuilder {
     FhirUriBuilder? resource,
     FhirStringBuilder? label,
     FhirStringBuilder? description,
-    FhirCodeBuilder? accept,
-    FhirCodeBuilder? contentType,
+    SupplementedMimeTypesBuilder? accept,
+    SupplementedMimeTypesBuilder? contentType,
     FhirIntegerBuilder? destination,
     FhirBooleanBuilder? encodeRequestUrl,
     TestScriptRequestMethodCodeBuilder? method,
@@ -9362,10 +10038,10 @@ class TestScriptAssertBuilder extends BackboneElementBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.compareToSourcePath',
       ),
-      contentType: JsonParser.parsePrimitive<FhirCodeBuilder>(
+      contentType: JsonParser.parsePrimitive<SupplementedMimeTypesBuilder>(
         json,
         'contentType',
-        FhirCodeBuilder.fromJson,
+        SupplementedMimeTypesBuilder.fromJson,
         '$objectPath.contentType',
       ),
       defaultManualCompletion:
@@ -9561,7 +10237,7 @@ class TestScriptAssertBuilder extends BackboneElementBuilder {
   /// [contentType]
   /// The mime-type contents to compare against the request or response
   /// message 'Content-Type' header.
-  FhirCodeBuilder? contentType;
+  SupplementedMimeTypesBuilder? contentType;
 
   /// [defaultManualCompletion]
   /// The default manual completion outcome applied to this assertion.
@@ -10084,17 +10760,20 @@ class TestScriptAssertBuilder extends BackboneElementBuilder {
         }
       case 'contentType':
         {
-          if (child is FhirCodeBuilder) {
+          if (child is SupplementedMimeTypesBuilder) {
             contentType = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
-              final converted = FhirCodeBuilder.tryParse(stringValue);
-              if (converted != null) {
+              // For enums, try to create directly from the string value
+              try {
+                final converted = SupplementedMimeTypesBuilder(stringValue);
                 contentType = converted;
                 return;
+              } catch (e) {
+                // Continue if enum creation fails
               }
             } catch (e) {
               // Continue if conversion fails
@@ -10501,7 +11180,7 @@ class TestScriptAssertBuilder extends BackboneElementBuilder {
       case 'compareToSourcePath':
         return ['FhirStringBuilder'];
       case 'contentType':
-        return ['FhirCodeBuilder'];
+        return ['FhirCodeEnumBuilder'];
       case 'defaultManualCompletion':
         return ['FhirCodeEnumBuilder'];
       case 'expression':
@@ -10595,7 +11274,7 @@ class TestScriptAssertBuilder extends BackboneElementBuilder {
         }
       case 'contentType':
         {
-          contentType = FhirCodeBuilder.empty();
+          contentType = SupplementedMimeTypesBuilder.empty();
           return;
         }
       case 'defaultManualCompletion':
@@ -10707,7 +11386,7 @@ class TestScriptAssertBuilder extends BackboneElementBuilder {
     FhirStringBuilder? compareToSourceId,
     FhirStringBuilder? compareToSourceExpression,
     FhirStringBuilder? compareToSourcePath,
-    FhirCodeBuilder? contentType,
+    SupplementedMimeTypesBuilder? contentType,
     AssertionManualCompletionTypeBuilder? defaultManualCompletion,
     FhirStringBuilder? expression,
     FhirStringBuilder? headerField,
@@ -10973,19 +11652,19 @@ class TestScriptRequirementBuilder extends BackboneElementBuilder {
     super.id,
     super.extension_,
     super.modifierExtension,
-    LinkXTestScriptRequirementBuilder? linkX,
-    FhirUriBuilder? linkUri,
-    FhirCanonicalBuilder? linkCanonical,
+    this.reference,
+    this.key,
     super.disallowExtensions,
-  })  : linkX = linkX ?? linkUri ?? linkCanonical,
-        super(
+  }) : super(
           objectPath: 'TestScript.setup.action.assert.requirement',
         );
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
-  factory TestScriptRequirementBuilder.empty() =>
-      TestScriptRequirementBuilder();
+  factory TestScriptRequirementBuilder.empty() => TestScriptRequirementBuilder(
+        reference: FhirCanonicalBuilder.empty(),
+        key: FhirIdBuilder.empty(),
+      );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
   factory TestScriptRequirementBuilder.fromJson(
@@ -11019,13 +11698,17 @@ class TestScriptRequirementBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      linkX: JsonParser.parsePolymorphic<LinkXTestScriptRequirementBuilder>(
+      reference: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
         json,
-        {
-          'linkUri': FhirUriBuilder.fromJson,
-          'linkCanonical': FhirCanonicalBuilder.fromJson,
-        },
-        objectPath,
+        'reference',
+        FhirCanonicalBuilder.fromJson,
+        '$objectPath.reference',
+      ),
+      key: JsonParser.parsePrimitive<FhirIdBuilder>(
+        json,
+        'key',
+        FhirIdBuilder.fromJson,
+        '$objectPath.key',
       ),
     );
   }
@@ -11072,17 +11755,15 @@ class TestScriptRequirementBuilder extends BackboneElementBuilder {
   @override
   String get fhirType => 'TestScriptRequirement';
 
-  /// [linkX]
-  /// Link or reference providing traceability to the testing requirement for
-  /// this test.
-  LinkXTestScriptRequirementBuilder? linkX;
+  /// [reference]
+  /// Canonical reference providing traceability to the testing requirement
+  /// for this assert.
+  FhirCanonicalBuilder? reference;
 
-  /// Getter for [linkUri] as a FhirUriBuilder
-  FhirUriBuilder? get linkUri => linkX?.isAs<FhirUriBuilder>();
-
-  /// Getter for [linkCanonical] as a FhirCanonicalBuilder
-  FhirCanonicalBuilder? get linkCanonical =>
-      linkX?.isAs<FhirCanonicalBuilder>();
+  /// [key]
+  /// Requirements.statement.key that identifies the statement that this
+  /// assert satisfies.
+  FhirIdBuilder? key;
 
   /// Converts a [TestScriptRequirementBuilder]
   /// to [TestScriptRequirement]
@@ -11123,11 +11804,8 @@ class TestScriptRequirementBuilder extends BackboneElementBuilder {
     addField('id', id);
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
-    if (linkX != null) {
-      final fhirType = linkX!.fhirType;
-      addField('link${fhirType.capitalizeFirstLetter()}', linkX);
-    }
-
+    addField('reference', reference);
+    addField('key', key);
     return json;
   }
 
@@ -11138,7 +11816,8 @@ class TestScriptRequirementBuilder extends BackboneElementBuilder {
       'id',
       'extension',
       'modifierExtension',
-      'linkX',
+      'reference',
+      'key',
     ];
   }
 
@@ -11163,21 +11842,13 @@ class TestScriptRequirementBuilder extends BackboneElementBuilder {
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
         }
-      case 'link':
-        if (linkX != null) {
-          fields.add(linkX!);
+      case 'reference':
+        if (reference != null) {
+          fields.add(reference!);
         }
-      case 'linkX':
-        if (linkX != null) {
-          fields.add(linkX!);
-        }
-      case 'linkUri':
-        if (linkX is FhirUriBuilder) {
-          fields.add(linkX!);
-        }
-      case 'linkCanonical':
-        if (linkX is FhirCanonicalBuilder) {
-          fields.add(linkX!);
+      case 'key':
+        if (key != null) {
+          fields.add(key!);
         }
       default:
         if (checkValid) {
@@ -11260,41 +11931,45 @@ class TestScriptRequirementBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'link':
-      case 'linkX':
+      case 'reference':
         {
-          if (child is LinkXTestScriptRequirementBuilder) {
-            linkX = child;
+          if (child is FhirCanonicalBuilder) {
+            reference = child;
             return;
-          } else {
-            if (child is FhirUriBuilder) {
-              linkX = child;
-              return;
-            }
-            if (child is FhirCanonicalBuilder) {
-              linkX = child;
-              return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirCanonicalBuilder.tryParse(stringValue);
+              if (converted != null) {
+                reference = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
             }
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'linkUri':
+      case 'key':
         {
-          if (child is FhirUriBuilder) {
-            linkX = child;
+          if (child is FhirIdBuilder) {
+            key = child;
             return;
-          } else {
-            throw Exception('Invalid child type for $childName');
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirIdBuilder.tryParse(stringValue);
+              if (converted != null) {
+                key = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
-        }
-      case 'linkCanonical':
-        {
-          if (child is FhirCanonicalBuilder) {
-            linkX = child;
-            return;
-          } else {
-            throw Exception('Invalid child type for $childName');
-          }
+          throw Exception('Invalid child type for $childName');
         }
       default:
         throw Exception('Cannot set child value for $childName');
@@ -11312,16 +11987,10 @@ class TestScriptRequirementBuilder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
-      case 'link':
-      case 'linkX':
-        return [
-          'FhirUriBuilder',
-          'FhirCanonicalBuilder',
-        ];
-      case 'linkUri':
-        return ['FhirUriBuilder'];
-      case 'linkCanonical':
+      case 'reference':
         return ['FhirCanonicalBuilder'];
+      case 'key':
+        return ['FhirIdBuilder'];
       default:
         return <String>[];
     }
@@ -11347,16 +12016,14 @@ class TestScriptRequirementBuilder extends BackboneElementBuilder {
           modifierExtension = <FhirExtensionBuilder>[];
           return;
         }
-      case 'link':
-      case 'linkX':
-      case 'linkUri':
+      case 'reference':
         {
-          linkX = FhirUriBuilder.empty();
+          reference = FhirCanonicalBuilder.empty();
           return;
         }
-      case 'linkCanonical':
+      case 'key':
         {
-          linkX = FhirCanonicalBuilder.empty();
+          key = FhirIdBuilder.empty();
           return;
         }
       default:
@@ -11371,9 +12038,8 @@ class TestScriptRequirementBuilder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    LinkXTestScriptRequirementBuilder? linkX,
-    FhirUriBuilder? linkUri,
-    FhirCanonicalBuilder? linkCanonical,
+    FhirCanonicalBuilder? reference,
+    FhirIdBuilder? key,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -11385,7 +12051,8 @@ class TestScriptRequirementBuilder extends BackboneElementBuilder {
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
-      linkX: linkX ?? linkUri ?? linkCanonical ?? this.linkX,
+      reference: reference ?? this.reference,
+      key: key ?? this.key,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -11431,8 +12098,14 @@ class TestScriptRequirementBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      linkX,
-      o.linkX,
+      reference,
+      o.reference,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      key,
+      o.key,
     )) {
       return false;
     }
@@ -11460,9 +12133,7 @@ class TestScriptTestBuilder extends BackboneElementBuilder {
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
-  factory TestScriptTestBuilder.empty() => TestScriptTestBuilder(
-        action: <TestScriptActionBuilder>[],
-      );
+  factory TestScriptTestBuilder.empty() => TestScriptTestBuilder();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
   factory TestScriptTestBuilder.fromJson(
@@ -11972,6 +12643,7 @@ class TestScriptAction1Builder extends BackboneElementBuilder {
     super.id,
     super.extension_,
     super.modifierExtension,
+    this.common,
     this.operation,
     this.assert_,
     super.disallowExtensions,
@@ -12015,6 +12687,12 @@ class TestScriptAction1Builder extends BackboneElementBuilder {
             ),
           )
           .toList(),
+      common: JsonParser.parseObject<TestScriptCommonBuilder>(
+        json,
+        'common',
+        TestScriptCommonBuilder.fromJson,
+        '$objectPath.common',
+      ),
       operation: JsonParser.parseObject<TestScriptOperationBuilder>(
         json,
         'operation',
@@ -12072,6 +12750,11 @@ class TestScriptAction1Builder extends BackboneElementBuilder {
   @override
   String get fhirType => 'TestScriptAction1';
 
+  /// [common]
+  /// Links or references to common collection(s) of actions in this or an
+  /// external TestScript instance.
+  TestScriptCommonBuilder? common;
+
   /// [operation]
   /// An operation would involve a REST request to a server.
   TestScriptOperationBuilder? operation;
@@ -12120,6 +12803,7 @@ class TestScriptAction1Builder extends BackboneElementBuilder {
     addField('id', id);
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
+    addField('common', common);
     addField('operation', operation);
     addField('assert', assert_);
     return json;
@@ -12132,6 +12816,7 @@ class TestScriptAction1Builder extends BackboneElementBuilder {
       'id',
       'extension',
       'modifierExtension',
+      'common',
       'operation',
       'assert',
     ];
@@ -12157,6 +12842,10 @@ class TestScriptAction1Builder extends BackboneElementBuilder {
       case 'modifierExtension':
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
+        }
+      case 'common':
+        if (common != null) {
+          fields.add(common!);
         }
       case 'operation':
         if (operation != null) {
@@ -12247,6 +12936,14 @@ class TestScriptAction1Builder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'common':
+        {
+          if (child is TestScriptCommonBuilder) {
+            common = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'operation':
         {
           if (child is TestScriptOperationBuilder) {
@@ -12279,6 +12976,8 @@ class TestScriptAction1Builder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
+      case 'common':
+        return ['TestScriptCommonBuilder'];
       case 'operation':
         return ['TestScriptOperationBuilder'];
       case 'assert':
@@ -12308,6 +13007,11 @@ class TestScriptAction1Builder extends BackboneElementBuilder {
           modifierExtension = <FhirExtensionBuilder>[];
           return;
         }
+      case 'common':
+        {
+          common = TestScriptCommonBuilder.empty();
+          return;
+        }
       case 'operation':
         {
           operation = TestScriptOperationBuilder.empty();
@@ -12330,6 +13034,7 @@ class TestScriptAction1Builder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
+    TestScriptCommonBuilder? common,
     TestScriptOperationBuilder? operation,
     TestScriptAssertBuilder? assert_,
     Map<String, dynamic>? userData,
@@ -12343,6 +13048,7 @@ class TestScriptAction1Builder extends BackboneElementBuilder {
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
+      common: common ?? this.common,
       operation: operation ?? this.operation,
       assert_: assert_ ?? this.assert_,
     )..objectPath = newObjectPath;
@@ -12386,6 +13092,12 @@ class TestScriptAction1Builder extends BackboneElementBuilder {
     if (!listEquals<FhirExtensionBuilder>(
       modifierExtension,
       o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      common,
+      o.common,
     )) {
       return false;
     }
@@ -12832,6 +13544,7 @@ class TestScriptAction2Builder extends BackboneElementBuilder {
     super.id,
     super.extension_,
     super.modifierExtension,
+    this.common,
     this.operation,
     super.disallowExtensions,
   }) : super(
@@ -12876,6 +13589,12 @@ class TestScriptAction2Builder extends BackboneElementBuilder {
             ),
           )
           .toList(),
+      common: JsonParser.parseObject<TestScriptCommonBuilder>(
+        json,
+        'common',
+        TestScriptCommonBuilder.fromJson,
+        '$objectPath.common',
+      ),
       operation: JsonParser.parseObject<TestScriptOperationBuilder>(
         json,
         'operation',
@@ -12927,6 +13646,12 @@ class TestScriptAction2Builder extends BackboneElementBuilder {
   @override
   String get fhirType => 'TestScriptAction2';
 
+  /// [common]
+  /// Links or references to common collection(s) of actions in this or an
+  /// external TestScript instance. Action asserts SHALL be ignored for the
+  /// TestScript.teardown.
+  TestScriptCommonBuilder? common;
+
   /// [operation]
   /// An operation would involve a REST request to a server.
   TestScriptOperationBuilder? operation;
@@ -12970,6 +13695,7 @@ class TestScriptAction2Builder extends BackboneElementBuilder {
     addField('id', id);
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
+    addField('common', common);
     addField('operation', operation);
     return json;
   }
@@ -12981,7 +13707,1553 @@ class TestScriptAction2Builder extends BackboneElementBuilder {
       'id',
       'extension',
       'modifierExtension',
+      'common',
       'operation',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'common':
+        if (common != null) {
+          fields.add(common!);
+        }
+      case 'operation':
+        if (operation != null) {
+          fields.add(operation!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'common':
+        {
+          if (child is TestScriptCommonBuilder) {
+            common = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'operation':
+        {
+          if (child is TestScriptOperationBuilder) {
+            operation = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'common':
+        return ['TestScriptCommonBuilder'];
+      case 'operation':
+        return ['TestScriptOperationBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [TestScriptAction2Builder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'common':
+        {
+          common = TestScriptCommonBuilder.empty();
+          return;
+        }
+      case 'operation':
+        {
+          operation = TestScriptOperationBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  TestScriptAction2Builder clone() => throw UnimplementedError();
+  @override
+  TestScriptAction2Builder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    TestScriptCommonBuilder? common,
+    TestScriptOperationBuilder? operation,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = TestScriptAction2Builder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      common: common ?? this.common,
+      operation: operation ?? this.operation,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! TestScriptAction2Builder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      common,
+      o.common,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      operation,
+      o.operation,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [TestScriptCommon1Builder]
+/// A common collection of actions that can be re-used in a TestScript.
+class TestScriptCommon1Builder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [TestScriptCommon1Builder]
+
+  TestScriptCommon1Builder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.key,
+    this.name,
+    this.description,
+    this.parameter,
+    this.action,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'TestScript.common',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory TestScriptCommon1Builder.empty() => TestScriptCommon1Builder(
+        key: FhirIdBuilder.empty(),
+        action: <TestScriptActionBuilder>[],
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory TestScriptCommon1Builder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'TestScript.common';
+    return TestScriptCommon1Builder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      key: JsonParser.parsePrimitive<FhirIdBuilder>(
+        json,
+        'key',
+        FhirIdBuilder.fromJson,
+        '$objectPath.key',
+      ),
+      name: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'name',
+        FhirStringBuilder.fromJson,
+        '$objectPath.name',
+      ),
+      description: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'description',
+        FhirStringBuilder.fromJson,
+        '$objectPath.description',
+      ),
+      parameter: (json['parameter'] as List<dynamic>?)
+          ?.map<TestScriptParameterBuilder>(
+            (v) => TestScriptParameterBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.parameter',
+              },
+            ),
+          )
+          .toList(),
+      action: (json['action'] as List<dynamic>?)
+          ?.map<TestScriptActionBuilder>(
+            (v) => TestScriptActionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.action',
+              },
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  /// Deserialize [TestScriptCommon1Builder]
+  /// from a [String] or [YamlMap] object
+  factory TestScriptCommon1Builder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return TestScriptCommon1Builder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return TestScriptCommon1Builder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'TestScriptCommon1Builder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [TestScriptCommon1Builder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory TestScriptCommon1Builder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return TestScriptCommon1Builder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'TestScriptCommon1';
+
+  /// [key]
+  /// Key that identifies this common collection of actions (unique within
+  /// this resource).
+  FhirIdBuilder? key;
+
+  /// [name]
+  /// The name of this this common collection of actions used for
+  /// tracking/logging purposes by test engines.
+  FhirStringBuilder? name;
+
+  /// [description]
+  /// A short description of this common collection of actions used by test
+  /// engines for tracking and reporting purposes.
+  FhirStringBuilder? description;
+
+  /// [parameter]
+  /// Optional named parameter(s) to provide input values to this common
+  /// collection of actions from this or an external TestScript.
+  List<TestScriptParameterBuilder>? parameter;
+
+  /// [action]
+  /// An action will contain either an operation or an assertion but not
+  /// both.
+  List<TestScriptActionBuilder>? action;
+
+  /// Converts a [TestScriptCommon1Builder]
+  /// to [TestScriptCommon1]
+  @override
+  TestScriptCommon1 build() => TestScriptCommon1.fromJson(toJson());
+
+  /// Converts a [TestScriptCommon1Builder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('key', key);
+    addField('name', name);
+    addField('description', description);
+    addField('parameter', parameter);
+    addField('action', action);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'key',
+      'name',
+      'description',
+      'parameter',
+      'action',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'key':
+        if (key != null) {
+          fields.add(key!);
+        }
+      case 'name':
+        if (name != null) {
+          fields.add(name!);
+        }
+      case 'description':
+        if (description != null) {
+          fields.add(description!);
+        }
+      case 'parameter':
+        if (parameter != null) {
+          fields.addAll(parameter!);
+        }
+      case 'action':
+        if (action != null) {
+          fields.addAll(action!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'key':
+        {
+          if (child is FhirIdBuilder) {
+            key = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirIdBuilder.tryParse(stringValue);
+              if (converted != null) {
+                key = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'name':
+        {
+          if (child is FhirStringBuilder) {
+            name = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                name = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'description':
+        {
+          if (child is FhirStringBuilder) {
+            description = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                description = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'parameter':
+        {
+          if (child is List<TestScriptParameterBuilder>) {
+            // Replace or create new list
+            parameter = child;
+            return;
+          } else if (child is TestScriptParameterBuilder) {
+            // Add single element to existing list or create new list
+            parameter = [
+              ...(parameter ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'action':
+        {
+          if (child is List<TestScriptActionBuilder>) {
+            // Replace or create new list
+            action = child;
+            return;
+          } else if (child is TestScriptActionBuilder) {
+            // Add single element to existing list or create new list
+            action = [
+              ...(action ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'key':
+        return ['FhirIdBuilder'];
+      case 'name':
+        return ['FhirStringBuilder'];
+      case 'description':
+        return ['FhirStringBuilder'];
+      case 'parameter':
+        return ['TestScriptParameterBuilder'];
+      case 'action':
+        return ['TestScriptActionBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [TestScriptCommon1Builder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'key':
+        {
+          key = FhirIdBuilder.empty();
+          return;
+        }
+      case 'name':
+        {
+          name = FhirStringBuilder.empty();
+          return;
+        }
+      case 'description':
+        {
+          description = FhirStringBuilder.empty();
+          return;
+        }
+      case 'parameter':
+        {
+          parameter = <TestScriptParameterBuilder>[];
+          return;
+        }
+      case 'action':
+        {
+          action = <TestScriptActionBuilder>[];
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  TestScriptCommon1Builder clone() => throw UnimplementedError();
+  @override
+  TestScriptCommon1Builder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    FhirIdBuilder? key,
+    FhirStringBuilder? name,
+    FhirStringBuilder? description,
+    List<TestScriptParameterBuilder>? parameter,
+    List<TestScriptActionBuilder>? action,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = TestScriptCommon1Builder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      key: key ?? this.key,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      parameter: parameter ?? this.parameter,
+      action: action ?? this.action,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! TestScriptCommon1Builder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      key,
+      o.key,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      name,
+      o.name,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      description,
+      o.description,
+    )) {
+      return false;
+    }
+    if (!listEquals<TestScriptParameterBuilder>(
+      parameter,
+      o.parameter,
+    )) {
+      return false;
+    }
+    if (!listEquals<TestScriptActionBuilder>(
+      action,
+      o.action,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [TestScriptParameter1Builder]
+/// Optional named parameter(s) to provide input values to this common
+/// collection of actions from this or an external TestScript.
+class TestScriptParameter1Builder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [TestScriptParameter1Builder]
+
+  TestScriptParameter1Builder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.name,
+    this.description,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'TestScript.common.parameter',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory TestScriptParameter1Builder.empty() => TestScriptParameter1Builder();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory TestScriptParameter1Builder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'TestScript.common.parameter';
+    return TestScriptParameter1Builder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      name: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'name',
+        FhirStringBuilder.fromJson,
+        '$objectPath.name',
+      ),
+      description: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'description',
+        FhirStringBuilder.fromJson,
+        '$objectPath.description',
+      ),
+    );
+  }
+
+  /// Deserialize [TestScriptParameter1Builder]
+  /// from a [String] or [YamlMap] object
+  factory TestScriptParameter1Builder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return TestScriptParameter1Builder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return TestScriptParameter1Builder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'TestScriptParameter1Builder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [TestScriptParameter1Builder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory TestScriptParameter1Builder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return TestScriptParameter1Builder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'TestScriptParameter1';
+
+  /// [name]
+  /// The name of this parameter that will referenced in this common
+  /// collection of actions using the TestScript variable nomenclature
+  /// '${name}.
+  FhirStringBuilder? name;
+
+  /// [description]
+  /// An optional short description of this parameter to be used this common
+  /// collection of actions used by test engines for tracking and reporting
+  /// purposes.
+  FhirStringBuilder? description;
+
+  /// Converts a [TestScriptParameter1Builder]
+  /// to [TestScriptParameter1]
+  @override
+  TestScriptParameter1 build() => TestScriptParameter1.fromJson(toJson());
+
+  /// Converts a [TestScriptParameter1Builder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('name', name);
+    addField('description', description);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'name',
+      'description',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'name':
+        if (name != null) {
+          fields.add(name!);
+        }
+      case 'description':
+        if (description != null) {
+          fields.add(description!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'name':
+        {
+          if (child is FhirStringBuilder) {
+            name = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                name = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'description':
+        {
+          if (child is FhirStringBuilder) {
+            description = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                description = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'name':
+        return ['FhirStringBuilder'];
+      case 'description':
+        return ['FhirStringBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [TestScriptParameter1Builder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'name':
+        {
+          name = FhirStringBuilder.empty();
+          return;
+        }
+      case 'description':
+        {
+          description = FhirStringBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  TestScriptParameter1Builder clone() => throw UnimplementedError();
+  @override
+  TestScriptParameter1Builder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    FhirStringBuilder? name,
+    FhirStringBuilder? description,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = TestScriptParameter1Builder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      name: name ?? this.name,
+      description: description ?? this.description,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! TestScriptParameter1Builder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      name,
+      o.name,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      description,
+      o.description,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [TestScriptAction3Builder]
+/// An action will contain either an operation or an assertion but not
+/// both.
+class TestScriptAction3Builder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [TestScriptAction3Builder]
+
+  TestScriptAction3Builder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.operation,
+    this.assert_,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'TestScript.common.action',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory TestScriptAction3Builder.empty() => TestScriptAction3Builder();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory TestScriptAction3Builder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'TestScript.common.action';
+    return TestScriptAction3Builder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      operation: JsonParser.parseObject<TestScriptOperationBuilder>(
+        json,
+        'operation',
+        TestScriptOperationBuilder.fromJson,
+        '$objectPath.operation',
+      ),
+      assert_: JsonParser.parseObject<TestScriptAssertBuilder>(
+        json,
+        'assert',
+        TestScriptAssertBuilder.fromJson,
+        '$objectPath.assert',
+      ),
+    );
+  }
+
+  /// Deserialize [TestScriptAction3Builder]
+  /// from a [String] or [YamlMap] object
+  factory TestScriptAction3Builder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return TestScriptAction3Builder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return TestScriptAction3Builder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'TestScriptAction3Builder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [TestScriptAction3Builder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory TestScriptAction3Builder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return TestScriptAction3Builder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'TestScriptAction3';
+
+  /// [operation]
+  /// An operation would involve a REST request to a server.
+  TestScriptOperationBuilder? operation;
+
+  /// [assert_]
+  /// Evaluates the results of previous operations to determine if the server
+  /// under test behaves appropriately.
+  TestScriptAssertBuilder? assert_;
+
+  /// Converts a [TestScriptAction3Builder]
+  /// to [TestScriptAction3]
+  @override
+  TestScriptAction3 build() => TestScriptAction3.fromJson(toJson());
+
+  /// Converts a [TestScriptAction3Builder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('operation', operation);
+    addField('assert', assert_);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'operation',
+      'assert',
     ];
   }
 
@@ -13009,6 +15281,10 @@ class TestScriptAction2Builder extends BackboneElementBuilder {
       case 'operation':
         if (operation != null) {
           fields.add(operation!);
+        }
+      case 'assert':
+        if (assert_ != null) {
+          fields.add(assert_!);
         }
       default:
         if (checkValid) {
@@ -13099,6 +15375,14 @@ class TestScriptAction2Builder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'assert':
+        {
+          if (child is TestScriptAssertBuilder) {
+            assert_ = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -13117,12 +15401,14 @@ class TestScriptAction2Builder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'operation':
         return ['TestScriptOperationBuilder'];
+      case 'assert':
+        return ['TestScriptAssertBuilder'];
       default:
         return <String>[];
     }
   }
 
-  /// Creates a new [TestScriptAction2Builder]
+  /// Creates a new [TestScriptAction3Builder]
   ///  with a chosen field set to an empty object.
   @override
   void createProperty(String propertyName) {
@@ -13147,19 +15433,25 @@ class TestScriptAction2Builder extends BackboneElementBuilder {
           operation = TestScriptOperationBuilder.empty();
           return;
         }
+      case 'assert':
+        {
+          assert_ = TestScriptAssertBuilder.empty();
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
   }
 
   @override
-  TestScriptAction2Builder clone() => throw UnimplementedError();
+  TestScriptAction3Builder clone() => throw UnimplementedError();
   @override
-  TestScriptAction2Builder copyWith({
+  TestScriptAction3Builder copyWith({
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     TestScriptOperationBuilder? operation,
+    TestScriptAssertBuilder? assert_,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -13167,11 +15459,12 @@ class TestScriptAction2Builder extends BackboneElementBuilder {
     String? objectPath,
   }) {
     final newObjectPath = this.objectPath;
-    final newResult = TestScriptAction2Builder(
+    final newResult = TestScriptAction3Builder(
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       operation: operation ?? this.operation,
+      assert_: assert_ ?? this.assert_,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -13193,7 +15486,7 @@ class TestScriptAction2Builder extends BackboneElementBuilder {
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! TestScriptAction2Builder) {
+    if (o is! TestScriptAction3Builder) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -13219,6 +15512,12 @@ class TestScriptAction2Builder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       operation,
       o.operation,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      assert_,
+      o.assert_,
     )) {
       return false;
     }

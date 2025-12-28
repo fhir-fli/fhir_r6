@@ -32,13 +32,19 @@ class DetectedIssue extends DomainResource {
     IdentifiedXDetectedIssue? identifiedX,
     FhirDateTime? identifiedDateTime,
     Period? identifiedPeriod,
+    Timing? identifiedTiming,
     this.author,
     this.implicated,
     this.evidence,
     this.detail,
     this.reference,
+    this.qualityOfEvidence,
+    this.managementCode,
     this.mitigation,
-  })  : identifiedX = identifiedX ?? identifiedDateTime ?? identifiedPeriod,
+  })  : identifiedX = identifiedX ??
+            identifiedDateTime ??
+            identifiedPeriod ??
+            identifiedTiming,
         super(
           resourceType: R6ResourceType.DetectedIssue,
         );
@@ -118,10 +124,10 @@ class DetectedIssue extends DomainResource {
         'code',
         CodeableConcept.fromJson,
       ),
-      severity: JsonParser.parsePrimitive<DetectedIssueSeverity>(
+      severity: JsonParser.parseObject<CodeableConcept>(
         json,
         'severity',
-        DetectedIssueSeverity.fromJson,
+        CodeableConcept.fromJson,
       ),
       subject: JsonParser.parseObject<Reference>(
         json,
@@ -138,6 +144,7 @@ class DetectedIssue extends DomainResource {
         {
           'identifiedDateTime': FhirDateTime.fromJson,
           'identifiedPeriod': Period.fromJson,
+          'identifiedTiming': Timing.fromJson,
         },
       ),
       author: JsonParser.parseObject<Reference>(
@@ -168,6 +175,16 @@ class DetectedIssue extends DomainResource {
         json,
         'reference',
         FhirUri.fromJson,
+      ),
+      qualityOfEvidence: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'qualityOfEvidence',
+        CodeableConcept.fromJson,
+      ),
+      managementCode: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'managementCode',
+        CodeableConcept.fromJson,
       ),
       mitigation: (json['mitigation'] as List<dynamic>?)
           ?.map<DetectedIssueMitigation>(
@@ -222,25 +239,29 @@ class DetectedIssue extends DomainResource {
   String get fhirType => 'DetectedIssue';
 
   /// [identifier]
-  /// Business identifier associated with the detected issue record.
+  /// Business identifiers assigned to this detected issue by the performer
+  /// and/or other systems. These identifiers remain constant as the resource
+  /// is updated and propagates from server to server.
   final List<Identifier>? identifier;
 
   /// [status]
-  /// Indicates the status of the detected issue.
+  /// The current state of the detected issue.
   final DetectedIssueStatus status;
 
   /// [category]
-  /// A code that classifies the general type of detected issue.
+  /// Partitions the detected issue into one or more categories that can be
+  /// used to filter searching, to govern access control and/or to guide
+  /// system behavior.
   final List<CodeableConcept>? category;
 
   /// [code]
-  /// Identifies the specific type of issue identified.
+  /// A code that identifies the specific type of issue detected.
   final CodeableConcept? code;
 
   /// [severity]
   /// Indicates the degree of importance associated with the identified issue
   /// based on the potential impact on the patient.
-  final DetectedIssueSeverity? severity;
+  final CodeableConcept? severity;
 
   /// [subject]
   /// Indicates the subject whose record the detected issue is associated
@@ -248,11 +269,13 @@ class DetectedIssue extends DomainResource {
   final Reference? subject;
 
   /// [encounter]
-  /// The encounter during which this issue was detected.
+  /// The Encounter during which this detected issue was created or to which
+  /// the creation of this record is tightly associated.
   final Reference? encounter;
 
   /// [identifiedX]
-  /// The date or period when the detected issue was initially identified.
+  /// The date, period or timing when the detected issue did occur or is
+  /// occurring.
   final IdentifiedXDetectedIssue? identifiedX;
 
   /// Getter for [identifiedDateTime] as a FhirDateTime
@@ -260,6 +283,9 @@ class DetectedIssue extends DomainResource {
 
   /// Getter for [identifiedPeriod] as a Period
   Period? get identifiedPeriod => identifiedX?.isAs<Period>();
+
+  /// Getter for [identifiedTiming] as a Timing
+  Timing? get identifiedTiming => identifiedX?.isAs<Timing>();
 
   /// [author]
   /// Individual or device responsible for the issue being raised. For
@@ -286,6 +312,20 @@ class DetectedIssue extends DomainResource {
   /// The literature, knowledge-base or similar reference that describes the
   /// propensity for the detected issue identified.
   final FhirUri? reference;
+
+  /// [qualityOfEvidence]
+  /// The quality of the evidence supporting identification of the detected
+  /// issue. The code system used specifies the quality scale used to grade
+  /// this evidence source while the code specifies the actual quality score
+  /// (represented as a coded value) associated with the evidence.
+  final CodeableConcept? qualityOfEvidence;
+
+  /// [managementCode]
+  /// An indication of the importance or type of step that should or may be
+  /// taken in order to address the detected issue. This is different than
+  /// mitigation in that it is not specifically providing actions to be
+  /// taken, rather general suggestions about approach.
+  final CodeableConcept? managementCode;
 
   /// [mitigation]
   /// Indicates an action that has been taken or is committed to reduce or
@@ -446,6 +486,14 @@ class DetectedIssue extends DomainResource {
       reference,
     );
     addField(
+      'qualityOfEvidence',
+      qualityOfEvidence,
+    );
+    addField(
+      'managementCode',
+      managementCode,
+    );
+    addField(
       'mitigation',
       mitigation,
     );
@@ -477,6 +525,8 @@ class DetectedIssue extends DomainResource {
       'evidence',
       'detail',
       'reference',
+      'qualityOfEvidence',
+      'managementCode',
       'mitigation',
     ];
   }
@@ -560,6 +610,10 @@ class DetectedIssue extends DomainResource {
         if (identifiedX is Period) {
           fields.add(identifiedX!);
         }
+      case 'identifiedTiming':
+        if (identifiedX is Timing) {
+          fields.add(identifiedX!);
+        }
       case 'author':
         if (author != null) {
           fields.add(author!);
@@ -579,6 +633,14 @@ class DetectedIssue extends DomainResource {
       case 'reference':
         if (reference != null) {
           fields.add(reference!);
+        }
+      case 'qualityOfEvidence':
+        if (qualityOfEvidence != null) {
+          fields.add(qualityOfEvidence!);
+        }
+      case 'managementCode':
+        if (managementCode != null) {
+          fields.add(managementCode!);
         }
       case 'mitigation':
         if (mitigation != null) {
@@ -748,6 +810,18 @@ class DetectedIssue extends DomainResource {
     if (!equalsDeepWithNull(
       reference,
       o.reference,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      qualityOfEvidence,
+      o.qualityOfEvidence,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      managementCode,
+      o.managementCode,
     )) {
       return false;
     }

@@ -29,11 +29,17 @@ class EvidenceVariable extends MetadataResource {
     this.name,
     this.title,
     this.shortTitle,
+    this.citeAs,
     required super.status,
     super.experimental,
     super.date,
+    super.author,
     super.publisher,
     super.contact,
+    this.recorder,
+    super.editor,
+    super.reviewer,
+    super.endorser,
     super.description,
     this.note,
     super.useContext,
@@ -43,15 +49,20 @@ class EvidenceVariable extends MetadataResource {
     super.approvalDate,
     super.lastReviewDate,
     super.effectivePeriod,
-    super.author,
-    super.editor,
-    super.reviewer,
-    super.endorser,
-    super.relatedArtifact,
+    this.relatesTo,
     this.actual,
-    this.characteristic,
+    this.definition,
+    this.definitionModifier,
     this.handling,
     this.category,
+    this.conditional,
+    this.classifier,
+    this.dataStorage,
+    this.timing,
+    this.period,
+    this.constraint,
+    this.missingDataMeaning,
+    this.unacceptableDataHandling,
   })  : versionAlgorithmX = versionAlgorithmX ??
             versionAlgorithmString ??
             versionAlgorithmCoding,
@@ -150,6 +161,11 @@ class EvidenceVariable extends MetadataResource {
         'shortTitle',
         FhirString.fromJson,
       ),
+      citeAs: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'citeAs',
+        FhirMarkdown.fromJson,
+      ),
       status: JsonParser.parsePrimitive<PublicationStatus>(
         json,
         'status',
@@ -165,12 +181,47 @@ class EvidenceVariable extends MetadataResource {
         'date',
         FhirDateTime.fromJson,
       ),
+      author: (json['author'] as List<dynamic>?)
+          ?.map<ContactDetail>(
+            (v) => ContactDetail.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       publisher: JsonParser.parsePrimitive<FhirString>(
         json,
         'publisher',
         FhirString.fromJson,
       ),
       contact: (json['contact'] as List<dynamic>?)
+          ?.map<ContactDetail>(
+            (v) => ContactDetail.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      recorder: (json['recorder'] as List<dynamic>?)
+          ?.map<ContactDetail>(
+            (v) => ContactDetail.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      editor: (json['editor'] as List<dynamic>?)
+          ?.map<ContactDetail>(
+            (v) => ContactDetail.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      reviewer: (json['reviewer'] as List<dynamic>?)
+          ?.map<ContactDetail>(
+            (v) => ContactDetail.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      endorser: (json['endorser'] as List<dynamic>?)
           ?.map<ContactDetail>(
             (v) => ContactDetail.fromJson(
               {...v as Map<String, dynamic>},
@@ -226,37 +277,9 @@ class EvidenceVariable extends MetadataResource {
         'effectivePeriod',
         Period.fromJson,
       ),
-      author: (json['author'] as List<dynamic>?)
-          ?.map<ContactDetail>(
-            (v) => ContactDetail.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      editor: (json['editor'] as List<dynamic>?)
-          ?.map<ContactDetail>(
-            (v) => ContactDetail.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      reviewer: (json['reviewer'] as List<dynamic>?)
-          ?.map<ContactDetail>(
-            (v) => ContactDetail.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      endorser: (json['endorser'] as List<dynamic>?)
-          ?.map<ContactDetail>(
-            (v) => ContactDetail.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      relatedArtifact: (json['relatedArtifact'] as List<dynamic>?)
-          ?.map<RelatedArtifact>(
-            (v) => RelatedArtifact.fromJson(
+      relatesTo: (json['relatesTo'] as List<dynamic>?)
+          ?.map<EvidenceVariableRelatesTo>(
+            (v) => EvidenceVariableRelatesTo.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -266,9 +289,14 @@ class EvidenceVariable extends MetadataResource {
         'actual',
         FhirBoolean.fromJson,
       ),
-      characteristic: (json['characteristic'] as List<dynamic>?)
-          ?.map<EvidenceVariableCharacteristic>(
-            (v) => EvidenceVariableCharacteristic.fromJson(
+      definition: JsonParser.parseObject<CodeableReference>(
+        json,
+        'definition',
+        CodeableReference.fromJson,
+      ),
+      definitionModifier: (json['definitionModifier'] as List<dynamic>?)
+          ?.map<EvidenceVariableDefinitionModifier>(
+            (v) => EvidenceVariableDefinitionModifier.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -285,6 +313,57 @@ class EvidenceVariable extends MetadataResource {
             ),
           )
           .toList(),
+      conditional: JsonParser.parseObject<FhirExpression>(
+        json,
+        'conditional',
+        FhirExpression.fromJson,
+      ),
+      classifier: (json['classifier'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      dataStorage: (json['dataStorage'] as List<dynamic>?)
+          ?.map<EvidenceVariableDataStorage>(
+            (v) => EvidenceVariableDataStorage.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      timing: JsonParser.parseObject<RelativeTime>(
+        json,
+        'timing',
+        RelativeTime.fromJson,
+      ),
+      period: JsonParser.parseObject<Period>(
+        json,
+        'period',
+        Period.fromJson,
+      ),
+      constraint: (json['constraint'] as List<dynamic>?)
+          ?.map<EvidenceVariableConstraint>(
+            (v) => EvidenceVariableConstraint.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      missingDataMeaning: (json['missingDataMeaning'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      unacceptableDataHandling:
+          (json['unacceptableDataHandling'] as List<dynamic>?)
+              ?.map<CodeableConcept>(
+                (v) => CodeableConcept.fromJson(
+                  {...v as Map<String, dynamic>},
+                ),
+              )
+              .toList(),
     );
   }
 
@@ -363,6 +442,17 @@ class EvidenceVariable extends MetadataResource {
   /// descriptive contexts where the full, formal title is not necessary.
   final FhirString? shortTitle;
 
+  /// [citeAs]
+  /// Display of the suggested method of how to cite this EvidenceVariable.
+  final FhirMarkdown? citeAs;
+
+  /// [recorder]
+  /// The person or entity that entered the data into the EvidenceVariable
+  /// Resource instance, if different than the author or creator of the
+  /// intellectual property contained within the EvidenceVariable Resource
+  /// instance.
+  final List<ContactDetail>? recorder;
+
   /// [note]
   /// A human-readable string to clarify or explain concepts about the
   /// resource.
@@ -374,35 +464,80 @@ class EvidenceVariable extends MetadataResource {
   final FhirMarkdown? purpose;
 
   /// [copyright]
-  /// A copyright statement relating to the resource and/or its contents.
-  /// Copyright statements are generally legal restrictions on the use and
-  /// publishing of the resource.
+  /// A copyright statement relating to the EvidenceVariable and/or its
+  /// contents. Copyright statements are legal notices of intellectual
+  /// property ownership and may include restrictions on the use and
+  /// publishing of the EvidenceVariable.
   final FhirMarkdown? copyright;
 
   /// [copyrightLabel]
   /// A short string (<50 characters), suitable for inclusion in a page
   /// footer that identifies the copyright holder, effective period, and
-  /// optionally whether rights are resctricted. (e.g. 'All rights reserved',
+  /// optionally whether rights are restricted . (e.g. 'All rights reserved',
   /// 'Some rights reserved').
   final FhirString? copyrightLabel;
+
+  /// [relatesTo]
+  /// Relationships that this EvidenceVariable has with other FHIR or
+  /// non-FHIR resources that already exist.
+  final List<EvidenceVariableRelatesTo>? relatesTo;
 
   /// [actual]
   /// True if the actual variable measured, false if a conceptual
   /// representation of the intended variable.
   final FhirBoolean? actual;
 
-  /// [characteristic]
-  /// A defining factor of the EvidenceVariable. Multiple characteristics are
-  /// applied with "and" semantics.
-  final List<EvidenceVariableCharacteristic>? characteristic;
+  /// [definition]
+  /// The meaning of the evidence variable.
+  final CodeableReference? definition;
+
+  /// [definitionModifier]
+  /// Further specification of the definition.
+  final List<EvidenceVariableDefinitionModifier>? definitionModifier;
 
   /// [handling]
   /// The method of handling in statistical analysis.
   final EvidenceVariableHandling? handling;
 
   /// [category]
-  /// A grouping for ordinal or polychotomous variables.
+  /// A grouping for dichotomous, ordinal, or polychotomouos variables.
   final List<EvidenceVariableCategory>? category;
+
+  /// [conditional]
+  /// The context, situation, or parameters that determine whether the data
+  /// is obtained to determine the value of the variable.
+  final FhirExpression? conditional;
+
+  /// [classifier]
+  /// Classification of the variable.
+  final List<CodeableConcept>? classifier;
+
+  /// [dataStorage]
+  /// How the data element is organized and where the data element
+  /// (expressing the value of the variable) is found in the dataset.
+  final List<EvidenceVariableDataStorage>? dataStorage;
+
+  /// [timing]
+  /// When the variable is observed in relation to a reference point in time
+  /// defined by context or event.
+  final RelativeTime? timing;
+
+  /// [period]
+  /// When the variable is observed in relation to calendar dates and times.
+  final Period? period;
+
+  /// [constraint]
+  /// Limit on acceptability of data used to express values of the variable.
+  final List<EvidenceVariableConstraint>? constraint;
+
+  /// [missingDataMeaning]
+  /// A method or transformation applied for missing data.
+  final List<CodeableConcept>? missingDataMeaning;
+
+  /// [unacceptableDataHandling]
+  /// A method or transformation applied for data that does not match
+  /// required patterns.
+  final List<CodeableConcept>? unacceptableDataHandling;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -532,6 +667,10 @@ class EvidenceVariable extends MetadataResource {
       shortTitle,
     );
     addField(
+      'citeAs',
+      citeAs,
+    );
+    addField(
       'status',
       status,
     );
@@ -544,12 +683,32 @@ class EvidenceVariable extends MetadataResource {
       date,
     );
     addField(
+      'author',
+      author,
+    );
+    addField(
       'publisher',
       publisher,
     );
     addField(
       'contact',
       contact,
+    );
+    addField(
+      'recorder',
+      recorder,
+    );
+    addField(
+      'editor',
+      editor,
+    );
+    addField(
+      'reviewer',
+      reviewer,
+    );
+    addField(
+      'endorser',
+      endorser,
     );
     addField(
       'description',
@@ -588,32 +747,20 @@ class EvidenceVariable extends MetadataResource {
       effectivePeriod,
     );
     addField(
-      'author',
-      author,
-    );
-    addField(
-      'editor',
-      editor,
-    );
-    addField(
-      'reviewer',
-      reviewer,
-    );
-    addField(
-      'endorser',
-      endorser,
-    );
-    addField(
-      'relatedArtifact',
-      relatedArtifact,
+      'relatesTo',
+      relatesTo,
     );
     addField(
       'actual',
       actual,
     );
     addField(
-      'characteristic',
-      characteristic,
+      'definition',
+      definition,
+    );
+    addField(
+      'definitionModifier',
+      definitionModifier,
     );
     addField(
       'handling',
@@ -622,6 +769,38 @@ class EvidenceVariable extends MetadataResource {
     addField(
       'category',
       category,
+    );
+    addField(
+      'conditional',
+      conditional,
+    );
+    addField(
+      'classifier',
+      classifier,
+    );
+    addField(
+      'dataStorage',
+      dataStorage,
+    );
+    addField(
+      'timing',
+      timing,
+    );
+    addField(
+      'period',
+      period,
+    );
+    addField(
+      'constraint',
+      constraint,
+    );
+    addField(
+      'missingDataMeaning',
+      missingDataMeaning,
+    );
+    addField(
+      'unacceptableDataHandling',
+      unacceptableDataHandling,
     );
     return json;
   }
@@ -645,11 +824,17 @@ class EvidenceVariable extends MetadataResource {
       'name',
       'title',
       'shortTitle',
+      'citeAs',
       'status',
       'experimental',
       'date',
+      'author',
       'publisher',
       'contact',
+      'recorder',
+      'editor',
+      'reviewer',
+      'endorser',
       'description',
       'note',
       'useContext',
@@ -659,15 +844,20 @@ class EvidenceVariable extends MetadataResource {
       'approvalDate',
       'lastReviewDate',
       'effectivePeriod',
-      'author',
-      'editor',
-      'reviewer',
-      'endorser',
-      'relatedArtifact',
+      'relatesTo',
       'actual',
-      'characteristic',
+      'definition',
+      'definitionModifier',
       'handling',
       'category',
+      'conditional',
+      'classifier',
+      'dataStorage',
+      'timing',
+      'period',
+      'constraint',
+      'missingDataMeaning',
+      'unacceptableDataHandling',
     ];
   }
 
@@ -748,6 +938,10 @@ class EvidenceVariable extends MetadataResource {
         if (shortTitle != null) {
           fields.add(shortTitle!);
         }
+      case 'citeAs':
+        if (citeAs != null) {
+          fields.add(citeAs!);
+        }
       case 'status':
         if (status != null) {
           fields.add(status!);
@@ -760,6 +954,10 @@ class EvidenceVariable extends MetadataResource {
         if (date != null) {
           fields.add(date!);
         }
+      case 'author':
+        if (author != null) {
+          fields.addAll(author!);
+        }
       case 'publisher':
         if (publisher != null) {
           fields.add(publisher!);
@@ -767,6 +965,22 @@ class EvidenceVariable extends MetadataResource {
       case 'contact':
         if (contact != null) {
           fields.addAll(contact!);
+        }
+      case 'recorder':
+        if (recorder != null) {
+          fields.addAll(recorder!);
+        }
+      case 'editor':
+        if (editor != null) {
+          fields.addAll(editor!);
+        }
+      case 'reviewer':
+        if (reviewer != null) {
+          fields.addAll(reviewer!);
+        }
+      case 'endorser':
+        if (endorser != null) {
+          fields.addAll(endorser!);
         }
       case 'description':
         if (description != null) {
@@ -804,33 +1018,21 @@ class EvidenceVariable extends MetadataResource {
         if (effectivePeriod != null) {
           fields.add(effectivePeriod!);
         }
-      case 'author':
-        if (author != null) {
-          fields.addAll(author!);
-        }
-      case 'editor':
-        if (editor != null) {
-          fields.addAll(editor!);
-        }
-      case 'reviewer':
-        if (reviewer != null) {
-          fields.addAll(reviewer!);
-        }
-      case 'endorser':
-        if (endorser != null) {
-          fields.addAll(endorser!);
-        }
-      case 'relatedArtifact':
-        if (relatedArtifact != null) {
-          fields.addAll(relatedArtifact!);
+      case 'relatesTo':
+        if (relatesTo != null) {
+          fields.addAll(relatesTo!);
         }
       case 'actual':
         if (actual != null) {
           fields.add(actual!);
         }
-      case 'characteristic':
-        if (characteristic != null) {
-          fields.addAll(characteristic!);
+      case 'definition':
+        if (definition != null) {
+          fields.add(definition!);
+        }
+      case 'definitionModifier':
+        if (definitionModifier != null) {
+          fields.addAll(definitionModifier!);
         }
       case 'handling':
         if (handling != null) {
@@ -839,6 +1041,38 @@ class EvidenceVariable extends MetadataResource {
       case 'category':
         if (category != null) {
           fields.addAll(category!);
+        }
+      case 'conditional':
+        if (conditional != null) {
+          fields.add(conditional!);
+        }
+      case 'classifier':
+        if (classifier != null) {
+          fields.addAll(classifier!);
+        }
+      case 'dataStorage':
+        if (dataStorage != null) {
+          fields.addAll(dataStorage!);
+        }
+      case 'timing':
+        if (timing != null) {
+          fields.add(timing!);
+        }
+      case 'period':
+        if (period != null) {
+          fields.add(period!);
+        }
+      case 'constraint':
+        if (constraint != null) {
+          fields.addAll(constraint!);
+        }
+      case 'missingDataMeaning':
+        if (missingDataMeaning != null) {
+          fields.addAll(missingDataMeaning!);
+        }
+      case 'unacceptableDataHandling':
+        if (unacceptableDataHandling != null) {
+          fields.addAll(unacceptableDataHandling!);
         }
       default:
         if (checkValid) {
@@ -972,6 +1206,12 @@ class EvidenceVariable extends MetadataResource {
       return false;
     }
     if (!equalsDeepWithNull(
+      citeAs,
+      o.citeAs,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       status,
       o.status,
     )) {
@@ -989,6 +1229,12 @@ class EvidenceVariable extends MetadataResource {
     )) {
       return false;
     }
+    if (!listEquals<ContactDetail>(
+      author,
+      o.author,
+    )) {
+      return false;
+    }
     if (!equalsDeepWithNull(
       publisher,
       o.publisher,
@@ -998,6 +1244,30 @@ class EvidenceVariable extends MetadataResource {
     if (!listEquals<ContactDetail>(
       contact,
       o.contact,
+    )) {
+      return false;
+    }
+    if (!listEquals<ContactDetail>(
+      recorder,
+      o.recorder,
+    )) {
+      return false;
+    }
+    if (!listEquals<ContactDetail>(
+      editor,
+      o.editor,
+    )) {
+      return false;
+    }
+    if (!listEquals<ContactDetail>(
+      reviewer,
+      o.reviewer,
+    )) {
+      return false;
+    }
+    if (!listEquals<ContactDetail>(
+      endorser,
+      o.endorser,
     )) {
       return false;
     }
@@ -1055,33 +1325,9 @@ class EvidenceVariable extends MetadataResource {
     )) {
       return false;
     }
-    if (!listEquals<ContactDetail>(
-      author,
-      o.author,
-    )) {
-      return false;
-    }
-    if (!listEquals<ContactDetail>(
-      editor,
-      o.editor,
-    )) {
-      return false;
-    }
-    if (!listEquals<ContactDetail>(
-      reviewer,
-      o.reviewer,
-    )) {
-      return false;
-    }
-    if (!listEquals<ContactDetail>(
-      endorser,
-      o.endorser,
-    )) {
-      return false;
-    }
-    if (!listEquals<RelatedArtifact>(
-      relatedArtifact,
-      o.relatedArtifact,
+    if (!listEquals<EvidenceVariableRelatesTo>(
+      relatesTo,
+      o.relatesTo,
     )) {
       return false;
     }
@@ -1091,9 +1337,15 @@ class EvidenceVariable extends MetadataResource {
     )) {
       return false;
     }
-    if (!listEquals<EvidenceVariableCharacteristic>(
-      characteristic,
-      o.characteristic,
+    if (!equalsDeepWithNull(
+      definition,
+      o.definition,
+    )) {
+      return false;
+    }
+    if (!listEquals<EvidenceVariableDefinitionModifier>(
+      definitionModifier,
+      o.definitionModifier,
     )) {
       return false;
     }
@@ -1109,667 +1361,51 @@ class EvidenceVariable extends MetadataResource {
     )) {
       return false;
     }
-    return true;
-  }
-}
-
-/// [EvidenceVariableCharacteristic]
-/// A defining factor of the EvidenceVariable. Multiple characteristics are
-/// applied with "and" semantics.
-class EvidenceVariableCharacteristic extends BackboneElement {
-  /// Primary constructor for
-  /// [EvidenceVariableCharacteristic]
-
-  const EvidenceVariableCharacteristic({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.linkId,
-    this.description,
-    this.note,
-    this.exclude,
-    this.definitionReference,
-    this.definitionCanonical,
-    this.definitionCodeableConcept,
-    this.definitionExpression,
-    this.definitionId,
-    this.definitionByTypeAndValue,
-    this.definitionByCombination,
-    InstancesXEvidenceVariableCharacteristic? instancesX,
-    Quantity? instancesQuantity,
-    Range? instancesRange,
-    DurationXEvidenceVariableCharacteristic? durationX,
-    Quantity? durationQuantity,
-    Range? durationRange,
-    this.timeFromEvent,
-    super.disallowExtensions,
-  })  : instancesX = instancesX ?? instancesQuantity ?? instancesRange,
-        durationX = durationX ?? durationQuantity ?? durationRange,
-        super();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory EvidenceVariableCharacteristic.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return EvidenceVariableCharacteristic(
-      id: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'id',
-        FhirString.fromJson,
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      linkId: JsonParser.parsePrimitive<FhirId>(
-        json,
-        'linkId',
-        FhirId.fromJson,
-      ),
-      description: JsonParser.parsePrimitive<FhirMarkdown>(
-        json,
-        'description',
-        FhirMarkdown.fromJson,
-      ),
-      note: (json['note'] as List<dynamic>?)
-          ?.map<Annotation>(
-            (v) => Annotation.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      exclude: JsonParser.parsePrimitive<FhirBoolean>(
-        json,
-        'exclude',
-        FhirBoolean.fromJson,
-      ),
-      definitionReference: JsonParser.parseObject<Reference>(
-        json,
-        'definitionReference',
-        Reference.fromJson,
-      ),
-      definitionCanonical: JsonParser.parsePrimitive<FhirCanonical>(
-        json,
-        'definitionCanonical',
-        FhirCanonical.fromJson,
-      ),
-      definitionCodeableConcept: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'definitionCodeableConcept',
-        CodeableConcept.fromJson,
-      ),
-      definitionExpression: JsonParser.parseObject<FhirExpression>(
-        json,
-        'definitionExpression',
-        FhirExpression.fromJson,
-      ),
-      definitionId: JsonParser.parsePrimitive<FhirId>(
-        json,
-        'definitionId',
-        FhirId.fromJson,
-      ),
-      definitionByTypeAndValue:
-          JsonParser.parseObject<EvidenceVariableDefinitionByTypeAndValue>(
-        json,
-        'definitionByTypeAndValue',
-        EvidenceVariableDefinitionByTypeAndValue.fromJson,
-      ),
-      definitionByCombination:
-          JsonParser.parseObject<EvidenceVariableDefinitionByCombination>(
-        json,
-        'definitionByCombination',
-        EvidenceVariableDefinitionByCombination.fromJson,
-      ),
-      instancesX:
-          JsonParser.parsePolymorphic<InstancesXEvidenceVariableCharacteristic>(
-        json,
-        {
-          'instancesQuantity': Quantity.fromJson,
-          'instancesRange': Range.fromJson,
-        },
-      ),
-      durationX:
-          JsonParser.parsePolymorphic<DurationXEvidenceVariableCharacteristic>(
-        json,
-        {
-          'durationQuantity': Quantity.fromJson,
-          'durationRange': Range.fromJson,
-        },
-      ),
-      timeFromEvent: (json['timeFromEvent'] as List<dynamic>?)
-          ?.map<EvidenceVariableTimeFromEvent>(
-            (v) => EvidenceVariableTimeFromEvent.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-    );
-  }
-
-  /// Deserialize [EvidenceVariableCharacteristic]
-  /// from a [String] or [YamlMap] object
-  factory EvidenceVariableCharacteristic.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return EvidenceVariableCharacteristic.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return EvidenceVariableCharacteristic.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'EvidenceVariableCharacteristic '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [EvidenceVariableCharacteristic]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory EvidenceVariableCharacteristic.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return EvidenceVariableCharacteristic.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'EvidenceVariableCharacteristic';
-
-  /// [linkId]
-  /// Label used for when a characteristic refers to another characteristic.
-  final FhirId? linkId;
-
-  /// [description]
-  /// A short, natural language description of the characteristic that could
-  /// be used to communicate the criteria to an end-user.
-  final FhirMarkdown? description;
-
-  /// [note]
-  /// A human-readable string to clarify or explain concepts about the
-  /// characteristic.
-  final List<Annotation>? note;
-
-  /// [exclude]
-  /// When true, this characteristic is an exclusion criterion. In other
-  /// words, not matching this characteristic definition is equivalent to
-  /// meeting this criterion.
-  final FhirBoolean? exclude;
-
-  /// [definitionReference]
-  /// Defines the characteristic using a Reference.
-  final Reference? definitionReference;
-
-  /// [definitionCanonical]
-  /// Defines the characteristic using Canonical.
-  final FhirCanonical? definitionCanonical;
-
-  /// [definitionCodeableConcept]
-  /// Defines the characteristic using CodeableConcept.
-  final CodeableConcept? definitionCodeableConcept;
-
-  /// [definitionExpression]
-  /// Defines the characteristic using Expression.
-  final FhirExpression? definitionExpression;
-
-  /// [definitionId]
-  /// Defines the characteristic using id.
-  final FhirId? definitionId;
-
-  /// [definitionByTypeAndValue]
-  /// Defines the characteristic using both a type and value[x] elements.
-  final EvidenceVariableDefinitionByTypeAndValue? definitionByTypeAndValue;
-
-  /// [definitionByCombination]
-  /// Defines the characteristic as a combination of two or more
-  /// characteristics.
-  final EvidenceVariableDefinitionByCombination? definitionByCombination;
-
-  /// [instancesX]
-  /// Number of occurrences meeting the characteristic.
-  final InstancesXEvidenceVariableCharacteristic? instancesX;
-
-  /// Getter for [instancesQuantity] as a Quantity
-  Quantity? get instancesQuantity => instancesX?.isAs<Quantity>();
-
-  /// Getter for [instancesRange] as a Range
-  Range? get instancesRange => instancesX?.isAs<Range>();
-
-  /// [durationX]
-  /// Length of time in which the characteristic is met.
-  final DurationXEvidenceVariableCharacteristic? durationX;
-
-  /// Getter for [durationQuantity] as a Quantity
-  Quantity? get durationQuantity => durationX?.isAs<Quantity>();
-
-  /// Getter for [durationRange] as a Range
-  Range? get durationRange => durationX?.isAs<Range>();
-
-  /// [timeFromEvent]
-  /// Timing in which the characteristic is determined.
-  final List<EvidenceVariableTimeFromEvent>? timeFromEvent;
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    bool isNonEmpty(dynamic val) {
-      if (val == null) return false;
-      if (val is List && val.isEmpty) return false;
-      if (val is Map && val.isEmpty) return false;
-      return true;
-    }
-
-    void addField(String key, dynamic field) {
-      if (field == null) return;
-      if (!(field is FhirBase? || field is List<FhirBase>?)) {
-        throw ArgumentError('"field" must be a FhirBase type');
-      }
-      if (field is PrimitiveType) {
-        final fieldMap = field.toJson();
-        final val = fieldMap['value'];
-        final ext = fieldMap['_value'];
-        final hasVal = isNonEmpty(val);
-        final hasExt = isNonEmpty(ext);
-        if (hasVal) json[key] = val;
-        if (hasExt) json['_$key'] = ext;
-      } else if (field is List<FhirBase>) {
-        if (field.isEmpty) return;
-        final isPrimitive = field.first is PrimitiveType;
-        final tempList = <dynamic>[];
-        final tempExtensions = <dynamic>[];
-        for (final e in field) {
-          final itemMap = e.toJson();
-          if (!isNonEmpty(itemMap)) {
-            continue;
-          }
-          if (isPrimitive) {
-            final v = itemMap['value'];
-            final x = itemMap['_value'];
-            tempList.add(v);
-            tempExtensions.add(x);
-          } else {
-            tempList.add(itemMap);
-          }
-        }
-        if (tempList.isEmpty) return;
-        if (isPrimitive) {
-          final hasAnyValues = tempList.any((v) => v != null);
-          if (hasAnyValues) {
-            json[key] = tempList;
-          }
-          final anyExt = tempExtensions.any(isNonEmpty);
-          if (anyExt) {
-            json['_$key'] = tempExtensions;
-          }
-        } else {
-          json[key] = tempList;
-        }
-      } else if (field is FhirBase) {
-        final subMap = field.toJson();
-        if (isNonEmpty(subMap)) {
-          json[key] = subMap;
-        }
-      }
-    }
-
-    addField(
-      'id',
-      id,
-    );
-    addField(
-      'extension',
-      extension_,
-    );
-    addField(
-      'modifierExtension',
-      modifierExtension,
-    );
-    addField(
-      'linkId',
-      linkId,
-    );
-    addField(
-      'description',
-      description,
-    );
-    addField(
-      'note',
-      note,
-    );
-    addField(
-      'exclude',
-      exclude,
-    );
-    addField(
-      'definitionReference',
-      definitionReference,
-    );
-    addField(
-      'definitionCanonical',
-      definitionCanonical,
-    );
-    addField(
-      'definitionCodeableConcept',
-      definitionCodeableConcept,
-    );
-    addField(
-      'definitionExpression',
-      definitionExpression,
-    );
-    addField(
-      'definitionId',
-      definitionId,
-    );
-    addField(
-      'definitionByTypeAndValue',
-      definitionByTypeAndValue,
-    );
-    addField(
-      'definitionByCombination',
-      definitionByCombination,
-    );
-    if (instancesX != null) {
-      final fhirType = instancesX!.fhirType;
-      addField(
-        'instances${fhirType.capitalize()}',
-        instancesX,
-      );
-    }
-
-    if (durationX != null) {
-      final fhirType = durationX!.fhirType;
-      addField(
-        'duration${fhirType.capitalize()}',
-        durationX,
-      );
-    }
-
-    addField(
-      'timeFromEvent',
-      timeFromEvent,
-    );
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'linkId',
-      'description',
-      'note',
-      'exclude',
-      'definitionReference',
-      'definitionCanonical',
-      'definitionCodeableConcept',
-      'definitionExpression',
-      'definitionId',
-      'definitionByTypeAndValue',
-      'definitionByCombination',
-      'instancesX',
-      'durationX',
-      'timeFromEvent',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBase> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBase>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'linkId':
-        if (linkId != null) {
-          fields.add(linkId!);
-        }
-      case 'description':
-        if (description != null) {
-          fields.add(description!);
-        }
-      case 'note':
-        if (note != null) {
-          fields.addAll(note!);
-        }
-      case 'exclude':
-        if (exclude != null) {
-          fields.add(exclude!);
-        }
-      case 'definitionReference':
-        if (definitionReference != null) {
-          fields.add(definitionReference!);
-        }
-      case 'definitionCanonical':
-        if (definitionCanonical != null) {
-          fields.add(definitionCanonical!);
-        }
-      case 'definitionCodeableConcept':
-        if (definitionCodeableConcept != null) {
-          fields.add(definitionCodeableConcept!);
-        }
-      case 'definitionExpression':
-        if (definitionExpression != null) {
-          fields.add(definitionExpression!);
-        }
-      case 'definitionId':
-        if (definitionId != null) {
-          fields.add(definitionId!);
-        }
-      case 'definitionByTypeAndValue':
-        if (definitionByTypeAndValue != null) {
-          fields.add(definitionByTypeAndValue!);
-        }
-      case 'definitionByCombination':
-        if (definitionByCombination != null) {
-          fields.add(definitionByCombination!);
-        }
-      case 'instances':
-        fields.add(instancesX!);
-      case 'instancesX':
-        fields.add(instancesX!);
-      case 'instancesQuantity':
-        if (instancesX is Quantity) {
-          fields.add(instancesX!);
-        }
-      case 'instancesRange':
-        if (instancesX is Range) {
-          fields.add(instancesX!);
-        }
-      case 'duration':
-        fields.add(durationX!);
-      case 'durationX':
-        fields.add(durationX!);
-      case 'durationQuantity':
-        if (durationX is Quantity) {
-          fields.add(durationX!);
-        }
-      case 'durationRange':
-        if (durationX is Range) {
-          fields.add(durationX!);
-        }
-      case 'timeFromEvent':
-        if (timeFromEvent != null) {
-          fields.addAll(timeFromEvent!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBase? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  EvidenceVariableCharacteristic clone() => copyWith();
-
-  /// Copy function for [EvidenceVariableCharacteristic]
-  /// Returns a copy of the current instance with the provided fields modified.
-  /// If a field is not provided, it will retain its original value.
-  /// If a null is provided, this will clearn the field, unless the
-  /// field is required, in which case it will keep its current value.
-  @override
-  $EvidenceVariableCharacteristicCopyWith<EvidenceVariableCharacteristic>
-      get copyWith => _$EvidenceVariableCharacteristicCopyWithImpl<
-              EvidenceVariableCharacteristic>(
-            this,
-            (value) => value,
-          );
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBase? o) {
-    if (o is! EvidenceVariableCharacteristic) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
     if (!equalsDeepWithNull(
-      id,
-      o.id,
+      conditional,
+      o.conditional,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
-      extension_,
-      o.extension_,
+    if (!listEquals<CodeableConcept>(
+      classifier,
+      o.classifier,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
-      modifierExtension,
-      o.modifierExtension,
+    if (!listEquals<EvidenceVariableDataStorage>(
+      dataStorage,
+      o.dataStorage,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
-      linkId,
-      o.linkId,
+      timing,
+      o.timing,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
-      description,
-      o.description,
+      period,
+      o.period,
     )) {
       return false;
     }
-    if (!listEquals<Annotation>(
-      note,
-      o.note,
+    if (!listEquals<EvidenceVariableConstraint>(
+      constraint,
+      o.constraint,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      exclude,
-      o.exclude,
+    if (!listEquals<CodeableConcept>(
+      missingDataMeaning,
+      o.missingDataMeaning,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      definitionReference,
-      o.definitionReference,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      definitionCanonical,
-      o.definitionCanonical,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      definitionCodeableConcept,
-      o.definitionCodeableConcept,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      definitionExpression,
-      o.definitionExpression,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      definitionId,
-      o.definitionId,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      definitionByTypeAndValue,
-      o.definitionByTypeAndValue,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      definitionByCombination,
-      o.definitionByCombination,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      instancesX,
-      o.instancesX,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      durationX,
-      o.durationX,
-    )) {
-      return false;
-    }
-    if (!listEquals<EvidenceVariableTimeFromEvent>(
-      timeFromEvent,
-      o.timeFromEvent,
+    if (!listEquals<CodeableConcept>(
+      unacceptableDataHandling,
+      o.unacceptableDataHandling,
     )) {
       return false;
     }
@@ -1777,29 +1413,27 @@ class EvidenceVariableCharacteristic extends BackboneElement {
   }
 }
 
-/// [EvidenceVariableDefinitionByTypeAndValue]
-/// Defines the characteristic using both a type and value[x] elements.
-class EvidenceVariableDefinitionByTypeAndValue extends BackboneElement {
+/// [EvidenceVariableRelatesTo]
+/// Relationships that this EvidenceVariable has with other FHIR or
+/// non-FHIR resources that already exist.
+class EvidenceVariableRelatesTo extends BackboneElement {
   /// Primary constructor for
-  /// [EvidenceVariableDefinitionByTypeAndValue]
+  /// [EvidenceVariableRelatesTo]
 
-  const EvidenceVariableDefinitionByTypeAndValue({
+  const EvidenceVariableRelatesTo({
     super.id,
     super.extension_,
     super.modifierExtension,
     required this.type,
-    this.method,
-    this.device,
-    required this.valueX,
-    this.offset,
+    required this.targetX,
     super.disallowExtensions,
   }) : super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory EvidenceVariableDefinitionByTypeAndValue.fromJson(
+  factory EvidenceVariableRelatesTo.fromJson(
     Map<String, dynamic> json,
   ) {
-    return EvidenceVariableDefinitionByTypeAndValue(
+    return EvidenceVariableRelatesTo(
       id: JsonParser.parsePrimitive<FhirString>(
         json,
         'id',
@@ -1819,59 +1453,40 @@ class EvidenceVariableDefinitionByTypeAndValue extends BackboneElement {
             ),
           )
           .toList(),
-      type: JsonParser.parseObject<CodeableConcept>(
+      type: JsonParser.parsePrimitive<ArtifactRelationshipType>(
         json,
         'type',
-        CodeableConcept.fromJson,
+        ArtifactRelationshipType.fromJson,
       )!,
-      method: (json['method'] as List<dynamic>?)
-          ?.map<CodeableConcept>(
-            (v) => CodeableConcept.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      device: JsonParser.parseObject<Reference>(
-        json,
-        'device',
-        Reference.fromJson,
-      ),
-      valueX: JsonParser.parsePolymorphic<
-          ValueXEvidenceVariableDefinitionByTypeAndValue>(
+      targetX: JsonParser.parsePolymorphic<TargetXEvidenceVariableRelatesTo>(
         json,
         {
-          'valueCodeableConcept': CodeableConcept.fromJson,
-          'valueBoolean': FhirBoolean.fromJson,
-          'valueQuantity': Quantity.fromJson,
-          'valueRange': Range.fromJson,
-          'valueReference': Reference.fromJson,
-          'valueId': FhirId.fromJson,
+          'targetUri': FhirUri.fromJson,
+          'targetAttachment': Attachment.fromJson,
+          'targetCanonical': FhirCanonical.fromJson,
+          'targetReference': Reference.fromJson,
+          'targetMarkdown': FhirMarkdown.fromJson,
         },
       )!,
-      offset: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'offset',
-        CodeableConcept.fromJson,
-      ),
     );
   }
 
-  /// Deserialize [EvidenceVariableDefinitionByTypeAndValue]
+  /// Deserialize [EvidenceVariableRelatesTo]
   /// from a [String] or [YamlMap] object
-  factory EvidenceVariableDefinitionByTypeAndValue.fromYaml(
+  factory EvidenceVariableRelatesTo.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return EvidenceVariableDefinitionByTypeAndValue.fromJson(
+      return EvidenceVariableRelatesTo.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return EvidenceVariableDefinitionByTypeAndValue.fromJson(
+      return EvidenceVariableRelatesTo.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'EvidenceVariableDefinitionByTypeAndValue '
+        'EvidenceVariableRelatesTo '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -1879,16 +1494,16 @@ class EvidenceVariableDefinitionByTypeAndValue extends BackboneElement {
   }
 
   /// Factory constructor for
-  /// [EvidenceVariableDefinitionByTypeAndValue]
+  /// [EvidenceVariableRelatesTo]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory EvidenceVariableDefinitionByTypeAndValue.fromJsonString(
+  factory EvidenceVariableRelatesTo.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return EvidenceVariableDefinitionByTypeAndValue.fromJson(json);
+      return EvidenceVariableRelatesTo.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -1896,46 +1511,30 @@ class EvidenceVariableDefinitionByTypeAndValue extends BackboneElement {
   }
 
   @override
-  String get fhirType => 'EvidenceVariableDefinitionByTypeAndValue';
+  String get fhirType => 'EvidenceVariableRelatesTo';
 
   /// [type]
-  /// Used to express the type of characteristic.
-  final CodeableConcept type;
+  /// The type of relationship to the related artifact.
+  final ArtifactRelationshipType type;
 
-  /// [method]
-  /// Method for how the characteristic value was determined.
-  final List<CodeableConcept>? method;
+  /// [targetX]
+  /// The artifact that is related to this EvidenceVariable Resource.
+  final TargetXEvidenceVariableRelatesTo targetX;
 
-  /// [device]
-  /// Device used for determining characteristic.
-  final Reference? device;
+  /// Getter for [targetUri] as a FhirUri
+  FhirUri? get targetUri => targetX.isAs<FhirUri>();
 
-  /// [valueX]
-  /// Defines the characteristic when paired with characteristic.type.
-  final ValueXEvidenceVariableDefinitionByTypeAndValue valueX;
+  /// Getter for [targetAttachment] as a Attachment
+  Attachment? get targetAttachment => targetX.isAs<Attachment>();
 
-  /// Getter for [valueCodeableConcept] as a CodeableConcept
-  CodeableConcept? get valueCodeableConcept => valueX.isAs<CodeableConcept>();
+  /// Getter for [targetCanonical] as a FhirCanonical
+  FhirCanonical? get targetCanonical => targetX.isAs<FhirCanonical>();
 
-  /// Getter for [valueBoolean] as a FhirBoolean
-  FhirBoolean? get valueBoolean => valueX.isAs<FhirBoolean>();
+  /// Getter for [targetReference] as a Reference
+  Reference? get targetReference => targetX.isAs<Reference>();
 
-  /// Getter for [valueQuantity] as a Quantity
-  Quantity? get valueQuantity => valueX.isAs<Quantity>();
-
-  /// Getter for [valueRange] as a Range
-  Range? get valueRange => valueX.isAs<Range>();
-
-  /// Getter for [valueReference] as a Reference
-  Reference? get valueReference => valueX.isAs<Reference>();
-
-  /// Getter for [valueId] as a FhirId
-  FhirId? get valueId => valueX.isAs<FhirId>();
-
-  /// [offset]
-  /// Defines the reference point for comparison when valueQuantity or
-  /// valueRange is not compared to zero.
-  final CodeableConcept? offset;
+  /// Getter for [targetMarkdown] as a FhirMarkdown
+  FhirMarkdown? get targetMarkdown => targetX.isAs<FhirMarkdown>();
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -2015,24 +1614,12 @@ class EvidenceVariableDefinitionByTypeAndValue extends BackboneElement {
       'type',
       type,
     );
+    final targetXFhirType = targetX.fhirType;
     addField(
-      'method',
-      method,
-    );
-    addField(
-      'device',
-      device,
-    );
-    final valueXFhirType = valueX.fhirType;
-    addField(
-      'value${valueXFhirType.capitalize()}',
-      valueX,
+      'target${targetXFhirType.capitalize()}',
+      targetX,
     );
 
-    addField(
-      'offset',
-      offset,
-    );
     return json;
   }
 
@@ -2044,10 +1631,7 @@ class EvidenceVariableDefinitionByTypeAndValue extends BackboneElement {
       'extension',
       'modifierExtension',
       'type',
-      'method',
-      'device',
-      'valueX',
-      'offset',
+      'targetX',
     ];
   }
 
@@ -2074,45 +1658,29 @@ class EvidenceVariableDefinitionByTypeAndValue extends BackboneElement {
         }
       case 'type':
         fields.add(type);
-      case 'method':
-        if (method != null) {
-          fields.addAll(method!);
+      case 'target':
+        fields.add(targetX);
+      case 'targetX':
+        fields.add(targetX);
+      case 'targetUri':
+        if (targetX is FhirUri) {
+          fields.add(targetX);
         }
-      case 'device':
-        if (device != null) {
-          fields.add(device!);
+      case 'targetAttachment':
+        if (targetX is Attachment) {
+          fields.add(targetX);
         }
-      case 'value':
-        fields.add(valueX);
-      case 'valueX':
-        fields.add(valueX);
-      case 'valueCodeableConcept':
-        if (valueX is CodeableConcept) {
-          fields.add(valueX);
+      case 'targetCanonical':
+        if (targetX is FhirCanonical) {
+          fields.add(targetX);
         }
-      case 'valueBoolean':
-        if (valueX is FhirBoolean) {
-          fields.add(valueX);
+      case 'targetReference':
+        if (targetX is Reference) {
+          fields.add(targetX);
         }
-      case 'valueQuantity':
-        if (valueX is Quantity) {
-          fields.add(valueX);
-        }
-      case 'valueRange':
-        if (valueX is Range) {
-          fields.add(valueX);
-        }
-      case 'valueReference':
-        if (valueX is Reference) {
-          fields.add(valueX);
-        }
-      case 'valueId':
-        if (valueX is FhirId) {
-          fields.add(valueX);
-        }
-      case 'offset':
-        if (offset != null) {
-          fields.add(offset!);
+      case 'targetMarkdown':
+        if (targetX is FhirMarkdown) {
+          fields.add(targetX);
         }
       default:
         if (checkValid) {
@@ -2133,26 +1701,24 @@ class EvidenceVariableDefinitionByTypeAndValue extends BackboneElement {
   }
 
   @override
-  EvidenceVariableDefinitionByTypeAndValue clone() => copyWith();
+  EvidenceVariableRelatesTo clone() => copyWith();
 
-  /// Copy function for [EvidenceVariableDefinitionByTypeAndValue]
+  /// Copy function for [EvidenceVariableRelatesTo]
   /// Returns a copy of the current instance with the provided fields modified.
   /// If a field is not provided, it will retain its original value.
   /// If a null is provided, this will clearn the field, unless the
   /// field is required, in which case it will keep its current value.
   @override
-  $EvidenceVariableDefinitionByTypeAndValueCopyWith<
-          EvidenceVariableDefinitionByTypeAndValue>
-      get copyWith => _$EvidenceVariableDefinitionByTypeAndValueCopyWithImpl<
-              EvidenceVariableDefinitionByTypeAndValue>(
-            this,
-            (value) => value,
-          );
+  $EvidenceVariableRelatesToCopyWith<EvidenceVariableRelatesTo> get copyWith =>
+      _$EvidenceVariableRelatesToCopyWithImpl<EvidenceVariableRelatesTo>(
+        this,
+        (value) => value,
+      );
 
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBase? o) {
-    if (o is! EvidenceVariableDefinitionByTypeAndValue) {
+    if (o is! EvidenceVariableRelatesTo) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -2181,27 +1747,9 @@ class EvidenceVariableDefinitionByTypeAndValue extends BackboneElement {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
-      method,
-      o.method,
-    )) {
-      return false;
-    }
     if (!equalsDeepWithNull(
-      device,
-      o.device,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      valueX,
-      o.valueX,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      offset,
-      o.offset,
+      targetX,
+      o.targetX,
     )) {
       return false;
     }
@@ -2209,28 +1757,26 @@ class EvidenceVariableDefinitionByTypeAndValue extends BackboneElement {
   }
 }
 
-/// [EvidenceVariableDefinitionByCombination]
-/// Defines the characteristic as a combination of two or more
-/// characteristics.
-class EvidenceVariableDefinitionByCombination extends BackboneElement {
+/// [EvidenceVariableDefinitionModifier]
+/// Further specification of the definition.
+class EvidenceVariableDefinitionModifier extends BackboneElement {
   /// Primary constructor for
-  /// [EvidenceVariableDefinitionByCombination]
+  /// [EvidenceVariableDefinitionModifier]
 
-  const EvidenceVariableDefinitionByCombination({
+  const EvidenceVariableDefinitionModifier({
     super.id,
     super.extension_,
     super.modifierExtension,
     required this.code,
-    this.threshold,
-    required this.characteristic,
+    required this.valueX,
     super.disallowExtensions,
   }) : super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory EvidenceVariableDefinitionByCombination.fromJson(
+  factory EvidenceVariableDefinitionModifier.fromJson(
     Map<String, dynamic> json,
   ) {
-    return EvidenceVariableDefinitionByCombination(
+    return EvidenceVariableDefinitionModifier(
       id: JsonParser.parsePrimitive<FhirString>(
         json,
         'id',
@@ -2250,42 +1796,45 @@ class EvidenceVariableDefinitionByCombination extends BackboneElement {
             ),
           )
           .toList(),
-      code: JsonParser.parsePrimitive<CharacteristicCombination>(
+      code: JsonParser.parseObject<CodeableConcept>(
         json,
         'code',
-        CharacteristicCombination.fromJson,
+        CodeableConcept.fromJson,
       )!,
-      threshold: JsonParser.parsePrimitive<FhirPositiveInt>(
+      valueX:
+          JsonParser.parsePolymorphic<ValueXEvidenceVariableDefinitionModifier>(
         json,
-        'threshold',
-        FhirPositiveInt.fromJson,
-      ),
-      characteristic: (json['characteristic'] as List<dynamic>)
-          .map<EvidenceVariableCharacteristic>(
-            (v) => EvidenceVariableCharacteristic.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
+        {
+          'valueCodeableConcept': CodeableConcept.fromJson,
+          'valueBoolean': FhirBoolean.fromJson,
+          'valueQuantity': Quantity.fromJson,
+          'valueRange': Range.fromJson,
+          'valuePeriod': Period.fromJson,
+          'valueRelativeTime': RelativeTime.fromJson,
+          'valueReference': Reference.fromJson,
+          'valueExpression': FhirExpression.fromJson,
+          'valueUri': FhirUri.fromJson,
+        },
+      )!,
     );
   }
 
-  /// Deserialize [EvidenceVariableDefinitionByCombination]
+  /// Deserialize [EvidenceVariableDefinitionModifier]
   /// from a [String] or [YamlMap] object
-  factory EvidenceVariableDefinitionByCombination.fromYaml(
+  factory EvidenceVariableDefinitionModifier.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return EvidenceVariableDefinitionByCombination.fromJson(
+      return EvidenceVariableDefinitionModifier.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return EvidenceVariableDefinitionByCombination.fromJson(
+      return EvidenceVariableDefinitionModifier.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'EvidenceVariableDefinitionByCombination '
+        'EvidenceVariableDefinitionModifier '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -2293,16 +1842,16 @@ class EvidenceVariableDefinitionByCombination extends BackboneElement {
   }
 
   /// Factory constructor for
-  /// [EvidenceVariableDefinitionByCombination]
+  /// [EvidenceVariableDefinitionModifier]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory EvidenceVariableDefinitionByCombination.fromJsonString(
+  factory EvidenceVariableDefinitionModifier.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return EvidenceVariableDefinitionByCombination.fromJson(json);
+      return EvidenceVariableDefinitionModifier.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -2310,20 +1859,42 @@ class EvidenceVariableDefinitionByCombination extends BackboneElement {
   }
 
   @override
-  String get fhirType => 'EvidenceVariableDefinitionByCombination';
+  String get fhirType => 'EvidenceVariableDefinitionModifier';
 
   /// [code]
-  /// Used to specify if two or more characteristics are combined with OR or
-  /// AND.
-  final CharacteristicCombination code;
+  /// Attribute of the definition.
+  final CodeableConcept code;
 
-  /// [threshold]
-  /// Provides the value of "n" when "at-least" or "at-most" codes are used.
-  final FhirPositiveInt? threshold;
+  /// [valueX]
+  /// Specification of the definition attribute.
+  final ValueXEvidenceVariableDefinitionModifier valueX;
 
-  /// [characteristic]
-  /// A defining factor of the characteristic.
-  final List<EvidenceVariableCharacteristic> characteristic;
+  /// Getter for [valueCodeableConcept] as a CodeableConcept
+  CodeableConcept? get valueCodeableConcept => valueX.isAs<CodeableConcept>();
+
+  /// Getter for [valueBoolean] as a FhirBoolean
+  FhirBoolean? get valueBoolean => valueX.isAs<FhirBoolean>();
+
+  /// Getter for [valueQuantity] as a Quantity
+  Quantity? get valueQuantity => valueX.isAs<Quantity>();
+
+  /// Getter for [valueRange] as a Range
+  Range? get valueRange => valueX.isAs<Range>();
+
+  /// Getter for [valuePeriod] as a Period
+  Period? get valuePeriod => valueX.isAs<Period>();
+
+  /// Getter for [valueRelativeTime] as a RelativeTime
+  RelativeTime? get valueRelativeTime => valueX.isAs<RelativeTime>();
+
+  /// Getter for [valueReference] as a Reference
+  Reference? get valueReference => valueX.isAs<Reference>();
+
+  /// Getter for [valueExpression] as a FhirExpression
+  FhirExpression? get valueExpression => valueX.isAs<FhirExpression>();
+
+  /// Getter for [valueUri] as a FhirUri
+  FhirUri? get valueUri => valueX.isAs<FhirUri>();
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -2403,14 +1974,12 @@ class EvidenceVariableDefinitionByCombination extends BackboneElement {
       'code',
       code,
     );
+    final valueXFhirType = valueX.fhirType;
     addField(
-      'threshold',
-      threshold,
+      'value${valueXFhirType.capitalize()}',
+      valueX,
     );
-    addField(
-      'characteristic',
-      characteristic,
-    );
+
     return json;
   }
 
@@ -2422,8 +1991,7 @@ class EvidenceVariableDefinitionByCombination extends BackboneElement {
       'extension',
       'modifierExtension',
       'code',
-      'threshold',
-      'characteristic',
+      'valueX',
     ];
   }
 
@@ -2450,12 +2018,46 @@ class EvidenceVariableDefinitionByCombination extends BackboneElement {
         }
       case 'code':
         fields.add(code);
-      case 'threshold':
-        if (threshold != null) {
-          fields.add(threshold!);
+      case 'value':
+        fields.add(valueX);
+      case 'valueX':
+        fields.add(valueX);
+      case 'valueCodeableConcept':
+        if (valueX is CodeableConcept) {
+          fields.add(valueX);
         }
-      case 'characteristic':
-        fields.addAll(characteristic);
+      case 'valueBoolean':
+        if (valueX is FhirBoolean) {
+          fields.add(valueX);
+        }
+      case 'valueQuantity':
+        if (valueX is Quantity) {
+          fields.add(valueX);
+        }
+      case 'valueRange':
+        if (valueX is Range) {
+          fields.add(valueX);
+        }
+      case 'valuePeriod':
+        if (valueX is Period) {
+          fields.add(valueX);
+        }
+      case 'valueRelativeTime':
+        if (valueX is RelativeTime) {
+          fields.add(valueX);
+        }
+      case 'valueReference':
+        if (valueX is Reference) {
+          fields.add(valueX);
+        }
+      case 'valueExpression':
+        if (valueX is FhirExpression) {
+          fields.add(valueX);
+        }
+      case 'valueUri':
+        if (valueX is FhirUri) {
+          fields.add(valueX);
+        }
       default:
         if (checkValid) {
           throw ArgumentError('Invalid name: $fieldName');
@@ -2475,18 +2077,18 @@ class EvidenceVariableDefinitionByCombination extends BackboneElement {
   }
 
   @override
-  EvidenceVariableDefinitionByCombination clone() => copyWith();
+  EvidenceVariableDefinitionModifier clone() => copyWith();
 
-  /// Copy function for [EvidenceVariableDefinitionByCombination]
+  /// Copy function for [EvidenceVariableDefinitionModifier]
   /// Returns a copy of the current instance with the provided fields modified.
   /// If a field is not provided, it will retain its original value.
   /// If a null is provided, this will clearn the field, unless the
   /// field is required, in which case it will keep its current value.
   @override
-  $EvidenceVariableDefinitionByCombinationCopyWith<
-          EvidenceVariableDefinitionByCombination>
-      get copyWith => _$EvidenceVariableDefinitionByCombinationCopyWithImpl<
-              EvidenceVariableDefinitionByCombination>(
+  $EvidenceVariableDefinitionModifierCopyWith<
+          EvidenceVariableDefinitionModifier>
+      get copyWith => _$EvidenceVariableDefinitionModifierCopyWithImpl<
+              EvidenceVariableDefinitionModifier>(
             this,
             (value) => value,
           );
@@ -2494,7 +2096,7 @@ class EvidenceVariableDefinitionByCombination extends BackboneElement {
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBase? o) {
-    if (o is! EvidenceVariableDefinitionByCombination) {
+    if (o is! EvidenceVariableDefinitionModifier) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -2524,443 +2126,8 @@ class EvidenceVariableDefinitionByCombination extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
-      threshold,
-      o.threshold,
-    )) {
-      return false;
-    }
-    if (!listEquals<EvidenceVariableCharacteristic>(
-      characteristic,
-      o.characteristic,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [EvidenceVariableTimeFromEvent]
-/// Timing in which the characteristic is determined.
-class EvidenceVariableTimeFromEvent extends BackboneElement {
-  /// Primary constructor for
-  /// [EvidenceVariableTimeFromEvent]
-
-  const EvidenceVariableTimeFromEvent({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.description,
-    this.note,
-    EventXEvidenceVariableTimeFromEvent? eventX,
-    CodeableConcept? eventCodeableConcept,
-    Reference? eventReference,
-    FhirDateTime? eventDateTime,
-    FhirId? eventId,
-    this.quantity,
-    this.range,
-    super.disallowExtensions,
-  })  : eventX = eventX ??
-            eventCodeableConcept ??
-            eventReference ??
-            eventDateTime ??
-            eventId,
-        super();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory EvidenceVariableTimeFromEvent.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return EvidenceVariableTimeFromEvent(
-      id: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'id',
-        FhirString.fromJson,
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      description: JsonParser.parsePrimitive<FhirMarkdown>(
-        json,
-        'description',
-        FhirMarkdown.fromJson,
-      ),
-      note: (json['note'] as List<dynamic>?)
-          ?.map<Annotation>(
-            (v) => Annotation.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      eventX: JsonParser.parsePolymorphic<EventXEvidenceVariableTimeFromEvent>(
-        json,
-        {
-          'eventCodeableConcept': CodeableConcept.fromJson,
-          'eventReference': Reference.fromJson,
-          'eventDateTime': FhirDateTime.fromJson,
-          'eventId': FhirId.fromJson,
-        },
-      ),
-      quantity: JsonParser.parseObject<Quantity>(
-        json,
-        'quantity',
-        Quantity.fromJson,
-      ),
-      range: JsonParser.parseObject<Range>(
-        json,
-        'range',
-        Range.fromJson,
-      ),
-    );
-  }
-
-  /// Deserialize [EvidenceVariableTimeFromEvent]
-  /// from a [String] or [YamlMap] object
-  factory EvidenceVariableTimeFromEvent.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return EvidenceVariableTimeFromEvent.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return EvidenceVariableTimeFromEvent.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'EvidenceVariableTimeFromEvent '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [EvidenceVariableTimeFromEvent]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory EvidenceVariableTimeFromEvent.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return EvidenceVariableTimeFromEvent.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'EvidenceVariableTimeFromEvent';
-
-  /// [description]
-  /// Human readable description.
-  final FhirMarkdown? description;
-
-  /// [note]
-  /// A human-readable string to clarify or explain concepts about the
-  /// timeFromEvent.
-  final List<Annotation>? note;
-
-  /// [eventX]
-  /// The event used as a base point (reference point) in time.
-  final EventXEvidenceVariableTimeFromEvent? eventX;
-
-  /// Getter for [eventCodeableConcept] as a CodeableConcept
-  CodeableConcept? get eventCodeableConcept => eventX?.isAs<CodeableConcept>();
-
-  /// Getter for [eventReference] as a Reference
-  Reference? get eventReference => eventX?.isAs<Reference>();
-
-  /// Getter for [eventDateTime] as a FhirDateTime
-  FhirDateTime? get eventDateTime => eventX?.isAs<FhirDateTime>();
-
-  /// Getter for [eventId] as a FhirId
-  FhirId? get eventId => eventX?.isAs<FhirId>();
-
-  /// [quantity]
-  /// Used to express the observation at a defined amount of time before or
-  /// after the event.
-  final Quantity? quantity;
-
-  /// [range]
-  /// Used to express the observation within a period before and/or after the
-  /// event.
-  final Range? range;
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    bool isNonEmpty(dynamic val) {
-      if (val == null) return false;
-      if (val is List && val.isEmpty) return false;
-      if (val is Map && val.isEmpty) return false;
-      return true;
-    }
-
-    void addField(String key, dynamic field) {
-      if (field == null) return;
-      if (!(field is FhirBase? || field is List<FhirBase>?)) {
-        throw ArgumentError('"field" must be a FhirBase type');
-      }
-      if (field is PrimitiveType) {
-        final fieldMap = field.toJson();
-        final val = fieldMap['value'];
-        final ext = fieldMap['_value'];
-        final hasVal = isNonEmpty(val);
-        final hasExt = isNonEmpty(ext);
-        if (hasVal) json[key] = val;
-        if (hasExt) json['_$key'] = ext;
-      } else if (field is List<FhirBase>) {
-        if (field.isEmpty) return;
-        final isPrimitive = field.first is PrimitiveType;
-        final tempList = <dynamic>[];
-        final tempExtensions = <dynamic>[];
-        for (final e in field) {
-          final itemMap = e.toJson();
-          if (!isNonEmpty(itemMap)) {
-            continue;
-          }
-          if (isPrimitive) {
-            final v = itemMap['value'];
-            final x = itemMap['_value'];
-            tempList.add(v);
-            tempExtensions.add(x);
-          } else {
-            tempList.add(itemMap);
-          }
-        }
-        if (tempList.isEmpty) return;
-        if (isPrimitive) {
-          final hasAnyValues = tempList.any((v) => v != null);
-          if (hasAnyValues) {
-            json[key] = tempList;
-          }
-          final anyExt = tempExtensions.any(isNonEmpty);
-          if (anyExt) {
-            json['_$key'] = tempExtensions;
-          }
-        } else {
-          json[key] = tempList;
-        }
-      } else if (field is FhirBase) {
-        final subMap = field.toJson();
-        if (isNonEmpty(subMap)) {
-          json[key] = subMap;
-        }
-      }
-    }
-
-    addField(
-      'id',
-      id,
-    );
-    addField(
-      'extension',
-      extension_,
-    );
-    addField(
-      'modifierExtension',
-      modifierExtension,
-    );
-    addField(
-      'description',
-      description,
-    );
-    addField(
-      'note',
-      note,
-    );
-    if (eventX != null) {
-      final fhirType = eventX!.fhirType;
-      addField(
-        'event${fhirType.capitalize()}',
-        eventX,
-      );
-    }
-
-    addField(
-      'quantity',
-      quantity,
-    );
-    addField(
-      'range',
-      range,
-    );
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'description',
-      'note',
-      'eventX',
-      'quantity',
-      'range',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBase> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBase>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'description':
-        if (description != null) {
-          fields.add(description!);
-        }
-      case 'note':
-        if (note != null) {
-          fields.addAll(note!);
-        }
-      case 'event':
-        fields.add(eventX!);
-      case 'eventX':
-        fields.add(eventX!);
-      case 'eventCodeableConcept':
-        if (eventX is CodeableConcept) {
-          fields.add(eventX!);
-        }
-      case 'eventReference':
-        if (eventX is Reference) {
-          fields.add(eventX!);
-        }
-      case 'eventDateTime':
-        if (eventX is FhirDateTime) {
-          fields.add(eventX!);
-        }
-      case 'eventId':
-        if (eventX is FhirId) {
-          fields.add(eventX!);
-        }
-      case 'quantity':
-        if (quantity != null) {
-          fields.add(quantity!);
-        }
-      case 'range':
-        if (range != null) {
-          fields.add(range!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBase? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  EvidenceVariableTimeFromEvent clone() => copyWith();
-
-  /// Copy function for [EvidenceVariableTimeFromEvent]
-  /// Returns a copy of the current instance with the provided fields modified.
-  /// If a field is not provided, it will retain its original value.
-  /// If a null is provided, this will clearn the field, unless the
-  /// field is required, in which case it will keep its current value.
-  @override
-  $EvidenceVariableTimeFromEventCopyWith<EvidenceVariableTimeFromEvent>
-      get copyWith => _$EvidenceVariableTimeFromEventCopyWithImpl<
-              EvidenceVariableTimeFromEvent>(
-            this,
-            (value) => value,
-          );
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBase? o) {
-    if (o is! EvidenceVariableTimeFromEvent) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      description,
-      o.description,
-    )) {
-      return false;
-    }
-    if (!listEquals<Annotation>(
-      note,
-      o.note,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      eventX,
-      o.eventX,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      quantity,
-      o.quantity,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      range,
-      o.range,
+      valueX,
+      o.valueX,
     )) {
       return false;
     }
@@ -2969,7 +2136,7 @@ class EvidenceVariableTimeFromEvent extends BackboneElement {
 }
 
 /// [EvidenceVariableCategory]
-/// A grouping for ordinal or polychotomous variables.
+/// A grouping for dichotomous, ordinal, or polychotomouos variables.
 class EvidenceVariableCategory extends BackboneElement {
   /// Primary constructor for
   /// [EvidenceVariableCategory]
@@ -2983,8 +2150,13 @@ class EvidenceVariableCategory extends BackboneElement {
     CodeableConcept? valueCodeableConcept,
     Quantity? valueQuantity,
     Range? valueRange,
+    Reference? valueReference,
     super.disallowExtensions,
-  })  : valueX = valueX ?? valueCodeableConcept ?? valueQuantity ?? valueRange,
+  })  : valueX = valueX ??
+            valueCodeableConcept ??
+            valueQuantity ??
+            valueRange ??
+            valueReference,
         super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -3022,6 +2194,7 @@ class EvidenceVariableCategory extends BackboneElement {
           'valueCodeableConcept': CodeableConcept.fromJson,
           'valueQuantity': Quantity.fromJson,
           'valueRange': Range.fromJson,
+          'valueReference': Reference.fromJson,
         },
       ),
     );
@@ -3085,6 +2258,9 @@ class EvidenceVariableCategory extends BackboneElement {
 
   /// Getter for [valueRange] as a Range
   Range? get valueRange => valueX?.isAs<Range>();
+
+  /// Getter for [valueReference] as a Reference
+  Reference? get valueReference => valueX?.isAs<Reference>();
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -3228,6 +2404,10 @@ class EvidenceVariableCategory extends BackboneElement {
         if (valueX is Range) {
           fields.add(valueX!);
         }
+      case 'valueReference':
+        if (valueX is Reference) {
+          fields.add(valueX!);
+        }
       default:
         if (checkValid) {
           throw ArgumentError('Invalid name: $fieldName');
@@ -3296,6 +2476,930 @@ class EvidenceVariableCategory extends BackboneElement {
     if (!equalsDeepWithNull(
       valueX,
       o.valueX,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [EvidenceVariableDataStorage]
+/// How the data element is organized and where the data element
+/// (expressing the value of the variable) is found in the dataset.
+class EvidenceVariableDataStorage extends BackboneElement {
+  /// Primary constructor for
+  /// [EvidenceVariableDataStorage]
+
+  const EvidenceVariableDataStorage({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.datatype,
+    this.path,
+    this.delimiter,
+    this.component,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory EvidenceVariableDataStorage.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return EvidenceVariableDataStorage(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      datatype: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'datatype',
+        CodeableConcept.fromJson,
+      ),
+      path: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'path',
+        FhirString.fromJson,
+      ),
+      delimiter: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'delimiter',
+        FhirString.fromJson,
+      ),
+      component: (json['component'] as List<dynamic>?)
+          ?.map<EvidenceVariableDataStorage>(
+            (v) => EvidenceVariableDataStorage.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  /// Deserialize [EvidenceVariableDataStorage]
+  /// from a [String] or [YamlMap] object
+  factory EvidenceVariableDataStorage.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return EvidenceVariableDataStorage.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return EvidenceVariableDataStorage.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'EvidenceVariableDataStorage '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [EvidenceVariableDataStorage]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory EvidenceVariableDataStorage.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return EvidenceVariableDataStorage.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'EvidenceVariableDataStorage';
+
+  /// [datatype]
+  /// The type of data used to express values of the variable.
+  final CodeableConcept? datatype;
+
+  /// [path]
+  /// The mapping (order of elements) to reach the element containing the
+  /// data element in the dataset.
+  final FhirString? path;
+
+  /// [delimiter]
+  /// A character or series of characters that is used within a string to
+  /// signal the separation of discrete values.
+  final FhirString? delimiter;
+
+  /// [component]
+  /// A part of the value for a variable that is stored in 2 or more parts.
+  final List<EvidenceVariableDataStorage>? component;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'datatype',
+      datatype,
+    );
+    addField(
+      'path',
+      path,
+    );
+    addField(
+      'delimiter',
+      delimiter,
+    );
+    addField(
+      'component',
+      component,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'datatype',
+      'path',
+      'delimiter',
+      'component',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'datatype':
+        if (datatype != null) {
+          fields.add(datatype!);
+        }
+      case 'path':
+        if (path != null) {
+          fields.add(path!);
+        }
+      case 'delimiter':
+        if (delimiter != null) {
+          fields.add(delimiter!);
+        }
+      case 'component':
+        if (component != null) {
+          fields.addAll(component!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  EvidenceVariableDataStorage clone() => copyWith();
+
+  /// Copy function for [EvidenceVariableDataStorage]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $EvidenceVariableDataStorageCopyWith<EvidenceVariableDataStorage>
+      get copyWith => _$EvidenceVariableDataStorageCopyWithImpl<
+              EvidenceVariableDataStorage>(
+            this,
+            (value) => value,
+          );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! EvidenceVariableDataStorage) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      datatype,
+      o.datatype,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      path,
+      o.path,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      delimiter,
+      o.delimiter,
+    )) {
+      return false;
+    }
+    if (!listEquals<EvidenceVariableDataStorage>(
+      component,
+      o.component,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [EvidenceVariableConstraint]
+/// Limit on acceptability of data used to express values of the variable.
+class EvidenceVariableConstraint extends BackboneElement {
+  /// Primary constructor for
+  /// [EvidenceVariableConstraint]
+
+  const EvidenceVariableConstraint({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.conditional,
+    this.minimumQuantity,
+    this.maximumQuantity,
+    this.earliestDateTime,
+    this.latestDateTime,
+    this.minimumStringLength,
+    this.maximumStringLength,
+    this.code,
+    this.expression,
+    this.expectedValueSet,
+    this.expectedUnitsValueSet,
+    this.anyValueAllowed,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory EvidenceVariableConstraint.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return EvidenceVariableConstraint(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      conditional: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'conditional',
+        CodeableConcept.fromJson,
+      ),
+      minimumQuantity: JsonParser.parseObject<Quantity>(
+        json,
+        'minimumQuantity',
+        Quantity.fromJson,
+      ),
+      maximumQuantity: JsonParser.parseObject<Quantity>(
+        json,
+        'maximumQuantity',
+        Quantity.fromJson,
+      ),
+      earliestDateTime: JsonParser.parsePrimitive<FhirDateTime>(
+        json,
+        'earliestDateTime',
+        FhirDateTime.fromJson,
+      ),
+      latestDateTime: JsonParser.parsePrimitive<FhirDateTime>(
+        json,
+        'latestDateTime',
+        FhirDateTime.fromJson,
+      ),
+      minimumStringLength: JsonParser.parsePrimitive<FhirUnsignedInt>(
+        json,
+        'minimumStringLength',
+        FhirUnsignedInt.fromJson,
+      ),
+      maximumStringLength: JsonParser.parsePrimitive<FhirPositiveInt>(
+        json,
+        'maximumStringLength',
+        FhirPositiveInt.fromJson,
+      ),
+      code: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'code',
+        CodeableConcept.fromJson,
+      ),
+      expression: JsonParser.parseObject<FhirExpression>(
+        json,
+        'expression',
+        FhirExpression.fromJson,
+      ),
+      expectedValueSet: JsonParser.parseObject<Reference>(
+        json,
+        'expectedValueSet',
+        Reference.fromJson,
+      ),
+      expectedUnitsValueSet: JsonParser.parseObject<Reference>(
+        json,
+        'expectedUnitsValueSet',
+        Reference.fromJson,
+      ),
+      anyValueAllowed: JsonParser.parsePrimitive<FhirBoolean>(
+        json,
+        'anyValueAllowed',
+        FhirBoolean.fromJson,
+      ),
+    );
+  }
+
+  /// Deserialize [EvidenceVariableConstraint]
+  /// from a [String] or [YamlMap] object
+  factory EvidenceVariableConstraint.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return EvidenceVariableConstraint.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return EvidenceVariableConstraint.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'EvidenceVariableConstraint '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [EvidenceVariableConstraint]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory EvidenceVariableConstraint.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return EvidenceVariableConstraint.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'EvidenceVariableConstraint';
+
+  /// [conditional]
+  /// The context, situation, or parameters that determine whether this
+  /// constraint applies.
+  final CodeableConcept? conditional;
+
+  /// [minimumQuantity]
+  /// The lowest permissible value of the variable, used with variables that
+  /// have a number-based datatype (with or without units).
+  final Quantity? minimumQuantity;
+
+  /// [maximumQuantity]
+  /// The highest permissible value of the variable, used with variables that
+  /// have a number-based datatype (with or without units).
+  final Quantity? maximumQuantity;
+
+  /// [earliestDateTime]
+  /// The earliest permissible value of the variable, used with variables
+  /// that have a date-based or dateTime-based datatype.
+  final FhirDateTime? earliestDateTime;
+
+  /// [latestDateTime]
+  /// The latest permissible value of the variable, used with variables that
+  /// have a date-based or dateTime-based datatype.
+  final FhirDateTime? latestDateTime;
+
+  /// [minimumStringLength]
+  /// The lowest number of characters allowed for a value of the variable,
+  /// used with variables that have a string-based datatype.
+  final FhirUnsignedInt? minimumStringLength;
+
+  /// [maximumStringLength]
+  /// The highest number of characters allowed for a value of the variable,
+  /// used with variables that have a string-based datatype.
+  final FhirPositiveInt? maximumStringLength;
+
+  /// [code]
+  /// A rule, such as a format or other expectation, for the data values.
+  final CodeableConcept? code;
+
+  /// [expression]
+  /// A rule, such as a format or other expectation, for the data values,
+  /// expressed as an Expression.
+  final FhirExpression? expression;
+
+  /// [expectedValueSet]
+  /// List of anticipated values used to express value of the variable, used
+  /// with variables that have a codeable concept-based datatype.
+  final Reference? expectedValueSet;
+
+  /// [expectedUnitsValueSet]
+  /// List of anticipated values used to express units for the value of the
+  /// variable, used with variables that have a Quantity-based datatype.
+  final Reference? expectedUnitsValueSet;
+
+  /// [anyValueAllowed]
+  /// Whether the value expressed for a variable is allowed to not be
+  /// restricted to the expected value set.
+  final FhirBoolean? anyValueAllowed;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'conditional',
+      conditional,
+    );
+    addField(
+      'minimumQuantity',
+      minimumQuantity,
+    );
+    addField(
+      'maximumQuantity',
+      maximumQuantity,
+    );
+    addField(
+      'earliestDateTime',
+      earliestDateTime,
+    );
+    addField(
+      'latestDateTime',
+      latestDateTime,
+    );
+    addField(
+      'minimumStringLength',
+      minimumStringLength,
+    );
+    addField(
+      'maximumStringLength',
+      maximumStringLength,
+    );
+    addField(
+      'code',
+      code,
+    );
+    addField(
+      'expression',
+      expression,
+    );
+    addField(
+      'expectedValueSet',
+      expectedValueSet,
+    );
+    addField(
+      'expectedUnitsValueSet',
+      expectedUnitsValueSet,
+    );
+    addField(
+      'anyValueAllowed',
+      anyValueAllowed,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'conditional',
+      'minimumQuantity',
+      'maximumQuantity',
+      'earliestDateTime',
+      'latestDateTime',
+      'minimumStringLength',
+      'maximumStringLength',
+      'code',
+      'expression',
+      'expectedValueSet',
+      'expectedUnitsValueSet',
+      'anyValueAllowed',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'conditional':
+        if (conditional != null) {
+          fields.add(conditional!);
+        }
+      case 'minimumQuantity':
+        if (minimumQuantity != null) {
+          fields.add(minimumQuantity!);
+        }
+      case 'maximumQuantity':
+        if (maximumQuantity != null) {
+          fields.add(maximumQuantity!);
+        }
+      case 'earliestDateTime':
+        if (earliestDateTime != null) {
+          fields.add(earliestDateTime!);
+        }
+      case 'latestDateTime':
+        if (latestDateTime != null) {
+          fields.add(latestDateTime!);
+        }
+      case 'minimumStringLength':
+        if (minimumStringLength != null) {
+          fields.add(minimumStringLength!);
+        }
+      case 'maximumStringLength':
+        if (maximumStringLength != null) {
+          fields.add(maximumStringLength!);
+        }
+      case 'code':
+        if (code != null) {
+          fields.add(code!);
+        }
+      case 'expression':
+        if (expression != null) {
+          fields.add(expression!);
+        }
+      case 'expectedValueSet':
+        if (expectedValueSet != null) {
+          fields.add(expectedValueSet!);
+        }
+      case 'expectedUnitsValueSet':
+        if (expectedUnitsValueSet != null) {
+          fields.add(expectedUnitsValueSet!);
+        }
+      case 'anyValueAllowed':
+        if (anyValueAllowed != null) {
+          fields.add(anyValueAllowed!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  EvidenceVariableConstraint clone() => copyWith();
+
+  /// Copy function for [EvidenceVariableConstraint]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $EvidenceVariableConstraintCopyWith<EvidenceVariableConstraint>
+      get copyWith =>
+          _$EvidenceVariableConstraintCopyWithImpl<EvidenceVariableConstraint>(
+            this,
+            (value) => value,
+          );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! EvidenceVariableConstraint) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      conditional,
+      o.conditional,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      minimumQuantity,
+      o.minimumQuantity,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      maximumQuantity,
+      o.maximumQuantity,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      earliestDateTime,
+      o.earliestDateTime,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      latestDateTime,
+      o.latestDateTime,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      minimumStringLength,
+      o.minimumStringLength,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      maximumStringLength,
+      o.maximumStringLength,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      code,
+      o.code,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      expression,
+      o.expression,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      expectedValueSet,
+      o.expectedValueSet,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      expectedUnitsValueSet,
+      o.expectedUnitsValueSet,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      anyValueAllowed,
+      o.anyValueAllowed,
     )) {
       return false;
     }

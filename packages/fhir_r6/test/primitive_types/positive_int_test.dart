@@ -25,7 +25,7 @@ void positiveIntTest() {
         () {
       expect(
         () => FhirPositiveInt.fromJson({'value': 'invalid'}),
-        throwsA(isA<TypeError>()),
+        throwsA(isA<ArgumentError>()),
       );
     });
 
@@ -130,4 +130,7 @@ void positiveIntTest() {
       expect(fhirInteger.toJsonString(), equals('{"value":$validInteger}'));
     });
   });
+}
+void main() {
+  positiveIntTest();
 }

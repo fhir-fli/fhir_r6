@@ -1076,7 +1076,7 @@ Future<void> testArgFxns() async {
   test('combine', () async {
     expect(
       // ignore: inference_failure_on_function_invocation
-      listEquals(
+      patient3.listEquals(
         await walkFhirPath(
           context: patient3,
           pathExpression: '%a.combine(%b)',
@@ -1601,5 +1601,24 @@ Future<void> testArgFxns() async {
     });
   });
 
-  // TODO(Dokotela): trace
+  test('trace', () async {
+    // Test trace with one parameter (logs name and focus)
+    final engine = await FHIRPathEngine.create(WorkerContext());
+    final result = await engine.evaluateFromPath(
+      patient1,
+      "Patient.name.family.trace('familyName')",
+    );
+    expect(result, isNotEmpty);
+    expect(engine.fpContext.fpLog.toString(), contains('familyName'));
+
+    // Test trace with two parameters (logs name and value)
+    engine.fpContext.fpLog.clear();
+    final result2 = await engine.evaluateFromPath(
+      patient1,
+      "Patient.name.family.trace('familyName', 'Doe')",
+    );
+    expect(result2, isNotEmpty);
+    expect(engine.fpContext.fpLog.toString(), contains('familyName'));
+    expect(engine.fpContext.fpLog.toString(), contains('Doe'));
+  });
 }

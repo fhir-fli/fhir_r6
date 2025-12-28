@@ -5,8 +5,9 @@ import 'package:yaml/yaml.dart';
 part 'care_team.g.dart';
 
 /// [CareTeam]
-/// The Care Team includes all the people and organizations who plan to
-/// participate in the coordination and delivery of care.
+/// The Care Team includes all the people, organizations, and care teams
+/// who participate or plan to participate in the coordination and delivery
+/// of care.
 class CareTeam extends DomainResource {
   /// Primary constructor for
   /// [CareTeam]
@@ -678,11 +679,11 @@ class CareTeamParticipant extends BackboneElement {
     this.role,
     this.member,
     this.onBehalfOf,
-    CoverageXCareTeamParticipant? coverageX,
-    Period? coveragePeriod,
-    Timing? coverageTiming,
+    EffectiveXCareTeamParticipant? effectiveX,
+    Period? effectivePeriod,
+    Timing? effectiveTiming,
     super.disallowExtensions,
-  })  : coverageX = coverageX ?? coveragePeriod ?? coverageTiming,
+  })  : effectiveX = effectiveX ?? effectivePeriod ?? effectiveTiming,
         super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -724,11 +725,11 @@ class CareTeamParticipant extends BackboneElement {
         'onBehalfOf',
         Reference.fromJson,
       ),
-      coverageX: JsonParser.parsePolymorphic<CoverageXCareTeamParticipant>(
+      effectiveX: JsonParser.parsePolymorphic<EffectiveXCareTeamParticipant>(
         json,
         {
-          'coveragePeriod': Period.fromJson,
-          'coverageTiming': Timing.fromJson,
+          'effectivePeriod': Period.fromJson,
+          'effectiveTiming': Timing.fromJson,
         },
       ),
     );
@@ -788,18 +789,19 @@ class CareTeamParticipant extends BackboneElement {
   final Reference? member;
 
   /// [onBehalfOf]
-  /// The organization of the practitioner.
+  /// Entity that the participant is acting as a proxy of, or an agent of, or
+  /// in the interest of, or as a representative of.
   final Reference? onBehalfOf;
 
-  /// [coverageX]
+  /// [effectiveX]
   /// When the member is generally available within this care team.
-  final CoverageXCareTeamParticipant? coverageX;
+  final EffectiveXCareTeamParticipant? effectiveX;
 
-  /// Getter for [coveragePeriod] as a Period
-  Period? get coveragePeriod => coverageX?.isAs<Period>();
+  /// Getter for [effectivePeriod] as a Period
+  Period? get effectivePeriod => effectiveX?.isAs<Period>();
 
-  /// Getter for [coverageTiming] as a Timing
-  Timing? get coverageTiming => coverageX?.isAs<Timing>();
+  /// Getter for [effectiveTiming] as a Timing
+  Timing? get effectiveTiming => effectiveX?.isAs<Timing>();
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -887,11 +889,11 @@ class CareTeamParticipant extends BackboneElement {
       'onBehalfOf',
       onBehalfOf,
     );
-    if (coverageX != null) {
-      final fhirType = coverageX!.fhirType;
+    if (effectiveX != null) {
+      final fhirType = effectiveX!.fhirType;
       addField(
-        'coverage${fhirType.capitalize()}',
-        coverageX,
+        'effective${fhirType.capitalize()}',
+        effectiveX,
       );
     }
 
@@ -908,7 +910,7 @@ class CareTeamParticipant extends BackboneElement {
       'role',
       'member',
       'onBehalfOf',
-      'coverageX',
+      'effectiveX',
     ];
   }
 
@@ -945,17 +947,17 @@ class CareTeamParticipant extends BackboneElement {
         if (onBehalfOf != null) {
           fields.add(onBehalfOf!);
         }
-      case 'coverage':
-        fields.add(coverageX!);
-      case 'coverageX':
-        fields.add(coverageX!);
-      case 'coveragePeriod':
-        if (coverageX is Period) {
-          fields.add(coverageX!);
+      case 'effective':
+        fields.add(effectiveX!);
+      case 'effectiveX':
+        fields.add(effectiveX!);
+      case 'effectivePeriod':
+        if (effectiveX is Period) {
+          fields.add(effectiveX!);
         }
-      case 'coverageTiming':
-        if (coverageX is Timing) {
-          fields.add(coverageX!);
+      case 'effectiveTiming':
+        if (effectiveX is Timing) {
+          fields.add(effectiveX!);
         }
       default:
         if (checkValid) {
@@ -1035,8 +1037,8 @@ class CareTeamParticipant extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
-      coverageX,
-      o.coverageX,
+      effectiveX,
+      o.effectiveX,
     )) {
       return false;
     }

@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'dart:convert';
 import 'package:fhir_r6/fhir_r6.dart'
     show
@@ -15,12 +13,12 @@ import 'package:fhir_r6/fhir_r6.dart'
         CitationPublicationForm,
         CitationPublishedIn,
         CitationRelatesTo,
+        CitationRelatesTo1,
         CitationStatusDate,
         CitationStatusDate1,
         CitationSummary,
         CitationSummary1,
         CitationTitle,
-        CitationVersion,
         CitationWebLocation,
         R6ResourceType,
         yamlMapToJson,
@@ -58,6 +56,7 @@ class CitationBuilder extends MetadataResourceBuilder {
     super.status,
     super.experimental,
     super.date,
+    super.author,
     super.publisher,
     super.contact,
     super.description,
@@ -69,7 +68,7 @@ class CitationBuilder extends MetadataResourceBuilder {
     super.approvalDate,
     super.lastReviewDate,
     super.effectivePeriod,
-    super.author,
+    this.recorder,
     super.editor,
     super.reviewer,
     super.endorser,
@@ -78,7 +77,7 @@ class CitationBuilder extends MetadataResourceBuilder {
     this.note,
     this.currentState,
     this.statusDate,
-    super.relatedArtifact,
+    this.relatesTo,
     this.citedArtifact,
   })  : versionAlgorithmX = versionAlgorithmX ??
             versionAlgorithmString ??
@@ -221,6 +220,16 @@ class CitationBuilder extends MetadataResourceBuilder {
         FhirDateTimeBuilder.fromJson,
         '$objectPath.date',
       ),
+      author: (json['author'] as List<dynamic>?)
+          ?.map<ContactDetailBuilder>(
+            (v) => ContactDetailBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.author',
+              },
+            ),
+          )
+          .toList(),
       publisher: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'publisher',
@@ -299,12 +308,12 @@ class CitationBuilder extends MetadataResourceBuilder {
         PeriodBuilder.fromJson,
         '$objectPath.effectivePeriod',
       ),
-      author: (json['author'] as List<dynamic>?)
+      recorder: (json['recorder'] as List<dynamic>?)
           ?.map<ContactDetailBuilder>(
             (v) => ContactDetailBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.author',
+                'objectPath': '$objectPath.recorder',
               },
             ),
           )
@@ -389,12 +398,12 @@ class CitationBuilder extends MetadataResourceBuilder {
             ),
           )
           .toList(),
-      relatedArtifact: (json['relatedArtifact'] as List<dynamic>?)
-          ?.map<RelatedArtifactBuilder>(
-            (v) => RelatedArtifactBuilder.fromJson(
+      relatesTo: (json['relatesTo'] as List<dynamic>?)
+          ?.map<CitationRelatesToBuilder>(
+            (v) => CitationRelatesToBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.relatedArtifact',
+                'objectPath': '$objectPath.relatesTo',
               },
             ),
           )
@@ -496,6 +505,10 @@ class CitationBuilder extends MetadataResourceBuilder {
   /// 'Some rights reserved').
   FhirStringBuilder? copyrightLabel;
 
+  /// [recorder]
+  /// Who entered the data for the citation record.
+  List<ContactDetailBuilder>? recorder;
+
   /// [summary]
   /// A human-readable display of key concepts to represent the citation.
   List<CitationSummaryBuilder>? summary;
@@ -516,6 +529,11 @@ class CitationBuilder extends MetadataResourceBuilder {
   /// The state or status of the citation record paired with an effective
   /// date or period for that state.
   List<CitationStatusDateBuilder>? statusDate;
+
+  /// [relatesTo]
+  /// Relationships that this Citation has with other FHIR or non-FHIR
+  /// resources that already exist.
+  List<CitationRelatesToBuilder>? relatesTo;
 
   /// [citedArtifact]
   /// The article or artifact being described.
@@ -582,6 +600,7 @@ class CitationBuilder extends MetadataResourceBuilder {
     addField('status', status);
     addField('experimental', experimental);
     addField('date', date);
+    addField('author', author);
     addField('publisher', publisher);
     addField('contact', contact);
     addField('description', description);
@@ -593,7 +612,7 @@ class CitationBuilder extends MetadataResourceBuilder {
     addField('approvalDate', approvalDate);
     addField('lastReviewDate', lastReviewDate);
     addField('effectivePeriod', effectivePeriod);
-    addField('author', author);
+    addField('recorder', recorder);
     addField('editor', editor);
     addField('reviewer', reviewer);
     addField('endorser', endorser);
@@ -602,7 +621,7 @@ class CitationBuilder extends MetadataResourceBuilder {
     addField('note', note);
     addField('currentState', currentState);
     addField('statusDate', statusDate);
-    addField('relatedArtifact', relatedArtifact);
+    addField('relatesTo', relatesTo);
     addField('citedArtifact', citedArtifact);
     return json;
   }
@@ -628,6 +647,7 @@ class CitationBuilder extends MetadataResourceBuilder {
       'status',
       'experimental',
       'date',
+      'author',
       'publisher',
       'contact',
       'description',
@@ -639,7 +659,7 @@ class CitationBuilder extends MetadataResourceBuilder {
       'approvalDate',
       'lastReviewDate',
       'effectivePeriod',
-      'author',
+      'recorder',
       'editor',
       'reviewer',
       'endorser',
@@ -648,7 +668,7 @@ class CitationBuilder extends MetadataResourceBuilder {
       'note',
       'currentState',
       'statusDate',
-      'relatedArtifact',
+      'relatesTo',
       'citedArtifact',
     ];
   }
@@ -742,6 +762,10 @@ class CitationBuilder extends MetadataResourceBuilder {
         if (date != null) {
           fields.add(date!);
         }
+      case 'author':
+        if (author != null) {
+          fields.addAll(author!);
+        }
       case 'publisher':
         if (publisher != null) {
           fields.add(publisher!);
@@ -786,9 +810,9 @@ class CitationBuilder extends MetadataResourceBuilder {
         if (effectivePeriod != null) {
           fields.add(effectivePeriod!);
         }
-      case 'author':
-        if (author != null) {
-          fields.addAll(author!);
+      case 'recorder':
+        if (recorder != null) {
+          fields.addAll(recorder!);
         }
       case 'editor':
         if (editor != null) {
@@ -822,9 +846,9 @@ class CitationBuilder extends MetadataResourceBuilder {
         if (statusDate != null) {
           fields.addAll(statusDate!);
         }
-      case 'relatedArtifact':
-        if (relatedArtifact != null) {
-          fields.addAll(relatedArtifact!);
+      case 'relatesTo':
+        if (relatesTo != null) {
+          fields.addAll(relatesTo!);
         }
       case 'citedArtifact':
         if (citedArtifact != null) {
@@ -1181,6 +1205,22 @@ class CitationBuilder extends MetadataResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'author':
+        {
+          if (child is List<ContactDetailBuilder>) {
+            // Replace or create new list
+            author = child;
+            return;
+          } else if (child is ContactDetailBuilder) {
+            // Add single element to existing list or create new list
+            author = [
+              ...(author ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'publisher':
         {
           if (child is FhirStringBuilder) {
@@ -1377,16 +1417,16 @@ class CitationBuilder extends MetadataResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'author':
+      case 'recorder':
         {
           if (child is List<ContactDetailBuilder>) {
             // Replace or create new list
-            author = child;
+            recorder = child;
             return;
           } else if (child is ContactDetailBuilder) {
             // Add single element to existing list or create new list
-            author = [
-              ...(author ?? []),
+            recorder = [
+              ...(recorder ?? []),
               child,
             ];
             return;
@@ -1521,16 +1561,16 @@ class CitationBuilder extends MetadataResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'relatedArtifact':
+      case 'relatesTo':
         {
-          if (child is List<RelatedArtifactBuilder>) {
+          if (child is List<CitationRelatesToBuilder>) {
             // Replace or create new list
-            relatedArtifact = child;
+            relatesTo = child;
             return;
-          } else if (child is RelatedArtifactBuilder) {
+          } else if (child is CitationRelatesToBuilder) {
             // Add single element to existing list or create new list
-            relatedArtifact = [
-              ...(relatedArtifact ?? []),
+            relatesTo = [
+              ...(relatesTo ?? []),
               child,
             ];
             return;
@@ -1597,6 +1637,8 @@ class CitationBuilder extends MetadataResourceBuilder {
         return ['FhirBooleanBuilder'];
       case 'date':
         return ['FhirDateTimeBuilder'];
+      case 'author':
+        return ['ContactDetailBuilder'];
       case 'publisher':
         return ['FhirStringBuilder'];
       case 'contact':
@@ -1619,7 +1661,7 @@ class CitationBuilder extends MetadataResourceBuilder {
         return ['FhirDateBuilder'];
       case 'effectivePeriod':
         return ['PeriodBuilder'];
-      case 'author':
+      case 'recorder':
         return ['ContactDetailBuilder'];
       case 'editor':
         return ['ContactDetailBuilder'];
@@ -1637,8 +1679,8 @@ class CitationBuilder extends MetadataResourceBuilder {
         return ['CodeableConceptBuilder'];
       case 'statusDate':
         return ['CitationStatusDateBuilder'];
-      case 'relatedArtifact':
-        return ['RelatedArtifactBuilder'];
+      case 'relatesTo':
+        return ['CitationRelatesToBuilder'];
       case 'citedArtifact':
         return ['CitationCitedArtifactBuilder'];
       default:
@@ -1743,6 +1785,11 @@ class CitationBuilder extends MetadataResourceBuilder {
           date = FhirDateTimeBuilder.empty();
           return;
         }
+      case 'author':
+        {
+          author = <ContactDetailBuilder>[];
+          return;
+        }
       case 'publisher':
         {
           publisher = FhirStringBuilder.empty();
@@ -1798,9 +1845,9 @@ class CitationBuilder extends MetadataResourceBuilder {
           effectivePeriod = PeriodBuilder.empty();
           return;
         }
-      case 'author':
+      case 'recorder':
         {
-          author = <ContactDetailBuilder>[];
+          recorder = <ContactDetailBuilder>[];
           return;
         }
       case 'editor':
@@ -1843,9 +1890,9 @@ class CitationBuilder extends MetadataResourceBuilder {
           statusDate = <CitationStatusDateBuilder>[];
           return;
         }
-      case 'relatedArtifact':
+      case 'relatesTo':
         {
-          relatedArtifact = <RelatedArtifactBuilder>[];
+          relatesTo = <CitationRelatesToBuilder>[];
           return;
         }
       case 'citedArtifact':
@@ -1879,6 +1926,7 @@ class CitationBuilder extends MetadataResourceBuilder {
     PublicationStatusBuilder? status,
     FhirBooleanBuilder? experimental,
     FhirDateTimeBuilder? date,
+    List<ContactDetailBuilder>? author,
     FhirStringBuilder? publisher,
     List<ContactDetailBuilder>? contact,
     FhirMarkdownBuilder? description,
@@ -1890,7 +1938,7 @@ class CitationBuilder extends MetadataResourceBuilder {
     FhirDateBuilder? approvalDate,
     FhirDateBuilder? lastReviewDate,
     PeriodBuilder? effectivePeriod,
-    List<ContactDetailBuilder>? author,
+    List<ContactDetailBuilder>? recorder,
     List<ContactDetailBuilder>? editor,
     List<ContactDetailBuilder>? reviewer,
     List<ContactDetailBuilder>? endorser,
@@ -1899,7 +1947,7 @@ class CitationBuilder extends MetadataResourceBuilder {
     List<AnnotationBuilder>? note,
     List<CodeableConceptBuilder>? currentState,
     List<CitationStatusDateBuilder>? statusDate,
-    List<RelatedArtifactBuilder>? relatedArtifact,
+    List<CitationRelatesToBuilder>? relatesTo,
     CitationCitedArtifactBuilder? citedArtifact,
     FhirStringBuilder? versionAlgorithmString,
     CodingBuilder? versionAlgorithmCoding,
@@ -1930,6 +1978,7 @@ class CitationBuilder extends MetadataResourceBuilder {
       status: status ?? this.status,
       experimental: experimental ?? this.experimental,
       date: date ?? this.date,
+      author: author ?? this.author,
       publisher: publisher ?? this.publisher,
       contact: contact ?? this.contact,
       description: description ?? this.description,
@@ -1941,7 +1990,7 @@ class CitationBuilder extends MetadataResourceBuilder {
       approvalDate: approvalDate ?? this.approvalDate,
       lastReviewDate: lastReviewDate ?? this.lastReviewDate,
       effectivePeriod: effectivePeriod ?? this.effectivePeriod,
-      author: author ?? this.author,
+      recorder: recorder ?? this.recorder,
       editor: editor ?? this.editor,
       reviewer: reviewer ?? this.reviewer,
       endorser: endorser ?? this.endorser,
@@ -1950,7 +1999,7 @@ class CitationBuilder extends MetadataResourceBuilder {
       note: note ?? this.note,
       currentState: currentState ?? this.currentState,
       statusDate: statusDate ?? this.statusDate,
-      relatedArtifact: relatedArtifact ?? this.relatedArtifact,
+      relatesTo: relatesTo ?? this.relatesTo,
       citedArtifact: citedArtifact ?? this.citedArtifact,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
@@ -2080,6 +2129,12 @@ class CitationBuilder extends MetadataResourceBuilder {
     )) {
       return false;
     }
+    if (!listEquals<ContactDetailBuilder>(
+      author,
+      o.author,
+    )) {
+      return false;
+    }
     if (!equalsDeepWithNull(
       publisher,
       o.publisher,
@@ -2147,8 +2202,8 @@ class CitationBuilder extends MetadataResourceBuilder {
       return false;
     }
     if (!listEquals<ContactDetailBuilder>(
-      author,
-      o.author,
+      recorder,
+      o.recorder,
     )) {
       return false;
     }
@@ -2200,9 +2255,9 @@ class CitationBuilder extends MetadataResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<RelatedArtifactBuilder>(
-      relatedArtifact,
-      o.relatedArtifact,
+    if (!listEquals<CitationRelatesToBuilder>(
+      relatesTo,
+      o.relatesTo,
     )) {
       return false;
     }
@@ -3627,6 +3682,645 @@ class CitationStatusDateBuilder extends BackboneElementBuilder {
   }
 }
 
+/// [CitationRelatesToBuilder]
+/// Relationships that this Citation has with other FHIR or non-FHIR
+/// resources that already exist.
+class CitationRelatesToBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [CitationRelatesToBuilder]
+
+  CitationRelatesToBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.type,
+    TargetXCitationRelatesToBuilder? targetX,
+    FhirUriBuilder? targetUri,
+    AttachmentBuilder? targetAttachment,
+    FhirCanonicalBuilder? targetCanonical,
+    ReferenceBuilder? targetReference,
+    FhirMarkdownBuilder? targetMarkdown,
+    super.disallowExtensions,
+  })  : targetX = targetX ??
+            targetUri ??
+            targetAttachment ??
+            targetCanonical ??
+            targetReference ??
+            targetMarkdown,
+        super(
+          objectPath: 'Citation.relatesTo',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory CitationRelatesToBuilder.empty() => CitationRelatesToBuilder(
+        type: ArtifactRelationshipTypeBuilder.values.first,
+        targetX: FhirUriBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory CitationRelatesToBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'Citation.relatesTo';
+    return CitationRelatesToBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      type: JsonParser.parsePrimitive<ArtifactRelationshipTypeBuilder>(
+        json,
+        'type',
+        ArtifactRelationshipTypeBuilder.fromJson,
+        '$objectPath.type',
+      ),
+      targetX: JsonParser.parsePolymorphic<TargetXCitationRelatesToBuilder>(
+        json,
+        {
+          'targetUri': FhirUriBuilder.fromJson,
+          'targetAttachment': AttachmentBuilder.fromJson,
+          'targetCanonical': FhirCanonicalBuilder.fromJson,
+          'targetReference': ReferenceBuilder.fromJson,
+          'targetMarkdown': FhirMarkdownBuilder.fromJson,
+        },
+        objectPath,
+      ),
+    );
+  }
+
+  /// Deserialize [CitationRelatesToBuilder]
+  /// from a [String] or [YamlMap] object
+  factory CitationRelatesToBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return CitationRelatesToBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return CitationRelatesToBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'CitationRelatesToBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [CitationRelatesToBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory CitationRelatesToBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return CitationRelatesToBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'CitationRelatesTo';
+
+  /// [type]
+  /// The type of relationship to the related artifact.
+  ArtifactRelationshipTypeBuilder? type;
+
+  /// [targetX]
+  /// The artifact that is related to this Citation Resource.
+  TargetXCitationRelatesToBuilder? targetX;
+
+  /// Getter for [targetUri] as a FhirUriBuilder
+  FhirUriBuilder? get targetUri => targetX?.isAs<FhirUriBuilder>();
+
+  /// Getter for [targetAttachment] as a AttachmentBuilder
+  AttachmentBuilder? get targetAttachment => targetX?.isAs<AttachmentBuilder>();
+
+  /// Getter for [targetCanonical] as a FhirCanonicalBuilder
+  FhirCanonicalBuilder? get targetCanonical =>
+      targetX?.isAs<FhirCanonicalBuilder>();
+
+  /// Getter for [targetReference] as a ReferenceBuilder
+  ReferenceBuilder? get targetReference => targetX?.isAs<ReferenceBuilder>();
+
+  /// Getter for [targetMarkdown] as a FhirMarkdownBuilder
+  FhirMarkdownBuilder? get targetMarkdown =>
+      targetX?.isAs<FhirMarkdownBuilder>();
+
+  /// Converts a [CitationRelatesToBuilder]
+  /// to [CitationRelatesTo]
+  @override
+  CitationRelatesTo build() => CitationRelatesTo.fromJson(toJson());
+
+  /// Converts a [CitationRelatesToBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('type', type);
+    if (targetX != null) {
+      final fhirType = targetX!.fhirType;
+      addField('target${fhirType.capitalizeFirstLetter()}', targetX);
+    }
+
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'type',
+      'targetX',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'type':
+        if (type != null) {
+          fields.add(type!);
+        }
+      case 'target':
+        if (targetX != null) {
+          fields.add(targetX!);
+        }
+      case 'targetX':
+        if (targetX != null) {
+          fields.add(targetX!);
+        }
+      case 'targetUri':
+        if (targetX is FhirUriBuilder) {
+          fields.add(targetX!);
+        }
+      case 'targetAttachment':
+        if (targetX is AttachmentBuilder) {
+          fields.add(targetX!);
+        }
+      case 'targetCanonical':
+        if (targetX is FhirCanonicalBuilder) {
+          fields.add(targetX!);
+        }
+      case 'targetReference':
+        if (targetX is ReferenceBuilder) {
+          fields.add(targetX!);
+        }
+      case 'targetMarkdown':
+        if (targetX is FhirMarkdownBuilder) {
+          fields.add(targetX!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'type':
+        {
+          if (child is ArtifactRelationshipTypeBuilder) {
+            type = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For enums, try to create directly from the string value
+              try {
+                final converted = ArtifactRelationshipTypeBuilder(stringValue);
+                type = converted;
+                return;
+              } catch (e) {
+                // Continue if enum creation fails
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'target':
+      case 'targetX':
+        {
+          if (child is TargetXCitationRelatesToBuilder) {
+            targetX = child;
+            return;
+          } else {
+            if (child is FhirUriBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is AttachmentBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is FhirCanonicalBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is ReferenceBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is FhirMarkdownBuilder) {
+              targetX = child;
+              return;
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'targetUri':
+        {
+          if (child is FhirUriBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetAttachment':
+        {
+          if (child is AttachmentBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetCanonical':
+        {
+          if (child is FhirCanonicalBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetReference':
+        {
+          if (child is ReferenceBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetMarkdown':
+        {
+          if (child is FhirMarkdownBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'type':
+        return ['FhirCodeEnumBuilder'];
+      case 'target':
+      case 'targetX':
+        return [
+          'FhirUriBuilder',
+          'AttachmentBuilder',
+          'FhirCanonicalBuilder',
+          'ReferenceBuilder',
+          'FhirMarkdownBuilder',
+        ];
+      case 'targetUri':
+        return ['FhirUriBuilder'];
+      case 'targetAttachment':
+        return ['AttachmentBuilder'];
+      case 'targetCanonical':
+        return ['FhirCanonicalBuilder'];
+      case 'targetReference':
+        return ['ReferenceBuilder'];
+      case 'targetMarkdown':
+        return ['FhirMarkdownBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [CitationRelatesToBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'type':
+        {
+          type = ArtifactRelationshipTypeBuilder.empty();
+          return;
+        }
+      case 'target':
+      case 'targetX':
+      case 'targetUri':
+        {
+          targetX = FhirUriBuilder.empty();
+          return;
+        }
+      case 'targetAttachment':
+        {
+          targetX = AttachmentBuilder.empty();
+          return;
+        }
+      case 'targetCanonical':
+        {
+          targetX = FhirCanonicalBuilder.empty();
+          return;
+        }
+      case 'targetReference':
+        {
+          targetX = ReferenceBuilder.empty();
+          return;
+        }
+      case 'targetMarkdown':
+        {
+          targetX = FhirMarkdownBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  CitationRelatesToBuilder clone() => throw UnimplementedError();
+  @override
+  CitationRelatesToBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    ArtifactRelationshipTypeBuilder? type,
+    TargetXCitationRelatesToBuilder? targetX,
+    FhirUriBuilder? targetUri,
+    AttachmentBuilder? targetAttachment,
+    FhirCanonicalBuilder? targetCanonical,
+    ReferenceBuilder? targetReference,
+    FhirMarkdownBuilder? targetMarkdown,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = CitationRelatesToBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      type: type ?? this.type,
+      targetX: targetX ??
+          targetUri ??
+          targetAttachment ??
+          targetCanonical ??
+          targetReference ??
+          targetMarkdown ??
+          this.targetX,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! CitationRelatesToBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      type,
+      o.type,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      targetX,
+      o.targetX,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
 /// [CitationCitedArtifactBuilder]
 /// The article or artifact being described.
 class CitationCitedArtifactBuilder extends BackboneElementBuilder {
@@ -3646,6 +4340,7 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
     this.title,
     this.abstract_,
     this.part_,
+    this.baseCitation,
     this.relatesTo,
     this.publicationForm,
     this.webLocation,
@@ -3720,10 +4415,10 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
         FhirDateTimeBuilder.fromJson,
         '$objectPath.dateAccessed',
       ),
-      version: JsonParser.parseObject<CitationVersionBuilder>(
+      version: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'version',
-        CitationVersionBuilder.fromJson,
+        FhirStringBuilder.fromJson,
         '$objectPath.version',
       ),
       currentState: (json['currentState'] as List<dynamic>?)
@@ -3771,6 +4466,12 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
         'part',
         CitationPartBuilder.fromJson,
         '$objectPath.part',
+      ),
+      baseCitation: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'baseCitation',
+        ReferenceBuilder.fromJson,
+        '$objectPath.baseCitation',
       ),
       relatesTo: (json['relatesTo'] as List<dynamic>?)
           ?.map<CitationRelatesToBuilder>(
@@ -3890,7 +4591,7 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
 
   /// [version]
   /// The defined version of the cited artifact.
-  CitationVersionBuilder? version;
+  FhirStringBuilder? version;
 
   /// [currentState]
   /// The status of the cited artifact.
@@ -3914,13 +4615,19 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
   /// The component of the article or artifact.
   CitationPartBuilder? part_;
 
+  /// [baseCitation]
+  /// Citation for the primary version and complete form of the cited
+  /// artifact.
+  ReferenceBuilder? baseCitation;
+
   /// [relatesTo]
   /// The artifact related to the cited artifact.
   List<CitationRelatesToBuilder>? relatesTo;
 
   /// [publicationForm]
-  /// If multiple, used to represent alternative forms of the article that
-  /// are not separate citations.
+  /// Where, when and how the artifact was published. If multiple, used to
+  /// represent alternative forms of the article that are not separate
+  /// citations.
   List<CitationPublicationFormBuilder>? publicationForm;
 
   /// [webLocation]
@@ -3988,6 +4695,7 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
     addField('title', title);
     addField('abstract', abstract_);
     addField('part', part_);
+    addField('baseCitation', baseCitation);
     addField('relatesTo', relatesTo);
     addField('publicationForm', publicationForm);
     addField('webLocation', webLocation);
@@ -4013,6 +4721,7 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
       'title',
       'abstract',
       'part',
+      'baseCitation',
       'relatesTo',
       'publicationForm',
       'webLocation',
@@ -4078,6 +4787,10 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
       case 'part':
         if (part_ != null) {
           fields.add(part_!);
+        }
+      case 'baseCitation':
+        if (baseCitation != null) {
+          fields.add(baseCitation!);
         }
       case 'relatesTo':
         if (relatesTo != null) {
@@ -4238,9 +4951,21 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
         }
       case 'version':
         {
-          if (child is CitationVersionBuilder) {
+          if (child is FhirStringBuilder) {
             version = child;
             return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                version = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -4312,6 +5037,14 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
         {
           if (child is CitationPartBuilder) {
             part_ = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'baseCitation':
+        {
+          if (child is ReferenceBuilder) {
+            baseCitation = child;
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -4427,7 +5160,7 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
       case 'dateAccessed':
         return ['FhirDateTimeBuilder'];
       case 'version':
-        return ['CitationVersionBuilder'];
+        return ['FhirStringBuilder'];
       case 'currentState':
         return ['CodeableConceptBuilder'];
       case 'statusDate':
@@ -4438,6 +5171,8 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
         return ['CitationAbstractBuilder'];
       case 'part':
         return ['CitationPartBuilder'];
+      case 'baseCitation':
+        return ['ReferenceBuilder'];
       case 'relatesTo':
         return ['CitationRelatesToBuilder'];
       case 'publicationForm':
@@ -4492,7 +5227,7 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
         }
       case 'version':
         {
-          version = CitationVersionBuilder.empty();
+          version = FhirStringBuilder.empty();
           return;
         }
       case 'currentState':
@@ -4518,6 +5253,11 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
       case 'part':
         {
           part_ = CitationPartBuilder.empty();
+          return;
+        }
+      case 'baseCitation':
+        {
+          baseCitation = ReferenceBuilder.empty();
           return;
         }
       case 'relatesTo':
@@ -4565,12 +5305,13 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
     List<IdentifierBuilder>? identifier,
     List<IdentifierBuilder>? relatedIdentifier,
     FhirDateTimeBuilder? dateAccessed,
-    CitationVersionBuilder? version,
+    FhirStringBuilder? version,
     List<CodeableConceptBuilder>? currentState,
     List<CitationStatusDateBuilder>? statusDate,
     List<CitationTitleBuilder>? title,
     List<CitationAbstractBuilder>? abstract_,
     CitationPartBuilder? part_,
+    ReferenceBuilder? baseCitation,
     List<CitationRelatesToBuilder>? relatesTo,
     List<CitationPublicationFormBuilder>? publicationForm,
     List<CitationWebLocationBuilder>? webLocation,
@@ -4597,6 +5338,7 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
       title: title ?? this.title,
       abstract_: abstract_ ?? this.abstract_,
       part_: part_ ?? this.part_,
+      baseCitation: baseCitation ?? this.baseCitation,
       relatesTo: relatesTo ?? this.relatesTo,
       publicationForm: publicationForm ?? this.publicationForm,
       webLocation: webLocation ?? this.webLocation,
@@ -4701,6 +5443,12 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      baseCitation,
+      o.baseCitation,
+    )) {
+      return false;
+    }
     if (!listEquals<CitationRelatesToBuilder>(
       relatesTo,
       o.relatesTo,
@@ -4734,462 +5482,6 @@ class CitationCitedArtifactBuilder extends BackboneElementBuilder {
     if (!listEquals<AnnotationBuilder>(
       note,
       o.note,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [CitationVersionBuilder]
-/// The defined version of the cited artifact.
-class CitationVersionBuilder extends BackboneElementBuilder {
-  /// Primary constructor for
-  /// [CitationVersionBuilder]
-
-  CitationVersionBuilder({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.value,
-    this.baseCitation,
-    super.disallowExtensions,
-  }) : super(
-          objectPath: 'Citation.citedArtifact.version',
-        );
-
-  /// An empty constructor for partial usage.
-  /// For Builder classes, no fields are required
-  factory CitationVersionBuilder.empty() => CitationVersionBuilder(
-        value: FhirStringBuilder.empty(),
-      );
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory CitationVersionBuilder.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    const objectPath = 'Citation.citedArtifact.version';
-    return CitationVersionBuilder(
-      id: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'id',
-        FhirStringBuilder.fromJson,
-        '$objectPath.id',
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.extension',
-              },
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.modifierExtension',
-              },
-            ),
-          )
-          .toList(),
-      value: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'value',
-        FhirStringBuilder.fromJson,
-        '$objectPath.value',
-      ),
-      baseCitation: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'baseCitation',
-        ReferenceBuilder.fromJson,
-        '$objectPath.baseCitation',
-      ),
-    );
-  }
-
-  /// Deserialize [CitationVersionBuilder]
-  /// from a [String] or [YamlMap] object
-  factory CitationVersionBuilder.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return CitationVersionBuilder.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return CitationVersionBuilder.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'CitationVersionBuilder '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [CitationVersionBuilder]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory CitationVersionBuilder.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return CitationVersionBuilder.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'CitationVersion';
-
-  /// [value]
-  /// The version number or other version identifier.
-  FhirStringBuilder? value;
-
-  /// [baseCitation]
-  /// Citation for the main version of the cited artifact.
-  ReferenceBuilder? baseCitation;
-
-  /// Converts a [CitationVersionBuilder]
-  /// to [CitationVersion]
-  @override
-  CitationVersion build() => CitationVersion.fromJson(toJson());
-
-  /// Converts a [CitationVersionBuilder]
-  /// to a [Map<String, dynamic>]
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    void addField(String key, dynamic field) {
-      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
-        throw ArgumentError('"field" must be a FhirBaseBuilder type');
-      }
-      if (field == null) return;
-      if (field is PrimitiveTypeBuilder) {
-        json[key] = field.toJson()['value'];
-        if (field.toJson()['_value'] != null) {
-          json['_$key'] = field.toJson()['_value'];
-        }
-      } else if (field is List<FhirBaseBuilder>) {
-        if (field.isEmpty) return;
-        if (field.first is PrimitiveTypeBuilder) {
-          final fieldJson = field.map((e) => e.toJson()).toList();
-          json[key] = fieldJson.map((e) => e['value']).toList();
-          if (fieldJson.any((e) => e['_value'] != null)) {
-            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
-          }
-        } else {
-          json[key] = field.map((e) => e.toJson()).toList();
-        }
-      } else if (field is FhirBaseBuilder) {
-        json[key] = field.toJson();
-      }
-    }
-
-    addField('id', id);
-    addField('extension', extension_);
-    addField('modifierExtension', modifierExtension);
-    addField('value', value);
-    addField('baseCitation', baseCitation);
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'value',
-      'baseCitation',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBaseBuilder> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBaseBuilder>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'value':
-        if (value != null) {
-          fields.add(value!);
-        }
-      case 'baseCitation':
-        if (baseCitation != null) {
-          fields.add(baseCitation!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBaseBuilder? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  void setChildByName(String childName, dynamic child) {
-    // child must be null, or a (List of) FhirBaseBuilder(s).
-    if (child == null) {
-      return; // In builders, setting to null is allowed
-    }
-    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
-      throw Exception('Cannot set child value for $childName');
-    }
-
-    switch (childName) {
-      case 'id':
-        {
-          if (child is FhirStringBuilder) {
-            id = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                id = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'extension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            extension_ = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            extension_ = [
-              ...(extension_ ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'modifierExtension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            modifierExtension = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            modifierExtension = [
-              ...(modifierExtension ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'value':
-        {
-          if (child is FhirStringBuilder) {
-            value = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                value = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'baseCitation':
-        {
-          if (child is ReferenceBuilder) {
-            baseCitation = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      default:
-        throw Exception('Cannot set child value for $childName');
-    }
-  }
-
-  /// Return the possible Dart types for the field named [fieldName].
-  /// For polymorphic fields, multiple types are possible.
-  @override
-  List<String> typeByElementName(String fieldName) {
-    switch (fieldName) {
-      case 'id':
-        return ['FhirStringBuilder'];
-      case 'extension':
-        return ['FhirExtensionBuilder'];
-      case 'modifierExtension':
-        return ['FhirExtensionBuilder'];
-      case 'value':
-        return ['FhirStringBuilder'];
-      case 'baseCitation':
-        return ['ReferenceBuilder'];
-      default:
-        return <String>[];
-    }
-  }
-
-  /// Creates a new [CitationVersionBuilder]
-  ///  with a chosen field set to an empty object.
-  @override
-  void createProperty(String propertyName) {
-    switch (propertyName) {
-      case 'id':
-        {
-          id = FhirStringBuilder.empty();
-          return;
-        }
-      case 'extension':
-        {
-          extension_ = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'modifierExtension':
-        {
-          modifierExtension = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'value':
-        {
-          value = FhirStringBuilder.empty();
-          return;
-        }
-      case 'baseCitation':
-        {
-          baseCitation = ReferenceBuilder.empty();
-          return;
-        }
-      default:
-        throw ArgumentError('No matching property: $propertyName');
-    }
-  }
-
-  @override
-  CitationVersionBuilder clone() => throw UnimplementedError();
-  @override
-  CitationVersionBuilder copyWith({
-    FhirStringBuilder? id,
-    List<FhirExtensionBuilder>? extension_,
-    List<FhirExtensionBuilder>? modifierExtension,
-    FhirStringBuilder? value,
-    ReferenceBuilder? baseCitation,
-    Map<String, dynamic>? userData,
-    List<String>? formatCommentsPre,
-    List<String>? formatCommentsPost,
-    List<dynamic>? annotations,
-    String? objectPath,
-  }) {
-    final newObjectPath = this.objectPath;
-    final newResult = CitationVersionBuilder(
-      id: id ?? this.id,
-      extension_: extension_ ?? this.extension_,
-      modifierExtension: modifierExtension ?? this.modifierExtension,
-      value: value ?? this.value,
-      baseCitation: baseCitation ?? this.baseCitation,
-    )..objectPath = newObjectPath;
-    // Copy user data and annotations
-    if (userData != null) {
-      newResult.userData = userData;
-    }
-    if (formatCommentsPre != null) {
-      newResult.formatCommentsPre = formatCommentsPre;
-    }
-    if (formatCommentsPost != null) {
-      newResult.formatCommentsPost = formatCommentsPost;
-    }
-    if (annotations != null) {
-      newResult.annotations = annotations;
-    }
-
-    return newResult;
-  }
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! CitationVersionBuilder) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      value,
-      o.value,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      baseCitation,
-      o.baseCitation,
     )) {
       return false;
     }
@@ -5761,10 +6053,10 @@ class CitationTitleBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      language: JsonParser.parseObject<CodeableConceptBuilder>(
+      language: JsonParser.parsePrimitive<AllLanguagesBuilder>(
         json,
         'language',
-        CodeableConceptBuilder.fromJson,
+        AllLanguagesBuilder.fromJson,
         '$objectPath.language',
       ),
       text: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
@@ -5824,7 +6116,7 @@ class CitationTitleBuilder extends BackboneElementBuilder {
 
   /// [language]
   /// Used to express the specific language of the title.
-  CodeableConceptBuilder? language;
+  AllLanguagesBuilder? language;
 
   /// [text]
   /// The title of the article or artifact.
@@ -6020,9 +6312,24 @@ class CitationTitleBuilder extends BackboneElementBuilder {
         }
       case 'language':
         {
-          if (child is CodeableConceptBuilder) {
+          if (child is AllLanguagesBuilder) {
             language = child;
             return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For enums, try to create directly from the string value
+              try {
+                final converted = AllLanguagesBuilder(stringValue);
+                language = converted;
+                return;
+              } catch (e) {
+                // Continue if enum creation fails
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -6065,7 +6372,7 @@ class CitationTitleBuilder extends BackboneElementBuilder {
       case 'type':
         return ['CodeableConceptBuilder'];
       case 'language':
-        return ['CodeableConceptBuilder'];
+        return ['FhirCodeEnumBuilder'];
       case 'text':
         return ['FhirMarkdownBuilder'];
       default:
@@ -6100,7 +6407,7 @@ class CitationTitleBuilder extends BackboneElementBuilder {
         }
       case 'language':
         {
-          language = CodeableConceptBuilder.empty();
+          language = AllLanguagesBuilder.empty();
           return;
         }
       case 'text':
@@ -6121,7 +6428,7 @@ class CitationTitleBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     List<CodeableConceptBuilder>? type,
-    CodeableConceptBuilder? language,
+    AllLanguagesBuilder? language,
     FhirMarkdownBuilder? text,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -6261,16 +6568,20 @@ class CitationAbstractBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      type: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'type',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.type',
-      ),
-      language: JsonParser.parseObject<CodeableConceptBuilder>(
+      type: (json['type'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.type',
+              },
+            ),
+          )
+          .toList(),
+      language: JsonParser.parsePrimitive<AllLanguagesBuilder>(
         json,
         'language',
-        CodeableConceptBuilder.fromJson,
+        AllLanguagesBuilder.fromJson,
         '$objectPath.language',
       ),
       text: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
@@ -6332,11 +6643,11 @@ class CitationAbstractBuilder extends BackboneElementBuilder {
 
   /// [type]
   /// Used to express the reason for or classification of the abstract.
-  CodeableConceptBuilder? type;
+  List<CodeableConceptBuilder>? type;
 
   /// [language]
   /// Used to express the specific language of the abstract.
-  CodeableConceptBuilder? language;
+  AllLanguagesBuilder? language;
 
   /// [text]
   /// Abstract content.
@@ -6429,7 +6740,7 @@ class CitationAbstractBuilder extends BackboneElementBuilder {
         }
       case 'type':
         if (type != null) {
-          fields.add(type!);
+          fields.addAll(type!);
         }
       case 'language':
         if (language != null) {
@@ -6526,17 +6837,40 @@ class CitationAbstractBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          if (child is CodeableConceptBuilder) {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
             type = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            type = [
+              ...(type ?? []),
+              child,
+            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
         }
       case 'language':
         {
-          if (child is CodeableConceptBuilder) {
+          if (child is AllLanguagesBuilder) {
             language = child;
             return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For enums, try to create directly from the string value
+              try {
+                final converted = AllLanguagesBuilder(stringValue);
+                language = converted;
+                return;
+              } catch (e) {
+                // Continue if enum creation fails
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -6599,7 +6933,7 @@ class CitationAbstractBuilder extends BackboneElementBuilder {
       case 'type':
         return ['CodeableConceptBuilder'];
       case 'language':
-        return ['CodeableConceptBuilder'];
+        return ['FhirCodeEnumBuilder'];
       case 'text':
         return ['FhirMarkdownBuilder'];
       case 'copyright':
@@ -6631,12 +6965,12 @@ class CitationAbstractBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          type = CodeableConceptBuilder.empty();
+          type = <CodeableConceptBuilder>[];
           return;
         }
       case 'language':
         {
-          language = CodeableConceptBuilder.empty();
+          language = AllLanguagesBuilder.empty();
           return;
         }
       case 'text':
@@ -6661,8 +6995,8 @@ class CitationAbstractBuilder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    CodeableConceptBuilder? type,
-    CodeableConceptBuilder? language,
+    List<CodeableConceptBuilder>? type,
+    AllLanguagesBuilder? language,
     FhirMarkdownBuilder? text,
     FhirMarkdownBuilder? copyright,
     Map<String, dynamic>? userData,
@@ -6724,7 +7058,7 @@ class CitationAbstractBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<CodeableConceptBuilder>(
       type,
       o.type,
     )) {
@@ -6764,7 +7098,6 @@ class CitationPartBuilder extends BackboneElementBuilder {
     super.modifierExtension,
     this.type,
     this.value,
-    this.baseCitation,
     super.disallowExtensions,
   }) : super(
           objectPath: 'Citation.citedArtifact.part',
@@ -6817,12 +7150,6 @@ class CitationPartBuilder extends BackboneElementBuilder {
         'value',
         FhirStringBuilder.fromJson,
         '$objectPath.value',
-      ),
-      baseCitation: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'baseCitation',
-        ReferenceBuilder.fromJson,
-        '$objectPath.baseCitation',
       ),
     );
   }
@@ -6877,10 +7204,6 @@ class CitationPartBuilder extends BackboneElementBuilder {
   /// The specification of the component.
   FhirStringBuilder? value;
 
-  /// [baseCitation]
-  /// The citation for the full article or artifact.
-  ReferenceBuilder? baseCitation;
-
   /// Converts a [CitationPartBuilder]
   /// to [CitationPart]
   @override
@@ -6922,7 +7245,6 @@ class CitationPartBuilder extends BackboneElementBuilder {
     addField('modifierExtension', modifierExtension);
     addField('type', type);
     addField('value', value);
-    addField('baseCitation', baseCitation);
     return json;
   }
 
@@ -6935,7 +7257,6 @@ class CitationPartBuilder extends BackboneElementBuilder {
       'modifierExtension',
       'type',
       'value',
-      'baseCitation',
     ];
   }
 
@@ -6967,10 +7288,6 @@ class CitationPartBuilder extends BackboneElementBuilder {
       case 'value':
         if (value != null) {
           fields.add(value!);
-        }
-      case 'baseCitation':
-        if (baseCitation != null) {
-          fields.add(baseCitation!);
         }
       default:
         if (checkValid) {
@@ -7081,14 +7398,6 @@ class CitationPartBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'baseCitation':
-        {
-          if (child is ReferenceBuilder) {
-            baseCitation = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -7109,8 +7418,6 @@ class CitationPartBuilder extends BackboneElementBuilder {
         return ['CodeableConceptBuilder'];
       case 'value':
         return ['FhirStringBuilder'];
-      case 'baseCitation':
-        return ['ReferenceBuilder'];
       default:
         return <String>[];
     }
@@ -7146,11 +7453,6 @@ class CitationPartBuilder extends BackboneElementBuilder {
           value = FhirStringBuilder.empty();
           return;
         }
-      case 'baseCitation':
-        {
-          baseCitation = ReferenceBuilder.empty();
-          return;
-        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
@@ -7165,7 +7467,6 @@ class CitationPartBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     CodeableConceptBuilder? type,
     FhirStringBuilder? value,
-    ReferenceBuilder? baseCitation,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -7179,7 +7480,6 @@ class CitationPartBuilder extends BackboneElementBuilder {
       modifierExtension: modifierExtension ?? this.modifierExtension,
       type: type ?? this.type,
       value: value ?? this.value,
-      baseCitation: baseCitation ?? this.baseCitation,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -7236,23 +7536,17 @@ class CitationPartBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      baseCitation,
-      o.baseCitation,
-    )) {
-      return false;
-    }
     return true;
   }
 }
 
-/// [CitationRelatesToBuilder]
+/// [CitationRelatesTo1Builder]
 /// The artifact related to the cited artifact.
-class CitationRelatesToBuilder extends BackboneElementBuilder {
+class CitationRelatesTo1Builder extends BackboneElementBuilder {
   /// Primary constructor for
-  /// [CitationRelatesToBuilder]
+  /// [CitationRelatesTo1Builder]
 
-  CitationRelatesToBuilder({
+  CitationRelatesTo1Builder({
     super.id,
     super.extension_,
     super.modifierExtension,
@@ -7261,26 +7555,33 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
     this.label,
     this.display,
     this.citation,
-    this.document,
-    this.resource,
-    this.resourceReference,
+    TargetXCitationRelatesTo1Builder? targetX,
+    FhirUriBuilder? targetUri,
+    AttachmentBuilder? targetAttachment,
+    FhirCanonicalBuilder? targetCanonical,
+    ReferenceBuilder? targetReference,
     super.disallowExtensions,
-  }) : super(
+  })  : targetX = targetX ??
+            targetUri ??
+            targetAttachment ??
+            targetCanonical ??
+            targetReference,
+        super(
           objectPath: 'Citation.citedArtifact.relatesTo',
         );
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
-  factory CitationRelatesToBuilder.empty() => CitationRelatesToBuilder(
-        type: RelatedArtifactTypeExpandedBuilder.values.first,
+  factory CitationRelatesTo1Builder.empty() => CitationRelatesTo1Builder(
+        type: ArtifactRelationshipTypeBuilder.values.first,
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory CitationRelatesToBuilder.fromJson(
+  factory CitationRelatesTo1Builder.fromJson(
     Map<String, dynamic> json,
   ) {
     const objectPath = 'Citation.citedArtifact.relatesTo';
-    return CitationRelatesToBuilder(
+    return CitationRelatesTo1Builder(
       id: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'id',
@@ -7307,10 +7608,10 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      type: JsonParser.parsePrimitive<RelatedArtifactTypeExpandedBuilder>(
+      type: JsonParser.parsePrimitive<ArtifactRelationshipTypeBuilder>(
         json,
         'type',
-        RelatedArtifactTypeExpandedBuilder.fromJson,
+        ArtifactRelationshipTypeBuilder.fromJson,
         '$objectPath.type',
       ),
       classifier: (json['classifier'] as List<dynamic>?)
@@ -7341,43 +7642,35 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
         FhirMarkdownBuilder.fromJson,
         '$objectPath.citation',
       ),
-      document: JsonParser.parseObject<AttachmentBuilder>(
+      targetX: JsonParser.parsePolymorphic<TargetXCitationRelatesTo1Builder>(
         json,
-        'document',
-        AttachmentBuilder.fromJson,
-        '$objectPath.document',
-      ),
-      resource: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
-        json,
-        'resource',
-        FhirCanonicalBuilder.fromJson,
-        '$objectPath.resource',
-      ),
-      resourceReference: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'resourceReference',
-        ReferenceBuilder.fromJson,
-        '$objectPath.resourceReference',
+        {
+          'targetUri': FhirUriBuilder.fromJson,
+          'targetAttachment': AttachmentBuilder.fromJson,
+          'targetCanonical': FhirCanonicalBuilder.fromJson,
+          'targetReference': ReferenceBuilder.fromJson,
+        },
+        objectPath,
       ),
     );
   }
 
-  /// Deserialize [CitationRelatesToBuilder]
+  /// Deserialize [CitationRelatesTo1Builder]
   /// from a [String] or [YamlMap] object
-  factory CitationRelatesToBuilder.fromYaml(
+  factory CitationRelatesTo1Builder.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return CitationRelatesToBuilder.fromJson(
+      return CitationRelatesTo1Builder.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return CitationRelatesToBuilder.fromJson(
+      return CitationRelatesTo1Builder.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'CitationRelatesToBuilder '
+        'CitationRelatesTo1Builder '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -7385,16 +7678,16 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
   }
 
   /// Factory constructor for
-  /// [CitationRelatesToBuilder]
+  /// [CitationRelatesTo1Builder]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory CitationRelatesToBuilder.fromJsonString(
+  factory CitationRelatesTo1Builder.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return CitationRelatesToBuilder.fromJson(json);
+      return CitationRelatesTo1Builder.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -7402,11 +7695,11 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
   }
 
   @override
-  String get fhirType => 'CitationRelatesTo';
+  String get fhirType => 'CitationRelatesTo1';
 
   /// [type]
   /// The type of relationship to the related artifact.
-  RelatedArtifactTypeExpandedBuilder? type;
+  ArtifactRelationshipTypeBuilder? type;
 
   /// [classifier]
   /// Provides additional classifiers of the related artifact.
@@ -7427,28 +7720,30 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
   /// formatted according to an accepted citation format.
   FhirMarkdownBuilder? citation;
 
-  /// [document]
-  /// The document being referenced, represented as an attachment. Do not use
-  /// this element if using the resource element to provide the canonical to
-  /// the related artifact.
-  AttachmentBuilder? document;
+  /// [targetX]
+  /// The artifact that is related to this Citation Resource's cited
+  /// artifact.
+  TargetXCitationRelatesTo1Builder? targetX;
 
-  /// [resource]
-  /// The related artifact, such as a library, value set, profile, or other
-  /// knowledge resource.
-  FhirCanonicalBuilder? resource;
+  /// Getter for [targetUri] as a FhirUriBuilder
+  FhirUriBuilder? get targetUri => targetX?.isAs<FhirUriBuilder>();
 
-  /// [resourceReference]
-  /// The related artifact, if the artifact is not a canonical resource, or a
-  /// resource reference to a canonical resource.
-  ReferenceBuilder? resourceReference;
+  /// Getter for [targetAttachment] as a AttachmentBuilder
+  AttachmentBuilder? get targetAttachment => targetX?.isAs<AttachmentBuilder>();
 
-  /// Converts a [CitationRelatesToBuilder]
-  /// to [CitationRelatesTo]
+  /// Getter for [targetCanonical] as a FhirCanonicalBuilder
+  FhirCanonicalBuilder? get targetCanonical =>
+      targetX?.isAs<FhirCanonicalBuilder>();
+
+  /// Getter for [targetReference] as a ReferenceBuilder
+  ReferenceBuilder? get targetReference => targetX?.isAs<ReferenceBuilder>();
+
+  /// Converts a [CitationRelatesTo1Builder]
+  /// to [CitationRelatesTo1]
   @override
-  CitationRelatesTo build() => CitationRelatesTo.fromJson(toJson());
+  CitationRelatesTo1 build() => CitationRelatesTo1.fromJson(toJson());
 
-  /// Converts a [CitationRelatesToBuilder]
+  /// Converts a [CitationRelatesTo1Builder]
   /// to a [Map<String, dynamic>]
   @override
   Map<String, dynamic> toJson() {
@@ -7487,9 +7782,11 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
     addField('label', label);
     addField('display', display);
     addField('citation', citation);
-    addField('document', document);
-    addField('resource', resource);
-    addField('resourceReference', resourceReference);
+    if (targetX != null) {
+      final fhirType = targetX!.fhirType;
+      addField('target${fhirType.capitalizeFirstLetter()}', targetX);
+    }
+
     return json;
   }
 
@@ -7505,9 +7802,7 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
       'label',
       'display',
       'citation',
-      'document',
-      'resource',
-      'resourceReference',
+      'targetX',
     ];
   }
 
@@ -7552,17 +7847,29 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
         if (citation != null) {
           fields.add(citation!);
         }
-      case 'document':
-        if (document != null) {
-          fields.add(document!);
+      case 'target':
+        if (targetX != null) {
+          fields.add(targetX!);
         }
-      case 'resource':
-        if (resource != null) {
-          fields.add(resource!);
+      case 'targetX':
+        if (targetX != null) {
+          fields.add(targetX!);
         }
-      case 'resourceReference':
-        if (resourceReference != null) {
-          fields.add(resourceReference!);
+      case 'targetUri':
+        if (targetX is FhirUriBuilder) {
+          fields.add(targetX!);
+        }
+      case 'targetAttachment':
+        if (targetX is AttachmentBuilder) {
+          fields.add(targetX!);
+        }
+      case 'targetCanonical':
+        if (targetX is FhirCanonicalBuilder) {
+          fields.add(targetX!);
+        }
+      case 'targetReference':
+        if (targetX is ReferenceBuilder) {
+          fields.add(targetX!);
         }
       default:
         if (checkValid) {
@@ -7647,7 +7954,7 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          if (child is RelatedArtifactTypeExpandedBuilder) {
+          if (child is ArtifactRelationshipTypeBuilder) {
             type = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
@@ -7656,8 +7963,7 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
               final stringValue = child.toString();
               // For enums, try to create directly from the string value
               try {
-                final converted =
-                    RelatedArtifactTypeExpandedBuilder(stringValue);
+                final converted = ArtifactRelationshipTypeBuilder(stringValue);
                 type = converted;
                 return;
               } catch (e) {
@@ -7745,41 +8051,67 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'document':
+      case 'target':
+      case 'targetX':
         {
-          if (child is AttachmentBuilder) {
-            document = child;
+          if (child is TargetXCitationRelatesTo1Builder) {
+            targetX = child;
             return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'resource':
-        {
-          if (child is FhirCanonicalBuilder) {
-            resource = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirCanonicalBuilder.tryParse(stringValue);
-              if (converted != null) {
-                resource = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
+          } else {
+            if (child is FhirUriBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is AttachmentBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is FhirCanonicalBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is ReferenceBuilder) {
+              targetX = child;
+              return;
             }
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'resourceReference':
+      case 'targetUri':
+        {
+          if (child is FhirUriBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetAttachment':
+        {
+          if (child is AttachmentBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetCanonical':
+        {
+          if (child is FhirCanonicalBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetReference':
         {
           if (child is ReferenceBuilder) {
-            resourceReference = child;
+            targetX = child;
             return;
+          } else {
+            throw Exception('Invalid child type for $childName');
           }
-          throw Exception('Invalid child type for $childName');
         }
       default:
         throw Exception('Cannot set child value for $childName');
@@ -7807,18 +8139,28 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
         return ['FhirStringBuilder'];
       case 'citation':
         return ['FhirMarkdownBuilder'];
-      case 'document':
+      case 'target':
+      case 'targetX':
+        return [
+          'FhirUriBuilder',
+          'AttachmentBuilder',
+          'FhirCanonicalBuilder',
+          'ReferenceBuilder',
+        ];
+      case 'targetUri':
+        return ['FhirUriBuilder'];
+      case 'targetAttachment':
         return ['AttachmentBuilder'];
-      case 'resource':
+      case 'targetCanonical':
         return ['FhirCanonicalBuilder'];
-      case 'resourceReference':
+      case 'targetReference':
         return ['ReferenceBuilder'];
       default:
         return <String>[];
     }
   }
 
-  /// Creates a new [CitationRelatesToBuilder]
+  /// Creates a new [CitationRelatesTo1Builder]
   ///  with a chosen field set to an empty object.
   @override
   void createProperty(String propertyName) {
@@ -7840,7 +8182,7 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          type = RelatedArtifactTypeExpandedBuilder.empty();
+          type = ArtifactRelationshipTypeBuilder.empty();
           return;
         }
       case 'classifier':
@@ -7863,19 +8205,26 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
           citation = FhirMarkdownBuilder.empty();
           return;
         }
-      case 'document':
+      case 'target':
+      case 'targetX':
+      case 'targetUri':
         {
-          document = AttachmentBuilder.empty();
+          targetX = FhirUriBuilder.empty();
           return;
         }
-      case 'resource':
+      case 'targetAttachment':
         {
-          resource = FhirCanonicalBuilder.empty();
+          targetX = AttachmentBuilder.empty();
           return;
         }
-      case 'resourceReference':
+      case 'targetCanonical':
         {
-          resourceReference = ReferenceBuilder.empty();
+          targetX = FhirCanonicalBuilder.empty();
+          return;
+        }
+      case 'targetReference':
+        {
+          targetX = ReferenceBuilder.empty();
           return;
         }
       default:
@@ -7884,20 +8233,22 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
   }
 
   @override
-  CitationRelatesToBuilder clone() => throw UnimplementedError();
+  CitationRelatesTo1Builder clone() => throw UnimplementedError();
   @override
-  CitationRelatesToBuilder copyWith({
+  CitationRelatesTo1Builder copyWith({
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    RelatedArtifactTypeExpandedBuilder? type,
+    ArtifactRelationshipTypeBuilder? type,
     List<CodeableConceptBuilder>? classifier,
     FhirStringBuilder? label,
     FhirStringBuilder? display,
     FhirMarkdownBuilder? citation,
-    AttachmentBuilder? document,
-    FhirCanonicalBuilder? resource,
-    ReferenceBuilder? resourceReference,
+    TargetXCitationRelatesTo1Builder? targetX,
+    FhirUriBuilder? targetUri,
+    AttachmentBuilder? targetAttachment,
+    FhirCanonicalBuilder? targetCanonical,
+    ReferenceBuilder? targetReference,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -7905,7 +8256,7 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
     String? objectPath,
   }) {
     final newObjectPath = this.objectPath;
-    final newResult = CitationRelatesToBuilder(
+    final newResult = CitationRelatesTo1Builder(
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
@@ -7914,9 +8265,12 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
       label: label ?? this.label,
       display: display ?? this.display,
       citation: citation ?? this.citation,
-      document: document ?? this.document,
-      resource: resource ?? this.resource,
-      resourceReference: resourceReference ?? this.resourceReference,
+      targetX: targetX ??
+          targetUri ??
+          targetAttachment ??
+          targetCanonical ??
+          targetReference ??
+          this.targetX,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -7938,7 +8292,7 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! CitationRelatesToBuilder) {
+    if (o is! CitationRelatesTo1Builder) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -7992,20 +8346,8 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      document,
-      o.document,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      resource,
-      o.resource,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      resourceReference,
-      o.resourceReference,
+      targetX,
+      o.targetX,
     )) {
       return false;
     }
@@ -8014,8 +8356,9 @@ class CitationRelatesToBuilder extends BackboneElementBuilder {
 }
 
 /// [CitationPublicationFormBuilder]
-/// If multiple, used to represent alternative forms of the article that
-/// are not separate citations.
+/// Where, when and how the artifact was published. If multiple, used to
+/// represent alternative forms of the article that are not separate
+/// citations.
 class CitationPublicationFormBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [CitationPublicationFormBuilder]
@@ -8129,16 +8472,12 @@ class CitationPublicationFormBuilder extends BackboneElementBuilder {
         FhirDateTimeBuilder.fromJson,
         '$objectPath.lastRevisionDate',
       ),
-      language: (json['language'] as List<dynamic>?)
-          ?.map<CodeableConceptBuilder>(
-            (v) => CodeableConceptBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.language',
-              },
-            ),
-          )
-          .toList(),
+      language: JsonParser.parsePrimitiveList<AllLanguagesBuilder>(
+        json,
+        'language',
+        AllLanguagesBuilder.fromJson,
+        '$objectPath.language',
+      ),
       accessionNumber: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'accessionNumber',
@@ -8258,7 +8597,8 @@ class CitationPublicationFormBuilder extends BackboneElementBuilder {
   FhirStringBuilder? publicationDateText;
 
   /// [publicationDateSeason]
-  /// Spring, Summer, Fall/Autumn, Winter.
+  /// Season in which the cited artifact was published, e.g. Spring, Summer,
+  /// Fall/Autumn, Winter.
   FhirStringBuilder? publicationDateSeason;
 
   /// [lastRevisionDate]
@@ -8268,7 +8608,7 @@ class CitationPublicationFormBuilder extends BackboneElementBuilder {
   /// [language]
   /// The language or languages in which this form of the article is
   /// published.
-  List<CodeableConceptBuilder>? language;
+  List<AllLanguagesBuilder>? language;
 
   /// [accessionNumber]
   /// Entry number or identifier for inclusion in a database.
@@ -8677,17 +9017,56 @@ class CitationPublicationFormBuilder extends BackboneElementBuilder {
         }
       case 'language':
         {
-          if (child is List<CodeableConceptBuilder>) {
+          if (child is List<AllLanguagesBuilder>) {
             // Replace or create new list
             language = child;
             return;
-          } else if (child is CodeableConceptBuilder) {
+          } else if (child is AllLanguagesBuilder) {
             // Add single element to existing list or create new list
             language = [
               ...(language ?? []),
               child,
             ];
             return;
+          } else if (child is List<PrimitiveTypeBuilder>) {
+            // Try to convert list of primitive types
+            final convertedList = <AllLanguagesBuilder>[];
+            for (final element in child) {
+              try {
+                final stringValue = element.toString();
+                // For enums, try to create directly from the string value
+                try {
+                  final converted = AllLanguagesBuilder(stringValue);
+                  convertedList.add(converted);
+                } catch (e) {
+                  // Continue if enum creation fails
+                }
+              } catch (e) {
+                // Continue if conversion fails
+              }
+            }
+            if (convertedList.isNotEmpty) {
+              language = convertedList;
+              return;
+            }
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert a single primitive
+            try {
+              final stringValue = child.toString();
+              // For enums, try to create directly from the string value
+              try {
+                final converted = AllLanguagesBuilder(stringValue);
+                language = [
+                  ...(language ?? []),
+                  converted,
+                ];
+                return;
+              } catch (e) {
+                // Continue if enum creation fails
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -8844,7 +9223,7 @@ class CitationPublicationFormBuilder extends BackboneElementBuilder {
       case 'lastRevisionDate':
         return ['FhirDateTimeBuilder'];
       case 'language':
-        return ['CodeableConceptBuilder'];
+        return ['FhirCodeEnumBuilder'];
       case 'accessionNumber':
         return ['FhirStringBuilder'];
       case 'pageString':
@@ -8924,7 +9303,7 @@ class CitationPublicationFormBuilder extends BackboneElementBuilder {
         }
       case 'language':
         {
-          language = <CodeableConceptBuilder>[];
+          language = <AllLanguagesBuilder>[];
           return;
         }
       case 'accessionNumber':
@@ -8977,7 +9356,7 @@ class CitationPublicationFormBuilder extends BackboneElementBuilder {
     FhirStringBuilder? publicationDateText,
     FhirStringBuilder? publicationDateSeason,
     FhirDateTimeBuilder? lastRevisionDate,
-    List<CodeableConceptBuilder>? language,
+    List<AllLanguagesBuilder>? language,
     FhirStringBuilder? accessionNumber,
     FhirStringBuilder? pageString,
     FhirStringBuilder? firstPage,
@@ -9103,7 +9482,7 @@ class CitationPublicationFormBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConceptBuilder>(
+    if (!listEquals<AllLanguagesBuilder>(
       language,
       o.language,
     )) {
@@ -10849,7 +11228,7 @@ class CitationContributorshipBuilder extends BackboneElementBuilder {
   String get fhirType => 'CitationContributorship';
 
   /// [complete]
-  /// Indicates if the list includes all authors and/or contributors.
+  /// Indication whether all authors are included in the entry content.
   FhirBooleanBuilder? complete;
 
   /// [entry]
@@ -11423,8 +11802,8 @@ class CitationEntryBuilder extends BackboneElementBuilder {
   List<ReferenceBuilder>? affiliation;
 
   /// [contributionType]
-  /// This element identifies the specific nature of an individual’s
-  /// contribution with respect to the cited work.
+  /// The specific nature of an individual’s contribution with respect to the
+  /// cited work.
   List<CodeableConceptBuilder>? contributionType;
 
   /// [role]
@@ -12532,12 +12911,16 @@ class CitationSummary1Builder extends BackboneElementBuilder {
         CodeableConceptBuilder.fromJson,
         '$objectPath.type',
       ),
-      style: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'style',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.style',
-      ),
+      style: (json['style'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.style',
+              },
+            ),
+          )
+          .toList(),
       source: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
         'source',
@@ -12603,7 +12986,7 @@ class CitationSummary1Builder extends BackboneElementBuilder {
   /// [style]
   /// The format for the display string, such as author last name with first
   /// letter capitalized followed by forename initials.
-  CodeableConceptBuilder? style;
+  List<CodeableConceptBuilder>? style;
 
   /// [source]
   /// Used to code the producer or rule for creating the display string.
@@ -12701,7 +13084,7 @@ class CitationSummary1Builder extends BackboneElementBuilder {
         }
       case 'style':
         if (style != null) {
-          fields.add(style!);
+          fields.addAll(style!);
         }
       case 'source':
         if (source != null) {
@@ -12802,8 +13185,16 @@ class CitationSummary1Builder extends BackboneElementBuilder {
         }
       case 'style':
         {
-          if (child is CodeableConceptBuilder) {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
             style = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            style = [
+              ...(style ?? []),
+              child,
+            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -12892,7 +13283,7 @@ class CitationSummary1Builder extends BackboneElementBuilder {
         }
       case 'style':
         {
-          style = CodeableConceptBuilder.empty();
+          style = <CodeableConceptBuilder>[];
           return;
         }
       case 'source':
@@ -12918,7 +13309,7 @@ class CitationSummary1Builder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     CodeableConceptBuilder? type,
-    CodeableConceptBuilder? style,
+    List<CodeableConceptBuilder>? style,
     CodeableConceptBuilder? source,
     FhirMarkdownBuilder? value,
     Map<String, dynamic>? userData,
@@ -12986,7 +13377,7 @@ class CitationSummary1Builder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<CodeableConceptBuilder>(
       style,
       o.style,
     )) {

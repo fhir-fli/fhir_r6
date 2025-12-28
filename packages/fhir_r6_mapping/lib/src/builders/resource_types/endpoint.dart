@@ -36,6 +36,7 @@ class FhirEndpointBuilder extends DomainResourceBuilder {
     this.managingOrganization,
     this.contact,
     this.period,
+    this.availability,
     this.payload,
     this.address,
     this.header,
@@ -188,6 +189,12 @@ class FhirEndpointBuilder extends DomainResourceBuilder {
         PeriodBuilder.fromJson,
         '$objectPath.period',
       ),
+      availability: JsonParser.parseObject<AvailabilityBuilder>(
+        json,
+        'availability',
+        AvailabilityBuilder.fromJson,
+        '$objectPath.availability',
+      ),
       payload: (json['payload'] as List<dynamic>?)
           ?.map<EndpointPayloadBuilder>(
             (v) => EndpointPayloadBuilder.fromJson(
@@ -261,8 +268,8 @@ class FhirEndpointBuilder extends DomainResourceBuilder {
   List<IdentifierBuilder>? identifier;
 
   /// [status]
-  /// The endpoint status represents the general expected availability of an
-  /// endpoint.
+  /// The endpoint status represents whether the endpoint can currently be
+  /// used for connections or why it can't be used.
   EndpointStatusBuilder? status;
 
   /// [connectionType]
@@ -287,9 +294,11 @@ class FhirEndpointBuilder extends DomainResourceBuilder {
   List<CodeableConceptBuilder>? environmentType;
 
   /// [managingOrganization]
-  /// The organization that manages this endpoint (even if technically
-  /// another organization is hosting this in the cloud, it is the
-  /// organization associated with the data).
+  /// The organization that provides technical management services for this
+  /// endpoint. This would be the organization that acts as the public help
+  /// desk for when the endpoint is not functioning. It does NOT necessarily
+  /// represent the organization who is the steward of data being
+  /// provided/accepted by the endpoint.
   ReferenceBuilder? managingOrganization;
 
   /// [contact]
@@ -300,6 +309,11 @@ class FhirEndpointBuilder extends DomainResourceBuilder {
   /// [period]
   /// The interval during which the endpoint is expected to be operational.
   PeriodBuilder? period;
+
+  /// [availability]
+  /// The times the endpoint is expected to be available, including transient
+  /// downtimes and any exceptions.
+  AvailabilityBuilder? availability;
 
   /// [payload]
   /// The set of payloads that are provided/available at this endpoint.
@@ -367,6 +381,7 @@ class FhirEndpointBuilder extends DomainResourceBuilder {
     addField('managingOrganization', managingOrganization);
     addField('contact', contact);
     addField('period', period);
+    addField('availability', availability);
     addField('payload', payload);
     addField('address', address);
     addField('header', header);
@@ -394,6 +409,7 @@ class FhirEndpointBuilder extends DomainResourceBuilder {
       'managingOrganization',
       'contact',
       'period',
+      'availability',
       'payload',
       'address',
       'header',
@@ -476,6 +492,10 @@ class FhirEndpointBuilder extends DomainResourceBuilder {
       case 'period':
         if (period != null) {
           fields.add(period!);
+        }
+      case 'availability':
+        if (availability != null) {
+          fields.add(availability!);
         }
       case 'payload':
         if (payload != null) {
@@ -788,6 +808,14 @@ class FhirEndpointBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'availability':
+        {
+          if (child is AvailabilityBuilder) {
+            availability = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'payload':
         {
           if (child is List<EndpointPayloadBuilder>) {
@@ -917,6 +945,8 @@ class FhirEndpointBuilder extends DomainResourceBuilder {
         return ['ContactPointBuilder'];
       case 'period':
         return ['PeriodBuilder'];
+      case 'availability':
+        return ['AvailabilityBuilder'];
       case 'payload':
         return ['EndpointPayloadBuilder'];
       case 'address':
@@ -1018,6 +1048,11 @@ class FhirEndpointBuilder extends DomainResourceBuilder {
           period = PeriodBuilder.empty();
           return;
         }
+      case 'availability':
+        {
+          availability = AvailabilityBuilder.empty();
+          return;
+        }
       case 'payload':
         {
           payload = <EndpointPayloadBuilder>[];
@@ -1059,6 +1094,7 @@ class FhirEndpointBuilder extends DomainResourceBuilder {
     ReferenceBuilder? managingOrganization,
     List<ContactPointBuilder>? contact,
     PeriodBuilder? period,
+    AvailabilityBuilder? availability,
     List<EndpointPayloadBuilder>? payload,
     FhirUrlBuilder? address,
     List<FhirStringBuilder>? header,
@@ -1086,6 +1122,7 @@ class FhirEndpointBuilder extends DomainResourceBuilder {
       managingOrganization: managingOrganization ?? this.managingOrganization,
       contact: contact ?? this.contact,
       period: period ?? this.period,
+      availability: availability ?? this.availability,
       payload: payload ?? this.payload,
       address: address ?? this.address,
       header: header ?? this.header,
@@ -1217,6 +1254,12 @@ class FhirEndpointBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      availability,
+      o.availability,
+    )) {
+      return false;
+    }
     if (!listEquals<EndpointPayloadBuilder>(
       payload,
       o.payload,
@@ -1251,6 +1294,8 @@ class EndpointPayloadBuilder extends BackboneElementBuilder {
     super.modifierExtension,
     this.type,
     this.mimeType,
+    this.profileCanonical,
+    this.profileUri,
     super.disallowExtensions,
   }) : super(
           objectPath: 'Endpoint.payload',
@@ -1307,6 +1352,18 @@ class EndpointPayloadBuilder extends BackboneElementBuilder {
         'mimeType',
         FhirCodeBuilder.fromJson,
         '$objectPath.mimeType',
+      ),
+      profileCanonical: JsonParser.parsePrimitiveList<FhirCanonicalBuilder>(
+        json,
+        'profileCanonical',
+        FhirCanonicalBuilder.fromJson,
+        '$objectPath.profileCanonical',
+      ),
+      profileUri: JsonParser.parsePrimitiveList<FhirUriBuilder>(
+        json,
+        'profileUri',
+        FhirUriBuilder.fromJson,
+        '$objectPath.profileUri',
       ),
     );
   }
@@ -1365,6 +1422,19 @@ class EndpointPayloadBuilder extends BackboneElementBuilder {
   /// connectionType).
   List<FhirCodeBuilder>? mimeType;
 
+  /// [profileCanonical]
+  /// The FHIR profile that is expected at this endpoint. It describes the
+  /// resources that are handled, or even simply which resource types -e.g.
+  /// Vital Sign Observations or QuestionnaireResponse. The `profileUri` may
+  /// be used when a FHIR Structure Definition is not available/appropriate.
+  List<FhirCanonicalBuilder>? profileCanonical;
+
+  /// [profileUri]
+  /// The profile (as a uri) that is expected at this endpoint when not
+  /// represented using a FHIR profile. e.g. CDA Template ID expressed as an
+  /// OID (in the Uri).
+  List<FhirUriBuilder>? profileUri;
+
   /// Converts a [EndpointPayloadBuilder]
   /// to [EndpointPayload]
   @override
@@ -1406,6 +1476,8 @@ class EndpointPayloadBuilder extends BackboneElementBuilder {
     addField('modifierExtension', modifierExtension);
     addField('type', type);
     addField('mimeType', mimeType);
+    addField('profileCanonical', profileCanonical);
+    addField('profileUri', profileUri);
     return json;
   }
 
@@ -1418,6 +1490,8 @@ class EndpointPayloadBuilder extends BackboneElementBuilder {
       'modifierExtension',
       'type',
       'mimeType',
+      'profileCanonical',
+      'profileUri',
     ];
   }
 
@@ -1449,6 +1523,14 @@ class EndpointPayloadBuilder extends BackboneElementBuilder {
       case 'mimeType':
         if (mimeType != null) {
           fields.addAll(mimeType!);
+        }
+      case 'profileCanonical':
+        if (profileCanonical != null) {
+          fields.addAll(profileCanonical!);
+        }
+      case 'profileUri':
+        if (profileUri != null) {
+          fields.addAll(profileUri!);
         }
       default:
         if (checkValid) {
@@ -1596,6 +1678,104 @@ class EndpointPayloadBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'profileCanonical':
+        {
+          if (child is List<FhirCanonicalBuilder>) {
+            // Replace or create new list
+            profileCanonical = child;
+            return;
+          } else if (child is FhirCanonicalBuilder) {
+            // Add single element to existing list or create new list
+            profileCanonical = [
+              ...(profileCanonical ?? []),
+              child,
+            ];
+            return;
+          } else if (child is List<PrimitiveTypeBuilder>) {
+            // Try to convert list of primitive types
+            final convertedList = <FhirCanonicalBuilder>[];
+            for (final element in child) {
+              try {
+                final stringValue = element.toString();
+                final converted = FhirCanonicalBuilder.tryParse(stringValue);
+                if (converted != null) {
+                  convertedList.add(converted);
+                }
+              } catch (e) {
+                // Continue if conversion fails
+              }
+            }
+            if (convertedList.isNotEmpty) {
+              profileCanonical = convertedList;
+              return;
+            }
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert a single primitive
+            try {
+              final stringValue = child.toString();
+              final converted = FhirCanonicalBuilder.tryParse(stringValue);
+              if (converted != null) {
+                profileCanonical = [
+                  ...(profileCanonical ?? []),
+                  converted,
+                ];
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'profileUri':
+        {
+          if (child is List<FhirUriBuilder>) {
+            // Replace or create new list
+            profileUri = child;
+            return;
+          } else if (child is FhirUriBuilder) {
+            // Add single element to existing list or create new list
+            profileUri = [
+              ...(profileUri ?? []),
+              child,
+            ];
+            return;
+          } else if (child is List<PrimitiveTypeBuilder>) {
+            // Try to convert list of primitive types
+            final convertedList = <FhirUriBuilder>[];
+            for (final element in child) {
+              try {
+                final stringValue = element.toString();
+                final converted = FhirUriBuilder.tryParse(stringValue);
+                if (converted != null) {
+                  convertedList.add(converted);
+                }
+              } catch (e) {
+                // Continue if conversion fails
+              }
+            }
+            if (convertedList.isNotEmpty) {
+              profileUri = convertedList;
+              return;
+            }
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert a single primitive
+            try {
+              final stringValue = child.toString();
+              final converted = FhirUriBuilder.tryParse(stringValue);
+              if (converted != null) {
+                profileUri = [
+                  ...(profileUri ?? []),
+                  converted,
+                ];
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -1616,6 +1796,10 @@ class EndpointPayloadBuilder extends BackboneElementBuilder {
         return ['CodeableConceptBuilder'];
       case 'mimeType':
         return ['FhirCodeBuilder'];
+      case 'profileCanonical':
+        return ['FhirCanonicalBuilder'];
+      case 'profileUri':
+        return ['FhirUriBuilder'];
       default:
         return <String>[];
     }
@@ -1651,6 +1835,16 @@ class EndpointPayloadBuilder extends BackboneElementBuilder {
           mimeType = <FhirCodeBuilder>[];
           return;
         }
+      case 'profileCanonical':
+        {
+          profileCanonical = <FhirCanonicalBuilder>[];
+          return;
+        }
+      case 'profileUri':
+        {
+          profileUri = <FhirUriBuilder>[];
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
@@ -1665,6 +1859,8 @@ class EndpointPayloadBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     List<CodeableConceptBuilder>? type,
     List<FhirCodeBuilder>? mimeType,
+    List<FhirCanonicalBuilder>? profileCanonical,
+    List<FhirUriBuilder>? profileUri,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -1678,6 +1874,8 @@ class EndpointPayloadBuilder extends BackboneElementBuilder {
       modifierExtension: modifierExtension ?? this.modifierExtension,
       type: type ?? this.type,
       mimeType: mimeType ?? this.mimeType,
+      profileCanonical: profileCanonical ?? this.profileCanonical,
+      profileUri: profileUri ?? this.profileUri,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -1731,6 +1929,18 @@ class EndpointPayloadBuilder extends BackboneElementBuilder {
     if (!listEquals<FhirCodeBuilder>(
       mimeType,
       o.mimeType,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirCanonicalBuilder>(
+      profileCanonical,
+      o.profileCanonical,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirUriBuilder>(
+      profileUri,
+      o.profileUri,
     )) {
       return false;
     }

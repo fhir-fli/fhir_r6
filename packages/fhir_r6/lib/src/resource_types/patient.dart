@@ -6,7 +6,8 @@ part 'patient.g.dart';
 
 /// [Patient]
 /// Demographics and other administrative information about an individual
-/// or animal receiving care or other health-related services.
+/// or animal that is the subject of potential, past, current, or future
+/// health-related care, services, or processes.
 class Patient extends DomainResource {
   /// Primary constructor for
   /// [Patient]
@@ -272,7 +273,9 @@ class Patient extends DomainResource {
 
   /// [gender]
   /// Administrative Gender - the gender that the patient is considered to
-  /// have for administration and record keeping purposes.
+  /// have for administration and record keeping purposes. See the [Patient
+  /// Gender and Sex section](patient.html#gender) for additional information
+  /// about communicating patient gender and sex.
   final AdministrativeGender? gender;
 
   /// [birthDate]
@@ -280,7 +283,9 @@ class Patient extends DomainResource {
   final FhirDate? birthDate;
 
   /// [deceasedX]
-  /// Indicates if the individual is deceased or not.
+  /// Indicates the date when the individual died, or, if the date is not
+  /// known or cannot be estimated, a flag indicating the patient is known to
+  /// be deceased.
   final DeceasedXPatient? deceasedX;
 
   /// Getter for [deceasedBoolean] as a FhirBoolean
@@ -299,7 +304,11 @@ class Patient extends DomainResource {
 
   /// [multipleBirthX]
   /// Indicates whether the patient is part of a multiple (boolean) or
-  /// indicates the actual birth order (integer).
+  /// indicates the actual birth order (integer). This count is relative to
+  /// the total of live births and fetal losses, which MAY be tracked in the
+  /// `patient-multipleBirthTotal` extension. The boolean option for this
+  /// property can also be used to track that there are known to be multiple
+  /// fetuses prior to birth.
   final MultipleBirthXPatient? multipleBirthX;
 
   /// Getter for [multipleBirthBoolean] as a FhirBoolean
@@ -855,9 +864,12 @@ class PatientContact extends BackboneElement {
     super.extension_,
     super.modifierExtension,
     this.relationship,
+    this.role,
     this.name,
+    this.additionalName,
     this.telecom,
     this.address,
+    this.additionalAddress,
     this.gender,
     this.organization,
     this.period,
@@ -895,11 +907,25 @@ class PatientContact extends BackboneElement {
             ),
           )
           .toList(),
+      role: (json['role'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       name: JsonParser.parseObject<HumanName>(
         json,
         'name',
         HumanName.fromJson,
       ),
+      additionalName: (json['additionalName'] as List<dynamic>?)
+          ?.map<HumanName>(
+            (v) => HumanName.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       telecom: (json['telecom'] as List<dynamic>?)
           ?.map<ContactPoint>(
             (v) => ContactPoint.fromJson(
@@ -912,6 +938,13 @@ class PatientContact extends BackboneElement {
         'address',
         Address.fromJson,
       ),
+      additionalAddress: (json['additionalAddress'] as List<dynamic>?)
+          ?.map<Address>(
+            (v) => Address.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       gender: JsonParser.parsePrimitive<AdministrativeGender>(
         json,
         'gender',
@@ -973,13 +1006,23 @@ class PatientContact extends BackboneElement {
   String get fhirType => 'PatientContact';
 
   /// [relationship]
-  /// The nature of the relationship between the patient and the contact
-  /// person.
+  /// The nature of the personal relationship between the patient and the
+  /// contact person.
   final List<CodeableConcept>? relationship;
 
+  /// [role]
+  /// The nature of the functional role between the patient and the contact
+  /// person.
+  final List<CodeableConcept>? role;
+
   /// [name]
-  /// A name associated with the contact person.
+  /// A name associated with the contact person. Alternate/additional names
+  /// for this contact can be found in the `additionalName` property.
   final HumanName? name;
+
+  /// [additionalName]
+  /// Additional names for the contact person.
+  final List<HumanName>? additionalName;
 
   /// [telecom]
   /// A contact detail for the person, e.g. a telephone number or an email
@@ -987,8 +1030,13 @@ class PatientContact extends BackboneElement {
   final List<ContactPoint>? telecom;
 
   /// [address]
-  /// Address for the contact person.
+  /// Address for the contact person. Alternate/additional addresses for this
+  /// contact can be found in the `additionalAddress` property.
   final Address? address;
+
+  /// [additionalAddress]
+  /// Additional addresses for the contact person.
+  final List<Address>? additionalAddress;
 
   /// [gender]
   /// Administrative Gender - the gender that the contact person is
@@ -1084,8 +1132,16 @@ class PatientContact extends BackboneElement {
       relationship,
     );
     addField(
+      'role',
+      role,
+    );
+    addField(
       'name',
       name,
+    );
+    addField(
+      'additionalName',
+      additionalName,
     );
     addField(
       'telecom',
@@ -1094,6 +1150,10 @@ class PatientContact extends BackboneElement {
     addField(
       'address',
       address,
+    );
+    addField(
+      'additionalAddress',
+      additionalAddress,
     );
     addField(
       'gender',
@@ -1118,9 +1178,12 @@ class PatientContact extends BackboneElement {
       'extension',
       'modifierExtension',
       'relationship',
+      'role',
       'name',
+      'additionalName',
       'telecom',
       'address',
+      'additionalAddress',
       'gender',
       'organization',
       'period',
@@ -1152,9 +1215,17 @@ class PatientContact extends BackboneElement {
         if (relationship != null) {
           fields.addAll(relationship!);
         }
+      case 'role':
+        if (role != null) {
+          fields.addAll(role!);
+        }
       case 'name':
         if (name != null) {
           fields.add(name!);
+        }
+      case 'additionalName':
+        if (additionalName != null) {
+          fields.addAll(additionalName!);
         }
       case 'telecom':
         if (telecom != null) {
@@ -1163,6 +1234,10 @@ class PatientContact extends BackboneElement {
       case 'address':
         if (address != null) {
           fields.add(address!);
+        }
+      case 'additionalAddress':
+        if (additionalAddress != null) {
+          fields.addAll(additionalAddress!);
         }
       case 'gender':
         if (gender != null) {
@@ -1241,9 +1316,21 @@ class PatientContact extends BackboneElement {
     )) {
       return false;
     }
+    if (!listEquals<CodeableConcept>(
+      role,
+      o.role,
+    )) {
+      return false;
+    }
     if (!equalsDeepWithNull(
       name,
       o.name,
+    )) {
+      return false;
+    }
+    if (!listEquals<HumanName>(
+      additionalName,
+      o.additionalName,
     )) {
       return false;
     }
@@ -1256,6 +1343,12 @@ class PatientContact extends BackboneElement {
     if (!equalsDeepWithNull(
       address,
       o.address,
+    )) {
+      return false;
+    }
+    if (!listEquals<Address>(
+      additionalAddress,
+      o.additionalAddress,
     )) {
       return false;
     }
@@ -1377,10 +1470,7 @@ class PatientCommunication extends BackboneElement {
   String get fhirType => 'PatientCommunication';
 
   /// [language]
-  /// The ISO-639-1 alpha 2 code in lower case for the language, optionally
-  /// followed by a hyphen and the ISO-3166-1 alpha 2 code for the region in
-  /// upper case; e.g. "en" for English, or "en-US" for American English
-  /// versus "en-AU" for Australian English.
+  /// The language which may be used to communicate with the individual.
   final CodeableConcept language;
 
   /// [preferred]

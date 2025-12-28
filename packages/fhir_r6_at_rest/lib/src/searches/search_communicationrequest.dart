@@ -10,13 +10,15 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchCommunicationRequest extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [CommunicationRequest]
+  @override
   SearchCommunicationRequest identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -26,8 +28,8 @@ class SearchCommunicationRequest extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}authored'] =
-        value.toString();
+    parameters['authored'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -38,8 +40,9 @@ class SearchCommunicationRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}category'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['category'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -50,8 +53,9 @@ class SearchCommunicationRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}group_identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['group_identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -62,8 +66,9 @@ class SearchCommunicationRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}medium'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['medium'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -73,32 +78,36 @@ class SearchCommunicationRequest extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}occurrence'] =
-        value.toString();
+    parameters['occurrence'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [priority] in the resource
   /// [CommunicationRequest]
+  @override
   SearchCommunicationRequest priority(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}priority'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['priority'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [CommunicationRequest]
+  @override
   SearchCommunicationRequest status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

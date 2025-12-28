@@ -35,15 +35,25 @@ class FhirCanonical extends FhirUri
         SubjectXPlanDefinition,
         SubjectXPlanDefinitionAction,
         ArtifactXArtifactAssessment,
+        TargetXArtifactAssessmentRelatesTo,
+        TargetXCitationRelatesTo,
+        TargetXCitationRelatesTo1,
+        TargetXCompositionRelatesTo,
+        TargetXEvidenceRelatesTo,
+        TargetXEvidenceVariableRelatesTo,
         InstantiatesXObservation,
         ActorXRequestOrchestrationParticipant,
+        TargetXResearchStudyRelatesTo,
         SourceScopeXConceptMap,
         TargetScopeXConceptMap,
         StructureProfileXExampleScenarioInstance,
         DefinitionXPlanDefinitionAction,
         DefinitionXRequestOrchestrationAction,
-        LinkXTestReportRequirement,
-        LinkXTestScriptRequirement {
+
+        /// ### ***
+        ArtifactXTestPlanScope,
+        ArtifactXTestPlanTestCaseScope,
+        LinkXTestReportRequirement {
   // --------------------------------------------------------------------------
   // Private Internal Constructor
   // --------------------------------------------------------------------------
@@ -112,7 +122,7 @@ class FhirCanonical extends FhirUri
 
   /// Constructs a [FhirCanonical] from a JSON [Map].
   factory FhirCanonical.fromJson(Map<String, dynamic> json) {
-    final rawValue = json['value'] as String?;
+    final rawValue = json['value'];
     final elementJson = json['_value'] as Map<String, dynamic>?;
     final parsedElement =
         elementJson == null ? null : Element.fromJson(elementJson);

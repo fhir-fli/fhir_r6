@@ -10,13 +10,15 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchMessageHeader extends SearchResource {
   /// a token search for [code] in the resource
   /// [MessageHeader]
+  @override
   SearchMessageHeader code(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}code'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['code'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -29,8 +31,8 @@ class SearchMessageHeader extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}destination'] =
-        value.toString();
+    parameters['destination'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -41,8 +43,9 @@ class SearchMessageHeader extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}event'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['event'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -53,8 +56,9 @@ class SearchMessageHeader extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}response_id'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['response_id'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -67,8 +71,8 @@ class SearchMessageHeader extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}source'] =
-        value.toString();
+    parameters['source'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

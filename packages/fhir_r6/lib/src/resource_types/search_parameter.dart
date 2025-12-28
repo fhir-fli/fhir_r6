@@ -41,6 +41,7 @@ class SearchParameter extends CanonicalResource {
     this.copyright,
     this.copyrightLabel,
     required this.code,
+    this.aliasCode,
     required this.base,
     required this.type,
     this.expression,
@@ -217,6 +218,11 @@ class SearchParameter extends CanonicalResource {
         'code',
         FhirCode.fromJson,
       )!,
+      aliasCode: JsonParser.parsePrimitiveList<FhirCode>(
+        json,
+        'aliasCode',
+        FhirCode.fromJson,
+      ),
       base: JsonParser.parsePrimitiveList<VersionIndependentResourceTypesAll>(
         json,
         'base',
@@ -385,6 +391,13 @@ class SearchParameter extends CanonicalResource {
   /// searchParam.name to differentiate between multiple SearchParameters
   /// that happen to have the same code.
   final FhirCode code;
+
+  /// [aliasCode]
+  /// Additional label that are recommended to be used in the URL or the
+  /// parameter name in a parameters resource for this search parameter.
+  /// Typically used to provide backwards-compatibility for renamed search
+  /// parameters and translations into localized languages.
+  final List<FhirCode>? aliasCode;
 
   /// [base]
   /// The base resource type(s) that this search parameter can be used
@@ -623,6 +636,10 @@ class SearchParameter extends CanonicalResource {
       code,
     );
     addField(
+      'aliasCode',
+      aliasCode,
+    );
+    addField(
       'base',
       base,
     );
@@ -704,6 +721,7 @@ class SearchParameter extends CanonicalResource {
       'copyright',
       'copyrightLabel',
       'code',
+      'aliasCode',
       'base',
       'type',
       'expression',
@@ -840,6 +858,10 @@ class SearchParameter extends CanonicalResource {
         }
       case 'code':
         fields.add(code);
+      case 'aliasCode':
+        if (aliasCode != null) {
+          fields.addAll(aliasCode!);
+        }
       case 'base':
         fields.addAll(base);
       case 'type':
@@ -1084,6 +1106,12 @@ class SearchParameter extends CanonicalResource {
     if (!equalsDeepWithNull(
       code,
       o.code,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirCode>(
+      aliasCode,
+      o.aliasCode,
     )) {
       return false;
     }

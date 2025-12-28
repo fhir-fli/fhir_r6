@@ -41,6 +41,7 @@ class Requirements extends CanonicalResource {
     this.copyright,
     this.copyrightLabel,
     this.derivedFrom,
+    this.imports,
     this.reference,
     this.actor,
     this.statement,
@@ -203,16 +204,25 @@ class Requirements extends CanonicalResource {
         'derivedFrom',
         FhirCanonical.fromJson,
       ),
+      imports: (json['imports'] as List<dynamic>?)
+          ?.map<RequirementsImports>(
+            (v) => RequirementsImports.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       reference: JsonParser.parsePrimitiveList<FhirUrl>(
         json,
         'reference',
         FhirUrl.fromJson,
       ),
-      actor: JsonParser.parsePrimitiveList<FhirCanonical>(
-        json,
-        'actor',
-        FhirCanonical.fromJson,
-      ),
+      actor: (json['actor'] as List<dynamic>?)
+          ?.map<RequirementsActor>(
+            (v) => RequirementsActor.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       statement: (json['statement'] as List<dynamic>?)
           ?.map<RequirementsStatement>(
             (v) => RequirementsStatement.fromJson(
@@ -316,15 +326,22 @@ class Requirements extends CanonicalResource {
   /// updates.
   final List<FhirCanonical>? derivedFrom;
 
+  /// [imports]
+  /// Points to requirements defined elsewhere that have the same force as if
+  /// they were defined in this instance.
+  final List<RequirementsImports>? imports;
+
   /// [reference]
   /// A reference to another artifact that created this set of requirements.
-  /// This could be a Profile, etc., or external regulation, or business
-  /// requirements expressed elsewhere.
+  /// This could be a profile, etc., or external regulation, or business
+  /// requirements expressed elsewhere. This URI is intended to point to a
+  /// specific web page for an artifact, not a canonical URL. If pointing to
+  /// HL7 specifications, it is best to point to the version-specific URL.
   final List<FhirUrl>? reference;
 
   /// [actor]
   /// An actor these requirements are in regard to.
-  final List<FhirCanonical>? actor;
+  final List<RequirementsActor>? actor;
 
   /// [statement]
   /// The actual statement of requirement, in markdown format.
@@ -502,6 +519,10 @@ class Requirements extends CanonicalResource {
       derivedFrom,
     );
     addField(
+      'imports',
+      imports,
+    );
+    addField(
       'reference',
       reference,
     );
@@ -546,6 +567,7 @@ class Requirements extends CanonicalResource {
       'copyright',
       'copyrightLabel',
       'derivedFrom',
+      'imports',
       'reference',
       'actor',
       'statement',
@@ -672,6 +694,10 @@ class Requirements extends CanonicalResource {
       case 'derivedFrom':
         if (derivedFrom != null) {
           fields.addAll(derivedFrom!);
+        }
+      case 'imports':
+        if (imports != null) {
+          fields.addAll(imports!);
         }
       case 'reference':
         if (reference != null) {
@@ -882,13 +908,19 @@ class Requirements extends CanonicalResource {
     )) {
       return false;
     }
+    if (!listEquals<RequirementsImports>(
+      imports,
+      o.imports,
+    )) {
+      return false;
+    }
     if (!listEquals<FhirUrl>(
       reference,
       o.reference,
     )) {
       return false;
     }
-    if (!listEquals<FhirCanonical>(
+    if (!listEquals<RequirementsActor>(
       actor,
       o.actor,
     )) {
@@ -897,6 +929,610 @@ class Requirements extends CanonicalResource {
     if (!listEquals<RequirementsStatement>(
       statement,
       o.statement,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [RequirementsImports]
+/// Points to requirements defined elsewhere that have the same force as if
+/// they were defined in this instance.
+class RequirementsImports extends BackboneElement {
+  /// Primary constructor for
+  /// [RequirementsImports]
+
+  const RequirementsImports({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    required this.reference,
+    this.key,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory RequirementsImports.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return RequirementsImports(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      reference: JsonParser.parsePrimitive<FhirCanonical>(
+        json,
+        'reference',
+        FhirCanonical.fromJson,
+      )!,
+      key: JsonParser.parsePrimitiveList<FhirId>(
+        json,
+        'key',
+        FhirId.fromJson,
+      ),
+    );
+  }
+
+  /// Deserialize [RequirementsImports]
+  /// from a [String] or [YamlMap] object
+  factory RequirementsImports.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return RequirementsImports.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return RequirementsImports.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'RequirementsImports '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [RequirementsImports]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory RequirementsImports.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return RequirementsImports.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'RequirementsImports';
+
+  /// [reference]
+  /// The canonical for the Requirements resource to import statements from.
+  final FhirCanonical reference;
+
+  /// [key]
+  /// The key of a statement to treat as part of the set of requirements
+  /// defined in this instance.
+  final List<FhirId>? key;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'reference',
+      reference,
+    );
+    addField(
+      'key',
+      key,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'reference',
+      'key',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'reference':
+        fields.add(reference);
+      case 'key':
+        if (key != null) {
+          fields.addAll(key!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  RequirementsImports clone() => copyWith();
+
+  /// Copy function for [RequirementsImports]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $RequirementsImportsCopyWith<RequirementsImports> get copyWith =>
+      _$RequirementsImportsCopyWithImpl<RequirementsImports>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! RequirementsImports) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reference,
+      o.reference,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirId>(
+      key,
+      o.key,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [RequirementsActor]
+/// An actor these requirements are in regard to.
+class RequirementsActor extends BackboneElement {
+  /// Primary constructor for
+  /// [RequirementsActor]
+
+  const RequirementsActor({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    required this.reference,
+    this.key,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory RequirementsActor.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return RequirementsActor(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      reference: JsonParser.parsePrimitive<FhirCanonical>(
+        json,
+        'reference',
+        FhirCanonical.fromJson,
+      )!,
+      key: JsonParser.parsePrimitive<FhirId>(
+        json,
+        'key',
+        FhirId.fromJson,
+      ),
+    );
+  }
+
+  /// Deserialize [RequirementsActor]
+  /// from a [String] or [YamlMap] object
+  factory RequirementsActor.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return RequirementsActor.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return RequirementsActor.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'RequirementsActor '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [RequirementsActor]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory RequirementsActor.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return RequirementsActor.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'RequirementsActor';
+
+  /// [reference]
+  /// The canonical for an actor relevant to some of the requirements.
+  final FhirCanonical reference;
+
+  /// [key]
+  /// A unique string used to reference the actor from specific requirements.
+  final FhirId? key;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'reference',
+      reference,
+    );
+    addField(
+      'key',
+      key,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'reference',
+      'key',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'reference':
+        fields.add(reference);
+      case 'key':
+        if (key != null) {
+          fields.add(key!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  RequirementsActor clone() => copyWith();
+
+  /// Copy function for [RequirementsActor]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $RequirementsActorCopyWith<RequirementsActor> get copyWith =>
+      _$RequirementsActorCopyWithImpl<RequirementsActor>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! RequirementsActor) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reference,
+      o.reference,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      key,
+      o.key,
     )) {
       return false;
     }
@@ -920,10 +1556,11 @@ class RequirementsStatement extends BackboneElement {
     this.conditionality,
     required this.requirement,
     this.derivedFrom,
-    this.parent,
+    this.partOf,
     this.satisfiedBy,
     this.reference,
     this.source,
+    this.actor,
     super.disallowExtensions,
   }) : super();
 
@@ -976,15 +1613,15 @@ class RequirementsStatement extends BackboneElement {
         'requirement',
         FhirMarkdown.fromJson,
       )!,
-      derivedFrom: JsonParser.parsePrimitive<FhirString>(
+      derivedFrom: JsonParser.parseObject<RequirementsDerivedFrom>(
         json,
         'derivedFrom',
-        FhirString.fromJson,
+        RequirementsDerivedFrom.fromJson,
       ),
-      parent: JsonParser.parsePrimitive<FhirString>(
+      partOf: JsonParser.parseObject<RequirementsPartOf>(
         json,
-        'parent',
-        FhirString.fromJson,
+        'partOf',
+        RequirementsPartOf.fromJson,
       ),
       satisfiedBy: JsonParser.parsePrimitiveList<FhirUrl>(
         json,
@@ -1003,6 +1640,11 @@ class RequirementsStatement extends BackboneElement {
             ),
           )
           .toList(),
+      actor: JsonParser.parsePrimitiveList<FhirId>(
+        json,
+        'actor',
+        FhirId.fromJson,
+      ),
     );
   }
 
@@ -1072,31 +1714,41 @@ class RequirementsStatement extends BackboneElement {
   final FhirMarkdown requirement;
 
   /// [derivedFrom]
-  /// Another statement on one of the requirements that this requirement
-  /// clarifies or restricts.
-  final FhirString? derivedFrom;
+  /// Indicates that this statement is refining, tightening, or establishing
+  /// more context for the referenced requirement/statement.
+  final RequirementsDerivedFrom? derivedFrom;
 
-  /// [parent]
-  /// A larger requirement that this requirement helps to refine and enable.
-  final FhirString? parent;
+  /// [partOf]
+  /// Identifies a higher-level requirement or statement which this
+  /// referencing statement is a logical sub-requirement of. I.e. This
+  /// statement is a necessary step to achieving the referenced
+  /// requirement/statement.
+  final RequirementsPartOf? partOf;
 
   /// [satisfiedBy]
   /// A reference to another artifact that satisfies this requirement. This
-  /// could be a Profile, extension, or an element in one of those, or a
+  /// could be a profile, extension, or an element in one of those, or a
   /// CapabilityStatement, OperationDefinition, SearchParameter,
   /// CodeSystem(/code), ValueSet, Libary etc.
   final List<FhirUrl>? satisfiedBy;
 
   /// [reference]
   /// A reference to another artifact that created this requirement. This
-  /// could be a Profile, etc., or external regulation, or business
-  /// requirements expressed elsewhere.
+  /// could be a profile, etc., or external regulation, or business
+  /// requirements expressed elsewhere. This URI is intended to point to a
+  /// specific web page for an artifact, not a canonical URL. If pointing to
+  /// HL7 specifications, it is best to point to the version-specific URL.
   final List<FhirUrl>? reference;
 
   /// [source]
   /// Who asked for this statement to be a requirement. By default, it's
   /// assumed that the publisher knows who it is if it matters.
   final List<Reference>? source;
+
+  /// [actor]
+  /// A reference to the key of an actor listed in Requirements.actor that is
+  /// relevant to this requirement statement.
+  final List<FhirId>? actor;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1197,8 +1849,8 @@ class RequirementsStatement extends BackboneElement {
       derivedFrom,
     );
     addField(
-      'parent',
-      parent,
+      'partOf',
+      partOf,
     );
     addField(
       'satisfiedBy',
@@ -1211,6 +1863,10 @@ class RequirementsStatement extends BackboneElement {
     addField(
       'source',
       source,
+    );
+    addField(
+      'actor',
+      actor,
     );
     return json;
   }
@@ -1228,10 +1884,11 @@ class RequirementsStatement extends BackboneElement {
       'conditionality',
       'requirement',
       'derivedFrom',
-      'parent',
+      'partOf',
       'satisfiedBy',
       'reference',
       'source',
+      'actor',
     ];
   }
 
@@ -1276,9 +1933,9 @@ class RequirementsStatement extends BackboneElement {
         if (derivedFrom != null) {
           fields.add(derivedFrom!);
         }
-      case 'parent':
-        if (parent != null) {
-          fields.add(parent!);
+      case 'partOf':
+        if (partOf != null) {
+          fields.add(partOf!);
         }
       case 'satisfiedBy':
         if (satisfiedBy != null) {
@@ -1291,6 +1948,10 @@ class RequirementsStatement extends BackboneElement {
       case 'source':
         if (source != null) {
           fields.addAll(source!);
+        }
+      case 'actor':
+        if (actor != null) {
+          fields.addAll(actor!);
         }
       default:
         if (checkValid) {
@@ -1388,8 +2049,8 @@ class RequirementsStatement extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
-      parent,
-      o.parent,
+      partOf,
+      o.partOf,
     )) {
       return false;
     }
@@ -1408,6 +2069,621 @@ class RequirementsStatement extends BackboneElement {
     if (!listEquals<Reference>(
       source,
       o.source,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirId>(
+      actor,
+      o.actor,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [RequirementsDerivedFrom]
+/// Indicates that this statement is refining, tightening, or establishing
+/// more context for the referenced requirement/statement.
+class RequirementsDerivedFrom extends BackboneElement {
+  /// Primary constructor for
+  /// [RequirementsDerivedFrom]
+
+  const RequirementsDerivedFrom({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.reference,
+    required this.key,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory RequirementsDerivedFrom.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return RequirementsDerivedFrom(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      reference: JsonParser.parsePrimitive<FhirCanonical>(
+        json,
+        'reference',
+        FhirCanonical.fromJson,
+      ),
+      key: JsonParser.parsePrimitive<FhirId>(
+        json,
+        'key',
+        FhirId.fromJson,
+      )!,
+    );
+  }
+
+  /// Deserialize [RequirementsDerivedFrom]
+  /// from a [String] or [YamlMap] object
+  factory RequirementsDerivedFrom.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return RequirementsDerivedFrom.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return RequirementsDerivedFrom.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'RequirementsDerivedFrom '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [RequirementsDerivedFrom]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory RequirementsDerivedFrom.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return RequirementsDerivedFrom.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'RequirementsDerivedFrom';
+
+  /// [reference]
+  /// The canonical of the Requirements instance this statement is
+  /// derivedFrom.
+  final FhirCanonical? reference;
+
+  /// [key]
+  /// The key, either within this resource or the specified Requirements
+  /// resource this statement is derivedFrom.
+  final FhirId key;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'reference',
+      reference,
+    );
+    addField(
+      'key',
+      key,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'reference',
+      'key',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'reference':
+        if (reference != null) {
+          fields.add(reference!);
+        }
+      case 'key':
+        fields.add(key);
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  RequirementsDerivedFrom clone() => copyWith();
+
+  /// Copy function for [RequirementsDerivedFrom]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $RequirementsDerivedFromCopyWith<RequirementsDerivedFrom> get copyWith =>
+      _$RequirementsDerivedFromCopyWithImpl<RequirementsDerivedFrom>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! RequirementsDerivedFrom) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reference,
+      o.reference,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      key,
+      o.key,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [RequirementsPartOf]
+/// Identifies a higher-level requirement or statement which this
+/// referencing statement is a logical sub-requirement of. I.e. This
+/// statement is a necessary step to achieving the referenced
+/// requirement/statement.
+class RequirementsPartOf extends BackboneElement {
+  /// Primary constructor for
+  /// [RequirementsPartOf]
+
+  const RequirementsPartOf({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.reference,
+    required this.key,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory RequirementsPartOf.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return RequirementsPartOf(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      reference: JsonParser.parsePrimitive<FhirCanonical>(
+        json,
+        'reference',
+        FhirCanonical.fromJson,
+      ),
+      key: JsonParser.parsePrimitive<FhirId>(
+        json,
+        'key',
+        FhirId.fromJson,
+      )!,
+    );
+  }
+
+  /// Deserialize [RequirementsPartOf]
+  /// from a [String] or [YamlMap] object
+  factory RequirementsPartOf.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return RequirementsPartOf.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return RequirementsPartOf.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'RequirementsPartOf '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [RequirementsPartOf]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory RequirementsPartOf.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return RequirementsPartOf.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'RequirementsPartOf';
+
+  /// [reference]
+  /// The canonical of the Requirements instance this statement is a part of.
+  final FhirCanonical? reference;
+
+  /// [key]
+  /// The key, either within this resource or the specified Requirements
+  /// resource this statement is a part of.
+  final FhirId key;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'reference',
+      reference,
+    );
+    addField(
+      'key',
+      key,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'reference',
+      'key',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'reference':
+        if (reference != null) {
+          fields.add(reference!);
+        }
+      case 'key':
+        fields.add(key);
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  RequirementsPartOf clone() => copyWith();
+
+  /// Copy function for [RequirementsPartOf]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $RequirementsPartOfCopyWith<RequirementsPartOf> get copyWith =>
+      _$RequirementsPartOfCopyWithImpl<RequirementsPartOf>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! RequirementsPartOf) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reference,
+      o.reference,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      key,
+      o.key,
     )) {
       return false;
     }

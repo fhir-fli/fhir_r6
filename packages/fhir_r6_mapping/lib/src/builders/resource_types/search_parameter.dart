@@ -46,6 +46,7 @@ class SearchParameterBuilder extends CanonicalResourceBuilder {
     this.copyright,
     this.copyrightLabel,
     this.code,
+    this.aliasCode,
     this.base,
     this.type,
     this.expression,
@@ -277,6 +278,12 @@ class SearchParameterBuilder extends CanonicalResourceBuilder {
         FhirCodeBuilder.fromJson,
         '$objectPath.code',
       ),
+      aliasCode: JsonParser.parsePrimitiveList<FhirCodeBuilder>(
+        json,
+        'aliasCode',
+        FhirCodeBuilder.fromJson,
+        '$objectPath.aliasCode',
+      ),
       base: JsonParser.parsePrimitiveList<
           VersionIndependentResourceTypesAllBuilder>(
         json,
@@ -464,6 +471,13 @@ class SearchParameterBuilder extends CanonicalResourceBuilder {
   /// that happen to have the same code.
   FhirCodeBuilder? code;
 
+  /// [aliasCode]
+  /// Additional label that are recommended to be used in the URL or the
+  /// parameter name in a parameters resource for this search parameter.
+  /// Typically used to provide backwards-compatibility for renamed search
+  /// parameters and translations into localized languages.
+  List<FhirCodeBuilder>? aliasCode;
+
   /// [base]
   /// The base resource type(s) that this search parameter can be used
   /// against.
@@ -596,6 +610,7 @@ class SearchParameterBuilder extends CanonicalResourceBuilder {
     addField('copyright', copyright);
     addField('copyrightLabel', copyrightLabel);
     addField('code', code);
+    addField('aliasCode', aliasCode);
     addField('base', base);
     addField('type', type);
     addField('expression', expression);
@@ -642,6 +657,7 @@ class SearchParameterBuilder extends CanonicalResourceBuilder {
       'copyright',
       'copyrightLabel',
       'code',
+      'aliasCode',
       'base',
       'type',
       'expression',
@@ -785,6 +801,10 @@ class SearchParameterBuilder extends CanonicalResourceBuilder {
       case 'code':
         if (code != null) {
           fields.add(code!);
+        }
+      case 'aliasCode':
+        if (aliasCode != null) {
+          fields.addAll(aliasCode!);
         }
       case 'base':
         if (base != null) {
@@ -1373,6 +1393,55 @@ class SearchParameterBuilder extends CanonicalResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'aliasCode':
+        {
+          if (child is List<FhirCodeBuilder>) {
+            // Replace or create new list
+            aliasCode = child;
+            return;
+          } else if (child is FhirCodeBuilder) {
+            // Add single element to existing list or create new list
+            aliasCode = [
+              ...(aliasCode ?? []),
+              child,
+            ];
+            return;
+          } else if (child is List<PrimitiveTypeBuilder>) {
+            // Try to convert list of primitive types
+            final convertedList = <FhirCodeBuilder>[];
+            for (final element in child) {
+              try {
+                final stringValue = element.toString();
+                final converted = FhirCodeBuilder.tryParse(stringValue);
+                if (converted != null) {
+                  convertedList.add(converted);
+                }
+              } catch (e) {
+                // Continue if conversion fails
+              }
+            }
+            if (convertedList.isNotEmpty) {
+              aliasCode = convertedList;
+              return;
+            }
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert a single primitive
+            try {
+              final stringValue = child.toString();
+              final converted = FhirCodeBuilder.tryParse(stringValue);
+              if (converted != null) {
+                aliasCode = [
+                  ...(aliasCode ?? []),
+                  converted,
+                ];
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'base':
         {
           if (child is List<VersionIndependentResourceTypesAllBuilder>) {
@@ -1860,6 +1929,8 @@ class SearchParameterBuilder extends CanonicalResourceBuilder {
         return ['FhirStringBuilder'];
       case 'code':
         return ['FhirCodeBuilder'];
+      case 'aliasCode':
+        return ['FhirCodeBuilder'];
       case 'base':
         return ['FhirCodeEnumBuilder'];
       case 'type':
@@ -2036,6 +2107,11 @@ class SearchParameterBuilder extends CanonicalResourceBuilder {
           code = FhirCodeBuilder.empty();
           return;
         }
+      case 'aliasCode':
+        {
+          aliasCode = <FhirCodeBuilder>[];
+          return;
+        }
       case 'base':
         {
           base = <VersionIndependentResourceTypesAllBuilder>[];
@@ -2132,6 +2208,7 @@ class SearchParameterBuilder extends CanonicalResourceBuilder {
     FhirMarkdownBuilder? copyright,
     FhirStringBuilder? copyrightLabel,
     FhirCodeBuilder? code,
+    List<FhirCodeBuilder>? aliasCode,
     List<VersionIndependentResourceTypesAllBuilder>? base,
     SearchParamTypeBuilder? type,
     FhirStringBuilder? expression,
@@ -2183,6 +2260,7 @@ class SearchParameterBuilder extends CanonicalResourceBuilder {
       copyright: copyright ?? this.copyright,
       copyrightLabel: copyrightLabel ?? this.copyrightLabel,
       code: code ?? this.code,
+      aliasCode: aliasCode ?? this.aliasCode,
       base: base ?? this.base,
       type: type ?? this.type,
       expression: expression ?? this.expression,
@@ -2380,6 +2458,12 @@ class SearchParameterBuilder extends CanonicalResourceBuilder {
     if (!equalsDeepWithNull(
       code,
       o.code,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirCodeBuilder>(
+      aliasCode,
+      o.aliasCode,
     )) {
       return false;
     }

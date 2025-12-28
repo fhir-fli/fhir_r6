@@ -3,6 +3,9 @@ part of '../primitive_types.dart';
 
 /// Actual enum for EvidenceVariableHandling
 enum EvidenceVariableHandlingEnum {
+  /// boolean
+  boolean,
+
   /// continuous
   continuous,
 
@@ -14,6 +17,9 @@ enum EvidenceVariableHandlingEnum {
 
   /// polychotomous
   polychotomous,
+
+  /// extension
+  extensionValue,
   ;
 
   /// Converts the enum value to a string.
@@ -23,6 +29,8 @@ enum EvidenceVariableHandlingEnum {
   @override
   String toString() {
     switch (this) {
+      case EvidenceVariableHandlingEnum.boolean:
+        return 'boolean';
       case EvidenceVariableHandlingEnum.continuous:
         return 'continuous';
       case EvidenceVariableHandlingEnum.dichotomous:
@@ -31,6 +39,8 @@ enum EvidenceVariableHandlingEnum {
         return 'ordinal';
       case EvidenceVariableHandlingEnum.polychotomous:
         return 'polychotomous';
+      case EvidenceVariableHandlingEnum.extensionValue:
+        return 'extension';
     }
   }
 
@@ -48,6 +58,8 @@ enum EvidenceVariableHandlingEnum {
       return null;
     }
     switch (value) {
+      case 'boolean':
+        return EvidenceVariableHandlingEnum.boolean;
       case 'continuous':
         return EvidenceVariableHandlingEnum.continuous;
       case 'dichotomous':
@@ -56,6 +68,8 @@ enum EvidenceVariableHandlingEnum {
         return EvidenceVariableHandlingEnum.ordinal;
       case 'polychotomous':
         return EvidenceVariableHandlingEnum.polychotomous;
+      case 'extension':
+        return EvidenceVariableHandlingEnum.extensionValue;
     }
     return null;
   }
@@ -131,6 +145,19 @@ class EvidenceVariableHandling extends FhirCodeEnum {
   /// An actual enum that can be used for EvidenceVariableHandling
   final EvidenceVariableHandlingEnum? valueEnum;
 
+  /// boolean
+  static const EvidenceVariableHandling boolean = EvidenceVariableHandling._(
+    valueString: 'boolean',
+    valueEnum: EvidenceVariableHandlingEnum.boolean,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/variable-handling',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'boolean variable',
+    ),
+  );
+
   /// continuous
   static const EvidenceVariableHandling continuous = EvidenceVariableHandling._(
     valueString: 'continuous',
@@ -138,7 +165,7 @@ class EvidenceVariableHandling extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/variable-handling',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'continuous variable',
     ),
@@ -152,7 +179,7 @@ class EvidenceVariableHandling extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/variable-handling',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'dichotomous variable',
     ),
@@ -165,7 +192,7 @@ class EvidenceVariableHandling extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/variable-handling',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ordinal variable',
     ),
@@ -179,18 +206,34 @@ class EvidenceVariableHandling extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/variable-handling',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'polychotomous variable',
     ),
   );
 
+  /// extension_
+  static const EvidenceVariableHandling extensionValue =
+      EvidenceVariableHandling._(
+    valueString: 'extension',
+    valueEnum: EvidenceVariableHandlingEnum.extensionValue,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/variable-handling',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'extension',
+    ),
+  );
+
   /// List of all enum-like values
   static final List<EvidenceVariableHandling> values = [
+    boolean,
     continuous,
     dichotomous,
     ordinal,
     polychotomous,
+    extensionValue,
   ];
 
   /// Returns the enum value with an element attached

@@ -136,7 +136,7 @@ class QuestionnaireAnswerConstraint extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/questionnaire-answer-constraint',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Options only',
     ),
@@ -151,7 +151,7 @@ class QuestionnaireAnswerConstraint extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/questionnaire-answer-constraint',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: "Options or 'type'",
     ),
@@ -166,7 +166,7 @@ class QuestionnaireAnswerConstraint extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/questionnaire-answer-constraint',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Options or string',
     ),

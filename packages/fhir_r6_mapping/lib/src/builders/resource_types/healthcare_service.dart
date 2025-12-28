@@ -44,6 +44,7 @@ class HealthcareServiceBuilder extends DomainResourceBuilder {
     this.characteristic,
     this.communication,
     this.referralMethod,
+    this.referralRequired,
     this.appointmentRequired,
     this.availability,
     this.endpoint,
@@ -298,22 +299,24 @@ class HealthcareServiceBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
+      referralRequired: JsonParser.parsePrimitive<FhirBooleanBuilder>(
+        json,
+        'referralRequired',
+        FhirBooleanBuilder.fromJson,
+        '$objectPath.referralRequired',
+      ),
       appointmentRequired: JsonParser.parsePrimitive<FhirBooleanBuilder>(
         json,
         'appointmentRequired',
         FhirBooleanBuilder.fromJson,
         '$objectPath.appointmentRequired',
       ),
-      availability: (json['availability'] as List<dynamic>?)
-          ?.map<AvailabilityBuilder>(
-            (v) => AvailabilityBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.availability',
-              },
-            ),
-          )
-          .toList(),
+      availability: JsonParser.parseObject<AvailabilityBuilder>(
+        json,
+        'availability',
+        AvailabilityBuilder.fromJson,
+        '$objectPath.availability',
+      ),
       endpoint: (json['endpoint'] as List<dynamic>?)
           ?.map<ReferenceBuilder>(
             (v) => ReferenceBuilder.fromJson(
@@ -468,16 +471,20 @@ class HealthcareServiceBuilder extends DomainResourceBuilder {
   /// it is implied that no referral is required.
   List<CodeableConceptBuilder>? referralMethod;
 
+  /// [referralRequired]
+  /// Indicates whether or not a prospective consumer will require a referral
+  /// for a particular service at a site to be provided by the Organization.
+  FhirBooleanBuilder? referralRequired;
+
   /// [appointmentRequired]
   /// Indicates whether or not a prospective consumer will require an
   /// appointment for a particular service at a site to be provided by the
-  /// Organization. Indicates if an appointment is required for access to
-  /// this service.
+  /// Organization.
   FhirBooleanBuilder? appointmentRequired;
 
   /// [availability]
   /// A collection of times that the healthcare service is available.
-  List<AvailabilityBuilder>? availability;
+  AvailabilityBuilder? availability;
 
   /// [endpoint]
   /// Technical endpoints providing access to services operated for the
@@ -549,6 +556,7 @@ class HealthcareServiceBuilder extends DomainResourceBuilder {
     addField('characteristic', characteristic);
     addField('communication', communication);
     addField('referralMethod', referralMethod);
+    addField('referralRequired', referralRequired);
     addField('appointmentRequired', appointmentRequired);
     addField('availability', availability);
     addField('endpoint', endpoint);
@@ -587,6 +595,7 @@ class HealthcareServiceBuilder extends DomainResourceBuilder {
       'characteristic',
       'communication',
       'referralMethod',
+      'referralRequired',
       'appointmentRequired',
       'availability',
       'endpoint',
@@ -714,13 +723,17 @@ class HealthcareServiceBuilder extends DomainResourceBuilder {
         if (referralMethod != null) {
           fields.addAll(referralMethod!);
         }
+      case 'referralRequired':
+        if (referralRequired != null) {
+          fields.add(referralRequired!);
+        }
       case 'appointmentRequired':
         if (appointmentRequired != null) {
           fields.add(appointmentRequired!);
         }
       case 'availability':
         if (availability != null) {
-          fields.addAll(availability!);
+          fields.add(availability!);
         }
       case 'endpoint':
         if (endpoint != null) {
@@ -1202,6 +1215,26 @@ class HealthcareServiceBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'referralRequired':
+        {
+          if (child is FhirBooleanBuilder) {
+            referralRequired = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirBooleanBuilder.tryParse(stringValue);
+              if (converted != null) {
+                referralRequired = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'appointmentRequired':
         {
           if (child is FhirBooleanBuilder) {
@@ -1224,16 +1257,8 @@ class HealthcareServiceBuilder extends DomainResourceBuilder {
         }
       case 'availability':
         {
-          if (child is List<AvailabilityBuilder>) {
-            // Replace or create new list
+          if (child is AvailabilityBuilder) {
             availability = child;
-            return;
-          } else if (child is AvailabilityBuilder) {
-            // Add single element to existing list or create new list
-            availability = [
-              ...(availability ?? []),
-              child,
-            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -1320,6 +1345,8 @@ class HealthcareServiceBuilder extends DomainResourceBuilder {
         return ['CodeableConceptBuilder'];
       case 'referralMethod':
         return ['CodeableConceptBuilder'];
+      case 'referralRequired':
+        return ['FhirBooleanBuilder'];
       case 'appointmentRequired':
         return ['FhirBooleanBuilder'];
       case 'availability':
@@ -1476,6 +1503,11 @@ class HealthcareServiceBuilder extends DomainResourceBuilder {
           referralMethod = <CodeableConceptBuilder>[];
           return;
         }
+      case 'referralRequired':
+        {
+          referralRequired = FhirBooleanBuilder.empty();
+          return;
+        }
       case 'appointmentRequired':
         {
           appointmentRequired = FhirBooleanBuilder.empty();
@@ -1483,7 +1515,7 @@ class HealthcareServiceBuilder extends DomainResourceBuilder {
         }
       case 'availability':
         {
-          availability = <AvailabilityBuilder>[];
+          availability = AvailabilityBuilder.empty();
           return;
         }
       case 'endpoint':
@@ -1528,8 +1560,9 @@ class HealthcareServiceBuilder extends DomainResourceBuilder {
     List<CodeableConceptBuilder>? characteristic,
     List<CodeableConceptBuilder>? communication,
     List<CodeableConceptBuilder>? referralMethod,
+    FhirBooleanBuilder? referralRequired,
     FhirBooleanBuilder? appointmentRequired,
-    List<AvailabilityBuilder>? availability,
+    AvailabilityBuilder? availability,
     List<ReferenceBuilder>? endpoint,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -1566,6 +1599,7 @@ class HealthcareServiceBuilder extends DomainResourceBuilder {
       characteristic: characteristic ?? this.characteristic,
       communication: communication ?? this.communication,
       referralMethod: referralMethod ?? this.referralMethod,
+      referralRequired: referralRequired ?? this.referralRequired,
       appointmentRequired: appointmentRequired ?? this.appointmentRequired,
       availability: availability ?? this.availability,
       endpoint: endpoint ?? this.endpoint,
@@ -1764,12 +1798,18 @@ class HealthcareServiceBuilder extends DomainResourceBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
+      referralRequired,
+      o.referralRequired,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       appointmentRequired,
       o.appointmentRequired,
     )) {
       return false;
     }
-    if (!listEquals<AvailabilityBuilder>(
+    if (!equalsDeepWithNull(
       availability,
       o.availability,
     )) {
@@ -1797,9 +1837,22 @@ class HealthcareServiceEligibilityBuilder extends BackboneElementBuilder {
     super.extension_,
     super.modifierExtension,
     this.code,
+    ValueXHealthcareServiceEligibilityBuilder? valueX,
+    CodeableConceptBuilder? valueCodeableConcept,
+    FhirBooleanBuilder? valueBoolean,
+    QuantityBuilder? valueQuantity,
+    RangeBuilder? valueRange,
+    ReferenceBuilder? valueReference,
     this.comment,
+    this.period,
     super.disallowExtensions,
-  }) : super(
+  })  : valueX = valueX ??
+            valueCodeableConcept ??
+            valueBoolean ??
+            valueQuantity ??
+            valueRange ??
+            valueReference,
+        super(
           objectPath: 'HealthcareService.eligibility',
         );
 
@@ -1846,11 +1899,29 @@ class HealthcareServiceEligibilityBuilder extends BackboneElementBuilder {
         CodeableConceptBuilder.fromJson,
         '$objectPath.code',
       ),
+      valueX: JsonParser.parsePolymorphic<
+          ValueXHealthcareServiceEligibilityBuilder>(
+        json,
+        {
+          'valueCodeableConcept': CodeableConceptBuilder.fromJson,
+          'valueBoolean': FhirBooleanBuilder.fromJson,
+          'valueQuantity': QuantityBuilder.fromJson,
+          'valueRange': RangeBuilder.fromJson,
+          'valueReference': ReferenceBuilder.fromJson,
+        },
+        objectPath,
+      ),
       comment: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
         json,
         'comment',
         FhirMarkdownBuilder.fromJson,
         '$objectPath.comment',
+      ),
+      period: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+        json,
+        'period',
+        FhirMarkdownBuilder.fromJson,
+        '$objectPath.period',
       ),
     );
   }
@@ -1901,9 +1972,35 @@ class HealthcareServiceEligibilityBuilder extends BackboneElementBuilder {
   /// Coded value for the eligibility.
   CodeableConceptBuilder? code;
 
+  /// [valueX]
+  /// Sometimes an eligibility code requires additional data to calculate the
+  /// eligibility rules.
+  ValueXHealthcareServiceEligibilityBuilder? valueX;
+
+  /// Getter for [valueCodeableConcept] as a CodeableConceptBuilder
+  CodeableConceptBuilder? get valueCodeableConcept =>
+      valueX?.isAs<CodeableConceptBuilder>();
+
+  /// Getter for [valueBoolean] as a FhirBooleanBuilder
+  FhirBooleanBuilder? get valueBoolean => valueX?.isAs<FhirBooleanBuilder>();
+
+  /// Getter for [valueQuantity] as a QuantityBuilder
+  QuantityBuilder? get valueQuantity => valueX?.isAs<QuantityBuilder>();
+
+  /// Getter for [valueRange] as a RangeBuilder
+  RangeBuilder? get valueRange => valueX?.isAs<RangeBuilder>();
+
+  /// Getter for [valueReference] as a ReferenceBuilder
+  ReferenceBuilder? get valueReference => valueX?.isAs<ReferenceBuilder>();
+
   /// [comment]
   /// Describes the eligibility conditions for the service.
   FhirMarkdownBuilder? comment;
+
+  /// [period]
+  /// The period that this eligibility rule is a requirement for this
+  /// service.
+  FhirMarkdownBuilder? period;
 
   /// Converts a [HealthcareServiceEligibilityBuilder]
   /// to [HealthcareServiceEligibility]
@@ -1946,7 +2043,13 @@ class HealthcareServiceEligibilityBuilder extends BackboneElementBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('code', code);
+    if (valueX != null) {
+      final fhirType = valueX!.fhirType;
+      addField('value${fhirType.capitalizeFirstLetter()}', valueX);
+    }
+
     addField('comment', comment);
+    addField('period', period);
     return json;
   }
 
@@ -1958,7 +2061,9 @@ class HealthcareServiceEligibilityBuilder extends BackboneElementBuilder {
       'extension',
       'modifierExtension',
       'code',
+      'valueX',
       'comment',
+      'period',
     ];
   }
 
@@ -1987,9 +2092,41 @@ class HealthcareServiceEligibilityBuilder extends BackboneElementBuilder {
         if (code != null) {
           fields.add(code!);
         }
+      case 'value':
+        if (valueX != null) {
+          fields.add(valueX!);
+        }
+      case 'valueX':
+        if (valueX != null) {
+          fields.add(valueX!);
+        }
+      case 'valueCodeableConcept':
+        if (valueX is CodeableConceptBuilder) {
+          fields.add(valueX!);
+        }
+      case 'valueBoolean':
+        if (valueX is FhirBooleanBuilder) {
+          fields.add(valueX!);
+        }
+      case 'valueQuantity':
+        if (valueX is QuantityBuilder) {
+          fields.add(valueX!);
+        }
+      case 'valueRange':
+        if (valueX is RangeBuilder) {
+          fields.add(valueX!);
+        }
+      case 'valueReference':
+        if (valueX is ReferenceBuilder) {
+          fields.add(valueX!);
+        }
       case 'comment':
         if (comment != null) {
           fields.add(comment!);
+        }
+      case 'period':
+        if (period != null) {
+          fields.add(period!);
         }
       default:
         if (checkValid) {
@@ -2080,6 +2217,81 @@ class HealthcareServiceEligibilityBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'value':
+      case 'valueX':
+        {
+          if (child is ValueXHealthcareServiceEligibilityBuilder) {
+            valueX = child;
+            return;
+          } else {
+            if (child is CodeableConceptBuilder) {
+              valueX = child;
+              return;
+            }
+            if (child is FhirBooleanBuilder) {
+              valueX = child;
+              return;
+            }
+            if (child is QuantityBuilder) {
+              valueX = child;
+              return;
+            }
+            if (child is RangeBuilder) {
+              valueX = child;
+              return;
+            }
+            if (child is ReferenceBuilder) {
+              valueX = child;
+              return;
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'valueCodeableConcept':
+        {
+          if (child is CodeableConceptBuilder) {
+            valueX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'valueBoolean':
+        {
+          if (child is FhirBooleanBuilder) {
+            valueX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'valueQuantity':
+        {
+          if (child is QuantityBuilder) {
+            valueX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'valueRange':
+        {
+          if (child is RangeBuilder) {
+            valueX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'valueReference':
+        {
+          if (child is ReferenceBuilder) {
+            valueX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
       case 'comment':
         {
           if (child is FhirMarkdownBuilder) {
@@ -2092,6 +2304,26 @@ class HealthcareServiceEligibilityBuilder extends BackboneElementBuilder {
               final converted = FhirMarkdownBuilder.tryParse(stringValue);
               if (converted != null) {
                 comment = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'period':
+        {
+          if (child is FhirMarkdownBuilder) {
+            period = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                period = converted;
                 return;
               }
             } catch (e) {
@@ -2118,7 +2350,28 @@ class HealthcareServiceEligibilityBuilder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'code':
         return ['CodeableConceptBuilder'];
+      case 'value':
+      case 'valueX':
+        return [
+          'CodeableConceptBuilder',
+          'FhirBooleanBuilder',
+          'QuantityBuilder',
+          'RangeBuilder',
+          'ReferenceBuilder',
+        ];
+      case 'valueCodeableConcept':
+        return ['CodeableConceptBuilder'];
+      case 'valueBoolean':
+        return ['FhirBooleanBuilder'];
+      case 'valueQuantity':
+        return ['QuantityBuilder'];
+      case 'valueRange':
+        return ['RangeBuilder'];
+      case 'valueReference':
+        return ['ReferenceBuilder'];
       case 'comment':
+        return ['FhirMarkdownBuilder'];
+      case 'period':
         return ['FhirMarkdownBuilder'];
       default:
         return <String>[];
@@ -2150,9 +2403,41 @@ class HealthcareServiceEligibilityBuilder extends BackboneElementBuilder {
           code = CodeableConceptBuilder.empty();
           return;
         }
+      case 'value':
+      case 'valueX':
+      case 'valueCodeableConcept':
+        {
+          valueX = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'valueBoolean':
+        {
+          valueX = FhirBooleanBuilder.empty();
+          return;
+        }
+      case 'valueQuantity':
+        {
+          valueX = QuantityBuilder.empty();
+          return;
+        }
+      case 'valueRange':
+        {
+          valueX = RangeBuilder.empty();
+          return;
+        }
+      case 'valueReference':
+        {
+          valueX = ReferenceBuilder.empty();
+          return;
+        }
       case 'comment':
         {
           comment = FhirMarkdownBuilder.empty();
+          return;
+        }
+      case 'period':
+        {
+          period = FhirMarkdownBuilder.empty();
           return;
         }
       default:
@@ -2168,7 +2453,14 @@ class HealthcareServiceEligibilityBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     CodeableConceptBuilder? code,
+    ValueXHealthcareServiceEligibilityBuilder? valueX,
     FhirMarkdownBuilder? comment,
+    FhirMarkdownBuilder? period,
+    CodeableConceptBuilder? valueCodeableConcept,
+    FhirBooleanBuilder? valueBoolean,
+    QuantityBuilder? valueQuantity,
+    RangeBuilder? valueRange,
+    ReferenceBuilder? valueReference,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -2181,7 +2473,15 @@ class HealthcareServiceEligibilityBuilder extends BackboneElementBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       code: code ?? this.code,
+      valueX: valueX ??
+          valueCodeableConcept ??
+          valueBoolean ??
+          valueQuantity ??
+          valueRange ??
+          valueReference ??
+          this.valueX,
       comment: comment ?? this.comment,
+      period: period ?? this.period,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -2233,8 +2533,20 @@ class HealthcareServiceEligibilityBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
+      valueX,
+      o.valueX,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       comment,
       o.comment,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      period,
+      o.period,
     )) {
       return false;
     }

@@ -21,7 +21,7 @@ abstract class $SubscriptionTopicCopyWith<T>
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXSubscriptionTopic? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     List<FhirCanonical>? derivedFrom,
@@ -39,10 +39,7 @@ abstract class $SubscriptionTopicCopyWith<T>
     FhirDate? approvalDate,
     FhirDate? lastReviewDate,
     Period? effectivePeriod,
-    List<SubscriptionTopicResourceTrigger>? resourceTrigger,
-    List<SubscriptionTopicEventTrigger>? eventTrigger,
-    List<SubscriptionTopicCanFilterBy>? canFilterBy,
-    List<SubscriptionTopicNotificationShape>? notificationShape,
+    List<SubscriptionTopicTrigger>? trigger,
     bool? disallowExtensions,
   });
 }
@@ -85,10 +82,7 @@ class _$SubscriptionTopicCopyWithImpl<T>
     Object? approvalDate = fhirSentinel,
     Object? lastReviewDate = fhirSentinel,
     Object? effectivePeriod = fhirSentinel,
-    Object? resourceTrigger = fhirSentinel,
-    Object? eventTrigger = fhirSentinel,
-    Object? canFilterBy = fhirSentinel,
-    Object? notificationShape = fhirSentinel,
+    Object? trigger = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -122,7 +116,7 @@ class _$SubscriptionTopicCopyWithImpl<T>
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXSubscriptionTopic?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -171,18 +165,9 @@ class _$SubscriptionTopicCopyWithImpl<T>
         effectivePeriod: identical(effectivePeriod, fhirSentinel)
             ? _value.effectivePeriod
             : effectivePeriod as Period?,
-        resourceTrigger: identical(resourceTrigger, fhirSentinel)
-            ? _value.resourceTrigger
-            : resourceTrigger as List<SubscriptionTopicResourceTrigger>?,
-        eventTrigger: identical(eventTrigger, fhirSentinel)
-            ? _value.eventTrigger
-            : eventTrigger as List<SubscriptionTopicEventTrigger>?,
-        canFilterBy: identical(canFilterBy, fhirSentinel)
-            ? _value.canFilterBy
-            : canFilterBy as List<SubscriptionTopicCanFilterBy>?,
-        notificationShape: identical(notificationShape, fhirSentinel)
-            ? _value.notificationShape
-            : notificationShape as List<SubscriptionTopicNotificationShape>?,
+        trigger: identical(trigger, fhirSentinel)
+            ? _value.trigger
+            : trigger as List<SubscriptionTopicTrigger>?,
       ),
     );
   }
@@ -196,7 +181,7 @@ extension SubscriptionTopicCopyWithExtension on SubscriptionTopic {
       );
 }
 
-abstract class $SubscriptionTopicResourceTriggerCopyWith<T>
+abstract class $SubscriptionTopicTriggerCopyWith<T>
     extends $BackboneElementCopyWith<T> {
   @override
   T call({
@@ -208,16 +193,19 @@ abstract class $SubscriptionTopicResourceTriggerCopyWith<T>
     List<InteractionTrigger>? supportedInteraction,
     SubscriptionTopicQueryCriteria? queryCriteria,
     FhirString? fhirPathCriteria,
+    CodeableConcept? event,
+    List<SubscriptionTopicCanFilterBy>? canFilterBy,
+    List<SubscriptionTopicNotificationShape>? notificationShape,
     bool? disallowExtensions,
   });
 }
 
-class _$SubscriptionTopicResourceTriggerCopyWithImpl<T>
-    implements $SubscriptionTopicResourceTriggerCopyWith<T> {
-  final SubscriptionTopicResourceTrigger _value;
-  final T Function(SubscriptionTopicResourceTrigger) _then;
+class _$SubscriptionTopicTriggerCopyWithImpl<T>
+    implements $SubscriptionTopicTriggerCopyWith<T> {
+  final SubscriptionTopicTrigger _value;
+  final T Function(SubscriptionTopicTrigger) _then;
 
-  _$SubscriptionTopicResourceTriggerCopyWithImpl(this._value, this._then);
+  _$SubscriptionTopicTriggerCopyWithImpl(this._value, this._then);
 
   @override
   T call({
@@ -229,10 +217,13 @@ class _$SubscriptionTopicResourceTriggerCopyWithImpl<T>
     Object? supportedInteraction = fhirSentinel,
     Object? queryCriteria = fhirSentinel,
     Object? fhirPathCriteria = fhirSentinel,
+    Object? event = fhirSentinel,
+    Object? canFilterBy = fhirSentinel,
+    Object? notificationShape = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
-      SubscriptionTopicResourceTrigger(
+      SubscriptionTopicTrigger(
         id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
         extension_: identical(extension_, fhirSentinel)
             ? _value.extension_
@@ -255,6 +246,15 @@ class _$SubscriptionTopicResourceTriggerCopyWithImpl<T>
         fhirPathCriteria: identical(fhirPathCriteria, fhirSentinel)
             ? _value.fhirPathCriteria
             : fhirPathCriteria as FhirString?,
+        event: identical(event, fhirSentinel)
+            ? _value.event
+            : event as CodeableConcept?,
+        canFilterBy: identical(canFilterBy, fhirSentinel)
+            ? _value.canFilterBy
+            : canFilterBy as List<SubscriptionTopicCanFilterBy>?,
+        notificationShape: identical(notificationShape, fhirSentinel)
+            ? _value.notificationShape
+            : notificationShape as List<SubscriptionTopicNotificationShape>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -263,14 +263,13 @@ class _$SubscriptionTopicResourceTriggerCopyWithImpl<T>
   }
 }
 
-extension SubscriptionTopicResourceTriggerCopyWithExtension
-    on SubscriptionTopicResourceTrigger {
-  $SubscriptionTopicResourceTriggerCopyWith<SubscriptionTopicResourceTrigger>
-      get copyWith => _$SubscriptionTopicResourceTriggerCopyWithImpl<
-              SubscriptionTopicResourceTrigger>(
-            this,
-            (value) => value,
-          );
+extension SubscriptionTopicTriggerCopyWithExtension
+    on SubscriptionTopicTrigger {
+  $SubscriptionTopicTriggerCopyWith<SubscriptionTopicTrigger> get copyWith =>
+      _$SubscriptionTopicTriggerCopyWithImpl<SubscriptionTopicTrigger>(
+        this,
+        (value) => value,
+      );
 }
 
 abstract class $SubscriptionTopicQueryCriteriaCopyWith<T>
@@ -345,73 +344,6 @@ extension SubscriptionTopicQueryCriteriaCopyWithExtension
   $SubscriptionTopicQueryCriteriaCopyWith<SubscriptionTopicQueryCriteria>
       get copyWith => _$SubscriptionTopicQueryCriteriaCopyWithImpl<
               SubscriptionTopicQueryCriteria>(
-            this,
-            (value) => value,
-          );
-}
-
-abstract class $SubscriptionTopicEventTriggerCopyWith<T>
-    extends $BackboneElementCopyWith<T> {
-  @override
-  T call({
-    FhirString? id,
-    List<FhirExtension>? extension_,
-    List<FhirExtension>? modifierExtension,
-    FhirMarkdown? description,
-    CodeableConcept? event,
-    FhirUri? resource,
-    bool? disallowExtensions,
-  });
-}
-
-class _$SubscriptionTopicEventTriggerCopyWithImpl<T>
-    implements $SubscriptionTopicEventTriggerCopyWith<T> {
-  final SubscriptionTopicEventTrigger _value;
-  final T Function(SubscriptionTopicEventTrigger) _then;
-
-  _$SubscriptionTopicEventTriggerCopyWithImpl(this._value, this._then);
-
-  @override
-  T call({
-    Object? id = fhirSentinel,
-    Object? extension_ = fhirSentinel,
-    Object? modifierExtension = fhirSentinel,
-    Object? description = fhirSentinel,
-    Object? event = fhirSentinel,
-    Object? resource = fhirSentinel,
-    Object? disallowExtensions = fhirSentinel,
-  }) {
-    return _then(
-      SubscriptionTopicEventTrigger(
-        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
-        extension_: identical(extension_, fhirSentinel)
-            ? _value.extension_
-            : extension_ as List<FhirExtension>?,
-        modifierExtension: identical(modifierExtension, fhirSentinel)
-            ? _value.modifierExtension
-            : modifierExtension as List<FhirExtension>?,
-        description: identical(description, fhirSentinel)
-            ? _value.description
-            : description as FhirMarkdown?,
-        event: identical(event, fhirSentinel)
-            ? _value.event
-            : (event as CodeableConcept?) ?? _value.event,
-        resource: identical(resource, fhirSentinel)
-            ? _value.resource
-            : (resource as FhirUri?) ?? _value.resource,
-        disallowExtensions: identical(disallowExtensions, fhirSentinel)
-            ? _value.disallowExtensions
-            : disallowExtensions as bool?,
-      ),
-    );
-  }
-}
-
-extension SubscriptionTopicEventTriggerCopyWithExtension
-    on SubscriptionTopicEventTrigger {
-  $SubscriptionTopicEventTriggerCopyWith<SubscriptionTopicEventTrigger>
-      get copyWith => _$SubscriptionTopicEventTriggerCopyWithImpl<
-              SubscriptionTopicEventTrigger>(
             this,
             (value) => value,
           );
@@ -509,6 +441,7 @@ abstract class $SubscriptionTopicNotificationShapeCopyWith<T>
     FhirUri? resource,
     List<FhirString>? include,
     List<FhirString>? revInclude,
+    List<SubscriptionTopicRelatedQuery>? relatedQuery,
     bool? disallowExtensions,
   });
 }
@@ -528,6 +461,7 @@ class _$SubscriptionTopicNotificationShapeCopyWithImpl<T>
     Object? resource = fhirSentinel,
     Object? include = fhirSentinel,
     Object? revInclude = fhirSentinel,
+    Object? relatedQuery = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -548,6 +482,9 @@ class _$SubscriptionTopicNotificationShapeCopyWithImpl<T>
         revInclude: identical(revInclude, fhirSentinel)
             ? _value.revInclude
             : revInclude as List<FhirString>?,
+        relatedQuery: identical(relatedQuery, fhirSentinel)
+            ? _value.relatedQuery
+            : relatedQuery as List<SubscriptionTopicRelatedQuery>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -562,6 +499,68 @@ extension SubscriptionTopicNotificationShapeCopyWithExtension
           SubscriptionTopicNotificationShape>
       get copyWith => _$SubscriptionTopicNotificationShapeCopyWithImpl<
               SubscriptionTopicNotificationShape>(
+            this,
+            (value) => value,
+          );
+}
+
+abstract class $SubscriptionTopicRelatedQueryCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    Coding? queryType,
+    FhirString? query,
+    bool? disallowExtensions,
+  });
+}
+
+class _$SubscriptionTopicRelatedQueryCopyWithImpl<T>
+    implements $SubscriptionTopicRelatedQueryCopyWith<T> {
+  final SubscriptionTopicRelatedQuery _value;
+  final T Function(SubscriptionTopicRelatedQuery) _then;
+
+  _$SubscriptionTopicRelatedQueryCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? queryType = fhirSentinel,
+    Object? query = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      SubscriptionTopicRelatedQuery(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        queryType: identical(queryType, fhirSentinel)
+            ? _value.queryType
+            : queryType as Coding?,
+        query: identical(query, fhirSentinel)
+            ? _value.query
+            : (query as FhirString?) ?? _value.query,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension SubscriptionTopicRelatedQueryCopyWithExtension
+    on SubscriptionTopicRelatedQuery {
+  $SubscriptionTopicRelatedQueryCopyWith<SubscriptionTopicRelatedQuery>
+      get copyWith => _$SubscriptionTopicRelatedQueryCopyWithImpl<
+              SubscriptionTopicRelatedQuery>(
             this,
             (value) => value,
           );

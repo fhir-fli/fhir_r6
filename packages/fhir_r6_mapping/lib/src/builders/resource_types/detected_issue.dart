@@ -38,13 +38,19 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
     IdentifiedXDetectedIssueBuilder? identifiedX,
     FhirDateTimeBuilder? identifiedDateTime,
     PeriodBuilder? identifiedPeriod,
+    TimingBuilder? identifiedTiming,
     this.author,
     this.implicated,
     this.evidence,
     this.detail,
     this.reference,
+    this.qualityOfEvidence,
+    this.managementCode,
     this.mitigation,
-  })  : identifiedX = identifiedX ?? identifiedDateTime ?? identifiedPeriod,
+  })  : identifiedX = identifiedX ??
+            identifiedDateTime ??
+            identifiedPeriod ??
+            identifiedTiming,
         super(
           objectPath: 'DetectedIssue',
           resourceType: R6ResourceType.DetectedIssue,
@@ -154,10 +160,10 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
         CodeableConceptBuilder.fromJson,
         '$objectPath.code',
       ),
-      severity: JsonParser.parsePrimitive<DetectedIssueSeverityBuilder>(
+      severity: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
         'severity',
-        DetectedIssueSeverityBuilder.fromJson,
+        CodeableConceptBuilder.fromJson,
         '$objectPath.severity',
       ),
       subject: JsonParser.parseObject<ReferenceBuilder>(
@@ -177,6 +183,7 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
         {
           'identifiedDateTime': FhirDateTimeBuilder.fromJson,
           'identifiedPeriod': PeriodBuilder.fromJson,
+          'identifiedTiming': TimingBuilder.fromJson,
         },
         objectPath,
       ),
@@ -217,6 +224,18 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
         'reference',
         FhirUriBuilder.fromJson,
         '$objectPath.reference',
+      ),
+      qualityOfEvidence: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'qualityOfEvidence',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.qualityOfEvidence',
+      ),
+      managementCode: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'managementCode',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.managementCode',
       ),
       mitigation: (json['mitigation'] as List<dynamic>?)
           ?.map<DetectedIssueMitigationBuilder>(
@@ -274,25 +293,29 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
   String get fhirType => 'DetectedIssue';
 
   /// [identifier]
-  /// Business identifier associated with the detected issue record.
+  /// Business identifiers assigned to this detected issue by the performer
+  /// and/or other systems. These identifiers remain constant as the resource
+  /// is updated and propagates from server to server.
   List<IdentifierBuilder>? identifier;
 
   /// [status]
-  /// Indicates the status of the detected issue.
+  /// The current state of the detected issue.
   DetectedIssueStatusBuilder? status;
 
   /// [category]
-  /// A code that classifies the general type of detected issue.
+  /// Partitions the detected issue into one or more categories that can be
+  /// used to filter searching, to govern access control and/or to guide
+  /// system behavior.
   List<CodeableConceptBuilder>? category;
 
   /// [code]
-  /// Identifies the specific type of issue identified.
+  /// A code that identifies the specific type of issue detected.
   CodeableConceptBuilder? code;
 
   /// [severity]
   /// Indicates the degree of importance associated with the identified issue
   /// based on the potential impact on the patient.
-  DetectedIssueSeverityBuilder? severity;
+  CodeableConceptBuilder? severity;
 
   /// [subject]
   /// Indicates the subject whose record the detected issue is associated
@@ -300,11 +323,13 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
   ReferenceBuilder? subject;
 
   /// [encounter]
-  /// The encounter during which this issue was detected.
+  /// The Encounter during which this detected issue was created or to which
+  /// the creation of this record is tightly associated.
   ReferenceBuilder? encounter;
 
   /// [identifiedX]
-  /// The date or period when the detected issue was initially identified.
+  /// The date, period or timing when the detected issue did occur or is
+  /// occurring.
   IdentifiedXDetectedIssueBuilder? identifiedX;
 
   /// Getter for [identifiedDateTime] as a FhirDateTimeBuilder
@@ -313,6 +338,9 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
 
   /// Getter for [identifiedPeriod] as a PeriodBuilder
   PeriodBuilder? get identifiedPeriod => identifiedX?.isAs<PeriodBuilder>();
+
+  /// Getter for [identifiedTiming] as a TimingBuilder
+  TimingBuilder? get identifiedTiming => identifiedX?.isAs<TimingBuilder>();
 
   /// [author]
   /// Individual or device responsible for the issue being raised. For
@@ -339,6 +367,20 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
   /// The literature, knowledge-base or similar reference that describes the
   /// propensity for the detected issue identified.
   FhirUriBuilder? reference;
+
+  /// [qualityOfEvidence]
+  /// The quality of the evidence supporting identification of the detected
+  /// issue. The code system used specifies the quality scale used to grade
+  /// this evidence source while the code specifies the actual quality score
+  /// (represented as a coded value) associated with the evidence.
+  CodeableConceptBuilder? qualityOfEvidence;
+
+  /// [managementCode]
+  /// An indication of the importance or type of step that should or may be
+  /// taken in order to address the detected issue. This is different than
+  /// mitigation in that it is not specifically providing actions to be
+  /// taken, rather general suggestions about approach.
+  CodeableConceptBuilder? managementCode;
 
   /// [mitigation]
   /// Indicates an action that has been taken or is committed to reduce or
@@ -409,6 +451,8 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
     addField('evidence', evidence);
     addField('detail', detail);
     addField('reference', reference);
+    addField('qualityOfEvidence', qualityOfEvidence);
+    addField('managementCode', managementCode);
     addField('mitigation', mitigation);
     return json;
   }
@@ -438,6 +482,8 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
       'evidence',
       'detail',
       'reference',
+      'qualityOfEvidence',
+      'managementCode',
       'mitigation',
     ];
   }
@@ -527,6 +573,10 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
         if (identifiedX is PeriodBuilder) {
           fields.add(identifiedX!);
         }
+      case 'identifiedTiming':
+        if (identifiedX is TimingBuilder) {
+          fields.add(identifiedX!);
+        }
       case 'author':
         if (author != null) {
           fields.add(author!);
@@ -546,6 +596,14 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
       case 'reference':
         if (reference != null) {
           fields.add(reference!);
+        }
+      case 'qualityOfEvidence':
+        if (qualityOfEvidence != null) {
+          fields.add(qualityOfEvidence!);
+        }
+      case 'managementCode':
+        if (managementCode != null) {
+          fields.add(managementCode!);
         }
       case 'mitigation':
         if (mitigation != null) {
@@ -772,24 +830,9 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
         }
       case 'severity':
         {
-          if (child is DetectedIssueSeverityBuilder) {
+          if (child is CodeableConceptBuilder) {
             severity = child;
             return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              // For enums, try to create directly from the string value
-              try {
-                final converted = DetectedIssueSeverityBuilder(stringValue);
-                severity = converted;
-                return;
-              } catch (e) {
-                // Continue if enum creation fails
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -824,6 +867,10 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
               identifiedX = child;
               return;
             }
+            if (child is TimingBuilder) {
+              identifiedX = child;
+              return;
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -839,6 +886,15 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
       case 'identifiedPeriod':
         {
           if (child is PeriodBuilder) {
+            identifiedX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'identifiedTiming':
+        {
+          if (child is TimingBuilder) {
             identifiedX = child;
             return;
           } else {
@@ -925,6 +981,22 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'qualityOfEvidence':
+        {
+          if (child is CodeableConceptBuilder) {
+            qualityOfEvidence = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'managementCode':
+        {
+          if (child is CodeableConceptBuilder) {
+            managementCode = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'mitigation':
         {
           if (child is List<DetectedIssueMitigationBuilder>) {
@@ -976,7 +1048,7 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
       case 'code':
         return ['CodeableConceptBuilder'];
       case 'severity':
-        return ['FhirCodeEnumBuilder'];
+        return ['CodeableConceptBuilder'];
       case 'subject':
         return ['ReferenceBuilder'];
       case 'encounter':
@@ -986,11 +1058,14 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
         return [
           'FhirDateTimeBuilder',
           'PeriodBuilder',
+          'TimingBuilder',
         ];
       case 'identifiedDateTime':
         return ['FhirDateTimeBuilder'];
       case 'identifiedPeriod':
         return ['PeriodBuilder'];
+      case 'identifiedTiming':
+        return ['TimingBuilder'];
       case 'author':
         return ['ReferenceBuilder'];
       case 'implicated':
@@ -1001,6 +1076,10 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
         return ['FhirMarkdownBuilder'];
       case 'reference':
         return ['FhirUriBuilder'];
+      case 'qualityOfEvidence':
+        return ['CodeableConceptBuilder'];
+      case 'managementCode':
+        return ['CodeableConceptBuilder'];
       case 'mitigation':
         return ['DetectedIssueMitigationBuilder'];
       default:
@@ -1075,7 +1154,7 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
         }
       case 'severity':
         {
-          severity = DetectedIssueSeverityBuilder.empty();
+          severity = CodeableConceptBuilder.empty();
           return;
         }
       case 'subject':
@@ -1098,6 +1177,11 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
       case 'identifiedPeriod':
         {
           identifiedX = PeriodBuilder.empty();
+          return;
+        }
+      case 'identifiedTiming':
+        {
+          identifiedX = TimingBuilder.empty();
           return;
         }
       case 'author':
@@ -1123,6 +1207,16 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
       case 'reference':
         {
           reference = FhirUriBuilder.empty();
+          return;
+        }
+      case 'qualityOfEvidence':
+        {
+          qualityOfEvidence = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'managementCode':
+        {
+          managementCode = CodeableConceptBuilder.empty();
           return;
         }
       case 'mitigation':
@@ -1151,7 +1245,7 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
     DetectedIssueStatusBuilder? status,
     List<CodeableConceptBuilder>? category,
     CodeableConceptBuilder? code,
-    DetectedIssueSeverityBuilder? severity,
+    CodeableConceptBuilder? severity,
     ReferenceBuilder? subject,
     ReferenceBuilder? encounter,
     IdentifiedXDetectedIssueBuilder? identifiedX,
@@ -1160,9 +1254,12 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
     List<DetectedIssueEvidenceBuilder>? evidence,
     FhirMarkdownBuilder? detail,
     FhirUriBuilder? reference,
+    CodeableConceptBuilder? qualityOfEvidence,
+    CodeableConceptBuilder? managementCode,
     List<DetectedIssueMitigationBuilder>? mitigation,
     FhirDateTimeBuilder? identifiedDateTime,
     PeriodBuilder? identifiedPeriod,
+    TimingBuilder? identifiedTiming,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -1188,12 +1285,15 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
       identifiedX: identifiedX ??
           identifiedDateTime ??
           identifiedPeriod ??
+          identifiedTiming ??
           this.identifiedX,
       author: author ?? this.author,
       implicated: implicated ?? this.implicated,
       evidence: evidence ?? this.evidence,
       detail: detail ?? this.detail,
       reference: reference ?? this.reference,
+      qualityOfEvidence: qualityOfEvidence ?? this.qualityOfEvidence,
+      managementCode: managementCode ?? this.managementCode,
       mitigation: mitigation ?? this.mitigation,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
@@ -1344,6 +1444,18 @@ class DetectedIssueBuilder extends DomainResourceBuilder {
     if (!equalsDeepWithNull(
       reference,
       o.reference,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      qualityOfEvidence,
+      o.qualityOfEvidence,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      managementCode,
+      o.managementCode,
     )) {
       return false;
     }

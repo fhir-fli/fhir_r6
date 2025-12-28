@@ -17,12 +17,9 @@ abstract class $MessageHeaderCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<Resource>? contained,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    Coding? eventX,
+    EventXMessageHeader? eventX,
     List<MessageHeaderDestination>? destination,
-    Reference? sender,
-    Reference? author,
     MessageHeaderSource? source,
-    Reference? responsible,
     CodeableConcept? reason,
     MessageHeaderResponse? response,
     List<Reference>? focus,
@@ -49,10 +46,7 @@ class _$MessageHeaderCopyWithImpl<T> implements $MessageHeaderCopyWith<T> {
     Object? modifierExtension = fhirSentinel,
     Object? eventX = fhirSentinel,
     Object? destination = fhirSentinel,
-    Object? sender = fhirSentinel,
-    Object? author = fhirSentinel,
     Object? source = fhirSentinel,
-    Object? responsible = fhirSentinel,
     Object? reason = fhirSentinel,
     Object? response = fhirSentinel,
     Object? focus = fhirSentinel,
@@ -81,22 +75,13 @@ class _$MessageHeaderCopyWithImpl<T> implements $MessageHeaderCopyWith<T> {
             : modifierExtension as List<FhirExtension>?,
         eventX: identical(eventX, fhirSentinel)
             ? _value.eventX
-            : (eventX as Coding?) ?? _value.eventX,
+            : (eventX as EventXMessageHeader?) ?? _value.eventX,
         destination: identical(destination, fhirSentinel)
             ? _value.destination
             : destination as List<MessageHeaderDestination>?,
-        sender: identical(sender, fhirSentinel)
-            ? _value.sender
-            : sender as Reference?,
-        author: identical(author, fhirSentinel)
-            ? _value.author
-            : author as Reference?,
         source: identical(source, fhirSentinel)
             ? _value.source
             : (source as MessageHeaderSource?) ?? _value.source,
-        responsible: identical(responsible, fhirSentinel)
-            ? _value.responsible
-            : responsible as Reference?,
         reason: identical(reason, fhirSentinel)
             ? _value.reason
             : reason as CodeableConcept?,
@@ -129,9 +114,8 @@ abstract class $MessageHeaderDestinationCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirUrl? endpointX,
+    EndpointXMessageHeaderDestination? endpointX,
     FhirString? name,
-    Reference? target,
     Reference? receiver,
     bool? disallowExtensions,
   });
@@ -151,7 +135,6 @@ class _$MessageHeaderDestinationCopyWithImpl<T>
     Object? modifierExtension = fhirSentinel,
     Object? endpointX = fhirSentinel,
     Object? name = fhirSentinel,
-    Object? target = fhirSentinel,
     Object? receiver = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -166,11 +149,8 @@ class _$MessageHeaderDestinationCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         endpointX: identical(endpointX, fhirSentinel)
             ? _value.endpointX
-            : endpointX as FhirUrl?,
+            : endpointX as EndpointXMessageHeaderDestination?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
-        target: identical(target, fhirSentinel)
-            ? _value.target
-            : target as Reference?,
         receiver: identical(receiver, fhirSentinel)
             ? _value.receiver
             : receiver as Reference?,
@@ -198,11 +178,12 @@ abstract class $MessageHeaderSourceCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirUrl? endpointX,
+    EndpointXMessageHeaderSource? endpointX,
     FhirString? name,
     FhirString? software,
     FhirString? version,
     ContactPoint? contact,
+    Reference? sender,
     bool? disallowExtensions,
   });
 }
@@ -224,6 +205,7 @@ class _$MessageHeaderSourceCopyWithImpl<T>
     Object? software = fhirSentinel,
     Object? version = fhirSentinel,
     Object? contact = fhirSentinel,
+    Object? sender = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -237,7 +219,7 @@ class _$MessageHeaderSourceCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         endpointX: identical(endpointX, fhirSentinel)
             ? _value.endpointX
-            : endpointX as FhirUrl?,
+            : endpointX as EndpointXMessageHeaderSource?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         software: identical(software, fhirSentinel)
             ? _value.software
@@ -248,6 +230,9 @@ class _$MessageHeaderSourceCopyWithImpl<T>
         contact: identical(contact, fhirSentinel)
             ? _value.contact
             : contact as ContactPoint?,
+        sender: identical(sender, fhirSentinel)
+            ? _value.sender
+            : sender as Reference?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

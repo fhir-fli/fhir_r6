@@ -20,7 +20,7 @@ abstract class $ConceptMapCopyWith<T> extends $MetadataResourceCopyWith<T> {
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXConceptMap? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     PublicationStatus? status,
@@ -45,8 +45,8 @@ abstract class $ConceptMapCopyWith<T> extends $MetadataResourceCopyWith<T> {
     List<RelatedArtifact>? relatedArtifact,
     List<ConceptMapProperty>? property,
     List<ConceptMapAdditionalAttribute>? additionalAttribute,
-    FhirUri? sourceScopeX,
-    FhirUri? targetScopeX,
+    SourceScopeXConceptMap? sourceScopeX,
+    TargetScopeXConceptMap? targetScopeX,
     List<ConceptMapGroup>? group,
     bool? disallowExtensions,
   });
@@ -130,7 +130,7 @@ class _$ConceptMapCopyWithImpl<T> implements $ConceptMapCopyWith<T> {
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXConceptMap?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -202,10 +202,10 @@ class _$ConceptMapCopyWithImpl<T> implements $ConceptMapCopyWith<T> {
             : additionalAttribute as List<ConceptMapAdditionalAttribute>?,
         sourceScopeX: identical(sourceScopeX, fhirSentinel)
             ? _value.sourceScopeX
-            : sourceScopeX as FhirUri?,
+            : sourceScopeX as SourceScopeXConceptMap?,
         targetScopeX: identical(targetScopeX, fhirSentinel)
             ? _value.targetScopeX
-            : targetScopeX as FhirUri?,
+            : targetScopeX as TargetScopeXConceptMap?,
         group: identical(group, fhirSentinel)
             ? _value.group
             : group as List<ConceptMapGroup>?,
@@ -571,7 +571,7 @@ class _$ConceptMapTargetCopyWithImpl<T>
             : comment as FhirString?,
         property: identical(property, fhirSentinel)
             ? _value.property
-            : property as List<ConceptMapProperty1>?,
+            : property as List<ConceptMapProperty>?,
         dependsOn: identical(dependsOn, fhirSentinel)
             ? _value.dependsOn
             : dependsOn as List<ConceptMapDependsOn>?,
@@ -602,7 +602,7 @@ abstract class $ConceptMapProperty1CopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     FhirCode? code,
-    Coding? valueX,
+    ValueXConceptMapProperty? valueX,
     bool? disallowExtensions,
   });
 }
@@ -637,7 +637,7 @@ class _$ConceptMapProperty1CopyWithImpl<T>
             : (code as FhirCode?) ?? _value.code,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as Coding?) ?? _value.valueX,
+            : (valueX as ValueXConceptMapProperty?) ?? _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -662,7 +662,7 @@ abstract class $ConceptMapDependsOnCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     FhirCode? attribute,
-    FhirCode? valueX,
+    ValueXConceptMapDependsOn? valueX,
     FhirCanonical? valueSet,
     bool? disallowExtensions,
   });
@@ -699,7 +699,7 @@ class _$ConceptMapDependsOnCopyWithImpl<T>
             : (attribute as FhirCode?) ?? _value.attribute,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : valueX as FhirCode?,
+            : valueX as ValueXConceptMapDependsOn?,
         valueSet: identical(valueSet, fhirSentinel)
             ? _value.valueSet
             : valueSet as FhirCanonical?,

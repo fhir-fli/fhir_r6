@@ -29,6 +29,9 @@ enum SearchParamTypeEnum {
 
   /// special
   special,
+
+  /// resource
+  resource,
   ;
 
   /// Converts the enum value to a string.
@@ -56,6 +59,8 @@ enum SearchParamTypeEnum {
         return 'uri';
       case SearchParamTypeEnum.special:
         return 'special';
+      case SearchParamTypeEnum.resource:
+        return 'resource';
     }
   }
 
@@ -91,6 +96,8 @@ enum SearchParamTypeEnum {
         return SearchParamTypeEnum.uri;
       case 'special':
         return SearchParamTypeEnum.special;
+      case 'resource':
+        return SearchParamTypeEnum.resource;
     }
     return null;
   }
@@ -172,7 +179,7 @@ class SearchParamType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Number',
     ),
@@ -185,7 +192,7 @@ class SearchParamType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Date/DateTime',
     ),
@@ -198,7 +205,7 @@ class SearchParamType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'String',
     ),
@@ -211,7 +218,7 @@ class SearchParamType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Token',
     ),
@@ -224,7 +231,7 @@ class SearchParamType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Reference',
     ),
@@ -237,7 +244,7 @@ class SearchParamType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Composite',
     ),
@@ -250,7 +257,7 @@ class SearchParamType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Quantity',
     ),
@@ -263,7 +270,7 @@ class SearchParamType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'URI',
     ),
@@ -276,9 +283,22 @@ class SearchParamType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Special',
+    ),
+  );
+
+  /// resource
+  static const SearchParamType resource = SearchParamType._(
+    valueString: 'resource',
+    valueEnum: SearchParamTypeEnum.resource,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Resource',
     ),
   );
 
@@ -293,6 +313,7 @@ class SearchParamType extends FhirCodeEnum {
     quantity,
     uri,
     special,
+    resource,
   ];
 
   /// Returns the enum value with an element attached

@@ -5,9 +5,9 @@ import 'package:yaml/yaml.dart';
 part 'actor_definition.g.dart';
 
 /// [ActorDefinition]
-/// Describes an actor - a human or an application that plays a role in
-/// data exchange, and that may have obligations associated with the role
-/// the actor plays.
+/// Provides a definition of an actor - a system, individual, non-system
+/// device, or collective - that plays a role in a process, such as data
+/// exchange, along with associated obligations.
 class ActorDefinition extends CanonicalResource {
   /// Primary constructor for
   /// [ActorDefinition]
@@ -43,8 +43,7 @@ class ActorDefinition extends CanonicalResource {
     required this.type,
     this.documentation,
     this.reference,
-    this.capabilities,
-    this.derivedFrom,
+    this.baseDefinition,
   })  : versionAlgorithmX = versionAlgorithmX ??
             versionAlgorithmString ??
             versionAlgorithmCoding,
@@ -199,10 +198,10 @@ class ActorDefinition extends CanonicalResource {
         'copyrightLabel',
         FhirString.fromJson,
       ),
-      type: JsonParser.parsePrimitive<ExampleScenarioActorType>(
+      type: JsonParser.parsePrimitive<ActorDefinitionActorType>(
         json,
         'type',
-        ExampleScenarioActorType.fromJson,
+        ActorDefinitionActorType.fromJson,
       )!,
       documentation: JsonParser.parsePrimitive<FhirMarkdown>(
         json,
@@ -214,14 +213,9 @@ class ActorDefinition extends CanonicalResource {
         'reference',
         FhirUrl.fromJson,
       ),
-      capabilities: JsonParser.parsePrimitive<FhirCanonical>(
+      baseDefinition: JsonParser.parsePrimitiveList<FhirCanonical>(
         json,
-        'capabilities',
-        FhirCanonical.fromJson,
-      ),
-      derivedFrom: JsonParser.parsePrimitiveList<FhirCanonical>(
-        json,
-        'derivedFrom',
+        'baseDefinition',
         FhirCanonical.fromJson,
       ),
     );
@@ -317,10 +311,11 @@ class ActorDefinition extends CanonicalResource {
 
   /// [type]
   /// Whether the actor represents a human or an appliction.
-  final ExampleScenarioActorType type;
+  final ActorDefinitionActorType type;
 
   /// [documentation]
-  /// Documentation about the functionality of the actor.
+  /// Details describing the nature of the actor as well as boundaries that
+  /// distinguish this type of actor from other actors.
   final FhirMarkdown? documentation;
 
   /// [reference]
@@ -328,15 +323,11 @@ class ActorDefinition extends CanonicalResource {
   /// description and documentation.
   final List<FhirUrl>? reference;
 
-  /// [capabilities]
-  /// The capability statement for the actor (if the concept is applicable).
-  final FhirCanonical? capabilities;
-
-  /// [derivedFrom]
-  /// A url that identifies the definition of this actor in another IG (which
-  /// IG must be listed in the dependencies). This actor inherits all the
-  /// obligations etc. as defined in the other IG.
-  final List<FhirCanonical>? derivedFrom;
+  /// [baseDefinition]
+  /// An ActorDefinition that is a super-type of this actor. This actor
+  /// inherits all of the obligations that apply to the referenced actor
+  /// definition and can be used wherever the referenced ActorDefinition can.
+  final List<FhirCanonical>? baseDefinition;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -518,12 +509,8 @@ class ActorDefinition extends CanonicalResource {
       reference,
     );
     addField(
-      'capabilities',
-      capabilities,
-    );
-    addField(
-      'derivedFrom',
-      derivedFrom,
+      'baseDefinition',
+      baseDefinition,
     );
     return json;
   }
@@ -560,8 +547,7 @@ class ActorDefinition extends CanonicalResource {
       'type',
       'documentation',
       'reference',
-      'capabilities',
-      'derivedFrom',
+      'baseDefinition',
     ];
   }
 
@@ -692,13 +678,9 @@ class ActorDefinition extends CanonicalResource {
         if (reference != null) {
           fields.addAll(reference!);
         }
-      case 'capabilities':
-        if (capabilities != null) {
-          fields.add(capabilities!);
-        }
-      case 'derivedFrom':
-        if (derivedFrom != null) {
-          fields.addAll(derivedFrom!);
+      case 'baseDefinition':
+        if (baseDefinition != null) {
+          fields.addAll(baseDefinition!);
         }
       default:
         if (checkValid) {
@@ -909,15 +891,9 @@ class ActorDefinition extends CanonicalResource {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      capabilities,
-      o.capabilities,
-    )) {
-      return false;
-    }
     if (!listEquals<FhirCanonical>(
-      derivedFrom,
-      o.derivedFrom,
+      baseDefinition,
+      o.baseDefinition,
     )) {
       return false;
     }

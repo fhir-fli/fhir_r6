@@ -1,0 +1,1 @@
+{"resourceType":"NutritionProduct","id":"example","code":{"coding":[{"system":"http://snomed.info/sct","code":"226886006","display":"Scrambled egg (substance)"}]},"status":"active","category":[{"coding":[{"system":"http://snomed.info/sct","code":"102263004","display":"Eggs (edible) (substance)"}]}]}

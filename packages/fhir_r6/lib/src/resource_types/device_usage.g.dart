@@ -24,7 +24,7 @@ abstract class $DeviceUsageCopyWith<T> extends $DomainResourceCopyWith<T> {
     Reference? patient,
     List<Reference>? derivedFrom,
     Reference? context,
-    Timing? timingX,
+    TimingXDeviceUsage? timingX,
     FhirDateTime? dateAsserted,
     CodeableConcept? usageStatus,
     List<CodeableConcept>? usageReason,
@@ -116,7 +116,7 @@ class _$DeviceUsageCopyWithImpl<T> implements $DeviceUsageCopyWith<T> {
             : context as Reference?,
         timingX: identical(timingX, fhirSentinel)
             ? _value.timingX
-            : timingX as Timing?,
+            : timingX as TimingXDeviceUsage?,
         dateAsserted: identical(dateAsserted, fhirSentinel)
             ? _value.dateAsserted
             : dateAsserted as FhirDateTime?,

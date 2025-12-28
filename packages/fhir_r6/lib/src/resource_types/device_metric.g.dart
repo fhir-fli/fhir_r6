@@ -23,7 +23,7 @@ abstract class $DeviceMetricCopyWith<T> extends $DomainResourceCopyWith<T> {
     Reference? device,
     DeviceMetricOperationalStatus? operationalStatus,
     ColorCodesOrRGB? color,
-    DeviceMetricCategory? category,
+    CodeableConcept? category,
     Quantity? measurementFrequency,
     List<DeviceMetricCalibration>? calibration,
     bool? disallowExtensions,
@@ -97,7 +97,7 @@ class _$DeviceMetricCopyWithImpl<T> implements $DeviceMetricCopyWith<T> {
             : color as ColorCodesOrRGB?,
         category: identical(category, fhirSentinel)
             ? _value.category
-            : (category as DeviceMetricCategory?) ?? _value.category,
+            : (category as CodeableConcept?) ?? _value.category,
         measurementFrequency: identical(measurementFrequency, fhirSentinel)
             ? _value.measurementFrequency
             : measurementFrequency as Quantity?,
@@ -124,7 +124,7 @@ abstract class $DeviceMetricCalibrationCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    DeviceMetricCalibrationType? type,
+    CodeableConcept? type,
     DeviceMetricCalibrationState? state,
     FhirInstant? time,
     bool? disallowExtensions,
@@ -159,7 +159,7 @@ class _$DeviceMetricCalibrationCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         type: identical(type, fhirSentinel)
             ? _value.type
-            : type as DeviceMetricCalibrationType?,
+            : type as CodeableConcept?,
         state: identical(state, fhirSentinel)
             ? _value.state
             : state as DeviceMetricCalibrationState?,

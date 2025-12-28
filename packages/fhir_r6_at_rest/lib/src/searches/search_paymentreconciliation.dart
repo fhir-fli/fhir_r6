@@ -14,8 +14,8 @@ class SearchPaymentReconciliation extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}created'] =
-        value.toString();
+    parameters['created'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -28,20 +28,22 @@ class SearchPaymentReconciliation extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}disposition'] =
-        value.toString();
+    parameters['disposition'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [identifier] in the resource
   /// [PaymentReconciliation]
+  @override
   SearchPaymentReconciliation identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -52,20 +54,23 @@ class SearchPaymentReconciliation extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}outcome'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['outcome'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [PaymentReconciliation]
+  @override
   SearchPaymentReconciliation status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

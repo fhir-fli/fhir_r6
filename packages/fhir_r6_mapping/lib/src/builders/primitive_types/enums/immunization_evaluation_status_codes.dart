@@ -1,4 +1,4 @@
-// ignore_for_file: unused_element_parameter, non_constant_identifier_names, lines_longer_than_80_chars
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for ImmunizationEvaluationStatusCodes
@@ -167,8 +167,7 @@ class ImmunizationEvaluationStatusCodesBuilder extends FhirCodeEnumBuilder {
     );
   }
 
-  ///  An actual enum that can be used for
-  /// ImmunizationEvaluationStatusCodesBuilder
+  ///  An actual enum that can be used for ImmunizationEvaluationStatusCodesBuilder
   final ImmunizationEvaluationStatusCodesBuilderEnum? valueEnum;
 
   /// in_progress
@@ -180,7 +179,7 @@ class ImmunizationEvaluationStatusCodesBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/immunization-evaluation-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'In Progress',
     ),
@@ -195,7 +194,7 @@ class ImmunizationEvaluationStatusCodesBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/immunization-evaluation-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Not Done',
     ),
@@ -210,7 +209,7 @@ class ImmunizationEvaluationStatusCodesBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/immunization-evaluation-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'On Hold',
     ),
@@ -225,7 +224,7 @@ class ImmunizationEvaluationStatusCodesBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/immunization-evaluation-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Completed',
     ),
@@ -240,7 +239,7 @@ class ImmunizationEvaluationStatusCodesBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/immunization-evaluation-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Entered in Error',
     ),
@@ -255,7 +254,7 @@ class ImmunizationEvaluationStatusCodesBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/immunization-evaluation-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Stopped',
     ),
@@ -270,7 +269,7 @@ class ImmunizationEvaluationStatusCodesBuilder extends FhirCodeEnumBuilder {
       valueString:
           'http://hl7.org/fhir/ValueSet/immunization-evaluation-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Unknown',
     ),

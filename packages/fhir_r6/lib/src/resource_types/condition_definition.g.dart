@@ -21,7 +21,7 @@ abstract class $ConditionDefinitionCopyWith<T>
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXConditionDefinition? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     FhirString? subtitle,
@@ -41,7 +41,7 @@ abstract class $ConditionDefinitionCopyWith<T>
     FhirBoolean? hasBodySite,
     FhirBoolean? hasStage,
     List<FhirUri>? definition,
-    List<ConditionDefinitionObservation>? observation,
+    List<FhirCanonical>? observation,
     List<ConditionDefinitionMedication>? medication,
     List<ConditionDefinitionPrecondition>? precondition,
     List<Reference>? team,
@@ -128,7 +128,7 @@ class _$ConditionDefinitionCopyWithImpl<T>
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXConditionDefinition?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -185,7 +185,7 @@ class _$ConditionDefinitionCopyWithImpl<T>
             : definition as List<FhirUri>?,
         observation: identical(observation, fhirSentinel)
             ? _value.observation
-            : observation as List<ConditionDefinitionObservation>?,
+            : observation as List<FhirCanonical>?,
         medication: identical(medication, fhirSentinel)
             ? _value.medication
             : medication as List<ConditionDefinitionMedication>?,
@@ -212,68 +212,6 @@ extension ConditionDefinitionCopyWithExtension on ConditionDefinition {
         this,
         (value) => value,
       );
-}
-
-abstract class $ConditionDefinitionObservationCopyWith<T>
-    extends $BackboneElementCopyWith<T> {
-  @override
-  T call({
-    FhirString? id,
-    List<FhirExtension>? extension_,
-    List<FhirExtension>? modifierExtension,
-    CodeableConcept? category,
-    CodeableConcept? code,
-    bool? disallowExtensions,
-  });
-}
-
-class _$ConditionDefinitionObservationCopyWithImpl<T>
-    implements $ConditionDefinitionObservationCopyWith<T> {
-  final ConditionDefinitionObservation _value;
-  final T Function(ConditionDefinitionObservation) _then;
-
-  _$ConditionDefinitionObservationCopyWithImpl(this._value, this._then);
-
-  @override
-  T call({
-    Object? id = fhirSentinel,
-    Object? extension_ = fhirSentinel,
-    Object? modifierExtension = fhirSentinel,
-    Object? category = fhirSentinel,
-    Object? code = fhirSentinel,
-    Object? disallowExtensions = fhirSentinel,
-  }) {
-    return _then(
-      ConditionDefinitionObservation(
-        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
-        extension_: identical(extension_, fhirSentinel)
-            ? _value.extension_
-            : extension_ as List<FhirExtension>?,
-        modifierExtension: identical(modifierExtension, fhirSentinel)
-            ? _value.modifierExtension
-            : modifierExtension as List<FhirExtension>?,
-        category: identical(category, fhirSentinel)
-            ? _value.category
-            : category as CodeableConcept?,
-        code: identical(code, fhirSentinel)
-            ? _value.code
-            : code as CodeableConcept?,
-        disallowExtensions: identical(disallowExtensions, fhirSentinel)
-            ? _value.disallowExtensions
-            : disallowExtensions as bool?,
-      ),
-    );
-  }
-}
-
-extension ConditionDefinitionObservationCopyWithExtension
-    on ConditionDefinitionObservation {
-  $ConditionDefinitionObservationCopyWith<ConditionDefinitionObservation>
-      get copyWith => _$ConditionDefinitionObservationCopyWithImpl<
-              ConditionDefinitionObservation>(
-            this,
-            (value) => value,
-          );
 }
 
 abstract class $ConditionDefinitionMedicationCopyWith<T>
@@ -347,7 +285,7 @@ abstract class $ConditionDefinitionPreconditionCopyWith<T>
     List<FhirExtension>? modifierExtension,
     ConditionPreconditionType? type,
     CodeableConcept? code,
-    CodeableConcept? valueX,
+    ValueXConditionDefinitionPrecondition? valueX,
     bool? disallowExtensions,
   });
 }
@@ -386,7 +324,7 @@ class _$ConditionDefinitionPreconditionCopyWithImpl<T>
             : (code as CodeableConcept?) ?? _value.code,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : valueX as CodeableConcept?,
+            : valueX as ValueXConditionDefinitionPrecondition?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

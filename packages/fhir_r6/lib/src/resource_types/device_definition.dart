@@ -5,8 +5,9 @@ import 'package:yaml/yaml.dart';
 part 'device_definition.g.dart';
 
 /// [DeviceDefinition]
-/// The characteristics, operational status and capabilities of a
-/// medical-related component of a medical device.
+/// The definition of a kind of device or device component. Typically, this
+/// definition corresponds to a device model although it may be a broader
+/// category of device.
 class DeviceDefinition extends DomainResource {
   /// Primary constructor for
   /// [DeviceDefinition]
@@ -20,25 +21,39 @@ class DeviceDefinition extends DomainResource {
     super.contained,
     super.extension_,
     super.modifierExtension,
-    this.description,
+    this.url,
     this.identifier,
-    this.udiDeviceIdentifier,
-    this.regulatoryIdentifier,
+    this.version,
+    VersionAlgorithmXDeviceDefinition? versionAlgorithmX,
+    FhirString? versionAlgorithmString,
+    Coding? versionAlgorithmCoding,
+    this.name,
+    this.title,
+    required this.status,
+    this.experimental,
     this.partNumber,
     this.manufacturer,
-    this.deviceName,
     this.modelNumber,
+    this.date,
+    this.contact,
+    this.publisher,
+    this.useContext,
+    this.jurisdiction,
+    this.purpose,
+    this.copyright,
+    this.copyrightLabel,
+    this.udiDeviceIdentifier,
+    this.regulatoryIdentifier,
+    this.deviceName,
     this.classification,
     this.conformsTo,
     this.hasPart,
     this.packaging,
-    this.version,
+    this.deviceVersion,
     this.safety,
     this.shelfLifeStorage,
-    this.languageCode,
+    this.outputLanguage,
     this.property,
-    this.owner,
-    this.contact,
     this.link,
     this.note,
     this.material,
@@ -46,7 +61,10 @@ class DeviceDefinition extends DomainResource {
     this.guideline,
     this.correctiveAction,
     this.chargeItem,
-  }) : super(
+  })  : versionAlgorithmX = versionAlgorithmX ??
+            versionAlgorithmString ??
+            versionAlgorithmCoding,
+        super(
           resourceType: R6ResourceType.DeviceDefinition,
         );
 
@@ -101,10 +119,10 @@ class DeviceDefinition extends DomainResource {
             ),
           )
           .toList(),
-      description: JsonParser.parsePrimitive<FhirMarkdown>(
+      url: JsonParser.parsePrimitive<FhirUri>(
         json,
-        'description',
-        FhirMarkdown.fromJson,
+        'url',
+        FhirUri.fromJson,
       ),
       identifier: (json['identifier'] as List<dynamic>?)
           ?.map<Identifier>(
@@ -113,6 +131,100 @@ class DeviceDefinition extends DomainResource {
             ),
           )
           .toList(),
+      version: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'version',
+        FhirString.fromJson,
+      ),
+      versionAlgorithmX:
+          JsonParser.parsePolymorphic<VersionAlgorithmXDeviceDefinition>(
+        json,
+        {
+          'versionAlgorithmString': FhirString.fromJson,
+          'versionAlgorithmCoding': Coding.fromJson,
+        },
+      ),
+      name: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'name',
+        FhirString.fromJson,
+      ),
+      title: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'title',
+        FhirString.fromJson,
+      ),
+      status: JsonParser.parsePrimitive<PublicationStatus>(
+        json,
+        'status',
+        PublicationStatus.fromJson,
+      )!,
+      experimental: JsonParser.parsePrimitive<FhirBoolean>(
+        json,
+        'experimental',
+        FhirBoolean.fromJson,
+      ),
+      partNumber: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'partNumber',
+        FhirString.fromJson,
+      ),
+      manufacturer: JsonParser.parseObject<Reference>(
+        json,
+        'manufacturer',
+        Reference.fromJson,
+      ),
+      modelNumber: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'modelNumber',
+        FhirString.fromJson,
+      ),
+      date: JsonParser.parsePrimitive<FhirDateTime>(
+        json,
+        'date',
+        FhirDateTime.fromJson,
+      ),
+      contact: (json['contact'] as List<dynamic>?)
+          ?.map<ContactDetail>(
+            (v) => ContactDetail.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      publisher: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'publisher',
+        FhirString.fromJson,
+      ),
+      useContext: (json['useContext'] as List<dynamic>?)
+          ?.map<UsageContext>(
+            (v) => UsageContext.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      jurisdiction: (json['jurisdiction'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      purpose: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'purpose',
+        FhirMarkdown.fromJson,
+      ),
+      copyright: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'copyright',
+        FhirMarkdown.fromJson,
+      ),
+      copyrightLabel: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'copyrightLabel',
+        FhirString.fromJson,
+      ),
       udiDeviceIdentifier: (json['udiDeviceIdentifier'] as List<dynamic>?)
           ?.map<DeviceDefinitionUdiDeviceIdentifier>(
             (v) => DeviceDefinitionUdiDeviceIdentifier.fromJson(
@@ -127,16 +239,6 @@ class DeviceDefinition extends DomainResource {
             ),
           )
           .toList(),
-      partNumber: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'partNumber',
-        FhirString.fromJson,
-      ),
-      manufacturer: JsonParser.parseObject<Reference>(
-        json,
-        'manufacturer',
-        Reference.fromJson,
-      ),
       deviceName: (json['deviceName'] as List<dynamic>?)
           ?.map<DeviceDefinitionDeviceName>(
             (v) => DeviceDefinitionDeviceName.fromJson(
@@ -144,11 +246,6 @@ class DeviceDefinition extends DomainResource {
             ),
           )
           .toList(),
-      modelNumber: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'modelNumber',
-        FhirString.fromJson,
-      ),
       classification: (json['classification'] as List<dynamic>?)
           ?.map<DeviceDefinitionClassification>(
             (v) => DeviceDefinitionClassification.fromJson(
@@ -177,9 +274,9 @@ class DeviceDefinition extends DomainResource {
             ),
           )
           .toList(),
-      version: (json['version'] as List<dynamic>?)
-          ?.map<DeviceDefinitionVersion>(
-            (v) => DeviceDefinitionVersion.fromJson(
+      deviceVersion: (json['deviceVersion'] as List<dynamic>?)
+          ?.map<DeviceDefinitionDeviceVersion>(
+            (v) => DeviceDefinitionDeviceVersion.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -198,28 +295,14 @@ class DeviceDefinition extends DomainResource {
             ),
           )
           .toList(),
-      languageCode: (json['languageCode'] as List<dynamic>?)
-          ?.map<CodeableConcept>(
-            (v) => CodeableConcept.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
+      outputLanguage: JsonParser.parsePrimitiveList<AllLanguages>(
+        json,
+        'outputLanguage',
+        AllLanguages.fromJson,
+      ),
       property: (json['property'] as List<dynamic>?)
           ?.map<DeviceDefinitionProperty>(
             (v) => DeviceDefinitionProperty.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      owner: JsonParser.parseObject<Reference>(
-        json,
-        'owner',
-        Reference.fromJson,
-      ),
-      contact: (json['contact'] as List<dynamic>?)
-          ?.map<ContactPoint>(
-            (v) => ContactPoint.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -246,11 +329,13 @@ class DeviceDefinition extends DomainResource {
           )
           .toList(),
       productionIdentifierInUDI:
-          JsonParser.parsePrimitiveList<DeviceProductionIdentifierInUDI>(
-        json,
-        'productionIdentifierInUDI',
-        DeviceProductionIdentifierInUDI.fromJson,
-      ),
+          (json['productionIdentifierInUDI'] as List<dynamic>?)
+              ?.map<CodeableConcept>(
+                (v) => CodeableConcept.fromJson(
+                  {...v as Map<String, dynamic>},
+                ),
+              )
+              .toList(),
       guideline: JsonParser.parseObject<DeviceDefinitionGuideline>(
         json,
         'guideline',
@@ -314,19 +399,122 @@ class DeviceDefinition extends DomainResource {
   @override
   String get fhirType => 'DeviceDefinition';
 
-  /// [description]
-  /// Additional information to describe the device.
-  final FhirMarkdown? description;
+  /// [url]
+  /// An absolute URI that is used to identify this DeviceDefinition when it
+  /// is referenced in a specification, model, design or an instance; also
+  /// called its canonical identifier. This SHOULD be globally unique and
+  /// SHOULD be a literal address at which an authoritative instance of this
+  /// DeviceDefinition is (or will be) published. This URL can be the target
+  /// of a canonical reference. It SHALL remain the same when the
+  /// DeviceDefinition is stored on different servers.
+  final FhirUri? url;
 
   /// [identifier]
-  /// Unique instance identifiers assigned to a device by the software,
-  /// manufacturers, other organizations or owners. For example: handle ID.
-  /// The identifier is typically valued if the udiDeviceIdentifier,
-  /// partNumber or modelNumber is not valued and represents a different type
-  /// of identifier. However, it is permissible to still include those
-  /// identifiers in DeviceDefinition.identifier with the appropriate
-  /// identifier.type.
+  /// A formal identifier that is used to identify this DeviceDefinition when
+  /// it is represented in other formats, or referenced in a specification,
+  /// model, design or an instance.
   final List<Identifier>? identifier;
+
+  /// [version]
+  /// The identifier that is used to identify this version of the
+  /// DeviceDefinition when it is referenced in a specification.
+  final FhirString? version;
+
+  /// [versionAlgorithmX]
+  /// Indicates the mechanism used to compare versions to determine which is
+  /// more current.
+  final VersionAlgorithmXDeviceDefinition? versionAlgorithmX;
+
+  /// Getter for [versionAlgorithmString] as a FhirString
+  FhirString? get versionAlgorithmString =>
+      versionAlgorithmX?.isAs<FhirString>();
+
+  /// Getter for [versionAlgorithmCoding] as a Coding
+  Coding? get versionAlgorithmCoding => versionAlgorithmX?.isAs<Coding>();
+
+  /// [name]
+  /// A natural language name identifying the DeviceDefinition. This name
+  /// should be usable as an identifier for the resource by machine
+  /// processing applications such as code generation.
+  final FhirString? name;
+
+  /// [title]
+  /// A short, descriptive, user-friendly title for the DeviceDefinition.
+  final FhirString? title;
+
+  /// [status]
+  /// The current state of this DeviceDefinition.
+  final PublicationStatus status;
+
+  /// [experimental]
+  /// A Boolean value to indicate that this DeviceDefinition is authored for
+  /// testing purposes (or education/evaluation/marketing) and no version of
+  /// this resource will ever be intended for genuine usage.
+  final FhirBoolean? experimental;
+
+  /// [partNumber]
+  /// The part number or catalog number of the device.
+  final FhirString? partNumber;
+
+  /// [manufacturer]
+  /// A name of the manufacturer or legal representative e.g. labeler.
+  /// Whether this is the actual manufacturer or the labeler or responsible
+  /// depends on implementation and jurisdiction.
+  final Reference? manufacturer;
+
+  /// [modelNumber]
+  /// The model number for the device for example as defined by the
+  /// manufacturer or labeler, or other agency.
+  final FhirString? modelNumber;
+
+  /// [date]
+  /// The date (and optionally time) when the DeviceDefinition was last
+  /// significantly changed. The date must change when the business version
+  /// changes and it must change if the status code changes. In addition, it
+  /// should change when the substantive content of the DeviceDefinition
+  /// changes.
+  final FhirDateTime? date;
+
+  /// [contact]
+  /// Contact details for an organization or a particular human that is
+  /// responsible for the device.
+  final List<ContactDetail>? contact;
+
+  /// [publisher]
+  /// The name of the organization or individual responsible for the release
+  /// and ongoing maintenance of the device definition.
+  final FhirString? publisher;
+
+  /// [useContext]
+  /// The content was developed with a focus and intent of supporting the
+  /// contexts that are listed. These contexts may be general categories
+  /// (gender, age, ...) or may be references to specific programs (insurance
+  /// plans, studies, ...) and may be used to assist with indexing and
+  /// searching for appropriate DeviceDefinitions.
+  final List<UsageContext>? useContext;
+
+  /// [jurisdiction]
+  /// A legal or geographic region in which the DeviceDefinition is intended
+  /// to be used.
+  final List<CodeableConcept>? jurisdiction;
+
+  /// [purpose]
+  /// Explanation of why this DeviceDefinition is needed and why it has been
+  /// designed as it has.
+  final FhirMarkdown? purpose;
+
+  /// [copyright]
+  /// A copyright statement relating to the DeviceDefinition and/or its
+  /// contents. Copyright statements are generally legal restrictions on the
+  /// use and publishing of the DeviceDefinition.
+  final FhirMarkdown? copyright;
+
+  /// [copyrightLabel]
+  /// A short string (<50 characters), suitable for inclusion in a page
+  /// footer that identifies the copyright holder, effective period, and
+  /// optionally whether rights are resctricted. (e.g. 'All rights reserved',
+  /// 'Some rights reserved').
+  final FhirString? copyrightLabel;
 
   /// [udiDeviceIdentifier]
   /// Unique device identifier (UDI) assigned to device label or package.
@@ -343,24 +531,9 @@ class DeviceDefinition extends DomainResource {
   /// example is the Basic UDI-DI in Europe.
   final List<DeviceDefinitionRegulatoryIdentifier>? regulatoryIdentifier;
 
-  /// [partNumber]
-  /// The part number or catalog number of the device.
-  final FhirString? partNumber;
-
-  /// [manufacturer]
-  /// A name of the manufacturer or legal representative e.g. labeler.
-  /// Whether this is the actual manufacturer or the labeler or responsible
-  /// depends on implementation and jurisdiction.
-  final Reference? manufacturer;
-
   /// [deviceName]
   /// The name or names of the device as given by the manufacturer.
   final List<DeviceDefinitionDeviceName>? deviceName;
-
-  /// [modelNumber]
-  /// The model number for the device for example as defined by the
-  /// manufacturer or labeler, or other agency.
-  final FhirString? modelNumber;
 
   /// [classification]
   /// What kind of device or device system this is.
@@ -382,9 +555,9 @@ class DeviceDefinition extends DomainResource {
   /// packaged.
   final List<DeviceDefinitionPackaging>? packaging;
 
-  /// [version]
+  /// [deviceVersion]
   /// The version of the device or software.
-  final List<DeviceDefinitionVersion>? version;
+  final List<DeviceDefinitionDeviceVersion>? deviceVersion;
 
   /// [safety]
   /// Safety characteristics of the device.
@@ -394,10 +567,10 @@ class DeviceDefinition extends DomainResource {
   /// Shelf Life and storage information.
   final List<ProductShelfLife>? shelfLifeStorage;
 
-  /// [languageCode]
+  /// [outputLanguage]
   /// Language code for the human-readable text strings produced by the
   /// device (all supported).
-  final List<CodeableConcept>? languageCode;
+  final List<AllLanguages>? outputLanguage;
 
   /// [property]
   /// Static or essentially fixed characteristics or features of this kind of
@@ -405,16 +578,6 @@ class DeviceDefinition extends DomainResource {
   /// e.g., time or timing attributes, resolution, accuracy, and physical
   /// attributes.
   final List<DeviceDefinitionProperty>? property;
-
-  /// [owner]
-  /// An organization that is responsible for the provision and ongoing
-  /// maintenance of the device.
-  final Reference? owner;
-
-  /// [contact]
-  /// Contact details for an organization or a particular human that is
-  /// responsible for the device.
-  final List<ContactPoint>? contact;
 
   /// [link]
   /// An associated device, attached to, used with, communicating with or
@@ -433,7 +596,7 @@ class DeviceDefinition extends DomainResource {
   /// [productionIdentifierInUDI]
   /// Indicates the production identifier(s) that are expected to appear in
   /// the UDI carrier on the device label.
-  final List<DeviceProductionIdentifierInUDI>? productionIdentifierInUDI;
+  final List<CodeableConcept>? productionIdentifierInUDI;
 
   /// [guideline]
   /// Information aimed at providing directions for the usage of this model
@@ -544,20 +707,40 @@ class DeviceDefinition extends DomainResource {
       modifierExtension,
     );
     addField(
-      'description',
-      description,
+      'url',
+      url,
     );
     addField(
       'identifier',
       identifier,
     );
     addField(
-      'udiDeviceIdentifier',
-      udiDeviceIdentifier,
+      'version',
+      version,
+    );
+    if (versionAlgorithmX != null) {
+      final fhirType = versionAlgorithmX!.fhirType;
+      addField(
+        'versionAlgorithm${fhirType.capitalize()}',
+        versionAlgorithmX,
+      );
+    }
+
+    addField(
+      'name',
+      name,
     );
     addField(
-      'regulatoryIdentifier',
-      regulatoryIdentifier,
+      'title',
+      title,
+    );
+    addField(
+      'status',
+      status,
+    );
+    addField(
+      'experimental',
+      experimental,
     );
     addField(
       'partNumber',
@@ -568,12 +751,52 @@ class DeviceDefinition extends DomainResource {
       manufacturer,
     );
     addField(
-      'deviceName',
-      deviceName,
-    );
-    addField(
       'modelNumber',
       modelNumber,
+    );
+    addField(
+      'date',
+      date,
+    );
+    addField(
+      'contact',
+      contact,
+    );
+    addField(
+      'publisher',
+      publisher,
+    );
+    addField(
+      'useContext',
+      useContext,
+    );
+    addField(
+      'jurisdiction',
+      jurisdiction,
+    );
+    addField(
+      'purpose',
+      purpose,
+    );
+    addField(
+      'copyright',
+      copyright,
+    );
+    addField(
+      'copyrightLabel',
+      copyrightLabel,
+    );
+    addField(
+      'udiDeviceIdentifier',
+      udiDeviceIdentifier,
+    );
+    addField(
+      'regulatoryIdentifier',
+      regulatoryIdentifier,
+    );
+    addField(
+      'deviceName',
+      deviceName,
     );
     addField(
       'classification',
@@ -592,8 +815,8 @@ class DeviceDefinition extends DomainResource {
       packaging,
     );
     addField(
-      'version',
-      version,
+      'deviceVersion',
+      deviceVersion,
     );
     addField(
       'safety',
@@ -604,20 +827,12 @@ class DeviceDefinition extends DomainResource {
       shelfLifeStorage,
     );
     addField(
-      'languageCode',
-      languageCode,
+      'outputLanguage',
+      outputLanguage,
     );
     addField(
       'property',
       property,
-    );
-    addField(
-      'owner',
-      owner,
-    );
-    addField(
-      'contact',
-      contact,
     );
     addField(
       'link',
@@ -662,25 +877,37 @@ class DeviceDefinition extends DomainResource {
       'contained',
       'extension',
       'modifierExtension',
-      'description',
+      'url',
       'identifier',
-      'udiDeviceIdentifier',
-      'regulatoryIdentifier',
+      'version',
+      'versionAlgorithmX',
+      'name',
+      'title',
+      'status',
+      'experimental',
       'partNumber',
       'manufacturer',
-      'deviceName',
       'modelNumber',
+      'date',
+      'contact',
+      'publisher',
+      'useContext',
+      'jurisdiction',
+      'purpose',
+      'copyright',
+      'copyrightLabel',
+      'udiDeviceIdentifier',
+      'regulatoryIdentifier',
+      'deviceName',
       'classification',
       'conformsTo',
       'hasPart',
       'packaging',
-      'version',
+      'deviceVersion',
       'safety',
       'shelfLifeStorage',
-      'languageCode',
+      'outputLanguage',
       'property',
-      'owner',
-      'contact',
       'link',
       'note',
       'material',
@@ -732,21 +959,43 @@ class DeviceDefinition extends DomainResource {
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
         }
-      case 'description':
-        if (description != null) {
-          fields.add(description!);
+      case 'url':
+        if (url != null) {
+          fields.add(url!);
         }
       case 'identifier':
         if (identifier != null) {
           fields.addAll(identifier!);
         }
-      case 'udiDeviceIdentifier':
-        if (udiDeviceIdentifier != null) {
-          fields.addAll(udiDeviceIdentifier!);
+      case 'version':
+        if (version != null) {
+          fields.add(version!);
         }
-      case 'regulatoryIdentifier':
-        if (regulatoryIdentifier != null) {
-          fields.addAll(regulatoryIdentifier!);
+      case 'versionAlgorithm':
+        fields.add(versionAlgorithmX!);
+      case 'versionAlgorithmX':
+        fields.add(versionAlgorithmX!);
+      case 'versionAlgorithmString':
+        if (versionAlgorithmX is FhirString) {
+          fields.add(versionAlgorithmX!);
+        }
+      case 'versionAlgorithmCoding':
+        if (versionAlgorithmX is Coding) {
+          fields.add(versionAlgorithmX!);
+        }
+      case 'name':
+        if (name != null) {
+          fields.add(name!);
+        }
+      case 'title':
+        if (title != null) {
+          fields.add(title!);
+        }
+      case 'status':
+        fields.add(status);
+      case 'experimental':
+        if (experimental != null) {
+          fields.add(experimental!);
         }
       case 'partNumber':
         if (partNumber != null) {
@@ -756,13 +1005,53 @@ class DeviceDefinition extends DomainResource {
         if (manufacturer != null) {
           fields.add(manufacturer!);
         }
-      case 'deviceName':
-        if (deviceName != null) {
-          fields.addAll(deviceName!);
-        }
       case 'modelNumber':
         if (modelNumber != null) {
           fields.add(modelNumber!);
+        }
+      case 'date':
+        if (date != null) {
+          fields.add(date!);
+        }
+      case 'contact':
+        if (contact != null) {
+          fields.addAll(contact!);
+        }
+      case 'publisher':
+        if (publisher != null) {
+          fields.add(publisher!);
+        }
+      case 'useContext':
+        if (useContext != null) {
+          fields.addAll(useContext!);
+        }
+      case 'jurisdiction':
+        if (jurisdiction != null) {
+          fields.addAll(jurisdiction!);
+        }
+      case 'purpose':
+        if (purpose != null) {
+          fields.add(purpose!);
+        }
+      case 'copyright':
+        if (copyright != null) {
+          fields.add(copyright!);
+        }
+      case 'copyrightLabel':
+        if (copyrightLabel != null) {
+          fields.add(copyrightLabel!);
+        }
+      case 'udiDeviceIdentifier':
+        if (udiDeviceIdentifier != null) {
+          fields.addAll(udiDeviceIdentifier!);
+        }
+      case 'regulatoryIdentifier':
+        if (regulatoryIdentifier != null) {
+          fields.addAll(regulatoryIdentifier!);
+        }
+      case 'deviceName':
+        if (deviceName != null) {
+          fields.addAll(deviceName!);
         }
       case 'classification':
         if (classification != null) {
@@ -780,9 +1069,9 @@ class DeviceDefinition extends DomainResource {
         if (packaging != null) {
           fields.addAll(packaging!);
         }
-      case 'version':
-        if (version != null) {
-          fields.addAll(version!);
+      case 'deviceVersion':
+        if (deviceVersion != null) {
+          fields.addAll(deviceVersion!);
         }
       case 'safety':
         if (safety != null) {
@@ -792,21 +1081,13 @@ class DeviceDefinition extends DomainResource {
         if (shelfLifeStorage != null) {
           fields.addAll(shelfLifeStorage!);
         }
-      case 'languageCode':
-        if (languageCode != null) {
-          fields.addAll(languageCode!);
+      case 'outputLanguage':
+        if (outputLanguage != null) {
+          fields.addAll(outputLanguage!);
         }
       case 'property':
         if (property != null) {
           fields.addAll(property!);
-        }
-      case 'owner':
-        if (owner != null) {
-          fields.add(owner!);
-        }
-      case 'contact':
-        if (contact != null) {
-          fields.addAll(contact!);
         }
       case 'link':
         if (link != null) {
@@ -926,8 +1207,8 @@ class DeviceDefinition extends DomainResource {
       return false;
     }
     if (!equalsDeepWithNull(
-      description,
-      o.description,
+      url,
+      o.url,
     )) {
       return false;
     }
@@ -937,15 +1218,39 @@ class DeviceDefinition extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<DeviceDefinitionUdiDeviceIdentifier>(
-      udiDeviceIdentifier,
-      o.udiDeviceIdentifier,
+    if (!equalsDeepWithNull(
+      version,
+      o.version,
     )) {
       return false;
     }
-    if (!listEquals<DeviceDefinitionRegulatoryIdentifier>(
-      regulatoryIdentifier,
-      o.regulatoryIdentifier,
+    if (!equalsDeepWithNull(
+      versionAlgorithmX,
+      o.versionAlgorithmX,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      name,
+      o.name,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      title,
+      o.title,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      status,
+      o.status,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      experimental,
+      o.experimental,
     )) {
       return false;
     }
@@ -961,15 +1266,75 @@ class DeviceDefinition extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<DeviceDefinitionDeviceName>(
-      deviceName,
-      o.deviceName,
+    if (!equalsDeepWithNull(
+      modelNumber,
+      o.modelNumber,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
-      modelNumber,
-      o.modelNumber,
+      date,
+      o.date,
+    )) {
+      return false;
+    }
+    if (!listEquals<ContactDetail>(
+      contact,
+      o.contact,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      publisher,
+      o.publisher,
+    )) {
+      return false;
+    }
+    if (!listEquals<UsageContext>(
+      useContext,
+      o.useContext,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConcept>(
+      jurisdiction,
+      o.jurisdiction,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      purpose,
+      o.purpose,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      copyright,
+      o.copyright,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      copyrightLabel,
+      o.copyrightLabel,
+    )) {
+      return false;
+    }
+    if (!listEquals<DeviceDefinitionUdiDeviceIdentifier>(
+      udiDeviceIdentifier,
+      o.udiDeviceIdentifier,
+    )) {
+      return false;
+    }
+    if (!listEquals<DeviceDefinitionRegulatoryIdentifier>(
+      regulatoryIdentifier,
+      o.regulatoryIdentifier,
+    )) {
+      return false;
+    }
+    if (!listEquals<DeviceDefinitionDeviceName>(
+      deviceName,
+      o.deviceName,
     )) {
       return false;
     }
@@ -997,9 +1362,9 @@ class DeviceDefinition extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<DeviceDefinitionVersion>(
-      version,
-      o.version,
+    if (!listEquals<DeviceDefinitionDeviceVersion>(
+      deviceVersion,
+      o.deviceVersion,
     )) {
       return false;
     }
@@ -1015,27 +1380,15 @@ class DeviceDefinition extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
-      languageCode,
-      o.languageCode,
+    if (!listEquals<AllLanguages>(
+      outputLanguage,
+      o.outputLanguage,
     )) {
       return false;
     }
     if (!listEquals<DeviceDefinitionProperty>(
       property,
       o.property,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      owner,
-      o.owner,
-    )) {
-      return false;
-    }
-    if (!listEquals<ContactPoint>(
-      contact,
-      o.contact,
     )) {
       return false;
     }
@@ -1057,7 +1410,7 @@ class DeviceDefinition extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<DeviceProductionIdentifierInUDI>(
+    if (!listEquals<CodeableConcept>(
       productionIdentifierInUDI,
       o.productionIdentifierInUDI,
     )) {
@@ -2138,10 +2491,10 @@ class DeviceDefinitionDeviceName extends BackboneElement {
         'name',
         FhirString.fromJson,
       )!,
-      type: JsonParser.parsePrimitive<DeviceNameType>(
+      type: JsonParser.parseObject<CodeableConcept>(
         json,
         'type',
-        DeviceNameType.fromJson,
+        CodeableConcept.fromJson,
       )!,
     );
   }
@@ -2197,7 +2550,7 @@ class DeviceDefinitionDeviceName extends BackboneElement {
   /// [type]
   /// The type of deviceName.
   /// RegisteredName | UserFriendlyName | PatientReportedName.
-  final DeviceNameType type;
+  final CodeableConcept type;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -4080,13 +4433,13 @@ class DeviceDefinitionDistributor extends BackboneElement {
   }
 }
 
-/// [DeviceDefinitionVersion]
+/// [DeviceDefinitionDeviceVersion]
 /// The version of the device or software.
-class DeviceDefinitionVersion extends BackboneElement {
+class DeviceDefinitionDeviceVersion extends BackboneElement {
   /// Primary constructor for
-  /// [DeviceDefinitionVersion]
+  /// [DeviceDefinitionDeviceVersion]
 
-  const DeviceDefinitionVersion({
+  const DeviceDefinitionDeviceVersion({
     super.id,
     super.extension_,
     super.modifierExtension,
@@ -4097,10 +4450,10 @@ class DeviceDefinitionVersion extends BackboneElement {
   }) : super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory DeviceDefinitionVersion.fromJson(
+  factory DeviceDefinitionDeviceVersion.fromJson(
     Map<String, dynamic> json,
   ) {
-    return DeviceDefinitionVersion(
+    return DeviceDefinitionDeviceVersion(
       id: JsonParser.parsePrimitive<FhirString>(
         json,
         'id',
@@ -4138,22 +4491,22 @@ class DeviceDefinitionVersion extends BackboneElement {
     );
   }
 
-  /// Deserialize [DeviceDefinitionVersion]
+  /// Deserialize [DeviceDefinitionDeviceVersion]
   /// from a [String] or [YamlMap] object
-  factory DeviceDefinitionVersion.fromYaml(
+  factory DeviceDefinitionDeviceVersion.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return DeviceDefinitionVersion.fromJson(
+      return DeviceDefinitionDeviceVersion.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return DeviceDefinitionVersion.fromJson(
+      return DeviceDefinitionDeviceVersion.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'DeviceDefinitionVersion '
+        'DeviceDefinitionDeviceVersion '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -4161,16 +4514,16 @@ class DeviceDefinitionVersion extends BackboneElement {
   }
 
   /// Factory constructor for
-  /// [DeviceDefinitionVersion]
+  /// [DeviceDefinitionDeviceVersion]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory DeviceDefinitionVersion.fromJsonString(
+  factory DeviceDefinitionDeviceVersion.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return DeviceDefinitionVersion.fromJson(json);
+      return DeviceDefinitionDeviceVersion.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -4178,7 +4531,7 @@ class DeviceDefinitionVersion extends BackboneElement {
   }
 
   @override
-  String get fhirType => 'DeviceDefinitionVersion';
+  String get fhirType => 'DeviceDefinitionDeviceVersion';
 
   /// [type]
   /// The type of the device version, e.g. manufacturer, approved, internal.
@@ -4345,24 +4698,25 @@ class DeviceDefinitionVersion extends BackboneElement {
   }
 
   @override
-  DeviceDefinitionVersion clone() => copyWith();
+  DeviceDefinitionDeviceVersion clone() => copyWith();
 
-  /// Copy function for [DeviceDefinitionVersion]
+  /// Copy function for [DeviceDefinitionDeviceVersion]
   /// Returns a copy of the current instance with the provided fields modified.
   /// If a field is not provided, it will retain its original value.
   /// If a null is provided, this will clearn the field, unless the
   /// field is required, in which case it will keep its current value.
   @override
-  $DeviceDefinitionVersionCopyWith<DeviceDefinitionVersion> get copyWith =>
-      _$DeviceDefinitionVersionCopyWithImpl<DeviceDefinitionVersion>(
-        this,
-        (value) => value,
-      );
+  $DeviceDefinitionDeviceVersionCopyWith<DeviceDefinitionDeviceVersion>
+      get copyWith => _$DeviceDefinitionDeviceVersionCopyWithImpl<
+              DeviceDefinitionDeviceVersion>(
+            this,
+            (value) => value,
+          );
 
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBase? o) {
-    if (o is! DeviceDefinitionVersion) {
+    if (o is! DeviceDefinitionDeviceVersion) {
       return false;
     }
     if (identical(this, o)) return true;

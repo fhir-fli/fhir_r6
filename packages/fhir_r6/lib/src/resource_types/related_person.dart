@@ -6,8 +6,8 @@ part 'related_person.g.dart';
 
 /// [RelatedPerson]
 /// Information about a person that is involved in a patient's health or
-/// the care for a patient, but who is not the target of healthcare, nor
-/// has a formal responsibility in the care process.
+/// the care for a patient, but who is not the primary target of
+/// healthcare.
 class RelatedPerson extends DomainResource {
   /// Primary constructor for
   /// [RelatedPerson]
@@ -25,6 +25,7 @@ class RelatedPerson extends DomainResource {
     this.active,
     required this.patient,
     this.relationship,
+    this.role,
     this.name,
     this.telecom,
     this.gender,
@@ -106,6 +107,13 @@ class RelatedPerson extends DomainResource {
         Reference.fromJson,
       )!,
       relationship: (json['relationship'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      role: (json['role'] as List<dynamic>?)
           ?.map<CodeableConcept>(
             (v) => CodeableConcept.fromJson(
               {...v as Map<String, dynamic>},
@@ -220,9 +228,14 @@ class RelatedPerson extends DomainResource {
   final Reference patient;
 
   /// [relationship]
-  /// The nature of the relationship between the related person and the
-  /// patient.
+  /// The nature of the personal relationship between the related person and
+  /// the patient.
   final List<CodeableConcept>? relationship;
+
+  /// [role]
+  /// The nature of the functional relationship between the patient and the
+  /// related person.
+  final List<CodeableConcept>? role;
 
   /// [name]
   /// A name associated with the person.
@@ -372,6 +385,10 @@ class RelatedPerson extends DomainResource {
       relationship,
     );
     addField(
+      'role',
+      role,
+    );
+    addField(
       'name',
       name,
     );
@@ -422,6 +439,7 @@ class RelatedPerson extends DomainResource {
       'active',
       'patient',
       'relationship',
+      'role',
       'name',
       'telecom',
       'gender',
@@ -487,6 +505,10 @@ class RelatedPerson extends DomainResource {
       case 'relationship':
         if (relationship != null) {
           fields.addAll(relationship!);
+        }
+      case 'role':
+        if (role != null) {
+          fields.addAll(role!);
         }
       case 'name':
         if (name != null) {
@@ -630,6 +652,12 @@ class RelatedPerson extends DomainResource {
     if (!listEquals<CodeableConcept>(
       relationship,
       o.relationship,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConcept>(
+      role,
+      o.role,
     )) {
       return false;
     }
@@ -781,10 +809,7 @@ class RelatedPersonCommunication extends BackboneElement {
   String get fhirType => 'RelatedPersonCommunication';
 
   /// [language]
-  /// The ISO-639-1 alpha 2 code in lower case for the language, optionally
-  /// followed by a hyphen and the ISO-3166-1 alpha 2 code for the region in
-  /// upper case; e.g. "en" for English, or "en-US" for American English
-  /// versus "en-AU" for Australian English.
+  /// The language which may be used to communicate with the individual.
   final CodeableConcept language;
 
   /// [preferred]

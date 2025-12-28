@@ -3,6 +3,7 @@ import 'package:fhir_r6/fhir_r6.dart'
     show
         ArtifactAssessment,
         ArtifactAssessmentContent,
+        ArtifactAssessmentRelatesTo,
         R6ResourceType,
         yamlMapToJson,
         yamlToJson;
@@ -28,22 +29,20 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
     super.modifierExtension,
     this.identifier,
     this.title,
-    CiteAsXArtifactAssessmentBuilder? citeAsX,
-    ReferenceBuilder? citeAsReference,
-    FhirMarkdownBuilder? citeAsMarkdown,
-    this.date,
-    this.copyright,
-    this.approvalDate,
-    this.lastReviewDate,
+    this.citeAs,
     ArtifactXArtifactAssessmentBuilder? artifactX,
     ReferenceBuilder? artifactReference,
     FhirCanonicalBuilder? artifactCanonical,
     FhirUriBuilder? artifactUri,
+    this.relatesTo,
+    this.date,
+    this.copyright,
+    this.approvalDate,
+    this.lastReviewDate,
     this.content,
     this.workflowStatus,
     this.disposition,
-  })  : citeAsX = citeAsX ?? citeAsReference ?? citeAsMarkdown,
-        artifactX =
+  })  : artifactX =
             artifactX ?? artifactReference ?? artifactCanonical ?? artifactUri,
         super(
           objectPath: 'ArtifactAssessment',
@@ -138,14 +137,32 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.title',
       ),
-      citeAsX: JsonParser.parsePolymorphic<CiteAsXArtifactAssessmentBuilder>(
+      citeAs: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+        json,
+        'citeAs',
+        FhirMarkdownBuilder.fromJson,
+        '$objectPath.citeAs',
+      ),
+      artifactX:
+          JsonParser.parsePolymorphic<ArtifactXArtifactAssessmentBuilder>(
         json,
         {
-          'citeAsReference': ReferenceBuilder.fromJson,
-          'citeAsMarkdown': FhirMarkdownBuilder.fromJson,
+          'artifactReference': ReferenceBuilder.fromJson,
+          'artifactCanonical': FhirCanonicalBuilder.fromJson,
+          'artifactUri': FhirUriBuilder.fromJson,
         },
         objectPath,
       ),
+      relatesTo: (json['relatesTo'] as List<dynamic>?)
+          ?.map<ArtifactAssessmentRelatesToBuilder>(
+            (v) => ArtifactAssessmentRelatesToBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.relatesTo',
+              },
+            ),
+          )
+          .toList(),
       date: JsonParser.parsePrimitive<FhirDateTimeBuilder>(
         json,
         'date',
@@ -169,16 +186,6 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
         'lastReviewDate',
         FhirDateBuilder.fromJson,
         '$objectPath.lastReviewDate',
-      ),
-      artifactX:
-          JsonParser.parsePolymorphic<ArtifactXArtifactAssessmentBuilder>(
-        json,
-        {
-          'artifactReference': ReferenceBuilder.fromJson,
-          'artifactCanonical': FhirCanonicalBuilder.fromJson,
-          'artifactUri': FhirUriBuilder.fromJson,
-        },
-        objectPath,
       ),
       content: (json['content'] as List<dynamic>?)
           ?.map<ArtifactAssessmentContentBuilder>(
@@ -256,20 +263,34 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
   List<IdentifierBuilder>? identifier;
 
   /// [title]
-  /// A short title for the assessment for use in displaying and selecting.
+  /// A label for use in displaying and selecting the artifact assessment.
   FhirStringBuilder? title;
 
-  /// [citeAsX]
-  /// Display of or reference to the bibliographic citation of the comment,
-  /// classifier, or rating.
-  CiteAsXArtifactAssessmentBuilder? citeAsX;
+  /// [citeAs]
+  /// Display of the bibliographic citation of the comment, classifier, or
+  /// rating.
+  FhirMarkdownBuilder? citeAs;
 
-  /// Getter for [citeAsReference] as a ReferenceBuilder
-  ReferenceBuilder? get citeAsReference => citeAsX?.isAs<ReferenceBuilder>();
+  /// [artifactX]
+  /// A reference to a resource, canonical resource, or non-FHIR resource
+  /// which the comment or assessment is about.
+  ArtifactXArtifactAssessmentBuilder? artifactX;
 
-  /// Getter for [citeAsMarkdown] as a FhirMarkdownBuilder
-  FhirMarkdownBuilder? get citeAsMarkdown =>
-      citeAsX?.isAs<FhirMarkdownBuilder>();
+  /// Getter for [artifactReference] as a ReferenceBuilder
+  ReferenceBuilder? get artifactReference =>
+      artifactX?.isAs<ReferenceBuilder>();
+
+  /// Getter for [artifactCanonical] as a FhirCanonicalBuilder
+  FhirCanonicalBuilder? get artifactCanonical =>
+      artifactX?.isAs<FhirCanonicalBuilder>();
+
+  /// Getter for [artifactUri] as a FhirUriBuilder
+  FhirUriBuilder? get artifactUri => artifactX?.isAs<FhirUriBuilder>();
+
+  /// [relatesTo]
+  /// Relationship that this ArtifactAssessment has with other FHIR or
+  /// non-FHIR resources that already exist.
+  List<ArtifactAssessmentRelatesToBuilder>? relatesTo;
 
   /// [date]
   /// The date (and optionally time) when the artifact assessment was
@@ -295,22 +316,6 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
   /// happens periodically after approval but does not change the original
   /// approval date.
   FhirDateBuilder? lastReviewDate;
-
-  /// [artifactX]
-  /// A reference to a resource, canonical resource, or non-FHIR resource
-  /// which the comment or assessment is about.
-  ArtifactXArtifactAssessmentBuilder? artifactX;
-
-  /// Getter for [artifactReference] as a ReferenceBuilder
-  ReferenceBuilder? get artifactReference =>
-      artifactX?.isAs<ReferenceBuilder>();
-
-  /// Getter for [artifactCanonical] as a FhirCanonicalBuilder
-  FhirCanonicalBuilder? get artifactCanonical =>
-      artifactX?.isAs<FhirCanonicalBuilder>();
-
-  /// Getter for [artifactUri] as a FhirUriBuilder
-  FhirUriBuilder? get artifactUri => artifactX?.isAs<FhirUriBuilder>();
 
   /// [content]
   /// A component comment, classifier, or rating of the artifact.
@@ -372,20 +377,17 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
     addField('modifierExtension', modifierExtension);
     addField('identifier', identifier);
     addField('title', title);
-    if (citeAsX != null) {
-      final fhirType = citeAsX!.fhirType;
-      addField('citeAs${fhirType.capitalizeFirstLetter()}', citeAsX);
-    }
-
-    addField('date', date);
-    addField('copyright', copyright);
-    addField('approvalDate', approvalDate);
-    addField('lastReviewDate', lastReviewDate);
+    addField('citeAs', citeAs);
     if (artifactX != null) {
       final fhirType = artifactX!.fhirType;
       addField('artifact${fhirType.capitalizeFirstLetter()}', artifactX);
     }
 
+    addField('relatesTo', relatesTo);
+    addField('date', date);
+    addField('copyright', copyright);
+    addField('approvalDate', approvalDate);
+    addField('lastReviewDate', lastReviewDate);
     addField('content', content);
     addField('workflowStatus', workflowStatus);
     addField('disposition', disposition);
@@ -406,12 +408,13 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
       'modifierExtension',
       'identifier',
       'title',
-      'citeAsX',
+      'citeAs',
+      'artifactX',
+      'relatesTo',
       'date',
       'copyright',
       'approvalDate',
       'lastReviewDate',
-      'artifactX',
       'content',
       'workflowStatus',
       'disposition',
@@ -468,36 +471,8 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
           fields.add(title!);
         }
       case 'citeAs':
-        if (citeAsX != null) {
-          fields.add(citeAsX!);
-        }
-      case 'citeAsX':
-        if (citeAsX != null) {
-          fields.add(citeAsX!);
-        }
-      case 'citeAsReference':
-        if (citeAsX is ReferenceBuilder) {
-          fields.add(citeAsX!);
-        }
-      case 'citeAsMarkdown':
-        if (citeAsX is FhirMarkdownBuilder) {
-          fields.add(citeAsX!);
-        }
-      case 'date':
-        if (date != null) {
-          fields.add(date!);
-        }
-      case 'copyright':
-        if (copyright != null) {
-          fields.add(copyright!);
-        }
-      case 'approvalDate':
-        if (approvalDate != null) {
-          fields.add(approvalDate!);
-        }
-      case 'lastReviewDate':
-        if (lastReviewDate != null) {
-          fields.add(lastReviewDate!);
+        if (citeAs != null) {
+          fields.add(citeAs!);
         }
       case 'artifact':
         if (artifactX != null) {
@@ -518,6 +493,26 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
       case 'artifactUri':
         if (artifactX is FhirUriBuilder) {
           fields.add(artifactX!);
+        }
+      case 'relatesTo':
+        if (relatesTo != null) {
+          fields.addAll(relatesTo!);
+        }
+      case 'date':
+        if (date != null) {
+          fields.add(date!);
+        }
+      case 'copyright':
+        if (copyright != null) {
+          fields.add(copyright!);
+        }
+      case 'approvalDate':
+        if (approvalDate != null) {
+          fields.add(approvalDate!);
+        }
+      case 'lastReviewDate':
+        if (lastReviewDate != null) {
+          fields.add(lastReviewDate!);
         }
       case 'content':
         if (content != null) {
@@ -724,40 +719,89 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
           throw Exception('Invalid child type for $childName');
         }
       case 'citeAs':
-      case 'citeAsX':
         {
-          if (child is CiteAsXArtifactAssessmentBuilder) {
-            citeAsX = child;
+          if (child is FhirMarkdownBuilder) {
+            citeAs = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                citeAs = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'artifact':
+      case 'artifactX':
+        {
+          if (child is ArtifactXArtifactAssessmentBuilder) {
+            artifactX = child;
             return;
           } else {
             if (child is ReferenceBuilder) {
-              citeAsX = child;
+              artifactX = child;
               return;
             }
-            if (child is FhirMarkdownBuilder) {
-              citeAsX = child;
+            if (child is FhirCanonicalBuilder) {
+              artifactX = child;
+              return;
+            }
+            if (child is FhirUriBuilder) {
+              artifactX = child;
               return;
             }
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'citeAsReference':
+      case 'artifactReference':
         {
           if (child is ReferenceBuilder) {
-            citeAsX = child;
+            artifactX = child;
             return;
           } else {
             throw Exception('Invalid child type for $childName');
           }
         }
-      case 'citeAsMarkdown':
+      case 'artifactCanonical':
         {
-          if (child is FhirMarkdownBuilder) {
-            citeAsX = child;
+          if (child is FhirCanonicalBuilder) {
+            artifactX = child;
             return;
           } else {
             throw Exception('Invalid child type for $childName');
           }
+        }
+      case 'artifactUri':
+        {
+          if (child is FhirUriBuilder) {
+            artifactX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'relatesTo':
+        {
+          if (child is List<ArtifactAssessmentRelatesToBuilder>) {
+            // Replace or create new list
+            relatesTo = child;
+            return;
+          } else if (child is ArtifactAssessmentRelatesToBuilder) {
+            // Add single element to existing list or create new list
+            relatesTo = [
+              ...(relatesTo ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
         }
       case 'date':
         {
@@ -838,55 +882,6 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
             }
           }
           throw Exception('Invalid child type for $childName');
-        }
-      case 'artifact':
-      case 'artifactX':
-        {
-          if (child is ArtifactXArtifactAssessmentBuilder) {
-            artifactX = child;
-            return;
-          } else {
-            if (child is ReferenceBuilder) {
-              artifactX = child;
-              return;
-            }
-            if (child is FhirCanonicalBuilder) {
-              artifactX = child;
-              return;
-            }
-            if (child is FhirUriBuilder) {
-              artifactX = child;
-              return;
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'artifactReference':
-        {
-          if (child is ReferenceBuilder) {
-            artifactX = child;
-            return;
-          } else {
-            throw Exception('Invalid child type for $childName');
-          }
-        }
-      case 'artifactCanonical':
-        {
-          if (child is FhirCanonicalBuilder) {
-            artifactX = child;
-            return;
-          } else {
-            throw Exception('Invalid child type for $childName');
-          }
-        }
-      case 'artifactUri':
-        {
-          if (child is FhirUriBuilder) {
-            artifactX = child;
-            return;
-          } else {
-            throw Exception('Invalid child type for $childName');
-          }
         }
       case 'content':
         {
@@ -983,23 +978,7 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
       case 'title':
         return ['FhirStringBuilder'];
       case 'citeAs':
-      case 'citeAsX':
-        return [
-          'ReferenceBuilder',
-          'FhirMarkdownBuilder',
-        ];
-      case 'citeAsReference':
-        return ['ReferenceBuilder'];
-      case 'citeAsMarkdown':
         return ['FhirMarkdownBuilder'];
-      case 'date':
-        return ['FhirDateTimeBuilder'];
-      case 'copyright':
-        return ['FhirMarkdownBuilder'];
-      case 'approvalDate':
-        return ['FhirDateBuilder'];
-      case 'lastReviewDate':
-        return ['FhirDateBuilder'];
       case 'artifact':
       case 'artifactX':
         return [
@@ -1013,6 +992,16 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
         return ['FhirCanonicalBuilder'];
       case 'artifactUri':
         return ['FhirUriBuilder'];
+      case 'relatesTo':
+        return ['ArtifactAssessmentRelatesToBuilder'];
+      case 'date':
+        return ['FhirDateTimeBuilder'];
+      case 'copyright':
+        return ['FhirMarkdownBuilder'];
+      case 'approvalDate':
+        return ['FhirDateBuilder'];
+      case 'lastReviewDate':
+        return ['FhirDateBuilder'];
       case 'content':
         return ['ArtifactAssessmentContentBuilder'];
       case 'workflowStatus':
@@ -1080,15 +1069,30 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
           return;
         }
       case 'citeAs':
-      case 'citeAsX':
-      case 'citeAsReference':
         {
-          citeAsX = ReferenceBuilder.empty();
+          citeAs = FhirMarkdownBuilder.empty();
           return;
         }
-      case 'citeAsMarkdown':
+      case 'artifact':
+      case 'artifactX':
+      case 'artifactReference':
         {
-          citeAsX = FhirMarkdownBuilder.empty();
+          artifactX = ReferenceBuilder.empty();
+          return;
+        }
+      case 'artifactCanonical':
+        {
+          artifactX = FhirCanonicalBuilder.empty();
+          return;
+        }
+      case 'artifactUri':
+        {
+          artifactX = FhirUriBuilder.empty();
+          return;
+        }
+      case 'relatesTo':
+        {
+          relatesTo = <ArtifactAssessmentRelatesToBuilder>[];
           return;
         }
       case 'date':
@@ -1109,23 +1113,6 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
       case 'lastReviewDate':
         {
           lastReviewDate = FhirDateBuilder.empty();
-          return;
-        }
-      case 'artifact':
-      case 'artifactX':
-      case 'artifactReference':
-        {
-          artifactX = ReferenceBuilder.empty();
-          return;
-        }
-      case 'artifactCanonical':
-        {
-          artifactX = FhirCanonicalBuilder.empty();
-          return;
-        }
-      case 'artifactUri':
-        {
-          artifactX = FhirUriBuilder.empty();
           return;
         }
       case 'content':
@@ -1162,17 +1149,16 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     List<IdentifierBuilder>? identifier,
     FhirStringBuilder? title,
-    CiteAsXArtifactAssessmentBuilder? citeAsX,
+    FhirMarkdownBuilder? citeAs,
+    ArtifactXArtifactAssessmentBuilder? artifactX,
+    List<ArtifactAssessmentRelatesToBuilder>? relatesTo,
     FhirDateTimeBuilder? date,
     FhirMarkdownBuilder? copyright,
     FhirDateBuilder? approvalDate,
     FhirDateBuilder? lastReviewDate,
-    ArtifactXArtifactAssessmentBuilder? artifactX,
     List<ArtifactAssessmentContentBuilder>? content,
     ArtifactAssessmentWorkflowStatusBuilder? workflowStatus,
     ArtifactAssessmentDispositionBuilder? disposition,
-    ReferenceBuilder? citeAsReference,
-    FhirMarkdownBuilder? citeAsMarkdown,
     ReferenceBuilder? artifactReference,
     FhirCanonicalBuilder? artifactCanonical,
     FhirUriBuilder? artifactUri,
@@ -1193,16 +1179,17 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
       modifierExtension: modifierExtension ?? this.modifierExtension,
       identifier: identifier ?? this.identifier,
       title: title ?? this.title,
-      citeAsX: citeAsX ?? citeAsReference ?? citeAsMarkdown ?? this.citeAsX,
-      date: date ?? this.date,
-      copyright: copyright ?? this.copyright,
-      approvalDate: approvalDate ?? this.approvalDate,
-      lastReviewDate: lastReviewDate ?? this.lastReviewDate,
+      citeAs: citeAs ?? this.citeAs,
       artifactX: artifactX ??
           artifactReference ??
           artifactCanonical ??
           artifactUri ??
           this.artifactX,
+      relatesTo: relatesTo ?? this.relatesTo,
+      date: date ?? this.date,
+      copyright: copyright ?? this.copyright,
+      approvalDate: approvalDate ?? this.approvalDate,
+      lastReviewDate: lastReviewDate ?? this.lastReviewDate,
       content: content ?? this.content,
       workflowStatus: workflowStatus ?? this.workflowStatus,
       disposition: disposition ?? this.disposition,
@@ -1293,8 +1280,20 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      citeAsX,
-      o.citeAsX,
+      citeAs,
+      o.citeAs,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      artifactX,
+      o.artifactX,
+    )) {
+      return false;
+    }
+    if (!listEquals<ArtifactAssessmentRelatesToBuilder>(
+      relatesTo,
+      o.relatesTo,
     )) {
       return false;
     }
@@ -1322,12 +1321,6 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      artifactX,
-      o.artifactX,
-    )) {
-      return false;
-    }
     if (!listEquals<ArtifactAssessmentContentBuilder>(
       content,
       o.content,
@@ -1350,6 +1343,648 @@ class ArtifactAssessmentBuilder extends DomainResourceBuilder {
   }
 }
 
+/// [ArtifactAssessmentRelatesToBuilder]
+/// Relationship that this ArtifactAssessment has with other FHIR or
+/// non-FHIR resources that already exist.
+class ArtifactAssessmentRelatesToBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [ArtifactAssessmentRelatesToBuilder]
+
+  ArtifactAssessmentRelatesToBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.type,
+    TargetXArtifactAssessmentRelatesToBuilder? targetX,
+    FhirUriBuilder? targetUri,
+    AttachmentBuilder? targetAttachment,
+    FhirCanonicalBuilder? targetCanonical,
+    ReferenceBuilder? targetReference,
+    FhirMarkdownBuilder? targetMarkdown,
+    super.disallowExtensions,
+  })  : targetX = targetX ??
+            targetUri ??
+            targetAttachment ??
+            targetCanonical ??
+            targetReference ??
+            targetMarkdown,
+        super(
+          objectPath: 'ArtifactAssessment.relatesTo',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory ArtifactAssessmentRelatesToBuilder.empty() =>
+      ArtifactAssessmentRelatesToBuilder(
+        type: ArtifactRelationshipTypeBuilder.values.first,
+        targetX: FhirUriBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory ArtifactAssessmentRelatesToBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'ArtifactAssessment.relatesTo';
+    return ArtifactAssessmentRelatesToBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      type: JsonParser.parsePrimitive<ArtifactRelationshipTypeBuilder>(
+        json,
+        'type',
+        ArtifactRelationshipTypeBuilder.fromJson,
+        '$objectPath.type',
+      ),
+      targetX: JsonParser.parsePolymorphic<
+          TargetXArtifactAssessmentRelatesToBuilder>(
+        json,
+        {
+          'targetUri': FhirUriBuilder.fromJson,
+          'targetAttachment': AttachmentBuilder.fromJson,
+          'targetCanonical': FhirCanonicalBuilder.fromJson,
+          'targetReference': ReferenceBuilder.fromJson,
+          'targetMarkdown': FhirMarkdownBuilder.fromJson,
+        },
+        objectPath,
+      ),
+    );
+  }
+
+  /// Deserialize [ArtifactAssessmentRelatesToBuilder]
+  /// from a [String] or [YamlMap] object
+  factory ArtifactAssessmentRelatesToBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return ArtifactAssessmentRelatesToBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return ArtifactAssessmentRelatesToBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'ArtifactAssessmentRelatesToBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [ArtifactAssessmentRelatesToBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory ArtifactAssessmentRelatesToBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return ArtifactAssessmentRelatesToBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'ArtifactAssessmentRelatesTo';
+
+  /// [type]
+  /// The type of relationship to the related artifact.
+  ArtifactRelationshipTypeBuilder? type;
+
+  /// [targetX]
+  /// The artifact that is related to this ArtifactAssessment Resource.
+  TargetXArtifactAssessmentRelatesToBuilder? targetX;
+
+  /// Getter for [targetUri] as a FhirUriBuilder
+  FhirUriBuilder? get targetUri => targetX?.isAs<FhirUriBuilder>();
+
+  /// Getter for [targetAttachment] as a AttachmentBuilder
+  AttachmentBuilder? get targetAttachment => targetX?.isAs<AttachmentBuilder>();
+
+  /// Getter for [targetCanonical] as a FhirCanonicalBuilder
+  FhirCanonicalBuilder? get targetCanonical =>
+      targetX?.isAs<FhirCanonicalBuilder>();
+
+  /// Getter for [targetReference] as a ReferenceBuilder
+  ReferenceBuilder? get targetReference => targetX?.isAs<ReferenceBuilder>();
+
+  /// Getter for [targetMarkdown] as a FhirMarkdownBuilder
+  FhirMarkdownBuilder? get targetMarkdown =>
+      targetX?.isAs<FhirMarkdownBuilder>();
+
+  /// Converts a [ArtifactAssessmentRelatesToBuilder]
+  /// to [ArtifactAssessmentRelatesTo]
+  @override
+  ArtifactAssessmentRelatesTo build() =>
+      ArtifactAssessmentRelatesTo.fromJson(toJson());
+
+  /// Converts a [ArtifactAssessmentRelatesToBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('type', type);
+    if (targetX != null) {
+      final fhirType = targetX!.fhirType;
+      addField('target${fhirType.capitalizeFirstLetter()}', targetX);
+    }
+
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'type',
+      'targetX',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'type':
+        if (type != null) {
+          fields.add(type!);
+        }
+      case 'target':
+        if (targetX != null) {
+          fields.add(targetX!);
+        }
+      case 'targetX':
+        if (targetX != null) {
+          fields.add(targetX!);
+        }
+      case 'targetUri':
+        if (targetX is FhirUriBuilder) {
+          fields.add(targetX!);
+        }
+      case 'targetAttachment':
+        if (targetX is AttachmentBuilder) {
+          fields.add(targetX!);
+        }
+      case 'targetCanonical':
+        if (targetX is FhirCanonicalBuilder) {
+          fields.add(targetX!);
+        }
+      case 'targetReference':
+        if (targetX is ReferenceBuilder) {
+          fields.add(targetX!);
+        }
+      case 'targetMarkdown':
+        if (targetX is FhirMarkdownBuilder) {
+          fields.add(targetX!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'type':
+        {
+          if (child is ArtifactRelationshipTypeBuilder) {
+            type = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For enums, try to create directly from the string value
+              try {
+                final converted = ArtifactRelationshipTypeBuilder(stringValue);
+                type = converted;
+                return;
+              } catch (e) {
+                // Continue if enum creation fails
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'target':
+      case 'targetX':
+        {
+          if (child is TargetXArtifactAssessmentRelatesToBuilder) {
+            targetX = child;
+            return;
+          } else {
+            if (child is FhirUriBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is AttachmentBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is FhirCanonicalBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is ReferenceBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is FhirMarkdownBuilder) {
+              targetX = child;
+              return;
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'targetUri':
+        {
+          if (child is FhirUriBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetAttachment':
+        {
+          if (child is AttachmentBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetCanonical':
+        {
+          if (child is FhirCanonicalBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetReference':
+        {
+          if (child is ReferenceBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetMarkdown':
+        {
+          if (child is FhirMarkdownBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'type':
+        return ['FhirCodeEnumBuilder'];
+      case 'target':
+      case 'targetX':
+        return [
+          'FhirUriBuilder',
+          'AttachmentBuilder',
+          'FhirCanonicalBuilder',
+          'ReferenceBuilder',
+          'FhirMarkdownBuilder',
+        ];
+      case 'targetUri':
+        return ['FhirUriBuilder'];
+      case 'targetAttachment':
+        return ['AttachmentBuilder'];
+      case 'targetCanonical':
+        return ['FhirCanonicalBuilder'];
+      case 'targetReference':
+        return ['ReferenceBuilder'];
+      case 'targetMarkdown':
+        return ['FhirMarkdownBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [ArtifactAssessmentRelatesToBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'type':
+        {
+          type = ArtifactRelationshipTypeBuilder.empty();
+          return;
+        }
+      case 'target':
+      case 'targetX':
+      case 'targetUri':
+        {
+          targetX = FhirUriBuilder.empty();
+          return;
+        }
+      case 'targetAttachment':
+        {
+          targetX = AttachmentBuilder.empty();
+          return;
+        }
+      case 'targetCanonical':
+        {
+          targetX = FhirCanonicalBuilder.empty();
+          return;
+        }
+      case 'targetReference':
+        {
+          targetX = ReferenceBuilder.empty();
+          return;
+        }
+      case 'targetMarkdown':
+        {
+          targetX = FhirMarkdownBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  ArtifactAssessmentRelatesToBuilder clone() => throw UnimplementedError();
+  @override
+  ArtifactAssessmentRelatesToBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    ArtifactRelationshipTypeBuilder? type,
+    TargetXArtifactAssessmentRelatesToBuilder? targetX,
+    FhirUriBuilder? targetUri,
+    AttachmentBuilder? targetAttachment,
+    FhirCanonicalBuilder? targetCanonical,
+    ReferenceBuilder? targetReference,
+    FhirMarkdownBuilder? targetMarkdown,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = ArtifactAssessmentRelatesToBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      type: type ?? this.type,
+      targetX: targetX ??
+          targetUri ??
+          targetAttachment ??
+          targetCanonical ??
+          targetReference ??
+          targetMarkdown ??
+          this.targetX,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! ArtifactAssessmentRelatesToBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      type,
+      o.type,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      targetX,
+      o.targetX,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
 /// [ArtifactAssessmentContentBuilder]
 /// A component comment, classifier, or rating of the artifact.
 class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
@@ -1360,14 +1995,13 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
     super.id,
     super.extension_,
     super.modifierExtension,
-    this.informationType,
     this.summary,
     this.type,
     this.classifier,
     this.quantity,
     this.author,
     this.path,
-    this.relatedArtifact,
+    this.relatesTo,
     this.freeToShare,
     this.component,
     super.disallowExtensions,
@@ -1412,13 +2046,6 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      informationType:
-          JsonParser.parsePrimitive<ArtifactAssessmentInformationTypeBuilder>(
-        json,
-        'informationType',
-        ArtifactAssessmentInformationTypeBuilder.fromJson,
-        '$objectPath.informationType',
-      ),
       summary: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
         json,
         'summary',
@@ -1447,24 +2074,28 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
         QuantityBuilder.fromJson,
         '$objectPath.quantity',
       ),
-      author: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'author',
-        ReferenceBuilder.fromJson,
-        '$objectPath.author',
-      ),
+      author: (json['author'] as List<dynamic>?)
+          ?.map<ReferenceBuilder>(
+            (v) => ReferenceBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.author',
+              },
+            ),
+          )
+          .toList(),
       path: JsonParser.parsePrimitiveList<FhirUriBuilder>(
         json,
         'path',
         FhirUriBuilder.fromJson,
         '$objectPath.path',
       ),
-      relatedArtifact: (json['relatedArtifact'] as List<dynamic>?)
-          ?.map<RelatedArtifactBuilder>(
-            (v) => RelatedArtifactBuilder.fromJson(
+      relatesTo: (json['relatesTo'] as List<dynamic>?)
+          ?.map<ArtifactAssessmentRelatesToBuilder>(
+            (v) => ArtifactAssessmentRelatesToBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.relatedArtifact',
+                'objectPath': '$objectPath.relatesTo',
               },
             ),
           )
@@ -1530,10 +2161,6 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
   @override
   String get fhirType => 'ArtifactAssessmentContent';
 
-  /// [informationType]
-  /// The type of information this component of the content represents.
-  ArtifactAssessmentInformationTypeBuilder? informationType;
-
   /// [summary]
   /// A brief summary of the content of this component.
   FhirMarkdownBuilder? summary;
@@ -1552,24 +2179,24 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
 
   /// [author]
   /// Indicates who or what authored the content.
-  ReferenceBuilder? author;
+  List<ReferenceBuilder>? author;
 
   /// [path]
   /// A URI that points to what the comment is about, such as a line of text
   /// in the CQL, or a specific element in a resource.
   List<FhirUriBuilder>? path;
 
-  /// [relatedArtifact]
-  /// Additional related artifacts that provide supporting documentation,
-  /// additional evidence, or further information related to the content.
-  List<RelatedArtifactBuilder>? relatedArtifact;
+  /// [relatesTo]
+  /// Relationship that this content component has with other FHIR or
+  /// non-FHIR resources that already exist.
+  List<ArtifactAssessmentRelatesToBuilder>? relatesTo;
 
   /// [freeToShare]
   /// Acceptable to publicly share the comment, classifier or rating.
   FhirBooleanBuilder? freeToShare;
 
   /// [component]
-  /// If the informationType is container, the components of the content.
+  /// A component comment, classifier, or rating of the artifact.
   List<ArtifactAssessmentContentBuilder>? component;
 
   /// Converts a [ArtifactAssessmentContentBuilder]
@@ -1612,14 +2239,13 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
     addField('id', id);
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
-    addField('informationType', informationType);
     addField('summary', summary);
     addField('type', type);
     addField('classifier', classifier);
     addField('quantity', quantity);
     addField('author', author);
     addField('path', path);
-    addField('relatedArtifact', relatedArtifact);
+    addField('relatesTo', relatesTo);
     addField('freeToShare', freeToShare);
     addField('component', component);
     return json;
@@ -1632,14 +2258,13 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
       'id',
       'extension',
       'modifierExtension',
-      'informationType',
       'summary',
       'type',
       'classifier',
       'quantity',
       'author',
       'path',
-      'relatedArtifact',
+      'relatesTo',
       'freeToShare',
       'component',
     ];
@@ -1666,10 +2291,6 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
         }
-      case 'informationType':
-        if (informationType != null) {
-          fields.add(informationType!);
-        }
       case 'summary':
         if (summary != null) {
           fields.add(summary!);
@@ -1688,15 +2309,15 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
         }
       case 'author':
         if (author != null) {
-          fields.add(author!);
+          fields.addAll(author!);
         }
       case 'path':
         if (path != null) {
           fields.addAll(path!);
         }
-      case 'relatedArtifact':
-        if (relatedArtifact != null) {
-          fields.addAll(relatedArtifact!);
+      case 'relatesTo':
+        if (relatesTo != null) {
+          fields.addAll(relatesTo!);
         }
       case 'freeToShare':
         if (freeToShare != null) {
@@ -1787,30 +2408,6 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'informationType':
-        {
-          if (child is ArtifactAssessmentInformationTypeBuilder) {
-            informationType = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              // For enums, try to create directly from the string value
-              try {
-                final converted =
-                    ArtifactAssessmentInformationTypeBuilder(stringValue);
-                informationType = converted;
-                return;
-              } catch (e) {
-                // Continue if enum creation fails
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
       case 'summary':
         {
           if (child is FhirMarkdownBuilder) {
@@ -1865,8 +2462,16 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
         }
       case 'author':
         {
-          if (child is ReferenceBuilder) {
+          if (child is List<ReferenceBuilder>) {
+            // Replace or create new list
             author = child;
+            return;
+          } else if (child is ReferenceBuilder) {
+            // Add single element to existing list or create new list
+            author = [
+              ...(author ?? []),
+              child,
+            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -1920,16 +2525,16 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'relatedArtifact':
+      case 'relatesTo':
         {
-          if (child is List<RelatedArtifactBuilder>) {
+          if (child is List<ArtifactAssessmentRelatesToBuilder>) {
             // Replace or create new list
-            relatedArtifact = child;
+            relatesTo = child;
             return;
-          } else if (child is RelatedArtifactBuilder) {
+          } else if (child is ArtifactAssessmentRelatesToBuilder) {
             // Add single element to existing list or create new list
-            relatedArtifact = [
-              ...(relatedArtifact ?? []),
+            relatesTo = [
+              ...(relatesTo ?? []),
               child,
             ];
             return;
@@ -1988,8 +2593,6 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
-      case 'informationType':
-        return ['FhirCodeEnumBuilder'];
       case 'summary':
         return ['FhirMarkdownBuilder'];
       case 'type':
@@ -2002,8 +2605,8 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
         return ['ReferenceBuilder'];
       case 'path':
         return ['FhirUriBuilder'];
-      case 'relatedArtifact':
-        return ['RelatedArtifactBuilder'];
+      case 'relatesTo':
+        return ['ArtifactAssessmentRelatesToBuilder'];
       case 'freeToShare':
         return ['FhirBooleanBuilder'];
       case 'component':
@@ -2033,11 +2636,6 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
           modifierExtension = <FhirExtensionBuilder>[];
           return;
         }
-      case 'informationType':
-        {
-          informationType = ArtifactAssessmentInformationTypeBuilder.empty();
-          return;
-        }
       case 'summary':
         {
           summary = FhirMarkdownBuilder.empty();
@@ -2060,7 +2658,7 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
         }
       case 'author':
         {
-          author = ReferenceBuilder.empty();
+          author = <ReferenceBuilder>[];
           return;
         }
       case 'path':
@@ -2068,9 +2666,9 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
           path = <FhirUriBuilder>[];
           return;
         }
-      case 'relatedArtifact':
+      case 'relatesTo':
         {
-          relatedArtifact = <RelatedArtifactBuilder>[];
+          relatesTo = <ArtifactAssessmentRelatesToBuilder>[];
           return;
         }
       case 'freeToShare':
@@ -2095,14 +2693,13 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    ArtifactAssessmentInformationTypeBuilder? informationType,
     FhirMarkdownBuilder? summary,
     CodeableConceptBuilder? type,
     List<CodeableConceptBuilder>? classifier,
     QuantityBuilder? quantity,
-    ReferenceBuilder? author,
+    List<ReferenceBuilder>? author,
     List<FhirUriBuilder>? path,
-    List<RelatedArtifactBuilder>? relatedArtifact,
+    List<ArtifactAssessmentRelatesToBuilder>? relatesTo,
     FhirBooleanBuilder? freeToShare,
     List<ArtifactAssessmentContentBuilder>? component,
     Map<String, dynamic>? userData,
@@ -2116,14 +2713,13 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
-      informationType: informationType ?? this.informationType,
       summary: summary ?? this.summary,
       type: type ?? this.type,
       classifier: classifier ?? this.classifier,
       quantity: quantity ?? this.quantity,
       author: author ?? this.author,
       path: path ?? this.path,
-      relatedArtifact: relatedArtifact ?? this.relatedArtifact,
+      relatesTo: relatesTo ?? this.relatesTo,
       freeToShare: freeToShare ?? this.freeToShare,
       component: component ?? this.component,
     )..objectPath = newObjectPath;
@@ -2171,12 +2767,6 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      informationType,
-      o.informationType,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
       summary,
       o.summary,
     )) {
@@ -2200,7 +2790,7 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<ReferenceBuilder>(
       author,
       o.author,
     )) {
@@ -2212,9 +2802,9 @@ class ArtifactAssessmentContentBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!listEquals<RelatedArtifactBuilder>(
-      relatedArtifact,
-      o.relatedArtifact,
+    if (!listEquals<ArtifactAssessmentRelatesToBuilder>(
+      relatesTo,
+      o.relatesTo,
     )) {
       return false;
     }

@@ -10,35 +10,41 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchDiagnosticReport extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [DiagnosticReport]
+  @override
   SearchDiagnosticReport identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [code] in the resource
   /// [DiagnosticReport]
+  @override
   SearchDiagnosticReport code(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}code'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['code'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [DiagnosticReport]
+  @override
   SearchDiagnosticReport date(
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}date'] = value.toString();
+    parameters['date'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -49,20 +55,22 @@ class SearchDiagnosticReport extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}category'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['category'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
-  /// a token search for [conclusion] in the resource
+  /// a token search for [conclusioncodeCode] in the resource
   /// [DiagnosticReport]
-  SearchDiagnosticReport conclusion(
+  SearchDiagnosticReport conclusioncodeCode(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}conclusion'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['conclusioncode_code'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -72,20 +80,22 @@ class SearchDiagnosticReport extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}issued'] =
-        value.toString();
+    parameters['issued'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [DiagnosticReport]
+  @override
   SearchDiagnosticReport status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

@@ -4,10 +4,10 @@ import 'package:fhir_r6/fhir_r6.dart'
         R6ResourceType,
         SubscriptionTopic,
         SubscriptionTopicCanFilterBy,
-        SubscriptionTopicEventTrigger,
         SubscriptionTopicNotificationShape,
         SubscriptionTopicQueryCriteria,
-        SubscriptionTopicResourceTrigger,
+        SubscriptionTopicRelatedQuery,
+        SubscriptionTopicTrigger,
         yamlMapToJson,
         yamlToJson;
 import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
@@ -52,10 +52,7 @@ class SubscriptionTopicBuilder extends CanonicalResourceBuilder {
     this.approvalDate,
     this.lastReviewDate,
     this.effectivePeriod,
-    this.resourceTrigger,
-    this.eventTrigger,
-    this.canFilterBy,
-    this.notificationShape,
+    this.trigger,
   })  : versionAlgorithmX = versionAlgorithmX ??
             versionAlgorithmString ??
             versionAlgorithmCoding,
@@ -282,42 +279,12 @@ class SubscriptionTopicBuilder extends CanonicalResourceBuilder {
         PeriodBuilder.fromJson,
         '$objectPath.effectivePeriod',
       ),
-      resourceTrigger: (json['resourceTrigger'] as List<dynamic>?)
-          ?.map<SubscriptionTopicResourceTriggerBuilder>(
-            (v) => SubscriptionTopicResourceTriggerBuilder.fromJson(
+      trigger: (json['trigger'] as List<dynamic>?)
+          ?.map<SubscriptionTopicTriggerBuilder>(
+            (v) => SubscriptionTopicTriggerBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.resourceTrigger',
-              },
-            ),
-          )
-          .toList(),
-      eventTrigger: (json['eventTrigger'] as List<dynamic>?)
-          ?.map<SubscriptionTopicEventTriggerBuilder>(
-            (v) => SubscriptionTopicEventTriggerBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.eventTrigger',
-              },
-            ),
-          )
-          .toList(),
-      canFilterBy: (json['canFilterBy'] as List<dynamic>?)
-          ?.map<SubscriptionTopicCanFilterByBuilder>(
-            (v) => SubscriptionTopicCanFilterByBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.canFilterBy',
-              },
-            ),
-          )
-          .toList(),
-      notificationShape: (json['notificationShape'] as List<dynamic>?)
-          ?.map<SubscriptionTopicNotificationShapeBuilder>(
-            (v) => SubscriptionTopicNotificationShapeBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.notificationShape',
+                'objectPath': '$objectPath.trigger',
               },
             ),
           )
@@ -436,30 +403,14 @@ class SubscriptionTopicBuilder extends CanonicalResourceBuilder {
   /// to be effective.
   PeriodBuilder? effectivePeriod;
 
-  /// [resourceTrigger]
-  /// A definition of a resource-based event that triggers a notification
+  /// [trigger]
+  /// A definition of a state change or event that triggers a notification
   /// based on the SubscriptionTopic. The criteria may be just a human
-  /// readable description and/or a full FHIR search string or FHIRPath
-  /// expression. Multiple triggers are considered OR joined (e.g., a
-  /// resource update matching ANY of the definitions will trigger a
+  /// readable description, or may contain a FHIRPath expression, query-based
+  /// definition, or event coding. Multiple triggers are considered OR joined
+  /// (e.g., an update matching ANY of the definitions will trigger a
   /// notification).
-  List<SubscriptionTopicResourceTriggerBuilder>? resourceTrigger;
-
-  /// [eventTrigger]
-  /// Event definition which can be used to trigger the SubscriptionTopic.
-  List<SubscriptionTopicEventTriggerBuilder>? eventTrigger;
-
-  /// [canFilterBy]
-  /// List of properties by which Subscriptions on the SubscriptionTopic can
-  /// be filtered. May be defined Search Parameters (e.g., Encounter.patient)
-  /// or parameters defined within this SubscriptionTopic context (e.g.,
-  /// hub.event).
-  List<SubscriptionTopicCanFilterByBuilder>? canFilterBy;
-
-  /// [notificationShape]
-  /// List of properties to describe the shape (e.g., resources) included in
-  /// notifications from this Subscription Topic.
-  List<SubscriptionTopicNotificationShapeBuilder>? notificationShape;
+  List<SubscriptionTopicTriggerBuilder>? trigger;
 
   /// Converts a [SubscriptionTopicBuilder]
   /// to [SubscriptionTopic]
@@ -534,10 +485,7 @@ class SubscriptionTopicBuilder extends CanonicalResourceBuilder {
     addField('approvalDate', approvalDate);
     addField('lastReviewDate', lastReviewDate);
     addField('effectivePeriod', effectivePeriod);
-    addField('resourceTrigger', resourceTrigger);
-    addField('eventTrigger', eventTrigger);
-    addField('canFilterBy', canFilterBy);
-    addField('notificationShape', notificationShape);
+    addField('trigger', trigger);
     return json;
   }
 
@@ -574,10 +522,7 @@ class SubscriptionTopicBuilder extends CanonicalResourceBuilder {
       'approvalDate',
       'lastReviewDate',
       'effectivePeriod',
-      'resourceTrigger',
-      'eventTrigger',
-      'canFilterBy',
-      'notificationShape',
+      'trigger',
     ];
   }
 
@@ -718,21 +663,9 @@ class SubscriptionTopicBuilder extends CanonicalResourceBuilder {
         if (effectivePeriod != null) {
           fields.add(effectivePeriod!);
         }
-      case 'resourceTrigger':
-        if (resourceTrigger != null) {
-          fields.addAll(resourceTrigger!);
-        }
-      case 'eventTrigger':
-        if (eventTrigger != null) {
-          fields.addAll(eventTrigger!);
-        }
-      case 'canFilterBy':
-        if (canFilterBy != null) {
-          fields.addAll(canFilterBy!);
-        }
-      case 'notificationShape':
-        if (notificationShape != null) {
-          fields.addAll(notificationShape!);
+      case 'trigger':
+        if (trigger != null) {
+          fields.addAll(trigger!);
         }
       default:
         if (checkValid) {
@@ -1330,64 +1263,16 @@ class SubscriptionTopicBuilder extends CanonicalResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'resourceTrigger':
+      case 'trigger':
         {
-          if (child is List<SubscriptionTopicResourceTriggerBuilder>) {
+          if (child is List<SubscriptionTopicTriggerBuilder>) {
             // Replace or create new list
-            resourceTrigger = child;
+            trigger = child;
             return;
-          } else if (child is SubscriptionTopicResourceTriggerBuilder) {
+          } else if (child is SubscriptionTopicTriggerBuilder) {
             // Add single element to existing list or create new list
-            resourceTrigger = [
-              ...(resourceTrigger ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'eventTrigger':
-        {
-          if (child is List<SubscriptionTopicEventTriggerBuilder>) {
-            // Replace or create new list
-            eventTrigger = child;
-            return;
-          } else if (child is SubscriptionTopicEventTriggerBuilder) {
-            // Add single element to existing list or create new list
-            eventTrigger = [
-              ...(eventTrigger ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'canFilterBy':
-        {
-          if (child is List<SubscriptionTopicCanFilterByBuilder>) {
-            // Replace or create new list
-            canFilterBy = child;
-            return;
-          } else if (child is SubscriptionTopicCanFilterByBuilder) {
-            // Add single element to existing list or create new list
-            canFilterBy = [
-              ...(canFilterBy ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'notificationShape':
-        {
-          if (child is List<SubscriptionTopicNotificationShapeBuilder>) {
-            // Replace or create new list
-            notificationShape = child;
-            return;
-          } else if (child is SubscriptionTopicNotificationShapeBuilder) {
-            // Add single element to existing list or create new list
-            notificationShape = [
-              ...(notificationShape ?? []),
+            trigger = [
+              ...(trigger ?? []),
               child,
             ];
             return;
@@ -1470,14 +1355,8 @@ class SubscriptionTopicBuilder extends CanonicalResourceBuilder {
         return ['FhirDateBuilder'];
       case 'effectivePeriod':
         return ['PeriodBuilder'];
-      case 'resourceTrigger':
-        return ['SubscriptionTopicResourceTriggerBuilder'];
-      case 'eventTrigger':
-        return ['SubscriptionTopicEventTriggerBuilder'];
-      case 'canFilterBy':
-        return ['SubscriptionTopicCanFilterByBuilder'];
-      case 'notificationShape':
-        return ['SubscriptionTopicNotificationShapeBuilder'];
+      case 'trigger':
+        return ['SubscriptionTopicTriggerBuilder'];
       default:
         return <String>[];
     }
@@ -1640,24 +1519,9 @@ class SubscriptionTopicBuilder extends CanonicalResourceBuilder {
           effectivePeriod = PeriodBuilder.empty();
           return;
         }
-      case 'resourceTrigger':
+      case 'trigger':
         {
-          resourceTrigger = <SubscriptionTopicResourceTriggerBuilder>[];
-          return;
-        }
-      case 'eventTrigger':
-        {
-          eventTrigger = <SubscriptionTopicEventTriggerBuilder>[];
-          return;
-        }
-      case 'canFilterBy':
-        {
-          canFilterBy = <SubscriptionTopicCanFilterByBuilder>[];
-          return;
-        }
-      case 'notificationShape':
-        {
-          notificationShape = <SubscriptionTopicNotificationShapeBuilder>[];
+          trigger = <SubscriptionTopicTriggerBuilder>[];
           return;
         }
       default:
@@ -1698,10 +1562,7 @@ class SubscriptionTopicBuilder extends CanonicalResourceBuilder {
     FhirDateBuilder? approvalDate,
     FhirDateBuilder? lastReviewDate,
     PeriodBuilder? effectivePeriod,
-    List<SubscriptionTopicResourceTriggerBuilder>? resourceTrigger,
-    List<SubscriptionTopicEventTriggerBuilder>? eventTrigger,
-    List<SubscriptionTopicCanFilterByBuilder>? canFilterBy,
-    List<SubscriptionTopicNotificationShapeBuilder>? notificationShape,
+    List<SubscriptionTopicTriggerBuilder>? trigger,
     FhirStringBuilder? versionAlgorithmString,
     CodingBuilder? versionAlgorithmCoding,
     Map<String, dynamic>? userData,
@@ -1743,10 +1604,7 @@ class SubscriptionTopicBuilder extends CanonicalResourceBuilder {
       approvalDate: approvalDate ?? this.approvalDate,
       lastReviewDate: lastReviewDate ?? this.lastReviewDate,
       effectivePeriod: effectivePeriod ?? this.effectivePeriod,
-      resourceTrigger: resourceTrigger ?? this.resourceTrigger,
-      eventTrigger: eventTrigger ?? this.eventTrigger,
-      canFilterBy: canFilterBy ?? this.canFilterBy,
-      notificationShape: notificationShape ?? this.notificationShape,
+      trigger: trigger ?? this.trigger,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -1947,27 +1805,9 @@ class SubscriptionTopicBuilder extends CanonicalResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<SubscriptionTopicResourceTriggerBuilder>(
-      resourceTrigger,
-      o.resourceTrigger,
-    )) {
-      return false;
-    }
-    if (!listEquals<SubscriptionTopicEventTriggerBuilder>(
-      eventTrigger,
-      o.eventTrigger,
-    )) {
-      return false;
-    }
-    if (!listEquals<SubscriptionTopicCanFilterByBuilder>(
-      canFilterBy,
-      o.canFilterBy,
-    )) {
-      return false;
-    }
-    if (!listEquals<SubscriptionTopicNotificationShapeBuilder>(
-      notificationShape,
-      o.notificationShape,
+    if (!listEquals<SubscriptionTopicTriggerBuilder>(
+      trigger,
+      o.trigger,
     )) {
       return false;
     }
@@ -1975,18 +1815,18 @@ class SubscriptionTopicBuilder extends CanonicalResourceBuilder {
   }
 }
 
-/// [SubscriptionTopicResourceTriggerBuilder]
-/// A definition of a resource-based event that triggers a notification
+/// [SubscriptionTopicTriggerBuilder]
+/// A definition of a state change or event that triggers a notification
 /// based on the SubscriptionTopic. The criteria may be just a human
-/// readable description and/or a full FHIR search string or FHIRPath
-/// expression. Multiple triggers are considered OR joined (e.g., a
-/// resource update matching ANY of the definitions will trigger a
+/// readable description, or may contain a FHIRPath expression, query-based
+/// definition, or event coding. Multiple triggers are considered OR joined
+/// (e.g., an update matching ANY of the definitions will trigger a
 /// notification).
-class SubscriptionTopicResourceTriggerBuilder extends BackboneElementBuilder {
+class SubscriptionTopicTriggerBuilder extends BackboneElementBuilder {
   /// Primary constructor for
-  /// [SubscriptionTopicResourceTriggerBuilder]
+  /// [SubscriptionTopicTriggerBuilder]
 
-  SubscriptionTopicResourceTriggerBuilder({
+  SubscriptionTopicTriggerBuilder({
     super.id,
     super.extension_,
     super.modifierExtension,
@@ -1995,24 +1835,27 @@ class SubscriptionTopicResourceTriggerBuilder extends BackboneElementBuilder {
     this.supportedInteraction,
     this.queryCriteria,
     this.fhirPathCriteria,
+    this.event,
+    this.canFilterBy,
+    this.notificationShape,
     super.disallowExtensions,
   }) : super(
-          objectPath: 'SubscriptionTopic.resourceTrigger',
+          objectPath: 'SubscriptionTopic.trigger',
         );
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
-  factory SubscriptionTopicResourceTriggerBuilder.empty() =>
-      SubscriptionTopicResourceTriggerBuilder(
+  factory SubscriptionTopicTriggerBuilder.empty() =>
+      SubscriptionTopicTriggerBuilder(
         resource: FhirUriBuilder.empty(),
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory SubscriptionTopicResourceTriggerBuilder.fromJson(
+  factory SubscriptionTopicTriggerBuilder.fromJson(
     Map<String, dynamic> json,
   ) {
-    const objectPath = 'SubscriptionTopic.resourceTrigger';
-    return SubscriptionTopicResourceTriggerBuilder(
+    const objectPath = 'SubscriptionTopic.trigger';
+    return SubscriptionTopicTriggerBuilder(
       id: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'id',
@@ -2071,25 +1914,51 @@ class SubscriptionTopicResourceTriggerBuilder extends BackboneElementBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.fhirPathCriteria',
       ),
+      event: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'event',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.event',
+      ),
+      canFilterBy: (json['canFilterBy'] as List<dynamic>?)
+          ?.map<SubscriptionTopicCanFilterByBuilder>(
+            (v) => SubscriptionTopicCanFilterByBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.canFilterBy',
+              },
+            ),
+          )
+          .toList(),
+      notificationShape: (json['notificationShape'] as List<dynamic>?)
+          ?.map<SubscriptionTopicNotificationShapeBuilder>(
+            (v) => SubscriptionTopicNotificationShapeBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.notificationShape',
+              },
+            ),
+          )
+          .toList(),
     );
   }
 
-  /// Deserialize [SubscriptionTopicResourceTriggerBuilder]
+  /// Deserialize [SubscriptionTopicTriggerBuilder]
   /// from a [String] or [YamlMap] object
-  factory SubscriptionTopicResourceTriggerBuilder.fromYaml(
+  factory SubscriptionTopicTriggerBuilder.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return SubscriptionTopicResourceTriggerBuilder.fromJson(
+      return SubscriptionTopicTriggerBuilder.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return SubscriptionTopicResourceTriggerBuilder.fromJson(
+      return SubscriptionTopicTriggerBuilder.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'SubscriptionTopicResourceTriggerBuilder '
+        'SubscriptionTopicTriggerBuilder '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -2097,16 +1966,16 @@ class SubscriptionTopicResourceTriggerBuilder extends BackboneElementBuilder {
   }
 
   /// Factory constructor for
-  /// [SubscriptionTopicResourceTriggerBuilder]
+  /// [SubscriptionTopicTriggerBuilder]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory SubscriptionTopicResourceTriggerBuilder.fromJsonString(
+  factory SubscriptionTopicTriggerBuilder.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return SubscriptionTopicResourceTriggerBuilder.fromJson(json);
+      return SubscriptionTopicTriggerBuilder.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -2114,21 +1983,21 @@ class SubscriptionTopicResourceTriggerBuilder extends BackboneElementBuilder {
   }
 
   @override
-  String get fhirType => 'SubscriptionTopicResourceTrigger';
+  String get fhirType => 'SubscriptionTopicTrigger';
 
   /// [description]
-  /// The human readable description of this resource trigger for the
+  /// The human readable description of this trigger for the
   /// SubscriptionTopic - for example, "An Encounter enters the 'in-progress'
   /// state".
   FhirMarkdownBuilder? description;
 
   /// [resource]
-  /// URL of the Resource that is the type used in this resource trigger.
-  /// Relative URLs are relative to the StructureDefinition root of the
-  /// implemented FHIR version (e.g.,
-  /// http://hl7.org/fhir/StructureDefinition). For example, "Patient" maps
-  /// to http://hl7.org/fhir/StructureDefinition/Patient. For more
-  /// information, see <a
+  /// URL of the key definition that is relevant to this trigger. Relative
+  /// URLs are relative to the StructureDefinition root of the implemented
+  /// FHIR version (e.g., http://hl7.org/fhir/StructureDefinition). For
+  /// example, "Patient" maps to
+  /// http://hl7.org/fhir/StructureDefinition/Patient. For more information,
+  /// see <a
   /// href="elementdefinition-definitions.html#ElementDefinition.type.code">ElementDefinition.type.code</a>.
   FhirUriBuilder? resource;
 
@@ -2149,13 +2018,29 @@ class SubscriptionTopicResourceTriggerBuilder extends BackboneElementBuilder {
   /// to trigger a notification for this topic.
   FhirStringBuilder? fhirPathCriteria;
 
-  /// Converts a [SubscriptionTopicResourceTriggerBuilder]
-  /// to [SubscriptionTopicResourceTrigger]
-  @override
-  SubscriptionTopicResourceTrigger build() =>
-      SubscriptionTopicResourceTrigger.fromJson(toJson());
+  /// [event]
+  /// A well-defined event which can be used to trigger notifications from
+  /// the SubscriptionTopic.
+  CodeableConceptBuilder? event;
 
-  /// Converts a [SubscriptionTopicResourceTriggerBuilder]
+  /// [canFilterBy]
+  /// List of properties by which Subscriptions can be filtered. May be
+  /// defined Search Parameters (e.g., Encounter.patient) or parameters
+  /// defined within this SubscriptionTopic context (e.g., hub.event).
+  List<SubscriptionTopicCanFilterByBuilder>? canFilterBy;
+
+  /// [notificationShape]
+  /// List of properties to describe the shape (e.g., resources) included in
+  /// notifications from this trigger.
+  List<SubscriptionTopicNotificationShapeBuilder>? notificationShape;
+
+  /// Converts a [SubscriptionTopicTriggerBuilder]
+  /// to [SubscriptionTopicTrigger]
+  @override
+  SubscriptionTopicTrigger build() =>
+      SubscriptionTopicTrigger.fromJson(toJson());
+
+  /// Converts a [SubscriptionTopicTriggerBuilder]
   /// to a [Map<String, dynamic>]
   @override
   Map<String, dynamic> toJson() {
@@ -2194,6 +2079,9 @@ class SubscriptionTopicResourceTriggerBuilder extends BackboneElementBuilder {
     addField('supportedInteraction', supportedInteraction);
     addField('queryCriteria', queryCriteria);
     addField('fhirPathCriteria', fhirPathCriteria);
+    addField('event', event);
+    addField('canFilterBy', canFilterBy);
+    addField('notificationShape', notificationShape);
     return json;
   }
 
@@ -2209,6 +2097,9 @@ class SubscriptionTopicResourceTriggerBuilder extends BackboneElementBuilder {
       'supportedInteraction',
       'queryCriteria',
       'fhirPathCriteria',
+      'event',
+      'canFilterBy',
+      'notificationShape',
     ];
   }
 
@@ -2252,6 +2143,18 @@ class SubscriptionTopicResourceTriggerBuilder extends BackboneElementBuilder {
       case 'fhirPathCriteria':
         if (fhirPathCriteria != null) {
           fields.add(fhirPathCriteria!);
+        }
+      case 'event':
+        if (event != null) {
+          fields.add(event!);
+        }
+      case 'canFilterBy':
+        if (canFilterBy != null) {
+          fields.addAll(canFilterBy!);
+        }
+      case 'notificationShape':
+        if (notificationShape != null) {
+          fields.addAll(notificationShape!);
         }
       default:
         if (checkValid) {
@@ -2457,6 +2360,46 @@ class SubscriptionTopicResourceTriggerBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'event':
+        {
+          if (child is CodeableConceptBuilder) {
+            event = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'canFilterBy':
+        {
+          if (child is List<SubscriptionTopicCanFilterByBuilder>) {
+            // Replace or create new list
+            canFilterBy = child;
+            return;
+          } else if (child is SubscriptionTopicCanFilterByBuilder) {
+            // Add single element to existing list or create new list
+            canFilterBy = [
+              ...(canFilterBy ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'notificationShape':
+        {
+          if (child is List<SubscriptionTopicNotificationShapeBuilder>) {
+            // Replace or create new list
+            notificationShape = child;
+            return;
+          } else if (child is SubscriptionTopicNotificationShapeBuilder) {
+            // Add single element to existing list or create new list
+            notificationShape = [
+              ...(notificationShape ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -2483,12 +2426,18 @@ class SubscriptionTopicResourceTriggerBuilder extends BackboneElementBuilder {
         return ['SubscriptionTopicQueryCriteriaBuilder'];
       case 'fhirPathCriteria':
         return ['FhirStringBuilder'];
+      case 'event':
+        return ['CodeableConceptBuilder'];
+      case 'canFilterBy':
+        return ['SubscriptionTopicCanFilterByBuilder'];
+      case 'notificationShape':
+        return ['SubscriptionTopicNotificationShapeBuilder'];
       default:
         return <String>[];
     }
   }
 
-  /// Creates a new [SubscriptionTopicResourceTriggerBuilder]
+  /// Creates a new [SubscriptionTopicTriggerBuilder]
   ///  with a chosen field set to an empty object.
   @override
   void createProperty(String propertyName) {
@@ -2533,15 +2482,30 @@ class SubscriptionTopicResourceTriggerBuilder extends BackboneElementBuilder {
           fhirPathCriteria = FhirStringBuilder.empty();
           return;
         }
+      case 'event':
+        {
+          event = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'canFilterBy':
+        {
+          canFilterBy = <SubscriptionTopicCanFilterByBuilder>[];
+          return;
+        }
+      case 'notificationShape':
+        {
+          notificationShape = <SubscriptionTopicNotificationShapeBuilder>[];
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
   }
 
   @override
-  SubscriptionTopicResourceTriggerBuilder clone() => throw UnimplementedError();
+  SubscriptionTopicTriggerBuilder clone() => throw UnimplementedError();
   @override
-  SubscriptionTopicResourceTriggerBuilder copyWith({
+  SubscriptionTopicTriggerBuilder copyWith({
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
@@ -2550,6 +2514,9 @@ class SubscriptionTopicResourceTriggerBuilder extends BackboneElementBuilder {
     List<InteractionTriggerBuilder>? supportedInteraction,
     SubscriptionTopicQueryCriteriaBuilder? queryCriteria,
     FhirStringBuilder? fhirPathCriteria,
+    CodeableConceptBuilder? event,
+    List<SubscriptionTopicCanFilterByBuilder>? canFilterBy,
+    List<SubscriptionTopicNotificationShapeBuilder>? notificationShape,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -2557,7 +2524,7 @@ class SubscriptionTopicResourceTriggerBuilder extends BackboneElementBuilder {
     String? objectPath,
   }) {
     final newObjectPath = this.objectPath;
-    final newResult = SubscriptionTopicResourceTriggerBuilder(
+    final newResult = SubscriptionTopicTriggerBuilder(
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
@@ -2566,6 +2533,9 @@ class SubscriptionTopicResourceTriggerBuilder extends BackboneElementBuilder {
       supportedInteraction: supportedInteraction ?? this.supportedInteraction,
       queryCriteria: queryCriteria ?? this.queryCriteria,
       fhirPathCriteria: fhirPathCriteria ?? this.fhirPathCriteria,
+      event: event ?? this.event,
+      canFilterBy: canFilterBy ?? this.canFilterBy,
+      notificationShape: notificationShape ?? this.notificationShape,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -2587,7 +2557,7 @@ class SubscriptionTopicResourceTriggerBuilder extends BackboneElementBuilder {
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! SubscriptionTopicResourceTriggerBuilder) {
+    if (o is! SubscriptionTopicTriggerBuilder) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -2640,6 +2610,24 @@ class SubscriptionTopicResourceTriggerBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      event,
+      o.event,
+    )) {
+      return false;
+    }
+    if (!listEquals<SubscriptionTopicCanFilterByBuilder>(
+      canFilterBy,
+      o.canFilterBy,
+    )) {
+      return false;
+    }
+    if (!listEquals<SubscriptionTopicNotificationShapeBuilder>(
+      notificationShape,
+      o.notificationShape,
+    )) {
+      return false;
+    }
     return true;
   }
 }
@@ -2662,7 +2650,7 @@ class SubscriptionTopicQueryCriteriaBuilder extends BackboneElementBuilder {
     this.requireBoth,
     super.disallowExtensions,
   }) : super(
-          objectPath: 'SubscriptionTopic.resourceTrigger.queryCriteria',
+          objectPath: 'SubscriptionTopic.trigger.queryCriteria',
         );
 
   /// An empty constructor for partial usage.
@@ -2674,7 +2662,7 @@ class SubscriptionTopicQueryCriteriaBuilder extends BackboneElementBuilder {
   factory SubscriptionTopicQueryCriteriaBuilder.fromJson(
     Map<String, dynamic> json,
   ) {
-    const objectPath = 'SubscriptionTopic.resourceTrigger.queryCriteria';
+    const objectPath = 'SubscriptionTopic.trigger.queryCriteria';
     return SubscriptionTopicQueryCriteriaBuilder(
       id: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
@@ -3288,532 +3276,10 @@ class SubscriptionTopicQueryCriteriaBuilder extends BackboneElementBuilder {
   }
 }
 
-/// [SubscriptionTopicEventTriggerBuilder]
-/// Event definition which can be used to trigger the SubscriptionTopic.
-class SubscriptionTopicEventTriggerBuilder extends BackboneElementBuilder {
-  /// Primary constructor for
-  /// [SubscriptionTopicEventTriggerBuilder]
-
-  SubscriptionTopicEventTriggerBuilder({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.description,
-    this.event,
-    this.resource,
-    super.disallowExtensions,
-  }) : super(
-          objectPath: 'SubscriptionTopic.eventTrigger',
-        );
-
-  /// An empty constructor for partial usage.
-  /// For Builder classes, no fields are required
-  factory SubscriptionTopicEventTriggerBuilder.empty() =>
-      SubscriptionTopicEventTriggerBuilder(
-        event: CodeableConceptBuilder.empty(),
-        resource: FhirUriBuilder.empty(),
-      );
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory SubscriptionTopicEventTriggerBuilder.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    const objectPath = 'SubscriptionTopic.eventTrigger';
-    return SubscriptionTopicEventTriggerBuilder(
-      id: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'id',
-        FhirStringBuilder.fromJson,
-        '$objectPath.id',
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.extension',
-              },
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.modifierExtension',
-              },
-            ),
-          )
-          .toList(),
-      description: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
-        json,
-        'description',
-        FhirMarkdownBuilder.fromJson,
-        '$objectPath.description',
-      ),
-      event: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'event',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.event',
-      ),
-      resource: JsonParser.parsePrimitive<FhirUriBuilder>(
-        json,
-        'resource',
-        FhirUriBuilder.fromJson,
-        '$objectPath.resource',
-      ),
-    );
-  }
-
-  /// Deserialize [SubscriptionTopicEventTriggerBuilder]
-  /// from a [String] or [YamlMap] object
-  factory SubscriptionTopicEventTriggerBuilder.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return SubscriptionTopicEventTriggerBuilder.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return SubscriptionTopicEventTriggerBuilder.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'SubscriptionTopicEventTriggerBuilder '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [SubscriptionTopicEventTriggerBuilder]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory SubscriptionTopicEventTriggerBuilder.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return SubscriptionTopicEventTriggerBuilder.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'SubscriptionTopicEventTrigger';
-
-  /// [description]
-  /// The human readable description of an event to trigger a notification
-  /// for the SubscriptionTopic - for example, "Patient Admission, as defined
-  /// in HL7v2 via message ADT^A01". Multiple values are considered OR joined
-  /// (e.g., matching any single event listed).
-  FhirMarkdownBuilder? description;
-
-  /// [event]
-  /// A well-defined event which can be used to trigger notifications from
-  /// the SubscriptionTopic.
-  CodeableConceptBuilder? event;
-
-  /// [resource]
-  /// URL of the Resource that is the focus type used in this event trigger.
-  /// Relative URLs are relative to the StructureDefinition root of the
-  /// implemented FHIR version (e.g.,
-  /// http://hl7.org/fhir/StructureDefinition). For example, "Patient" maps
-  /// to http://hl7.org/fhir/StructureDefinition/Patient. For more
-  /// information, see <a
-  /// href="elementdefinition-definitions.html#ElementDefinition.type.code">ElementDefinition.type.code</a>.
-  FhirUriBuilder? resource;
-
-  /// Converts a [SubscriptionTopicEventTriggerBuilder]
-  /// to [SubscriptionTopicEventTrigger]
-  @override
-  SubscriptionTopicEventTrigger build() =>
-      SubscriptionTopicEventTrigger.fromJson(toJson());
-
-  /// Converts a [SubscriptionTopicEventTriggerBuilder]
-  /// to a [Map<String, dynamic>]
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    void addField(String key, dynamic field) {
-      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
-        throw ArgumentError('"field" must be a FhirBaseBuilder type');
-      }
-      if (field == null) return;
-      if (field is PrimitiveTypeBuilder) {
-        json[key] = field.toJson()['value'];
-        if (field.toJson()['_value'] != null) {
-          json['_$key'] = field.toJson()['_value'];
-        }
-      } else if (field is List<FhirBaseBuilder>) {
-        if (field.isEmpty) return;
-        if (field.first is PrimitiveTypeBuilder) {
-          final fieldJson = field.map((e) => e.toJson()).toList();
-          json[key] = fieldJson.map((e) => e['value']).toList();
-          if (fieldJson.any((e) => e['_value'] != null)) {
-            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
-          }
-        } else {
-          json[key] = field.map((e) => e.toJson()).toList();
-        }
-      } else if (field is FhirBaseBuilder) {
-        json[key] = field.toJson();
-      }
-    }
-
-    addField('id', id);
-    addField('extension', extension_);
-    addField('modifierExtension', modifierExtension);
-    addField('description', description);
-    addField('event', event);
-    addField('resource', resource);
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'description',
-      'event',
-      'resource',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBaseBuilder> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBaseBuilder>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'description':
-        if (description != null) {
-          fields.add(description!);
-        }
-      case 'event':
-        if (event != null) {
-          fields.add(event!);
-        }
-      case 'resource':
-        if (resource != null) {
-          fields.add(resource!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBaseBuilder? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  void setChildByName(String childName, dynamic child) {
-    // child must be null, or a (List of) FhirBaseBuilder(s).
-    if (child == null) {
-      return; // In builders, setting to null is allowed
-    }
-    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
-      throw Exception('Cannot set child value for $childName');
-    }
-
-    switch (childName) {
-      case 'id':
-        {
-          if (child is FhirStringBuilder) {
-            id = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                id = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'extension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            extension_ = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            extension_ = [
-              ...(extension_ ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'modifierExtension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            modifierExtension = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            modifierExtension = [
-              ...(modifierExtension ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'description':
-        {
-          if (child is FhirMarkdownBuilder) {
-            description = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirMarkdownBuilder.tryParse(stringValue);
-              if (converted != null) {
-                description = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'event':
-        {
-          if (child is CodeableConceptBuilder) {
-            event = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'resource':
-        {
-          if (child is FhirUriBuilder) {
-            resource = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirUriBuilder.tryParse(stringValue);
-              if (converted != null) {
-                resource = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      default:
-        throw Exception('Cannot set child value for $childName');
-    }
-  }
-
-  /// Return the possible Dart types for the field named [fieldName].
-  /// For polymorphic fields, multiple types are possible.
-  @override
-  List<String> typeByElementName(String fieldName) {
-    switch (fieldName) {
-      case 'id':
-        return ['FhirStringBuilder'];
-      case 'extension':
-        return ['FhirExtensionBuilder'];
-      case 'modifierExtension':
-        return ['FhirExtensionBuilder'];
-      case 'description':
-        return ['FhirMarkdownBuilder'];
-      case 'event':
-        return ['CodeableConceptBuilder'];
-      case 'resource':
-        return ['FhirUriBuilder'];
-      default:
-        return <String>[];
-    }
-  }
-
-  /// Creates a new [SubscriptionTopicEventTriggerBuilder]
-  ///  with a chosen field set to an empty object.
-  @override
-  void createProperty(String propertyName) {
-    switch (propertyName) {
-      case 'id':
-        {
-          id = FhirStringBuilder.empty();
-          return;
-        }
-      case 'extension':
-        {
-          extension_ = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'modifierExtension':
-        {
-          modifierExtension = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'description':
-        {
-          description = FhirMarkdownBuilder.empty();
-          return;
-        }
-      case 'event':
-        {
-          event = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'resource':
-        {
-          resource = FhirUriBuilder.empty();
-          return;
-        }
-      default:
-        throw ArgumentError('No matching property: $propertyName');
-    }
-  }
-
-  @override
-  SubscriptionTopicEventTriggerBuilder clone() => throw UnimplementedError();
-  @override
-  SubscriptionTopicEventTriggerBuilder copyWith({
-    FhirStringBuilder? id,
-    List<FhirExtensionBuilder>? extension_,
-    List<FhirExtensionBuilder>? modifierExtension,
-    FhirMarkdownBuilder? description,
-    CodeableConceptBuilder? event,
-    FhirUriBuilder? resource,
-    Map<String, dynamic>? userData,
-    List<String>? formatCommentsPre,
-    List<String>? formatCommentsPost,
-    List<dynamic>? annotations,
-    String? objectPath,
-  }) {
-    final newObjectPath = this.objectPath;
-    final newResult = SubscriptionTopicEventTriggerBuilder(
-      id: id ?? this.id,
-      extension_: extension_ ?? this.extension_,
-      modifierExtension: modifierExtension ?? this.modifierExtension,
-      description: description ?? this.description,
-      event: event ?? this.event,
-      resource: resource ?? this.resource,
-    )..objectPath = newObjectPath;
-    // Copy user data and annotations
-    if (userData != null) {
-      newResult.userData = userData;
-    }
-    if (formatCommentsPre != null) {
-      newResult.formatCommentsPre = formatCommentsPre;
-    }
-    if (formatCommentsPost != null) {
-      newResult.formatCommentsPost = formatCommentsPost;
-    }
-    if (annotations != null) {
-      newResult.annotations = annotations;
-    }
-
-    return newResult;
-  }
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! SubscriptionTopicEventTriggerBuilder) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      description,
-      o.description,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      event,
-      o.event,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      resource,
-      o.resource,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
 /// [SubscriptionTopicCanFilterByBuilder]
-/// List of properties by which Subscriptions on the SubscriptionTopic can
-/// be filtered. May be defined Search Parameters (e.g., Encounter.patient)
-/// or parameters defined within this SubscriptionTopic context (e.g.,
-/// hub.event).
+/// List of properties by which Subscriptions can be filtered. May be
+/// defined Search Parameters (e.g., Encounter.patient) or parameters
+/// defined within this SubscriptionTopic context (e.g., hub.event).
 class SubscriptionTopicCanFilterByBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [SubscriptionTopicCanFilterByBuilder]
@@ -3830,7 +3296,7 @@ class SubscriptionTopicCanFilterByBuilder extends BackboneElementBuilder {
     this.modifier,
     super.disallowExtensions,
   }) : super(
-          objectPath: 'SubscriptionTopic.canFilterBy',
+          objectPath: 'SubscriptionTopic.trigger.canFilterBy',
         );
 
   /// An empty constructor for partial usage.
@@ -3844,7 +3310,7 @@ class SubscriptionTopicCanFilterByBuilder extends BackboneElementBuilder {
   factory SubscriptionTopicCanFilterByBuilder.fromJson(
     Map<String, dynamic> json,
   ) {
-    const objectPath = 'SubscriptionTopic.canFilterBy';
+    const objectPath = 'SubscriptionTopic.trigger.canFilterBy';
     return SubscriptionTopicCanFilterByBuilder(
       id: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
@@ -3960,9 +3426,8 @@ class SubscriptionTopicCanFilterByBuilder extends BackboneElementBuilder {
   /// [resource]
   /// URL of the Resource that is the type used in this filter. This is the
   /// "focus" of the topic (or one of them if there are more than one). It
-  /// will be the same, a generality, or a specificity of
-  /// SubscriptionTopic.resourceTrigger.resource or
-  /// SubscriptionTopic.eventTrigger.resource when they are present.
+  /// will be the same, a generality, or a specificity of the
+  /// `SubscriptionTopic.trigger.resource` if this is present.
   FhirUriBuilder? resource;
 
   /// [filterParameter]
@@ -4572,7 +4037,7 @@ class SubscriptionTopicCanFilterByBuilder extends BackboneElementBuilder {
 
 /// [SubscriptionTopicNotificationShapeBuilder]
 /// List of properties to describe the shape (e.g., resources) included in
-/// notifications from this Subscription Topic.
+/// notifications from this trigger.
 class SubscriptionTopicNotificationShapeBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [SubscriptionTopicNotificationShapeBuilder]
@@ -4584,9 +4049,10 @@ class SubscriptionTopicNotificationShapeBuilder extends BackboneElementBuilder {
     this.resource,
     this.include,
     this.revInclude,
+    this.relatedQuery,
     super.disallowExtensions,
   }) : super(
-          objectPath: 'SubscriptionTopic.notificationShape',
+          objectPath: 'SubscriptionTopic.trigger.notificationShape',
         );
 
   /// An empty constructor for partial usage.
@@ -4600,7 +4066,7 @@ class SubscriptionTopicNotificationShapeBuilder extends BackboneElementBuilder {
   factory SubscriptionTopicNotificationShapeBuilder.fromJson(
     Map<String, dynamic> json,
   ) {
-    const objectPath = 'SubscriptionTopic.notificationShape';
+    const objectPath = 'SubscriptionTopic.trigger.notificationShape';
     return SubscriptionTopicNotificationShapeBuilder(
       id: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
@@ -4646,6 +4112,16 @@ class SubscriptionTopicNotificationShapeBuilder extends BackboneElementBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.revInclude',
       ),
+      relatedQuery: (json['relatedQuery'] as List<dynamic>?)
+          ?.map<SubscriptionTopicRelatedQueryBuilder>(
+            (v) => SubscriptionTopicRelatedQueryBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.relatedQuery',
+              },
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -4692,12 +4168,11 @@ class SubscriptionTopicNotificationShapeBuilder extends BackboneElementBuilder {
   String get fhirType => 'SubscriptionTopicNotificationShape';
 
   /// [resource]
-  /// URL of the Resource that is the type used in this shape. This is the
-  /// 'focus' resource of the topic (or one of them if there are more than
-  /// one) and the root resource for this shape definition. It will be the
-  /// same, a generality, or a specificity of
-  /// SubscriptionTopic.resourceTrigger.resource or
-  /// SubscriptionTopic.eventTrigger.resource when they are present.
+  /// URL of the Data Type, Resource, or definition (e.g., logical model)
+  /// that is the type used in this shape. This is the 'focus' resource of
+  /// the topic (or one of them if there are more than one) and the root for
+  /// this shape definition. It will be the same, a generality, or a
+  /// specificity of `SubscriptionTopic.trigger.resource` when it is present.
   FhirUriBuilder? resource;
 
   /// [include]
@@ -4715,6 +4190,12 @@ class SubscriptionTopicNotificationShapeBuilder extends BackboneElementBuilder {
   /// receive these additional resources, but SHALL function properly without
   /// them.
   List<FhirStringBuilder>? revInclude;
+
+  /// [relatedQuery]
+  /// Queries and codes that could be included with notifications of this
+  /// shape. Servers MAY include these queries if supported and desired in
+  /// the workflow.
+  List<SubscriptionTopicRelatedQueryBuilder>? relatedQuery;
 
   /// Converts a [SubscriptionTopicNotificationShapeBuilder]
   /// to [SubscriptionTopicNotificationShape]
@@ -4759,6 +4240,7 @@ class SubscriptionTopicNotificationShapeBuilder extends BackboneElementBuilder {
     addField('resource', resource);
     addField('include', include);
     addField('revInclude', revInclude);
+    addField('relatedQuery', relatedQuery);
     return json;
   }
 
@@ -4772,6 +4254,7 @@ class SubscriptionTopicNotificationShapeBuilder extends BackboneElementBuilder {
       'resource',
       'include',
       'revInclude',
+      'relatedQuery',
     ];
   }
 
@@ -4807,6 +4290,10 @@ class SubscriptionTopicNotificationShapeBuilder extends BackboneElementBuilder {
       case 'revInclude':
         if (revInclude != null) {
           fields.addAll(revInclude!);
+        }
+      case 'relatedQuery':
+        if (relatedQuery != null) {
+          fields.addAll(relatedQuery!);
         }
       default:
         if (checkValid) {
@@ -5007,6 +4494,22 @@ class SubscriptionTopicNotificationShapeBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'relatedQuery':
+        {
+          if (child is List<SubscriptionTopicRelatedQueryBuilder>) {
+            // Replace or create new list
+            relatedQuery = child;
+            return;
+          } else if (child is SubscriptionTopicRelatedQueryBuilder) {
+            // Add single element to existing list or create new list
+            relatedQuery = [
+              ...(relatedQuery ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -5029,6 +4532,8 @@ class SubscriptionTopicNotificationShapeBuilder extends BackboneElementBuilder {
         return ['FhirStringBuilder'];
       case 'revInclude':
         return ['FhirStringBuilder'];
+      case 'relatedQuery':
+        return ['SubscriptionTopicRelatedQueryBuilder'];
       default:
         return <String>[];
     }
@@ -5069,6 +4574,11 @@ class SubscriptionTopicNotificationShapeBuilder extends BackboneElementBuilder {
           revInclude = <FhirStringBuilder>[];
           return;
         }
+      case 'relatedQuery':
+        {
+          relatedQuery = <SubscriptionTopicRelatedQueryBuilder>[];
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
@@ -5085,6 +4595,7 @@ class SubscriptionTopicNotificationShapeBuilder extends BackboneElementBuilder {
     FhirUriBuilder? resource,
     List<FhirStringBuilder>? include,
     List<FhirStringBuilder>? revInclude,
+    List<SubscriptionTopicRelatedQueryBuilder>? relatedQuery,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -5099,6 +4610,7 @@ class SubscriptionTopicNotificationShapeBuilder extends BackboneElementBuilder {
       resource: resource ?? this.resource,
       include: include ?? this.include,
       revInclude: revInclude ?? this.revInclude,
+      relatedQuery: relatedQuery ?? this.relatedQuery,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -5158,6 +4670,479 @@ class SubscriptionTopicNotificationShapeBuilder extends BackboneElementBuilder {
     if (!listEquals<FhirStringBuilder>(
       revInclude,
       o.revInclude,
+    )) {
+      return false;
+    }
+    if (!listEquals<SubscriptionTopicRelatedQueryBuilder>(
+      relatedQuery,
+      o.relatedQuery,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [SubscriptionTopicRelatedQueryBuilder]
+/// Queries and codes that could be included with notifications of this
+/// shape. Servers MAY include these queries if supported and desired in
+/// the workflow.
+class SubscriptionTopicRelatedQueryBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [SubscriptionTopicRelatedQueryBuilder]
+
+  SubscriptionTopicRelatedQueryBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.queryType,
+    this.query,
+    super.disallowExtensions,
+  }) : super(
+          objectPath:
+              'SubscriptionTopic.trigger.notificationShape.relatedQuery',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory SubscriptionTopicRelatedQueryBuilder.empty() =>
+      SubscriptionTopicRelatedQueryBuilder(
+        query: FhirStringBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory SubscriptionTopicRelatedQueryBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath =
+        'SubscriptionTopic.trigger.notificationShape.relatedQuery';
+    return SubscriptionTopicRelatedQueryBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      queryType: JsonParser.parseObject<CodingBuilder>(
+        json,
+        'queryType',
+        CodingBuilder.fromJson,
+        '$objectPath.queryType',
+      ),
+      query: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'query',
+        FhirStringBuilder.fromJson,
+        '$objectPath.query',
+      ),
+    );
+  }
+
+  /// Deserialize [SubscriptionTopicRelatedQueryBuilder]
+  /// from a [String] or [YamlMap] object
+  factory SubscriptionTopicRelatedQueryBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return SubscriptionTopicRelatedQueryBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return SubscriptionTopicRelatedQueryBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'SubscriptionTopicRelatedQueryBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [SubscriptionTopicRelatedQueryBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory SubscriptionTopicRelatedQueryBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return SubscriptionTopicRelatedQueryBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'SubscriptionTopicRelatedQuery';
+
+  /// [queryType]
+  /// Coded value(s) used to describe the type of information that evaluating
+  /// this query will provide. Subscribers can use the values to ensure the
+  /// data they request are relevant and necessary for their use.
+  CodingBuilder? queryType;
+
+  /// [query]
+  /// Query a subscriber can use to retrieve additional information. The
+  /// exact contents of the query MAY depend on the value of the `queryType`,
+  /// however this SHOULD be a query suitable for use as an HTTP GET request
+  /// (either fully-qualified or partial).
+  FhirStringBuilder? query;
+
+  /// Converts a [SubscriptionTopicRelatedQueryBuilder]
+  /// to [SubscriptionTopicRelatedQuery]
+  @override
+  SubscriptionTopicRelatedQuery build() =>
+      SubscriptionTopicRelatedQuery.fromJson(toJson());
+
+  /// Converts a [SubscriptionTopicRelatedQueryBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('queryType', queryType);
+    addField('query', query);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'queryType',
+      'query',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'queryType':
+        if (queryType != null) {
+          fields.add(queryType!);
+        }
+      case 'query':
+        if (query != null) {
+          fields.add(query!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'queryType':
+        {
+          if (child is CodingBuilder) {
+            queryType = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'query':
+        {
+          if (child is FhirStringBuilder) {
+            query = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                query = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'queryType':
+        return ['CodingBuilder'];
+      case 'query':
+        return ['FhirStringBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [SubscriptionTopicRelatedQueryBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'queryType':
+        {
+          queryType = CodingBuilder.empty();
+          return;
+        }
+      case 'query':
+        {
+          query = FhirStringBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  SubscriptionTopicRelatedQueryBuilder clone() => throw UnimplementedError();
+  @override
+  SubscriptionTopicRelatedQueryBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    CodingBuilder? queryType,
+    FhirStringBuilder? query,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = SubscriptionTopicRelatedQueryBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      queryType: queryType ?? this.queryType,
+      query: query ?? this.query,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! SubscriptionTopicRelatedQueryBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      queryType,
+      o.queryType,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      query,
+      o.query,
     )) {
       return false;
     }

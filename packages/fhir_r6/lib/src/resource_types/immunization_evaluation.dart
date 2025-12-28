@@ -148,15 +148,15 @@ class ImmunizationEvaluation extends DomainResource {
         'series',
         FhirString.fromJson,
       ),
-      doseNumber: JsonParser.parsePrimitive<FhirString>(
+      doseNumber: JsonParser.parseObject<CodeableConcept>(
         json,
         'doseNumber',
-        FhirString.fromJson,
+        CodeableConcept.fromJson,
       ),
-      seriesDoses: JsonParser.parsePrimitive<FhirString>(
+      seriesDoses: JsonParser.parseObject<CodeableConcept>(
         json,
         'seriesDoses',
-        FhirString.fromJson,
+        CodeableConcept.fromJson,
       ),
     );
   }
@@ -255,12 +255,12 @@ class ImmunizationEvaluation extends DomainResource {
   /// [doseNumber]
   /// Nominal position in a series as determined by the outcome of the
   /// evaluation process.
-  final FhirString? doseNumber;
+  final CodeableConcept? doseNumber;
 
   /// [seriesDoses]
   /// The recommended number of doses to achieve immunity as determined by
   /// the outcome of the evaluation process.
-  final FhirString? seriesDoses;
+  final CodeableConcept? seriesDoses;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};

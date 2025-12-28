@@ -18,8 +18,6 @@ abstract class $ProcedureCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
-    List<FhirCanonical>? instantiatesCanonical,
-    List<FhirUri>? instantiatesUri,
     List<Reference>? basedOn,
     List<Reference>? partOf,
     EventStatus? status,
@@ -29,18 +27,19 @@ abstract class $ProcedureCopyWith<T> extends $DomainResourceCopyWith<T> {
     Reference? subject,
     Reference? focus,
     Reference? encounter,
-    FhirDateTime? occurrenceX,
+    OccurrenceXProcedure? occurrenceX,
     FhirDateTime? recorded,
     Reference? recorder,
-    FhirBoolean? reportedX,
+    ReportedXProcedure? reportedX,
     List<ProcedurePerformer>? performer,
     Reference? location,
     List<CodeableReference>? reason,
     List<CodeableConcept>? bodySite,
-    CodeableConcept? outcome,
+    List<Reference>? bodyStructure,
+    List<CodeableReference>? outcome,
     List<Reference>? report,
     List<CodeableReference>? complication,
-    List<CodeableConcept>? followUp,
+    List<CodeableReference>? followUp,
     List<Annotation>? note,
     List<ProcedureFocalDevice>? focalDevice,
     List<CodeableReference>? used,
@@ -66,8 +65,6 @@ class _$ProcedureCopyWithImpl<T> implements $ProcedureCopyWith<T> {
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? identifier = fhirSentinel,
-    Object? instantiatesCanonical = fhirSentinel,
-    Object? instantiatesUri = fhirSentinel,
     Object? basedOn = fhirSentinel,
     Object? partOf = fhirSentinel,
     Object? status = fhirSentinel,
@@ -85,6 +82,7 @@ class _$ProcedureCopyWithImpl<T> implements $ProcedureCopyWith<T> {
     Object? location = fhirSentinel,
     Object? reason = fhirSentinel,
     Object? bodySite = fhirSentinel,
+    Object? bodyStructure = fhirSentinel,
     Object? outcome = fhirSentinel,
     Object? report = fhirSentinel,
     Object? complication = fhirSentinel,
@@ -118,12 +116,6 @@ class _$ProcedureCopyWithImpl<T> implements $ProcedureCopyWith<T> {
         identifier: identical(identifier, fhirSentinel)
             ? _value.identifier
             : identifier as List<Identifier>?,
-        instantiatesCanonical: identical(instantiatesCanonical, fhirSentinel)
-            ? _value.instantiatesCanonical
-            : instantiatesCanonical as List<FhirCanonical>?,
-        instantiatesUri: identical(instantiatesUri, fhirSentinel)
-            ? _value.instantiatesUri
-            : instantiatesUri as List<FhirUri>?,
         basedOn: identical(basedOn, fhirSentinel)
             ? _value.basedOn
             : basedOn as List<Reference>?,
@@ -152,7 +144,7 @@ class _$ProcedureCopyWithImpl<T> implements $ProcedureCopyWith<T> {
             : encounter as Reference?,
         occurrenceX: identical(occurrenceX, fhirSentinel)
             ? _value.occurrenceX
-            : occurrenceX as FhirDateTime?,
+            : occurrenceX as OccurrenceXProcedure?,
         recorded: identical(recorded, fhirSentinel)
             ? _value.recorded
             : recorded as FhirDateTime?,
@@ -161,7 +153,7 @@ class _$ProcedureCopyWithImpl<T> implements $ProcedureCopyWith<T> {
             : recorder as Reference?,
         reportedX: identical(reportedX, fhirSentinel)
             ? _value.reportedX
-            : reportedX as FhirBoolean?,
+            : reportedX as ReportedXProcedure?,
         performer: identical(performer, fhirSentinel)
             ? _value.performer
             : performer as List<ProcedurePerformer>?,
@@ -174,9 +166,12 @@ class _$ProcedureCopyWithImpl<T> implements $ProcedureCopyWith<T> {
         bodySite: identical(bodySite, fhirSentinel)
             ? _value.bodySite
             : bodySite as List<CodeableConcept>?,
+        bodyStructure: identical(bodyStructure, fhirSentinel)
+            ? _value.bodyStructure
+            : bodyStructure as List<Reference>?,
         outcome: identical(outcome, fhirSentinel)
             ? _value.outcome
-            : outcome as CodeableConcept?,
+            : outcome as List<CodeableReference>?,
         report: identical(report, fhirSentinel)
             ? _value.report
             : report as List<Reference>?,
@@ -185,7 +180,7 @@ class _$ProcedureCopyWithImpl<T> implements $ProcedureCopyWith<T> {
             : complication as List<CodeableReference>?,
         followUp: identical(followUp, fhirSentinel)
             ? _value.followUp
-            : followUp as List<CodeableConcept>?,
+            : followUp as List<CodeableReference>?,
         note: identical(note, fhirSentinel)
             ? _value.note
             : note as List<Annotation>?,

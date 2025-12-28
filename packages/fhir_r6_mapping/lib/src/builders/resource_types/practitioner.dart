@@ -1260,6 +1260,7 @@ class PractitionerQualificationBuilder extends BackboneElementBuilder {
     super.modifierExtension,
     this.identifier,
     this.code,
+    this.status,
     this.period,
     this.issuer,
     super.disallowExtensions,
@@ -1321,6 +1322,12 @@ class PractitionerQualificationBuilder extends BackboneElementBuilder {
         'code',
         CodeableConceptBuilder.fromJson,
         '$objectPath.code',
+      ),
+      status: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'status',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.status',
       ),
       period: JsonParser.parseObject<PeriodBuilder>(
         json,
@@ -1387,6 +1394,16 @@ class PractitionerQualificationBuilder extends BackboneElementBuilder {
   /// Coded representation of the qualification.
   CodeableConceptBuilder? code;
 
+  /// [status]
+  /// Qualifications often take time to attain and might be tracked during
+  /// this time, and completed qualifications might not always be valid. This
+  /// status concept has some overlap with period and both should be
+  /// considered together. Refer to the descriptions of the codes for how the
+  /// period should be interpreted. If a qualification is revoked or
+  /// otherwise cancelled, then the period is likely to be ignored, and m be
+  /// related to when it was active.
+  CodeableConceptBuilder? status;
+
   /// [period]
   /// Period during which the qualification is valid.
   PeriodBuilder? period;
@@ -1437,6 +1454,7 @@ class PractitionerQualificationBuilder extends BackboneElementBuilder {
     addField('modifierExtension', modifierExtension);
     addField('identifier', identifier);
     addField('code', code);
+    addField('status', status);
     addField('period', period);
     addField('issuer', issuer);
     return json;
@@ -1451,6 +1469,7 @@ class PractitionerQualificationBuilder extends BackboneElementBuilder {
       'modifierExtension',
       'identifier',
       'code',
+      'status',
       'period',
       'issuer',
     ];
@@ -1484,6 +1503,10 @@ class PractitionerQualificationBuilder extends BackboneElementBuilder {
       case 'code':
         if (code != null) {
           fields.add(code!);
+        }
+      case 'status':
+        if (status != null) {
+          fields.add(status!);
         }
       case 'period':
         if (period != null) {
@@ -1598,6 +1621,14 @@ class PractitionerQualificationBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'status':
+        {
+          if (child is CodeableConceptBuilder) {
+            status = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'period':
         {
           if (child is PeriodBuilder) {
@@ -1633,6 +1664,8 @@ class PractitionerQualificationBuilder extends BackboneElementBuilder {
       case 'identifier':
         return ['IdentifierBuilder'];
       case 'code':
+        return ['CodeableConceptBuilder'];
+      case 'status':
         return ['CodeableConceptBuilder'];
       case 'period':
         return ['PeriodBuilder'];
@@ -1673,6 +1706,11 @@ class PractitionerQualificationBuilder extends BackboneElementBuilder {
           code = CodeableConceptBuilder.empty();
           return;
         }
+      case 'status':
+        {
+          status = CodeableConceptBuilder.empty();
+          return;
+        }
       case 'period':
         {
           period = PeriodBuilder.empty();
@@ -1697,6 +1735,7 @@ class PractitionerQualificationBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     List<IdentifierBuilder>? identifier,
     CodeableConceptBuilder? code,
+    CodeableConceptBuilder? status,
     PeriodBuilder? period,
     ReferenceBuilder? issuer,
     Map<String, dynamic>? userData,
@@ -1712,6 +1751,7 @@ class PractitionerQualificationBuilder extends BackboneElementBuilder {
       modifierExtension: modifierExtension ?? this.modifierExtension,
       identifier: identifier ?? this.identifier,
       code: code ?? this.code,
+      status: status ?? this.status,
       period: period ?? this.period,
       issuer: issuer ?? this.issuer,
     )..objectPath = newObjectPath;
@@ -1767,6 +1807,12 @@ class PractitionerQualificationBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       code,
       o.code,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      status,
+      o.status,
     )) {
       return false;
     }
@@ -1904,10 +1950,7 @@ class PractitionerCommunicationBuilder extends BackboneElementBuilder {
   String get fhirType => 'PractitionerCommunication';
 
   /// [language]
-  /// The ISO-639-1 alpha 2 code in lower case for the language, optionally
-  /// followed by a hyphen and the ISO-3166-1 alpha 2 code for the region in
-  /// upper case; e.g. "en" for English, or "en-US" for American English
-  /// versus "en-AU" for Australian English.
+  /// The language which may be used to communicate with the individual.
   CodeableConceptBuilder? language;
 
   /// [preferred]

@@ -33,21 +33,22 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
     super.modifierExtension,
     this.identifier,
     this.status,
+    this.category,
+    this.code,
     this.subject,
     this.issued,
     this.performer,
     this.basedOn,
-    this.category,
-    this.code,
-    this.studyUid,
     this.derivedFrom,
-    this.endpoint,
+    this.studyUid,
     this.seriesUid,
     this.seriesNumber,
     this.frameOfReferenceUid,
     this.bodySite,
     this.focus,
+    this.endpoint,
     this.instance,
+    this.imageRegion3D,
   }) : super(
           objectPath: 'ImagingSelection',
           resourceType: R6ResourceType.ImagingSelection,
@@ -142,6 +143,22 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
         ImagingSelectionStatusBuilder.fromJson,
         '$objectPath.status',
       ),
+      category: (json['category'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.category',
+              },
+            ),
+          )
+          .toList(),
+      code: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'code',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.code',
+      ),
       subject: JsonParser.parseObject<ReferenceBuilder>(
         json,
         'subject',
@@ -174,21 +191,11 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      category: (json['category'] as List<dynamic>?)
-          ?.map<CodeableConceptBuilder>(
-            (v) => CodeableConceptBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.category',
-              },
-            ),
-          )
-          .toList(),
-      code: JsonParser.parseObject<CodeableConceptBuilder>(
+      derivedFrom: JsonParser.parseObject<ReferenceBuilder>(
         json,
-        'code',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.code',
+        'derivedFrom',
+        ReferenceBuilder.fromJson,
+        '$objectPath.derivedFrom',
       ),
       studyUid: JsonParser.parsePrimitive<FhirIdBuilder>(
         json,
@@ -196,26 +203,6 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
         FhirIdBuilder.fromJson,
         '$objectPath.studyUid',
       ),
-      derivedFrom: (json['derivedFrom'] as List<dynamic>?)
-          ?.map<ReferenceBuilder>(
-            (v) => ReferenceBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.derivedFrom',
-              },
-            ),
-          )
-          .toList(),
-      endpoint: (json['endpoint'] as List<dynamic>?)
-          ?.map<ReferenceBuilder>(
-            (v) => ReferenceBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.endpoint',
-              },
-            ),
-          )
-          .toList(),
       seriesUid: JsonParser.parsePrimitive<FhirIdBuilder>(
         json,
         'seriesUid',
@@ -234,12 +221,16 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
         FhirIdBuilder.fromJson,
         '$objectPath.frameOfReferenceUid',
       ),
-      bodySite: JsonParser.parseObject<CodeableReferenceBuilder>(
-        json,
-        'bodySite',
-        CodeableReferenceBuilder.fromJson,
-        '$objectPath.bodySite',
-      ),
+      bodySite: (json['bodySite'] as List<dynamic>?)
+          ?.map<CodeableReferenceBuilder>(
+            (v) => CodeableReferenceBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.bodySite',
+              },
+            ),
+          )
+          .toList(),
       focus: (json['focus'] as List<dynamic>?)
           ?.map<ReferenceBuilder>(
             (v) => ReferenceBuilder.fromJson(
@@ -250,12 +241,32 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
+      endpoint: (json['endpoint'] as List<dynamic>?)
+          ?.map<ReferenceBuilder>(
+            (v) => ReferenceBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.endpoint',
+              },
+            ),
+          )
+          .toList(),
       instance: (json['instance'] as List<dynamic>?)
           ?.map<ImagingSelectionInstanceBuilder>(
             (v) => ImagingSelectionInstanceBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
                 'objectPath': '$objectPath.instance',
+              },
+            ),
+          )
+          .toList(),
+      imageRegion3D: (json['imageRegion3D'] as List<dynamic>?)
+          ?.map<ImagingSelectionImageRegion3DBuilder>(
+            (v) => ImagingSelectionImageRegion3DBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.imageRegion3D',
               },
             ),
           )
@@ -306,14 +317,22 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
   String get fhirType => 'ImagingSelection';
 
   /// [identifier]
-  /// A unique identifier assigned to this imaging selection.
+  /// Unique identifiers assigned to this imaging selection.
   List<IdentifierBuilder>? identifier;
 
   /// [status]
-  /// The current state of the ImagingSelection resource. This is not the
-  /// status of any ImagingStudy, ServiceRequest, or Task resources
-  /// associated with the ImagingSelection.
+  /// The current state of the imaging selection. This is distinct from the
+  /// status of any imaging study, service request, or task associated with
+  /// the imaging selection.
   ImagingSelectionStatusBuilder? status;
+
+  /// [category]
+  /// Classifies the general purpose of the imaging selection.
+  List<CodeableConceptBuilder>? category;
+
+  /// [code]
+  /// Identifies the type of imaging selection.
+  CodeableConceptBuilder? code;
 
   /// [subject]
   /// The patient, or group of patients, location, device, organization,
@@ -326,7 +345,7 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
   FhirInstantBuilder? issued;
 
   /// [performer]
-  /// Selector of the instances – human or machine.
+  /// Selectors of the instances – human or machine.
   List<ImagingSelectionPerformerBuilder>? performer;
 
   /// [basedOn]
@@ -334,28 +353,14 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
   /// selection being performed.
   List<ReferenceBuilder>? basedOn;
 
-  /// [category]
-  /// Classifies the imaging selection.
-  List<CodeableConceptBuilder>? category;
-
-  /// [code]
-  /// Reason for referencing the selected content.
-  CodeableConceptBuilder? code;
+  /// [derivedFrom]
+  /// The imaging study from which the imaging selection is made.
+  ReferenceBuilder? derivedFrom;
 
   /// [studyUid]
   /// The Study Instance UID for the DICOM Study from which the images were
   /// selected.
   FhirIdBuilder? studyUid;
-
-  /// [derivedFrom]
-  /// The imaging study from which the imaging selection is made.
-  List<ReferenceBuilder>? derivedFrom;
-
-  /// [endpoint]
-  /// The network service providing retrieval access to the selected images,
-  /// frames, etc. See implementation notes for information about using DICOM
-  /// endpoints.
-  List<ReferenceBuilder>? endpoint;
 
   /// [seriesUid]
   /// The Series Instance UID for the DICOM Series from which the images were
@@ -368,34 +373,36 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
   FhirUnsignedIntBuilder? seriesNumber;
 
   /// [frameOfReferenceUid]
-  /// The Frame of Reference UID identifying the coordinate system that
-  /// conveys spatial and/or temporal information for the selected images or
-  /// frames.
+  /// Uniquely identifies groups of composite instances that have the same
+  /// coordinate system that conveys spatial and/or temporal information.
   FhirIdBuilder? frameOfReferenceUid;
 
   /// [bodySite]
-  /// The anatomic structures examined. See DICOM Part 16 Annex L
-  /// (http://dicom.nema.org/medical/dicom/current/output/chtml/part16/chapter_L.html)
+  /// The anatomic structures examined. See [DICOM Part 16 Annex
+  /// L](http://dicom.nema.org/medical/dicom/current/output/chtml/part16/chapter_L.html)
   /// for DICOM to SNOMED-CT mappings.
-  CodeableReferenceBuilder? bodySite;
+  List<CodeableReferenceBuilder>? bodySite;
 
   /// [focus]
-  /// The actual focus of an observation when it is not the patient of record
-  /// representing something or someone associated with the patient such as a
-  /// spouse, parent, fetus, or donor. For example, fetus observations in a
-  /// mother's record. The focus of an observation could also be an existing
-  /// condition, an intervention, the subject's diet, another observation of
-  /// the subject, or a body structure such as tumor or implanted device. An
-  /// example use case would be using the Observation resource to capture
-  /// whether the mother is trained to change her child's tracheostomy tube.
-  /// In this example, the child is the patient of record and the mother is
-  /// the focus.
+  /// The actual focus of an imaging selection when it is another imaging
+  /// selection resource and not the patient of record.
   List<ReferenceBuilder>? focus;
+
+  /// [endpoint]
+  /// The network services providing retrieval access to the selected images,
+  /// frames, etc. See implementation notes for information about using DICOM
+  /// endpoints.
+  List<ReferenceBuilder>? endpoint;
 
   /// [instance]
   /// Each imaging selection includes one or more selected DICOM SOP
   /// instances.
   List<ImagingSelectionInstanceBuilder>? instance;
+
+  /// [imageRegion3D]
+  /// Each imaging selection might includes a 3D image region, specified by a
+  /// region type and a set of 3D coordinates.
+  List<ImagingSelectionImageRegion3DBuilder>? imageRegion3D;
 
   /// Converts a [ImagingSelectionBuilder]
   /// to [ImagingSelection]
@@ -444,21 +451,22 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
     addField('modifierExtension', modifierExtension);
     addField('identifier', identifier);
     addField('status', status);
+    addField('category', category);
+    addField('code', code);
     addField('subject', subject);
     addField('issued', issued);
     addField('performer', performer);
     addField('basedOn', basedOn);
-    addField('category', category);
-    addField('code', code);
-    addField('studyUid', studyUid);
     addField('derivedFrom', derivedFrom);
-    addField('endpoint', endpoint);
+    addField('studyUid', studyUid);
     addField('seriesUid', seriesUid);
     addField('seriesNumber', seriesNumber);
     addField('frameOfReferenceUid', frameOfReferenceUid);
     addField('bodySite', bodySite);
     addField('focus', focus);
+    addField('endpoint', endpoint);
     addField('instance', instance);
+    addField('imageRegion3D', imageRegion3D);
     return json;
   }
 
@@ -476,21 +484,22 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
       'modifierExtension',
       'identifier',
       'status',
+      'category',
+      'code',
       'subject',
       'issued',
       'performer',
       'basedOn',
-      'category',
-      'code',
-      'studyUid',
       'derivedFrom',
-      'endpoint',
+      'studyUid',
       'seriesUid',
       'seriesNumber',
       'frameOfReferenceUid',
       'bodySite',
       'focus',
+      'endpoint',
       'instance',
+      'imageRegion3D',
     ];
   }
 
@@ -543,6 +552,14 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
         if (status != null) {
           fields.add(status!);
         }
+      case 'category':
+        if (category != null) {
+          fields.addAll(category!);
+        }
+      case 'code':
+        if (code != null) {
+          fields.add(code!);
+        }
       case 'subject':
         if (subject != null) {
           fields.add(subject!);
@@ -559,25 +576,13 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
         if (basedOn != null) {
           fields.addAll(basedOn!);
         }
-      case 'category':
-        if (category != null) {
-          fields.addAll(category!);
-        }
-      case 'code':
-        if (code != null) {
-          fields.add(code!);
+      case 'derivedFrom':
+        if (derivedFrom != null) {
+          fields.add(derivedFrom!);
         }
       case 'studyUid':
         if (studyUid != null) {
           fields.add(studyUid!);
-        }
-      case 'derivedFrom':
-        if (derivedFrom != null) {
-          fields.addAll(derivedFrom!);
-        }
-      case 'endpoint':
-        if (endpoint != null) {
-          fields.addAll(endpoint!);
         }
       case 'seriesUid':
         if (seriesUid != null) {
@@ -593,15 +598,23 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
         }
       case 'bodySite':
         if (bodySite != null) {
-          fields.add(bodySite!);
+          fields.addAll(bodySite!);
         }
       case 'focus':
         if (focus != null) {
           fields.addAll(focus!);
         }
+      case 'endpoint':
+        if (endpoint != null) {
+          fields.addAll(endpoint!);
+        }
       case 'instance':
         if (instance != null) {
           fields.addAll(instance!);
+        }
+      case 'imageRegion3D':
+        if (imageRegion3D != null) {
+          fields.addAll(imageRegion3D!);
         }
       default:
         if (checkValid) {
@@ -798,6 +811,30 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'category':
+        {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
+            category = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            category = [
+              ...(category ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'code':
+        {
+          if (child is CodeableConceptBuilder) {
+            code = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'subject':
         {
           if (child is ReferenceBuilder) {
@@ -858,26 +895,10 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'category':
+      case 'derivedFrom':
         {
-          if (child is List<CodeableConceptBuilder>) {
-            // Replace or create new list
-            category = child;
-            return;
-          } else if (child is CodeableConceptBuilder) {
-            // Add single element to existing list or create new list
-            category = [
-              ...(category ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'code':
-        {
-          if (child is CodeableConceptBuilder) {
-            code = child;
+          if (child is ReferenceBuilder) {
+            derivedFrom = child;
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -899,38 +920,6 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
             } catch (e) {
               // Continue if conversion fails
             }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'derivedFrom':
-        {
-          if (child is List<ReferenceBuilder>) {
-            // Replace or create new list
-            derivedFrom = child;
-            return;
-          } else if (child is ReferenceBuilder) {
-            // Add single element to existing list or create new list
-            derivedFrom = [
-              ...(derivedFrom ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'endpoint':
-        {
-          if (child is List<ReferenceBuilder>) {
-            // Replace or create new list
-            endpoint = child;
-            return;
-          } else if (child is ReferenceBuilder) {
-            // Add single element to existing list or create new list
-            endpoint = [
-              ...(endpoint ?? []),
-              child,
-            ];
-            return;
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -1001,8 +990,16 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
         }
       case 'bodySite':
         {
-          if (child is CodeableReferenceBuilder) {
+          if (child is List<CodeableReferenceBuilder>) {
+            // Replace or create new list
             bodySite = child;
+            return;
+          } else if (child is CodeableReferenceBuilder) {
+            // Add single element to existing list or create new list
+            bodySite = [
+              ...(bodySite ?? []),
+              child,
+            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -1023,6 +1020,22 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'endpoint':
+        {
+          if (child is List<ReferenceBuilder>) {
+            // Replace or create new list
+            endpoint = child;
+            return;
+          } else if (child is ReferenceBuilder) {
+            // Add single element to existing list or create new list
+            endpoint = [
+              ...(endpoint ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'instance':
         {
           if (child is List<ImagingSelectionInstanceBuilder>) {
@@ -1033,6 +1046,22 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
             // Add single element to existing list or create new list
             instance = [
               ...(instance ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'imageRegion3D':
+        {
+          if (child is List<ImagingSelectionImageRegion3DBuilder>) {
+            // Replace or create new list
+            imageRegion3D = child;
+            return;
+          } else if (child is ImagingSelectionImageRegion3DBuilder) {
+            // Add single element to existing list or create new list
+            imageRegion3D = [
+              ...(imageRegion3D ?? []),
               child,
             ];
             return;
@@ -1069,6 +1098,10 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
         return ['IdentifierBuilder'];
       case 'status':
         return ['FhirCodeEnumBuilder'];
+      case 'category':
+        return ['CodeableConceptBuilder'];
+      case 'code':
+        return ['CodeableConceptBuilder'];
       case 'subject':
         return ['ReferenceBuilder'];
       case 'issued':
@@ -1077,16 +1110,10 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
         return ['ImagingSelectionPerformerBuilder'];
       case 'basedOn':
         return ['ReferenceBuilder'];
-      case 'category':
-        return ['CodeableConceptBuilder'];
-      case 'code':
-        return ['CodeableConceptBuilder'];
-      case 'studyUid':
-        return ['FhirIdBuilder'];
       case 'derivedFrom':
         return ['ReferenceBuilder'];
-      case 'endpoint':
-        return ['ReferenceBuilder'];
+      case 'studyUid':
+        return ['FhirIdBuilder'];
       case 'seriesUid':
         return ['FhirIdBuilder'];
       case 'seriesNumber':
@@ -1097,8 +1124,12 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
         return ['CodeableReferenceBuilder'];
       case 'focus':
         return ['ReferenceBuilder'];
+      case 'endpoint':
+        return ['ReferenceBuilder'];
       case 'instance':
         return ['ImagingSelectionInstanceBuilder'];
+      case 'imageRegion3D':
+        return ['ImagingSelectionImageRegion3DBuilder'];
       default:
         return <String>[];
     }
@@ -1159,6 +1190,16 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
           status = ImagingSelectionStatusBuilder.empty();
           return;
         }
+      case 'category':
+        {
+          category = <CodeableConceptBuilder>[];
+          return;
+        }
+      case 'code':
+        {
+          code = CodeableConceptBuilder.empty();
+          return;
+        }
       case 'subject':
         {
           subject = ReferenceBuilder.empty();
@@ -1179,29 +1220,14 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
           basedOn = <ReferenceBuilder>[];
           return;
         }
-      case 'category':
+      case 'derivedFrom':
         {
-          category = <CodeableConceptBuilder>[];
-          return;
-        }
-      case 'code':
-        {
-          code = CodeableConceptBuilder.empty();
+          derivedFrom = ReferenceBuilder.empty();
           return;
         }
       case 'studyUid':
         {
           studyUid = FhirIdBuilder.empty();
-          return;
-        }
-      case 'derivedFrom':
-        {
-          derivedFrom = <ReferenceBuilder>[];
-          return;
-        }
-      case 'endpoint':
-        {
-          endpoint = <ReferenceBuilder>[];
           return;
         }
       case 'seriesUid':
@@ -1221,7 +1247,7 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
         }
       case 'bodySite':
         {
-          bodySite = CodeableReferenceBuilder.empty();
+          bodySite = <CodeableReferenceBuilder>[];
           return;
         }
       case 'focus':
@@ -1229,9 +1255,19 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
           focus = <ReferenceBuilder>[];
           return;
         }
+      case 'endpoint':
+        {
+          endpoint = <ReferenceBuilder>[];
+          return;
+        }
       case 'instance':
         {
           instance = <ImagingSelectionInstanceBuilder>[];
+          return;
+        }
+      case 'imageRegion3D':
+        {
+          imageRegion3D = <ImagingSelectionImageRegion3DBuilder>[];
           return;
         }
       default:
@@ -1253,21 +1289,22 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     List<IdentifierBuilder>? identifier,
     ImagingSelectionStatusBuilder? status,
+    List<CodeableConceptBuilder>? category,
+    CodeableConceptBuilder? code,
     ReferenceBuilder? subject,
     FhirInstantBuilder? issued,
     List<ImagingSelectionPerformerBuilder>? performer,
     List<ReferenceBuilder>? basedOn,
-    List<CodeableConceptBuilder>? category,
-    CodeableConceptBuilder? code,
+    ReferenceBuilder? derivedFrom,
     FhirIdBuilder? studyUid,
-    List<ReferenceBuilder>? derivedFrom,
-    List<ReferenceBuilder>? endpoint,
     FhirIdBuilder? seriesUid,
     FhirUnsignedIntBuilder? seriesNumber,
     FhirIdBuilder? frameOfReferenceUid,
-    CodeableReferenceBuilder? bodySite,
+    List<CodeableReferenceBuilder>? bodySite,
     List<ReferenceBuilder>? focus,
+    List<ReferenceBuilder>? endpoint,
     List<ImagingSelectionInstanceBuilder>? instance,
+    List<ImagingSelectionImageRegion3DBuilder>? imageRegion3D,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -1285,21 +1322,22 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
       modifierExtension: modifierExtension ?? this.modifierExtension,
       identifier: identifier ?? this.identifier,
       status: status ?? this.status,
+      category: category ?? this.category,
+      code: code ?? this.code,
       subject: subject ?? this.subject,
       issued: issued ?? this.issued,
       performer: performer ?? this.performer,
       basedOn: basedOn ?? this.basedOn,
-      category: category ?? this.category,
-      code: code ?? this.code,
-      studyUid: studyUid ?? this.studyUid,
       derivedFrom: derivedFrom ?? this.derivedFrom,
-      endpoint: endpoint ?? this.endpoint,
+      studyUid: studyUid ?? this.studyUid,
       seriesUid: seriesUid ?? this.seriesUid,
       seriesNumber: seriesNumber ?? this.seriesNumber,
       frameOfReferenceUid: frameOfReferenceUid ?? this.frameOfReferenceUid,
       bodySite: bodySite ?? this.bodySite,
       focus: focus ?? this.focus,
+      endpoint: endpoint ?? this.endpoint,
       instance: instance ?? this.instance,
+      imageRegion3D: imageRegion3D ?? this.imageRegion3D,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -1386,6 +1424,18 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
+    if (!listEquals<CodeableConceptBuilder>(
+      category,
+      o.category,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      code,
+      o.code,
+    )) {
+      return false;
+    }
     if (!equalsDeepWithNull(
       subject,
       o.subject,
@@ -1410,33 +1460,15 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConceptBuilder>(
-      category,
-      o.category,
-    )) {
-      return false;
-    }
     if (!equalsDeepWithNull(
-      code,
-      o.code,
+      derivedFrom,
+      o.derivedFrom,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
       studyUid,
       o.studyUid,
-    )) {
-      return false;
-    }
-    if (!listEquals<ReferenceBuilder>(
-      derivedFrom,
-      o.derivedFrom,
-    )) {
-      return false;
-    }
-    if (!listEquals<ReferenceBuilder>(
-      endpoint,
-      o.endpoint,
     )) {
       return false;
     }
@@ -1458,7 +1490,7 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<CodeableReferenceBuilder>(
       bodySite,
       o.bodySite,
     )) {
@@ -1470,9 +1502,21 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
+    if (!listEquals<ReferenceBuilder>(
+      endpoint,
+      o.endpoint,
+    )) {
+      return false;
+    }
     if (!listEquals<ImagingSelectionInstanceBuilder>(
       instance,
       o.instance,
+    )) {
+      return false;
+    }
+    if (!listEquals<ImagingSelectionImageRegion3DBuilder>(
+      imageRegion3D,
+      o.imageRegion3D,
     )) {
       return false;
     }
@@ -1481,7 +1525,7 @@ class ImagingSelectionBuilder extends DomainResourceBuilder {
 }
 
 /// [ImagingSelectionPerformerBuilder]
-/// Selector of the instances – human or machine.
+/// Selectors of the instances – human or machine.
 class ImagingSelectionPerformerBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [ImagingSelectionPerformerBuilder]
@@ -1596,7 +1640,7 @@ class ImagingSelectionPerformerBuilder extends BackboneElementBuilder {
   CodeableConceptBuilder? function_;
 
   /// [actor]
-  /// Author – human or machine.
+  /// Author - human or machine.
   ReferenceBuilder? actor;
 
   /// Converts a [ImagingSelectionPerformerBuilder]
@@ -1940,7 +1984,6 @@ class ImagingSelectionInstanceBuilder extends BackboneElementBuilder {
     this.sopClass,
     this.subset,
     this.imageRegion2D,
-    this.imageRegion3D,
     super.disallowExtensions,
   }) : super(
           objectPath: 'ImagingSelection.instance',
@@ -1997,10 +2040,10 @@ class ImagingSelectionInstanceBuilder extends BackboneElementBuilder {
         FhirUnsignedIntBuilder.fromJson,
         '$objectPath.number',
       ),
-      sopClass: JsonParser.parseObject<CodingBuilder>(
+      sopClass: JsonParser.parsePrimitive<FhirOidBuilder>(
         json,
         'sopClass',
-        CodingBuilder.fromJson,
+        FhirOidBuilder.fromJson,
         '$objectPath.sopClass',
       ),
       subset: JsonParser.parsePrimitiveList<FhirStringBuilder>(
@@ -2015,16 +2058,6 @@ class ImagingSelectionInstanceBuilder extends BackboneElementBuilder {
               {
                 ...v as Map<String, dynamic>,
                 'objectPath': '$objectPath.imageRegion2D',
-              },
-            ),
-          )
-          .toList(),
-      imageRegion3D: (json['imageRegion3D'] as List<dynamic>?)
-          ?.map<ImagingSelectionImageRegion3DBuilder>(
-            (v) => ImagingSelectionImageRegion3DBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.imageRegion3D',
               },
             ),
           )
@@ -2084,31 +2117,30 @@ class ImagingSelectionInstanceBuilder extends BackboneElementBuilder {
 
   /// [sopClass]
   /// The SOP Class UID for the selected DICOM instance.
-  CodingBuilder? sopClass;
+  FhirOidBuilder? sopClass;
 
   /// [subset]
-  /// Selected subset of the SOP Instance. The content and format of the
-  /// subset item is determined by the SOP Class of the selected instance.
-  ///  May be one of:
-  ///  - A list of frame numbers selected from a multiframe SOP Instance.
-  ///  - A list of Content Item Observation UID values selected from a DICOM
-  /// SR or other structured document SOP Instance.
-  ///  - A list of segment numbers selected from a segmentation SOP Instance.
-  ///  - A list of Region of Interest (ROI) numbers selected from a
-  /// radiotherapy structure set SOP Instance.
+  /// Selected subset of the SOP Instance. The type of the subset item is
+  /// determined by the `instance.sopClass` value.
+  /// May be one of:
+  /// - A list of frame numbers selected from a multiframe SOP Instance (See
+  /// [DICOM PS 3.3 Table
+  /// 10.3](https://dicom.nema.org/medical/dicom/current/output/chtml/part03/sect_10.3.html#table_10-3)).
+  /// - A list of Referenced Content Item Identifier values selected from a
+  /// DICOM SR or other structured document SOP Instance (See [DICOM PS 3.3
+  /// C.17.3.2.5](https://dicom.nema.org/medical/dicom/current/output/chtml/part03/sect_C.17.3.2.5.html)).
+  /// - A list of segment numbers selected from a segmentation SOP Instance
+  /// (See [DICOM PS 3.3 Table
+  /// C.8.20-4](https://dicom.nema.org/medical/dicom/current/output/chtml/part03/sect_C.8.20.4.html#table_C.8.20-4)).
+  /// - A list of Region of Interest (ROI) numbers selected from a
+  /// radiotherapy structure set SOP Instance (See [DICOM PS 3.3
+  /// C.8.8.5](https://dicom.nema.org/medical/dicom/current/output/chtml/part03/sect_C.8.8.5.html)).
   List<FhirStringBuilder>? subset;
 
   /// [imageRegion2D]
   /// Each imaging selection instance or frame list might includes an image
   /// region, specified by a region type and a set of 2D coordinates.
-  ///  If the parent imagingSelection.instance contains a subset element of
-  /// type frame, the image region applies to all frames in the subset list.
   List<ImagingSelectionImageRegion2DBuilder>? imageRegion2D;
-
-  /// [imageRegion3D]
-  /// Each imaging selection might includes a 3D image region, specified by a
-  /// region type and a set of 3D coordinates.
-  List<ImagingSelectionImageRegion3DBuilder>? imageRegion3D;
 
   /// Converts a [ImagingSelectionInstanceBuilder]
   /// to [ImagingSelectionInstance]
@@ -2155,7 +2187,6 @@ class ImagingSelectionInstanceBuilder extends BackboneElementBuilder {
     addField('sopClass', sopClass);
     addField('subset', subset);
     addField('imageRegion2D', imageRegion2D);
-    addField('imageRegion3D', imageRegion3D);
     return json;
   }
 
@@ -2171,7 +2202,6 @@ class ImagingSelectionInstanceBuilder extends BackboneElementBuilder {
       'sopClass',
       'subset',
       'imageRegion2D',
-      'imageRegion3D',
     ];
   }
 
@@ -2215,10 +2245,6 @@ class ImagingSelectionInstanceBuilder extends BackboneElementBuilder {
       case 'imageRegion2D':
         if (imageRegion2D != null) {
           fields.addAll(imageRegion2D!);
-        }
-      case 'imageRegion3D':
-        if (imageRegion3D != null) {
-          fields.addAll(imageRegion3D!);
         }
       default:
         if (checkValid) {
@@ -2348,9 +2374,21 @@ class ImagingSelectionInstanceBuilder extends BackboneElementBuilder {
         }
       case 'sopClass':
         {
-          if (child is CodingBuilder) {
+          if (child is FhirOidBuilder) {
             sopClass = child;
             return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirOidBuilder.tryParse(stringValue);
+              if (converted != null) {
+                sopClass = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -2419,22 +2457,6 @@ class ImagingSelectionInstanceBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'imageRegion3D':
-        {
-          if (child is List<ImagingSelectionImageRegion3DBuilder>) {
-            // Replace or create new list
-            imageRegion3D = child;
-            return;
-          } else if (child is ImagingSelectionImageRegion3DBuilder) {
-            // Add single element to existing list or create new list
-            imageRegion3D = [
-              ...(imageRegion3D ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -2456,13 +2478,11 @@ class ImagingSelectionInstanceBuilder extends BackboneElementBuilder {
       case 'number':
         return ['FhirUnsignedIntBuilder'];
       case 'sopClass':
-        return ['CodingBuilder'];
+        return ['FhirOidBuilder'];
       case 'subset':
         return ['FhirStringBuilder'];
       case 'imageRegion2D':
         return ['ImagingSelectionImageRegion2DBuilder'];
-      case 'imageRegion3D':
-        return ['ImagingSelectionImageRegion3DBuilder'];
       default:
         return <String>[];
     }
@@ -2500,7 +2520,7 @@ class ImagingSelectionInstanceBuilder extends BackboneElementBuilder {
         }
       case 'sopClass':
         {
-          sopClass = CodingBuilder.empty();
+          sopClass = FhirOidBuilder.empty();
           return;
         }
       case 'subset':
@@ -2511,11 +2531,6 @@ class ImagingSelectionInstanceBuilder extends BackboneElementBuilder {
       case 'imageRegion2D':
         {
           imageRegion2D = <ImagingSelectionImageRegion2DBuilder>[];
-          return;
-        }
-      case 'imageRegion3D':
-        {
-          imageRegion3D = <ImagingSelectionImageRegion3DBuilder>[];
           return;
         }
       default:
@@ -2532,10 +2547,9 @@ class ImagingSelectionInstanceBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     FhirIdBuilder? uid,
     FhirUnsignedIntBuilder? number,
-    CodingBuilder? sopClass,
+    FhirOidBuilder? sopClass,
     List<FhirStringBuilder>? subset,
     List<ImagingSelectionImageRegion2DBuilder>? imageRegion2D,
-    List<ImagingSelectionImageRegion3DBuilder>? imageRegion3D,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -2552,7 +2566,6 @@ class ImagingSelectionInstanceBuilder extends BackboneElementBuilder {
       sopClass: sopClass ?? this.sopClass,
       subset: subset ?? this.subset,
       imageRegion2D: imageRegion2D ?? this.imageRegion2D,
-      imageRegion3D: imageRegion3D ?? this.imageRegion3D,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -2627,12 +2640,6 @@ class ImagingSelectionInstanceBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!listEquals<ImagingSelectionImageRegion3DBuilder>(
-      imageRegion3D,
-      o.imageRegion3D,
-    )) {
-      return false;
-    }
     return true;
   }
 }
@@ -2640,8 +2647,6 @@ class ImagingSelectionInstanceBuilder extends BackboneElementBuilder {
 /// [ImagingSelectionImageRegion2DBuilder]
 /// Each imaging selection instance or frame list might includes an image
 /// region, specified by a region type and a set of 2D coordinates.
-///  If the parent imagingSelection.instance contains a subset element of
-/// type frame, the image region applies to all frames in the subset list.
 class ImagingSelectionImageRegion2DBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [ImagingSelectionImageRegion2DBuilder]
@@ -2763,10 +2768,10 @@ class ImagingSelectionImageRegion2DBuilder extends BackboneElementBuilder {
   /// The coordinates describing the image region. Encoded as a set of
   /// (column, row) pairs that denote positions in the selected image /
   /// frames specified with sub-pixel resolution.
-  ///  The origin at the TLHC of the TLHC pixel is 0.0\0.0, the BRHC of the
+  /// The origin at the TLHC of the TLHC pixel is 0.0\0.0, the BRHC of the
   /// TLHC pixel is 1.0\1.0, and the BRHC of the BRHC pixel is the number of
-  /// columns\rows in the image / frames. The values must be within the range
-  /// 0\0 to the number of columns\rows in the image / frames.
+  /// columns\rows in the image / frames. The values SHALL be within the
+  /// range 0\0 to the number of columns\rows in the image / frames.
   List<FhirDecimalBuilder>? coordinate;
 
   /// Converts a [ImagingSelectionImageRegion2DBuilder]
@@ -3176,7 +3181,7 @@ class ImagingSelectionImageRegion3DBuilder extends BackboneElementBuilder {
     this.coordinate,
     super.disallowExtensions,
   }) : super(
-          objectPath: 'ImagingSelection.instance.imageRegion3D',
+          objectPath: 'ImagingSelection.imageRegion3D',
         );
 
   /// An empty constructor for partial usage.
@@ -3191,7 +3196,7 @@ class ImagingSelectionImageRegion3DBuilder extends BackboneElementBuilder {
   factory ImagingSelectionImageRegion3DBuilder.fromJson(
     Map<String, dynamic> json,
   ) {
-    const objectPath = 'ImagingSelection.instance.imageRegion3D';
+    const objectPath = 'ImagingSelection.imageRegion3D';
     return ImagingSelectionImageRegion3DBuilder(
       id: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
@@ -3283,7 +3288,7 @@ class ImagingSelectionImageRegion3DBuilder extends BackboneElementBuilder {
 
   /// [coordinate]
   /// The coordinates describing the image region. Encoded as an ordered set
-  /// of (x,y,z) triplets (in mm and may be negative) that define a region of
+  /// of (x,y,z) triplets (in mm and MAY be negative) that define a region of
   /// interest in the patient-relative Reference Coordinate System defined by
   /// ImagingSelection.frameOfReferenceUid element.
   List<FhirDecimalBuilder>? coordinate;

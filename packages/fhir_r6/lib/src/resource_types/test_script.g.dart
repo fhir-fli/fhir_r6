@@ -20,7 +20,7 @@ abstract class $TestScriptCopyWith<T> extends $CanonicalResourceCopyWith<T> {
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXTestScript? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     PublicationStatus? status,
@@ -34,8 +34,7 @@ abstract class $TestScriptCopyWith<T> extends $CanonicalResourceCopyWith<T> {
     FhirMarkdown? purpose,
     FhirMarkdown? copyright,
     FhirString? copyrightLabel,
-    List<TestScriptOrigin>? origin,
-    List<TestScriptDestination>? destination,
+    List<TestScriptTestSystem>? testSystem,
     TestScriptMetadata? metadata,
     List<TestScriptScope>? scope,
     List<TestScriptFixture>? fixture,
@@ -44,6 +43,7 @@ abstract class $TestScriptCopyWith<T> extends $CanonicalResourceCopyWith<T> {
     TestScriptSetup? setup,
     List<TestScriptTest>? test,
     TestScriptTeardown? teardown,
+    List<TestScriptCommon>? common,
     bool? disallowExtensions,
   });
 }
@@ -81,8 +81,7 @@ class _$TestScriptCopyWithImpl<T> implements $TestScriptCopyWith<T> {
     Object? purpose = fhirSentinel,
     Object? copyright = fhirSentinel,
     Object? copyrightLabel = fhirSentinel,
-    Object? origin = fhirSentinel,
-    Object? destination = fhirSentinel,
+    Object? testSystem = fhirSentinel,
     Object? metadata = fhirSentinel,
     Object? scope = fhirSentinel,
     Object? fixture = fhirSentinel,
@@ -91,6 +90,7 @@ class _$TestScriptCopyWithImpl<T> implements $TestScriptCopyWith<T> {
     Object? setup = fhirSentinel,
     Object? test = fhirSentinel,
     Object? teardown = fhirSentinel,
+    Object? common = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -122,7 +122,7 @@ class _$TestScriptCopyWithImpl<T> implements $TestScriptCopyWith<T> {
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXTestScript?,
         name: identical(name, fhirSentinel)
             ? _value.name
             : (name as FhirString?) ?? _value.name,
@@ -161,12 +161,9 @@ class _$TestScriptCopyWithImpl<T> implements $TestScriptCopyWith<T> {
         copyrightLabel: identical(copyrightLabel, fhirSentinel)
             ? _value.copyrightLabel
             : copyrightLabel as FhirString?,
-        origin: identical(origin, fhirSentinel)
-            ? _value.origin
-            : origin as List<TestScriptOrigin>?,
-        destination: identical(destination, fhirSentinel)
-            ? _value.destination
-            : destination as List<TestScriptDestination>?,
+        testSystem: identical(testSystem, fhirSentinel)
+            ? _value.testSystem
+            : testSystem as List<TestScriptTestSystem>?,
         metadata: identical(metadata, fhirSentinel)
             ? _value.metadata
             : metadata as TestScriptMetadata?,
@@ -191,6 +188,9 @@ class _$TestScriptCopyWithImpl<T> implements $TestScriptCopyWith<T> {
         teardown: identical(teardown, fhirSentinel)
             ? _value.teardown
             : teardown as TestScriptTeardown?,
+        common: identical(common, fhirSentinel)
+            ? _value.common
+            : common as List<TestScriptCommon>?,
       ),
     );
   }
@@ -204,26 +204,28 @@ extension TestScriptCopyWithExtension on TestScript {
       );
 }
 
-abstract class $TestScriptOriginCopyWith<T>
+abstract class $TestScriptTestSystemCopyWith<T>
     extends $BackboneElementCopyWith<T> {
   @override
   T call({
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirInteger? index,
-    Coding? profile,
+    FhirPositiveInt? index,
+    FhirString? title,
+    List<FhirCanonical>? actor,
+    FhirMarkdown? description,
     FhirUrl? url,
     bool? disallowExtensions,
   });
 }
 
-class _$TestScriptOriginCopyWithImpl<T>
-    implements $TestScriptOriginCopyWith<T> {
-  final TestScriptOrigin _value;
-  final T Function(TestScriptOrigin) _then;
+class _$TestScriptTestSystemCopyWithImpl<T>
+    implements $TestScriptTestSystemCopyWith<T> {
+  final TestScriptTestSystem _value;
+  final T Function(TestScriptTestSystem) _then;
 
-  _$TestScriptOriginCopyWithImpl(this._value, this._then);
+  _$TestScriptTestSystemCopyWithImpl(this._value, this._then);
 
   @override
   T call({
@@ -231,12 +233,14 @@ class _$TestScriptOriginCopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? index = fhirSentinel,
-    Object? profile = fhirSentinel,
+    Object? title = fhirSentinel,
+    Object? actor = fhirSentinel,
+    Object? description = fhirSentinel,
     Object? url = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
-      TestScriptOrigin(
+      TestScriptTestSystem(
         id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
         extension_: identical(extension_, fhirSentinel)
             ? _value.extension_
@@ -246,10 +250,16 @@ class _$TestScriptOriginCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         index: identical(index, fhirSentinel)
             ? _value.index
-            : (index as FhirInteger?) ?? _value.index,
-        profile: identical(profile, fhirSentinel)
-            ? _value.profile
-            : (profile as Coding?) ?? _value.profile,
+            : (index as FhirPositiveInt?) ?? _value.index,
+        title: identical(title, fhirSentinel)
+            ? _value.title
+            : (title as FhirString?) ?? _value.title,
+        actor: identical(actor, fhirSentinel)
+            ? _value.actor
+            : actor as List<FhirCanonical>?,
+        description: identical(description, fhirSentinel)
+            ? _value.description
+            : description as FhirMarkdown?,
         url: identical(url, fhirSentinel) ? _value.url : url as FhirUrl?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
@@ -259,72 +269,9 @@ class _$TestScriptOriginCopyWithImpl<T>
   }
 }
 
-extension TestScriptOriginCopyWithExtension on TestScriptOrigin {
-  $TestScriptOriginCopyWith<TestScriptOrigin> get copyWith =>
-      _$TestScriptOriginCopyWithImpl<TestScriptOrigin>(
-        this,
-        (value) => value,
-      );
-}
-
-abstract class $TestScriptDestinationCopyWith<T>
-    extends $BackboneElementCopyWith<T> {
-  @override
-  T call({
-    FhirString? id,
-    List<FhirExtension>? extension_,
-    List<FhirExtension>? modifierExtension,
-    FhirInteger? index,
-    Coding? profile,
-    FhirUrl? url,
-    bool? disallowExtensions,
-  });
-}
-
-class _$TestScriptDestinationCopyWithImpl<T>
-    implements $TestScriptDestinationCopyWith<T> {
-  final TestScriptDestination _value;
-  final T Function(TestScriptDestination) _then;
-
-  _$TestScriptDestinationCopyWithImpl(this._value, this._then);
-
-  @override
-  T call({
-    Object? id = fhirSentinel,
-    Object? extension_ = fhirSentinel,
-    Object? modifierExtension = fhirSentinel,
-    Object? index = fhirSentinel,
-    Object? profile = fhirSentinel,
-    Object? url = fhirSentinel,
-    Object? disallowExtensions = fhirSentinel,
-  }) {
-    return _then(
-      TestScriptDestination(
-        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
-        extension_: identical(extension_, fhirSentinel)
-            ? _value.extension_
-            : extension_ as List<FhirExtension>?,
-        modifierExtension: identical(modifierExtension, fhirSentinel)
-            ? _value.modifierExtension
-            : modifierExtension as List<FhirExtension>?,
-        index: identical(index, fhirSentinel)
-            ? _value.index
-            : (index as FhirInteger?) ?? _value.index,
-        profile: identical(profile, fhirSentinel)
-            ? _value.profile
-            : (profile as Coding?) ?? _value.profile,
-        url: identical(url, fhirSentinel) ? _value.url : url as FhirUrl?,
-        disallowExtensions: identical(disallowExtensions, fhirSentinel)
-            ? _value.disallowExtensions
-            : disallowExtensions as bool?,
-      ),
-    );
-  }
-}
-
-extension TestScriptDestinationCopyWithExtension on TestScriptDestination {
-  $TestScriptDestinationCopyWith<TestScriptDestination> get copyWith =>
-      _$TestScriptDestinationCopyWithImpl<TestScriptDestination>(
+extension TestScriptTestSystemCopyWithExtension on TestScriptTestSystem {
+  $TestScriptTestSystemCopyWith<TestScriptTestSystem> get copyWith =>
+      _$TestScriptTestSystemCopyWithImpl<TestScriptTestSystem>(
         this,
         (value) => value,
       );
@@ -783,7 +730,7 @@ class _$TestScriptSetupCopyWithImpl<T> implements $TestScriptSetupCopyWith<T> {
             : modifierExtension as List<FhirExtension>?,
         action: identical(action, fhirSentinel)
             ? _value.action
-            : (action as List<TestScriptAction>?) ?? _value.action,
+            : action as List<TestScriptAction>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -807,6 +754,7 @@ abstract class $TestScriptActionCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
+    TestScriptCommon? common,
     TestScriptOperation? operation,
     TestScriptAssert? assert_,
     bool? disallowExtensions,
@@ -825,6 +773,7 @@ class _$TestScriptActionCopyWithImpl<T>
     Object? id = fhirSentinel,
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
+    Object? common = fhirSentinel,
     Object? operation = fhirSentinel,
     Object? assert_ = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
@@ -838,6 +787,9 @@ class _$TestScriptActionCopyWithImpl<T>
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
+        common: identical(common, fhirSentinel)
+            ? _value.common
+            : common as TestScriptCommon?,
         operation: identical(operation, fhirSentinel)
             ? _value.operation
             : operation as TestScriptOperation?,
@@ -860,6 +812,131 @@ extension TestScriptActionCopyWithExtension on TestScriptAction {
       );
 }
 
+abstract class $TestScriptCommonCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    FhirCanonical? testScript,
+    FhirId? keyRef,
+    List<TestScriptParameter>? parameter,
+    bool? disallowExtensions,
+  });
+}
+
+class _$TestScriptCommonCopyWithImpl<T>
+    implements $TestScriptCommonCopyWith<T> {
+  final TestScriptCommon _value;
+  final T Function(TestScriptCommon) _then;
+
+  _$TestScriptCommonCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? testScript = fhirSentinel,
+    Object? keyRef = fhirSentinel,
+    Object? parameter = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      TestScriptCommon(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        testScript: identical(testScript, fhirSentinel)
+            ? _value.testScript
+            : testScript as FhirCanonical?,
+        keyRef: identical(keyRef, fhirSentinel)
+            ? _value.keyRef
+            : (keyRef as FhirId?) ?? _value.keyRef,
+        parameter: identical(parameter, fhirSentinel)
+            ? _value.parameter
+            : parameter as List<TestScriptParameter>?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension TestScriptCommonCopyWithExtension on TestScriptCommon {
+  $TestScriptCommonCopyWith<TestScriptCommon> get copyWith =>
+      _$TestScriptCommonCopyWithImpl<TestScriptCommon>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $TestScriptParameterCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    FhirString? name,
+    FhirString? value,
+    bool? disallowExtensions,
+  });
+}
+
+class _$TestScriptParameterCopyWithImpl<T>
+    implements $TestScriptParameterCopyWith<T> {
+  final TestScriptParameter _value;
+  final T Function(TestScriptParameter) _then;
+
+  _$TestScriptParameterCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? name = fhirSentinel,
+    Object? value = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      TestScriptParameter(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        name: identical(name, fhirSentinel)
+            ? _value.name
+            : (name as FhirString?) ?? _value.name,
+        value: identical(value, fhirSentinel)
+            ? _value.value
+            : (value as FhirString?) ?? _value.value,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension TestScriptParameterCopyWithExtension on TestScriptParameter {
+  $TestScriptParameterCopyWith<TestScriptParameter> get copyWith =>
+      _$TestScriptParameterCopyWithImpl<TestScriptParameter>(
+        this,
+        (value) => value,
+      );
+}
+
 abstract class $TestScriptOperationCopyWith<T>
     extends $BackboneElementCopyWith<T> {
   @override
@@ -871,8 +948,8 @@ abstract class $TestScriptOperationCopyWith<T>
     FhirUri? resource,
     FhirString? label,
     FhirString? description,
-    FhirCode? accept,
-    FhirCode? contentType,
+    SupplementedMimeTypes? accept,
+    SupplementedMimeTypes? contentType,
     FhirInteger? destination,
     FhirBoolean? encodeRequestUrl,
     TestScriptRequestMethodCode? method,
@@ -940,10 +1017,10 @@ class _$TestScriptOperationCopyWithImpl<T>
             : description as FhirString?,
         accept: identical(accept, fhirSentinel)
             ? _value.accept
-            : accept as FhirCode?,
+            : accept as SupplementedMimeTypes?,
         contentType: identical(contentType, fhirSentinel)
             ? _value.contentType
-            : contentType as FhirCode?,
+            : contentType as SupplementedMimeTypes?,
         destination: identical(destination, fhirSentinel)
             ? _value.destination
             : destination as FhirInteger?,
@@ -1064,7 +1141,7 @@ abstract class $TestScriptAssertCopyWith<T>
     FhirString? compareToSourceId,
     FhirString? compareToSourceExpression,
     FhirString? compareToSourcePath,
-    FhirCode? contentType,
+    SupplementedMimeTypes? contentType,
     AssertionManualCompletionType? defaultManualCompletion,
     FhirString? expression,
     FhirString? headerField,
@@ -1156,7 +1233,7 @@ class _$TestScriptAssertCopyWithImpl<T>
             : compareToSourcePath as FhirString?,
         contentType: identical(contentType, fhirSentinel)
             ? _value.contentType
-            : contentType as FhirCode?,
+            : contentType as SupplementedMimeTypes?,
         defaultManualCompletion:
             identical(defaultManualCompletion, fhirSentinel)
                 ? _value.defaultManualCompletion
@@ -1233,7 +1310,8 @@ abstract class $TestScriptRequirementCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirUri? linkX,
+    FhirCanonical? reference,
+    FhirId? key,
     bool? disallowExtensions,
   });
 }
@@ -1250,7 +1328,8 @@ class _$TestScriptRequirementCopyWithImpl<T>
     Object? id = fhirSentinel,
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
-    Object? linkX = fhirSentinel,
+    Object? reference = fhirSentinel,
+    Object? key = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -1262,8 +1341,12 @@ class _$TestScriptRequirementCopyWithImpl<T>
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
-        linkX:
-            identical(linkX, fhirSentinel) ? _value.linkX : linkX as FhirUri?,
+        reference: identical(reference, fhirSentinel)
+            ? _value.reference
+            : (reference as FhirCanonical?) ?? _value.reference,
+        key: identical(key, fhirSentinel)
+            ? _value.key
+            : (key as FhirId?) ?? _value.key,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -1324,7 +1407,7 @@ class _$TestScriptTestCopyWithImpl<T> implements $TestScriptTestCopyWith<T> {
             : description as FhirString?,
         action: identical(action, fhirSentinel)
             ? _value.action
-            : (action as List<TestScriptAction>?) ?? _value.action,
+            : action as List<TestScriptAction>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -1348,6 +1431,7 @@ abstract class $TestScriptAction1CopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
+    TestScriptCommon? common,
     TestScriptOperation? operation,
     TestScriptAssert? assert_,
     bool? disallowExtensions,
@@ -1366,6 +1450,7 @@ class _$TestScriptAction1CopyWithImpl<T>
     Object? id = fhirSentinel,
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
+    Object? common = fhirSentinel,
     Object? operation = fhirSentinel,
     Object? assert_ = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
@@ -1379,6 +1464,9 @@ class _$TestScriptAction1CopyWithImpl<T>
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
+        common: identical(common, fhirSentinel)
+            ? _value.common
+            : common as TestScriptCommon?,
         operation: identical(operation, fhirSentinel)
             ? _value.operation
             : operation as TestScriptOperation?,
@@ -1463,6 +1551,7 @@ abstract class $TestScriptAction2CopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
+    TestScriptCommon? common,
     TestScriptOperation? operation,
     bool? disallowExtensions,
   });
@@ -1480,6 +1569,7 @@ class _$TestScriptAction2CopyWithImpl<T>
     Object? id = fhirSentinel,
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
+    Object? common = fhirSentinel,
     Object? operation = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -1492,6 +1582,9 @@ class _$TestScriptAction2CopyWithImpl<T>
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
+        common: identical(common, fhirSentinel)
+            ? _value.common
+            : common as TestScriptCommon?,
         operation: identical(operation, fhirSentinel)
             ? _value.operation
             : (operation as TestScriptOperation?) ?? _value.operation,
@@ -1506,6 +1599,197 @@ class _$TestScriptAction2CopyWithImpl<T>
 extension TestScriptAction2CopyWithExtension on TestScriptAction2 {
   $TestScriptAction2CopyWith<TestScriptAction2> get copyWith =>
       _$TestScriptAction2CopyWithImpl<TestScriptAction2>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $TestScriptCommon1CopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    FhirId? key,
+    FhirString? name,
+    FhirString? description,
+    List<TestScriptParameter>? parameter,
+    List<TestScriptAction>? action,
+    bool? disallowExtensions,
+  });
+}
+
+class _$TestScriptCommon1CopyWithImpl<T>
+    implements $TestScriptCommon1CopyWith<T> {
+  final TestScriptCommon1 _value;
+  final T Function(TestScriptCommon1) _then;
+
+  _$TestScriptCommon1CopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? key = fhirSentinel,
+    Object? name = fhirSentinel,
+    Object? description = fhirSentinel,
+    Object? parameter = fhirSentinel,
+    Object? action = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      TestScriptCommon1(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        key: identical(key, fhirSentinel)
+            ? _value.key
+            : (key as FhirId?) ?? _value.key,
+        name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
+        description: identical(description, fhirSentinel)
+            ? _value.description
+            : description as FhirString?,
+        parameter: identical(parameter, fhirSentinel)
+            ? _value.parameter
+            : parameter as List<TestScriptParameter>?,
+        action: identical(action, fhirSentinel)
+            ? _value.action
+            : (action as List<TestScriptAction>?) ?? _value.action,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension TestScriptCommon1CopyWithExtension on TestScriptCommon1 {
+  $TestScriptCommon1CopyWith<TestScriptCommon1> get copyWith =>
+      _$TestScriptCommon1CopyWithImpl<TestScriptCommon1>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $TestScriptParameter1CopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    FhirString? name,
+    FhirString? description,
+    bool? disallowExtensions,
+  });
+}
+
+class _$TestScriptParameter1CopyWithImpl<T>
+    implements $TestScriptParameter1CopyWith<T> {
+  final TestScriptParameter1 _value;
+  final T Function(TestScriptParameter1) _then;
+
+  _$TestScriptParameter1CopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? name = fhirSentinel,
+    Object? description = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      TestScriptParameter1(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
+        description: identical(description, fhirSentinel)
+            ? _value.description
+            : description as FhirString?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension TestScriptParameter1CopyWithExtension on TestScriptParameter1 {
+  $TestScriptParameter1CopyWith<TestScriptParameter1> get copyWith =>
+      _$TestScriptParameter1CopyWithImpl<TestScriptParameter1>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $TestScriptAction3CopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    TestScriptOperation? operation,
+    TestScriptAssert? assert_,
+    bool? disallowExtensions,
+  });
+}
+
+class _$TestScriptAction3CopyWithImpl<T>
+    implements $TestScriptAction3CopyWith<T> {
+  final TestScriptAction3 _value;
+  final T Function(TestScriptAction3) _then;
+
+  _$TestScriptAction3CopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? operation = fhirSentinel,
+    Object? assert_ = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      TestScriptAction3(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        operation: identical(operation, fhirSentinel)
+            ? _value.operation
+            : operation as TestScriptOperation?,
+        assert_: identical(assert_, fhirSentinel)
+            ? _value.assert_
+            : assert_ as TestScriptAssert?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension TestScriptAction3CopyWithExtension on TestScriptAction3 {
+  $TestScriptAction3CopyWith<TestScriptAction3> get copyWith =>
+      _$TestScriptAction3CopyWithImpl<TestScriptAction3>(
         this,
         (value) => value,
       );

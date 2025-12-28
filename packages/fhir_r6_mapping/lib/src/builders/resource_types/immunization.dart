@@ -2124,8 +2124,8 @@ class ImmunizationPerformerBuilder extends BackboneElementBuilder {
   String get fhirType => 'ImmunizationPerformer';
 
   /// [function_]
-  /// Describes the type of performance (e.g. ordering provider,
-  /// administering provider, etc.).
+  /// Describes the function played by the performer in the immunization
+  /// event (e.g. ordering provider, administering provider, etc.).
   CodeableConceptBuilder? function_;
 
   /// [actor]
@@ -3435,9 +3435,7 @@ class ImmunizationProtocolAppliedBuilder extends BackboneElementBuilder {
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
   factory ImmunizationProtocolAppliedBuilder.empty() =>
-      ImmunizationProtocolAppliedBuilder(
-        doseNumber: FhirStringBuilder.empty(),
-      );
+      ImmunizationProtocolAppliedBuilder();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
   factory ImmunizationProtocolAppliedBuilder.fromJson(
@@ -3493,16 +3491,16 @@ class ImmunizationProtocolAppliedBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      doseNumber: JsonParser.parsePrimitive<FhirStringBuilder>(
+      doseNumber: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
         'doseNumber',
-        FhirStringBuilder.fromJson,
+        CodeableConceptBuilder.fromJson,
         '$objectPath.doseNumber',
       ),
-      seriesDoses: JsonParser.parsePrimitive<FhirStringBuilder>(
+      seriesDoses: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
         'seriesDoses',
-        FhirStringBuilder.fromJson,
+        CodeableConceptBuilder.fromJson,
         '$objectPath.seriesDoses',
       ),
     );
@@ -3567,12 +3565,12 @@ class ImmunizationProtocolAppliedBuilder extends BackboneElementBuilder {
   /// [doseNumber]
   /// Nominal position in a series as intended by the practitioner
   /// administering the dose.
-  FhirStringBuilder? doseNumber;
+  CodeableConceptBuilder? doseNumber;
 
   /// [seriesDoses]
   /// The recommended number of doses to achieve immunity as intended by the
   /// practitioner administering the dose.
-  FhirStringBuilder? seriesDoses;
+  CodeableConceptBuilder? seriesDoses;
 
   /// Converts a [ImmunizationProtocolAppliedBuilder]
   /// to [ImmunizationProtocolApplied]
@@ -3805,41 +3803,17 @@ class ImmunizationProtocolAppliedBuilder extends BackboneElementBuilder {
         }
       case 'doseNumber':
         {
-          if (child is FhirStringBuilder) {
+          if (child is CodeableConceptBuilder) {
             doseNumber = child;
             return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                doseNumber = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
       case 'seriesDoses':
         {
-          if (child is FhirStringBuilder) {
+          if (child is CodeableConceptBuilder) {
             seriesDoses = child;
             return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                seriesDoses = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -3866,9 +3840,9 @@ class ImmunizationProtocolAppliedBuilder extends BackboneElementBuilder {
       case 'targetDisease':
         return ['CodeableConceptBuilder'];
       case 'doseNumber':
-        return ['FhirStringBuilder'];
+        return ['CodeableConceptBuilder'];
       case 'seriesDoses':
-        return ['FhirStringBuilder'];
+        return ['CodeableConceptBuilder'];
       default:
         return <String>[];
     }
@@ -3911,12 +3885,12 @@ class ImmunizationProtocolAppliedBuilder extends BackboneElementBuilder {
         }
       case 'doseNumber':
         {
-          doseNumber = FhirStringBuilder.empty();
+          doseNumber = CodeableConceptBuilder.empty();
           return;
         }
       case 'seriesDoses':
         {
-          seriesDoses = FhirStringBuilder.empty();
+          seriesDoses = CodeableConceptBuilder.empty();
           return;
         }
       default:
@@ -3934,8 +3908,8 @@ class ImmunizationProtocolAppliedBuilder extends BackboneElementBuilder {
     FhirStringBuilder? series,
     ReferenceBuilder? authority,
     List<CodeableConceptBuilder>? targetDisease,
-    FhirStringBuilder? doseNumber,
-    FhirStringBuilder? seriesDoses,
+    CodeableConceptBuilder? doseNumber,
+    CodeableConceptBuilder? seriesDoses,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,

@@ -152,7 +152,7 @@ class ArtifactAssessmentDisposition extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/artifactassessment-disposition',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Unresolved',
     ),
@@ -167,7 +167,7 @@ class ArtifactAssessmentDisposition extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/artifactassessment-disposition',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Not Persuasive',
     ),
@@ -182,7 +182,7 @@ class ArtifactAssessmentDisposition extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/artifactassessment-disposition',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Persuasive',
     ),
@@ -197,7 +197,7 @@ class ArtifactAssessmentDisposition extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/artifactassessment-disposition',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Persuasive with Modification',
     ),
@@ -212,7 +212,7 @@ class ArtifactAssessmentDisposition extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/artifactassessment-disposition',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Not Persuasive with Modification',
     ),

@@ -31,8 +31,6 @@ class ProcedureBuilder extends DomainResourceBuilder {
     super.extension_,
     super.modifierExtension,
     this.identifier,
-    this.instantiatesCanonical,
-    this.instantiatesUri,
     this.basedOn,
     this.partOf,
     this.status,
@@ -58,6 +56,7 @@ class ProcedureBuilder extends DomainResourceBuilder {
     this.location,
     this.reason,
     this.bodySite,
+    this.bodyStructure,
     this.outcome,
     this.report,
     this.complication,
@@ -162,19 +161,6 @@ class ProcedureBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      instantiatesCanonical:
-          JsonParser.parsePrimitiveList<FhirCanonicalBuilder>(
-        json,
-        'instantiatesCanonical',
-        FhirCanonicalBuilder.fromJson,
-        '$objectPath.instantiatesCanonical',
-      ),
-      instantiatesUri: JsonParser.parsePrimitiveList<FhirUriBuilder>(
-        json,
-        'instantiatesUri',
-        FhirUriBuilder.fromJson,
-        '$objectPath.instantiatesUri',
-      ),
       basedOn: (json['basedOn'] as List<dynamic>?)
           ?.map<ReferenceBuilder>(
             (v) => ReferenceBuilder.fromJson(
@@ -309,12 +295,26 @@ class ProcedureBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      outcome: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'outcome',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.outcome',
-      ),
+      bodyStructure: (json['bodyStructure'] as List<dynamic>?)
+          ?.map<ReferenceBuilder>(
+            (v) => ReferenceBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.bodyStructure',
+              },
+            ),
+          )
+          .toList(),
+      outcome: (json['outcome'] as List<dynamic>?)
+          ?.map<CodeableReferenceBuilder>(
+            (v) => CodeableReferenceBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.outcome',
+              },
+            ),
+          )
+          .toList(),
       report: (json['report'] as List<dynamic>?)
           ?.map<ReferenceBuilder>(
             (v) => ReferenceBuilder.fromJson(
@@ -336,8 +336,8 @@ class ProcedureBuilder extends DomainResourceBuilder {
           )
           .toList(),
       followUp: (json['followUp'] as List<dynamic>?)
-          ?.map<CodeableConceptBuilder>(
-            (v) => CodeableConceptBuilder.fromJson(
+          ?.map<CodeableReferenceBuilder>(
+            (v) => CodeableReferenceBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
                 'objectPath': '$objectPath.followUp',
@@ -435,18 +435,6 @@ class ProcedureBuilder extends DomainResourceBuilder {
   /// other systems which remain constant as the resource is updated and is
   /// propagated from server to server.
   List<IdentifierBuilder>? identifier;
-
-  /// [instantiatesCanonical]
-  /// The URL pointing to a FHIR-defined protocol, guideline, order set or
-  /// other definition that is adhered to in whole or in part by this
-  /// Procedure.
-  List<FhirCanonicalBuilder>? instantiatesCanonical;
-
-  /// [instantiatesUri]
-  /// The URL pointing to an externally maintained protocol, guideline, order
-  /// set or other definition that is adhered to in whole or in part by this
-  /// Procedure.
-  List<FhirUriBuilder>? instantiatesUri;
 
   /// [basedOn]
   /// A reference to a resource that contains details of the request for this
@@ -578,10 +566,18 @@ class ProcedureBuilder extends DomainResourceBuilder {
   /// locations are allowed - e.g. multiple punch biopsies of a lesion.
   List<CodeableConceptBuilder>? bodySite;
 
+  /// [bodyStructure]
+  /// Indicates the body structure on the subject's body where the procedure
+  /// was performed.
+  List<ReferenceBuilder>? bodyStructure;
+
   /// [outcome]
-  /// The outcome of the procedure - did it resolve the reasons for the
-  /// procedure being performed?
-  CodeableConceptBuilder? outcome;
+  /// The short term outcome of the procedure assessed during the procedure,
+  /// at the conclusion of the procedure, during the immediate
+  /// post-performance period, or at discharge. The outcome is usually
+  /// expected to be within the encounter during which the procedure was
+  /// performed.
+  List<CodeableReferenceBuilder>? outcome;
 
   /// [report]
   /// This could be a histology result, pathology report, surgical report,
@@ -599,7 +595,8 @@ class ProcedureBuilder extends DomainResourceBuilder {
   /// If the procedure required specific follow up - e.g. removal of sutures.
   /// The follow up may be represented as a simple note or could potentially
   /// be more complex, in which case the CarePlan resource can be used.
-  List<CodeableConceptBuilder>? followUp;
+  /// CarePlan can reference the Procedure via CarePlan.addresses.
+  List<CodeableReferenceBuilder>? followUp;
 
   /// [note]
   /// Any other notes and comments about the procedure.
@@ -670,8 +667,6 @@ class ProcedureBuilder extends DomainResourceBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('identifier', identifier);
-    addField('instantiatesCanonical', instantiatesCanonical);
-    addField('instantiatesUri', instantiatesUri);
     addField('basedOn', basedOn);
     addField('partOf', partOf);
     addField('status', status);
@@ -697,6 +692,7 @@ class ProcedureBuilder extends DomainResourceBuilder {
     addField('location', location);
     addField('reason', reason);
     addField('bodySite', bodySite);
+    addField('bodyStructure', bodyStructure);
     addField('outcome', outcome);
     addField('report', report);
     addField('complication', complication);
@@ -721,8 +717,6 @@ class ProcedureBuilder extends DomainResourceBuilder {
       'extension',
       'modifierExtension',
       'identifier',
-      'instantiatesCanonical',
-      'instantiatesUri',
       'basedOn',
       'partOf',
       'status',
@@ -740,6 +734,7 @@ class ProcedureBuilder extends DomainResourceBuilder {
       'location',
       'reason',
       'bodySite',
+      'bodyStructure',
       'outcome',
       'report',
       'complication',
@@ -795,14 +790,6 @@ class ProcedureBuilder extends DomainResourceBuilder {
       case 'identifier':
         if (identifier != null) {
           fields.addAll(identifier!);
-        }
-      case 'instantiatesCanonical':
-        if (instantiatesCanonical != null) {
-          fields.addAll(instantiatesCanonical!);
-        }
-      case 'instantiatesUri':
-        if (instantiatesUri != null) {
-          fields.addAll(instantiatesUri!);
         }
       case 'basedOn':
         if (basedOn != null) {
@@ -912,9 +899,13 @@ class ProcedureBuilder extends DomainResourceBuilder {
         if (bodySite != null) {
           fields.addAll(bodySite!);
         }
+      case 'bodyStructure':
+        if (bodyStructure != null) {
+          fields.addAll(bodyStructure!);
+        }
       case 'outcome':
         if (outcome != null) {
-          fields.add(outcome!);
+          fields.addAll(outcome!);
         }
       case 'report':
         if (report != null) {
@@ -1113,104 +1104,6 @@ class ProcedureBuilder extends DomainResourceBuilder {
               child,
             ];
             return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'instantiatesCanonical':
-        {
-          if (child is List<FhirCanonicalBuilder>) {
-            // Replace or create new list
-            instantiatesCanonical = child;
-            return;
-          } else if (child is FhirCanonicalBuilder) {
-            // Add single element to existing list or create new list
-            instantiatesCanonical = [
-              ...(instantiatesCanonical ?? []),
-              child,
-            ];
-            return;
-          } else if (child is List<PrimitiveTypeBuilder>) {
-            // Try to convert list of primitive types
-            final convertedList = <FhirCanonicalBuilder>[];
-            for (final element in child) {
-              try {
-                final stringValue = element.toString();
-                final converted = FhirCanonicalBuilder.tryParse(stringValue);
-                if (converted != null) {
-                  convertedList.add(converted);
-                }
-              } catch (e) {
-                // Continue if conversion fails
-              }
-            }
-            if (convertedList.isNotEmpty) {
-              instantiatesCanonical = convertedList;
-              return;
-            }
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert a single primitive
-            try {
-              final stringValue = child.toString();
-              final converted = FhirCanonicalBuilder.tryParse(stringValue);
-              if (converted != null) {
-                instantiatesCanonical = [
-                  ...(instantiatesCanonical ?? []),
-                  converted,
-                ];
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'instantiatesUri':
-        {
-          if (child is List<FhirUriBuilder>) {
-            // Replace or create new list
-            instantiatesUri = child;
-            return;
-          } else if (child is FhirUriBuilder) {
-            // Add single element to existing list or create new list
-            instantiatesUri = [
-              ...(instantiatesUri ?? []),
-              child,
-            ];
-            return;
-          } else if (child is List<PrimitiveTypeBuilder>) {
-            // Try to convert list of primitive types
-            final convertedList = <FhirUriBuilder>[];
-            for (final element in child) {
-              try {
-                final stringValue = element.toString();
-                final converted = FhirUriBuilder.tryParse(stringValue);
-                if (converted != null) {
-                  convertedList.add(converted);
-                }
-              } catch (e) {
-                // Continue if conversion fails
-              }
-            }
-            if (convertedList.isNotEmpty) {
-              instantiatesUri = convertedList;
-              return;
-            }
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert a single primitive
-            try {
-              final stringValue = child.toString();
-              final converted = FhirUriBuilder.tryParse(stringValue);
-              if (converted != null) {
-                instantiatesUri = [
-                  ...(instantiatesUri ?? []),
-                  converted,
-                ];
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -1533,10 +1426,34 @@ class ProcedureBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'bodyStructure':
+        {
+          if (child is List<ReferenceBuilder>) {
+            // Replace or create new list
+            bodyStructure = child;
+            return;
+          } else if (child is ReferenceBuilder) {
+            // Add single element to existing list or create new list
+            bodyStructure = [
+              ...(bodyStructure ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'outcome':
         {
-          if (child is CodeableConceptBuilder) {
+          if (child is List<CodeableReferenceBuilder>) {
+            // Replace or create new list
             outcome = child;
+            return;
+          } else if (child is CodeableReferenceBuilder) {
+            // Add single element to existing list or create new list
+            outcome = [
+              ...(outcome ?? []),
+              child,
+            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -1575,11 +1492,11 @@ class ProcedureBuilder extends DomainResourceBuilder {
         }
       case 'followUp':
         {
-          if (child is List<CodeableConceptBuilder>) {
+          if (child is List<CodeableReferenceBuilder>) {
             // Replace or create new list
             followUp = child;
             return;
-          } else if (child is CodeableConceptBuilder) {
+          } else if (child is CodeableReferenceBuilder) {
             // Add single element to existing list or create new list
             followUp = [
               ...(followUp ?? []),
@@ -1681,10 +1598,6 @@ class ProcedureBuilder extends DomainResourceBuilder {
         return ['FhirExtensionBuilder'];
       case 'identifier':
         return ['IdentifierBuilder'];
-      case 'instantiatesCanonical':
-        return ['FhirCanonicalBuilder'];
-      case 'instantiatesUri':
-        return ['FhirUriBuilder'];
       case 'basedOn':
         return ['ReferenceBuilder'];
       case 'partOf':
@@ -1747,14 +1660,16 @@ class ProcedureBuilder extends DomainResourceBuilder {
         return ['CodeableReferenceBuilder'];
       case 'bodySite':
         return ['CodeableConceptBuilder'];
+      case 'bodyStructure':
+        return ['ReferenceBuilder'];
       case 'outcome':
-        return ['CodeableConceptBuilder'];
+        return ['CodeableReferenceBuilder'];
       case 'report':
         return ['ReferenceBuilder'];
       case 'complication':
         return ['CodeableReferenceBuilder'];
       case 'followUp':
-        return ['CodeableConceptBuilder'];
+        return ['CodeableReferenceBuilder'];
       case 'note':
         return ['AnnotationBuilder'];
       case 'focalDevice':
@@ -1816,16 +1731,6 @@ class ProcedureBuilder extends DomainResourceBuilder {
       case 'identifier':
         {
           identifier = <IdentifierBuilder>[];
-          return;
-        }
-      case 'instantiatesCanonical':
-        {
-          instantiatesCanonical = <FhirCanonicalBuilder>[];
-          return;
-        }
-      case 'instantiatesUri':
-        {
-          instantiatesUri = <FhirUriBuilder>[];
           return;
         }
       case 'basedOn':
@@ -1947,9 +1852,14 @@ class ProcedureBuilder extends DomainResourceBuilder {
           bodySite = <CodeableConceptBuilder>[];
           return;
         }
+      case 'bodyStructure':
+        {
+          bodyStructure = <ReferenceBuilder>[];
+          return;
+        }
       case 'outcome':
         {
-          outcome = CodeableConceptBuilder.empty();
+          outcome = <CodeableReferenceBuilder>[];
           return;
         }
       case 'report':
@@ -1964,7 +1874,7 @@ class ProcedureBuilder extends DomainResourceBuilder {
         }
       case 'followUp':
         {
-          followUp = <CodeableConceptBuilder>[];
+          followUp = <CodeableReferenceBuilder>[];
           return;
         }
       case 'note':
@@ -2005,8 +1915,6 @@ class ProcedureBuilder extends DomainResourceBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     List<IdentifierBuilder>? identifier,
-    List<FhirCanonicalBuilder>? instantiatesCanonical,
-    List<FhirUriBuilder>? instantiatesUri,
     List<ReferenceBuilder>? basedOn,
     List<ReferenceBuilder>? partOf,
     EventStatusBuilder? status,
@@ -2024,10 +1932,11 @@ class ProcedureBuilder extends DomainResourceBuilder {
     ReferenceBuilder? location,
     List<CodeableReferenceBuilder>? reason,
     List<CodeableConceptBuilder>? bodySite,
-    CodeableConceptBuilder? outcome,
+    List<ReferenceBuilder>? bodyStructure,
+    List<CodeableReferenceBuilder>? outcome,
     List<ReferenceBuilder>? report,
     List<CodeableReferenceBuilder>? complication,
-    List<CodeableConceptBuilder>? followUp,
+    List<CodeableReferenceBuilder>? followUp,
     List<AnnotationBuilder>? note,
     List<ProcedureFocalDeviceBuilder>? focalDevice,
     List<CodeableReferenceBuilder>? used,
@@ -2056,9 +1965,6 @@ class ProcedureBuilder extends DomainResourceBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       identifier: identifier ?? this.identifier,
-      instantiatesCanonical:
-          instantiatesCanonical ?? this.instantiatesCanonical,
-      instantiatesUri: instantiatesUri ?? this.instantiatesUri,
       basedOn: basedOn ?? this.basedOn,
       partOf: partOf ?? this.partOf,
       status: status ?? this.status,
@@ -2084,6 +1990,7 @@ class ProcedureBuilder extends DomainResourceBuilder {
       location: location ?? this.location,
       reason: reason ?? this.reason,
       bodySite: bodySite ?? this.bodySite,
+      bodyStructure: bodyStructure ?? this.bodyStructure,
       outcome: outcome ?? this.outcome,
       report: report ?? this.report,
       complication: complication ?? this.complication,
@@ -2169,18 +2076,6 @@ class ProcedureBuilder extends DomainResourceBuilder {
     if (!listEquals<IdentifierBuilder>(
       identifier,
       o.identifier,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirCanonicalBuilder>(
-      instantiatesCanonical,
-      o.instantiatesCanonical,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirUriBuilder>(
-      instantiatesUri,
-      o.instantiatesUri,
     )) {
       return false;
     }
@@ -2286,7 +2181,13 @@ class ProcedureBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<ReferenceBuilder>(
+      bodyStructure,
+      o.bodyStructure,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableReferenceBuilder>(
       outcome,
       o.outcome,
     )) {
@@ -2304,7 +2205,7 @@ class ProcedureBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConceptBuilder>(
+    if (!listEquals<CodeableReferenceBuilder>(
       followUp,
       o.followUp,
     )) {

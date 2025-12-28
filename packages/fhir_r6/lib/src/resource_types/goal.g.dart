@@ -25,14 +25,14 @@ abstract class $GoalCopyWith<T> extends $DomainResourceCopyWith<T> {
     CodeableConcept? priority,
     CodeableConcept? description,
     Reference? subject,
-    FhirDate? startX,
+    StartXGoal? startX,
+    List<GoalAcceptance>? acceptance,
     List<GoalTarget>? target,
     FhirDate? statusDate,
-    FhirString? statusReason,
+    List<CodeableConcept>? statusReason,
     Reference? source,
     List<Reference>? addresses,
     List<Annotation>? note,
-    List<CodeableReference>? outcome,
     bool? disallowExtensions,
   });
 }
@@ -62,13 +62,13 @@ class _$GoalCopyWithImpl<T> implements $GoalCopyWith<T> {
     Object? description = fhirSentinel,
     Object? subject = fhirSentinel,
     Object? startX = fhirSentinel,
+    Object? acceptance = fhirSentinel,
     Object? target = fhirSentinel,
     Object? statusDate = fhirSentinel,
     Object? statusReason = fhirSentinel,
     Object? source = fhirSentinel,
     Object? addresses = fhirSentinel,
     Object? note = fhirSentinel,
-    Object? outcome = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -118,7 +118,10 @@ class _$GoalCopyWithImpl<T> implements $GoalCopyWith<T> {
             : (subject as Reference?) ?? _value.subject,
         startX: identical(startX, fhirSentinel)
             ? _value.startX
-            : startX as FhirDate?,
+            : startX as StartXGoal?,
+        acceptance: identical(acceptance, fhirSentinel)
+            ? _value.acceptance
+            : acceptance as List<GoalAcceptance>?,
         target: identical(target, fhirSentinel)
             ? _value.target
             : target as List<GoalTarget>?,
@@ -127,7 +130,7 @@ class _$GoalCopyWithImpl<T> implements $GoalCopyWith<T> {
             : statusDate as FhirDate?,
         statusReason: identical(statusReason, fhirSentinel)
             ? _value.statusReason
-            : statusReason as FhirString?,
+            : statusReason as List<CodeableConcept>?,
         source: identical(source, fhirSentinel)
             ? _value.source
             : source as Reference?,
@@ -137,9 +140,6 @@ class _$GoalCopyWithImpl<T> implements $GoalCopyWith<T> {
         note: identical(note, fhirSentinel)
             ? _value.note
             : note as List<Annotation>?,
-        outcome: identical(outcome, fhirSentinel)
-            ? _value.outcome
-            : outcome as List<CodeableReference>?,
       ),
     );
   }
@@ -152,6 +152,69 @@ extension GoalCopyWithExtension on Goal {
       );
 }
 
+abstract class $GoalAcceptanceCopyWith<T> extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    Reference? participant,
+    GoalAcceptStatus? status,
+    CodeableConcept? priority,
+    bool? disallowExtensions,
+  });
+}
+
+class _$GoalAcceptanceCopyWithImpl<T> implements $GoalAcceptanceCopyWith<T> {
+  final GoalAcceptance _value;
+  final T Function(GoalAcceptance) _then;
+
+  _$GoalAcceptanceCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? participant = fhirSentinel,
+    Object? status = fhirSentinel,
+    Object? priority = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      GoalAcceptance(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        participant: identical(participant, fhirSentinel)
+            ? _value.participant
+            : (participant as Reference?) ?? _value.participant,
+        status: identical(status, fhirSentinel)
+            ? _value.status
+            : status as GoalAcceptStatus?,
+        priority: identical(priority, fhirSentinel)
+            ? _value.priority
+            : priority as CodeableConcept?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension GoalAcceptanceCopyWithExtension on GoalAcceptance {
+  $GoalAcceptanceCopyWith<GoalAcceptance> get copyWith =>
+      _$GoalAcceptanceCopyWithImpl<GoalAcceptance>(
+        this,
+        (value) => value,
+      );
+}
+
 abstract class $GoalTargetCopyWith<T> extends $BackboneElementCopyWith<T> {
   @override
   T call({
@@ -159,8 +222,8 @@ abstract class $GoalTargetCopyWith<T> extends $BackboneElementCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? measure,
-    Quantity? detailX,
-    FhirDate? dueX,
+    DetailXGoalTarget? detailX,
+    DueXGoalTarget? dueX,
     bool? disallowExtensions,
   });
 }
@@ -195,8 +258,10 @@ class _$GoalTargetCopyWithImpl<T> implements $GoalTargetCopyWith<T> {
             : measure as CodeableConcept?,
         detailX: identical(detailX, fhirSentinel)
             ? _value.detailX
-            : detailX as Quantity?,
-        dueX: identical(dueX, fhirSentinel) ? _value.dueX : dueX as FhirDate?,
+            : detailX as DetailXGoalTarget?,
+        dueX: identical(dueX, fhirSentinel)
+            ? _value.dueX
+            : dueX as DueXGoalTarget?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

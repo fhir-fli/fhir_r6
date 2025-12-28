@@ -21,7 +21,7 @@ abstract class $ActorDefinitionCopyWith<T>
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXActorDefinition? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     PublicationStatus? status,
@@ -35,11 +35,10 @@ abstract class $ActorDefinitionCopyWith<T>
     FhirMarkdown? purpose,
     FhirMarkdown? copyright,
     FhirString? copyrightLabel,
-    ExampleScenarioActorType? type,
+    ActorDefinitionActorType? type,
     FhirMarkdown? documentation,
     List<FhirUrl>? reference,
-    FhirCanonical? capabilities,
-    List<FhirCanonical>? derivedFrom,
+    List<FhirCanonical>? baseDefinition,
     bool? disallowExtensions,
   });
 }
@@ -80,8 +79,7 @@ class _$ActorDefinitionCopyWithImpl<T> implements $ActorDefinitionCopyWith<T> {
     Object? type = fhirSentinel,
     Object? documentation = fhirSentinel,
     Object? reference = fhirSentinel,
-    Object? capabilities = fhirSentinel,
-    Object? derivedFrom = fhirSentinel,
+    Object? baseDefinition = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -113,7 +111,7 @@ class _$ActorDefinitionCopyWithImpl<T> implements $ActorDefinitionCopyWith<T> {
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXActorDefinition?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -152,19 +150,16 @@ class _$ActorDefinitionCopyWithImpl<T> implements $ActorDefinitionCopyWith<T> {
             : copyrightLabel as FhirString?,
         type: identical(type, fhirSentinel)
             ? _value.type
-            : (type as ExampleScenarioActorType?) ?? _value.type,
+            : (type as ActorDefinitionActorType?) ?? _value.type,
         documentation: identical(documentation, fhirSentinel)
             ? _value.documentation
             : documentation as FhirMarkdown?,
         reference: identical(reference, fhirSentinel)
             ? _value.reference
             : reference as List<FhirUrl>?,
-        capabilities: identical(capabilities, fhirSentinel)
-            ? _value.capabilities
-            : capabilities as FhirCanonical?,
-        derivedFrom: identical(derivedFrom, fhirSentinel)
-            ? _value.derivedFrom
-            : derivedFrom as List<FhirCanonical>?,
+        baseDefinition: identical(baseDefinition, fhirSentinel)
+            ? _value.baseDefinition
+            : baseDefinition as List<FhirCanonical>?,
       ),
     );
   }

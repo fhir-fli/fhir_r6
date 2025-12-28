@@ -29,6 +29,9 @@ enum SearchParamTypeBuilderEnum {
 
   /// special
   special,
+
+  /// resource
+  resource,
   ;
 
   /// Converts the enum value to a string.
@@ -56,6 +59,8 @@ enum SearchParamTypeBuilderEnum {
         return 'uri';
       case SearchParamTypeBuilderEnum.special:
         return 'special';
+      case SearchParamTypeBuilderEnum.resource:
+        return 'resource';
     }
   }
 
@@ -95,6 +100,8 @@ enum SearchParamTypeBuilderEnum {
         return SearchParamTypeBuilderEnum.uri;
       case 'special':
         return SearchParamTypeBuilderEnum.special;
+      case 'resource':
+        return SearchParamTypeBuilderEnum.resource;
     }
     return null;
   }
@@ -188,7 +195,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Number',
     ),
@@ -201,7 +208,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Date/DateTime',
     ),
@@ -214,7 +221,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'String',
     ),
@@ -227,7 +234,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Token',
     ),
@@ -240,7 +247,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Reference',
     ),
@@ -253,7 +260,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Composite',
     ),
@@ -266,7 +273,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Quantity',
     ),
@@ -279,7 +286,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'URI',
     ),
@@ -292,9 +299,22 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Special',
+    ),
+  );
+
+  /// resource
+  static SearchParamTypeBuilder resource = SearchParamTypeBuilder._(
+    valueString: 'resource',
+    valueEnum: SearchParamTypeBuilderEnum.resource,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'Resource',
     ),
   );
 
@@ -315,6 +335,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     quantity,
     uri,
     special,
+    resource,
   ];
 
   /// Returns the enum value with an element attached

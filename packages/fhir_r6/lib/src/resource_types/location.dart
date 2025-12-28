@@ -177,13 +177,11 @@ class Location extends DomainResource {
             ),
           )
           .toList(),
-      hoursOfOperation: (json['hoursOfOperation'] as List<dynamic>?)
-          ?.map<Availability>(
-            (v) => Availability.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
+      hoursOfOperation: JsonParser.parseObject<Availability>(
+        json,
+        'hoursOfOperation',
+        Availability.fromJson,
+      ),
       virtualService: (json['virtualService'] as List<dynamic>?)
           ?.map<VirtualServiceDetail>(
             (v) => VirtualServiceDetail.fromJson(
@@ -249,7 +247,7 @@ class Location extends DomainResource {
 
   /// [status]
   /// The status property covers the general availability of the resource,
-  /// not the current value which may be covered by the operationStatus, or
+  /// not the current value which may be covered by the operationalStatus, or
   /// by a schedule/slots if they are configured for the location.
   final LocationStatus? status;
 
@@ -319,7 +317,7 @@ class Location extends DomainResource {
   /// [hoursOfOperation]
   /// What days/times during a week is this location usually open, and any
   /// exceptions where the location is not available.
-  final List<Availability>? hoursOfOperation;
+  final Availability? hoursOfOperation;
 
   /// [virtualService]
   /// Connection details of a virtual service (e.g. shared conference call
@@ -637,7 +635,7 @@ class Location extends DomainResource {
         }
       case 'hoursOfOperation':
         if (hoursOfOperation != null) {
-          fields.addAll(hoursOfOperation!);
+          fields.add(hoursOfOperation!);
         }
       case 'virtualService':
         if (virtualService != null) {
@@ -825,7 +823,7 @@ class Location extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<Availability>(
+    if (!equalsDeepWithNull(
       hoursOfOperation,
       o.hoursOfOperation,
     )) {

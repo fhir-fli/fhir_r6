@@ -21,8 +21,6 @@ class FamilyMemberHistory extends DomainResource {
     super.extension_,
     super.modifierExtension,
     this.identifier,
-    this.instantiatesCanonical,
-    this.instantiatesUri,
     required this.status,
     this.dataAbsentReason,
     required this.patient,
@@ -120,16 +118,6 @@ class FamilyMemberHistory extends DomainResource {
             ),
           )
           .toList(),
-      instantiatesCanonical: JsonParser.parsePrimitiveList<FhirCanonical>(
-        json,
-        'instantiatesCanonical',
-        FhirCanonical.fromJson,
-      ),
-      instantiatesUri: JsonParser.parsePrimitiveList<FhirUri>(
-        json,
-        'instantiatesUri',
-        FhirUri.fromJson,
-      ),
       status: JsonParser.parsePrimitive<FamilyHistoryStatus>(
         json,
         'status',
@@ -281,18 +269,6 @@ class FamilyMemberHistory extends DomainResource {
   /// performer or other systems which remain constant as the resource is
   /// updated and propagates from server to server.
   final List<Identifier>? identifier;
-
-  /// [instantiatesCanonical]
-  /// The URL pointing to a FHIR-defined protocol, guideline, orderset or
-  /// other definition that is adhered to in whole or in part by this
-  /// FamilyMemberHistory.
-  final List<FhirCanonical>? instantiatesCanonical;
-
-  /// [instantiatesUri]
-  /// The URL pointing to an externally maintained protocol, guideline,
-  /// orderset or other definition that is adhered to in whole or in part by
-  /// this FamilyMemberHistory.
-  final List<FhirUri>? instantiatesUri;
 
   /// [status]
   /// A code specifying the status of the record of the family history of a
@@ -508,14 +484,6 @@ class FamilyMemberHistory extends DomainResource {
       identifier,
     );
     addField(
-      'instantiatesCanonical',
-      instantiatesCanonical,
-    );
-    addField(
-      'instantiatesUri',
-      instantiatesUri,
-    );
-    addField(
       'status',
       status,
     );
@@ -607,8 +575,6 @@ class FamilyMemberHistory extends DomainResource {
       'extension',
       'modifierExtension',
       'identifier',
-      'instantiatesCanonical',
-      'instantiatesUri',
       'status',
       'dataAbsentReason',
       'patient',
@@ -672,14 +638,6 @@ class FamilyMemberHistory extends DomainResource {
       case 'identifier':
         if (identifier != null) {
           fields.addAll(identifier!);
-        }
-      case 'instantiatesCanonical':
-        if (instantiatesCanonical != null) {
-          fields.addAll(instantiatesCanonical!);
-        }
-      case 'instantiatesUri':
-        if (instantiatesUri != null) {
-          fields.addAll(instantiatesUri!);
         }
       case 'status':
         fields.add(status);
@@ -875,18 +833,6 @@ class FamilyMemberHistory extends DomainResource {
     if (!listEquals<Identifier>(
       identifier,
       o.identifier,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirCanonical>(
-      instantiatesCanonical,
-      o.instantiatesCanonical,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirUri>(
-      instantiatesUri,
-      o.instantiatesUri,
     )) {
       return false;
     }
@@ -1422,10 +1368,10 @@ class FamilyMemberHistoryCondition extends BackboneElement {
   String get fhirType => 'FamilyMemberHistoryCondition';
 
   /// [code]
-  /// The actual condition specified. Could be a coded condition (like MI or
-  /// Diabetes) or a less specific string like 'cancer' depending on how much
-  /// is known about the condition and the capabilities of the creating
-  /// system.
+  /// The actual condition, allergy, or intolerance specified. Could be a
+  /// coded condition (like MI or Diabetes) or a less specific string like
+  /// 'cancer' depending on how much is known about the condition and the
+  /// capabilities of the creating system.
   final CodeableConcept code;
 
   /// [outcome]

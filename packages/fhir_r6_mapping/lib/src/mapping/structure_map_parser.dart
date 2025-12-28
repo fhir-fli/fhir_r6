@@ -554,7 +554,7 @@ class StructureMapParser {
         'only_one',
         'default',
       ])) {
-        source.min = FhirIntegerBuilder(int.parse(lexer.take()));
+        source.min = FhirUnsignedIntBuilder(int.parse(lexer.take()));
         lexer.token('..');
         source.max = lexer.take().toFhirStringBuilder;
       }

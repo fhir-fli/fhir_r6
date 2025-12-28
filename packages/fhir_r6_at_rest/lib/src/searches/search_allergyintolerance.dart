@@ -10,13 +10,15 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchAllergyIntolerance extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [AllergyIntolerance]
+  @override
   SearchAllergyIntolerance identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -27,30 +29,23 @@ class SearchAllergyIntolerance extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}type'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['type'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [code] in the resource
   /// [AllergyIntolerance]
+  @override
   SearchAllergyIntolerance code(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}code'] =
-        system != null ? '$system|$value' : '$value';
-    return this;
-  }
-
-  /// a date search for [date] in the resource
-  /// [AllergyIntolerance]
-  SearchAllergyIntolerance date(
-    FhirDateTime value, {
-    SearchModifier? modifier,
-  }) {
-    parameters['${modifier != null ? '$modifier' : ''}date'] = value.toString();
+    parameters['code'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -61,8 +56,9 @@ class SearchAllergyIntolerance extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}category'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['category'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -73,8 +69,9 @@ class SearchAllergyIntolerance extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}clinical_status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['clinical_status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -85,19 +82,32 @@ class SearchAllergyIntolerance extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}criticality'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['criticality'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
-  /// a date search for [lastDate] in the resource
+  /// a date search for [date] in the resource
   /// [AllergyIntolerance]
-  SearchAllergyIntolerance lastDate(
+  @override
+  SearchAllergyIntolerance date(
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}last_date'] =
-        value.toString();
+    parameters['date'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a date search for [lastReactionDate] in the resource
+  /// [AllergyIntolerance]
+  SearchAllergyIntolerance lastReactionDate(
+    FhirDateTime value, {
+    SearchModifier? modifier,
+  }) {
+    parameters['last_reaction_date'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -108,8 +118,9 @@ class SearchAllergyIntolerance extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}manifestation_code'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['manifestation_code'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -120,8 +131,9 @@ class SearchAllergyIntolerance extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}route'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['route'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -132,8 +144,9 @@ class SearchAllergyIntolerance extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}severity'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['severity'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -144,8 +157,9 @@ class SearchAllergyIntolerance extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}verification_status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['verification_status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

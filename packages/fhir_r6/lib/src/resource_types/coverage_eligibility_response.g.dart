@@ -23,7 +23,7 @@ abstract class $CoverageEligibilityResponseCopyWith<T>
     List<EligibilityResponsePurpose>? purpose,
     Reference? patient,
     List<CoverageEligibilityResponseEvent>? event,
-    FhirDate? servicedX,
+    ServicedXCoverageEligibilityResponse? servicedX,
     FhirDateTime? created,
     Reference? requestor,
     Reference? request,
@@ -110,7 +110,7 @@ class _$CoverageEligibilityResponseCopyWithImpl<T>
             : event as List<CoverageEligibilityResponseEvent>?,
         servicedX: identical(servicedX, fhirSentinel)
             ? _value.servicedX
-            : servicedX as FhirDate?,
+            : servicedX as ServicedXCoverageEligibilityResponse?,
         created: identical(created, fhirSentinel)
             ? _value.created
             : (created as FhirDateTime?) ?? _value.created,
@@ -164,7 +164,7 @@ abstract class $CoverageEligibilityResponseEventCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    FhirDateTime? whenX,
+    WhenXCoverageEligibilityResponseEvent? whenX,
     bool? disallowExtensions,
   });
 }
@@ -199,7 +199,7 @@ class _$CoverageEligibilityResponseEventCopyWithImpl<T>
             : (type as CodeableConcept?) ?? _value.type,
         whenX: identical(whenX, fhirSentinel)
             ? _value.whenX
-            : (whenX as FhirDateTime?) ?? _value.whenX,
+            : (whenX as WhenXCoverageEligibilityResponseEvent?) ?? _value.whenX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -420,8 +420,8 @@ abstract class $CoverageEligibilityResponseBenefitCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    FhirUnsignedInt? allowedX,
-    FhirUnsignedInt? usedX,
+    AllowedXCoverageEligibilityResponseBenefit? allowedX,
+    UsedXCoverageEligibilityResponseBenefit? usedX,
     bool? disallowExtensions,
   });
 }
@@ -457,10 +457,10 @@ class _$CoverageEligibilityResponseBenefitCopyWithImpl<T>
             : (type as CodeableConcept?) ?? _value.type,
         allowedX: identical(allowedX, fhirSentinel)
             ? _value.allowedX
-            : allowedX as FhirUnsignedInt?,
+            : allowedX as AllowedXCoverageEligibilityResponseBenefit?,
         usedX: identical(usedX, fhirSentinel)
             ? _value.usedX
-            : usedX as FhirUnsignedInt?,
+            : usedX as UsedXCoverageEligibilityResponseBenefit?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

@@ -116,10 +116,10 @@ class DeviceMetric extends DomainResource {
         'color',
         ColorCodesOrRGB.fromJson,
       ),
-      category: JsonParser.parsePrimitive<DeviceMetricCategory>(
+      category: JsonParser.parseObject<CodeableConcept>(
         json,
         'category',
-        DeviceMetricCategory.fromJson,
+        CodeableConcept.fromJson,
       )!,
       measurementFrequency: JsonParser.parseObject<Quantity>(
         json,
@@ -214,8 +214,9 @@ class DeviceMetric extends DomainResource {
 
   /// [category]
   /// Indicates the category of the observation generation process. A
-  /// DeviceMetric can be for example a setting, measurement, or calculation.
-  final DeviceMetricCategory category;
+  /// DeviceMetric can be, for example, a setting, measurement, or
+  /// calculation.
+  final CodeableConcept category;
 
   /// [measurementFrequency]
   /// The frequency at which the metric is taken or recorded. Devices measure
@@ -650,10 +651,10 @@ class DeviceMetricCalibration extends BackboneElement {
             ),
           )
           .toList(),
-      type: JsonParser.parsePrimitive<DeviceMetricCalibrationType>(
+      type: JsonParser.parseObject<CodeableConcept>(
         json,
         'type',
-        DeviceMetricCalibrationType.fromJson,
+        CodeableConcept.fromJson,
       ),
       state: JsonParser.parsePrimitive<DeviceMetricCalibrationState>(
         json,
@@ -712,7 +713,7 @@ class DeviceMetricCalibration extends BackboneElement {
 
   /// [type]
   /// Describes the type of the calibration method.
-  final DeviceMetricCalibrationType? type;
+  final CodeableConcept? type;
 
   /// [state]
   /// Describes the state of the calibration.

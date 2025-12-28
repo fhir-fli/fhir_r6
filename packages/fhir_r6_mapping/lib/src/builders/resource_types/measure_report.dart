@@ -32,6 +32,8 @@ class MeasureReportBuilder extends DomainResourceBuilder {
     super.extension_,
     super.modifierExtension,
     this.identifier,
+    this.category,
+    this.messages,
     this.status,
     this.type,
     this.dataUpdateType,
@@ -137,6 +139,18 @@ class MeasureReportBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
+      category: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'category',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.category',
+      ),
+      messages: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'messages',
+        ReferenceBuilder.fromJson,
+        '$objectPath.messages',
+      ),
       status: JsonParser.parsePrimitive<MeasureReportStatusBuilder>(
         json,
         'status',
@@ -185,12 +199,16 @@ class MeasureReportBuilder extends DomainResourceBuilder {
         ReferenceBuilder.fromJson,
         '$objectPath.reportingVendor',
       ),
-      location: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'location',
-        ReferenceBuilder.fromJson,
-        '$objectPath.location',
-      ),
+      location: (json['location'] as List<dynamic>?)
+          ?.map<ReferenceBuilder>(
+            (v) => ReferenceBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.location',
+              },
+            ),
+          )
+          .toList(),
       period: JsonParser.parseObject<PeriodBuilder>(
         json,
         'period',
@@ -296,6 +314,18 @@ class MeasureReportBuilder extends DomainResourceBuilder {
   /// model, design or an instance.
   List<IdentifierBuilder>? identifier;
 
+  /// [category]
+  /// The category of measure report instance this is such as Data Exchange
+  /// for Quality Measures (DEQM), Risk Adjustment, or Value-Based
+  /// Performance.
+  CodeableConceptBuilder? category;
+
+  /// [messages]
+  /// A reference to an OperationOutcome that contains any information,
+  /// warning, and/or error messages that were generated while processing an
+  /// operation such as $evaluate.
+  ReferenceBuilder? messages;
+
   /// [status]
   /// The MeasureReport status. No data will be available until the
   /// MeasureReport status is complete.
@@ -330,7 +360,7 @@ class MeasureReportBuilder extends DomainResourceBuilder {
   ReferenceBuilder? subject;
 
   /// [date]
-  /// The date this measure was calculated.
+  /// The date this measure report was generated.
   FhirDateTimeBuilder? date;
 
   /// [reporter]
@@ -347,7 +377,7 @@ class MeasureReportBuilder extends DomainResourceBuilder {
 
   /// [location]
   /// A reference to the location for which the data is being reported.
-  ReferenceBuilder? location;
+  List<ReferenceBuilder>? location;
 
   /// [period]
   /// The reporting period for which the report was calculated.
@@ -360,21 +390,22 @@ class MeasureReportBuilder extends DomainResourceBuilder {
   ReferenceBuilder? inputParameters;
 
   /// [scoring]
-  /// Indicates how the calculation is performed for the measure, including
-  /// proportion, ratio, continuous-variable, and cohort. The value set is
-  /// extensible, allowing additional measure scoring types to be
-  /// represented. It is expected to be the same as the scoring element on
-  /// the referenced Measure.
+  /// Deprecated, use group.scoring. Indicates how the calculation is
+  /// performed for the measure, including proportion, ratio,
+  /// continuous-variable, and cohort. The value set is extensible, allowing
+  /// additional measure scoring types to be represented. It is expected to
+  /// be the same as the scoring element on the referenced Measure.
   CodeableConceptBuilder? scoring;
 
   /// [improvementNotation]
-  /// Whether improvement in the measure is noted by an increase or decrease
-  /// in the measure score.
+  /// Deprecated, use group.improvementNotation. Whether improvement in the
+  /// measure is noted by an increase or decrease in the measure score.
   CodeableConceptBuilder? improvementNotation;
 
   /// [group]
   /// The results of the calculation, one for each population group in the
-  /// measure.
+  /// measure. A MeasureReport SHALL have a group element corresponding to
+  /// each group element defined in the Measure being reported.
   List<MeasureReportGroupBuilder>? group;
 
   /// [supplementalData]
@@ -438,6 +469,8 @@ class MeasureReportBuilder extends DomainResourceBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('identifier', identifier);
+    addField('category', category);
+    addField('messages', messages);
     addField('status', status);
     addField('type', type);
     addField('dataUpdateType', dataUpdateType);
@@ -470,6 +503,8 @@ class MeasureReportBuilder extends DomainResourceBuilder {
       'extension',
       'modifierExtension',
       'identifier',
+      'category',
+      'messages',
       'status',
       'type',
       'dataUpdateType',
@@ -534,6 +569,14 @@ class MeasureReportBuilder extends DomainResourceBuilder {
         if (identifier != null) {
           fields.addAll(identifier!);
         }
+      case 'category':
+        if (category != null) {
+          fields.add(category!);
+        }
+      case 'messages':
+        if (messages != null) {
+          fields.add(messages!);
+        }
       case 'status':
         if (status != null) {
           fields.add(status!);
@@ -568,7 +611,7 @@ class MeasureReportBuilder extends DomainResourceBuilder {
         }
       case 'location':
         if (location != null) {
-          fields.add(location!);
+          fields.addAll(location!);
         }
       case 'period':
         if (period != null) {
@@ -770,6 +813,22 @@ class MeasureReportBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'category':
+        {
+          if (child is CodeableConceptBuilder) {
+            category = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'messages':
+        {
+          if (child is ReferenceBuilder) {
+            messages = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'status':
         {
           if (child is MeasureReportStatusBuilder) {
@@ -905,8 +964,16 @@ class MeasureReportBuilder extends DomainResourceBuilder {
         }
       case 'location':
         {
-          if (child is ReferenceBuilder) {
+          if (child is List<ReferenceBuilder>) {
+            // Replace or create new list
             location = child;
+            return;
+          } else if (child is ReferenceBuilder) {
+            // Add single element to existing list or create new list
+            location = [
+              ...(location ?? []),
+              child,
+            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -1019,6 +1086,10 @@ class MeasureReportBuilder extends DomainResourceBuilder {
         return ['FhirExtensionBuilder'];
       case 'identifier':
         return ['IdentifierBuilder'];
+      case 'category':
+        return ['CodeableConceptBuilder'];
+      case 'messages':
+        return ['ReferenceBuilder'];
       case 'status':
         return ['FhirCodeEnumBuilder'];
       case 'type':
@@ -1106,6 +1177,16 @@ class MeasureReportBuilder extends DomainResourceBuilder {
           identifier = <IdentifierBuilder>[];
           return;
         }
+      case 'category':
+        {
+          category = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'messages':
+        {
+          messages = ReferenceBuilder.empty();
+          return;
+        }
       case 'status':
         {
           status = MeasureReportStatusBuilder.empty();
@@ -1148,7 +1229,7 @@ class MeasureReportBuilder extends DomainResourceBuilder {
         }
       case 'location':
         {
-          location = ReferenceBuilder.empty();
+          location = <ReferenceBuilder>[];
           return;
         }
       case 'period':
@@ -1204,6 +1285,8 @@ class MeasureReportBuilder extends DomainResourceBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     List<IdentifierBuilder>? identifier,
+    CodeableConceptBuilder? category,
+    ReferenceBuilder? messages,
     MeasureReportStatusBuilder? status,
     MeasureReportTypeBuilder? type,
     SubmitDataUpdateTypeBuilder? dataUpdateType,
@@ -1212,7 +1295,7 @@ class MeasureReportBuilder extends DomainResourceBuilder {
     FhirDateTimeBuilder? date,
     ReferenceBuilder? reporter,
     ReferenceBuilder? reportingVendor,
-    ReferenceBuilder? location,
+    List<ReferenceBuilder>? location,
     PeriodBuilder? period,
     ReferenceBuilder? inputParameters,
     CodeableConceptBuilder? scoring,
@@ -1236,6 +1319,8 @@ class MeasureReportBuilder extends DomainResourceBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       identifier: identifier ?? this.identifier,
+      category: category ?? this.category,
+      messages: messages ?? this.messages,
       status: status ?? this.status,
       type: type ?? this.type,
       dataUpdateType: dataUpdateType ?? this.dataUpdateType,
@@ -1333,6 +1418,18 @@ class MeasureReportBuilder extends DomainResourceBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
+      category,
+      o.category,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      messages,
+      o.messages,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       status,
       o.status,
     )) {
@@ -1380,7 +1477,7 @@ class MeasureReportBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<ReferenceBuilder>(
       location,
       o.location,
     )) {
@@ -1434,7 +1531,8 @@ class MeasureReportBuilder extends DomainResourceBuilder {
 
 /// [MeasureReportGroupBuilder]
 /// The results of the calculation, one for each population group in the
-/// measure.
+/// measure. A MeasureReport SHALL have a group element corresponding to
+/// each group element defined in the Measure being reported.
 class MeasureReportGroupBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [MeasureReportGroupBuilder]
@@ -1444,8 +1542,13 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
     super.extension_,
     super.modifierExtension,
     this.linkId,
+    this.calculatedDate,
     this.code,
+    this.description,
     this.subject,
+    this.scoring,
+    this.improvementNotation,
+    this.improvementNotationGuidance,
     this.population,
     MeasureScoreXMeasureReportGroupBuilder? measureScoreX,
     QuantityBuilder? measureScoreQuantity,
@@ -1454,6 +1557,7 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
     PeriodBuilder? measureScorePeriod,
     RangeBuilder? measureScoreRange,
     FhirDurationBuilder? measureScoreDuration,
+    FhirBooleanBuilder? measureScoreBoolean,
     this.stratifier,
     super.disallowExtensions,
   })  : measureScoreX = measureScoreX ??
@@ -1462,7 +1566,8 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
             measureScoreCodeableConcept ??
             measureScorePeriod ??
             measureScoreRange ??
-            measureScoreDuration,
+            measureScoreDuration ??
+            measureScoreBoolean,
         super(
           objectPath: 'MeasureReport.group',
         );
@@ -1509,17 +1614,48 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.linkId',
       ),
+      calculatedDate: JsonParser.parsePrimitive<FhirDateTimeBuilder>(
+        json,
+        'calculatedDate',
+        FhirDateTimeBuilder.fromJson,
+        '$objectPath.calculatedDate',
+      ),
       code: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
         'code',
         CodeableConceptBuilder.fromJson,
         '$objectPath.code',
       ),
+      description: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+        json,
+        'description',
+        FhirMarkdownBuilder.fromJson,
+        '$objectPath.description',
+      ),
       subject: JsonParser.parseObject<ReferenceBuilder>(
         json,
         'subject',
         ReferenceBuilder.fromJson,
         '$objectPath.subject',
+      ),
+      scoring: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'scoring',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.scoring',
+      ),
+      improvementNotation: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'improvementNotation',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.improvementNotation',
+      ),
+      improvementNotationGuidance:
+          JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+        json,
+        'improvementNotationGuidance',
+        FhirMarkdownBuilder.fromJson,
+        '$objectPath.improvementNotationGuidance',
       ),
       population: (json['population'] as List<dynamic>?)
           ?.map<MeasureReportPopulationBuilder>(
@@ -1541,6 +1677,7 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
           'measureScorePeriod': PeriodBuilder.fromJson,
           'measureScoreRange': RangeBuilder.fromJson,
           'measureScoreDuration': FhirDurationBuilder.fromJson,
+          'measureScoreBoolean': FhirBooleanBuilder.fromJson,
         },
         objectPath,
       ),
@@ -1601,22 +1738,55 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
 
   /// [linkId]
   /// The group from the Measure that corresponds to this group in the
-  /// MeasureReport resource.
+  /// MeasureReport resource. This element SHALL be populated based on the
+  /// corresponding element in the Measure being reported.
   FhirStringBuilder? linkId;
+
+  /// [calculatedDate]
+  /// The date the Measure Report was calculated.
+  FhirDateTimeBuilder? calculatedDate;
 
   /// [code]
   /// The meaning of the population group as defined in the measure
-  /// definition.
+  /// definition. This element SHALL be populated with at least the codings
+  /// in the code of the corresponding group in the Measure being reported.
   CodeableConceptBuilder? code;
+
+  /// [description]
+  /// The human readable description of this population group. This element
+  /// SHOULD be populated based on the description of the corresponding group
+  /// in the Measure being reported.
+  FhirMarkdownBuilder? description;
 
   /// [subject]
   /// Optional subject identifying the individual or individuals the report
   /// is for.
   ReferenceBuilder? subject;
 
+  /// [scoring]
+  /// Indicates how the calculation is performed for the measure, including
+  /// proportion, ratio, continuous-variable, and cohort. The value set is
+  /// extensible, allowing additional measure scoring types to be
+  /// represented. It is expected to be the same as the scoring element on
+  /// the referenced Measure.
+  CodeableConceptBuilder? scoring;
+
+  /// [improvementNotation]
+  /// Whether improvement in the measure is noted by an increase or decrease
+  /// in the measure score. Exercise caution when using any values besides
+  /// increase or decrease for improvementNotation.
+  CodeableConceptBuilder? improvementNotation;
+
+  /// [improvementNotationGuidance]
+  /// Narrative text to explain the improvement notation and how to interpret
+  /// it.
+  FhirMarkdownBuilder? improvementNotationGuidance;
+
   /// [population]
   /// The populations that make up the population group, one for each type of
-  /// population appropriate for the measure.
+  /// population appropriate for the measure. Each group in the MeasureReport
+  /// SHALL have populations as defined in the corresponding group of the
+  /// Measure being reported.
   List<MeasureReportPopulationBuilder>? population;
 
   /// [measureScoreX]
@@ -1647,9 +1817,15 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
   FhirDurationBuilder? get measureScoreDuration =>
       measureScoreX?.isAs<FhirDurationBuilder>();
 
+  /// Getter for [measureScoreBoolean] as a FhirBooleanBuilder
+  FhirBooleanBuilder? get measureScoreBoolean =>
+      measureScoreX?.isAs<FhirBooleanBuilder>();
+
   /// [stratifier]
-  /// When a measure includes multiple stratifiers, there will be a
-  /// stratifier group for each stratifier defined by the measure.
+  /// The stratification results for this measure group, calculated as
+  /// defined by the stratifier element of the measure being reported. Each
+  /// group in the MeasureReport SHALL have stratifiers as defined in the
+  /// corresponding group of the Measure being reported.
   List<MeasureReportStratifierBuilder>? stratifier;
 
   /// Converts a [MeasureReportGroupBuilder]
@@ -1692,8 +1868,13 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('linkId', linkId);
+    addField('calculatedDate', calculatedDate);
     addField('code', code);
+    addField('description', description);
     addField('subject', subject);
+    addField('scoring', scoring);
+    addField('improvementNotation', improvementNotation);
+    addField('improvementNotationGuidance', improvementNotationGuidance);
     addField('population', population);
     if (measureScoreX != null) {
       final fhirType = measureScoreX!.fhirType;
@@ -1715,8 +1896,13 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
       'extension',
       'modifierExtension',
       'linkId',
+      'calculatedDate',
       'code',
+      'description',
       'subject',
+      'scoring',
+      'improvementNotation',
+      'improvementNotationGuidance',
       'population',
       'measureScoreX',
       'stratifier',
@@ -1748,13 +1934,33 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
         if (linkId != null) {
           fields.add(linkId!);
         }
+      case 'calculatedDate':
+        if (calculatedDate != null) {
+          fields.add(calculatedDate!);
+        }
       case 'code':
         if (code != null) {
           fields.add(code!);
         }
+      case 'description':
+        if (description != null) {
+          fields.add(description!);
+        }
       case 'subject':
         if (subject != null) {
           fields.add(subject!);
+        }
+      case 'scoring':
+        if (scoring != null) {
+          fields.add(scoring!);
+        }
+      case 'improvementNotation':
+        if (improvementNotation != null) {
+          fields.add(improvementNotation!);
+        }
+      case 'improvementNotationGuidance':
+        if (improvementNotationGuidance != null) {
+          fields.add(improvementNotationGuidance!);
         }
       case 'population':
         if (population != null) {
@@ -1790,6 +1996,10 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
         }
       case 'measureScoreDuration':
         if (measureScoreX is FhirDurationBuilder) {
+          fields.add(measureScoreX!);
+        }
+      case 'measureScoreBoolean':
+        if (measureScoreX is FhirBooleanBuilder) {
           fields.add(measureScoreX!);
         }
       case 'stratifier':
@@ -1897,6 +2107,26 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'calculatedDate':
+        {
+          if (child is FhirDateTimeBuilder) {
+            calculatedDate = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirDateTimeBuilder.tryParse(stringValue);
+              if (converted != null) {
+                calculatedDate = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'code':
         {
           if (child is CodeableConceptBuilder) {
@@ -1905,11 +2135,67 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'description':
+        {
+          if (child is FhirMarkdownBuilder) {
+            description = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                description = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'subject':
         {
           if (child is ReferenceBuilder) {
             subject = child;
             return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'scoring':
+        {
+          if (child is CodeableConceptBuilder) {
+            scoring = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'improvementNotation':
+        {
+          if (child is CodeableConceptBuilder) {
+            improvementNotation = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'improvementNotationGuidance':
+        {
+          if (child is FhirMarkdownBuilder) {
+            improvementNotationGuidance = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                improvementNotationGuidance = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -1957,6 +2243,10 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
               return;
             }
             if (child is FhirDurationBuilder) {
+              measureScoreX = child;
+              return;
+            }
+            if (child is FhirBooleanBuilder) {
               measureScoreX = child;
               return;
             }
@@ -2017,6 +2307,15 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
             throw Exception('Invalid child type for $childName');
           }
         }
+      case 'measureScoreBoolean':
+        {
+          if (child is FhirBooleanBuilder) {
+            measureScoreX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
       case 'stratifier':
         {
           if (child is List<MeasureReportStratifierBuilder>) {
@@ -2051,10 +2350,20 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'linkId':
         return ['FhirStringBuilder'];
+      case 'calculatedDate':
+        return ['FhirDateTimeBuilder'];
       case 'code':
         return ['CodeableConceptBuilder'];
+      case 'description':
+        return ['FhirMarkdownBuilder'];
       case 'subject':
         return ['ReferenceBuilder'];
+      case 'scoring':
+        return ['CodeableConceptBuilder'];
+      case 'improvementNotation':
+        return ['CodeableConceptBuilder'];
+      case 'improvementNotationGuidance':
+        return ['FhirMarkdownBuilder'];
       case 'population':
         return ['MeasureReportPopulationBuilder'];
       case 'measureScore':
@@ -2066,6 +2375,7 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
           'PeriodBuilder',
           'RangeBuilder',
           'FhirDurationBuilder',
+          'FhirBooleanBuilder',
         ];
       case 'measureScoreQuantity':
         return ['QuantityBuilder'];
@@ -2079,6 +2389,8 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
         return ['RangeBuilder'];
       case 'measureScoreDuration':
         return ['FhirDurationBuilder'];
+      case 'measureScoreBoolean':
+        return ['FhirBooleanBuilder'];
       case 'stratifier':
         return ['MeasureReportStratifierBuilder'];
       default:
@@ -2111,14 +2423,39 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
           linkId = FhirStringBuilder.empty();
           return;
         }
+      case 'calculatedDate':
+        {
+          calculatedDate = FhirDateTimeBuilder.empty();
+          return;
+        }
       case 'code':
         {
           code = CodeableConceptBuilder.empty();
           return;
         }
+      case 'description':
+        {
+          description = FhirMarkdownBuilder.empty();
+          return;
+        }
       case 'subject':
         {
           subject = ReferenceBuilder.empty();
+          return;
+        }
+      case 'scoring':
+        {
+          scoring = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'improvementNotation':
+        {
+          improvementNotation = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'improvementNotationGuidance':
+        {
+          improvementNotationGuidance = FhirMarkdownBuilder.empty();
           return;
         }
       case 'population':
@@ -2158,6 +2495,11 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
           measureScoreX = FhirDurationBuilder.empty();
           return;
         }
+      case 'measureScoreBoolean':
+        {
+          measureScoreX = FhirBooleanBuilder.empty();
+          return;
+        }
       case 'stratifier':
         {
           stratifier = <MeasureReportStratifierBuilder>[];
@@ -2176,8 +2518,13 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     FhirStringBuilder? linkId,
+    FhirDateTimeBuilder? calculatedDate,
     CodeableConceptBuilder? code,
+    FhirMarkdownBuilder? description,
     ReferenceBuilder? subject,
+    CodeableConceptBuilder? scoring,
+    CodeableConceptBuilder? improvementNotation,
+    FhirMarkdownBuilder? improvementNotationGuidance,
     List<MeasureReportPopulationBuilder>? population,
     MeasureScoreXMeasureReportGroupBuilder? measureScoreX,
     List<MeasureReportStratifierBuilder>? stratifier,
@@ -2187,6 +2534,7 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
     PeriodBuilder? measureScorePeriod,
     RangeBuilder? measureScoreRange,
     FhirDurationBuilder? measureScoreDuration,
+    FhirBooleanBuilder? measureScoreBoolean,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -2199,8 +2547,14 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       linkId: linkId ?? this.linkId,
+      calculatedDate: calculatedDate ?? this.calculatedDate,
       code: code ?? this.code,
+      description: description ?? this.description,
       subject: subject ?? this.subject,
+      scoring: scoring ?? this.scoring,
+      improvementNotation: improvementNotation ?? this.improvementNotation,
+      improvementNotationGuidance:
+          improvementNotationGuidance ?? this.improvementNotationGuidance,
       population: population ?? this.population,
       measureScoreX: measureScoreX ??
           measureScoreQuantity ??
@@ -2209,6 +2563,7 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
           measureScorePeriod ??
           measureScoreRange ??
           measureScoreDuration ??
+          measureScoreBoolean ??
           this.measureScoreX,
       stratifier: stratifier ?? this.stratifier,
     )..objectPath = newObjectPath;
@@ -2262,14 +2617,44 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
+      calculatedDate,
+      o.calculatedDate,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       code,
       o.code,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
+      description,
+      o.description,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       subject,
       o.subject,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      scoring,
+      o.scoring,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      improvementNotation,
+      o.improvementNotation,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      improvementNotationGuidance,
+      o.improvementNotationGuidance,
     )) {
       return false;
     }
@@ -2297,7 +2682,9 @@ class MeasureReportGroupBuilder extends BackboneElementBuilder {
 
 /// [MeasureReportPopulationBuilder]
 /// The populations that make up the population group, one for each type of
-/// population appropriate for the measure.
+/// population appropriate for the measure. Each group in the MeasureReport
+/// SHALL have populations as defined in the corresponding group of the
+/// Measure being reported.
 class MeasureReportPopulationBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [MeasureReportPopulationBuilder]
@@ -2308,7 +2695,9 @@ class MeasureReportPopulationBuilder extends BackboneElementBuilder {
     super.modifierExtension,
     this.linkId,
     this.code,
+    this.description,
     this.count,
+    this.countQuantity,
     this.subjectResults,
     this.subjectReport,
     this.subjects,
@@ -2366,11 +2755,23 @@ class MeasureReportPopulationBuilder extends BackboneElementBuilder {
         CodeableConceptBuilder.fromJson,
         '$objectPath.code',
       ),
+      description: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+        json,
+        'description',
+        FhirMarkdownBuilder.fromJson,
+        '$objectPath.description',
+      ),
       count: JsonParser.parsePrimitive<FhirIntegerBuilder>(
         json,
         'count',
         FhirIntegerBuilder.fromJson,
         '$objectPath.count',
+      ),
+      countQuantity: JsonParser.parseObject<QuantityBuilder>(
+        json,
+        'countQuantity',
+        QuantityBuilder.fromJson,
+        '$objectPath.countQuantity',
       ),
       subjectResults: JsonParser.parseObject<ReferenceBuilder>(
         json,
@@ -2441,16 +2842,32 @@ class MeasureReportPopulationBuilder extends BackboneElementBuilder {
 
   /// [linkId]
   /// The population from the Measure that corresponds to this population in
-  /// the MeasureReport resource.
+  /// the MeasureReport resource. This element SHALL be populated based on
+  /// the corresponding element in the Measure being reported.
   FhirStringBuilder? linkId;
 
   /// [code]
-  /// The type of the population.
+  /// The type of the population. This element SHALL be populated with at
+  /// least the codings in the code element of the corresponding population
+  /// in the Measure group being reported.
   CodeableConceptBuilder? code;
+
+  /// [description]
+  /// The human readable description of this population criteria. This
+  /// element SHOULD be populated based on the description element of the
+  /// corresponding population in the Measure group being reported.
+  FhirMarkdownBuilder? description;
 
   /// [count]
   /// The number of members of the population.
   FhirIntegerBuilder? count;
+
+  /// [countQuantity]
+  /// The number of members of the population, specified as a quantity to
+  /// support identifying units, as well as to support some composite measure
+  /// calculation use cases where the resulting count of the population is a
+  /// decimal value.
+  QuantityBuilder? countQuantity;
 
   /// [subjectResults]
   /// This element refers to a List of individual level MeasureReport
@@ -2507,7 +2924,9 @@ class MeasureReportPopulationBuilder extends BackboneElementBuilder {
     addField('modifierExtension', modifierExtension);
     addField('linkId', linkId);
     addField('code', code);
+    addField('description', description);
     addField('count', count);
+    addField('countQuantity', countQuantity);
     addField('subjectResults', subjectResults);
     addField('subjectReport', subjectReport);
     addField('subjects', subjects);
@@ -2523,7 +2942,9 @@ class MeasureReportPopulationBuilder extends BackboneElementBuilder {
       'modifierExtension',
       'linkId',
       'code',
+      'description',
       'count',
+      'countQuantity',
       'subjectResults',
       'subjectReport',
       'subjects',
@@ -2559,9 +2980,17 @@ class MeasureReportPopulationBuilder extends BackboneElementBuilder {
         if (code != null) {
           fields.add(code!);
         }
+      case 'description':
+        if (description != null) {
+          fields.add(description!);
+        }
       case 'count':
         if (count != null) {
           fields.add(count!);
+        }
+      case 'countQuantity':
+        if (countQuantity != null) {
+          fields.add(countQuantity!);
         }
       case 'subjectResults':
         if (subjectResults != null) {
@@ -2684,6 +3113,26 @@ class MeasureReportPopulationBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'description':
+        {
+          if (child is FhirMarkdownBuilder) {
+            description = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                description = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'count':
         {
           if (child is FhirIntegerBuilder) {
@@ -2706,6 +3155,14 @@ class MeasureReportPopulationBuilder extends BackboneElementBuilder {
             } catch (e) {
               // Continue if conversion fails
             }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'countQuantity':
+        {
+          if (child is QuantityBuilder) {
+            countQuantity = child;
+            return;
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -2761,8 +3218,12 @@ class MeasureReportPopulationBuilder extends BackboneElementBuilder {
         return ['FhirStringBuilder'];
       case 'code':
         return ['CodeableConceptBuilder'];
+      case 'description':
+        return ['FhirMarkdownBuilder'];
       case 'count':
         return ['FhirIntegerBuilder'];
+      case 'countQuantity':
+        return ['QuantityBuilder'];
       case 'subjectResults':
         return ['ReferenceBuilder'];
       case 'subjectReport':
@@ -2804,9 +3265,19 @@ class MeasureReportPopulationBuilder extends BackboneElementBuilder {
           code = CodeableConceptBuilder.empty();
           return;
         }
+      case 'description':
+        {
+          description = FhirMarkdownBuilder.empty();
+          return;
+        }
       case 'count':
         {
           count = FhirIntegerBuilder.empty();
+          return;
+        }
+      case 'countQuantity':
+        {
+          countQuantity = QuantityBuilder.empty();
           return;
         }
       case 'subjectResults':
@@ -2838,7 +3309,9 @@ class MeasureReportPopulationBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     FhirStringBuilder? linkId,
     CodeableConceptBuilder? code,
+    FhirMarkdownBuilder? description,
     FhirIntegerBuilder? count,
+    QuantityBuilder? countQuantity,
     ReferenceBuilder? subjectResults,
     List<ReferenceBuilder>? subjectReport,
     ReferenceBuilder? subjects,
@@ -2855,7 +3328,9 @@ class MeasureReportPopulationBuilder extends BackboneElementBuilder {
       modifierExtension: modifierExtension ?? this.modifierExtension,
       linkId: linkId ?? this.linkId,
       code: code ?? this.code,
+      description: description ?? this.description,
       count: count ?? this.count,
+      countQuantity: countQuantity ?? this.countQuantity,
       subjectResults: subjectResults ?? this.subjectResults,
       subjectReport: subjectReport ?? this.subjectReport,
       subjects: subjects ?? this.subjects,
@@ -2916,8 +3391,20 @@ class MeasureReportPopulationBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
+      description,
+      o.description,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       count,
       o.count,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      countQuantity,
+      o.countQuantity,
     )) {
       return false;
     }
@@ -2944,8 +3431,10 @@ class MeasureReportPopulationBuilder extends BackboneElementBuilder {
 }
 
 /// [MeasureReportStratifierBuilder]
-/// When a measure includes multiple stratifiers, there will be a
-/// stratifier group for each stratifier defined by the measure.
+/// The stratification results for this measure group, calculated as
+/// defined by the stratifier element of the measure being reported. Each
+/// group in the MeasureReport SHALL have stratifiers as defined in the
+/// corresponding group of the Measure being reported.
 class MeasureReportStratifierBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [MeasureReportStratifierBuilder]
@@ -2956,6 +3445,7 @@ class MeasureReportStratifierBuilder extends BackboneElementBuilder {
     super.modifierExtension,
     this.linkId,
     this.code,
+    this.description,
     this.stratum,
     super.disallowExtensions,
   }) : super(
@@ -3010,6 +3500,12 @@ class MeasureReportStratifierBuilder extends BackboneElementBuilder {
         'code',
         CodeableConceptBuilder.fromJson,
         '$objectPath.code',
+      ),
+      description: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+        json,
+        'description',
+        FhirMarkdownBuilder.fromJson,
+        '$objectPath.description',
       ),
       stratum: (json['stratum'] as List<dynamic>?)
           ?.map<MeasureReportStratumBuilder>(
@@ -3068,12 +3564,22 @@ class MeasureReportStratifierBuilder extends BackboneElementBuilder {
 
   /// [linkId]
   /// The stratifier from the Measure that corresponds to this stratifier in
-  /// the MeasureReport resource.
+  /// the MeasureReport resource. This element SHALL be populated based on
+  /// the corresponding element in the Measure being reported.
   FhirStringBuilder? linkId;
 
   /// [code]
   /// The meaning of this stratifier, as defined in the measure definition.
+  /// This element SHALL be populated with at least the codings in the code
+  /// element of the corresponding stratifier in the Measure group being
+  /// reported.
   CodeableConceptBuilder? code;
+
+  /// [description]
+  /// The human readable description of this stratifier criteria. This
+  /// element SHOULD be populated with the description element of the
+  /// corresponding stratifier in the Measure group being reported.
+  FhirMarkdownBuilder? description;
 
   /// [stratum]
   /// This element contains the results for a single stratum within the
@@ -3122,6 +3628,7 @@ class MeasureReportStratifierBuilder extends BackboneElementBuilder {
     addField('modifierExtension', modifierExtension);
     addField('linkId', linkId);
     addField('code', code);
+    addField('description', description);
     addField('stratum', stratum);
     return json;
   }
@@ -3135,6 +3642,7 @@ class MeasureReportStratifierBuilder extends BackboneElementBuilder {
       'modifierExtension',
       'linkId',
       'code',
+      'description',
       'stratum',
     ];
   }
@@ -3167,6 +3675,10 @@ class MeasureReportStratifierBuilder extends BackboneElementBuilder {
       case 'code':
         if (code != null) {
           fields.add(code!);
+        }
+      case 'description':
+        if (description != null) {
+          fields.add(description!);
         }
       case 'stratum':
         if (stratum != null) {
@@ -3281,6 +3793,26 @@ class MeasureReportStratifierBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'description':
+        {
+          if (child is FhirMarkdownBuilder) {
+            description = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                description = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'stratum':
         {
           if (child is List<MeasureReportStratumBuilder>) {
@@ -3317,6 +3849,8 @@ class MeasureReportStratifierBuilder extends BackboneElementBuilder {
         return ['FhirStringBuilder'];
       case 'code':
         return ['CodeableConceptBuilder'];
+      case 'description':
+        return ['FhirMarkdownBuilder'];
       case 'stratum':
         return ['MeasureReportStratumBuilder'];
       default:
@@ -3354,6 +3888,11 @@ class MeasureReportStratifierBuilder extends BackboneElementBuilder {
           code = CodeableConceptBuilder.empty();
           return;
         }
+      case 'description':
+        {
+          description = FhirMarkdownBuilder.empty();
+          return;
+        }
       case 'stratum':
         {
           stratum = <MeasureReportStratumBuilder>[];
@@ -3373,6 +3912,7 @@ class MeasureReportStratifierBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     FhirStringBuilder? linkId,
     CodeableConceptBuilder? code,
+    FhirMarkdownBuilder? description,
     List<MeasureReportStratumBuilder>? stratum,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -3387,6 +3927,7 @@ class MeasureReportStratifierBuilder extends BackboneElementBuilder {
       modifierExtension: modifierExtension ?? this.modifierExtension,
       linkId: linkId ?? this.linkId,
       code: code ?? this.code,
+      description: description ?? this.description,
       stratum: stratum ?? this.stratum,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
@@ -3444,6 +3985,12 @@ class MeasureReportStratifierBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      description,
+      o.description,
+    )) {
+      return false;
+    }
     if (!listEquals<MeasureReportStratumBuilder>(
       stratum,
       o.stratum,
@@ -3481,6 +4028,7 @@ class MeasureReportStratumBuilder extends BackboneElementBuilder {
     PeriodBuilder? measureScorePeriod,
     RangeBuilder? measureScoreRange,
     FhirDurationBuilder? measureScoreDuration,
+    FhirBooleanBuilder? measureScoreBoolean,
     super.disallowExtensions,
   })  : valueX = valueX ??
             valueCodeableConcept ??
@@ -3494,7 +4042,8 @@ class MeasureReportStratumBuilder extends BackboneElementBuilder {
             measureScoreCodeableConcept ??
             measureScorePeriod ??
             measureScoreRange ??
-            measureScoreDuration,
+            measureScoreDuration ??
+            measureScoreBoolean,
         super(
           objectPath: 'MeasureReport.group.stratifier.stratum',
         );
@@ -3576,6 +4125,7 @@ class MeasureReportStratumBuilder extends BackboneElementBuilder {
           'measureScorePeriod': PeriodBuilder.fromJson,
           'measureScoreRange': RangeBuilder.fromJson,
           'measureScoreDuration': FhirDurationBuilder.fromJson,
+          'measureScoreBoolean': FhirBooleanBuilder.fromJson,
         },
         objectPath,
       ),
@@ -3652,7 +4202,8 @@ class MeasureReportStratumBuilder extends BackboneElementBuilder {
 
   /// [population]
   /// The populations that make up the stratum, one for each type of
-  /// population appropriate to the measure.
+  /// population appropriate to the measure. For each stratifier, systems MAY
+  /// provide population breakdowns in addition to the stratified scores.
   List<MeasureReportPopulationBuilder>? population;
 
   /// [measureScoreX]
@@ -3682,6 +4233,10 @@ class MeasureReportStratumBuilder extends BackboneElementBuilder {
   /// Getter for [measureScoreDuration] as a FhirDurationBuilder
   FhirDurationBuilder? get measureScoreDuration =>
       measureScoreX?.isAs<FhirDurationBuilder>();
+
+  /// Getter for [measureScoreBoolean] as a FhirBooleanBuilder
+  FhirBooleanBuilder? get measureScoreBoolean =>
+      measureScoreX?.isAs<FhirBooleanBuilder>();
 
   /// Converts a [MeasureReportStratumBuilder]
   /// to [MeasureReportStratum]
@@ -3841,6 +4396,10 @@ class MeasureReportStratumBuilder extends BackboneElementBuilder {
         }
       case 'measureScoreDuration':
         if (measureScoreX is FhirDurationBuilder) {
+          fields.add(measureScoreX!);
+        }
+      case 'measureScoreBoolean':
+        if (measureScoreX is FhirBooleanBuilder) {
           fields.add(measureScoreX!);
         }
       default:
@@ -4062,6 +4621,10 @@ class MeasureReportStratumBuilder extends BackboneElementBuilder {
               measureScoreX = child;
               return;
             }
+            if (child is FhirBooleanBuilder) {
+              measureScoreX = child;
+              return;
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -4119,6 +4682,15 @@ class MeasureReportStratumBuilder extends BackboneElementBuilder {
             throw Exception('Invalid child type for $childName');
           }
         }
+      case 'measureScoreBoolean':
+        {
+          if (child is FhirBooleanBuilder) {
+            measureScoreX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -4167,6 +4739,7 @@ class MeasureReportStratumBuilder extends BackboneElementBuilder {
           'PeriodBuilder',
           'RangeBuilder',
           'FhirDurationBuilder',
+          'FhirBooleanBuilder',
         ];
       case 'measureScoreQuantity':
         return ['QuantityBuilder'];
@@ -4180,6 +4753,8 @@ class MeasureReportStratumBuilder extends BackboneElementBuilder {
         return ['RangeBuilder'];
       case 'measureScoreDuration':
         return ['FhirDurationBuilder'];
+      case 'measureScoreBoolean':
+        return ['FhirBooleanBuilder'];
       default:
         return <String>[];
     }
@@ -4274,6 +4849,11 @@ class MeasureReportStratumBuilder extends BackboneElementBuilder {
           measureScoreX = FhirDurationBuilder.empty();
           return;
         }
+      case 'measureScoreBoolean':
+        {
+          measureScoreX = FhirBooleanBuilder.empty();
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
@@ -4301,6 +4881,7 @@ class MeasureReportStratumBuilder extends BackboneElementBuilder {
     PeriodBuilder? measureScorePeriod,
     RangeBuilder? measureScoreRange,
     FhirDurationBuilder? measureScoreDuration,
+    FhirBooleanBuilder? measureScoreBoolean,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -4328,6 +4909,7 @@ class MeasureReportStratumBuilder extends BackboneElementBuilder {
           measureScorePeriod ??
           measureScoreRange ??
           measureScoreDuration ??
+          measureScoreBoolean ??
           this.measureScoreX,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
@@ -4413,6 +4995,7 @@ class MeasureReportComponentBuilder extends BackboneElementBuilder {
     super.modifierExtension,
     this.linkId,
     this.code,
+    this.description,
     ValueXMeasureReportComponentBuilder? valueX,
     CodeableConceptBuilder? valueCodeableConcept,
     FhirBooleanBuilder? valueBoolean,
@@ -4482,6 +5065,12 @@ class MeasureReportComponentBuilder extends BackboneElementBuilder {
         CodeableConceptBuilder.fromJson,
         '$objectPath.code',
       ),
+      description: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+        json,
+        'description',
+        FhirMarkdownBuilder.fromJson,
+        '$objectPath.description',
+      ),
       valueX: JsonParser.parsePolymorphic<ValueXMeasureReportComponentBuilder>(
         json,
         {
@@ -4540,12 +5129,22 @@ class MeasureReportComponentBuilder extends BackboneElementBuilder {
 
   /// [linkId]
   /// The stratifier component from the Measure that corresponds to this
-  /// stratifier component in the MeasureReport resource.
+  /// stratifier component in the MeasureReport resource. This element SHALL
+  /// be populated based on the corresponding element in the Measure being
+  /// reported.
   FhirStringBuilder? linkId;
 
   /// [code]
-  /// The code for the stratum component value.
+  /// The code for the stratum component value. This element SHALL be
+  /// populated with at least the codings in the code element of the
+  /// corresponding component of the stratifier being reported.
   CodeableConceptBuilder? code;
+
+  /// [description]
+  /// The human readable description of this stratifier criteria component.
+  /// This element MAY be populated with the description of the corresponding
+  /// component of the stratifier being reported.
+  FhirMarkdownBuilder? description;
 
   /// [valueX]
   /// The stratum component value.
@@ -4608,6 +5207,7 @@ class MeasureReportComponentBuilder extends BackboneElementBuilder {
     addField('modifierExtension', modifierExtension);
     addField('linkId', linkId);
     addField('code', code);
+    addField('description', description);
     if (valueX != null) {
       final fhirType = valueX!.fhirType;
       addField('value${fhirType.capitalizeFirstLetter()}', valueX);
@@ -4625,6 +5225,7 @@ class MeasureReportComponentBuilder extends BackboneElementBuilder {
       'modifierExtension',
       'linkId',
       'code',
+      'description',
       'valueX',
     ];
   }
@@ -4657,6 +5258,10 @@ class MeasureReportComponentBuilder extends BackboneElementBuilder {
       case 'code':
         if (code != null) {
           fields.add(code!);
+        }
+      case 'description':
+        if (description != null) {
+          fields.add(description!);
         }
       case 'value':
         if (valueX != null) {
@@ -4795,6 +5400,26 @@ class MeasureReportComponentBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'description':
+        {
+          if (child is FhirMarkdownBuilder) {
+            description = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                description = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'value':
       case 'valueX':
         {
@@ -4890,6 +5515,8 @@ class MeasureReportComponentBuilder extends BackboneElementBuilder {
         return ['FhirStringBuilder'];
       case 'code':
         return ['CodeableConceptBuilder'];
+      case 'description':
+        return ['FhirMarkdownBuilder'];
       case 'value':
       case 'valueX':
         return [
@@ -4944,6 +5571,11 @@ class MeasureReportComponentBuilder extends BackboneElementBuilder {
           code = CodeableConceptBuilder.empty();
           return;
         }
+      case 'description':
+        {
+          description = FhirMarkdownBuilder.empty();
+          return;
+        }
       case 'value':
       case 'valueX':
       case 'valueCodeableConcept':
@@ -4985,6 +5617,7 @@ class MeasureReportComponentBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     FhirStringBuilder? linkId,
     CodeableConceptBuilder? code,
+    FhirMarkdownBuilder? description,
     ValueXMeasureReportComponentBuilder? valueX,
     CodeableConceptBuilder? valueCodeableConcept,
     FhirBooleanBuilder? valueBoolean,
@@ -5004,6 +5637,7 @@ class MeasureReportComponentBuilder extends BackboneElementBuilder {
       modifierExtension: modifierExtension ?? this.modifierExtension,
       linkId: linkId ?? this.linkId,
       code: code ?? this.code,
+      description: description ?? this.description,
       valueX: valueX ??
           valueCodeableConcept ??
           valueBoolean ??
@@ -5068,6 +5702,12 @@ class MeasureReportComponentBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
+      description,
+      o.description,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       valueX,
       o.valueX,
     )) {
@@ -5079,7 +5719,8 @@ class MeasureReportComponentBuilder extends BackboneElementBuilder {
 
 /// [MeasureReportPopulation1Builder]
 /// The populations that make up the stratum, one for each type of
-/// population appropriate to the measure.
+/// population appropriate to the measure. For each stratifier, systems MAY
+/// provide population breakdowns in addition to the stratified scores.
 class MeasureReportPopulation1Builder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [MeasureReportPopulation1Builder]
@@ -5091,6 +5732,7 @@ class MeasureReportPopulation1Builder extends BackboneElementBuilder {
     this.linkId,
     this.code,
     this.count,
+    this.countQuantity,
     this.subjectResults,
     this.subjectReport,
     this.subjects,
@@ -5153,6 +5795,12 @@ class MeasureReportPopulation1Builder extends BackboneElementBuilder {
         'count',
         FhirIntegerBuilder.fromJson,
         '$objectPath.count',
+      ),
+      countQuantity: JsonParser.parseObject<QuantityBuilder>(
+        json,
+        'countQuantity',
+        QuantityBuilder.fromJson,
+        '$objectPath.countQuantity',
       ),
       subjectResults: JsonParser.parseObject<ReferenceBuilder>(
         json,
@@ -5223,16 +5871,26 @@ class MeasureReportPopulation1Builder extends BackboneElementBuilder {
 
   /// [linkId]
   /// The population from the Measure that corresponds to this population in
-  /// the MeasureReport resource.
+  /// the MeasureReport resource. This element SHALL be populated with the
+  /// linkId corresponding to the population being reported.
   FhirStringBuilder? linkId;
 
   /// [code]
-  /// The type of the population.
+  /// The type of the population. This element SHALL be populated with at
+  /// least the codings in the code element of the corresponding population
+  /// being reported.
   CodeableConceptBuilder? code;
 
   /// [count]
   /// The number of members of the population in this stratum.
   FhirIntegerBuilder? count;
+
+  /// [countQuantity]
+  /// The number of members of the population in this stratum, specified as a
+  /// quantity to support identifying units, as well as to support some
+  /// composite measure calculation use cases where the resulting count of
+  /// the population is a decimal value.
+  QuantityBuilder? countQuantity;
 
   /// [subjectResults]
   /// This element refers to a List of individual level MeasureReport
@@ -5291,6 +5949,7 @@ class MeasureReportPopulation1Builder extends BackboneElementBuilder {
     addField('linkId', linkId);
     addField('code', code);
     addField('count', count);
+    addField('countQuantity', countQuantity);
     addField('subjectResults', subjectResults);
     addField('subjectReport', subjectReport);
     addField('subjects', subjects);
@@ -5307,6 +5966,7 @@ class MeasureReportPopulation1Builder extends BackboneElementBuilder {
       'linkId',
       'code',
       'count',
+      'countQuantity',
       'subjectResults',
       'subjectReport',
       'subjects',
@@ -5345,6 +6005,10 @@ class MeasureReportPopulation1Builder extends BackboneElementBuilder {
       case 'count':
         if (count != null) {
           fields.add(count!);
+        }
+      case 'countQuantity':
+        if (countQuantity != null) {
+          fields.add(countQuantity!);
         }
       case 'subjectResults':
         if (subjectResults != null) {
@@ -5492,6 +6156,14 @@ class MeasureReportPopulation1Builder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'countQuantity':
+        {
+          if (child is QuantityBuilder) {
+            countQuantity = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'subjectResults':
         {
           if (child is ReferenceBuilder) {
@@ -5546,6 +6218,8 @@ class MeasureReportPopulation1Builder extends BackboneElementBuilder {
         return ['CodeableConceptBuilder'];
       case 'count':
         return ['FhirIntegerBuilder'];
+      case 'countQuantity':
+        return ['QuantityBuilder'];
       case 'subjectResults':
         return ['ReferenceBuilder'];
       case 'subjectReport':
@@ -5592,6 +6266,11 @@ class MeasureReportPopulation1Builder extends BackboneElementBuilder {
           count = FhirIntegerBuilder.empty();
           return;
         }
+      case 'countQuantity':
+        {
+          countQuantity = QuantityBuilder.empty();
+          return;
+        }
       case 'subjectResults':
         {
           subjectResults = ReferenceBuilder.empty();
@@ -5622,6 +6301,7 @@ class MeasureReportPopulation1Builder extends BackboneElementBuilder {
     FhirStringBuilder? linkId,
     CodeableConceptBuilder? code,
     FhirIntegerBuilder? count,
+    QuantityBuilder? countQuantity,
     ReferenceBuilder? subjectResults,
     List<ReferenceBuilder>? subjectReport,
     ReferenceBuilder? subjects,
@@ -5639,6 +6319,7 @@ class MeasureReportPopulation1Builder extends BackboneElementBuilder {
       linkId: linkId ?? this.linkId,
       code: code ?? this.code,
       count: count ?? this.count,
+      countQuantity: countQuantity ?? this.countQuantity,
       subjectResults: subjectResults ?? this.subjectResults,
       subjectReport: subjectReport ?? this.subjectReport,
       subjects: subjects ?? this.subjects,
@@ -5701,6 +6382,12 @@ class MeasureReportPopulation1Builder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       count,
       o.count,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      countQuantity,
+      o.countQuantity,
     )) {
       return false;
     }

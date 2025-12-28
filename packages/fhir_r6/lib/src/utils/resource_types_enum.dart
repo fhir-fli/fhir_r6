@@ -74,8 +74,8 @@ enum R6ResourceType {
   /// ClaimResponse
   ClaimResponse,
 
-  /// ClinicalImpression
-  ClinicalImpression,
+  /// ClinicalAssessment
+  ClinicalAssessment,
 
   /// ClinicalUseDefinition
   ClinicalUseDefinition,
@@ -125,6 +125,9 @@ enum R6ResourceType {
   /// Device
   Device,
 
+  /// DeviceAlert
+  DeviceAlert,
+
   /// DeviceAssociation
   DeviceAssociation,
 
@@ -169,9 +172,6 @@ enum R6ResourceType {
 
   /// Evidence
   Evidence,
-
-  /// EvidenceReport
-  EvidenceReport,
 
   /// EvidenceVariable
   EvidenceVariable,
@@ -239,6 +239,9 @@ enum R6ResourceType {
   /// InsurancePlan
   InsurancePlan,
 
+  /// InsuranceProduct
+  InsuranceProduct,
+
   /// InventoryItem
   InventoryItem,
 
@@ -293,6 +296,9 @@ enum R6ResourceType {
   /// MessageHeader
   MessageHeader,
 
+  /// MolecularDefinition
+  MolecularDefinition,
+
   /// MolecularSequence
   MolecularSequence,
 
@@ -346,6 +352,9 @@ enum R6ResourceType {
 
   /// Person
   Person,
+
+  /// PersonalRelationship
+  PersonalRelationship,
 
   /// PlanDefinition
   PlanDefinition,
@@ -528,8 +537,8 @@ enum R6ResourceType {
         return 'Claim';
       case R6ResourceType.ClaimResponse:
         return 'ClaimResponse';
-      case R6ResourceType.ClinicalImpression:
-        return 'ClinicalImpression';
+      case R6ResourceType.ClinicalAssessment:
+        return 'ClinicalAssessment';
       case R6ResourceType.ClinicalUseDefinition:
         return 'ClinicalUseDefinition';
       case R6ResourceType.CodeSystem:
@@ -562,6 +571,8 @@ enum R6ResourceType {
         return 'DetectedIssue';
       case R6ResourceType.Device:
         return 'Device';
+      case R6ResourceType.DeviceAlert:
+        return 'DeviceAlert';
       case R6ResourceType.DeviceAssociation:
         return 'DeviceAssociation';
       case R6ResourceType.DeviceDefinition:
@@ -592,8 +603,6 @@ enum R6ResourceType {
         return 'EventDefinition';
       case R6ResourceType.Evidence:
         return 'Evidence';
-      case R6ResourceType.EvidenceReport:
-        return 'EvidenceReport';
       case R6ResourceType.EvidenceVariable:
         return 'EvidenceVariable';
       case R6ResourceType.ExampleScenario:
@@ -638,6 +647,8 @@ enum R6ResourceType {
         return 'Ingredient';
       case R6ResourceType.InsurancePlan:
         return 'InsurancePlan';
+      case R6ResourceType.InsuranceProduct:
+        return 'InsuranceProduct';
       case R6ResourceType.InventoryItem:
         return 'InventoryItem';
       case R6ResourceType.InventoryReport:
@@ -674,6 +685,8 @@ enum R6ResourceType {
         return 'MessageDefinition';
       case R6ResourceType.MessageHeader:
         return 'MessageHeader';
+      case R6ResourceType.MolecularDefinition:
+        return 'MolecularDefinition';
       case R6ResourceType.MolecularSequence:
         return 'MolecularSequence';
       case R6ResourceType.NamingSystem:
@@ -710,6 +723,8 @@ enum R6ResourceType {
         return 'Permission';
       case R6ResourceType.Person:
         return 'Person';
+      case R6ResourceType.PersonalRelationship:
+        return 'PersonalRelationship';
       case R6ResourceType.PlanDefinition:
         return 'PlanDefinition';
       case R6ResourceType.Practitioner:
@@ -853,8 +868,8 @@ enum R6ResourceType {
         return R6ResourceType.Claim;
       case 'ClaimResponse':
         return R6ResourceType.ClaimResponse;
-      case 'ClinicalImpression':
-        return R6ResourceType.ClinicalImpression;
+      case 'ClinicalAssessment':
+        return R6ResourceType.ClinicalAssessment;
       case 'ClinicalUseDefinition':
         return R6ResourceType.ClinicalUseDefinition;
       case 'CodeSystem':
@@ -887,6 +902,8 @@ enum R6ResourceType {
         return R6ResourceType.DetectedIssue;
       case 'Device':
         return R6ResourceType.Device;
+      case 'DeviceAlert':
+        return R6ResourceType.DeviceAlert;
       case 'DeviceAssociation':
         return R6ResourceType.DeviceAssociation;
       case 'DeviceDefinition':
@@ -917,8 +934,6 @@ enum R6ResourceType {
         return R6ResourceType.EventDefinition;
       case 'Evidence':
         return R6ResourceType.Evidence;
-      case 'EvidenceReport':
-        return R6ResourceType.EvidenceReport;
       case 'EvidenceVariable':
         return R6ResourceType.EvidenceVariable;
       case 'ExampleScenario':
@@ -963,6 +978,8 @@ enum R6ResourceType {
         return R6ResourceType.Ingredient;
       case 'InsurancePlan':
         return R6ResourceType.InsurancePlan;
+      case 'InsuranceProduct':
+        return R6ResourceType.InsuranceProduct;
       case 'InventoryItem':
         return R6ResourceType.InventoryItem;
       case 'InventoryReport':
@@ -999,6 +1016,8 @@ enum R6ResourceType {
         return R6ResourceType.MessageDefinition;
       case 'MessageHeader':
         return R6ResourceType.MessageHeader;
+      case 'MolecularDefinition':
+        return R6ResourceType.MolecularDefinition;
       case 'MolecularSequence':
         return R6ResourceType.MolecularSequence;
       case 'NamingSystem':
@@ -1035,6 +1054,8 @@ enum R6ResourceType {
         return R6ResourceType.Permission;
       case 'Person':
         return R6ResourceType.Person;
+      case 'PersonalRelationship':
+        return R6ResourceType.PersonalRelationship;
       case 'PlanDefinition':
         return R6ResourceType.PlanDefinition;
       case 'Practitioner':
@@ -1160,7 +1181,7 @@ enum R6ResourceType {
         'Citation',
         'Claim',
         'ClaimResponse',
-        'ClinicalImpression',
+        'ClinicalAssessment',
         'ClinicalUseDefinition',
         'CodeSystem',
         'Communication',
@@ -1177,6 +1198,7 @@ enum R6ResourceType {
         'CoverageEligibilityResponse',
         'DetectedIssue',
         'Device',
+        'DeviceAlert',
         'DeviceAssociation',
         'DeviceDefinition',
         'DeviceDispense',
@@ -1192,7 +1214,6 @@ enum R6ResourceType {
         'EpisodeOfCare',
         'EventDefinition',
         'Evidence',
-        'EvidenceReport',
         'EvidenceVariable',
         'ExampleScenario',
         'ExplanationOfBenefit',
@@ -1215,6 +1236,7 @@ enum R6ResourceType {
         'ImplementationGuide',
         'Ingredient',
         'InsurancePlan',
+        'InsuranceProduct',
         'InventoryItem',
         'InventoryReport',
         'Invoice',
@@ -1233,6 +1255,7 @@ enum R6ResourceType {
         'MedicinalProductDefinition',
         'MessageDefinition',
         'MessageHeader',
+        'MolecularDefinition',
         'MolecularSequence',
         'NamingSystem',
         'NutritionIntake',
@@ -1251,6 +1274,7 @@ enum R6ResourceType {
         'PaymentReconciliation',
         'Permission',
         'Person',
+        'PersonalRelationship',
         'PlanDefinition',
         'Practitioner',
         'PractitionerRole',

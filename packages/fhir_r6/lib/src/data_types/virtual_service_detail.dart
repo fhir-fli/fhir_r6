@@ -5,7 +5,8 @@ import 'package:yaml/yaml.dart';
 part 'virtual_service_detail.g.dart';
 
 /// [VirtualServiceDetail]
-/// Virtual Service Contact Details.
+/// The set of values required to describe a virtual service's connection
+/// details, including some limitations of the service.
 class VirtualServiceDetail extends DataType {
   /// Primary constructor for
   /// [VirtualServiceDetail]
@@ -145,15 +146,18 @@ class VirtualServiceDetail extends DataType {
       addressX?.isAs<ExtendedContactDetail>();
 
   /// [additionalInfo]
-  /// Address to see alternative connection details.
+  /// A web address that provides additional details on the call, such as
+  /// alternative/regional call in numbers, or other associated services.
   final List<FhirUrl>? additionalInfo;
 
   /// [maxParticipants]
-  /// Maximum number of participants supported by the virtual service.
+  /// Maximum number of participants supported by the virtual service where
+  /// there are limitations imposed.
   final FhirPositiveInt? maxParticipants;
 
   /// [sessionKey]
-  /// Session Key required by the virtual service.
+  /// Some systems require an additional factor/value be provided to access
+  /// the service.
   final FhirString? sessionKey;
   @override
   Map<String, dynamic> toJson() {

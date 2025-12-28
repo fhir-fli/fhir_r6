@@ -25,21 +25,22 @@ class ImagingSelection extends DomainResource {
     super.modifierExtension,
     this.identifier,
     required this.status,
+    this.category,
+    required this.code,
     this.subject,
     this.issued,
     this.performer,
     this.basedOn,
-    this.category,
-    required this.code,
-    this.studyUid,
     this.derivedFrom,
-    this.endpoint,
+    this.studyUid,
     this.seriesUid,
     this.seriesNumber,
     this.frameOfReferenceUid,
     this.bodySite,
     this.focus,
+    this.endpoint,
     this.instance,
+    this.imageRegion3D,
   }) : super(
           resourceType: R6ResourceType.ImagingSelection,
         );
@@ -107,6 +108,18 @@ class ImagingSelection extends DomainResource {
         'status',
         ImagingSelectionStatus.fromJson,
       )!,
+      category: (json['category'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      code: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'code',
+        CodeableConcept.fromJson,
+      )!,
       subject: JsonParser.parseObject<Reference>(
         json,
         'subject',
@@ -131,37 +144,16 @@ class ImagingSelection extends DomainResource {
             ),
           )
           .toList(),
-      category: (json['category'] as List<dynamic>?)
-          ?.map<CodeableConcept>(
-            (v) => CodeableConcept.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      code: JsonParser.parseObject<CodeableConcept>(
+      derivedFrom: JsonParser.parseObject<Reference>(
         json,
-        'code',
-        CodeableConcept.fromJson,
-      )!,
+        'derivedFrom',
+        Reference.fromJson,
+      ),
       studyUid: JsonParser.parsePrimitive<FhirId>(
         json,
         'studyUid',
         FhirId.fromJson,
       ),
-      derivedFrom: (json['derivedFrom'] as List<dynamic>?)
-          ?.map<Reference>(
-            (v) => Reference.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      endpoint: (json['endpoint'] as List<dynamic>?)
-          ?.map<Reference>(
-            (v) => Reference.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
       seriesUid: JsonParser.parsePrimitive<FhirId>(
         json,
         'seriesUid',
@@ -177,12 +169,21 @@ class ImagingSelection extends DomainResource {
         'frameOfReferenceUid',
         FhirId.fromJson,
       ),
-      bodySite: JsonParser.parseObject<CodeableReference>(
-        json,
-        'bodySite',
-        CodeableReference.fromJson,
-      ),
+      bodySite: (json['bodySite'] as List<dynamic>?)
+          ?.map<CodeableReference>(
+            (v) => CodeableReference.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       focus: (json['focus'] as List<dynamic>?)
+          ?.map<Reference>(
+            (v) => Reference.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      endpoint: (json['endpoint'] as List<dynamic>?)
           ?.map<Reference>(
             (v) => Reference.fromJson(
               {...v as Map<String, dynamic>},
@@ -192,6 +193,13 @@ class ImagingSelection extends DomainResource {
       instance: (json['instance'] as List<dynamic>?)
           ?.map<ImagingSelectionInstance>(
             (v) => ImagingSelectionInstance.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      imageRegion3D: (json['imageRegion3D'] as List<dynamic>?)
+          ?.map<ImagingSelectionImageRegion3D>(
+            (v) => ImagingSelectionImageRegion3D.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -242,14 +250,22 @@ class ImagingSelection extends DomainResource {
   String get fhirType => 'ImagingSelection';
 
   /// [identifier]
-  /// A unique identifier assigned to this imaging selection.
+  /// Unique identifiers assigned to this imaging selection.
   final List<Identifier>? identifier;
 
   /// [status]
-  /// The current state of the ImagingSelection resource. This is not the
-  /// status of any ImagingStudy, ServiceRequest, or Task resources
-  /// associated with the ImagingSelection.
+  /// The current state of the imaging selection. This is distinct from the
+  /// status of any imaging study, service request, or task associated with
+  /// the imaging selection.
   final ImagingSelectionStatus status;
+
+  /// [category]
+  /// Classifies the general purpose of the imaging selection.
+  final List<CodeableConcept>? category;
+
+  /// [code]
+  /// Identifies the type of imaging selection.
+  final CodeableConcept code;
 
   /// [subject]
   /// The patient, or group of patients, location, device, organization,
@@ -262,7 +278,7 @@ class ImagingSelection extends DomainResource {
   final FhirInstant? issued;
 
   /// [performer]
-  /// Selector of the instances – human or machine.
+  /// Selectors of the instances – human or machine.
   final List<ImagingSelectionPerformer>? performer;
 
   /// [basedOn]
@@ -270,28 +286,14 @@ class ImagingSelection extends DomainResource {
   /// selection being performed.
   final List<Reference>? basedOn;
 
-  /// [category]
-  /// Classifies the imaging selection.
-  final List<CodeableConcept>? category;
-
-  /// [code]
-  /// Reason for referencing the selected content.
-  final CodeableConcept code;
+  /// [derivedFrom]
+  /// The imaging study from which the imaging selection is made.
+  final Reference? derivedFrom;
 
   /// [studyUid]
   /// The Study Instance UID for the DICOM Study from which the images were
   /// selected.
   final FhirId? studyUid;
-
-  /// [derivedFrom]
-  /// The imaging study from which the imaging selection is made.
-  final List<Reference>? derivedFrom;
-
-  /// [endpoint]
-  /// The network service providing retrieval access to the selected images,
-  /// frames, etc. See implementation notes for information about using DICOM
-  /// endpoints.
-  final List<Reference>? endpoint;
 
   /// [seriesUid]
   /// The Series Instance UID for the DICOM Series from which the images were
@@ -304,34 +306,36 @@ class ImagingSelection extends DomainResource {
   final FhirUnsignedInt? seriesNumber;
 
   /// [frameOfReferenceUid]
-  /// The Frame of Reference UID identifying the coordinate system that
-  /// conveys spatial and/or temporal information for the selected images or
-  /// frames.
+  /// Uniquely identifies groups of composite instances that have the same
+  /// coordinate system that conveys spatial and/or temporal information.
   final FhirId? frameOfReferenceUid;
 
   /// [bodySite]
-  /// The anatomic structures examined. See DICOM Part 16 Annex L
-  /// (http://dicom.nema.org/medical/dicom/current/output/chtml/part16/chapter_L.html)
+  /// The anatomic structures examined. See [DICOM Part 16 Annex
+  /// L](http://dicom.nema.org/medical/dicom/current/output/chtml/part16/chapter_L.html)
   /// for DICOM to SNOMED-CT mappings.
-  final CodeableReference? bodySite;
+  final List<CodeableReference>? bodySite;
 
   /// [focus]
-  /// The actual focus of an observation when it is not the patient of record
-  /// representing something or someone associated with the patient such as a
-  /// spouse, parent, fetus, or donor. For example, fetus observations in a
-  /// mother's record. The focus of an observation could also be an existing
-  /// condition, an intervention, the subject's diet, another observation of
-  /// the subject, or a body structure such as tumor or implanted device. An
-  /// example use case would be using the Observation resource to capture
-  /// whether the mother is trained to change her child's tracheostomy tube.
-  /// In this example, the child is the patient of record and the mother is
-  /// the focus.
+  /// The actual focus of an imaging selection when it is another imaging
+  /// selection resource and not the patient of record.
   final List<Reference>? focus;
+
+  /// [endpoint]
+  /// The network services providing retrieval access to the selected images,
+  /// frames, etc. See implementation notes for information about using DICOM
+  /// endpoints.
+  final List<Reference>? endpoint;
 
   /// [instance]
   /// Each imaging selection includes one or more selected DICOM SOP
   /// instances.
   final List<ImagingSelectionInstance>? instance;
+
+  /// [imageRegion3D]
+  /// Each imaging selection might includes a 3D image region, specified by a
+  /// region type and a set of 3D coordinates.
+  final List<ImagingSelectionImageRegion3D>? imageRegion3D;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -437,6 +441,14 @@ class ImagingSelection extends DomainResource {
       status,
     );
     addField(
+      'category',
+      category,
+    );
+    addField(
+      'code',
+      code,
+    );
+    addField(
       'subject',
       subject,
     );
@@ -453,24 +465,12 @@ class ImagingSelection extends DomainResource {
       basedOn,
     );
     addField(
-      'category',
-      category,
-    );
-    addField(
-      'code',
-      code,
-    );
-    addField(
-      'studyUid',
-      studyUid,
-    );
-    addField(
       'derivedFrom',
       derivedFrom,
     );
     addField(
-      'endpoint',
-      endpoint,
+      'studyUid',
+      studyUid,
     );
     addField(
       'seriesUid',
@@ -493,8 +493,16 @@ class ImagingSelection extends DomainResource {
       focus,
     );
     addField(
+      'endpoint',
+      endpoint,
+    );
+    addField(
       'instance',
       instance,
+    );
+    addField(
+      'imageRegion3D',
+      imageRegion3D,
     );
     return json;
   }
@@ -513,21 +521,22 @@ class ImagingSelection extends DomainResource {
       'modifierExtension',
       'identifier',
       'status',
+      'category',
+      'code',
       'subject',
       'issued',
       'performer',
       'basedOn',
-      'category',
-      'code',
-      'studyUid',
       'derivedFrom',
-      'endpoint',
+      'studyUid',
       'seriesUid',
       'seriesNumber',
       'frameOfReferenceUid',
       'bodySite',
       'focus',
+      'endpoint',
       'instance',
+      'imageRegion3D',
     ];
   }
 
@@ -578,6 +587,12 @@ class ImagingSelection extends DomainResource {
         }
       case 'status':
         fields.add(status);
+      case 'category':
+        if (category != null) {
+          fields.addAll(category!);
+        }
+      case 'code':
+        fields.add(code);
       case 'subject':
         if (subject != null) {
           fields.add(subject!);
@@ -594,23 +609,13 @@ class ImagingSelection extends DomainResource {
         if (basedOn != null) {
           fields.addAll(basedOn!);
         }
-      case 'category':
-        if (category != null) {
-          fields.addAll(category!);
+      case 'derivedFrom':
+        if (derivedFrom != null) {
+          fields.add(derivedFrom!);
         }
-      case 'code':
-        fields.add(code);
       case 'studyUid':
         if (studyUid != null) {
           fields.add(studyUid!);
-        }
-      case 'derivedFrom':
-        if (derivedFrom != null) {
-          fields.addAll(derivedFrom!);
-        }
-      case 'endpoint':
-        if (endpoint != null) {
-          fields.addAll(endpoint!);
         }
       case 'seriesUid':
         if (seriesUid != null) {
@@ -626,15 +631,23 @@ class ImagingSelection extends DomainResource {
         }
       case 'bodySite':
         if (bodySite != null) {
-          fields.add(bodySite!);
+          fields.addAll(bodySite!);
         }
       case 'focus':
         if (focus != null) {
           fields.addAll(focus!);
         }
+      case 'endpoint':
+        if (endpoint != null) {
+          fields.addAll(endpoint!);
+        }
       case 'instance':
         if (instance != null) {
           fields.addAll(instance!);
+        }
+      case 'imageRegion3D':
+        if (imageRegion3D != null) {
+          fields.addAll(imageRegion3D!);
         }
       default:
         if (checkValid) {
@@ -737,6 +750,18 @@ class ImagingSelection extends DomainResource {
     )) {
       return false;
     }
+    if (!listEquals<CodeableConcept>(
+      category,
+      o.category,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      code,
+      o.code,
+    )) {
+      return false;
+    }
     if (!equalsDeepWithNull(
       subject,
       o.subject,
@@ -761,33 +786,15 @@ class ImagingSelection extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
-      category,
-      o.category,
-    )) {
-      return false;
-    }
     if (!equalsDeepWithNull(
-      code,
-      o.code,
+      derivedFrom,
+      o.derivedFrom,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
       studyUid,
       o.studyUid,
-    )) {
-      return false;
-    }
-    if (!listEquals<Reference>(
-      derivedFrom,
-      o.derivedFrom,
-    )) {
-      return false;
-    }
-    if (!listEquals<Reference>(
-      endpoint,
-      o.endpoint,
     )) {
       return false;
     }
@@ -809,7 +816,7 @@ class ImagingSelection extends DomainResource {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<CodeableReference>(
       bodySite,
       o.bodySite,
     )) {
@@ -821,9 +828,21 @@ class ImagingSelection extends DomainResource {
     )) {
       return false;
     }
+    if (!listEquals<Reference>(
+      endpoint,
+      o.endpoint,
+    )) {
+      return false;
+    }
     if (!listEquals<ImagingSelectionInstance>(
       instance,
       o.instance,
+    )) {
+      return false;
+    }
+    if (!listEquals<ImagingSelectionImageRegion3D>(
+      imageRegion3D,
+      o.imageRegion3D,
     )) {
       return false;
     }
@@ -832,7 +851,7 @@ class ImagingSelection extends DomainResource {
 }
 
 /// [ImagingSelectionPerformer]
-/// Selector of the instances – human or machine.
+/// Selectors of the instances – human or machine.
 class ImagingSelectionPerformer extends BackboneElement {
   /// Primary constructor for
   /// [ImagingSelectionPerformer]
@@ -930,7 +949,7 @@ class ImagingSelectionPerformer extends BackboneElement {
   final CodeableConcept? function_;
 
   /// [actor]
-  /// Author – human or machine.
+  /// Author - human or machine.
   final Reference? actor;
   @override
   Map<String, dynamic> toJson() {
@@ -1150,7 +1169,6 @@ class ImagingSelectionInstance extends BackboneElement {
     this.sopClass,
     this.subset,
     this.imageRegion2D,
-    this.imageRegion3D,
     super.disallowExtensions,
   }) : super();
 
@@ -1188,10 +1206,10 @@ class ImagingSelectionInstance extends BackboneElement {
         'number',
         FhirUnsignedInt.fromJson,
       ),
-      sopClass: JsonParser.parseObject<Coding>(
+      sopClass: JsonParser.parsePrimitive<FhirOid>(
         json,
         'sopClass',
-        Coding.fromJson,
+        FhirOid.fromJson,
       ),
       subset: JsonParser.parsePrimitiveList<FhirString>(
         json,
@@ -1201,13 +1219,6 @@ class ImagingSelectionInstance extends BackboneElement {
       imageRegion2D: (json['imageRegion2D'] as List<dynamic>?)
           ?.map<ImagingSelectionImageRegion2D>(
             (v) => ImagingSelectionImageRegion2D.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      imageRegion3D: (json['imageRegion3D'] as List<dynamic>?)
-          ?.map<ImagingSelectionImageRegion3D>(
-            (v) => ImagingSelectionImageRegion3D.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -1267,31 +1278,30 @@ class ImagingSelectionInstance extends BackboneElement {
 
   /// [sopClass]
   /// The SOP Class UID for the selected DICOM instance.
-  final Coding? sopClass;
+  final FhirOid? sopClass;
 
   /// [subset]
-  /// Selected subset of the SOP Instance. The content and format of the
-  /// subset item is determined by the SOP Class of the selected instance.
-  ///  May be one of:
-  ///  - A list of frame numbers selected from a multiframe SOP Instance.
-  ///  - A list of Content Item Observation UID values selected from a DICOM
-  /// SR or other structured document SOP Instance.
-  ///  - A list of segment numbers selected from a segmentation SOP Instance.
-  ///  - A list of Region of Interest (ROI) numbers selected from a
-  /// radiotherapy structure set SOP Instance.
+  /// Selected subset of the SOP Instance. The type of the subset item is
+  /// determined by the `instance.sopClass` value.
+  /// May be one of:
+  /// - A list of frame numbers selected from a multiframe SOP Instance (See
+  /// [DICOM PS 3.3 Table
+  /// 10.3](https://dicom.nema.org/medical/dicom/current/output/chtml/part03/sect_10.3.html#table_10-3)).
+  /// - A list of Referenced Content Item Identifier values selected from a
+  /// DICOM SR or other structured document SOP Instance (See [DICOM PS 3.3
+  /// C.17.3.2.5](https://dicom.nema.org/medical/dicom/current/output/chtml/part03/sect_C.17.3.2.5.html)).
+  /// - A list of segment numbers selected from a segmentation SOP Instance
+  /// (See [DICOM PS 3.3 Table
+  /// C.8.20-4](https://dicom.nema.org/medical/dicom/current/output/chtml/part03/sect_C.8.20.4.html#table_C.8.20-4)).
+  /// - A list of Region of Interest (ROI) numbers selected from a
+  /// radiotherapy structure set SOP Instance (See [DICOM PS 3.3
+  /// C.8.8.5](https://dicom.nema.org/medical/dicom/current/output/chtml/part03/sect_C.8.8.5.html)).
   final List<FhirString>? subset;
 
   /// [imageRegion2D]
   /// Each imaging selection instance or frame list might includes an image
   /// region, specified by a region type and a set of 2D coordinates.
-  ///  If the parent imagingSelection.instance contains a subset element of
-  /// type frame, the image region applies to all frames in the subset list.
   final List<ImagingSelectionImageRegion2D>? imageRegion2D;
-
-  /// [imageRegion3D]
-  /// Each imaging selection might includes a 3D image region, specified by a
-  /// region type and a set of 3D coordinates.
-  final List<ImagingSelectionImageRegion3D>? imageRegion3D;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1387,10 +1397,6 @@ class ImagingSelectionInstance extends BackboneElement {
       'imageRegion2D',
       imageRegion2D,
     );
-    addField(
-      'imageRegion3D',
-      imageRegion3D,
-    );
     return json;
   }
 
@@ -1406,7 +1412,6 @@ class ImagingSelectionInstance extends BackboneElement {
       'sopClass',
       'subset',
       'imageRegion2D',
-      'imageRegion3D',
     ];
   }
 
@@ -1448,10 +1453,6 @@ class ImagingSelectionInstance extends BackboneElement {
       case 'imageRegion2D':
         if (imageRegion2D != null) {
           fields.addAll(imageRegion2D!);
-        }
-      case 'imageRegion3D':
-        if (imageRegion3D != null) {
-          fields.addAll(imageRegion3D!);
         }
       default:
         if (checkValid) {
@@ -1542,12 +1543,6 @@ class ImagingSelectionInstance extends BackboneElement {
     )) {
       return false;
     }
-    if (!listEquals<ImagingSelectionImageRegion3D>(
-      imageRegion3D,
-      o.imageRegion3D,
-    )) {
-      return false;
-    }
     return true;
   }
 }
@@ -1555,8 +1550,6 @@ class ImagingSelectionInstance extends BackboneElement {
 /// [ImagingSelectionImageRegion2D]
 /// Each imaging selection instance or frame list might includes an image
 /// region, specified by a region type and a set of 2D coordinates.
-///  If the parent imagingSelection.instance contains a subset element of
-/// type frame, the image region applies to all frames in the subset list.
 class ImagingSelectionImageRegion2D extends BackboneElement {
   /// Primary constructor for
   /// [ImagingSelectionImageRegion2D]
@@ -1657,10 +1650,10 @@ class ImagingSelectionImageRegion2D extends BackboneElement {
   /// The coordinates describing the image region. Encoded as a set of
   /// (column, row) pairs that denote positions in the selected image /
   /// frames specified with sub-pixel resolution.
-  ///  The origin at the TLHC of the TLHC pixel is 0.0\0.0, the BRHC of the
+  /// The origin at the TLHC of the TLHC pixel is 0.0\0.0, the BRHC of the
   /// TLHC pixel is 1.0\1.0, and the BRHC of the BRHC pixel is the number of
-  /// columns\rows in the image / frames. The values must be within the range
-  /// 0\0 to the number of columns\rows in the image / frames.
+  /// columns\rows in the image / frames. The values SHALL be within the
+  /// range 0\0 to the number of columns\rows in the image / frames.
   final List<FhirDecimal> coordinate;
   @override
   Map<String, dynamic> toJson() {
@@ -1962,7 +1955,7 @@ class ImagingSelectionImageRegion3D extends BackboneElement {
 
   /// [coordinate]
   /// The coordinates describing the image region. Encoded as an ordered set
-  /// of (x,y,z) triplets (in mm and may be negative) that define a region of
+  /// of (x,y,z) triplets (in mm and MAY be negative) that define a region of
   /// interest in the patient-relative Reference Coordinate System defined by
   /// ImagingSelection.frameOfReferenceUid element.
   final List<FhirDecimal> coordinate;

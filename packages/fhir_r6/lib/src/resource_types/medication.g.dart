@@ -127,7 +127,7 @@ abstract class $MedicationIngredientCopyWith<T>
     List<FhirExtension>? modifierExtension,
     CodeableReference? item,
     FhirBoolean? isActive,
-    Ratio? strengthX,
+    StrengthXMedicationIngredient? strengthX,
     bool? disallowExtensions,
   });
 }
@@ -166,7 +166,7 @@ class _$MedicationIngredientCopyWithImpl<T>
             : isActive as FhirBoolean?,
         strengthX: identical(strengthX, fhirSentinel)
             ? _value.strengthX
-            : strengthX as Ratio?,
+            : strengthX as StrengthXMedicationIngredient?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

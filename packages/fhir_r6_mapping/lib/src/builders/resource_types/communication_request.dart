@@ -10,9 +10,7 @@ import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [CommunicationRequestBuilder]
-/// A request to convey information; e.g. the CDS system proposes that an
-/// alert be sent to a responsible provider, the CDS system proposes that
-/// the public health agency be notified about a reportable condition.
+/// A request to convey information from a sender to a recipient.
 class CommunicationRequestBuilder extends DomainResourceBuilder {
   /// Primary constructor for
   /// [CommunicationRequestBuilder]
@@ -1896,8 +1894,8 @@ class CommunicationRequestPayloadBuilder extends BackboneElementBuilder {
   String get fhirType => 'CommunicationRequestPayload';
 
   /// [contentX]
-  /// The communicated content (or for multi-part communications, one portion
-  /// of the communication).
+  /// The content (or for multi-part communications, one portion of the
+  /// communication) to be communicated.
   ContentXCommunicationRequestPayloadBuilder? contentX;
 
   /// Getter for [contentAttachment] as a AttachmentBuilder

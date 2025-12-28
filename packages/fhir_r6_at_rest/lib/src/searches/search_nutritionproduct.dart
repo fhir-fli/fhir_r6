@@ -10,25 +10,53 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchNutritionProduct extends SearchResource {
   /// a token search for [code] in the resource
   /// [NutritionProduct]
+  @override
   SearchNutritionProduct code(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}code'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['code'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a date search for [expirationDate] in the resource
+  /// [NutritionProduct]
+  SearchNutritionProduct expirationDate(
+    FhirDateTime value, {
+    SearchModifier? modifier,
+  }) {
+    parameters['expiration_date'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [identifier] in the resource
   /// [NutritionProduct]
+  @override
   SearchNutritionProduct identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a token search for [ingredientItem] in the resource
+  /// [NutritionProduct]
+  SearchNutritionProduct ingredientItem(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    parameters['ingredient_item'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -39,8 +67,9 @@ class SearchNutritionProduct extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}lot_number'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['lot_number'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -51,20 +80,23 @@ class SearchNutritionProduct extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}serial_number'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['serial_number'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [NutritionProduct]
+  @override
   SearchNutritionProduct status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

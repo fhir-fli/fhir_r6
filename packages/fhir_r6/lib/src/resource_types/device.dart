@@ -5,9 +5,9 @@ import 'package:yaml/yaml.dart';
 part 'device.g.dart';
 
 /// [Device]
-/// A type of a manufactured item that is used in the provision of
-/// healthcare without being substantially changed through that activity.
-/// The device may be a medical or non-medical device.
+/// A manufactured item that is used in the provision of healthcare without
+/// being substantially changed through that activity. The device may be a
+/// medical or non-medical device.
 class Device extends DomainResource {
   /// Primary constructor for
   /// [Device]
@@ -22,7 +22,6 @@ class Device extends DomainResource {
     super.extension_,
     super.modifierExtension,
     this.identifier,
-    this.displayName,
     this.definition,
     this.udiCarrier,
     this.status,
@@ -38,18 +37,12 @@ class Device extends DomainResource {
     this.partNumber,
     this.category,
     this.type,
-    this.version,
+    this.deviceVersion,
     this.conformsTo,
     this.property,
-    this.mode,
-    this.cycle,
-    this.duration,
-    this.owner,
+    this.additive,
     this.contact,
     this.location,
-    this.url,
-    this.endpoint,
-    this.gateway,
     this.note,
     this.safety,
     this.parent,
@@ -115,15 +108,10 @@ class Device extends DomainResource {
             ),
           )
           .toList(),
-      displayName: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'displayName',
-        FhirString.fromJson,
-      ),
-      definition: JsonParser.parseObject<CodeableReference>(
+      definition: JsonParser.parseObject<Reference>(
         json,
         'definition',
-        CodeableReference.fromJson,
+        Reference.fromJson,
       ),
       udiCarrier: (json['udiCarrier'] as List<dynamic>?)
           ?.map<DeviceUdiCarrier>(
@@ -203,9 +191,9 @@ class Device extends DomainResource {
             ),
           )
           .toList(),
-      version: (json['version'] as List<dynamic>?)
-          ?.map<DeviceVersion>(
-            (v) => DeviceVersion.fromJson(
+      deviceVersion: (json['deviceVersion'] as List<dynamic>?)
+          ?.map<DeviceDeviceVersion>(
+            (v) => DeviceDeviceVersion.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -224,26 +212,13 @@ class Device extends DomainResource {
             ),
           )
           .toList(),
-      mode: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'mode',
-        CodeableConcept.fromJson,
-      ),
-      cycle: JsonParser.parseObject<Count>(
-        json,
-        'cycle',
-        Count.fromJson,
-      ),
-      duration: JsonParser.parseObject<FhirDuration>(
-        json,
-        'duration',
-        FhirDuration.fromJson,
-      ),
-      owner: JsonParser.parseObject<Reference>(
-        json,
-        'owner',
-        Reference.fromJson,
-      ),
+      additive: (json['additive'] as List<dynamic>?)
+          ?.map<DeviceAdditive>(
+            (v) => DeviceAdditive.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       contact: (json['contact'] as List<dynamic>?)
           ?.map<ContactPoint>(
             (v) => ContactPoint.fromJson(
@@ -256,25 +231,6 @@ class Device extends DomainResource {
         'location',
         Reference.fromJson,
       ),
-      url: JsonParser.parsePrimitive<FhirUri>(
-        json,
-        'url',
-        FhirUri.fromJson,
-      ),
-      endpoint: (json['endpoint'] as List<dynamic>?)
-          ?.map<Reference>(
-            (v) => Reference.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      gateway: (json['gateway'] as List<dynamic>?)
-          ?.map<CodeableReference>(
-            (v) => CodeableReference.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
       note: (json['note'] as List<dynamic>?)
           ?.map<Annotation>(
             (v) => Annotation.fromJson(
@@ -344,21 +300,14 @@ class Device extends DomainResource {
   /// organizations or owners.
   final List<Identifier>? identifier;
 
-  /// [displayName]
-  /// The name used to display by default when the device is referenced.
-  /// Based on intent of use by the resource creator, this may reflect one of
-  /// the names in Device.name, or may be another simple name.
-  final FhirString? displayName;
-
   /// [definition]
   /// The reference to the definition for the device.
-  final CodeableReference? definition;
+  final Reference? definition;
 
   /// [udiCarrier]
-  /// Unique device identifier (UDI) assigned to device label or package.
-  /// Note that the Device may include multiple udiCarriers as it either may
-  /// include just the udiCarrier for the jurisdiction it is sold, or for
-  /// multiple jurisdictions it could have been sold.
+  /// Unique Device Identifier (UDI) placed on a device label or package.
+  /// Note that the Device may include multiple UDIs if it is sold in
+  /// multiple jurisdictions.
   final List<DeviceUdiCarrier>? udiCarrier;
 
   /// [status]
@@ -371,9 +320,8 @@ class Device extends DomainResource {
   final CodeableConcept? availabilityStatus;
 
   /// [biologicalSourceEvent]
-  /// An identifier that supports traceability to the event during which
-  /// material in this product from one or more biological entities was
-  /// obtained or pooled.
+  /// A production identifier of the donation, collection, or pooling event
+  /// from which biological material in this device was derived.
   final Identifier? biologicalSourceEvent;
 
   /// [manufacturer]
@@ -424,10 +372,10 @@ class Device extends DomainResource {
   /// instance of the device.
   final List<CodeableConcept>? type;
 
-  /// [version]
+  /// [deviceVersion]
   /// The actual design of the device or software version running on the
   /// device.
-  final List<DeviceVersion>? version;
+  final List<DeviceDeviceVersion>? deviceVersion;
 
   /// [conformsTo]
   /// Identifies the standards, specifications, or formal guidances for the
@@ -443,24 +391,12 @@ class Device extends DomainResource {
   /// captured in more specific attributes.
   final List<DeviceProperty>? property;
 
-  /// [mode]
-  /// The designated condition for performing a task with the device.
-  final CodeableConcept? mode;
-
-  /// [cycle]
-  /// The series of occurrences that repeats during the operation of the
-  /// device.
-  final Count? cycle;
-
-  /// [duration]
-  /// A measurement of time during the device's operation (e.g., days, hours,
-  /// mins, etc.).
-  final FhirDuration? duration;
-
-  /// [owner]
-  /// An organization that is responsible for the provision and ongoing
-  /// maintenance of the device.
-  final Reference? owner;
+  /// [additive]
+  /// Material added to a container device (typically used in specimen
+  /// collection or initial processing). The material may be added by the
+  /// device manufacturer or by a different party subsequent to
+  /// manufacturing.
+  final List<DeviceAdditive>? additive;
 
   /// [contact]
   /// Contact details for an organization or a particular human that is
@@ -470,21 +406,6 @@ class Device extends DomainResource {
   /// [location]
   /// The place where the device can be found.
   final Reference? location;
-
-  /// [url]
-  /// A network address on which the device may be contacted directly.
-  final FhirUri? url;
-
-  /// [endpoint]
-  /// Technical endpoints providing access to services provided by the device
-  /// defined at this resource.
-  final List<Reference>? endpoint;
-
-  /// [gateway]
-  /// The linked device acting as a communication controller, data collector,
-  /// translator, or concentrator for the current device (e.g., mobile phone
-  /// application that relays a blood pressure device's data).
-  final List<CodeableReference>? gateway;
 
   /// [note]
   /// Descriptive information, usage information or implantation information
@@ -601,10 +522,6 @@ class Device extends DomainResource {
       identifier,
     );
     addField(
-      'displayName',
-      displayName,
-    );
-    addField(
       'definition',
       definition,
     );
@@ -665,8 +582,8 @@ class Device extends DomainResource {
       type,
     );
     addField(
-      'version',
-      version,
+      'deviceVersion',
+      deviceVersion,
     );
     addField(
       'conformsTo',
@@ -677,20 +594,8 @@ class Device extends DomainResource {
       property,
     );
     addField(
-      'mode',
-      mode,
-    );
-    addField(
-      'cycle',
-      cycle,
-    );
-    addField(
-      'duration',
-      duration,
-    );
-    addField(
-      'owner',
-      owner,
+      'additive',
+      additive,
     );
     addField(
       'contact',
@@ -699,18 +604,6 @@ class Device extends DomainResource {
     addField(
       'location',
       location,
-    );
-    addField(
-      'url',
-      url,
-    );
-    addField(
-      'endpoint',
-      endpoint,
-    );
-    addField(
-      'gateway',
-      gateway,
     );
     addField(
       'note',
@@ -740,7 +633,6 @@ class Device extends DomainResource {
       'extension',
       'modifierExtension',
       'identifier',
-      'displayName',
       'definition',
       'udiCarrier',
       'status',
@@ -756,18 +648,12 @@ class Device extends DomainResource {
       'partNumber',
       'category',
       'type',
-      'version',
+      'deviceVersion',
       'conformsTo',
       'property',
-      'mode',
-      'cycle',
-      'duration',
-      'owner',
+      'additive',
       'contact',
       'location',
-      'url',
-      'endpoint',
-      'gateway',
       'note',
       'safety',
       'parent',
@@ -818,10 +704,6 @@ class Device extends DomainResource {
       case 'identifier':
         if (identifier != null) {
           fields.addAll(identifier!);
-        }
-      case 'displayName':
-        if (displayName != null) {
-          fields.add(displayName!);
         }
       case 'definition':
         if (definition != null) {
@@ -883,9 +765,9 @@ class Device extends DomainResource {
         if (type != null) {
           fields.addAll(type!);
         }
-      case 'version':
-        if (version != null) {
-          fields.addAll(version!);
+      case 'deviceVersion':
+        if (deviceVersion != null) {
+          fields.addAll(deviceVersion!);
         }
       case 'conformsTo':
         if (conformsTo != null) {
@@ -895,21 +777,9 @@ class Device extends DomainResource {
         if (property != null) {
           fields.addAll(property!);
         }
-      case 'mode':
-        if (mode != null) {
-          fields.add(mode!);
-        }
-      case 'cycle':
-        if (cycle != null) {
-          fields.add(cycle!);
-        }
-      case 'duration':
-        if (duration != null) {
-          fields.add(duration!);
-        }
-      case 'owner':
-        if (owner != null) {
-          fields.add(owner!);
+      case 'additive':
+        if (additive != null) {
+          fields.addAll(additive!);
         }
       case 'contact':
         if (contact != null) {
@@ -918,18 +788,6 @@ class Device extends DomainResource {
       case 'location':
         if (location != null) {
           fields.add(location!);
-        }
-      case 'url':
-        if (url != null) {
-          fields.add(url!);
-        }
-      case 'endpoint':
-        if (endpoint != null) {
-          fields.addAll(endpoint!);
-        }
-      case 'gateway':
-        if (gateway != null) {
-          fields.addAll(gateway!);
         }
       case 'note':
         if (note != null) {
@@ -1038,12 +896,6 @@ class Device extends DomainResource {
       return false;
     }
     if (!equalsDeepWithNull(
-      displayName,
-      o.displayName,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
       definition,
       o.definition,
     )) {
@@ -1133,9 +985,9 @@ class Device extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<DeviceVersion>(
-      version,
-      o.version,
+    if (!listEquals<DeviceDeviceVersion>(
+      deviceVersion,
+      o.deviceVersion,
     )) {
       return false;
     }
@@ -1151,27 +1003,9 @@ class Device extends DomainResource {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      mode,
-      o.mode,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      cycle,
-      o.cycle,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      duration,
-      o.duration,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      owner,
-      o.owner,
+    if (!listEquals<DeviceAdditive>(
+      additive,
+      o.additive,
     )) {
       return false;
     }
@@ -1184,24 +1018,6 @@ class Device extends DomainResource {
     if (!equalsDeepWithNull(
       location,
       o.location,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      url,
-      o.url,
-    )) {
-      return false;
-    }
-    if (!listEquals<Reference>(
-      endpoint,
-      o.endpoint,
-    )) {
-      return false;
-    }
-    if (!listEquals<CodeableReference>(
-      gateway,
-      o.gateway,
     )) {
       return false;
     }
@@ -1228,10 +1044,9 @@ class Device extends DomainResource {
 }
 
 /// [DeviceUdiCarrier]
-/// Unique device identifier (UDI) assigned to device label or package.
-/// Note that the Device may include multiple udiCarriers as it either may
-/// include just the udiCarrier for the jurisdiction it is sold, or for
-/// multiple jurisdictions it could have been sold.
+/// Unique Device Identifier (UDI) placed on a device label or package.
+/// Note that the Device may include multiple UDIs if it is sold in
+/// multiple jurisdictions.
 class DeviceUdiCarrier extends BackboneElement {
   /// Primary constructor for
   /// [DeviceUdiCarrier]
@@ -1241,6 +1056,7 @@ class DeviceUdiCarrier extends BackboneElement {
     super.extension_,
     super.modifierExtension,
     required this.deviceIdentifier,
+    this.deviceIdentifierSystem,
     required this.issuer,
     this.jurisdiction,
     this.carrierAIDC,
@@ -1278,6 +1094,11 @@ class DeviceUdiCarrier extends BackboneElement {
         'deviceIdentifier',
         FhirString.fromJson,
       )!,
+      deviceIdentifierSystem: JsonParser.parsePrimitive<FhirUri>(
+        json,
+        'deviceIdentifierSystem',
+        FhirUri.fromJson,
+      ),
       issuer: JsonParser.parsePrimitive<FhirUri>(
         json,
         'issuer',
@@ -1349,9 +1170,17 @@ class DeviceUdiCarrier extends BackboneElement {
   String get fhirType => 'DeviceUdiCarrier';
 
   /// [deviceIdentifier]
-  /// The device identifier (DI) is a mandatory, fixed portion of a UDI that
-  /// identifies the labeler and the specific version or model of a device.
+  /// The device identifier (UDI-DI) is a mandatory, fixed portion of a UDI
+  /// that identifies the labeler and the specific version or model of a
+  /// device. The UDI-DI portion is placed on a device label or package. Note
+  /// that the DeviceDefinition may include multiple UDI-DIs if it is sold in
+  /// multiple jurisdictions.
   final FhirString deviceIdentifier;
+
+  /// [deviceIdentifierSystem]
+  /// Establishes the namespace for the device identifier value that is an
+  /// URL, OID, urn or uuid.
+  final FhirUri? deviceIdentifierSystem;
 
   /// [issuer]
   /// Organization that is charged with issuing UDIs for devices. For
@@ -1377,10 +1206,10 @@ class DeviceUdiCarrier extends BackboneElement {
 
   /// [carrierAIDC]
   /// The full UDI carrier of the Automatic Identification and Data Capture
-  /// (AIDC) technology representation of the barcode string as printed on
-  /// the packaging of the device - e.g., a barcode or RFID. Because of
-  /// limitations on character sets in XML and the need to round-trip JSON
-  /// data through XML, AIDC Formats *SHALL* be base64 encoded.
+  /// (AIDC) technology representation as printed on the packaging of the
+  /// device - e.g., a barcode or RFID. Because of limitations on character
+  /// sets in XML and the need to round-trip JSON data through XML, AIDC
+  /// Formats *SHALL* be base64 encoded.
   final FhirBase64Binary? carrierAIDC;
 
   /// [carrierHRF]
@@ -1471,6 +1300,10 @@ class DeviceUdiCarrier extends BackboneElement {
       deviceIdentifier,
     );
     addField(
+      'deviceIdentifierSystem',
+      deviceIdentifierSystem,
+    );
+    addField(
       'issuer',
       issuer,
     );
@@ -1501,6 +1334,7 @@ class DeviceUdiCarrier extends BackboneElement {
       'extension',
       'modifierExtension',
       'deviceIdentifier',
+      'deviceIdentifierSystem',
       'issuer',
       'jurisdiction',
       'carrierAIDC',
@@ -1532,6 +1366,10 @@ class DeviceUdiCarrier extends BackboneElement {
         }
       case 'deviceIdentifier':
         fields.add(deviceIdentifier);
+      case 'deviceIdentifierSystem':
+        if (deviceIdentifierSystem != null) {
+          fields.add(deviceIdentifierSystem!);
+        }
       case 'issuer':
         fields.add(issuer);
       case 'jurisdiction':
@@ -1612,6 +1450,12 @@ class DeviceUdiCarrier extends BackboneElement {
     if (!equalsDeepWithNull(
       deviceIdentifier,
       o.deviceIdentifier,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      deviceIdentifierSystem,
+      o.deviceIdentifierSystem,
     )) {
       return false;
     }
@@ -1697,10 +1541,10 @@ class DeviceName extends BackboneElement {
         'value',
         FhirString.fromJson,
       )!,
-      type: JsonParser.parsePrimitive<DeviceNameType>(
+      type: JsonParser.parseObject<CodeableConcept>(
         json,
         'type',
-        DeviceNameType.fromJson,
+        CodeableConcept.fromJson,
       )!,
       display: JsonParser.parsePrimitive<FhirBoolean>(
         json,
@@ -1759,7 +1603,7 @@ class DeviceName extends BackboneElement {
   /// [type]
   /// Indicates the kind of name. RegisteredName | UserFriendlyName |
   /// PatientReportedName.
-  final DeviceNameType type;
+  final CodeableConcept type;
 
   /// [display]
   /// Indicates the default or preferred name to be displayed.
@@ -1977,14 +1821,14 @@ class DeviceName extends BackboneElement {
   }
 }
 
-/// [DeviceVersion]
+/// [DeviceDeviceVersion]
 /// The actual design of the device or software version running on the
 /// device.
-class DeviceVersion extends BackboneElement {
+class DeviceDeviceVersion extends BackboneElement {
   /// Primary constructor for
-  /// [DeviceVersion]
+  /// [DeviceDeviceVersion]
 
-  const DeviceVersion({
+  const DeviceDeviceVersion({
     super.id,
     super.extension_,
     super.modifierExtension,
@@ -1996,10 +1840,10 @@ class DeviceVersion extends BackboneElement {
   }) : super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory DeviceVersion.fromJson(
+  factory DeviceDeviceVersion.fromJson(
     Map<String, dynamic> json,
   ) {
-    return DeviceVersion(
+    return DeviceDeviceVersion(
       id: JsonParser.parsePrimitive<FhirString>(
         json,
         'id',
@@ -2042,22 +1886,22 @@ class DeviceVersion extends BackboneElement {
     );
   }
 
-  /// Deserialize [DeviceVersion]
+  /// Deserialize [DeviceDeviceVersion]
   /// from a [String] or [YamlMap] object
-  factory DeviceVersion.fromYaml(
+  factory DeviceDeviceVersion.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return DeviceVersion.fromJson(
+      return DeviceDeviceVersion.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return DeviceVersion.fromJson(
+      return DeviceDeviceVersion.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'DeviceVersion '
+        'DeviceDeviceVersion '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -2065,16 +1909,16 @@ class DeviceVersion extends BackboneElement {
   }
 
   /// Factory constructor for
-  /// [DeviceVersion]
+  /// [DeviceDeviceVersion]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory DeviceVersion.fromJsonString(
+  factory DeviceDeviceVersion.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return DeviceVersion.fromJson(json);
+      return DeviceDeviceVersion.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -2082,7 +1926,7 @@ class DeviceVersion extends BackboneElement {
   }
 
   @override
-  String get fhirType => 'DeviceVersion';
+  String get fhirType => 'DeviceDeviceVersion';
 
   /// [type]
   /// The type of the device version, e.g. manufacturer, approved, internal.
@@ -2262,16 +2106,16 @@ class DeviceVersion extends BackboneElement {
   }
 
   @override
-  DeviceVersion clone() => copyWith();
+  DeviceDeviceVersion clone() => copyWith();
 
-  /// Copy function for [DeviceVersion]
+  /// Copy function for [DeviceDeviceVersion]
   /// Returns a copy of the current instance with the provided fields modified.
   /// If a field is not provided, it will retain its original value.
   /// If a null is provided, this will clearn the field, unless the
   /// field is required, in which case it will keep its current value.
   @override
-  $DeviceVersionCopyWith<DeviceVersion> get copyWith =>
-      _$DeviceVersionCopyWithImpl<DeviceVersion>(
+  $DeviceDeviceVersionCopyWith<DeviceDeviceVersion> get copyWith =>
+      _$DeviceDeviceVersionCopyWithImpl<DeviceDeviceVersion>(
         this,
         (value) => value,
       );
@@ -2279,7 +2123,7 @@ class DeviceVersion extends BackboneElement {
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBase? o) {
-    if (o is! DeviceVersion) {
+    if (o is! DeviceDeviceVersion) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -3020,6 +2864,364 @@ class DeviceProperty extends BackboneElement {
     if (!equalsDeepWithNull(
       valueX,
       o.valueX,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [DeviceAdditive]
+/// Material added to a container device (typically used in specimen
+/// collection or initial processing). The material may be added by the
+/// device manufacturer or by a different party subsequent to
+/// manufacturing.
+class DeviceAdditive extends BackboneElement {
+  /// Primary constructor for
+  /// [DeviceAdditive]
+
+  const DeviceAdditive({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    required this.type,
+    this.quantity,
+    this.performer,
+    this.performed,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory DeviceAdditive.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return DeviceAdditive(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      type: JsonParser.parseObject<CodeableReference>(
+        json,
+        'type',
+        CodeableReference.fromJson,
+      )!,
+      quantity: JsonParser.parseObject<Quantity>(
+        json,
+        'quantity',
+        Quantity.fromJson,
+      ),
+      performer: JsonParser.parseObject<Reference>(
+        json,
+        'performer',
+        Reference.fromJson,
+      ),
+      performed: JsonParser.parsePrimitive<FhirDateTime>(
+        json,
+        'performed',
+        FhirDateTime.fromJson,
+      ),
+    );
+  }
+
+  /// Deserialize [DeviceAdditive]
+  /// from a [String] or [YamlMap] object
+  factory DeviceAdditive.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return DeviceAdditive.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return DeviceAdditive.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'DeviceAdditive '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [DeviceAdditive]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory DeviceAdditive.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return DeviceAdditive.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'DeviceAdditive';
+
+  /// [type]
+  /// The type of the substance added to the container. This is represented
+  /// as a concept from a code system or described in a Substance resource.
+  final CodeableReference type;
+
+  /// [quantity]
+  /// The quantity of the additive substance in the container; may be volume,
+  /// dimensions, or other appropriate measurements, depending on the
+  /// container and additive substance type.
+  final Quantity? quantity;
+
+  /// [performer]
+  /// The performer who adds the substance to the container.
+  final Reference? performer;
+
+  /// [performed]
+  /// Time when the additive substance was placed into the container by the
+  /// performer.
+  final FhirDateTime? performed;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'type',
+      type,
+    );
+    addField(
+      'quantity',
+      quantity,
+    );
+    addField(
+      'performer',
+      performer,
+    );
+    addField(
+      'performed',
+      performed,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'type',
+      'quantity',
+      'performer',
+      'performed',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'type':
+        fields.add(type);
+      case 'quantity':
+        if (quantity != null) {
+          fields.add(quantity!);
+        }
+      case 'performer':
+        if (performer != null) {
+          fields.add(performer!);
+        }
+      case 'performed':
+        if (performed != null) {
+          fields.add(performed!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  DeviceAdditive clone() => copyWith();
+
+  /// Copy function for [DeviceAdditive]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $DeviceAdditiveCopyWith<DeviceAdditive> get copyWith =>
+      _$DeviceAdditiveCopyWithImpl<DeviceAdditive>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! DeviceAdditive) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      type,
+      o.type,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      quantity,
+      o.quantity,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      performer,
+      o.performer,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      performed,
+      o.performed,
     )) {
       return false;
     }

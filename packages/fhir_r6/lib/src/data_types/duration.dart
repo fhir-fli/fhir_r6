@@ -10,6 +10,7 @@ class FhirDuration extends Quantity
     implements
         TimingXActivityDefinition,
         DueXGoalTarget,
+        DurationXGroupCharacteristic,
         ValueXInventoryItemCharacteristic,
         MeasureScoreXMeasureReportGroup,
         MeasureScoreXMeasureReportStratum,
@@ -19,6 +20,7 @@ class FhirDuration extends Quantity
         TimingXRequestOrchestrationAction,
         OffsetXRequestOrchestrationRelatedAction,
         FastingStatusXSpecimenCollection,
+        TimeXSpecimenProcessing,
         ValueXTaskInput,
         ValueXTaskOutput,
         ValueXTransportInput,
@@ -31,6 +33,7 @@ class FhirDuration extends Quantity
         ValueXElementDefinitionExample,
         ValueXExtension,
         PeriodXProductShelfLife,
+        OffsetXRelativeTime,
         BoundsXTimingRepeat {
   /// Primary constructor for
   /// [FhirDuration]

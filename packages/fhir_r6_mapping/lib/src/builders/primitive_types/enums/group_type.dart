@@ -32,6 +32,18 @@ enum GroupTypeBuilderEnum {
 
   /// specimen
   specimen,
+
+  /// medication
+  medication,
+
+  /// substance
+  substance,
+
+  /// biologicallyDerivedProduct
+  biologicallyDerivedProduct,
+
+  /// nutritionProduct
+  nutritionProduct,
   ;
 
   /// Converts the enum value to a string.
@@ -61,6 +73,14 @@ enum GroupTypeBuilderEnum {
         return 'relatedperson';
       case GroupTypeBuilderEnum.specimen:
         return 'specimen';
+      case GroupTypeBuilderEnum.medication:
+        return 'medication';
+      case GroupTypeBuilderEnum.substance:
+        return 'substance';
+      case GroupTypeBuilderEnum.biologicallyDerivedProduct:
+        return 'biologicallyDerivedProduct';
+      case GroupTypeBuilderEnum.nutritionProduct:
+        return 'nutritionProduct';
     }
   }
 
@@ -102,6 +122,14 @@ enum GroupTypeBuilderEnum {
         return GroupTypeBuilderEnum.relatedperson;
       case 'specimen':
         return GroupTypeBuilderEnum.specimen;
+      case 'medication':
+        return GroupTypeBuilderEnum.medication;
+      case 'substance':
+        return GroupTypeBuilderEnum.substance;
+      case 'biologicallyDerivedProduct':
+        return GroupTypeBuilderEnum.biologicallyDerivedProduct;
+      case 'nutritionProduct':
+        return GroupTypeBuilderEnum.nutritionProduct;
     }
     return null;
   }
@@ -194,7 +222,7 @@ class GroupTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Person',
     ),
@@ -207,7 +235,7 @@ class GroupTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Animal',
     ),
@@ -220,7 +248,7 @@ class GroupTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Practitioner',
     ),
@@ -233,7 +261,7 @@ class GroupTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Device',
     ),
@@ -246,7 +274,7 @@ class GroupTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'CareTeam',
     ),
@@ -259,7 +287,7 @@ class GroupTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'HealthcareService',
     ),
@@ -272,7 +300,7 @@ class GroupTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Location',
     ),
@@ -285,7 +313,7 @@ class GroupTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Organization',
     ),
@@ -298,7 +326,7 @@ class GroupTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'RelatedPerson',
     ),
@@ -311,9 +339,61 @@ class GroupTypeBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Specimen',
+    ),
+  );
+
+  /// medication
+  static GroupTypeBuilder medication = GroupTypeBuilder._(
+    valueString: 'medication',
+    valueEnum: GroupTypeBuilderEnum.medication,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/group-type',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'Medication',
+    ),
+  );
+
+  /// substance
+  static GroupTypeBuilder substance = GroupTypeBuilder._(
+    valueString: 'substance',
+    valueEnum: GroupTypeBuilderEnum.substance,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/group-type',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'Substance',
+    ),
+  );
+
+  /// biologicallyDerivedProduct
+  static GroupTypeBuilder biologicallyDerivedProduct = GroupTypeBuilder._(
+    valueString: 'biologicallyDerivedProduct',
+    valueEnum: GroupTypeBuilderEnum.biologicallyDerivedProduct,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/group-type',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'BiologicallyDerivedProduct',
+    ),
+  );
+
+  /// nutritionProduct
+  static GroupTypeBuilder nutritionProduct = GroupTypeBuilder._(
+    valueString: 'nutritionProduct',
+    valueEnum: GroupTypeBuilderEnum.nutritionProduct,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/group-type',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'NutritionProduct',
     ),
   );
 
@@ -335,6 +415,10 @@ class GroupTypeBuilder extends FhirCodeEnumBuilder {
     organization,
     relatedperson,
     specimen,
+    medication,
+    substance,
+    biologicallyDerivedProduct,
+    nutritionProduct,
   ];
 
   /// Returns the enum value with an element attached

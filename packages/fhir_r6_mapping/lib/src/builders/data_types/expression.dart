@@ -11,6 +11,9 @@ import 'package:yaml/yaml.dart';
 /// is used.
 class FhirExpressionBuilder extends DataTypeBuilder
     implements
+        ValueXEvidenceVariableDefinitionModifierBuilder,
+        ValueXGroupCharacteristicBuilder,
+        DeterminedByXGroupCharacteristicBuilder,
         ValueXParametersParameterBuilder,
         ValueXTaskInputBuilder,
         ValueXTaskOutputBuilder,

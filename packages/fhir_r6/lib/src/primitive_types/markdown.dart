@@ -10,6 +10,7 @@ extension FhirMarkdownExtension on String {
 class FhirMarkdown extends FhirString
     implements
         SourceXImplementationGuidePage,
+        DescriptionXMolecularDefinitionGenomeAssembly,
         ValueXParametersParameter,
         ValueXTaskInput,
         ValueXTaskOutput,
@@ -23,10 +24,15 @@ class FhirMarkdown extends FhirString
         ValueXAdministrableProductDefinitionProperty,
         ValueXManufacturedItemDefinitionProperty,
         ValueXMedicinalProductDefinitionCharacteristic,
-        CiteAsXArtifactAssessment,
-        CiteAsXEvidence,
-        CiteAsXEvidenceReport,
-        InstructionXServiceRequestPatientInstruction {
+        TargetXArtifactAssessmentRelatesTo,
+        TargetXCitationRelatesTo,
+        TargetXCompositionRelatesTo,
+        TargetXEvidenceRelatesTo,
+        TargetXEvidenceVariableRelatesTo,
+        TargetXResearchStudyRelatesTo,
+        InstructionXServiceRequestPatientInstruction,
+        ArtifactXTestPlanScope,
+        ArtifactXTestPlanTestCaseScope {
   // --------------------------------------------------------------------------
   // Private Internal Constructor
   // --------------------------------------------------------------------------
@@ -78,7 +84,7 @@ class FhirMarkdown extends FhirString
 
   /// Constructs a [FhirMarkdown] from a JSON [Map].
   factory FhirMarkdown.fromJson(Map<String, dynamic> json) {
-    final rawValue = json['value'] as String?;
+    final rawValue = json['value'];
     final elementJson = json['_value'] as Map<String, dynamic>?;
     final parsedElement =
         elementJson == null ? null : Element.fromJson(elementJson);

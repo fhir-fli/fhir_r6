@@ -32,8 +32,9 @@ class NutritionProductBuilder extends DomainResourceBuilder {
     this.category,
     this.manufacturer,
     this.nutrient,
+    this.ingredientSummary,
     this.ingredient,
-    this.knownAllergen,
+    this.energy,
     this.characteristic,
     this.instance,
     this.note,
@@ -156,6 +157,12 @@ class NutritionProductBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
+      ingredientSummary: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+        json,
+        'ingredientSummary',
+        FhirMarkdownBuilder.fromJson,
+        '$objectPath.ingredientSummary',
+      ),
       ingredient: (json['ingredient'] as List<dynamic>?)
           ?.map<NutritionProductIngredientBuilder>(
             (v) => NutritionProductIngredientBuilder.fromJson(
@@ -166,16 +173,12 @@ class NutritionProductBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      knownAllergen: (json['knownAllergen'] as List<dynamic>?)
-          ?.map<CodeableReferenceBuilder>(
-            (v) => CodeableReferenceBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.knownAllergen',
-              },
-            ),
-          )
-          .toList(),
+      energy: JsonParser.parseObject<QuantityBuilder>(
+        json,
+        'energy',
+        QuantityBuilder.fromJson,
+        '$objectPath.energy',
+      ),
       characteristic: (json['characteristic'] as List<dynamic>?)
           ?.map<NutritionProductCharacteristicBuilder>(
             (v) => NutritionProductCharacteristicBuilder.fromJson(
@@ -252,8 +255,11 @@ class NutritionProductBuilder extends DomainResourceBuilder {
   String get fhirType => 'NutritionProduct';
 
   /// [code]
-  /// The code assigned to the product, for example a USDA NDB number, a USDA
-  /// FDC ID number, or a Langual code.
+  /// A code that specifies the product or a textual description if no code
+  /// is available. This could be such codes as a USDA Branded Food Products
+  /// Database number, a USDA Food Data Central (FDC) ID number, Universal
+  /// Product Code (UPC), a Langual code, or a country specific food database
+  /// code.
   CodeableConceptBuilder? code;
 
   /// [status]
@@ -261,27 +267,35 @@ class NutritionProductBuilder extends DomainResourceBuilder {
   NutritionProductStatusBuilder? status;
 
   /// [category]
-  /// Nutrition products can have different classifications - according to
-  /// its nutritional properties, preparation methods, etc.
+  /// Nutrition products fall into various categories based on their
+  /// composition (e.g., Fruit and Grain, Vegetables) or form (e.g.,
+  /// Beverages).
   List<CodeableConceptBuilder>? category;
 
   /// [manufacturer]
   /// The organisation (manufacturer, representative or legal authorization
-  /// holder) that is responsible for the device.
+  /// holder) or person that is responsible for nutrition product.
   List<ReferenceBuilder>? manufacturer;
 
   /// [nutrient]
   /// The product's nutritional information expressed by the nutrients.
   List<NutritionProductNutrientBuilder>? nutrient;
 
+  /// [ingredientSummary]
+  /// The textual description of the ingredients in the product. For example,
+  /// the following is a concatenated list of the ingredients for a peanut
+  /// butter would read 'ROASTED PEANUTS, SUGAR, HYDROGENATED VEGETABLE OIL
+  /// (COTTONSEED, SOYBEAN AND RAPESEED OIL) TO PREVENT SEPARATION, SALT'.
+  FhirMarkdownBuilder? ingredientSummary;
+
   /// [ingredient]
   /// Ingredients contained in this product.
   List<NutritionProductIngredientBuilder>? ingredient;
 
-  /// [knownAllergen]
-  /// Allergens that are known or suspected to be a part of this nutrition
-  /// product.
-  List<CodeableReferenceBuilder>? knownAllergen;
+  /// [energy]
+  /// The amount of energy present in the product expressed in kilocalories
+  /// or kilojoules.
+  QuantityBuilder? energy;
 
   /// [characteristic]
   /// Specifies descriptive properties of the nutrition product.
@@ -346,8 +360,9 @@ class NutritionProductBuilder extends DomainResourceBuilder {
     addField('category', category);
     addField('manufacturer', manufacturer);
     addField('nutrient', nutrient);
+    addField('ingredientSummary', ingredientSummary);
     addField('ingredient', ingredient);
-    addField('knownAllergen', knownAllergen);
+    addField('energy', energy);
     addField('characteristic', characteristic);
     addField('instance', instance);
     addField('note', note);
@@ -371,8 +386,9 @@ class NutritionProductBuilder extends DomainResourceBuilder {
       'category',
       'manufacturer',
       'nutrient',
+      'ingredientSummary',
       'ingredient',
-      'knownAllergen',
+      'energy',
       'characteristic',
       'instance',
       'note',
@@ -440,13 +456,17 @@ class NutritionProductBuilder extends DomainResourceBuilder {
         if (nutrient != null) {
           fields.addAll(nutrient!);
         }
+      case 'ingredientSummary':
+        if (ingredientSummary != null) {
+          fields.add(ingredientSummary!);
+        }
       case 'ingredient':
         if (ingredient != null) {
           fields.addAll(ingredient!);
         }
-      case 'knownAllergen':
-        if (knownAllergen != null) {
-          fields.addAll(knownAllergen!);
+      case 'energy':
+        if (energy != null) {
+          fields.add(energy!);
         }
       case 'characteristic':
         if (characteristic != null) {
@@ -695,6 +715,26 @@ class NutritionProductBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'ingredientSummary':
+        {
+          if (child is FhirMarkdownBuilder) {
+            ingredientSummary = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                ingredientSummary = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'ingredient':
         {
           if (child is List<NutritionProductIngredientBuilder>) {
@@ -711,18 +751,10 @@ class NutritionProductBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'knownAllergen':
+      case 'energy':
         {
-          if (child is List<CodeableReferenceBuilder>) {
-            // Replace or create new list
-            knownAllergen = child;
-            return;
-          } else if (child is CodeableReferenceBuilder) {
-            // Add single element to existing list or create new list
-            knownAllergen = [
-              ...(knownAllergen ?? []),
-              child,
-            ];
+          if (child is QuantityBuilder) {
+            energy = child;
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -811,10 +843,12 @@ class NutritionProductBuilder extends DomainResourceBuilder {
         return ['ReferenceBuilder'];
       case 'nutrient':
         return ['NutritionProductNutrientBuilder'];
+      case 'ingredientSummary':
+        return ['FhirMarkdownBuilder'];
       case 'ingredient':
         return ['NutritionProductIngredientBuilder'];
-      case 'knownAllergen':
-        return ['CodeableReferenceBuilder'];
+      case 'energy':
+        return ['QuantityBuilder'];
       case 'characteristic':
         return ['NutritionProductCharacteristicBuilder'];
       case 'instance':
@@ -896,14 +930,19 @@ class NutritionProductBuilder extends DomainResourceBuilder {
           nutrient = <NutritionProductNutrientBuilder>[];
           return;
         }
+      case 'ingredientSummary':
+        {
+          ingredientSummary = FhirMarkdownBuilder.empty();
+          return;
+        }
       case 'ingredient':
         {
           ingredient = <NutritionProductIngredientBuilder>[];
           return;
         }
-      case 'knownAllergen':
+      case 'energy':
         {
-          knownAllergen = <CodeableReferenceBuilder>[];
+          energy = QuantityBuilder.empty();
           return;
         }
       case 'characteristic':
@@ -943,8 +982,9 @@ class NutritionProductBuilder extends DomainResourceBuilder {
     List<CodeableConceptBuilder>? category,
     List<ReferenceBuilder>? manufacturer,
     List<NutritionProductNutrientBuilder>? nutrient,
+    FhirMarkdownBuilder? ingredientSummary,
     List<NutritionProductIngredientBuilder>? ingredient,
-    List<CodeableReferenceBuilder>? knownAllergen,
+    QuantityBuilder? energy,
     List<NutritionProductCharacteristicBuilder>? characteristic,
     List<NutritionProductInstanceBuilder>? instance,
     List<AnnotationBuilder>? note,
@@ -968,8 +1008,9 @@ class NutritionProductBuilder extends DomainResourceBuilder {
       category: category ?? this.category,
       manufacturer: manufacturer ?? this.manufacturer,
       nutrient: nutrient ?? this.nutrient,
+      ingredientSummary: ingredientSummary ?? this.ingredientSummary,
       ingredient: ingredient ?? this.ingredient,
-      knownAllergen: knownAllergen ?? this.knownAllergen,
+      energy: energy ?? this.energy,
       characteristic: characteristic ?? this.characteristic,
       instance: instance ?? this.instance,
       note: note ?? this.note,
@@ -1077,15 +1118,21 @@ class NutritionProductBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      ingredientSummary,
+      o.ingredientSummary,
+    )) {
+      return false;
+    }
     if (!listEquals<NutritionProductIngredientBuilder>(
       ingredient,
       o.ingredient,
     )) {
       return false;
     }
-    if (!listEquals<CodeableReferenceBuilder>(
-      knownAllergen,
-      o.knownAllergen,
+    if (!equalsDeepWithNull(
+      energy,
+      o.energy,
     )) {
       return false;
     }
@@ -1122,16 +1169,21 @@ class NutritionProductNutrientBuilder extends BackboneElementBuilder {
     super.extension_,
     super.modifierExtension,
     this.item,
-    this.amount,
+    AmountXNutritionProductNutrientBuilder? amountX,
+    RatioBuilder? amountRatio,
+    QuantityBuilder? amountQuantity,
     super.disallowExtensions,
-  }) : super(
+  })  : amountX = amountX ?? amountRatio ?? amountQuantity,
+        super(
           objectPath: 'NutritionProduct.nutrient',
         );
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
   factory NutritionProductNutrientBuilder.empty() =>
-      NutritionProductNutrientBuilder();
+      NutritionProductNutrientBuilder(
+        item: CodeableReferenceBuilder.empty(),
+      );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
   factory NutritionProductNutrientBuilder.fromJson(
@@ -1171,16 +1223,15 @@ class NutritionProductNutrientBuilder extends BackboneElementBuilder {
         CodeableReferenceBuilder.fromJson,
         '$objectPath.item',
       ),
-      amount: (json['amount'] as List<dynamic>?)
-          ?.map<RatioBuilder>(
-            (v) => RatioBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.amount',
-              },
-            ),
-          )
-          .toList(),
+      amountX:
+          JsonParser.parsePolymorphic<AmountXNutritionProductNutrientBuilder>(
+        json,
+        {
+          'amountRatio': RatioBuilder.fromJson,
+          'amountQuantity': QuantityBuilder.fromJson,
+        },
+        objectPath,
+      ),
     );
   }
 
@@ -1230,10 +1281,16 @@ class NutritionProductNutrientBuilder extends BackboneElementBuilder {
   /// The (relevant) nutrients in the product.
   CodeableReferenceBuilder? item;
 
-  /// [amount]
-  /// The amount of nutrient expressed in one or more units: X per pack / per
-  /// serving / per dose.
-  List<RatioBuilder>? amount;
+  /// [amountX]
+  /// The amount of nutrient expressed in one or more units, either X per
+  /// pack / per serving / per dose or X amount.
+  AmountXNutritionProductNutrientBuilder? amountX;
+
+  /// Getter for [amountRatio] as a RatioBuilder
+  RatioBuilder? get amountRatio => amountX?.isAs<RatioBuilder>();
+
+  /// Getter for [amountQuantity] as a QuantityBuilder
+  QuantityBuilder? get amountQuantity => amountX?.isAs<QuantityBuilder>();
 
   /// Converts a [NutritionProductNutrientBuilder]
   /// to [NutritionProductNutrient]
@@ -1276,7 +1333,11 @@ class NutritionProductNutrientBuilder extends BackboneElementBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('item', item);
-    addField('amount', amount);
+    if (amountX != null) {
+      final fhirType = amountX!.fhirType;
+      addField('amount${fhirType.capitalizeFirstLetter()}', amountX);
+    }
+
     return json;
   }
 
@@ -1288,7 +1349,7 @@ class NutritionProductNutrientBuilder extends BackboneElementBuilder {
       'extension',
       'modifierExtension',
       'item',
-      'amount',
+      'amountX',
     ];
   }
 
@@ -1318,8 +1379,20 @@ class NutritionProductNutrientBuilder extends BackboneElementBuilder {
           fields.add(item!);
         }
       case 'amount':
-        if (amount != null) {
-          fields.addAll(amount!);
+        if (amountX != null) {
+          fields.add(amountX!);
+        }
+      case 'amountX':
+        if (amountX != null) {
+          fields.add(amountX!);
+        }
+      case 'amountRatio':
+        if (amountX is RatioBuilder) {
+          fields.add(amountX!);
+        }
+      case 'amountQuantity':
+        if (amountX is QuantityBuilder) {
+          fields.add(amountX!);
         }
       default:
         if (checkValid) {
@@ -1411,20 +1484,40 @@ class NutritionProductNutrientBuilder extends BackboneElementBuilder {
           throw Exception('Invalid child type for $childName');
         }
       case 'amount':
+      case 'amountX':
         {
-          if (child is List<RatioBuilder>) {
-            // Replace or create new list
-            amount = child;
+          if (child is AmountXNutritionProductNutrientBuilder) {
+            amountX = child;
             return;
-          } else if (child is RatioBuilder) {
-            // Add single element to existing list or create new list
-            amount = [
-              ...(amount ?? []),
-              child,
-            ];
-            return;
+          } else {
+            if (child is RatioBuilder) {
+              amountX = child;
+              return;
+            }
+            if (child is QuantityBuilder) {
+              amountX = child;
+              return;
+            }
           }
           throw Exception('Invalid child type for $childName');
+        }
+      case 'amountRatio':
+        {
+          if (child is RatioBuilder) {
+            amountX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'amountQuantity':
+        {
+          if (child is QuantityBuilder) {
+            amountX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
         }
       default:
         throw Exception('Cannot set child value for $childName');
@@ -1445,7 +1538,15 @@ class NutritionProductNutrientBuilder extends BackboneElementBuilder {
       case 'item':
         return ['CodeableReferenceBuilder'];
       case 'amount':
+      case 'amountX':
+        return [
+          'RatioBuilder',
+          'QuantityBuilder',
+        ];
+      case 'amountRatio':
         return ['RatioBuilder'];
+      case 'amountQuantity':
+        return ['QuantityBuilder'];
       default:
         return <String>[];
     }
@@ -1477,8 +1578,15 @@ class NutritionProductNutrientBuilder extends BackboneElementBuilder {
           return;
         }
       case 'amount':
+      case 'amountX':
+      case 'amountRatio':
         {
-          amount = <RatioBuilder>[];
+          amountX = RatioBuilder.empty();
+          return;
+        }
+      case 'amountQuantity':
+        {
+          amountX = QuantityBuilder.empty();
           return;
         }
       default:
@@ -1494,7 +1602,9 @@ class NutritionProductNutrientBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     CodeableReferenceBuilder? item,
-    List<RatioBuilder>? amount,
+    AmountXNutritionProductNutrientBuilder? amountX,
+    RatioBuilder? amountRatio,
+    QuantityBuilder? amountQuantity,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -1507,7 +1617,7 @@ class NutritionProductNutrientBuilder extends BackboneElementBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       item: item ?? this.item,
-      amount: amount ?? this.amount,
+      amountX: amountX ?? amountRatio ?? amountQuantity ?? this.amountX,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -1558,9 +1668,9 @@ class NutritionProductNutrientBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!listEquals<RatioBuilder>(
-      amount,
-      o.amount,
+    if (!equalsDeepWithNull(
+      amountX,
+      o.amountX,
     )) {
       return false;
     }
@@ -1579,9 +1689,13 @@ class NutritionProductIngredientBuilder extends BackboneElementBuilder {
     super.extension_,
     super.modifierExtension,
     this.item,
-    this.amount,
+    AmountXNutritionProductIngredientBuilder? amountX,
+    RatioBuilder? amountRatio,
+    QuantityBuilder? amountQuantity,
+    this.allergen,
     super.disallowExtensions,
-  }) : super(
+  })  : amountX = amountX ?? amountRatio ?? amountQuantity,
+        super(
           objectPath: 'NutritionProduct.ingredient',
         );
 
@@ -1630,16 +1744,21 @@ class NutritionProductIngredientBuilder extends BackboneElementBuilder {
         CodeableReferenceBuilder.fromJson,
         '$objectPath.item',
       ),
-      amount: (json['amount'] as List<dynamic>?)
-          ?.map<RatioBuilder>(
-            (v) => RatioBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.amount',
-              },
-            ),
-          )
-          .toList(),
+      amountX:
+          JsonParser.parsePolymorphic<AmountXNutritionProductIngredientBuilder>(
+        json,
+        {
+          'amountRatio': RatioBuilder.fromJson,
+          'amountQuantity': QuantityBuilder.fromJson,
+        },
+        objectPath,
+      ),
+      allergen: JsonParser.parsePrimitive<FhirBooleanBuilder>(
+        json,
+        'allergen',
+        FhirBooleanBuilder.fromJson,
+        '$objectPath.allergen',
+      ),
     );
   }
 
@@ -1689,9 +1808,20 @@ class NutritionProductIngredientBuilder extends BackboneElementBuilder {
   /// The ingredient contained in the product.
   CodeableReferenceBuilder? item;
 
-  /// [amount]
+  /// [amountX]
   /// The amount of ingredient that is in the product.
-  List<RatioBuilder>? amount;
+  AmountXNutritionProductIngredientBuilder? amountX;
+
+  /// Getter for [amountRatio] as a RatioBuilder
+  RatioBuilder? get amountRatio => amountX?.isAs<RatioBuilder>();
+
+  /// Getter for [amountQuantity] as a QuantityBuilder
+  QuantityBuilder? get amountQuantity => amountX?.isAs<QuantityBuilder>();
+
+  /// [allergen]
+  /// A known or suspected allergenic and/or substance that is associated
+  /// with an intolerance.
+  FhirBooleanBuilder? allergen;
 
   /// Converts a [NutritionProductIngredientBuilder]
   /// to [NutritionProductIngredient]
@@ -1734,7 +1864,12 @@ class NutritionProductIngredientBuilder extends BackboneElementBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('item', item);
-    addField('amount', amount);
+    if (amountX != null) {
+      final fhirType = amountX!.fhirType;
+      addField('amount${fhirType.capitalizeFirstLetter()}', amountX);
+    }
+
+    addField('allergen', allergen);
     return json;
   }
 
@@ -1746,7 +1881,8 @@ class NutritionProductIngredientBuilder extends BackboneElementBuilder {
       'extension',
       'modifierExtension',
       'item',
-      'amount',
+      'amountX',
+      'allergen',
     ];
   }
 
@@ -1776,8 +1912,24 @@ class NutritionProductIngredientBuilder extends BackboneElementBuilder {
           fields.add(item!);
         }
       case 'amount':
-        if (amount != null) {
-          fields.addAll(amount!);
+        if (amountX != null) {
+          fields.add(amountX!);
+        }
+      case 'amountX':
+        if (amountX != null) {
+          fields.add(amountX!);
+        }
+      case 'amountRatio':
+        if (amountX is RatioBuilder) {
+          fields.add(amountX!);
+        }
+      case 'amountQuantity':
+        if (amountX is QuantityBuilder) {
+          fields.add(amountX!);
+        }
+      case 'allergen':
+        if (allergen != null) {
+          fields.add(allergen!);
         }
       default:
         if (checkValid) {
@@ -1869,18 +2021,58 @@ class NutritionProductIngredientBuilder extends BackboneElementBuilder {
           throw Exception('Invalid child type for $childName');
         }
       case 'amount':
+      case 'amountX':
         {
-          if (child is List<RatioBuilder>) {
-            // Replace or create new list
-            amount = child;
+          if (child is AmountXNutritionProductIngredientBuilder) {
+            amountX = child;
             return;
-          } else if (child is RatioBuilder) {
-            // Add single element to existing list or create new list
-            amount = [
-              ...(amount ?? []),
-              child,
-            ];
+          } else {
+            if (child is RatioBuilder) {
+              amountX = child;
+              return;
+            }
+            if (child is QuantityBuilder) {
+              amountX = child;
+              return;
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'amountRatio':
+        {
+          if (child is RatioBuilder) {
+            amountX = child;
             return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'amountQuantity':
+        {
+          if (child is QuantityBuilder) {
+            amountX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'allergen':
+        {
+          if (child is FhirBooleanBuilder) {
+            allergen = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirBooleanBuilder.tryParse(stringValue);
+              if (converted != null) {
+                allergen = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -1903,7 +2095,17 @@ class NutritionProductIngredientBuilder extends BackboneElementBuilder {
       case 'item':
         return ['CodeableReferenceBuilder'];
       case 'amount':
+      case 'amountX':
+        return [
+          'RatioBuilder',
+          'QuantityBuilder',
+        ];
+      case 'amountRatio':
         return ['RatioBuilder'];
+      case 'amountQuantity':
+        return ['QuantityBuilder'];
+      case 'allergen':
+        return ['FhirBooleanBuilder'];
       default:
         return <String>[];
     }
@@ -1935,8 +2137,20 @@ class NutritionProductIngredientBuilder extends BackboneElementBuilder {
           return;
         }
       case 'amount':
+      case 'amountX':
+      case 'amountRatio':
         {
-          amount = <RatioBuilder>[];
+          amountX = RatioBuilder.empty();
+          return;
+        }
+      case 'amountQuantity':
+        {
+          amountX = QuantityBuilder.empty();
+          return;
+        }
+      case 'allergen':
+        {
+          allergen = FhirBooleanBuilder.empty();
           return;
         }
       default:
@@ -1952,7 +2166,10 @@ class NutritionProductIngredientBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     CodeableReferenceBuilder? item,
-    List<RatioBuilder>? amount,
+    AmountXNutritionProductIngredientBuilder? amountX,
+    FhirBooleanBuilder? allergen,
+    RatioBuilder? amountRatio,
+    QuantityBuilder? amountQuantity,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -1965,7 +2182,8 @@ class NutritionProductIngredientBuilder extends BackboneElementBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       item: item ?? this.item,
-      amount: amount ?? this.amount,
+      amountX: amountX ?? amountRatio ?? amountQuantity ?? this.amountX,
+      allergen: allergen ?? this.allergen,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -2016,9 +2234,15 @@ class NutritionProductIngredientBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!listEquals<RatioBuilder>(
-      amount,
-      o.amount,
+    if (!equalsDeepWithNull(
+      amountX,
+      o.amountX,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      allergen,
+      o.allergen,
     )) {
       return false;
     }
@@ -2848,7 +3072,7 @@ class NutritionProductInstanceBuilder extends BackboneElementBuilder {
   List<IdentifierBuilder>? identifier;
 
   /// [name]
-  /// The name for the specific product.
+  /// The name or brand for the specific product.
   FhirStringBuilder? name;
 
   /// [lotNumber]
@@ -2866,9 +3090,8 @@ class NutritionProductInstanceBuilder extends BackboneElementBuilder {
   FhirDateTimeBuilder? useBy;
 
   /// [biologicalSourceEvent]
-  /// An identifier that supports traceability to the event during which
-  /// material in this product from one or more biological entities was
-  /// obtained or pooled.
+  /// An identifier of the donation, collection, or pooling event from which
+  /// biological material in this nutrition product was derived.
   IdentifierBuilder? biologicalSourceEvent;
 
   /// Converts a [NutritionProductInstanceBuilder]

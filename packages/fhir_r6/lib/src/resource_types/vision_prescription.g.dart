@@ -19,6 +19,7 @@ abstract class $VisionPrescriptionCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
+    List<Reference>? basedOn,
     FinancialResourceStatusCodes? status,
     FhirDateTime? created,
     Reference? patient,
@@ -48,6 +49,7 @@ class _$VisionPrescriptionCopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? identifier = fhirSentinel,
+    Object? basedOn = fhirSentinel,
     Object? status = fhirSentinel,
     Object? created = fhirSentinel,
     Object? patient = fhirSentinel,
@@ -80,6 +82,9 @@ class _$VisionPrescriptionCopyWithImpl<T>
         identifier: identical(identifier, fhirSentinel)
             ? _value.identifier
             : identifier as List<Identifier>?,
+        basedOn: identical(basedOn, fhirSentinel)
+            ? _value.basedOn
+            : basedOn as List<Reference>?,
         status: identical(status, fhirSentinel)
             ? _value.status
             : (status as FinancialResourceStatusCodes?) ?? _value.status,

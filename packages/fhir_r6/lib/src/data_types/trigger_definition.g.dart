@@ -15,7 +15,7 @@ abstract class $TriggerDefinitionCopyWith<T> extends $DataTypeCopyWith<T> {
     FhirString? name,
     CodeableConcept? code,
     FhirCanonical? subscriptionTopic,
-    Timing? timingX,
+    TimingXTriggerDefinition? timingX,
     List<DataRequirement>? data,
     FhirExpression? condition,
     bool? disallowExtensions,
@@ -60,7 +60,7 @@ class _$TriggerDefinitionCopyWithImpl<T>
             : subscriptionTopic as FhirCanonical?,
         timingX: identical(timingX, fhirSentinel)
             ? _value.timingX
-            : timingX as Timing?,
+            : timingX as TimingXTriggerDefinition?,
         data: identical(data, fhirSentinel)
             ? _value.data
             : data as List<DataRequirement>?,

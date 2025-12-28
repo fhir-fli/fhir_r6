@@ -26,6 +26,7 @@ abstract class $FhirEndpointCopyWith<T> extends $DomainResourceCopyWith<T> {
     Reference? managingOrganization,
     List<ContactPoint>? contact,
     Period? period,
+    Availability? availability,
     List<EndpointPayload>? payload,
     FhirUrl? address,
     List<FhirString>? header,
@@ -58,6 +59,7 @@ class _$FhirEndpointCopyWithImpl<T> implements $FhirEndpointCopyWith<T> {
     Object? managingOrganization = fhirSentinel,
     Object? contact = fhirSentinel,
     Object? period = fhirSentinel,
+    Object? availability = fhirSentinel,
     Object? payload = fhirSentinel,
     Object? address = fhirSentinel,
     Object? header = fhirSentinel,
@@ -108,6 +110,9 @@ class _$FhirEndpointCopyWithImpl<T> implements $FhirEndpointCopyWith<T> {
             : contact as List<ContactPoint>?,
         period:
             identical(period, fhirSentinel) ? _value.period : period as Period?,
+        availability: identical(availability, fhirSentinel)
+            ? _value.availability
+            : availability as Availability?,
         payload: identical(payload, fhirSentinel)
             ? _value.payload
             : payload as List<EndpointPayload>?,
@@ -138,6 +143,8 @@ abstract class $EndpointPayloadCopyWith<T> extends $BackboneElementCopyWith<T> {
     List<FhirExtension>? modifierExtension,
     List<CodeableConcept>? type,
     List<FhirCode>? mimeType,
+    List<FhirCanonical>? profileCanonical,
+    List<FhirUri>? profileUri,
     bool? disallowExtensions,
   });
 }
@@ -155,6 +162,8 @@ class _$EndpointPayloadCopyWithImpl<T> implements $EndpointPayloadCopyWith<T> {
     Object? modifierExtension = fhirSentinel,
     Object? type = fhirSentinel,
     Object? mimeType = fhirSentinel,
+    Object? profileCanonical = fhirSentinel,
+    Object? profileUri = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -172,6 +181,12 @@ class _$EndpointPayloadCopyWithImpl<T> implements $EndpointPayloadCopyWith<T> {
         mimeType: identical(mimeType, fhirSentinel)
             ? _value.mimeType
             : mimeType as List<FhirCode>?,
+        profileCanonical: identical(profileCanonical, fhirSentinel)
+            ? _value.profileCanonical
+            : profileCanonical as List<FhirCanonical>?,
+        profileUri: identical(profileUri, fhirSentinel)
+            ? _value.profileUri
+            : profileUri as List<FhirUri>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

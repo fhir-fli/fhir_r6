@@ -25,7 +25,9 @@ class PractitionerRole extends DomainResource {
     this.period,
     this.practitioner,
     this.organization,
+    this.network,
     this.code,
+    this.display,
     this.specialty,
     this.location,
     this.healthcareService,
@@ -116,6 +118,13 @@ class PractitionerRole extends DomainResource {
         'organization',
         Reference.fromJson,
       ),
+      network: (json['network'] as List<dynamic>?)
+          ?.map<Reference>(
+            (v) => Reference.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       code: (json['code'] as List<dynamic>?)
           ?.map<CodeableConcept>(
             (v) => CodeableConcept.fromJson(
@@ -123,6 +132,11 @@ class PractitionerRole extends DomainResource {
             ),
           )
           .toList(),
+      display: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'display',
+        FhirString.fromJson,
+      ),
       specialty: (json['specialty'] as List<dynamic>?)
           ?.map<CodeableConcept>(
             (v) => CodeableConcept.fromJson(
@@ -165,13 +179,11 @@ class PractitionerRole extends DomainResource {
             ),
           )
           .toList(),
-      availability: (json['availability'] as List<dynamic>?)
-          ?.map<Availability>(
-            (v) => Availability.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
+      availability: JsonParser.parseObject<Availability>(
+        json,
+        'availability',
+        Availability.fromJson,
+      ),
       endpoint: (json['endpoint'] as List<dynamic>?)
           ?.map<Reference>(
             (v) => Reference.fromJson(
@@ -245,13 +257,25 @@ class PractitionerRole extends DomainResource {
   final Reference? practitioner;
 
   /// [organization]
-  /// The organization where the Practitioner performs the roles associated.
+  /// The organization where this role is available.
   final Reference? organization;
+
+  /// [network]
+  /// The network in which the PractitionerRole provides the role's services
+  /// (if defined) at the indicated locations (if defined).
+  final List<Reference>? network;
 
   /// [code]
   /// Roles which this practitioner is authorized to perform for the
   /// organization.
   final List<CodeableConcept>? code;
+
+  /// [display]
+  /// A value that describes the intersection of the practitioner,
+  /// organization, and the role of the practitioner within the organization.
+  /// This is not the human name of the practitioner, though the textual
+  /// representation of that human name may be a part of this property.
+  final FhirString? display;
 
   /// [specialty]
   /// The specialty of a practitioner that describes the functional role they
@@ -287,7 +311,7 @@ class PractitionerRole extends DomainResource {
   /// [availability]
   /// A collection of times the practitioner is available or performing this
   /// role at the location and/or healthcareservice.
-  final List<Availability>? availability;
+  final Availability? availability;
 
   /// [endpoint]
   /// Technical endpoints providing access to services operated for the
@@ -411,8 +435,16 @@ class PractitionerRole extends DomainResource {
       organization,
     );
     addField(
+      'network',
+      network,
+    );
+    addField(
       'code',
       code,
+    );
+    addField(
+      'display',
+      display,
     );
     addField(
       'specialty',
@@ -466,7 +498,9 @@ class PractitionerRole extends DomainResource {
       'period',
       'practitioner',
       'organization',
+      'network',
       'code',
+      'display',
       'specialty',
       'location',
       'healthcareService',
@@ -539,9 +573,17 @@ class PractitionerRole extends DomainResource {
         if (organization != null) {
           fields.add(organization!);
         }
+      case 'network':
+        if (network != null) {
+          fields.addAll(network!);
+        }
       case 'code':
         if (code != null) {
           fields.addAll(code!);
+        }
+      case 'display':
+        if (display != null) {
+          fields.add(display!);
         }
       case 'specialty':
         if (specialty != null) {
@@ -569,7 +611,7 @@ class PractitionerRole extends DomainResource {
         }
       case 'availability':
         if (availability != null) {
-          fields.addAll(availability!);
+          fields.add(availability!);
         }
       case 'endpoint':
         if (endpoint != null) {
@@ -694,9 +736,21 @@ class PractitionerRole extends DomainResource {
     )) {
       return false;
     }
+    if (!listEquals<Reference>(
+      network,
+      o.network,
+    )) {
+      return false;
+    }
     if (!listEquals<CodeableConcept>(
       code,
       o.code,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      display,
+      o.display,
     )) {
       return false;
     }
@@ -736,7 +790,7 @@ class PractitionerRole extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<Availability>(
+    if (!equalsDeepWithNull(
       availability,
       o.availability,
     )) {

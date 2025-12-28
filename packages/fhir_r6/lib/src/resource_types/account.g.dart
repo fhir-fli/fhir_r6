@@ -24,13 +24,14 @@ abstract class $AccountCopyWith<T> extends $DomainResourceCopyWith<T> {
     FhirString? name,
     List<Reference>? subject,
     Period? servicePeriod,
+    List<Reference>? covers,
     List<AccountCoverage>? coverage,
     Reference? owner,
     FhirMarkdown? description,
     List<AccountGuarantor>? guarantor,
     List<AccountDiagnosis>? diagnosis,
     List<AccountProcedure>? procedure,
-    List<AccountRelatedAccount>? relatedAccount,
+    Reference? parent,
     CodeableConcept? currency,
     List<AccountBalance>? balance,
     FhirInstant? calculatedAt,
@@ -61,13 +62,14 @@ class _$AccountCopyWithImpl<T> implements $AccountCopyWith<T> {
     Object? name = fhirSentinel,
     Object? subject = fhirSentinel,
     Object? servicePeriod = fhirSentinel,
+    Object? covers = fhirSentinel,
     Object? coverage = fhirSentinel,
     Object? owner = fhirSentinel,
     Object? description = fhirSentinel,
     Object? guarantor = fhirSentinel,
     Object? diagnosis = fhirSentinel,
     Object? procedure = fhirSentinel,
-    Object? relatedAccount = fhirSentinel,
+    Object? parent = fhirSentinel,
     Object? currency = fhirSentinel,
     Object? balance = fhirSentinel,
     Object? calculatedAt = fhirSentinel,
@@ -112,6 +114,9 @@ class _$AccountCopyWithImpl<T> implements $AccountCopyWith<T> {
         servicePeriod: identical(servicePeriod, fhirSentinel)
             ? _value.servicePeriod
             : servicePeriod as Period?,
+        covers: identical(covers, fhirSentinel)
+            ? _value.covers
+            : covers as List<Reference>?,
         coverage: identical(coverage, fhirSentinel)
             ? _value.coverage
             : coverage as List<AccountCoverage>?,
@@ -129,9 +134,9 @@ class _$AccountCopyWithImpl<T> implements $AccountCopyWith<T> {
         procedure: identical(procedure, fhirSentinel)
             ? _value.procedure
             : procedure as List<AccountProcedure>?,
-        relatedAccount: identical(relatedAccount, fhirSentinel)
-            ? _value.relatedAccount
-            : relatedAccount as List<AccountRelatedAccount>?,
+        parent: identical(parent, fhirSentinel)
+            ? _value.parent
+            : parent as Reference?,
         currency: identical(currency, fhirSentinel)
             ? _value.currency
             : currency as CodeableConcept?,
@@ -221,6 +226,7 @@ abstract class $AccountGuarantorCopyWith<T>
     Reference? party,
     FhirBoolean? onHold,
     Period? period,
+    Reference? account,
     bool? disallowExtensions,
   });
 }
@@ -240,6 +246,7 @@ class _$AccountGuarantorCopyWithImpl<T>
     Object? party = fhirSentinel,
     Object? onHold = fhirSentinel,
     Object? period = fhirSentinel,
+    Object? account = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -251,14 +258,16 @@ class _$AccountGuarantorCopyWithImpl<T>
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
-        party: identical(party, fhirSentinel)
-            ? _value.party
-            : (party as Reference?) ?? _value.party,
+        party:
+            identical(party, fhirSentinel) ? _value.party : party as Reference?,
         onHold: identical(onHold, fhirSentinel)
             ? _value.onHold
             : onHold as FhirBoolean?,
         period:
             identical(period, fhirSentinel) ? _value.period : period as Period?,
+        account: identical(account, fhirSentinel)
+            ? _value.account
+            : account as Reference?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -430,66 +439,6 @@ class _$AccountProcedureCopyWithImpl<T>
 extension AccountProcedureCopyWithExtension on AccountProcedure {
   $AccountProcedureCopyWith<AccountProcedure> get copyWith =>
       _$AccountProcedureCopyWithImpl<AccountProcedure>(
-        this,
-        (value) => value,
-      );
-}
-
-abstract class $AccountRelatedAccountCopyWith<T>
-    extends $BackboneElementCopyWith<T> {
-  @override
-  T call({
-    FhirString? id,
-    List<FhirExtension>? extension_,
-    List<FhirExtension>? modifierExtension,
-    CodeableConcept? relationship,
-    Reference? account,
-    bool? disallowExtensions,
-  });
-}
-
-class _$AccountRelatedAccountCopyWithImpl<T>
-    implements $AccountRelatedAccountCopyWith<T> {
-  final AccountRelatedAccount _value;
-  final T Function(AccountRelatedAccount) _then;
-
-  _$AccountRelatedAccountCopyWithImpl(this._value, this._then);
-
-  @override
-  T call({
-    Object? id = fhirSentinel,
-    Object? extension_ = fhirSentinel,
-    Object? modifierExtension = fhirSentinel,
-    Object? relationship = fhirSentinel,
-    Object? account = fhirSentinel,
-    Object? disallowExtensions = fhirSentinel,
-  }) {
-    return _then(
-      AccountRelatedAccount(
-        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
-        extension_: identical(extension_, fhirSentinel)
-            ? _value.extension_
-            : extension_ as List<FhirExtension>?,
-        modifierExtension: identical(modifierExtension, fhirSentinel)
-            ? _value.modifierExtension
-            : modifierExtension as List<FhirExtension>?,
-        relationship: identical(relationship, fhirSentinel)
-            ? _value.relationship
-            : relationship as CodeableConcept?,
-        account: identical(account, fhirSentinel)
-            ? _value.account
-            : (account as Reference?) ?? _value.account,
-        disallowExtensions: identical(disallowExtensions, fhirSentinel)
-            ? _value.disallowExtensions
-            : disallowExtensions as bool?,
-      ),
-    );
-  }
-}
-
-extension AccountRelatedAccountCopyWithExtension on AccountRelatedAccount {
-  $AccountRelatedAccountCopyWith<AccountRelatedAccount> get copyWith =>
-      _$AccountRelatedAccountCopyWithImpl<AccountRelatedAccount>(
         this,
         (value) => value,
       );

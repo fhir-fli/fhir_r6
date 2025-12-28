@@ -21,14 +21,14 @@ abstract class $SpecimenDefinitionCopyWith<T>
     FhirUri? url,
     Identifier? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXSpecimenDefinition? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     List<FhirCanonical>? derivedFromCanonical,
     List<FhirUri>? derivedFromUri,
     PublicationStatus? status,
     FhirBoolean? experimental,
-    CodeableConcept? subjectX,
+    SubjectXSpecimenDefinition? subjectX,
     FhirDateTime? date,
     FhirString? publisher,
     List<ContactDetail>? contact,
@@ -126,7 +126,7 @@ class _$SpecimenDefinitionCopyWithImpl<T>
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXSpecimenDefinition?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -145,7 +145,7 @@ class _$SpecimenDefinitionCopyWithImpl<T>
             : experimental as FhirBoolean?,
         subjectX: identical(subjectX, fhirSentinel)
             ? _value.subjectX
-            : subjectX as CodeableConcept?,
+            : subjectX as SubjectXSpecimenDefinition?,
         date:
             identical(date, fhirSentinel) ? _value.date : date as FhirDateTime?,
         publisher: identical(publisher, fhirSentinel)
@@ -323,7 +323,7 @@ abstract class $SpecimenDefinitionContainerCopyWith<T>
     CodeableConcept? cap,
     FhirMarkdown? description,
     Quantity? capacity,
-    Quantity? minimumVolumeX,
+    MinimumVolumeXSpecimenDefinitionContainer? minimumVolumeX,
     List<SpecimenDefinitionAdditive>? additive,
     FhirMarkdown? preparation,
     bool? disallowExtensions,
@@ -377,7 +377,7 @@ class _$SpecimenDefinitionContainerCopyWithImpl<T>
             : capacity as Quantity?,
         minimumVolumeX: identical(minimumVolumeX, fhirSentinel)
             ? _value.minimumVolumeX
-            : minimumVolumeX as Quantity?,
+            : minimumVolumeX as MinimumVolumeXSpecimenDefinitionContainer?,
         additive: identical(additive, fhirSentinel)
             ? _value.additive
             : additive as List<SpecimenDefinitionAdditive>?,
@@ -409,7 +409,7 @@ abstract class $SpecimenDefinitionAdditiveCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    CodeableConcept? additiveX,
+    AdditiveXSpecimenDefinitionAdditive? additiveX,
     bool? disallowExtensions,
   });
 }
@@ -440,7 +440,8 @@ class _$SpecimenDefinitionAdditiveCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         additiveX: identical(additiveX, fhirSentinel)
             ? _value.additiveX
-            : (additiveX as CodeableConcept?) ?? _value.additiveX,
+            : (additiveX as AdditiveXSpecimenDefinitionAdditive?) ??
+                _value.additiveX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

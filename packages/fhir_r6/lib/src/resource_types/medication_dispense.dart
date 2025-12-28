@@ -40,6 +40,7 @@ class MedicationDispense extends DomainResource {
     this.type,
     this.quantity,
     this.daysSupply,
+    this.fillNumber,
     this.recorded,
     this.whenPrepared,
     this.whenHandedOver,
@@ -204,6 +205,11 @@ class MedicationDispense extends DomainResource {
         json,
         'daysSupply',
         Quantity.fromJson,
+      ),
+      fillNumber: JsonParser.parsePrimitive<FhirPositiveInt>(
+        json,
+        'fillNumber',
+        FhirPositiveInt.fromJson,
       ),
       recorded: JsonParser.parsePrimitive<FhirDateTime>(
         json,
@@ -395,9 +401,19 @@ class MedicationDispense extends DomainResource {
   /// The amount of medication expressed as a timing amount.
   final Quantity? daysSupply;
 
+  /// [fillNumber]
+  /// Represents the known number of the fill over the entire lifetime of the
+  /// prescription, i.e. if this is the first dispense by this pharmacy but
+  /// the third fill overall, then the fillNumber will be 3. Each fill number
+  /// represents one dispensation, even if that dispensation is not for the
+  /// full quantity. Partial fills are not represented by decimal quantities,
+  /// i.e., a partial fill of 40 tablets (full quantity is 100 tablets) adds
+  /// 1 to the prior fill number, not 0.4.
+  final FhirPositiveInt? fillNumber;
+
   /// [recorded]
-  /// The date (and maybe time) when the dispense activity started if
-  /// whenPrepared or whenHandedOver is not populated.
+  /// The date the occurrence of the MedicationDispense was first captured in
+  /// the system.
   final FhirDateTime? recorded;
 
   /// [whenPrepared]
@@ -614,6 +630,10 @@ class MedicationDispense extends DomainResource {
       daysSupply,
     );
     addField(
+      'fillNumber',
+      fillNumber,
+    );
+    addField(
       'recorded',
       recorded,
     );
@@ -685,6 +705,7 @@ class MedicationDispense extends DomainResource {
       'type',
       'quantity',
       'daysSupply',
+      'fillNumber',
       'recorded',
       'whenPrepared',
       'whenHandedOver',
@@ -800,6 +821,10 @@ class MedicationDispense extends DomainResource {
       case 'daysSupply':
         if (daysSupply != null) {
           fields.add(daysSupply!);
+        }
+      case 'fillNumber':
+        if (fillNumber != null) {
+          fields.add(fillNumber!);
         }
       case 'recorded':
         if (recorded != null) {
@@ -1029,6 +1054,12 @@ class MedicationDispense extends DomainResource {
     if (!equalsDeepWithNull(
       daysSupply,
       o.daysSupply,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      fillNumber,
+      o.fillNumber,
     )) {
       return false;
     }

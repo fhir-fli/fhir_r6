@@ -10,8 +10,9 @@ import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [CareTeamBuilder]
-/// The Care Team includes all the people and organizations who plan to
-/// participate in the coordination and delivery of care.
+/// The Care Team includes all the people, organizations, and care teams
+/// who participate or plan to participate in the coordination and delivery
+/// of care.
 class CareTeamBuilder extends DomainResourceBuilder {
   /// Primary constructor for
   /// [CareTeamBuilder]
@@ -1165,11 +1166,11 @@ class CareTeamParticipantBuilder extends BackboneElementBuilder {
     this.role,
     this.member,
     this.onBehalfOf,
-    CoverageXCareTeamParticipantBuilder? coverageX,
-    PeriodBuilder? coveragePeriod,
-    TimingBuilder? coverageTiming,
+    EffectiveXCareTeamParticipantBuilder? effectiveX,
+    PeriodBuilder? effectivePeriod,
+    TimingBuilder? effectiveTiming,
     super.disallowExtensions,
-  })  : coverageX = coverageX ?? coveragePeriod ?? coverageTiming,
+  })  : effectiveX = effectiveX ?? effectivePeriod ?? effectiveTiming,
         super(
           objectPath: 'CareTeam.participant',
         );
@@ -1228,12 +1229,12 @@ class CareTeamParticipantBuilder extends BackboneElementBuilder {
         ReferenceBuilder.fromJson,
         '$objectPath.onBehalfOf',
       ),
-      coverageX:
-          JsonParser.parsePolymorphic<CoverageXCareTeamParticipantBuilder>(
+      effectiveX:
+          JsonParser.parsePolymorphic<EffectiveXCareTeamParticipantBuilder>(
         json,
         {
-          'coveragePeriod': PeriodBuilder.fromJson,
-          'coverageTiming': TimingBuilder.fromJson,
+          'effectivePeriod': PeriodBuilder.fromJson,
+          'effectiveTiming': TimingBuilder.fromJson,
         },
         objectPath,
       ),
@@ -1294,18 +1295,19 @@ class CareTeamParticipantBuilder extends BackboneElementBuilder {
   ReferenceBuilder? member;
 
   /// [onBehalfOf]
-  /// The organization of the practitioner.
+  /// Entity that the participant is acting as a proxy of, or an agent of, or
+  /// in the interest of, or as a representative of.
   ReferenceBuilder? onBehalfOf;
 
-  /// [coverageX]
+  /// [effectiveX]
   /// When the member is generally available within this care team.
-  CoverageXCareTeamParticipantBuilder? coverageX;
+  EffectiveXCareTeamParticipantBuilder? effectiveX;
 
-  /// Getter for [coveragePeriod] as a PeriodBuilder
-  PeriodBuilder? get coveragePeriod => coverageX?.isAs<PeriodBuilder>();
+  /// Getter for [effectivePeriod] as a PeriodBuilder
+  PeriodBuilder? get effectivePeriod => effectiveX?.isAs<PeriodBuilder>();
 
-  /// Getter for [coverageTiming] as a TimingBuilder
-  TimingBuilder? get coverageTiming => coverageX?.isAs<TimingBuilder>();
+  /// Getter for [effectiveTiming] as a TimingBuilder
+  TimingBuilder? get effectiveTiming => effectiveX?.isAs<TimingBuilder>();
 
   /// Converts a [CareTeamParticipantBuilder]
   /// to [CareTeamParticipant]
@@ -1349,9 +1351,9 @@ class CareTeamParticipantBuilder extends BackboneElementBuilder {
     addField('role', role);
     addField('member', member);
     addField('onBehalfOf', onBehalfOf);
-    if (coverageX != null) {
-      final fhirType = coverageX!.fhirType;
-      addField('coverage${fhirType.capitalizeFirstLetter()}', coverageX);
+    if (effectiveX != null) {
+      final fhirType = effectiveX!.fhirType;
+      addField('effective${fhirType.capitalizeFirstLetter()}', effectiveX);
     }
 
     return json;
@@ -1367,7 +1369,7 @@ class CareTeamParticipantBuilder extends BackboneElementBuilder {
       'role',
       'member',
       'onBehalfOf',
-      'coverageX',
+      'effectiveX',
     ];
   }
 
@@ -1404,21 +1406,21 @@ class CareTeamParticipantBuilder extends BackboneElementBuilder {
         if (onBehalfOf != null) {
           fields.add(onBehalfOf!);
         }
-      case 'coverage':
-        if (coverageX != null) {
-          fields.add(coverageX!);
+      case 'effective':
+        if (effectiveX != null) {
+          fields.add(effectiveX!);
         }
-      case 'coverageX':
-        if (coverageX != null) {
-          fields.add(coverageX!);
+      case 'effectiveX':
+        if (effectiveX != null) {
+          fields.add(effectiveX!);
         }
-      case 'coveragePeriod':
-        if (coverageX is PeriodBuilder) {
-          fields.add(coverageX!);
+      case 'effectivePeriod':
+        if (effectiveX is PeriodBuilder) {
+          fields.add(effectiveX!);
         }
-      case 'coverageTiming':
-        if (coverageX is TimingBuilder) {
-          fields.add(coverageX!);
+      case 'effectiveTiming':
+        if (effectiveX is TimingBuilder) {
+          fields.add(effectiveX!);
         }
       default:
         if (checkValid) {
@@ -1525,37 +1527,37 @@ class CareTeamParticipantBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'coverage':
-      case 'coverageX':
+      case 'effective':
+      case 'effectiveX':
         {
-          if (child is CoverageXCareTeamParticipantBuilder) {
-            coverageX = child;
+          if (child is EffectiveXCareTeamParticipantBuilder) {
+            effectiveX = child;
             return;
           } else {
             if (child is PeriodBuilder) {
-              coverageX = child;
+              effectiveX = child;
               return;
             }
             if (child is TimingBuilder) {
-              coverageX = child;
+              effectiveX = child;
               return;
             }
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'coveragePeriod':
+      case 'effectivePeriod':
         {
           if (child is PeriodBuilder) {
-            coverageX = child;
+            effectiveX = child;
             return;
           } else {
             throw Exception('Invalid child type for $childName');
           }
         }
-      case 'coverageTiming':
+      case 'effectiveTiming':
         {
           if (child is TimingBuilder) {
-            coverageX = child;
+            effectiveX = child;
             return;
           } else {
             throw Exception('Invalid child type for $childName');
@@ -1583,15 +1585,15 @@ class CareTeamParticipantBuilder extends BackboneElementBuilder {
         return ['ReferenceBuilder'];
       case 'onBehalfOf':
         return ['ReferenceBuilder'];
-      case 'coverage':
-      case 'coverageX':
+      case 'effective':
+      case 'effectiveX':
         return [
           'PeriodBuilder',
           'TimingBuilder',
         ];
-      case 'coveragePeriod':
+      case 'effectivePeriod':
         return ['PeriodBuilder'];
-      case 'coverageTiming':
+      case 'effectiveTiming':
         return ['TimingBuilder'];
       default:
         return <String>[];
@@ -1633,16 +1635,16 @@ class CareTeamParticipantBuilder extends BackboneElementBuilder {
           onBehalfOf = ReferenceBuilder.empty();
           return;
         }
-      case 'coverage':
-      case 'coverageX':
-      case 'coveragePeriod':
+      case 'effective':
+      case 'effectiveX':
+      case 'effectivePeriod':
         {
-          coverageX = PeriodBuilder.empty();
+          effectiveX = PeriodBuilder.empty();
           return;
         }
-      case 'coverageTiming':
+      case 'effectiveTiming':
         {
-          coverageX = TimingBuilder.empty();
+          effectiveX = TimingBuilder.empty();
           return;
         }
       default:
@@ -1660,9 +1662,9 @@ class CareTeamParticipantBuilder extends BackboneElementBuilder {
     CodeableConceptBuilder? role,
     ReferenceBuilder? member,
     ReferenceBuilder? onBehalfOf,
-    CoverageXCareTeamParticipantBuilder? coverageX,
-    PeriodBuilder? coveragePeriod,
-    TimingBuilder? coverageTiming,
+    EffectiveXCareTeamParticipantBuilder? effectiveX,
+    PeriodBuilder? effectivePeriod,
+    TimingBuilder? effectiveTiming,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -1677,8 +1679,8 @@ class CareTeamParticipantBuilder extends BackboneElementBuilder {
       role: role ?? this.role,
       member: member ?? this.member,
       onBehalfOf: onBehalfOf ?? this.onBehalfOf,
-      coverageX:
-          coverageX ?? coveragePeriod ?? coverageTiming ?? this.coverageX,
+      effectiveX:
+          effectiveX ?? effectivePeriod ?? effectiveTiming ?? this.effectiveX,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -1742,8 +1744,8 @@ class CareTeamParticipantBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      coverageX,
-      o.coverageX,
+      effectiveX,
+      o.effectiveX,
     )) {
       return false;
     }

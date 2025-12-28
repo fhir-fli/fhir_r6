@@ -18,8 +18,6 @@ abstract class $CarePlanCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
-    List<FhirCanonical>? instantiatesCanonical,
-    List<FhirUri>? instantiatesUri,
     List<Reference>? basedOn,
     List<Reference>? replaces,
     List<Reference>? partOf,
@@ -61,8 +59,6 @@ class _$CarePlanCopyWithImpl<T> implements $CarePlanCopyWith<T> {
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? identifier = fhirSentinel,
-    Object? instantiatesCanonical = fhirSentinel,
-    Object? instantiatesUri = fhirSentinel,
     Object? basedOn = fhirSentinel,
     Object? replaces = fhirSentinel,
     Object? partOf = fhirSentinel,
@@ -108,12 +104,6 @@ class _$CarePlanCopyWithImpl<T> implements $CarePlanCopyWith<T> {
         identifier: identical(identifier, fhirSentinel)
             ? _value.identifier
             : identifier as List<Identifier>?,
-        instantiatesCanonical: identical(instantiatesCanonical, fhirSentinel)
-            ? _value.instantiatesCanonical
-            : instantiatesCanonical as List<FhirCanonical>?,
-        instantiatesUri: identical(instantiatesUri, fhirSentinel)
-            ? _value.instantiatesUri
-            : instantiatesUri as List<FhirUri>?,
         basedOn: identical(basedOn, fhirSentinel)
             ? _value.basedOn
             : basedOn as List<Reference>?,

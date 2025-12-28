@@ -24,12 +24,14 @@ abstract class $ConditionCopyWith<T> extends $DomainResourceCopyWith<T> {
     CodeableConcept? severity,
     CodeableConcept? code,
     List<CodeableConcept>? bodySite,
+    Reference? bodyStructure,
     Reference? subject,
     Reference? encounter,
-    FhirDateTime? onsetX,
-    FhirDateTime? abatementX,
+    OnsetXCondition? onsetX,
+    AbatementXCondition? abatementX,
     FhirDateTime? recordedDate,
-    List<ConditionParticipant>? participant,
+    Reference? recorder,
+    Reference? asserter,
     List<ConditionStage>? stage,
     List<CodeableReference>? evidence,
     List<Annotation>? note,
@@ -60,12 +62,14 @@ class _$ConditionCopyWithImpl<T> implements $ConditionCopyWith<T> {
     Object? severity = fhirSentinel,
     Object? code = fhirSentinel,
     Object? bodySite = fhirSentinel,
+    Object? bodyStructure = fhirSentinel,
     Object? subject = fhirSentinel,
     Object? encounter = fhirSentinel,
     Object? onsetX = fhirSentinel,
     Object? abatementX = fhirSentinel,
     Object? recordedDate = fhirSentinel,
-    Object? participant = fhirSentinel,
+    Object? recorder = fhirSentinel,
+    Object? asserter = fhirSentinel,
     Object? stage = fhirSentinel,
     Object? evidence = fhirSentinel,
     Object? note = fhirSentinel,
@@ -112,6 +116,9 @@ class _$ConditionCopyWithImpl<T> implements $ConditionCopyWith<T> {
         bodySite: identical(bodySite, fhirSentinel)
             ? _value.bodySite
             : bodySite as List<CodeableConcept>?,
+        bodyStructure: identical(bodyStructure, fhirSentinel)
+            ? _value.bodyStructure
+            : bodyStructure as Reference?,
         subject: identical(subject, fhirSentinel)
             ? _value.subject
             : (subject as Reference?) ?? _value.subject,
@@ -120,16 +127,19 @@ class _$ConditionCopyWithImpl<T> implements $ConditionCopyWith<T> {
             : encounter as Reference?,
         onsetX: identical(onsetX, fhirSentinel)
             ? _value.onsetX
-            : onsetX as FhirDateTime?,
+            : onsetX as OnsetXCondition?,
         abatementX: identical(abatementX, fhirSentinel)
             ? _value.abatementX
-            : abatementX as FhirDateTime?,
+            : abatementX as AbatementXCondition?,
         recordedDate: identical(recordedDate, fhirSentinel)
             ? _value.recordedDate
             : recordedDate as FhirDateTime?,
-        participant: identical(participant, fhirSentinel)
-            ? _value.participant
-            : participant as List<ConditionParticipant>?,
+        recorder: identical(recorder, fhirSentinel)
+            ? _value.recorder
+            : recorder as Reference?,
+        asserter: identical(asserter, fhirSentinel)
+            ? _value.asserter
+            : asserter as Reference?,
         stage: identical(stage, fhirSentinel)
             ? _value.stage
             : stage as List<ConditionStage>?,
@@ -147,66 +157,6 @@ class _$ConditionCopyWithImpl<T> implements $ConditionCopyWith<T> {
 extension ConditionCopyWithExtension on Condition {
   $ConditionCopyWith<Condition> get copyWith =>
       _$ConditionCopyWithImpl<Condition>(
-        this,
-        (value) => value,
-      );
-}
-
-abstract class $ConditionParticipantCopyWith<T>
-    extends $BackboneElementCopyWith<T> {
-  @override
-  T call({
-    FhirString? id,
-    List<FhirExtension>? extension_,
-    List<FhirExtension>? modifierExtension,
-    CodeableConcept? function_,
-    Reference? actor,
-    bool? disallowExtensions,
-  });
-}
-
-class _$ConditionParticipantCopyWithImpl<T>
-    implements $ConditionParticipantCopyWith<T> {
-  final ConditionParticipant _value;
-  final T Function(ConditionParticipant) _then;
-
-  _$ConditionParticipantCopyWithImpl(this._value, this._then);
-
-  @override
-  T call({
-    Object? id = fhirSentinel,
-    Object? extension_ = fhirSentinel,
-    Object? modifierExtension = fhirSentinel,
-    Object? function_ = fhirSentinel,
-    Object? actor = fhirSentinel,
-    Object? disallowExtensions = fhirSentinel,
-  }) {
-    return _then(
-      ConditionParticipant(
-        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
-        extension_: identical(extension_, fhirSentinel)
-            ? _value.extension_
-            : extension_ as List<FhirExtension>?,
-        modifierExtension: identical(modifierExtension, fhirSentinel)
-            ? _value.modifierExtension
-            : modifierExtension as List<FhirExtension>?,
-        function_: identical(function_, fhirSentinel)
-            ? _value.function_
-            : function_ as CodeableConcept?,
-        actor: identical(actor, fhirSentinel)
-            ? _value.actor
-            : (actor as Reference?) ?? _value.actor,
-        disallowExtensions: identical(disallowExtensions, fhirSentinel)
-            ? _value.disallowExtensions
-            : disallowExtensions as bool?,
-      ),
-    );
-  }
-}
-
-extension ConditionParticipantCopyWithExtension on ConditionParticipant {
-  $ConditionParticipantCopyWith<ConditionParticipant> get copyWith =>
-      _$ConditionParticipantCopyWithImpl<ConditionParticipant>(
         this,
         (value) => value,
       );

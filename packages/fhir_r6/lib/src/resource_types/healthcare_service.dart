@@ -39,6 +39,7 @@ class HealthcareService extends DomainResource {
     this.characteristic,
     this.communication,
     this.referralMethod,
+    this.referralRequired,
     this.appointmentRequired,
     this.availability,
     this.endpoint,
@@ -225,18 +226,21 @@ class HealthcareService extends DomainResource {
             ),
           )
           .toList(),
+      referralRequired: JsonParser.parsePrimitive<FhirBoolean>(
+        json,
+        'referralRequired',
+        FhirBoolean.fromJson,
+      ),
       appointmentRequired: JsonParser.parsePrimitive<FhirBoolean>(
         json,
         'appointmentRequired',
         FhirBoolean.fromJson,
       ),
-      availability: (json['availability'] as List<dynamic>?)
-          ?.map<Availability>(
-            (v) => Availability.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
+      availability: JsonParser.parseObject<Availability>(
+        json,
+        'availability',
+        Availability.fromJson,
+      ),
       endpoint: (json['endpoint'] as List<dynamic>?)
           ?.map<Reference>(
             (v) => Reference.fromJson(
@@ -388,16 +392,20 @@ class HealthcareService extends DomainResource {
   /// it is implied that no referral is required.
   final List<CodeableConcept>? referralMethod;
 
+  /// [referralRequired]
+  /// Indicates whether or not a prospective consumer will require a referral
+  /// for a particular service at a site to be provided by the Organization.
+  final FhirBoolean? referralRequired;
+
   /// [appointmentRequired]
   /// Indicates whether or not a prospective consumer will require an
   /// appointment for a particular service at a site to be provided by the
-  /// Organization. Indicates if an appointment is required for access to
-  /// this service.
+  /// Organization.
   final FhirBoolean? appointmentRequired;
 
   /// [availability]
   /// A collection of times that the healthcare service is available.
-  final List<Availability>? availability;
+  final Availability? availability;
 
   /// [endpoint]
   /// Technical endpoints providing access to services operated for the
@@ -580,6 +588,10 @@ class HealthcareService extends DomainResource {
       referralMethod,
     );
     addField(
+      'referralRequired',
+      referralRequired,
+    );
+    addField(
       'appointmentRequired',
       appointmentRequired,
     );
@@ -626,6 +638,7 @@ class HealthcareService extends DomainResource {
       'characteristic',
       'communication',
       'referralMethod',
+      'referralRequired',
       'appointmentRequired',
       'availability',
       'endpoint',
@@ -753,13 +766,17 @@ class HealthcareService extends DomainResource {
         if (referralMethod != null) {
           fields.addAll(referralMethod!);
         }
+      case 'referralRequired':
+        if (referralRequired != null) {
+          fields.add(referralRequired!);
+        }
       case 'appointmentRequired':
         if (appointmentRequired != null) {
           fields.add(appointmentRequired!);
         }
       case 'availability':
         if (availability != null) {
-          fields.addAll(availability!);
+          fields.add(availability!);
         }
       case 'endpoint':
         if (endpoint != null) {
@@ -975,12 +992,18 @@ class HealthcareService extends DomainResource {
       return false;
     }
     if (!equalsDeepWithNull(
+      referralRequired,
+      o.referralRequired,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       appointmentRequired,
       o.appointmentRequired,
     )) {
       return false;
     }
-    if (!listEquals<Availability>(
+    if (!equalsDeepWithNull(
       availability,
       o.availability,
     )) {
@@ -1008,9 +1031,22 @@ class HealthcareServiceEligibility extends BackboneElement {
     super.extension_,
     super.modifierExtension,
     this.code,
+    ValueXHealthcareServiceEligibility? valueX,
+    CodeableConcept? valueCodeableConcept,
+    FhirBoolean? valueBoolean,
+    Quantity? valueQuantity,
+    Range? valueRange,
+    Reference? valueReference,
     this.comment,
+    this.period,
     super.disallowExtensions,
-  }) : super();
+  })  : valueX = valueX ??
+            valueCodeableConcept ??
+            valueBoolean ??
+            valueQuantity ??
+            valueRange ??
+            valueReference,
+        super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
   factory HealthcareServiceEligibility.fromJson(
@@ -1041,9 +1077,24 @@ class HealthcareServiceEligibility extends BackboneElement {
         'code',
         CodeableConcept.fromJson,
       ),
+      valueX: JsonParser.parsePolymorphic<ValueXHealthcareServiceEligibility>(
+        json,
+        {
+          'valueCodeableConcept': CodeableConcept.fromJson,
+          'valueBoolean': FhirBoolean.fromJson,
+          'valueQuantity': Quantity.fromJson,
+          'valueRange': Range.fromJson,
+          'valueReference': Reference.fromJson,
+        },
+      ),
       comment: JsonParser.parsePrimitive<FhirMarkdown>(
         json,
         'comment',
+        FhirMarkdown.fromJson,
+      ),
+      period: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'period',
         FhirMarkdown.fromJson,
       ),
     );
@@ -1095,9 +1146,34 @@ class HealthcareServiceEligibility extends BackboneElement {
   /// Coded value for the eligibility.
   final CodeableConcept? code;
 
+  /// [valueX]
+  /// Sometimes an eligibility code requires additional data to calculate the
+  /// eligibility rules.
+  final ValueXHealthcareServiceEligibility? valueX;
+
+  /// Getter for [valueCodeableConcept] as a CodeableConcept
+  CodeableConcept? get valueCodeableConcept => valueX?.isAs<CodeableConcept>();
+
+  /// Getter for [valueBoolean] as a FhirBoolean
+  FhirBoolean? get valueBoolean => valueX?.isAs<FhirBoolean>();
+
+  /// Getter for [valueQuantity] as a Quantity
+  Quantity? get valueQuantity => valueX?.isAs<Quantity>();
+
+  /// Getter for [valueRange] as a Range
+  Range? get valueRange => valueX?.isAs<Range>();
+
+  /// Getter for [valueReference] as a Reference
+  Reference? get valueReference => valueX?.isAs<Reference>();
+
   /// [comment]
   /// Describes the eligibility conditions for the service.
   final FhirMarkdown? comment;
+
+  /// [period]
+  /// The period that this eligibility rule is a requirement for this
+  /// service.
+  final FhirMarkdown? period;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1177,9 +1253,21 @@ class HealthcareServiceEligibility extends BackboneElement {
       'code',
       code,
     );
+    if (valueX != null) {
+      final fhirType = valueX!.fhirType;
+      addField(
+        'value${fhirType.capitalize()}',
+        valueX,
+      );
+    }
+
     addField(
       'comment',
       comment,
+    );
+    addField(
+      'period',
+      period,
     );
     return json;
   }
@@ -1192,7 +1280,9 @@ class HealthcareServiceEligibility extends BackboneElement {
       'extension',
       'modifierExtension',
       'code',
+      'valueX',
       'comment',
+      'period',
     ];
   }
 
@@ -1221,9 +1311,37 @@ class HealthcareServiceEligibility extends BackboneElement {
         if (code != null) {
           fields.add(code!);
         }
+      case 'value':
+        fields.add(valueX!);
+      case 'valueX':
+        fields.add(valueX!);
+      case 'valueCodeableConcept':
+        if (valueX is CodeableConcept) {
+          fields.add(valueX!);
+        }
+      case 'valueBoolean':
+        if (valueX is FhirBoolean) {
+          fields.add(valueX!);
+        }
+      case 'valueQuantity':
+        if (valueX is Quantity) {
+          fields.add(valueX!);
+        }
+      case 'valueRange':
+        if (valueX is Range) {
+          fields.add(valueX!);
+        }
+      case 'valueReference':
+        if (valueX is Reference) {
+          fields.add(valueX!);
+        }
       case 'comment':
         if (comment != null) {
           fields.add(comment!);
+        }
+      case 'period':
+        if (period != null) {
+          fields.add(period!);
         }
       default:
         if (checkValid) {
@@ -1292,8 +1410,20 @@ class HealthcareServiceEligibility extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
+      valueX,
+      o.valueX,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       comment,
       o.comment,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      period,
+      o.period,
     )) {
       return false;
     }

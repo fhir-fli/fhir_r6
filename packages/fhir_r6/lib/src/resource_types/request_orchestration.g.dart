@@ -184,7 +184,7 @@ abstract class $RequestOrchestrationActionCopyWith<T>
     List<RequestOrchestrationInput>? input,
     List<RequestOrchestrationOutput>? output,
     List<RequestOrchestrationRelatedAction>? relatedAction,
-    FhirDateTime? timingX,
+    TimingXRequestOrchestrationAction? timingX,
     CodeableReference? location,
     List<RequestOrchestrationParticipant>? participant,
     CodeableConcept? type,
@@ -194,7 +194,7 @@ abstract class $RequestOrchestrationActionCopyWith<T>
     ActionPrecheckBehavior? precheckBehavior,
     ActionCardinalityBehavior? cardinalityBehavior,
     Reference? resource,
-    FhirCanonical? definitionX,
+    DefinitionXRequestOrchestrationAction? definitionX,
     FhirCanonical? transform,
     List<RequestOrchestrationDynamicValue>? dynamicValue,
     List<RequestOrchestrationAction>? action,
@@ -293,7 +293,7 @@ class _$RequestOrchestrationActionCopyWithImpl<T>
             : relatedAction as List<RequestOrchestrationRelatedAction>?,
         timingX: identical(timingX, fhirSentinel)
             ? _value.timingX
-            : timingX as FhirDateTime?,
+            : timingX as TimingXRequestOrchestrationAction?,
         location: identical(location, fhirSentinel)
             ? _value.location
             : location as CodeableReference?,
@@ -323,7 +323,7 @@ class _$RequestOrchestrationActionCopyWithImpl<T>
             : resource as Reference?,
         definitionX: identical(definitionX, fhirSentinel)
             ? _value.definitionX
-            : definitionX as FhirCanonical?,
+            : definitionX as DefinitionXRequestOrchestrationAction?,
         transform: identical(transform, fhirSentinel)
             ? _value.transform
             : transform as FhirCanonical?,
@@ -556,7 +556,7 @@ abstract class $RequestOrchestrationRelatedActionCopyWith<T>
     FhirId? targetId,
     ActionRelationshipType? relationship,
     ActionRelationshipType? endRelationship,
-    FhirDuration? offsetX,
+    OffsetXRequestOrchestrationRelatedAction? offsetX,
     bool? disallowExtensions,
   });
 }
@@ -599,7 +599,7 @@ class _$RequestOrchestrationRelatedActionCopyWithImpl<T>
             : endRelationship as ActionRelationshipType?,
         offsetX: identical(offsetX, fhirSentinel)
             ? _value.offsetX
-            : offsetX as FhirDuration?,
+            : offsetX as OffsetXRequestOrchestrationRelatedAction?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -630,7 +630,7 @@ abstract class $RequestOrchestrationParticipantCopyWith<T>
     Reference? typeReference,
     CodeableConcept? role,
     CodeableConcept? function_,
-    FhirCanonical? actorX,
+    ActorXRequestOrchestrationParticipant? actorX,
     bool? disallowExtensions,
   });
 }
@@ -681,7 +681,7 @@ class _$RequestOrchestrationParticipantCopyWithImpl<T>
             : function_ as CodeableConcept?,
         actorX: identical(actorX, fhirSentinel)
             ? _value.actorX
-            : actorX as FhirCanonical?,
+            : actorX as ActorXRequestOrchestrationParticipant?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

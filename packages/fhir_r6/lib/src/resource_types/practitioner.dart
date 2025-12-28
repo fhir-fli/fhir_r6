@@ -709,6 +709,7 @@ class PractitionerQualification extends BackboneElement {
     super.modifierExtension,
     this.identifier,
     required this.code,
+    this.status,
     this.period,
     this.issuer,
     super.disallowExtensions,
@@ -750,6 +751,11 @@ class PractitionerQualification extends BackboneElement {
         'code',
         CodeableConcept.fromJson,
       )!,
+      status: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'status',
+        CodeableConcept.fromJson,
+      ),
       period: JsonParser.parseObject<Period>(
         json,
         'period',
@@ -812,6 +818,16 @@ class PractitionerQualification extends BackboneElement {
   /// [code]
   /// Coded representation of the qualification.
   final CodeableConcept code;
+
+  /// [status]
+  /// Qualifications often take time to attain and might be tracked during
+  /// this time, and completed qualifications might not always be valid. This
+  /// status concept has some overlap with period and both should be
+  /// considered together. Refer to the descriptions of the codes for how the
+  /// period should be interpreted. If a qualification is revoked or
+  /// otherwise cancelled, then the period is likely to be ignored, and m be
+  /// related to when it was active.
+  final CodeableConcept? status;
 
   /// [period]
   /// Period during which the qualification is valid.
@@ -904,6 +920,10 @@ class PractitionerQualification extends BackboneElement {
       code,
     );
     addField(
+      'status',
+      status,
+    );
+    addField(
       'period',
       period,
     );
@@ -923,6 +943,7 @@ class PractitionerQualification extends BackboneElement {
       'modifierExtension',
       'identifier',
       'code',
+      'status',
       'period',
       'issuer',
     ];
@@ -955,6 +976,10 @@ class PractitionerQualification extends BackboneElement {
         }
       case 'code':
         fields.add(code);
+      case 'status':
+        if (status != null) {
+          fields.add(status!);
+        }
       case 'period':
         if (period != null) {
           fields.add(period!);
@@ -1031,6 +1056,12 @@ class PractitionerQualification extends BackboneElement {
     if (!equalsDeepWithNull(
       code,
       o.code,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      status,
+      o.status,
     )) {
       return false;
     }
@@ -1149,10 +1180,7 @@ class PractitionerCommunication extends BackboneElement {
   String get fhirType => 'PractitionerCommunication';
 
   /// [language]
-  /// The ISO-639-1 alpha 2 code in lower case for the language, optionally
-  /// followed by a hyphen and the ISO-3166-1 alpha 2 code for the region in
-  /// upper case; e.g. "en" for English, or "en-US" for American English
-  /// versus "en-AU" for Australian English.
+  /// The language which may be used to communicate with the individual.
   final CodeableConcept language;
 
   /// [preferred]

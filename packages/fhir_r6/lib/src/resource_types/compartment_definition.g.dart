@@ -20,7 +20,7 @@ abstract class $CompartmentDefinitionCopyWith<T>
     List<FhirExtension>? modifierExtension,
     FhirUri? url,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXCompartmentDefinition? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     PublicationStatus? status,
@@ -103,7 +103,7 @@ class _$CompartmentDefinitionCopyWithImpl<T>
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXCompartmentDefinition?,
         name: identical(name, fhirSentinel)
             ? _value.name
             : (name as FhirString?) ?? _value.name,

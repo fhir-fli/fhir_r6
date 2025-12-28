@@ -23,7 +23,7 @@ abstract class $EpisodeOfCareCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<CodeableConcept>? type,
     List<EpisodeOfCareReason>? reason,
     List<EpisodeOfCareDiagnosis>? diagnosis,
-    Reference? patient,
+    Reference? subject,
     Reference? managingOrganization,
     Period? period,
     List<Reference>? referralRequest,
@@ -56,7 +56,7 @@ class _$EpisodeOfCareCopyWithImpl<T> implements $EpisodeOfCareCopyWith<T> {
     Object? type = fhirSentinel,
     Object? reason = fhirSentinel,
     Object? diagnosis = fhirSentinel,
-    Object? patient = fhirSentinel,
+    Object? subject = fhirSentinel,
     Object? managingOrganization = fhirSentinel,
     Object? period = fhirSentinel,
     Object? referralRequest = fhirSentinel,
@@ -103,9 +103,9 @@ class _$EpisodeOfCareCopyWithImpl<T> implements $EpisodeOfCareCopyWith<T> {
         diagnosis: identical(diagnosis, fhirSentinel)
             ? _value.diagnosis
             : diagnosis as List<EpisodeOfCareDiagnosis>?,
-        patient: identical(patient, fhirSentinel)
-            ? _value.patient
-            : (patient as Reference?) ?? _value.patient,
+        subject: identical(subject, fhirSentinel)
+            ? _value.subject
+            : (subject as Reference?) ?? _value.subject,
         managingOrganization: identical(managingOrganization, fhirSentinel)
             ? _value.managingOrganization
             : managingOrganization as Reference?,
@@ -205,7 +205,7 @@ abstract class $EpisodeOfCareReasonCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    CodeableConcept? use,
+    List<CodeableConcept>? use,
     List<CodeableReference>? value,
     bool? disallowExtensions,
   });
@@ -236,8 +236,9 @@ class _$EpisodeOfCareReasonCopyWithImpl<T>
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
-        use:
-            identical(use, fhirSentinel) ? _value.use : use as CodeableConcept?,
+        use: identical(use, fhirSentinel)
+            ? _value.use
+            : use as List<CodeableConcept>?,
         value: identical(value, fhirSentinel)
             ? _value.value
             : value as List<CodeableReference>?,
@@ -265,7 +266,7 @@ abstract class $EpisodeOfCareDiagnosisCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     List<CodeableReference>? condition,
-    CodeableConcept? use,
+    List<CodeableConcept>? use,
     bool? disallowExtensions,
   });
 }
@@ -298,8 +299,9 @@ class _$EpisodeOfCareDiagnosisCopyWithImpl<T>
         condition: identical(condition, fhirSentinel)
             ? _value.condition
             : condition as List<CodeableReference>?,
-        use:
-            identical(use, fhirSentinel) ? _value.use : use as CodeableConcept?,
+        use: identical(use, fhirSentinel)
+            ? _value.use
+            : use as List<CodeableConcept>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

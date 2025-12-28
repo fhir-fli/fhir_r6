@@ -460,7 +460,7 @@ class AppointmentBuilder extends DomainResourceBuilder {
 
   /// [cancellationReason]
   /// The coded reason for the appointment being cancelled. This is often
-  /// used in reporting/billing/futher processing to determine if further
+  /// used in reporting/billing/further processing to determine if further
   /// actions are required, or specific fees apply.
   CodeableConceptBuilder? cancellationReason;
 

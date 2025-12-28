@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:fhir_r6/fhir_r6.dart'
     show
         AllergyIntolerance,
-        AllergyIntoleranceParticipant,
         AllergyIntoleranceReaction,
         R6ResourceType,
         yamlMapToJson,
@@ -42,8 +41,9 @@ class AllergyIntoleranceBuilder extends DomainResourceBuilder {
     RangeBuilder? onsetRange,
     FhirStringBuilder? onsetString,
     this.recordedDate,
-    this.participant,
-    this.lastOccurrence,
+    this.recorder,
+    this.asserter,
+    this.lastReactionOccurrence,
     this.note,
     this.reaction,
   })  : onsetX = onsetX ??
@@ -206,21 +206,23 @@ class AllergyIntoleranceBuilder extends DomainResourceBuilder {
         FhirDateTimeBuilder.fromJson,
         '$objectPath.recordedDate',
       ),
-      participant: (json['participant'] as List<dynamic>?)
-          ?.map<AllergyIntoleranceParticipantBuilder>(
-            (v) => AllergyIntoleranceParticipantBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.participant',
-              },
-            ),
-          )
-          .toList(),
-      lastOccurrence: JsonParser.parsePrimitive<FhirDateTimeBuilder>(
+      recorder: JsonParser.parseObject<ReferenceBuilder>(
         json,
-        'lastOccurrence',
+        'recorder',
+        ReferenceBuilder.fromJson,
+        '$objectPath.recorder',
+      ),
+      asserter: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'asserter',
+        ReferenceBuilder.fromJson,
+        '$objectPath.asserter',
+      ),
+      lastReactionOccurrence: JsonParser.parsePrimitive<FhirDateTimeBuilder>(
+        json,
+        'lastReactionOccurrence',
         FhirDateTimeBuilder.fromJson,
-        '$objectPath.lastOccurrence',
+        '$objectPath.lastReactionOccurrence',
       ),
       note: (json['note'] as List<dynamic>?)
           ?.map<AnnotationBuilder>(
@@ -372,15 +374,19 @@ class AllergyIntoleranceBuilder extends DomainResourceBuilder {
   /// date.
   FhirDateTimeBuilder? recordedDate;
 
-  /// [participant]
-  /// Indicates who or what participated in the activities related to the
-  /// allergy or intolerance and how they were involved.
-  List<AllergyIntoleranceParticipantBuilder>? participant;
+  /// [recorder]
+  /// Individual who recorded the record and takes responsibility for its
+  /// content.
+  ReferenceBuilder? recorder;
 
-  /// [lastOccurrence]
+  /// [asserter]
+  /// The source of the information about the allergy that is recorded.
+  ReferenceBuilder? asserter;
+
+  /// [lastReactionOccurrence]
   /// Represents the date and/or time of the last known occurrence of a
   /// reaction event.
-  FhirDateTimeBuilder? lastOccurrence;
+  FhirDateTimeBuilder? lastReactionOccurrence;
 
   /// [note]
   /// Additional narrative about the propensity for the Adverse Reaction, not
@@ -452,8 +458,9 @@ class AllergyIntoleranceBuilder extends DomainResourceBuilder {
     }
 
     addField('recordedDate', recordedDate);
-    addField('participant', participant);
-    addField('lastOccurrence', lastOccurrence);
+    addField('recorder', recorder);
+    addField('asserter', asserter);
+    addField('lastReactionOccurrence', lastReactionOccurrence);
     addField('note', note);
     addField('reaction', reaction);
     return json;
@@ -482,8 +489,9 @@ class AllergyIntoleranceBuilder extends DomainResourceBuilder {
       'encounter',
       'onsetX',
       'recordedDate',
-      'participant',
-      'lastOccurrence',
+      'recorder',
+      'asserter',
+      'lastReactionOccurrence',
       'note',
       'reaction',
     ];
@@ -598,13 +606,17 @@ class AllergyIntoleranceBuilder extends DomainResourceBuilder {
         if (recordedDate != null) {
           fields.add(recordedDate!);
         }
-      case 'participant':
-        if (participant != null) {
-          fields.addAll(participant!);
+      case 'recorder':
+        if (recorder != null) {
+          fields.add(recorder!);
         }
-      case 'lastOccurrence':
-        if (lastOccurrence != null) {
-          fields.add(lastOccurrence!);
+      case 'asserter':
+        if (asserter != null) {
+          fields.add(asserter!);
+        }
+      case 'lastReactionOccurrence':
+        if (lastReactionOccurrence != null) {
+          fields.add(lastReactionOccurrence!);
         }
       case 'note':
         if (note != null) {
@@ -1010,26 +1022,26 @@ class AllergyIntoleranceBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'participant':
+      case 'recorder':
         {
-          if (child is List<AllergyIntoleranceParticipantBuilder>) {
-            // Replace or create new list
-            participant = child;
-            return;
-          } else if (child is AllergyIntoleranceParticipantBuilder) {
-            // Add single element to existing list or create new list
-            participant = [
-              ...(participant ?? []),
-              child,
-            ];
+          if (child is ReferenceBuilder) {
+            recorder = child;
             return;
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'lastOccurrence':
+      case 'asserter':
+        {
+          if (child is ReferenceBuilder) {
+            asserter = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'lastReactionOccurrence':
         {
           if (child is FhirDateTimeBuilder) {
-            lastOccurrence = child;
+            lastReactionOccurrence = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
@@ -1037,7 +1049,7 @@ class AllergyIntoleranceBuilder extends DomainResourceBuilder {
               final stringValue = child.toString();
               final converted = FhirDateTimeBuilder.tryParse(stringValue);
               if (converted != null) {
-                lastOccurrence = converted;
+                lastReactionOccurrence = converted;
                 return;
               }
             } catch (e) {
@@ -1143,9 +1155,11 @@ class AllergyIntoleranceBuilder extends DomainResourceBuilder {
         return ['FhirStringBuilder'];
       case 'recordedDate':
         return ['FhirDateTimeBuilder'];
-      case 'participant':
-        return ['AllergyIntoleranceParticipantBuilder'];
-      case 'lastOccurrence':
+      case 'recorder':
+        return ['ReferenceBuilder'];
+      case 'asserter':
+        return ['ReferenceBuilder'];
+      case 'lastReactionOccurrence':
         return ['FhirDateTimeBuilder'];
       case 'note':
         return ['AnnotationBuilder'];
@@ -1278,14 +1292,19 @@ class AllergyIntoleranceBuilder extends DomainResourceBuilder {
           recordedDate = FhirDateTimeBuilder.empty();
           return;
         }
-      case 'participant':
+      case 'recorder':
         {
-          participant = <AllergyIntoleranceParticipantBuilder>[];
+          recorder = ReferenceBuilder.empty();
           return;
         }
-      case 'lastOccurrence':
+      case 'asserter':
         {
-          lastOccurrence = FhirDateTimeBuilder.empty();
+          asserter = ReferenceBuilder.empty();
+          return;
+        }
+      case 'lastReactionOccurrence':
+        {
+          lastReactionOccurrence = FhirDateTimeBuilder.empty();
           return;
         }
       case 'note':
@@ -1326,8 +1345,9 @@ class AllergyIntoleranceBuilder extends DomainResourceBuilder {
     ReferenceBuilder? encounter,
     OnsetXAllergyIntoleranceBuilder? onsetX,
     FhirDateTimeBuilder? recordedDate,
-    List<AllergyIntoleranceParticipantBuilder>? participant,
-    FhirDateTimeBuilder? lastOccurrence,
+    ReferenceBuilder? recorder,
+    ReferenceBuilder? asserter,
+    FhirDateTimeBuilder? lastReactionOccurrence,
     List<AnnotationBuilder>? note,
     List<AllergyIntoleranceReactionBuilder>? reaction,
     FhirDateTimeBuilder? onsetDateTime,
@@ -1367,8 +1387,10 @@ class AllergyIntoleranceBuilder extends DomainResourceBuilder {
           onsetString ??
           this.onsetX,
       recordedDate: recordedDate ?? this.recordedDate,
-      participant: participant ?? this.participant,
-      lastOccurrence: lastOccurrence ?? this.lastOccurrence,
+      recorder: recorder ?? this.recorder,
+      asserter: asserter ?? this.asserter,
+      lastReactionOccurrence:
+          lastReactionOccurrence ?? this.lastReactionOccurrence,
       note: note ?? this.note,
       reaction: reaction ?? this.reaction,
     )..objectPath = newObjectPath;
@@ -1511,15 +1533,21 @@ class AllergyIntoleranceBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<AllergyIntoleranceParticipantBuilder>(
-      participant,
-      o.participant,
+    if (!equalsDeepWithNull(
+      recorder,
+      o.recorder,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
-      lastOccurrence,
-      o.lastOccurrence,
+      asserter,
+      o.asserter,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      lastReactionOccurrence,
+      o.lastReactionOccurrence,
     )) {
       return false;
     }
@@ -1532,455 +1560,6 @@ class AllergyIntoleranceBuilder extends DomainResourceBuilder {
     if (!listEquals<AllergyIntoleranceReactionBuilder>(
       reaction,
       o.reaction,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [AllergyIntoleranceParticipantBuilder]
-/// Indicates who or what participated in the activities related to the
-/// allergy or intolerance and how they were involved.
-class AllergyIntoleranceParticipantBuilder extends BackboneElementBuilder {
-  /// Primary constructor for
-  /// [AllergyIntoleranceParticipantBuilder]
-
-  AllergyIntoleranceParticipantBuilder({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.function_,
-    this.actor,
-    super.disallowExtensions,
-  }) : super(
-          objectPath: 'AllergyIntolerance.participant',
-        );
-
-  /// An empty constructor for partial usage.
-  /// For Builder classes, no fields are required
-  factory AllergyIntoleranceParticipantBuilder.empty() =>
-      AllergyIntoleranceParticipantBuilder(
-        actor: ReferenceBuilder.empty(),
-      );
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory AllergyIntoleranceParticipantBuilder.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    const objectPath = 'AllergyIntolerance.participant';
-    return AllergyIntoleranceParticipantBuilder(
-      id: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'id',
-        FhirStringBuilder.fromJson,
-        '$objectPath.id',
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.extension',
-              },
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.modifierExtension',
-              },
-            ),
-          )
-          .toList(),
-      function_: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'function',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.function',
-      ),
-      actor: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'actor',
-        ReferenceBuilder.fromJson,
-        '$objectPath.actor',
-      ),
-    );
-  }
-
-  /// Deserialize [AllergyIntoleranceParticipantBuilder]
-  /// from a [String] or [YamlMap] object
-  factory AllergyIntoleranceParticipantBuilder.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return AllergyIntoleranceParticipantBuilder.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return AllergyIntoleranceParticipantBuilder.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'AllergyIntoleranceParticipantBuilder '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [AllergyIntoleranceParticipantBuilder]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory AllergyIntoleranceParticipantBuilder.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return AllergyIntoleranceParticipantBuilder.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'AllergyIntoleranceParticipant';
-
-  /// [function_]
-  /// Distinguishes the type of involvement of the actor in the activities
-  /// related to the allergy or intolerance.
-  CodeableConceptBuilder? function_;
-
-  /// [actor]
-  /// Indicates who or what participated in the activities related to the
-  /// allergy or intolerance.
-  ReferenceBuilder? actor;
-
-  /// Converts a [AllergyIntoleranceParticipantBuilder]
-  /// to [AllergyIntoleranceParticipant]
-  @override
-  AllergyIntoleranceParticipant build() =>
-      AllergyIntoleranceParticipant.fromJson(toJson());
-
-  /// Converts a [AllergyIntoleranceParticipantBuilder]
-  /// to a [Map<String, dynamic>]
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    void addField(String key, dynamic field) {
-      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
-        throw ArgumentError('"field" must be a FhirBaseBuilder type');
-      }
-      if (field == null) return;
-      if (field is PrimitiveTypeBuilder) {
-        json[key] = field.toJson()['value'];
-        if (field.toJson()['_value'] != null) {
-          json['_$key'] = field.toJson()['_value'];
-        }
-      } else if (field is List<FhirBaseBuilder>) {
-        if (field.isEmpty) return;
-        if (field.first is PrimitiveTypeBuilder) {
-          final fieldJson = field.map((e) => e.toJson()).toList();
-          json[key] = fieldJson.map((e) => e['value']).toList();
-          if (fieldJson.any((e) => e['_value'] != null)) {
-            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
-          }
-        } else {
-          json[key] = field.map((e) => e.toJson()).toList();
-        }
-      } else if (field is FhirBaseBuilder) {
-        json[key] = field.toJson();
-      }
-    }
-
-    addField('id', id);
-    addField('extension', extension_);
-    addField('modifierExtension', modifierExtension);
-    addField('function', function_);
-    addField('actor', actor);
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'function',
-      'actor',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBaseBuilder> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBaseBuilder>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'function':
-        if (function_ != null) {
-          fields.add(function_!);
-        }
-      case 'actor':
-        if (actor != null) {
-          fields.add(actor!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBaseBuilder? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  void setChildByName(String childName, dynamic child) {
-    // child must be null, or a (List of) FhirBaseBuilder(s).
-    if (child == null) {
-      return; // In builders, setting to null is allowed
-    }
-    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
-      throw Exception('Cannot set child value for $childName');
-    }
-
-    switch (childName) {
-      case 'id':
-        {
-          if (child is FhirStringBuilder) {
-            id = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                id = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'extension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            extension_ = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            extension_ = [
-              ...(extension_ ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'modifierExtension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            modifierExtension = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            modifierExtension = [
-              ...(modifierExtension ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'function':
-        {
-          if (child is CodeableConceptBuilder) {
-            function_ = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'actor':
-        {
-          if (child is ReferenceBuilder) {
-            actor = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      default:
-        throw Exception('Cannot set child value for $childName');
-    }
-  }
-
-  /// Return the possible Dart types for the field named [fieldName].
-  /// For polymorphic fields, multiple types are possible.
-  @override
-  List<String> typeByElementName(String fieldName) {
-    switch (fieldName) {
-      case 'id':
-        return ['FhirStringBuilder'];
-      case 'extension':
-        return ['FhirExtensionBuilder'];
-      case 'modifierExtension':
-        return ['FhirExtensionBuilder'];
-      case 'function':
-        return ['CodeableConceptBuilder'];
-      case 'actor':
-        return ['ReferenceBuilder'];
-      default:
-        return <String>[];
-    }
-  }
-
-  /// Creates a new [AllergyIntoleranceParticipantBuilder]
-  ///  with a chosen field set to an empty object.
-  @override
-  void createProperty(String propertyName) {
-    switch (propertyName) {
-      case 'id':
-        {
-          id = FhirStringBuilder.empty();
-          return;
-        }
-      case 'extension':
-        {
-          extension_ = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'modifierExtension':
-        {
-          modifierExtension = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'function':
-        {
-          function_ = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'actor':
-        {
-          actor = ReferenceBuilder.empty();
-          return;
-        }
-      default:
-        throw ArgumentError('No matching property: $propertyName');
-    }
-  }
-
-  @override
-  AllergyIntoleranceParticipantBuilder clone() => throw UnimplementedError();
-  @override
-  AllergyIntoleranceParticipantBuilder copyWith({
-    FhirStringBuilder? id,
-    List<FhirExtensionBuilder>? extension_,
-    List<FhirExtensionBuilder>? modifierExtension,
-    CodeableConceptBuilder? function_,
-    ReferenceBuilder? actor,
-    Map<String, dynamic>? userData,
-    List<String>? formatCommentsPre,
-    List<String>? formatCommentsPost,
-    List<dynamic>? annotations,
-    String? objectPath,
-  }) {
-    final newObjectPath = this.objectPath;
-    final newResult = AllergyIntoleranceParticipantBuilder(
-      id: id ?? this.id,
-      extension_: extension_ ?? this.extension_,
-      modifierExtension: modifierExtension ?? this.modifierExtension,
-      function_: function_ ?? this.function_,
-      actor: actor ?? this.actor,
-    )..objectPath = newObjectPath;
-    // Copy user data and annotations
-    if (userData != null) {
-      newResult.userData = userData;
-    }
-    if (formatCommentsPre != null) {
-      newResult.formatCommentsPre = formatCommentsPre;
-    }
-    if (formatCommentsPost != null) {
-      newResult.formatCommentsPost = formatCommentsPost;
-    }
-    if (annotations != null) {
-      newResult.annotations = annotations;
-    }
-
-    return newResult;
-  }
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! AllergyIntoleranceParticipantBuilder) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      function_,
-      o.function_,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      actor,
-      o.actor,
     )) {
       return false;
     }

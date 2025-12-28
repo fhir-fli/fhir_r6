@@ -20,12 +20,13 @@ abstract class $CitationCopyWith<T> extends $MetadataResourceCopyWith<T> {
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXCitation? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     PublicationStatus? status,
     FhirBoolean? experimental,
     FhirDateTime? date,
+    List<ContactDetail>? author,
     FhirString? publisher,
     List<ContactDetail>? contact,
     FhirMarkdown? description,
@@ -37,7 +38,7 @@ abstract class $CitationCopyWith<T> extends $MetadataResourceCopyWith<T> {
     FhirDate? approvalDate,
     FhirDate? lastReviewDate,
     Period? effectivePeriod,
-    List<ContactDetail>? author,
+    List<ContactDetail>? recorder,
     List<ContactDetail>? editor,
     List<ContactDetail>? reviewer,
     List<ContactDetail>? endorser,
@@ -46,7 +47,7 @@ abstract class $CitationCopyWith<T> extends $MetadataResourceCopyWith<T> {
     List<Annotation>? note,
     List<CodeableConcept>? currentState,
     List<CitationStatusDate>? statusDate,
-    List<RelatedArtifact>? relatedArtifact,
+    List<CitationRelatesTo>? relatesTo,
     CitationCitedArtifact? citedArtifact,
     bool? disallowExtensions,
   });
@@ -77,6 +78,7 @@ class _$CitationCopyWithImpl<T> implements $CitationCopyWith<T> {
     Object? status = fhirSentinel,
     Object? experimental = fhirSentinel,
     Object? date = fhirSentinel,
+    Object? author = fhirSentinel,
     Object? publisher = fhirSentinel,
     Object? contact = fhirSentinel,
     Object? description = fhirSentinel,
@@ -88,7 +90,7 @@ class _$CitationCopyWithImpl<T> implements $CitationCopyWith<T> {
     Object? approvalDate = fhirSentinel,
     Object? lastReviewDate = fhirSentinel,
     Object? effectivePeriod = fhirSentinel,
-    Object? author = fhirSentinel,
+    Object? recorder = fhirSentinel,
     Object? editor = fhirSentinel,
     Object? reviewer = fhirSentinel,
     Object? endorser = fhirSentinel,
@@ -97,7 +99,7 @@ class _$CitationCopyWithImpl<T> implements $CitationCopyWith<T> {
     Object? note = fhirSentinel,
     Object? currentState = fhirSentinel,
     Object? statusDate = fhirSentinel,
-    Object? relatedArtifact = fhirSentinel,
+    Object? relatesTo = fhirSentinel,
     Object? citedArtifact = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -130,7 +132,7 @@ class _$CitationCopyWithImpl<T> implements $CitationCopyWith<T> {
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXCitation?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -143,6 +145,9 @@ class _$CitationCopyWithImpl<T> implements $CitationCopyWith<T> {
             : experimental as FhirBoolean?,
         date:
             identical(date, fhirSentinel) ? _value.date : date as FhirDateTime?,
+        author: identical(author, fhirSentinel)
+            ? _value.author
+            : author as List<ContactDetail>?,
         publisher: identical(publisher, fhirSentinel)
             ? _value.publisher
             : publisher as FhirString?,
@@ -176,9 +181,9 @@ class _$CitationCopyWithImpl<T> implements $CitationCopyWith<T> {
         effectivePeriod: identical(effectivePeriod, fhirSentinel)
             ? _value.effectivePeriod
             : effectivePeriod as Period?,
-        author: identical(author, fhirSentinel)
-            ? _value.author
-            : author as List<ContactDetail>?,
+        recorder: identical(recorder, fhirSentinel)
+            ? _value.recorder
+            : recorder as List<ContactDetail>?,
         editor: identical(editor, fhirSentinel)
             ? _value.editor
             : editor as List<ContactDetail>?,
@@ -203,9 +208,9 @@ class _$CitationCopyWithImpl<T> implements $CitationCopyWith<T> {
         statusDate: identical(statusDate, fhirSentinel)
             ? _value.statusDate
             : statusDate as List<CitationStatusDate>?,
-        relatedArtifact: identical(relatedArtifact, fhirSentinel)
-            ? _value.relatedArtifact
-            : relatedArtifact as List<RelatedArtifact>?,
+        relatesTo: identical(relatesTo, fhirSentinel)
+            ? _value.relatesTo
+            : relatesTo as List<CitationRelatesTo>?,
         citedArtifact: identical(citedArtifact, fhirSentinel)
             ? _value.citedArtifact
             : citedArtifact as CitationCitedArtifact?,
@@ -404,6 +409,66 @@ extension CitationStatusDateCopyWithExtension on CitationStatusDate {
       );
 }
 
+abstract class $CitationRelatesToCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    ArtifactRelationshipType? type,
+    TargetXCitationRelatesTo? targetX,
+    bool? disallowExtensions,
+  });
+}
+
+class _$CitationRelatesToCopyWithImpl<T>
+    implements $CitationRelatesToCopyWith<T> {
+  final CitationRelatesTo _value;
+  final T Function(CitationRelatesTo) _then;
+
+  _$CitationRelatesToCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? type = fhirSentinel,
+    Object? targetX = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      CitationRelatesTo(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        type: identical(type, fhirSentinel)
+            ? _value.type
+            : (type as ArtifactRelationshipType?) ?? _value.type,
+        targetX: identical(targetX, fhirSentinel)
+            ? _value.targetX
+            : (targetX as TargetXCitationRelatesTo?) ?? _value.targetX,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension CitationRelatesToCopyWithExtension on CitationRelatesTo {
+  $CitationRelatesToCopyWith<CitationRelatesTo> get copyWith =>
+      _$CitationRelatesToCopyWithImpl<CitationRelatesTo>(
+        this,
+        (value) => value,
+      );
+}
+
 abstract class $CitationCitedArtifactCopyWith<T>
     extends $BackboneElementCopyWith<T> {
   @override
@@ -414,12 +479,13 @@ abstract class $CitationCitedArtifactCopyWith<T>
     List<Identifier>? identifier,
     List<Identifier>? relatedIdentifier,
     FhirDateTime? dateAccessed,
-    CitationVersion? version,
+    FhirString? version,
     List<CodeableConcept>? currentState,
     List<CitationStatusDate>? statusDate,
     List<CitationTitle>? title,
     List<CitationAbstract>? abstract_,
     CitationPart? part_,
+    Reference? baseCitation,
     List<CitationRelatesTo>? relatesTo,
     List<CitationPublicationForm>? publicationForm,
     List<CitationWebLocation>? webLocation,
@@ -451,6 +517,7 @@ class _$CitationCitedArtifactCopyWithImpl<T>
     Object? title = fhirSentinel,
     Object? abstract_ = fhirSentinel,
     Object? part_ = fhirSentinel,
+    Object? baseCitation = fhirSentinel,
     Object? relatesTo = fhirSentinel,
     Object? publicationForm = fhirSentinel,
     Object? webLocation = fhirSentinel,
@@ -479,7 +546,7 @@ class _$CitationCitedArtifactCopyWithImpl<T>
             : dateAccessed as FhirDateTime?,
         version: identical(version, fhirSentinel)
             ? _value.version
-            : version as CitationVersion?,
+            : version as FhirString?,
         currentState: identical(currentState, fhirSentinel)
             ? _value.currentState
             : currentState as List<CodeableConcept>?,
@@ -495,6 +562,9 @@ class _$CitationCitedArtifactCopyWithImpl<T>
         part_: identical(part_, fhirSentinel)
             ? _value.part_
             : part_ as CitationPart?,
+        baseCitation: identical(baseCitation, fhirSentinel)
+            ? _value.baseCitation
+            : baseCitation as Reference?,
         relatesTo: identical(relatesTo, fhirSentinel)
             ? _value.relatesTo
             : relatesTo as List<CitationRelatesTo>?,
@@ -524,64 +594,6 @@ class _$CitationCitedArtifactCopyWithImpl<T>
 extension CitationCitedArtifactCopyWithExtension on CitationCitedArtifact {
   $CitationCitedArtifactCopyWith<CitationCitedArtifact> get copyWith =>
       _$CitationCitedArtifactCopyWithImpl<CitationCitedArtifact>(
-        this,
-        (value) => value,
-      );
-}
-
-abstract class $CitationVersionCopyWith<T> extends $BackboneElementCopyWith<T> {
-  @override
-  T call({
-    FhirString? id,
-    List<FhirExtension>? extension_,
-    List<FhirExtension>? modifierExtension,
-    FhirString? value,
-    Reference? baseCitation,
-    bool? disallowExtensions,
-  });
-}
-
-class _$CitationVersionCopyWithImpl<T> implements $CitationVersionCopyWith<T> {
-  final CitationVersion _value;
-  final T Function(CitationVersion) _then;
-
-  _$CitationVersionCopyWithImpl(this._value, this._then);
-
-  @override
-  T call({
-    Object? id = fhirSentinel,
-    Object? extension_ = fhirSentinel,
-    Object? modifierExtension = fhirSentinel,
-    Object? value = fhirSentinel,
-    Object? baseCitation = fhirSentinel,
-    Object? disallowExtensions = fhirSentinel,
-  }) {
-    return _then(
-      CitationVersion(
-        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
-        extension_: identical(extension_, fhirSentinel)
-            ? _value.extension_
-            : extension_ as List<FhirExtension>?,
-        modifierExtension: identical(modifierExtension, fhirSentinel)
-            ? _value.modifierExtension
-            : modifierExtension as List<FhirExtension>?,
-        value: identical(value, fhirSentinel)
-            ? _value.value
-            : (value as FhirString?) ?? _value.value,
-        baseCitation: identical(baseCitation, fhirSentinel)
-            ? _value.baseCitation
-            : baseCitation as Reference?,
-        disallowExtensions: identical(disallowExtensions, fhirSentinel)
-            ? _value.disallowExtensions
-            : disallowExtensions as bool?,
-      ),
-    );
-  }
-}
-
-extension CitationVersionCopyWithExtension on CitationVersion {
-  $CitationVersionCopyWith<CitationVersion> get copyWith =>
-      _$CitationVersionCopyWithImpl<CitationVersion>(
         this,
         (value) => value,
       );
@@ -659,7 +671,7 @@ abstract class $CitationTitleCopyWith<T> extends $BackboneElementCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     List<CodeableConcept>? type,
-    CodeableConcept? language,
+    AllLanguages? language,
     FhirMarkdown? text,
     bool? disallowExtensions,
   });
@@ -695,7 +707,7 @@ class _$CitationTitleCopyWithImpl<T> implements $CitationTitleCopyWith<T> {
             : type as List<CodeableConcept>?,
         language: identical(language, fhirSentinel)
             ? _value.language
-            : language as CodeableConcept?,
+            : language as AllLanguages?,
         text: identical(text, fhirSentinel)
             ? _value.text
             : (text as FhirMarkdown?) ?? _value.text,
@@ -722,8 +734,8 @@ abstract class $CitationAbstractCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    CodeableConcept? type,
-    CodeableConcept? language,
+    List<CodeableConcept>? type,
+    AllLanguages? language,
     FhirMarkdown? text,
     FhirMarkdown? copyright,
     bool? disallowExtensions,
@@ -759,10 +771,10 @@ class _$CitationAbstractCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         type: identical(type, fhirSentinel)
             ? _value.type
-            : type as CodeableConcept?,
+            : type as List<CodeableConcept>?,
         language: identical(language, fhirSentinel)
             ? _value.language
-            : language as CodeableConcept?,
+            : language as AllLanguages?,
         text: identical(text, fhirSentinel)
             ? _value.text
             : (text as FhirMarkdown?) ?? _value.text,
@@ -793,7 +805,6 @@ abstract class $CitationPartCopyWith<T> extends $BackboneElementCopyWith<T> {
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
     FhirString? value,
-    Reference? baseCitation,
     bool? disallowExtensions,
   });
 }
@@ -811,7 +822,6 @@ class _$CitationPartCopyWithImpl<T> implements $CitationPartCopyWith<T> {
     Object? modifierExtension = fhirSentinel,
     Object? type = fhirSentinel,
     Object? value = fhirSentinel,
-    Object? baseCitation = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -829,9 +839,6 @@ class _$CitationPartCopyWithImpl<T> implements $CitationPartCopyWith<T> {
         value: identical(value, fhirSentinel)
             ? _value.value
             : value as FhirString?,
-        baseCitation: identical(baseCitation, fhirSentinel)
-            ? _value.baseCitation
-            : baseCitation as Reference?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -848,31 +855,29 @@ extension CitationPartCopyWithExtension on CitationPart {
       );
 }
 
-abstract class $CitationRelatesToCopyWith<T>
+abstract class $CitationRelatesTo1CopyWith<T>
     extends $BackboneElementCopyWith<T> {
   @override
   T call({
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    RelatedArtifactTypeExpanded? type,
+    ArtifactRelationshipType? type,
     List<CodeableConcept>? classifier,
     FhirString? label,
     FhirString? display,
     FhirMarkdown? citation,
-    Attachment? document,
-    FhirCanonical? resource,
-    Reference? resourceReference,
+    TargetXCitationRelatesTo1? targetX,
     bool? disallowExtensions,
   });
 }
 
-class _$CitationRelatesToCopyWithImpl<T>
-    implements $CitationRelatesToCopyWith<T> {
-  final CitationRelatesTo _value;
-  final T Function(CitationRelatesTo) _then;
+class _$CitationRelatesTo1CopyWithImpl<T>
+    implements $CitationRelatesTo1CopyWith<T> {
+  final CitationRelatesTo1 _value;
+  final T Function(CitationRelatesTo1) _then;
 
-  _$CitationRelatesToCopyWithImpl(this._value, this._then);
+  _$CitationRelatesTo1CopyWithImpl(this._value, this._then);
 
   @override
   T call({
@@ -884,13 +889,11 @@ class _$CitationRelatesToCopyWithImpl<T>
     Object? label = fhirSentinel,
     Object? display = fhirSentinel,
     Object? citation = fhirSentinel,
-    Object? document = fhirSentinel,
-    Object? resource = fhirSentinel,
-    Object? resourceReference = fhirSentinel,
+    Object? targetX = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
-      CitationRelatesTo(
+      CitationRelatesTo1(
         id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
         extension_: identical(extension_, fhirSentinel)
             ? _value.extension_
@@ -900,7 +903,7 @@ class _$CitationRelatesToCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         type: identical(type, fhirSentinel)
             ? _value.type
-            : (type as RelatedArtifactTypeExpanded?) ?? _value.type,
+            : (type as ArtifactRelationshipType?) ?? _value.type,
         classifier: identical(classifier, fhirSentinel)
             ? _value.classifier
             : classifier as List<CodeableConcept>?,
@@ -913,15 +916,9 @@ class _$CitationRelatesToCopyWithImpl<T>
         citation: identical(citation, fhirSentinel)
             ? _value.citation
             : citation as FhirMarkdown?,
-        document: identical(document, fhirSentinel)
-            ? _value.document
-            : document as Attachment?,
-        resource: identical(resource, fhirSentinel)
-            ? _value.resource
-            : resource as FhirCanonical?,
-        resourceReference: identical(resourceReference, fhirSentinel)
-            ? _value.resourceReference
-            : resourceReference as Reference?,
+        targetX: identical(targetX, fhirSentinel)
+            ? _value.targetX
+            : targetX as TargetXCitationRelatesTo1?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -930,9 +927,9 @@ class _$CitationRelatesToCopyWithImpl<T>
   }
 }
 
-extension CitationRelatesToCopyWithExtension on CitationRelatesTo {
-  $CitationRelatesToCopyWith<CitationRelatesTo> get copyWith =>
-      _$CitationRelatesToCopyWithImpl<CitationRelatesTo>(
+extension CitationRelatesTo1CopyWithExtension on CitationRelatesTo1 {
+  $CitationRelatesTo1CopyWith<CitationRelatesTo1> get copyWith =>
+      _$CitationRelatesTo1CopyWithImpl<CitationRelatesTo1>(
         this,
         (value) => value,
       );
@@ -953,7 +950,7 @@ abstract class $CitationPublicationFormCopyWith<T>
     FhirString? publicationDateText,
     FhirString? publicationDateSeason,
     FhirDateTime? lastRevisionDate,
-    List<CodeableConcept>? language,
+    List<AllLanguages>? language,
     FhirString? accessionNumber,
     FhirString? pageString,
     FhirString? firstPage,
@@ -1028,7 +1025,7 @@ class _$CitationPublicationFormCopyWithImpl<T>
             : lastRevisionDate as FhirDateTime?,
         language: identical(language, fhirSentinel)
             ? _value.language
-            : language as List<CodeableConcept>?,
+            : language as List<AllLanguages>?,
         accessionNumber: identical(accessionNumber, fhirSentinel)
             ? _value.accessionNumber
             : accessionNumber as FhirString?,
@@ -1270,7 +1267,7 @@ abstract class $CitationContributorshipCopyWith<T>
     List<FhirExtension>? modifierExtension,
     FhirBoolean? complete,
     List<CitationEntry>? entry,
-    List<CitationSummary1>? summary,
+    List<CitationSummary>? summary,
     bool? disallowExtensions,
   });
 }
@@ -1309,7 +1306,7 @@ class _$CitationContributorshipCopyWithImpl<T>
             : entry as List<CitationEntry>?,
         summary: identical(summary, fhirSentinel)
             ? _value.summary
-            : summary as List<CitationSummary1>?,
+            : summary as List<CitationSummary>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -1483,7 +1480,7 @@ abstract class $CitationSummary1CopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    CodeableConcept? style,
+    List<CodeableConcept>? style,
     CodeableConcept? source,
     FhirMarkdown? value,
     bool? disallowExtensions,
@@ -1522,7 +1519,7 @@ class _$CitationSummary1CopyWithImpl<T>
             : type as CodeableConcept?,
         style: identical(style, fhirSentinel)
             ? _value.style
-            : style as CodeableConcept?,
+            : style as List<CodeableConcept>?,
         source: identical(source, fhirSentinel)
             ? _value.source
             : source as CodeableConcept?,

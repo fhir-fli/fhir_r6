@@ -21,7 +21,7 @@ abstract class $SearchParameterCopyWith<T>
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXSearchParameter? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     FhirCanonical? derivedFrom,
@@ -37,6 +37,7 @@ abstract class $SearchParameterCopyWith<T>
     FhirMarkdown? copyright,
     FhirString? copyrightLabel,
     FhirCode? code,
+    List<FhirCode>? aliasCode,
     List<VersionIndependentResourceTypesAll>? base,
     SearchParamType? type,
     FhirString? expression,
@@ -88,6 +89,7 @@ class _$SearchParameterCopyWithImpl<T> implements $SearchParameterCopyWith<T> {
     Object? copyright = fhirSentinel,
     Object? copyrightLabel = fhirSentinel,
     Object? code = fhirSentinel,
+    Object? aliasCode = fhirSentinel,
     Object? base = fhirSentinel,
     Object? type = fhirSentinel,
     Object? expression = fhirSentinel,
@@ -133,7 +135,7 @@ class _$SearchParameterCopyWithImpl<T> implements $SearchParameterCopyWith<T> {
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXSearchParameter?,
         name: identical(name, fhirSentinel)
             ? _value.name
             : (name as FhirString?) ?? _value.name,
@@ -178,6 +180,9 @@ class _$SearchParameterCopyWithImpl<T> implements $SearchParameterCopyWith<T> {
         code: identical(code, fhirSentinel)
             ? _value.code
             : (code as FhirCode?) ?? _value.code,
+        aliasCode: identical(aliasCode, fhirSentinel)
+            ? _value.aliasCode
+            : aliasCode as List<FhirCode>?,
         base: identical(base, fhirSentinel)
             ? _value.base
             : (base as List<VersionIndependentResourceTypesAll>?) ??

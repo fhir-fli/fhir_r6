@@ -19,21 +19,22 @@ abstract class $ImagingSelectionCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
     ImagingSelectionStatus? status,
+    List<CodeableConcept>? category,
+    CodeableConcept? code,
     Reference? subject,
     FhirInstant? issued,
     List<ImagingSelectionPerformer>? performer,
     List<Reference>? basedOn,
-    List<CodeableConcept>? category,
-    CodeableConcept? code,
+    Reference? derivedFrom,
     FhirId? studyUid,
-    List<Reference>? derivedFrom,
-    List<Reference>? endpoint,
     FhirId? seriesUid,
     FhirUnsignedInt? seriesNumber,
     FhirId? frameOfReferenceUid,
-    CodeableReference? bodySite,
+    List<CodeableReference>? bodySite,
     List<Reference>? focus,
+    List<Reference>? endpoint,
     List<ImagingSelectionInstance>? instance,
+    List<ImagingSelectionImageRegion3D>? imageRegion3D,
     bool? disallowExtensions,
   });
 }
@@ -57,21 +58,22 @@ class _$ImagingSelectionCopyWithImpl<T>
     Object? modifierExtension = fhirSentinel,
     Object? identifier = fhirSentinel,
     Object? status = fhirSentinel,
+    Object? category = fhirSentinel,
+    Object? code = fhirSentinel,
     Object? subject = fhirSentinel,
     Object? issued = fhirSentinel,
     Object? performer = fhirSentinel,
     Object? basedOn = fhirSentinel,
-    Object? category = fhirSentinel,
-    Object? code = fhirSentinel,
-    Object? studyUid = fhirSentinel,
     Object? derivedFrom = fhirSentinel,
-    Object? endpoint = fhirSentinel,
+    Object? studyUid = fhirSentinel,
     Object? seriesUid = fhirSentinel,
     Object? seriesNumber = fhirSentinel,
     Object? frameOfReferenceUid = fhirSentinel,
     Object? bodySite = fhirSentinel,
     Object? focus = fhirSentinel,
+    Object? endpoint = fhirSentinel,
     Object? instance = fhirSentinel,
+    Object? imageRegion3D = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -100,6 +102,12 @@ class _$ImagingSelectionCopyWithImpl<T>
         status: identical(status, fhirSentinel)
             ? _value.status
             : (status as ImagingSelectionStatus?) ?? _value.status,
+        category: identical(category, fhirSentinel)
+            ? _value.category
+            : category as List<CodeableConcept>?,
+        code: identical(code, fhirSentinel)
+            ? _value.code
+            : (code as CodeableConcept?) ?? _value.code,
         subject: identical(subject, fhirSentinel)
             ? _value.subject
             : subject as Reference?,
@@ -112,21 +120,12 @@ class _$ImagingSelectionCopyWithImpl<T>
         basedOn: identical(basedOn, fhirSentinel)
             ? _value.basedOn
             : basedOn as List<Reference>?,
-        category: identical(category, fhirSentinel)
-            ? _value.category
-            : category as List<CodeableConcept>?,
-        code: identical(code, fhirSentinel)
-            ? _value.code
-            : (code as CodeableConcept?) ?? _value.code,
+        derivedFrom: identical(derivedFrom, fhirSentinel)
+            ? _value.derivedFrom
+            : derivedFrom as Reference?,
         studyUid: identical(studyUid, fhirSentinel)
             ? _value.studyUid
             : studyUid as FhirId?,
-        derivedFrom: identical(derivedFrom, fhirSentinel)
-            ? _value.derivedFrom
-            : derivedFrom as List<Reference>?,
-        endpoint: identical(endpoint, fhirSentinel)
-            ? _value.endpoint
-            : endpoint as List<Reference>?,
         seriesUid: identical(seriesUid, fhirSentinel)
             ? _value.seriesUid
             : seriesUid as FhirId?,
@@ -138,13 +137,19 @@ class _$ImagingSelectionCopyWithImpl<T>
             : frameOfReferenceUid as FhirId?,
         bodySite: identical(bodySite, fhirSentinel)
             ? _value.bodySite
-            : bodySite as CodeableReference?,
+            : bodySite as List<CodeableReference>?,
         focus: identical(focus, fhirSentinel)
             ? _value.focus
             : focus as List<Reference>?,
+        endpoint: identical(endpoint, fhirSentinel)
+            ? _value.endpoint
+            : endpoint as List<Reference>?,
         instance: identical(instance, fhirSentinel)
             ? _value.instance
             : instance as List<ImagingSelectionInstance>?,
+        imageRegion3D: identical(imageRegion3D, fhirSentinel)
+            ? _value.imageRegion3D
+            : imageRegion3D as List<ImagingSelectionImageRegion3D>?,
       ),
     );
   }
@@ -227,10 +232,9 @@ abstract class $ImagingSelectionInstanceCopyWith<T>
     List<FhirExtension>? modifierExtension,
     FhirId? uid,
     FhirUnsignedInt? number,
-    Coding? sopClass,
+    FhirOid? sopClass,
     List<FhirString>? subset,
     List<ImagingSelectionImageRegion2D>? imageRegion2D,
-    List<ImagingSelectionImageRegion3D>? imageRegion3D,
     bool? disallowExtensions,
   });
 }
@@ -252,7 +256,6 @@ class _$ImagingSelectionInstanceCopyWithImpl<T>
     Object? sopClass = fhirSentinel,
     Object? subset = fhirSentinel,
     Object? imageRegion2D = fhirSentinel,
-    Object? imageRegion3D = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -272,16 +275,13 @@ class _$ImagingSelectionInstanceCopyWithImpl<T>
             : number as FhirUnsignedInt?,
         sopClass: identical(sopClass, fhirSentinel)
             ? _value.sopClass
-            : sopClass as Coding?,
+            : sopClass as FhirOid?,
         subset: identical(subset, fhirSentinel)
             ? _value.subset
             : subset as List<FhirString>?,
         imageRegion2D: identical(imageRegion2D, fhirSentinel)
             ? _value.imageRegion2D
             : imageRegion2D as List<ImagingSelectionImageRegion2D>?,
-        imageRegion3D: identical(imageRegion3D, fhirSentinel)
-            ? _value.imageRegion3D
-            : imageRegion3D as List<ImagingSelectionImageRegion3D>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

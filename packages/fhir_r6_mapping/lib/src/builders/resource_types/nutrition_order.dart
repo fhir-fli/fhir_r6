@@ -20,7 +20,7 @@ import 'package:yaml/yaml.dart';
 
 /// [NutritionOrderBuilder]
 /// A request to supply a diet, formula feeding (enteral) or oral
-/// nutritional supplement to a patient/resident.
+/// nutritional supplement to an individual or group.
 class NutritionOrderBuilder extends DomainResourceBuilder {
   /// Primary constructor for
   /// [NutritionOrderBuilder]
@@ -36,8 +36,6 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
     super.modifierExtension,
     this.identifier,
     this.instantiatesCanonical,
-    this.instantiatesUri,
-    this.instantiates,
     this.basedOn,
     this.groupIdentifier,
     this.status,
@@ -47,7 +45,7 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
     this.encounter,
     this.supportingInformation,
     this.dateTime,
-    this.orderer,
+    this.requester,
     this.performer,
     this.allergyIntolerance,
     this.foodPreferenceModifier,
@@ -56,6 +54,7 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
     this.oralDiet,
     this.supplement,
     this.enteralFormula,
+    this.additive,
     this.note,
   }) : super(
           objectPath: 'NutritionOrder',
@@ -154,18 +153,6 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
         FhirCanonicalBuilder.fromJson,
         '$objectPath.instantiatesCanonical',
       ),
-      instantiatesUri: JsonParser.parsePrimitiveList<FhirUriBuilder>(
-        json,
-        'instantiatesUri',
-        FhirUriBuilder.fromJson,
-        '$objectPath.instantiatesUri',
-      ),
-      instantiates: JsonParser.parsePrimitiveList<FhirUriBuilder>(
-        json,
-        'instantiates',
-        FhirUriBuilder.fromJson,
-        '$objectPath.instantiates',
-      ),
       basedOn: (json['basedOn'] as List<dynamic>?)
           ?.map<ReferenceBuilder>(
             (v) => ReferenceBuilder.fromJson(
@@ -228,11 +215,11 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
         FhirDateTimeBuilder.fromJson,
         '$objectPath.dateTime',
       ),
-      orderer: JsonParser.parseObject<ReferenceBuilder>(
+      requester: JsonParser.parseObject<ReferenceBuilder>(
         json,
-        'orderer',
+        'requester',
         ReferenceBuilder.fromJson,
-        '$objectPath.orderer',
+        '$objectPath.requester',
       ),
       performer: (json['performer'] as List<dynamic>?)
           ?.map<CodeableReferenceBuilder>(
@@ -303,6 +290,16 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
         NutritionOrderEnteralFormulaBuilder.fromJson,
         '$objectPath.enteralFormula',
       ),
+      additive: (json['additive'] as List<dynamic>?)
+          ?.map<NutritionOrderAdditiveBuilder>(
+            (v) => NutritionOrderAdditiveBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.additive',
+              },
+            ),
+          )
+          .toList(),
       note: (json['note'] as List<dynamic>?)
           ?.map<AnnotationBuilder>(
             (v) => AnnotationBuilder.fromJson(
@@ -369,17 +366,6 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
   /// NutritionOrder.
   List<FhirCanonicalBuilder>? instantiatesCanonical;
 
-  /// [instantiatesUri]
-  /// The URL pointing to an externally maintained protocol, guideline,
-  /// orderset or other definition that is adhered to in whole or in part by
-  /// this NutritionOrder.
-  List<FhirUriBuilder>? instantiatesUri;
-
-  /// [instantiates]
-  /// The URL pointing to a protocol, guideline, orderset or other definition
-  /// that is adhered to in whole or in part by this NutritionOrder.
-  List<FhirUriBuilder>? instantiates;
-
   /// [basedOn]
   /// A plan or request that is fulfilled in whole or in part by this
   /// nutrition order.
@@ -424,10 +410,10 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
   /// The date and time that this nutrition order was requested.
   FhirDateTimeBuilder? dateTime;
 
-  /// [orderer]
+  /// [requester]
   /// The practitioner that holds legal responsibility for ordering the diet,
   /// nutritional supplement, or formula feedings.
-  ReferenceBuilder? orderer;
+  ReferenceBuilder? requester;
 
   /// [performer]
   /// The specified desired performer of the nutrition order.
@@ -440,33 +426,41 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
 
   /// [foodPreferenceModifier]
   /// This modifier is used to convey order-specific modifiers about the type
-  /// of food that should be given. These can be derived from patient
-  /// allergies, intolerances, or preferences such as Halal, Vegan or Kosher.
-  /// This modifier applies to the entire nutrition order inclusive of the
-  /// oral diet, nutritional supplements and enteral formula feedings.
+  /// of food (i.e. solid and/or liquid) that should be given. These can be
+  /// derived from patient allergies, intolerances, or preferences such as
+  /// Halal, Vegan or Kosher. This modifier applies to the entire nutrition
+  /// order inclusive of the oral diet, nutritional supplements and enteral
+  /// formula feedings.
   List<CodeableConceptBuilder>? foodPreferenceModifier;
 
   /// [excludeFoodModifier]
-  /// This modifier is used to convey Order-specific modifier about the type
-  /// of oral food or oral fluids that should not be given. These can be
-  /// derived from patient allergies, intolerances, or preferences such as No
-  /// Red Meat, No Soy or No Wheat or Gluten-Free. While it should not be
-  /// necessary to repeat allergy or intolerance information captured in the
-  /// referenced AllergyIntolerance resource in the excludeFoodModifier, this
-  /// element may be used to convey additional specificity related to foods
-  /// that should be eliminated from the patient’s diet for any reason. This
-  /// modifier applies to the entire nutrition order inclusive of the oral
-  /// diet, nutritional supplements and enteral formula feedings.
+  /// This modifier is used to convey Order-specific modifiers that should
+  /// not be given. These can be derived from patient allergies,
+  /// intolerances, or preferences such as No Red Meat, No Soy or No Wheat or
+  /// Gluten-Free. While it should not be necessary to repeat allergy or
+  /// intolerance information captured in the referenced AllergyIntolerance
+  /// resource in the excludeFoodModifier, this element may be used to convey
+  /// additional specificity related to what should be eliminated from the
+  /// patient’s diet for any reason. This modifier applies to the entire
+  /// nutrition order inclusive of the oral diet, nutritional supplements and
+  /// enteral formula feedings.
   List<CodeableConceptBuilder>? excludeFoodModifier;
 
   /// [outsideFoodAllowed]
-  /// This modifier is used to convey whether a food item is allowed to be
-  /// brought in by the patient and/or family. If set to true, indicates that
-  /// the receiving system does not need to supply the food item.
+  /// This modifier is used to convey whether a food item, brought in by the
+  /// patient, family, and/or caregiver, can be consumed by the patient. If
+  /// set to true, indicates that the receiving system does not need to
+  /// supply the food item.
   FhirBooleanBuilder? outsideFoodAllowed;
 
   /// [oralDiet]
-  /// Diet given orally in contrast to enteral (tube) feeding.
+  /// Diet given orally that may include texture modification, such as
+  /// International Dysphagia Diet Standardisation Initiative Framework -
+  /// Slightly Thick Level 1 drinks and Minced and International Dysphagia
+  /// Diet Standardisation Initiative Framework - Minced and Moist Level 5
+  /// food as well as, for example, Decreased potassium diet (ie, nutrient
+  /// modification), Halal diet (ie, cultural modification), and/or Low
+  /// microbial diet (eg, other modification).
   NutritionOrderOralDietBuilder? oralDiet;
 
   /// [supplement]
@@ -479,9 +473,14 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
   /// catheter, or stoma that delivers nutrition distal to the oral cavity.
   NutritionOrderEnteralFormulaBuilder? enteralFormula;
 
+  /// [additive]
+  /// Indicates modular components to be provided in addition or mixed with
+  /// the oral diet, supplement, and/or enteral feeding.
+  List<NutritionOrderAdditiveBuilder>? additive;
+
   /// [note]
-  /// Comments made about the {{title}} by the requester, performer, subject
-  /// or other participants.
+  /// Comments made about the nutrition order by the requester, performer,
+  /// subject or other participants.
   List<AnnotationBuilder>? note;
 
   /// Converts a [NutritionOrderBuilder]
@@ -531,8 +530,6 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
     addField('modifierExtension', modifierExtension);
     addField('identifier', identifier);
     addField('instantiatesCanonical', instantiatesCanonical);
-    addField('instantiatesUri', instantiatesUri);
-    addField('instantiates', instantiates);
     addField('basedOn', basedOn);
     addField('groupIdentifier', groupIdentifier);
     addField('status', status);
@@ -542,7 +539,7 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
     addField('encounter', encounter);
     addField('supportingInformation', supportingInformation);
     addField('dateTime', dateTime);
-    addField('orderer', orderer);
+    addField('requester', requester);
     addField('performer', performer);
     addField('allergyIntolerance', allergyIntolerance);
     addField('foodPreferenceModifier', foodPreferenceModifier);
@@ -551,6 +548,7 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
     addField('oralDiet', oralDiet);
     addField('supplement', supplement);
     addField('enteralFormula', enteralFormula);
+    addField('additive', additive);
     addField('note', note);
     return json;
   }
@@ -569,8 +567,6 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
       'modifierExtension',
       'identifier',
       'instantiatesCanonical',
-      'instantiatesUri',
-      'instantiates',
       'basedOn',
       'groupIdentifier',
       'status',
@@ -580,7 +576,7 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
       'encounter',
       'supportingInformation',
       'dateTime',
-      'orderer',
+      'requester',
       'performer',
       'allergyIntolerance',
       'foodPreferenceModifier',
@@ -589,6 +585,7 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
       'oralDiet',
       'supplement',
       'enteralFormula',
+      'additive',
       'note',
     ];
   }
@@ -642,14 +639,6 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
         if (instantiatesCanonical != null) {
           fields.addAll(instantiatesCanonical!);
         }
-      case 'instantiatesUri':
-        if (instantiatesUri != null) {
-          fields.addAll(instantiatesUri!);
-        }
-      case 'instantiates':
-        if (instantiates != null) {
-          fields.addAll(instantiates!);
-        }
       case 'basedOn':
         if (basedOn != null) {
           fields.addAll(basedOn!);
@@ -686,9 +675,9 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
         if (dateTime != null) {
           fields.add(dateTime!);
         }
-      case 'orderer':
-        if (orderer != null) {
-          fields.add(orderer!);
+      case 'requester':
+        if (requester != null) {
+          fields.add(requester!);
         }
       case 'performer':
         if (performer != null) {
@@ -721,6 +710,10 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
       case 'enteralFormula':
         if (enteralFormula != null) {
           fields.add(enteralFormula!);
+        }
+      case 'additive':
+        if (additive != null) {
+          fields.addAll(additive!);
         }
       case 'note':
         if (note != null) {
@@ -947,104 +940,6 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'instantiatesUri':
-        {
-          if (child is List<FhirUriBuilder>) {
-            // Replace or create new list
-            instantiatesUri = child;
-            return;
-          } else if (child is FhirUriBuilder) {
-            // Add single element to existing list or create new list
-            instantiatesUri = [
-              ...(instantiatesUri ?? []),
-              child,
-            ];
-            return;
-          } else if (child is List<PrimitiveTypeBuilder>) {
-            // Try to convert list of primitive types
-            final convertedList = <FhirUriBuilder>[];
-            for (final element in child) {
-              try {
-                final stringValue = element.toString();
-                final converted = FhirUriBuilder.tryParse(stringValue);
-                if (converted != null) {
-                  convertedList.add(converted);
-                }
-              } catch (e) {
-                // Continue if conversion fails
-              }
-            }
-            if (convertedList.isNotEmpty) {
-              instantiatesUri = convertedList;
-              return;
-            }
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert a single primitive
-            try {
-              final stringValue = child.toString();
-              final converted = FhirUriBuilder.tryParse(stringValue);
-              if (converted != null) {
-                instantiatesUri = [
-                  ...(instantiatesUri ?? []),
-                  converted,
-                ];
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'instantiates':
-        {
-          if (child is List<FhirUriBuilder>) {
-            // Replace or create new list
-            instantiates = child;
-            return;
-          } else if (child is FhirUriBuilder) {
-            // Add single element to existing list or create new list
-            instantiates = [
-              ...(instantiates ?? []),
-              child,
-            ];
-            return;
-          } else if (child is List<PrimitiveTypeBuilder>) {
-            // Try to convert list of primitive types
-            final convertedList = <FhirUriBuilder>[];
-            for (final element in child) {
-              try {
-                final stringValue = element.toString();
-                final converted = FhirUriBuilder.tryParse(stringValue);
-                if (converted != null) {
-                  convertedList.add(converted);
-                }
-              } catch (e) {
-                // Continue if conversion fails
-              }
-            }
-            if (convertedList.isNotEmpty) {
-              instantiates = convertedList;
-              return;
-            }
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert a single primitive
-            try {
-              final stringValue = child.toString();
-              final converted = FhirUriBuilder.tryParse(stringValue);
-              if (converted != null) {
-                instantiates = [
-                  ...(instantiates ?? []),
-                  converted,
-                ];
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
       case 'basedOn':
         {
           if (child is List<ReferenceBuilder>) {
@@ -1190,10 +1085,10 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'orderer':
+      case 'requester':
         {
           if (child is ReferenceBuilder) {
-            orderer = child;
+            requester = child;
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -1314,6 +1209,22 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'additive':
+        {
+          if (child is List<NutritionOrderAdditiveBuilder>) {
+            // Replace or create new list
+            additive = child;
+            return;
+          } else if (child is NutritionOrderAdditiveBuilder) {
+            // Add single element to existing list or create new list
+            additive = [
+              ...(additive ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'note':
         {
           if (child is List<AnnotationBuilder>) {
@@ -1360,10 +1271,6 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
         return ['IdentifierBuilder'];
       case 'instantiatesCanonical':
         return ['FhirCanonicalBuilder'];
-      case 'instantiatesUri':
-        return ['FhirUriBuilder'];
-      case 'instantiates':
-        return ['FhirUriBuilder'];
       case 'basedOn':
         return ['ReferenceBuilder'];
       case 'groupIdentifier':
@@ -1382,7 +1289,7 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
         return ['ReferenceBuilder'];
       case 'dateTime':
         return ['FhirDateTimeBuilder'];
-      case 'orderer':
+      case 'requester':
         return ['ReferenceBuilder'];
       case 'performer':
         return ['CodeableReferenceBuilder'];
@@ -1400,6 +1307,8 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
         return ['NutritionOrderSupplementBuilder'];
       case 'enteralFormula':
         return ['NutritionOrderEnteralFormulaBuilder'];
+      case 'additive':
+        return ['NutritionOrderAdditiveBuilder'];
       case 'note':
         return ['AnnotationBuilder'];
       default:
@@ -1462,16 +1371,6 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
           instantiatesCanonical = <FhirCanonicalBuilder>[];
           return;
         }
-      case 'instantiatesUri':
-        {
-          instantiatesUri = <FhirUriBuilder>[];
-          return;
-        }
-      case 'instantiates':
-        {
-          instantiates = <FhirUriBuilder>[];
-          return;
-        }
       case 'basedOn':
         {
           basedOn = <ReferenceBuilder>[];
@@ -1517,9 +1416,9 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
           dateTime = FhirDateTimeBuilder.empty();
           return;
         }
-      case 'orderer':
+      case 'requester':
         {
-          orderer = ReferenceBuilder.empty();
+          requester = ReferenceBuilder.empty();
           return;
         }
       case 'performer':
@@ -1562,6 +1461,11 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
           enteralFormula = NutritionOrderEnteralFormulaBuilder.empty();
           return;
         }
+      case 'additive':
+        {
+          additive = <NutritionOrderAdditiveBuilder>[];
+          return;
+        }
       case 'note':
         {
           note = <AnnotationBuilder>[];
@@ -1586,8 +1490,6 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     List<IdentifierBuilder>? identifier,
     List<FhirCanonicalBuilder>? instantiatesCanonical,
-    List<FhirUriBuilder>? instantiatesUri,
-    List<FhirUriBuilder>? instantiates,
     List<ReferenceBuilder>? basedOn,
     IdentifierBuilder? groupIdentifier,
     RequestStatusBuilder? status,
@@ -1597,7 +1499,7 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
     ReferenceBuilder? encounter,
     List<ReferenceBuilder>? supportingInformation,
     FhirDateTimeBuilder? dateTime,
-    ReferenceBuilder? orderer,
+    ReferenceBuilder? requester,
     List<CodeableReferenceBuilder>? performer,
     List<ReferenceBuilder>? allergyIntolerance,
     List<CodeableConceptBuilder>? foodPreferenceModifier,
@@ -1606,6 +1508,7 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
     NutritionOrderOralDietBuilder? oralDiet,
     List<NutritionOrderSupplementBuilder>? supplement,
     NutritionOrderEnteralFormulaBuilder? enteralFormula,
+    List<NutritionOrderAdditiveBuilder>? additive,
     List<AnnotationBuilder>? note,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -1625,8 +1528,6 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
       identifier: identifier ?? this.identifier,
       instantiatesCanonical:
           instantiatesCanonical ?? this.instantiatesCanonical,
-      instantiatesUri: instantiatesUri ?? this.instantiatesUri,
-      instantiates: instantiates ?? this.instantiates,
       basedOn: basedOn ?? this.basedOn,
       groupIdentifier: groupIdentifier ?? this.groupIdentifier,
       status: status ?? this.status,
@@ -1637,7 +1538,7 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
       supportingInformation:
           supportingInformation ?? this.supportingInformation,
       dateTime: dateTime ?? this.dateTime,
-      orderer: orderer ?? this.orderer,
+      requester: requester ?? this.requester,
       performer: performer ?? this.performer,
       allergyIntolerance: allergyIntolerance ?? this.allergyIntolerance,
       foodPreferenceModifier:
@@ -1647,6 +1548,7 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
       oralDiet: oralDiet ?? this.oralDiet,
       supplement: supplement ?? this.supplement,
       enteralFormula: enteralFormula ?? this.enteralFormula,
+      additive: additive ?? this.additive,
       note: note ?? this.note,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
@@ -1734,18 +1636,6 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<FhirUriBuilder>(
-      instantiatesUri,
-      o.instantiatesUri,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirUriBuilder>(
-      instantiates,
-      o.instantiates,
-    )) {
-      return false;
-    }
     if (!listEquals<ReferenceBuilder>(
       basedOn,
       o.basedOn,
@@ -1801,8 +1691,8 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      orderer,
-      o.orderer,
+      requester,
+      o.requester,
     )) {
       return false;
     }
@@ -1854,6 +1744,12 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
+    if (!listEquals<NutritionOrderAdditiveBuilder>(
+      additive,
+      o.additive,
+    )) {
+      return false;
+    }
     if (!listEquals<AnnotationBuilder>(
       note,
       o.note,
@@ -1865,7 +1761,13 @@ class NutritionOrderBuilder extends DomainResourceBuilder {
 }
 
 /// [NutritionOrderOralDietBuilder]
-/// Diet given orally in contrast to enteral (tube) feeding.
+/// Diet given orally that may include texture modification, such as
+/// International Dysphagia Diet Standardisation Initiative Framework -
+/// Slightly Thick Level 1 drinks and Minced and International Dysphagia
+/// Diet Standardisation Initiative Framework - Minced and Moist Level 5
+/// food as well as, for example, Decreased potassium diet (ie, nutrient
+/// modification), Halal diet (ie, cultural modification), and/or Low
+/// microbial diet (eg, other modification).
 class NutritionOrderOralDietBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [NutritionOrderOralDietBuilder]
@@ -1878,8 +1780,8 @@ class NutritionOrderOralDietBuilder extends BackboneElementBuilder {
     this.schedule,
     this.nutrient,
     this.texture,
-    this.fluidConsistencyType,
     this.instruction,
+    this.caloricDensity,
     super.disallowExtensions,
   }) : super(
           objectPath: 'NutritionOrder.oralDiet',
@@ -1958,21 +1860,17 @@ class NutritionOrderOralDietBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      fluidConsistencyType: (json['fluidConsistencyType'] as List<dynamic>?)
-          ?.map<CodeableConceptBuilder>(
-            (v) => CodeableConceptBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.fluidConsistencyType',
-              },
-            ),
-          )
-          .toList(),
       instruction: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'instruction',
         FhirStringBuilder.fromJson,
         '$objectPath.instruction',
+      ),
+      caloricDensity: JsonParser.parseObject<QuantityBuilder>(
+        json,
+        'caloricDensity',
+        QuantityBuilder.fromJson,
+        '$objectPath.caloricDensity',
       ),
     );
   }
@@ -2021,7 +1919,7 @@ class NutritionOrderOralDietBuilder extends BackboneElementBuilder {
 
   /// [type]
   /// The kind of diet or dietary restriction such as fiber restricted diet
-  /// or diabetic diet.
+  /// or diet for diabetes.
   List<CodeableConceptBuilder>? type;
 
   /// [schedule]
@@ -2029,24 +1927,26 @@ class NutritionOrderOralDietBuilder extends BackboneElementBuilder {
   NutritionOrderScheduleBuilder? schedule;
 
   /// [nutrient]
-  /// Class that defines the quantity and type of nutrient modifications (for
-  /// example carbohydrate, fiber or sodium) required for the oral diet.
+  /// Defines the quantity and the nutrient modified (for example
+  /// carbohydrate, fiber or sodium) in the oral diet.
   List<NutritionOrderNutrientBuilder>? nutrient;
 
   /// [texture]
-  /// Class that describes any texture modifications required for the patient
-  /// to safely consume various types of solid foods.
+  /// Class that describes any texture modifications in addition to the oral
+  /// diet type required for the patient to safely consume various types of
+  /// foods (i.e. solid and/or liquid).
   List<NutritionOrderTextureBuilder>? texture;
-
-  /// [fluidConsistencyType]
-  /// The required consistency (e.g. honey-thick, nectar-thick, thin,
-  /// thickened.) of liquids or fluids served to the patient.
-  List<CodeableConceptBuilder>? fluidConsistencyType;
 
   /// [instruction]
   /// Free text or additional instructions or information pertaining to the
   /// oral diet.
   FhirStringBuilder? instruction;
+
+  /// [caloricDensity]
+  /// The amount of energy (calories or kilojoules) that the oral diet should
+  /// provide. For example, an infant formula feeding of 30 ounces of 20
+  /// kcal/ounce (67 kcal/100 mL) formula per day.
+  QuantityBuilder? caloricDensity;
 
   /// Converts a [NutritionOrderOralDietBuilder]
   /// to [NutritionOrderOralDiet]
@@ -2091,8 +1991,8 @@ class NutritionOrderOralDietBuilder extends BackboneElementBuilder {
     addField('schedule', schedule);
     addField('nutrient', nutrient);
     addField('texture', texture);
-    addField('fluidConsistencyType', fluidConsistencyType);
     addField('instruction', instruction);
+    addField('caloricDensity', caloricDensity);
     return json;
   }
 
@@ -2107,8 +2007,8 @@ class NutritionOrderOralDietBuilder extends BackboneElementBuilder {
       'schedule',
       'nutrient',
       'texture',
-      'fluidConsistencyType',
       'instruction',
+      'caloricDensity',
     ];
   }
 
@@ -2149,13 +2049,13 @@ class NutritionOrderOralDietBuilder extends BackboneElementBuilder {
         if (texture != null) {
           fields.addAll(texture!);
         }
-      case 'fluidConsistencyType':
-        if (fluidConsistencyType != null) {
-          fields.addAll(fluidConsistencyType!);
-        }
       case 'instruction':
         if (instruction != null) {
           fields.add(instruction!);
+        }
+      case 'caloricDensity':
+        if (caloricDensity != null) {
+          fields.add(caloricDensity!);
         }
       default:
         if (checkValid) {
@@ -2294,22 +2194,6 @@ class NutritionOrderOralDietBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'fluidConsistencyType':
-        {
-          if (child is List<CodeableConceptBuilder>) {
-            // Replace or create new list
-            fluidConsistencyType = child;
-            return;
-          } else if (child is CodeableConceptBuilder) {
-            // Add single element to existing list or create new list
-            fluidConsistencyType = [
-              ...(fluidConsistencyType ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
       case 'instruction':
         {
           if (child is FhirStringBuilder) {
@@ -2327,6 +2211,14 @@ class NutritionOrderOralDietBuilder extends BackboneElementBuilder {
             } catch (e) {
               // Continue if conversion fails
             }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'caloricDensity':
+        {
+          if (child is QuantityBuilder) {
+            caloricDensity = child;
+            return;
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -2354,10 +2246,10 @@ class NutritionOrderOralDietBuilder extends BackboneElementBuilder {
         return ['NutritionOrderNutrientBuilder'];
       case 'texture':
         return ['NutritionOrderTextureBuilder'];
-      case 'fluidConsistencyType':
-        return ['CodeableConceptBuilder'];
       case 'instruction':
         return ['FhirStringBuilder'];
+      case 'caloricDensity':
+        return ['QuantityBuilder'];
       default:
         return <String>[];
     }
@@ -2403,14 +2295,14 @@ class NutritionOrderOralDietBuilder extends BackboneElementBuilder {
           texture = <NutritionOrderTextureBuilder>[];
           return;
         }
-      case 'fluidConsistencyType':
-        {
-          fluidConsistencyType = <CodeableConceptBuilder>[];
-          return;
-        }
       case 'instruction':
         {
           instruction = FhirStringBuilder.empty();
+          return;
+        }
+      case 'caloricDensity':
+        {
+          caloricDensity = QuantityBuilder.empty();
           return;
         }
       default:
@@ -2429,8 +2321,8 @@ class NutritionOrderOralDietBuilder extends BackboneElementBuilder {
     NutritionOrderScheduleBuilder? schedule,
     List<NutritionOrderNutrientBuilder>? nutrient,
     List<NutritionOrderTextureBuilder>? texture,
-    List<CodeableConceptBuilder>? fluidConsistencyType,
     FhirStringBuilder? instruction,
+    QuantityBuilder? caloricDensity,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -2446,8 +2338,8 @@ class NutritionOrderOralDietBuilder extends BackboneElementBuilder {
       schedule: schedule ?? this.schedule,
       nutrient: nutrient ?? this.nutrient,
       texture: texture ?? this.texture,
-      fluidConsistencyType: fluidConsistencyType ?? this.fluidConsistencyType,
       instruction: instruction ?? this.instruction,
+      caloricDensity: caloricDensity ?? this.caloricDensity,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -2516,15 +2408,15 @@ class NutritionOrderOralDietBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConceptBuilder>(
-      fluidConsistencyType,
-      o.fluidConsistencyType,
+    if (!equalsDeepWithNull(
+      instruction,
+      o.instruction,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
-      instruction,
-      o.instruction,
+      caloricDensity,
+      o.caloricDensity,
     )) {
       return false;
     }
@@ -2661,13 +2553,13 @@ class NutritionOrderScheduleBuilder extends BackboneElementBuilder {
   List<TimingBuilder>? timing;
 
   /// [asNeeded]
-  /// Indicates whether the product is only taken when needed within a
-  /// specific dosing schedule.
+  /// Indicates whether the diet is only taken when needed within a specific
+  /// administration schedule.
   FhirBooleanBuilder? asNeeded;
 
   /// [asNeededFor]
-  /// Indicates whether the product is only taken based on a precondition for
-  /// taking the product.
+  /// Indicates whether the diet is only taken based on a precondition for
+  /// taking the diet.
   CodeableConceptBuilder? asNeededFor;
 
   /// Converts a [NutritionOrderScheduleBuilder]
@@ -3044,8 +2936,8 @@ class NutritionOrderScheduleBuilder extends BackboneElementBuilder {
 }
 
 /// [NutritionOrderNutrientBuilder]
-/// Class that defines the quantity and type of nutrient modifications (for
-/// example carbohydrate, fiber or sodium) required for the oral diet.
+/// Defines the quantity and the nutrient modified (for example
+/// carbohydrate, fiber or sodium) in the oral diet.
 class NutritionOrderNutrientBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [NutritionOrderNutrientBuilder]
@@ -3488,8 +3380,9 @@ class NutritionOrderNutrientBuilder extends BackboneElementBuilder {
 }
 
 /// [NutritionOrderTextureBuilder]
-/// Class that describes any texture modifications required for the patient
-/// to safely consume various types of solid foods.
+/// Class that describes any texture modifications in addition to the oral
+/// diet type required for the patient to safely consume various types of
+/// foods (i.e. solid and/or liquid).
 class NutritionOrderTextureBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [NutritionOrderTextureBuilder]
@@ -3499,7 +3392,7 @@ class NutritionOrderTextureBuilder extends BackboneElementBuilder {
     super.extension_,
     super.modifierExtension,
     this.modifier,
-    this.foodType,
+    this.type,
     super.disallowExtensions,
   }) : super(
           objectPath: 'NutritionOrder.oralDiet.texture',
@@ -3548,11 +3441,11 @@ class NutritionOrderTextureBuilder extends BackboneElementBuilder {
         CodeableConceptBuilder.fromJson,
         '$objectPath.modifier',
       ),
-      foodType: JsonParser.parseObject<CodeableConceptBuilder>(
+      type: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
-        'foodType',
+        'type',
         CodeableConceptBuilder.fromJson,
-        '$objectPath.foodType',
+        '$objectPath.type',
       ),
     );
   }
@@ -3600,14 +3493,14 @@ class NutritionOrderTextureBuilder extends BackboneElementBuilder {
   String get fhirType => 'NutritionOrderTexture';
 
   /// [modifier]
-  /// Any texture modifications (for solid foods) that should be made, e.g.
-  /// easy to chew, chopped, ground, and pureed.
+  /// Texture modifications in the addition to the oral diet type that should
+  /// be made, e.g. easy to chew, chopped, ground, and pureed.
   CodeableConceptBuilder? modifier;
 
-  /// [foodType]
-  /// The food type(s) (e.g. meats, all foods) that the texture modification
-  /// applies to. This could be all foods types.
-  CodeableConceptBuilder? foodType;
+  /// [type]
+  /// The food (i.e. solid and/or liquid) type(s) (e.g. meats, all foods)
+  /// that the texture modification applies to.
+  CodeableConceptBuilder? type;
 
   /// Converts a [NutritionOrderTextureBuilder]
   /// to [NutritionOrderTexture]
@@ -3649,7 +3542,7 @@ class NutritionOrderTextureBuilder extends BackboneElementBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('modifier', modifier);
-    addField('foodType', foodType);
+    addField('type', type);
     return json;
   }
 
@@ -3661,7 +3554,7 @@ class NutritionOrderTextureBuilder extends BackboneElementBuilder {
       'extension',
       'modifierExtension',
       'modifier',
-      'foodType',
+      'type',
     ];
   }
 
@@ -3690,9 +3583,9 @@ class NutritionOrderTextureBuilder extends BackboneElementBuilder {
         if (modifier != null) {
           fields.add(modifier!);
         }
-      case 'foodType':
-        if (foodType != null) {
-          fields.add(foodType!);
+      case 'type':
+        if (type != null) {
+          fields.add(type!);
         }
       default:
         if (checkValid) {
@@ -3783,10 +3676,10 @@ class NutritionOrderTextureBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'foodType':
+      case 'type':
         {
           if (child is CodeableConceptBuilder) {
-            foodType = child;
+            type = child;
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -3809,7 +3702,7 @@ class NutritionOrderTextureBuilder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'modifier':
         return ['CodeableConceptBuilder'];
-      case 'foodType':
+      case 'type':
         return ['CodeableConceptBuilder'];
       default:
         return <String>[];
@@ -3841,9 +3734,9 @@ class NutritionOrderTextureBuilder extends BackboneElementBuilder {
           modifier = CodeableConceptBuilder.empty();
           return;
         }
-      case 'foodType':
+      case 'type':
         {
-          foodType = CodeableConceptBuilder.empty();
+          type = CodeableConceptBuilder.empty();
           return;
         }
       default:
@@ -3859,7 +3752,7 @@ class NutritionOrderTextureBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     CodeableConceptBuilder? modifier,
-    CodeableConceptBuilder? foodType,
+    CodeableConceptBuilder? type,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -3872,7 +3765,7 @@ class NutritionOrderTextureBuilder extends BackboneElementBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       modifier: modifier ?? this.modifier,
-      foodType: foodType ?? this.foodType,
+      type: type ?? this.type,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -3924,8 +3817,8 @@ class NutritionOrderTextureBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      foodType,
-      o.foodType,
+      type,
+      o.type,
     )) {
       return false;
     }
@@ -3949,6 +3842,7 @@ class NutritionOrderSupplementBuilder extends BackboneElementBuilder {
     this.schedule,
     this.quantity,
     this.instruction,
+    this.caloricDensity,
     super.disallowExtensions,
   }) : super(
           objectPath: 'NutritionOrder.supplement',
@@ -4021,6 +3915,12 @@ class NutritionOrderSupplementBuilder extends BackboneElementBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.instruction',
       ),
+      caloricDensity: JsonParser.parseObject<QuantityBuilder>(
+        json,
+        'caloricDensity',
+        QuantityBuilder.fromJson,
+        '$objectPath.caloricDensity',
+      ),
     );
   }
 
@@ -4089,6 +3989,13 @@ class NutritionOrderSupplementBuilder extends BackboneElementBuilder {
   /// oral supplement.
   FhirStringBuilder? instruction;
 
+  /// [caloricDensity]
+  /// The amount of energy (calories or kilojoules) that the supplement
+  /// should provide per specified volume, typically per ml or fluid oz. For
+  /// example, a patient may required a supplement that provides 24 calories
+  /// per fluid ounce.
+  QuantityBuilder? caloricDensity;
+
   /// Converts a [NutritionOrderSupplementBuilder]
   /// to [NutritionOrderSupplement]
   @override
@@ -4134,6 +4041,7 @@ class NutritionOrderSupplementBuilder extends BackboneElementBuilder {
     addField('schedule', schedule);
     addField('quantity', quantity);
     addField('instruction', instruction);
+    addField('caloricDensity', caloricDensity);
     return json;
   }
 
@@ -4149,6 +4057,7 @@ class NutritionOrderSupplementBuilder extends BackboneElementBuilder {
       'schedule',
       'quantity',
       'instruction',
+      'caloricDensity',
     ];
   }
 
@@ -4192,6 +4101,10 @@ class NutritionOrderSupplementBuilder extends BackboneElementBuilder {
       case 'instruction':
         if (instruction != null) {
           fields.add(instruction!);
+        }
+      case 'caloricDensity':
+        if (caloricDensity != null) {
+          fields.add(caloricDensity!);
         }
       default:
         if (checkValid) {
@@ -4338,6 +4251,14 @@ class NutritionOrderSupplementBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'caloricDensity':
+        {
+          if (child is QuantityBuilder) {
+            caloricDensity = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -4364,6 +4285,8 @@ class NutritionOrderSupplementBuilder extends BackboneElementBuilder {
         return ['QuantityBuilder'];
       case 'instruction':
         return ['FhirStringBuilder'];
+      case 'caloricDensity':
+        return ['QuantityBuilder'];
       default:
         return <String>[];
     }
@@ -4414,6 +4337,11 @@ class NutritionOrderSupplementBuilder extends BackboneElementBuilder {
           instruction = FhirStringBuilder.empty();
           return;
         }
+      case 'caloricDensity':
+        {
+          caloricDensity = QuantityBuilder.empty();
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
@@ -4431,6 +4359,7 @@ class NutritionOrderSupplementBuilder extends BackboneElementBuilder {
     NutritionOrderScheduleBuilder? schedule,
     QuantityBuilder? quantity,
     FhirStringBuilder? instruction,
+    QuantityBuilder? caloricDensity,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -4447,6 +4376,7 @@ class NutritionOrderSupplementBuilder extends BackboneElementBuilder {
       schedule: schedule ?? this.schedule,
       quantity: quantity ?? this.quantity,
       instruction: instruction ?? this.instruction,
+      caloricDensity: caloricDensity ?? this.caloricDensity,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -4518,6 +4448,12 @@ class NutritionOrderSupplementBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       instruction,
       o.instruction,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      caloricDensity,
+      o.caloricDensity,
     )) {
       return false;
     }
@@ -5047,14 +4983,13 @@ class NutritionOrderEnteralFormulaBuilder extends BackboneElementBuilder {
     super.id,
     super.extension_,
     super.modifierExtension,
-    this.baseFormulaType,
-    this.baseFormulaProductName,
+    this.type,
+    this.productName,
     this.deliveryDevice,
-    this.additive,
     this.caloricDensity,
     this.routeOfAdministration,
     this.administration,
-    this.maxVolumeToDeliver,
+    this.maxVolumeToAdminister,
     this.administrationInstruction,
     super.disallowExtensions,
   }) : super(
@@ -5098,17 +5033,17 @@ class NutritionOrderEnteralFormulaBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      baseFormulaType: JsonParser.parseObject<CodeableReferenceBuilder>(
+      type: JsonParser.parseObject<CodeableReferenceBuilder>(
         json,
-        'baseFormulaType',
+        'type',
         CodeableReferenceBuilder.fromJson,
-        '$objectPath.baseFormulaType',
+        '$objectPath.type',
       ),
-      baseFormulaProductName: JsonParser.parsePrimitive<FhirStringBuilder>(
+      productName: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
-        'baseFormulaProductName',
+        'productName',
         FhirStringBuilder.fromJson,
-        '$objectPath.baseFormulaProductName',
+        '$objectPath.productName',
       ),
       deliveryDevice: (json['deliveryDevice'] as List<dynamic>?)
           ?.map<CodeableReferenceBuilder>(
@@ -5120,28 +5055,22 @@ class NutritionOrderEnteralFormulaBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      additive: (json['additive'] as List<dynamic>?)
-          ?.map<NutritionOrderAdditiveBuilder>(
-            (v) => NutritionOrderAdditiveBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.additive',
-              },
-            ),
-          )
-          .toList(),
       caloricDensity: JsonParser.parseObject<QuantityBuilder>(
         json,
         'caloricDensity',
         QuantityBuilder.fromJson,
         '$objectPath.caloricDensity',
       ),
-      routeOfAdministration: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'routeOfAdministration',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.routeOfAdministration',
-      ),
+      routeOfAdministration: (json['routeOfAdministration'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.routeOfAdministration',
+              },
+            ),
+          )
+          .toList(),
       administration: (json['administration'] as List<dynamic>?)
           ?.map<NutritionOrderAdministrationBuilder>(
             (v) => NutritionOrderAdministrationBuilder.fromJson(
@@ -5152,11 +5081,11 @@ class NutritionOrderEnteralFormulaBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      maxVolumeToDeliver: JsonParser.parseObject<QuantityBuilder>(
+      maxVolumeToAdminister: JsonParser.parseObject<QuantityBuilder>(
         json,
-        'maxVolumeToDeliver',
+        'maxVolumeToAdminister',
         QuantityBuilder.fromJson,
-        '$objectPath.maxVolumeToDeliver',
+        '$objectPath.maxVolumeToAdminister',
       ),
       administrationInstruction: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
         json,
@@ -5209,51 +5138,46 @@ class NutritionOrderEnteralFormulaBuilder extends BackboneElementBuilder {
   @override
   String get fhirType => 'NutritionOrderEnteralFormula';
 
-  /// [baseFormulaType]
-  /// The type of enteral or infant formula such as an adult standard formula
-  /// with fiber or a soy-based infant formula.
-  CodeableReferenceBuilder? baseFormulaType;
+  /// [type]
+  /// The type of adult or pediatric enteral feeding such as an adult
+  /// standard formula with fiber or a soy-based infant feeding.
+  CodeableReferenceBuilder? type;
 
-  /// [baseFormulaProductName]
-  /// The product or brand name of the enteral or infant formula product such
-  /// as "ACME Adult Standard Formula".
-  FhirStringBuilder? baseFormulaProductName;
+  /// [productName]
+  /// The product or brand name of the enteral feeding product such as "ACME
+  /// Adult Standard Formula".
+  FhirStringBuilder? productName;
 
   /// [deliveryDevice]
   /// The intended type of device that is to be used for the administration
   /// of the enteral formula.
   List<CodeableReferenceBuilder>? deliveryDevice;
 
-  /// [additive]
-  /// Indicates modular components to be provided in addition or mixed with
-  /// the base formula.
-  List<NutritionOrderAdditiveBuilder>? additive;
-
   /// [caloricDensity]
-  /// The amount of energy (calories) that the formula should provide per
-  /// specified volume, typically per mL or fluid oz. For example, an infant
-  /// may require a formula that provides 24 calories per fluid ounce or an
-  /// adult may require an enteral formula that provides 1.5 calorie/mL.
+  /// The amount of energy (calories or kilojoules) that the feeding should
+  /// provide per specified volume, typically per mL or fluid oz. For
+  /// example, an infant may require a formula that provides 24 calories per
+  /// fluid ounce or an adult may require an enteral formula that provides
+  /// 1.5 calorie/mL.
   QuantityBuilder? caloricDensity;
 
   /// [routeOfAdministration]
-  /// The route or physiological path of administration into the patient's
-  /// gastrointestinal tract for purposes of providing the formula feeding,
-  /// e.g. nasogastric tube.
-  CodeableConceptBuilder? routeOfAdministration;
+  /// The administration into the patient's gastrointestinal tract for
+  /// purposes of providing the formula feeding, e.g. nasogastric tube, oral.
+  List<CodeableConceptBuilder>? routeOfAdministration;
 
   /// [administration]
-  /// Formula administration instructions as structured data. This repeating
-  /// structure allows for changing the administration rate or volume over
-  /// time for both bolus and continuous feeding. An example of this would be
-  /// an instruction to increase the rate of continuous feeding every 2
-  /// hours.
+  /// Formula feeding administration instructions as structured data. This
+  /// repeating structure allows for changing the administration rate or
+  /// volume over time for both bolus and continuous feeding. An example of
+  /// this would be an instruction to increase the rate of continuous feeding
+  /// every 2 hours.
   List<NutritionOrderAdministrationBuilder>? administration;
 
-  /// [maxVolumeToDeliver]
-  /// The maximum total quantity of formula that may be administered to a
-  /// subject over the period of time, e.g. 1440 mL over 24 hours.
-  QuantityBuilder? maxVolumeToDeliver;
+  /// [maxVolumeToAdminister]
+  /// The maximum total quantity of formula feeding that may be administered
+  /// to a subject over the period of time, e.g. 1440 mL over 24 hours.
+  QuantityBuilder? maxVolumeToAdminister;
 
   /// [administrationInstruction]
   /// Free text formula administration, feeding instructions or additional
@@ -5300,722 +5224,14 @@ class NutritionOrderEnteralFormulaBuilder extends BackboneElementBuilder {
     addField('id', id);
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
-    addField('baseFormulaType', baseFormulaType);
-    addField('baseFormulaProductName', baseFormulaProductName);
+    addField('type', type);
+    addField('productName', productName);
     addField('deliveryDevice', deliveryDevice);
-    addField('additive', additive);
     addField('caloricDensity', caloricDensity);
     addField('routeOfAdministration', routeOfAdministration);
     addField('administration', administration);
-    addField('maxVolumeToDeliver', maxVolumeToDeliver);
+    addField('maxVolumeToAdminister', maxVolumeToAdminister);
     addField('administrationInstruction', administrationInstruction);
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'baseFormulaType',
-      'baseFormulaProductName',
-      'deliveryDevice',
-      'additive',
-      'caloricDensity',
-      'routeOfAdministration',
-      'administration',
-      'maxVolumeToDeliver',
-      'administrationInstruction',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBaseBuilder> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBaseBuilder>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'baseFormulaType':
-        if (baseFormulaType != null) {
-          fields.add(baseFormulaType!);
-        }
-      case 'baseFormulaProductName':
-        if (baseFormulaProductName != null) {
-          fields.add(baseFormulaProductName!);
-        }
-      case 'deliveryDevice':
-        if (deliveryDevice != null) {
-          fields.addAll(deliveryDevice!);
-        }
-      case 'additive':
-        if (additive != null) {
-          fields.addAll(additive!);
-        }
-      case 'caloricDensity':
-        if (caloricDensity != null) {
-          fields.add(caloricDensity!);
-        }
-      case 'routeOfAdministration':
-        if (routeOfAdministration != null) {
-          fields.add(routeOfAdministration!);
-        }
-      case 'administration':
-        if (administration != null) {
-          fields.addAll(administration!);
-        }
-      case 'maxVolumeToDeliver':
-        if (maxVolumeToDeliver != null) {
-          fields.add(maxVolumeToDeliver!);
-        }
-      case 'administrationInstruction':
-        if (administrationInstruction != null) {
-          fields.add(administrationInstruction!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBaseBuilder? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  void setChildByName(String childName, dynamic child) {
-    // child must be null, or a (List of) FhirBaseBuilder(s).
-    if (child == null) {
-      return; // In builders, setting to null is allowed
-    }
-    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
-      throw Exception('Cannot set child value for $childName');
-    }
-
-    switch (childName) {
-      case 'id':
-        {
-          if (child is FhirStringBuilder) {
-            id = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                id = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'extension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            extension_ = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            extension_ = [
-              ...(extension_ ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'modifierExtension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            modifierExtension = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            modifierExtension = [
-              ...(modifierExtension ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'baseFormulaType':
-        {
-          if (child is CodeableReferenceBuilder) {
-            baseFormulaType = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'baseFormulaProductName':
-        {
-          if (child is FhirStringBuilder) {
-            baseFormulaProductName = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                baseFormulaProductName = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'deliveryDevice':
-        {
-          if (child is List<CodeableReferenceBuilder>) {
-            // Replace or create new list
-            deliveryDevice = child;
-            return;
-          } else if (child is CodeableReferenceBuilder) {
-            // Add single element to existing list or create new list
-            deliveryDevice = [
-              ...(deliveryDevice ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'additive':
-        {
-          if (child is List<NutritionOrderAdditiveBuilder>) {
-            // Replace or create new list
-            additive = child;
-            return;
-          } else if (child is NutritionOrderAdditiveBuilder) {
-            // Add single element to existing list or create new list
-            additive = [
-              ...(additive ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'caloricDensity':
-        {
-          if (child is QuantityBuilder) {
-            caloricDensity = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'routeOfAdministration':
-        {
-          if (child is CodeableConceptBuilder) {
-            routeOfAdministration = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'administration':
-        {
-          if (child is List<NutritionOrderAdministrationBuilder>) {
-            // Replace or create new list
-            administration = child;
-            return;
-          } else if (child is NutritionOrderAdministrationBuilder) {
-            // Add single element to existing list or create new list
-            administration = [
-              ...(administration ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'maxVolumeToDeliver':
-        {
-          if (child is QuantityBuilder) {
-            maxVolumeToDeliver = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'administrationInstruction':
-        {
-          if (child is FhirMarkdownBuilder) {
-            administrationInstruction = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirMarkdownBuilder.tryParse(stringValue);
-              if (converted != null) {
-                administrationInstruction = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      default:
-        throw Exception('Cannot set child value for $childName');
-    }
-  }
-
-  /// Return the possible Dart types for the field named [fieldName].
-  /// For polymorphic fields, multiple types are possible.
-  @override
-  List<String> typeByElementName(String fieldName) {
-    switch (fieldName) {
-      case 'id':
-        return ['FhirStringBuilder'];
-      case 'extension':
-        return ['FhirExtensionBuilder'];
-      case 'modifierExtension':
-        return ['FhirExtensionBuilder'];
-      case 'baseFormulaType':
-        return ['CodeableReferenceBuilder'];
-      case 'baseFormulaProductName':
-        return ['FhirStringBuilder'];
-      case 'deliveryDevice':
-        return ['CodeableReferenceBuilder'];
-      case 'additive':
-        return ['NutritionOrderAdditiveBuilder'];
-      case 'caloricDensity':
-        return ['QuantityBuilder'];
-      case 'routeOfAdministration':
-        return ['CodeableConceptBuilder'];
-      case 'administration':
-        return ['NutritionOrderAdministrationBuilder'];
-      case 'maxVolumeToDeliver':
-        return ['QuantityBuilder'];
-      case 'administrationInstruction':
-        return ['FhirMarkdownBuilder'];
-      default:
-        return <String>[];
-    }
-  }
-
-  /// Creates a new [NutritionOrderEnteralFormulaBuilder]
-  ///  with a chosen field set to an empty object.
-  @override
-  void createProperty(String propertyName) {
-    switch (propertyName) {
-      case 'id':
-        {
-          id = FhirStringBuilder.empty();
-          return;
-        }
-      case 'extension':
-        {
-          extension_ = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'modifierExtension':
-        {
-          modifierExtension = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'baseFormulaType':
-        {
-          baseFormulaType = CodeableReferenceBuilder.empty();
-          return;
-        }
-      case 'baseFormulaProductName':
-        {
-          baseFormulaProductName = FhirStringBuilder.empty();
-          return;
-        }
-      case 'deliveryDevice':
-        {
-          deliveryDevice = <CodeableReferenceBuilder>[];
-          return;
-        }
-      case 'additive':
-        {
-          additive = <NutritionOrderAdditiveBuilder>[];
-          return;
-        }
-      case 'caloricDensity':
-        {
-          caloricDensity = QuantityBuilder.empty();
-          return;
-        }
-      case 'routeOfAdministration':
-        {
-          routeOfAdministration = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'administration':
-        {
-          administration = <NutritionOrderAdministrationBuilder>[];
-          return;
-        }
-      case 'maxVolumeToDeliver':
-        {
-          maxVolumeToDeliver = QuantityBuilder.empty();
-          return;
-        }
-      case 'administrationInstruction':
-        {
-          administrationInstruction = FhirMarkdownBuilder.empty();
-          return;
-        }
-      default:
-        throw ArgumentError('No matching property: $propertyName');
-    }
-  }
-
-  @override
-  NutritionOrderEnteralFormulaBuilder clone() => throw UnimplementedError();
-  @override
-  NutritionOrderEnteralFormulaBuilder copyWith({
-    FhirStringBuilder? id,
-    List<FhirExtensionBuilder>? extension_,
-    List<FhirExtensionBuilder>? modifierExtension,
-    CodeableReferenceBuilder? baseFormulaType,
-    FhirStringBuilder? baseFormulaProductName,
-    List<CodeableReferenceBuilder>? deliveryDevice,
-    List<NutritionOrderAdditiveBuilder>? additive,
-    QuantityBuilder? caloricDensity,
-    CodeableConceptBuilder? routeOfAdministration,
-    List<NutritionOrderAdministrationBuilder>? administration,
-    QuantityBuilder? maxVolumeToDeliver,
-    FhirMarkdownBuilder? administrationInstruction,
-    Map<String, dynamic>? userData,
-    List<String>? formatCommentsPre,
-    List<String>? formatCommentsPost,
-    List<dynamic>? annotations,
-    String? objectPath,
-  }) {
-    final newObjectPath = this.objectPath;
-    final newResult = NutritionOrderEnteralFormulaBuilder(
-      id: id ?? this.id,
-      extension_: extension_ ?? this.extension_,
-      modifierExtension: modifierExtension ?? this.modifierExtension,
-      baseFormulaType: baseFormulaType ?? this.baseFormulaType,
-      baseFormulaProductName:
-          baseFormulaProductName ?? this.baseFormulaProductName,
-      deliveryDevice: deliveryDevice ?? this.deliveryDevice,
-      additive: additive ?? this.additive,
-      caloricDensity: caloricDensity ?? this.caloricDensity,
-      routeOfAdministration:
-          routeOfAdministration ?? this.routeOfAdministration,
-      administration: administration ?? this.administration,
-      maxVolumeToDeliver: maxVolumeToDeliver ?? this.maxVolumeToDeliver,
-      administrationInstruction:
-          administrationInstruction ?? this.administrationInstruction,
-    )..objectPath = newObjectPath;
-    // Copy user data and annotations
-    if (userData != null) {
-      newResult.userData = userData;
-    }
-    if (formatCommentsPre != null) {
-      newResult.formatCommentsPre = formatCommentsPre;
-    }
-    if (formatCommentsPost != null) {
-      newResult.formatCommentsPost = formatCommentsPost;
-    }
-    if (annotations != null) {
-      newResult.annotations = annotations;
-    }
-
-    return newResult;
-  }
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! NutritionOrderEnteralFormulaBuilder) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      baseFormulaType,
-      o.baseFormulaType,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      baseFormulaProductName,
-      o.baseFormulaProductName,
-    )) {
-      return false;
-    }
-    if (!listEquals<CodeableReferenceBuilder>(
-      deliveryDevice,
-      o.deliveryDevice,
-    )) {
-      return false;
-    }
-    if (!listEquals<NutritionOrderAdditiveBuilder>(
-      additive,
-      o.additive,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      caloricDensity,
-      o.caloricDensity,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      routeOfAdministration,
-      o.routeOfAdministration,
-    )) {
-      return false;
-    }
-    if (!listEquals<NutritionOrderAdministrationBuilder>(
-      administration,
-      o.administration,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      maxVolumeToDeliver,
-      o.maxVolumeToDeliver,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      administrationInstruction,
-      o.administrationInstruction,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [NutritionOrderAdditiveBuilder]
-/// Indicates modular components to be provided in addition or mixed with
-/// the base formula.
-class NutritionOrderAdditiveBuilder extends BackboneElementBuilder {
-  /// Primary constructor for
-  /// [NutritionOrderAdditiveBuilder]
-
-  NutritionOrderAdditiveBuilder({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.type,
-    this.productName,
-    this.quantity,
-    super.disallowExtensions,
-  }) : super(
-          objectPath: 'NutritionOrder.enteralFormula.additive',
-        );
-
-  /// An empty constructor for partial usage.
-  /// For Builder classes, no fields are required
-  factory NutritionOrderAdditiveBuilder.empty() =>
-      NutritionOrderAdditiveBuilder();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory NutritionOrderAdditiveBuilder.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    const objectPath = 'NutritionOrder.enteralFormula.additive';
-    return NutritionOrderAdditiveBuilder(
-      id: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'id',
-        FhirStringBuilder.fromJson,
-        '$objectPath.id',
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.extension',
-              },
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.modifierExtension',
-              },
-            ),
-          )
-          .toList(),
-      type: JsonParser.parseObject<CodeableReferenceBuilder>(
-        json,
-        'type',
-        CodeableReferenceBuilder.fromJson,
-        '$objectPath.type',
-      ),
-      productName: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'productName',
-        FhirStringBuilder.fromJson,
-        '$objectPath.productName',
-      ),
-      quantity: JsonParser.parseObject<QuantityBuilder>(
-        json,
-        'quantity',
-        QuantityBuilder.fromJson,
-        '$objectPath.quantity',
-      ),
-    );
-  }
-
-  /// Deserialize [NutritionOrderAdditiveBuilder]
-  /// from a [String] or [YamlMap] object
-  factory NutritionOrderAdditiveBuilder.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return NutritionOrderAdditiveBuilder.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return NutritionOrderAdditiveBuilder.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'NutritionOrderAdditiveBuilder '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [NutritionOrderAdditiveBuilder]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory NutritionOrderAdditiveBuilder.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return NutritionOrderAdditiveBuilder.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'NutritionOrderAdditive';
-
-  /// [type]
-  /// Indicates the type of modular component such as protein, carbohydrate,
-  /// fat or fiber to be provided in addition to or mixed with the base
-  /// formula.
-  CodeableReferenceBuilder? type;
-
-  /// [productName]
-  /// The product or brand name of the type of modular component to be added
-  /// to the formula.
-  FhirStringBuilder? productName;
-
-  /// [quantity]
-  /// The amount of additive to be given in addition or to be mixed in with
-  /// the base formula.
-  QuantityBuilder? quantity;
-
-  /// Converts a [NutritionOrderAdditiveBuilder]
-  /// to [NutritionOrderAdditive]
-  @override
-  NutritionOrderAdditive build() => NutritionOrderAdditive.fromJson(toJson());
-
-  /// Converts a [NutritionOrderAdditiveBuilder]
-  /// to a [Map<String, dynamic>]
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    void addField(String key, dynamic field) {
-      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
-        throw ArgumentError('"field" must be a FhirBaseBuilder type');
-      }
-      if (field == null) return;
-      if (field is PrimitiveTypeBuilder) {
-        json[key] = field.toJson()['value'];
-        if (field.toJson()['_value'] != null) {
-          json['_$key'] = field.toJson()['_value'];
-        }
-      } else if (field is List<FhirBaseBuilder>) {
-        if (field.isEmpty) return;
-        if (field.first is PrimitiveTypeBuilder) {
-          final fieldJson = field.map((e) => e.toJson()).toList();
-          json[key] = fieldJson.map((e) => e['value']).toList();
-          if (fieldJson.any((e) => e['_value'] != null)) {
-            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
-          }
-        } else {
-          json[key] = field.map((e) => e.toJson()).toList();
-        }
-      } else if (field is FhirBaseBuilder) {
-        json[key] = field.toJson();
-      }
-    }
-
-    addField('id', id);
-    addField('extension', extension_);
-    addField('modifierExtension', modifierExtension);
-    addField('type', type);
-    addField('productName', productName);
-    addField('quantity', quantity);
     return json;
   }
 
@@ -6028,7 +5244,12 @@ class NutritionOrderAdditiveBuilder extends BackboneElementBuilder {
       'modifierExtension',
       'type',
       'productName',
-      'quantity',
+      'deliveryDevice',
+      'caloricDensity',
+      'routeOfAdministration',
+      'administration',
+      'maxVolumeToAdminister',
+      'administrationInstruction',
     ];
   }
 
@@ -6061,9 +5282,29 @@ class NutritionOrderAdditiveBuilder extends BackboneElementBuilder {
         if (productName != null) {
           fields.add(productName!);
         }
-      case 'quantity':
-        if (quantity != null) {
-          fields.add(quantity!);
+      case 'deliveryDevice':
+        if (deliveryDevice != null) {
+          fields.addAll(deliveryDevice!);
+        }
+      case 'caloricDensity':
+        if (caloricDensity != null) {
+          fields.add(caloricDensity!);
+        }
+      case 'routeOfAdministration':
+        if (routeOfAdministration != null) {
+          fields.addAll(routeOfAdministration!);
+        }
+      case 'administration':
+        if (administration != null) {
+          fields.addAll(administration!);
+        }
+      case 'maxVolumeToAdminister':
+        if (maxVolumeToAdminister != null) {
+          fields.add(maxVolumeToAdminister!);
+        }
+      case 'administrationInstruction':
+        if (administrationInstruction != null) {
+          fields.add(administrationInstruction!);
         }
       default:
         if (checkValid) {
@@ -6174,11 +5415,87 @@ class NutritionOrderAdditiveBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'quantity':
+      case 'deliveryDevice':
+        {
+          if (child is List<CodeableReferenceBuilder>) {
+            // Replace or create new list
+            deliveryDevice = child;
+            return;
+          } else if (child is CodeableReferenceBuilder) {
+            // Add single element to existing list or create new list
+            deliveryDevice = [
+              ...(deliveryDevice ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'caloricDensity':
         {
           if (child is QuantityBuilder) {
-            quantity = child;
+            caloricDensity = child;
             return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'routeOfAdministration':
+        {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
+            routeOfAdministration = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            routeOfAdministration = [
+              ...(routeOfAdministration ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'administration':
+        {
+          if (child is List<NutritionOrderAdministrationBuilder>) {
+            // Replace or create new list
+            administration = child;
+            return;
+          } else if (child is NutritionOrderAdministrationBuilder) {
+            // Add single element to existing list or create new list
+            administration = [
+              ...(administration ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'maxVolumeToAdminister':
+        {
+          if (child is QuantityBuilder) {
+            maxVolumeToAdminister = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'administrationInstruction':
+        {
+          if (child is FhirMarkdownBuilder) {
+            administrationInstruction = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                administrationInstruction = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -6202,14 +5519,24 @@ class NutritionOrderAdditiveBuilder extends BackboneElementBuilder {
         return ['CodeableReferenceBuilder'];
       case 'productName':
         return ['FhirStringBuilder'];
-      case 'quantity':
+      case 'deliveryDevice':
+        return ['CodeableReferenceBuilder'];
+      case 'caloricDensity':
         return ['QuantityBuilder'];
+      case 'routeOfAdministration':
+        return ['CodeableConceptBuilder'];
+      case 'administration':
+        return ['NutritionOrderAdministrationBuilder'];
+      case 'maxVolumeToAdminister':
+        return ['QuantityBuilder'];
+      case 'administrationInstruction':
+        return ['FhirMarkdownBuilder'];
       default:
         return <String>[];
     }
   }
 
-  /// Creates a new [NutritionOrderAdditiveBuilder]
+  /// Creates a new [NutritionOrderEnteralFormulaBuilder]
   ///  with a chosen field set to an empty object.
   @override
   void createProperty(String propertyName) {
@@ -6239,9 +5566,34 @@ class NutritionOrderAdditiveBuilder extends BackboneElementBuilder {
           productName = FhirStringBuilder.empty();
           return;
         }
-      case 'quantity':
+      case 'deliveryDevice':
         {
-          quantity = QuantityBuilder.empty();
+          deliveryDevice = <CodeableReferenceBuilder>[];
+          return;
+        }
+      case 'caloricDensity':
+        {
+          caloricDensity = QuantityBuilder.empty();
+          return;
+        }
+      case 'routeOfAdministration':
+        {
+          routeOfAdministration = <CodeableConceptBuilder>[];
+          return;
+        }
+      case 'administration':
+        {
+          administration = <NutritionOrderAdministrationBuilder>[];
+          return;
+        }
+      case 'maxVolumeToAdminister':
+        {
+          maxVolumeToAdminister = QuantityBuilder.empty();
+          return;
+        }
+      case 'administrationInstruction':
+        {
+          administrationInstruction = FhirMarkdownBuilder.empty();
           return;
         }
       default:
@@ -6250,15 +5602,20 @@ class NutritionOrderAdditiveBuilder extends BackboneElementBuilder {
   }
 
   @override
-  NutritionOrderAdditiveBuilder clone() => throw UnimplementedError();
+  NutritionOrderEnteralFormulaBuilder clone() => throw UnimplementedError();
   @override
-  NutritionOrderAdditiveBuilder copyWith({
+  NutritionOrderEnteralFormulaBuilder copyWith({
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     CodeableReferenceBuilder? type,
     FhirStringBuilder? productName,
-    QuantityBuilder? quantity,
+    List<CodeableReferenceBuilder>? deliveryDevice,
+    QuantityBuilder? caloricDensity,
+    List<CodeableConceptBuilder>? routeOfAdministration,
+    List<NutritionOrderAdministrationBuilder>? administration,
+    QuantityBuilder? maxVolumeToAdminister,
+    FhirMarkdownBuilder? administrationInstruction,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -6266,13 +5623,21 @@ class NutritionOrderAdditiveBuilder extends BackboneElementBuilder {
     String? objectPath,
   }) {
     final newObjectPath = this.objectPath;
-    final newResult = NutritionOrderAdditiveBuilder(
+    final newResult = NutritionOrderEnteralFormulaBuilder(
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       type: type ?? this.type,
       productName: productName ?? this.productName,
-      quantity: quantity ?? this.quantity,
+      deliveryDevice: deliveryDevice ?? this.deliveryDevice,
+      caloricDensity: caloricDensity ?? this.caloricDensity,
+      routeOfAdministration:
+          routeOfAdministration ?? this.routeOfAdministration,
+      administration: administration ?? this.administration,
+      maxVolumeToAdminister:
+          maxVolumeToAdminister ?? this.maxVolumeToAdminister,
+      administrationInstruction:
+          administrationInstruction ?? this.administrationInstruction,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -6294,7 +5659,7 @@ class NutritionOrderAdditiveBuilder extends BackboneElementBuilder {
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! NutritionOrderAdditiveBuilder) {
+    if (o is! NutritionOrderEnteralFormulaBuilder) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -6329,9 +5694,39 @@ class NutritionOrderAdditiveBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
+    if (!listEquals<CodeableReferenceBuilder>(
+      deliveryDevice,
+      o.deliveryDevice,
+    )) {
+      return false;
+    }
     if (!equalsDeepWithNull(
-      quantity,
-      o.quantity,
+      caloricDensity,
+      o.caloricDensity,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConceptBuilder>(
+      routeOfAdministration,
+      o.routeOfAdministration,
+    )) {
+      return false;
+    }
+    if (!listEquals<NutritionOrderAdministrationBuilder>(
+      administration,
+      o.administration,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      maxVolumeToAdminister,
+      o.maxVolumeToAdminister,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      administrationInstruction,
+      o.administrationInstruction,
     )) {
       return false;
     }
@@ -6340,11 +5735,11 @@ class NutritionOrderAdditiveBuilder extends BackboneElementBuilder {
 }
 
 /// [NutritionOrderAdministrationBuilder]
-/// Formula administration instructions as structured data. This repeating
-/// structure allows for changing the administration rate or volume over
-/// time for both bolus and continuous feeding. An example of this would be
-/// an instruction to increase the rate of continuous feeding every 2
-/// hours.
+/// Formula feeding administration instructions as structured data. This
+/// repeating structure allows for changing the administration rate or
+/// volume over time for both bolus and continuous feeding. An example of
+/// this would be an instruction to increase the rate of continuous feeding
+/// every 2 hours.
 class NutritionOrderAdministrationBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [NutritionOrderAdministrationBuilder]
@@ -6468,17 +5863,17 @@ class NutritionOrderAdministrationBuilder extends BackboneElementBuilder {
   String get fhirType => 'NutritionOrderAdministration';
 
   /// [schedule]
-  /// Schedule information for an enteral formula.
+  /// Schedule information for an enteral feeding.
   NutritionOrderScheduleBuilder? schedule;
 
   /// [quantity]
-  /// The volume of formula to provide to the patient per the specified
-  /// administration schedule.
+  /// The volume of formula feeding to provide to the patient per the
+  /// specified administration schedule.
   QuantityBuilder? quantity;
 
   /// [rateX]
-  /// The rate of administration of formula via a feeding pump, e.g. 60 mL
-  /// per hour, according to the specified schedule.
+  /// The rate of administration of formula feeding via a feeding pump, e.g.
+  /// 60 mL per hour, according to the specified schedule.
   RateXNutritionOrderAdministrationBuilder? rateX;
 
   /// Getter for [rateQuantity] as a QuantityBuilder
@@ -6903,7 +6298,7 @@ class NutritionOrderAdministrationBuilder extends BackboneElementBuilder {
 }
 
 /// [NutritionOrderSchedule2Builder]
-/// Schedule information for an enteral formula.
+/// Schedule information for an enteral feeding.
 class NutritionOrderSchedule2Builder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [NutritionOrderSchedule2Builder]
@@ -7025,19 +6420,19 @@ class NutritionOrderSchedule2Builder extends BackboneElementBuilder {
   String get fhirType => 'NutritionOrderSchedule2';
 
   /// [timing]
-  /// The time period and frequency at which the enteral formula should be
-  /// given. The enteral formula should be given for the combination of all
+  /// The time period and frequency at which the enteral feeding should be
+  /// given. The enteral feeding should be given for the combination of all
   /// schedules if more than one schedule is present.
   List<TimingBuilder>? timing;
 
   /// [asNeeded]
-  /// Indicates whether the enteral formula is only taken when needed within
+  /// Indicates whether the enteral feeding is only taken when needed within
   /// a specific dosing schedule.
   FhirBooleanBuilder? asNeeded;
 
   /// [asNeededFor]
-  /// Indicates whether the enteral formula is only taken based on a
-  /// precondition for taking the enteral formula.
+  /// Indicates whether the enteral feeding is only taken based on a
+  /// precondition for taking the enteral feeding.
   CodeableConceptBuilder? asNeededFor;
 
   /// Converts a [NutritionOrderSchedule2Builder]
@@ -7406,6 +6801,560 @@ class NutritionOrderSchedule2Builder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       asNeededFor,
       o.asNeededFor,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [NutritionOrderAdditiveBuilder]
+/// Indicates modular components to be provided in addition or mixed with
+/// the oral diet, supplement, and/or enteral feeding.
+class NutritionOrderAdditiveBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [NutritionOrderAdditiveBuilder]
+
+  NutritionOrderAdditiveBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.modularType,
+    this.productName,
+    this.quantity,
+    this.routeOfAdministration,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'NutritionOrder.additive',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory NutritionOrderAdditiveBuilder.empty() =>
+      NutritionOrderAdditiveBuilder();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory NutritionOrderAdditiveBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'NutritionOrder.additive';
+    return NutritionOrderAdditiveBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      modularType: JsonParser.parseObject<CodeableReferenceBuilder>(
+        json,
+        'modularType',
+        CodeableReferenceBuilder.fromJson,
+        '$objectPath.modularType',
+      ),
+      productName: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'productName',
+        FhirStringBuilder.fromJson,
+        '$objectPath.productName',
+      ),
+      quantity: JsonParser.parseObject<QuantityBuilder>(
+        json,
+        'quantity',
+        QuantityBuilder.fromJson,
+        '$objectPath.quantity',
+      ),
+      routeOfAdministration: (json['routeOfAdministration'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.routeOfAdministration',
+              },
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  /// Deserialize [NutritionOrderAdditiveBuilder]
+  /// from a [String] or [YamlMap] object
+  factory NutritionOrderAdditiveBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return NutritionOrderAdditiveBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return NutritionOrderAdditiveBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'NutritionOrderAdditiveBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [NutritionOrderAdditiveBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory NutritionOrderAdditiveBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return NutritionOrderAdditiveBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'NutritionOrderAdditive';
+
+  /// [modularType]
+  /// Indicates the type of modular component such as protein, carbohydrate,
+  /// fat or fiber to be provided in addition to or mixed with the oral diet,
+  /// supplement, and/or enteral feeding.
+  CodeableReferenceBuilder? modularType;
+
+  /// [productName]
+  /// The product or brand name of the type of modular additive to be added
+  /// to the oral diet, supplement, and/or enteral feeding.
+  FhirStringBuilder? productName;
+
+  /// [quantity]
+  /// The amount of additive to be given in addition or to be mixed in with
+  /// the oral diet, supplement, and/or enteral feeding.
+  QuantityBuilder? quantity;
+
+  /// [routeOfAdministration]
+  /// The administration into the patient's gastrointestinal tract for
+  /// purposes of providing the additive, e.g. nasogastric tube, oral.
+  List<CodeableConceptBuilder>? routeOfAdministration;
+
+  /// Converts a [NutritionOrderAdditiveBuilder]
+  /// to [NutritionOrderAdditive]
+  @override
+  NutritionOrderAdditive build() => NutritionOrderAdditive.fromJson(toJson());
+
+  /// Converts a [NutritionOrderAdditiveBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('modularType', modularType);
+    addField('productName', productName);
+    addField('quantity', quantity);
+    addField('routeOfAdministration', routeOfAdministration);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'modularType',
+      'productName',
+      'quantity',
+      'routeOfAdministration',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'modularType':
+        if (modularType != null) {
+          fields.add(modularType!);
+        }
+      case 'productName':
+        if (productName != null) {
+          fields.add(productName!);
+        }
+      case 'quantity':
+        if (quantity != null) {
+          fields.add(quantity!);
+        }
+      case 'routeOfAdministration':
+        if (routeOfAdministration != null) {
+          fields.addAll(routeOfAdministration!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modularType':
+        {
+          if (child is CodeableReferenceBuilder) {
+            modularType = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'productName':
+        {
+          if (child is FhirStringBuilder) {
+            productName = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                productName = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'quantity':
+        {
+          if (child is QuantityBuilder) {
+            quantity = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'routeOfAdministration':
+        {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
+            routeOfAdministration = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            routeOfAdministration = [
+              ...(routeOfAdministration ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'modularType':
+        return ['CodeableReferenceBuilder'];
+      case 'productName':
+        return ['FhirStringBuilder'];
+      case 'quantity':
+        return ['QuantityBuilder'];
+      case 'routeOfAdministration':
+        return ['CodeableConceptBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [NutritionOrderAdditiveBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modularType':
+        {
+          modularType = CodeableReferenceBuilder.empty();
+          return;
+        }
+      case 'productName':
+        {
+          productName = FhirStringBuilder.empty();
+          return;
+        }
+      case 'quantity':
+        {
+          quantity = QuantityBuilder.empty();
+          return;
+        }
+      case 'routeOfAdministration':
+        {
+          routeOfAdministration = <CodeableConceptBuilder>[];
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  NutritionOrderAdditiveBuilder clone() => throw UnimplementedError();
+  @override
+  NutritionOrderAdditiveBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    CodeableReferenceBuilder? modularType,
+    FhirStringBuilder? productName,
+    QuantityBuilder? quantity,
+    List<CodeableConceptBuilder>? routeOfAdministration,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = NutritionOrderAdditiveBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      modularType: modularType ?? this.modularType,
+      productName: productName ?? this.productName,
+      quantity: quantity ?? this.quantity,
+      routeOfAdministration:
+          routeOfAdministration ?? this.routeOfAdministration,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! NutritionOrderAdditiveBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      modularType,
+      o.modularType,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      productName,
+      o.productName,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      quantity,
+      o.quantity,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConceptBuilder>(
+      routeOfAdministration,
+      o.routeOfAdministration,
     )) {
       return false;
     }

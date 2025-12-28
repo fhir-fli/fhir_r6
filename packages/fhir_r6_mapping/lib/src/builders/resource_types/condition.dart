@@ -1,12 +1,6 @@
 import 'dart:convert';
 import 'package:fhir_r6/fhir_r6.dart'
-    show
-        Condition,
-        ConditionParticipant,
-        ConditionStage,
-        R6ResourceType,
-        yamlMapToJson,
-        yamlToJson;
+    show Condition, ConditionStage, R6ResourceType, yamlMapToJson, yamlToJson;
 import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
@@ -33,6 +27,7 @@ class ConditionBuilder extends DomainResourceBuilder {
     this.severity,
     this.code,
     this.bodySite,
+    this.bodyStructure,
     this.subject,
     this.encounter,
     OnsetXConditionBuilder? onsetX,
@@ -48,7 +43,8 @@ class ConditionBuilder extends DomainResourceBuilder {
     RangeBuilder? abatementRange,
     FhirStringBuilder? abatementString,
     this.recordedDate,
-    this.participant,
+    this.recorder,
+    this.asserter,
     this.stage,
     this.evidence,
     this.note,
@@ -196,6 +192,12 @@ class ConditionBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
+      bodyStructure: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'bodyStructure',
+        ReferenceBuilder.fromJson,
+        '$objectPath.bodyStructure',
+      ),
       subject: JsonParser.parseObject<ReferenceBuilder>(
         json,
         'subject',
@@ -236,16 +238,18 @@ class ConditionBuilder extends DomainResourceBuilder {
         FhirDateTimeBuilder.fromJson,
         '$objectPath.recordedDate',
       ),
-      participant: (json['participant'] as List<dynamic>?)
-          ?.map<ConditionParticipantBuilder>(
-            (v) => ConditionParticipantBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.participant',
-              },
-            ),
-          )
-          .toList(),
+      recorder: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'recorder',
+        ReferenceBuilder.fromJson,
+        '$objectPath.recorder',
+      ),
+      asserter: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'asserter',
+        ReferenceBuilder.fromJson,
+        '$objectPath.asserter',
+      ),
       stage: (json['stage'] as List<dynamic>?)
           ?.map<ConditionStageBuilder>(
             (v) => ConditionStageBuilder.fromJson(
@@ -354,6 +358,11 @@ class ConditionBuilder extends DomainResourceBuilder {
   /// The anatomical location where this condition manifests itself.
   List<CodeableConceptBuilder>? bodySite;
 
+  /// [bodyStructure]
+  /// Indicates the body structure on the subject's body where this condition
+  /// manifests itself.
+  ReferenceBuilder? bodyStructure;
+
   /// [subject]
   /// Indicates the patient or group who the condition record is associated
   /// with.
@@ -365,8 +374,8 @@ class ConditionBuilder extends DomainResourceBuilder {
   ReferenceBuilder? encounter;
 
   /// [onsetX]
-  /// Estimated or actual date or date-time the condition began, in the
-  /// opinion of the clinician.
+  /// Estimated or actual date or date-time the condition, situation, or
+  /// concern began, in the opinion of the clinician.
   OnsetXConditionBuilder? onsetX;
 
   /// Getter for [onsetDateTime] as a FhirDateTimeBuilder
@@ -414,10 +423,14 @@ class ConditionBuilder extends DomainResourceBuilder {
   /// created in the system, which is often a system-generated date.
   FhirDateTimeBuilder? recordedDate;
 
-  /// [participant]
-  /// Indicates who or what participated in the activities related to the
-  /// condition and how they were involved.
-  List<ConditionParticipantBuilder>? participant;
+  /// [recorder]
+  /// Individual who recorded the record and takes responsibility for its
+  /// content.
+  ReferenceBuilder? recorder;
+
+  /// [asserter]
+  /// Individual or device that is making the condition statement.
+  ReferenceBuilder? asserter;
 
   /// [stage]
   /// A simple summary of the stage such as "Stage 3" or "Early Onset". The
@@ -427,9 +440,8 @@ class ConditionBuilder extends DomainResourceBuilder {
   List<ConditionStageBuilder>? stage;
 
   /// [evidence]
-  /// Supporting evidence / manifestations that are the basis of the
-  /// Condition's verification status, such as evidence that confirmed or
-  /// refuted the condition.
+  /// Supporting evidence / manifestations that are the basis for determining
+  /// the Condition.
   List<CodeableReferenceBuilder>? evidence;
 
   /// [note]
@@ -490,6 +502,7 @@ class ConditionBuilder extends DomainResourceBuilder {
     addField('severity', severity);
     addField('code', code);
     addField('bodySite', bodySite);
+    addField('bodyStructure', bodyStructure);
     addField('subject', subject);
     addField('encounter', encounter);
     if (onsetX != null) {
@@ -503,7 +516,8 @@ class ConditionBuilder extends DomainResourceBuilder {
     }
 
     addField('recordedDate', recordedDate);
-    addField('participant', participant);
+    addField('recorder', recorder);
+    addField('asserter', asserter);
     addField('stage', stage);
     addField('evidence', evidence);
     addField('note', note);
@@ -529,12 +543,14 @@ class ConditionBuilder extends DomainResourceBuilder {
       'severity',
       'code',
       'bodySite',
+      'bodyStructure',
       'subject',
       'encounter',
       'onsetX',
       'abatementX',
       'recordedDate',
-      'participant',
+      'recorder',
+      'asserter',
       'stage',
       'evidence',
       'note',
@@ -610,6 +626,10 @@ class ConditionBuilder extends DomainResourceBuilder {
         if (bodySite != null) {
           fields.addAll(bodySite!);
         }
+      case 'bodyStructure':
+        if (bodyStructure != null) {
+          fields.add(bodyStructure!);
+        }
       case 'subject':
         if (subject != null) {
           fields.add(subject!);
@@ -678,9 +698,13 @@ class ConditionBuilder extends DomainResourceBuilder {
         if (recordedDate != null) {
           fields.add(recordedDate!);
         }
-      case 'participant':
-        if (participant != null) {
-          fields.addAll(participant!);
+      case 'recorder':
+        if (recorder != null) {
+          fields.add(recorder!);
+        }
+      case 'asserter':
+        if (asserter != null) {
+          fields.add(asserter!);
         }
       case 'stage':
         if (stage != null) {
@@ -930,6 +954,14 @@ class ConditionBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'bodyStructure':
+        {
+          if (child is ReferenceBuilder) {
+            bodyStructure = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'subject':
         {
           if (child is ReferenceBuilder) {
@@ -1116,18 +1148,18 @@ class ConditionBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'participant':
+      case 'recorder':
         {
-          if (child is List<ConditionParticipantBuilder>) {
-            // Replace or create new list
-            participant = child;
+          if (child is ReferenceBuilder) {
+            recorder = child;
             return;
-          } else if (child is ConditionParticipantBuilder) {
-            // Add single element to existing list or create new list
-            participant = [
-              ...(participant ?? []),
-              child,
-            ];
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'asserter':
+        {
+          if (child is ReferenceBuilder) {
+            asserter = child;
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -1220,6 +1252,8 @@ class ConditionBuilder extends DomainResourceBuilder {
         return ['CodeableConceptBuilder'];
       case 'bodySite':
         return ['CodeableConceptBuilder'];
+      case 'bodyStructure':
+        return ['ReferenceBuilder'];
       case 'subject':
         return ['ReferenceBuilder'];
       case 'encounter':
@@ -1264,8 +1298,10 @@ class ConditionBuilder extends DomainResourceBuilder {
         return ['FhirStringBuilder'];
       case 'recordedDate':
         return ['FhirDateTimeBuilder'];
-      case 'participant':
-        return ['ConditionParticipantBuilder'];
+      case 'recorder':
+        return ['ReferenceBuilder'];
+      case 'asserter':
+        return ['ReferenceBuilder'];
       case 'stage':
         return ['ConditionStageBuilder'];
       case 'evidence':
@@ -1357,6 +1393,11 @@ class ConditionBuilder extends DomainResourceBuilder {
           bodySite = <CodeableConceptBuilder>[];
           return;
         }
+      case 'bodyStructure':
+        {
+          bodyStructure = ReferenceBuilder.empty();
+          return;
+        }
       case 'subject':
         {
           subject = ReferenceBuilder.empty();
@@ -1426,9 +1467,14 @@ class ConditionBuilder extends DomainResourceBuilder {
           recordedDate = FhirDateTimeBuilder.empty();
           return;
         }
-      case 'participant':
+      case 'recorder':
         {
-          participant = <ConditionParticipantBuilder>[];
+          recorder = ReferenceBuilder.empty();
+          return;
+        }
+      case 'asserter':
+        {
+          asserter = ReferenceBuilder.empty();
           return;
         }
       case 'stage':
@@ -1470,12 +1516,14 @@ class ConditionBuilder extends DomainResourceBuilder {
     CodeableConceptBuilder? severity,
     CodeableConceptBuilder? code,
     List<CodeableConceptBuilder>? bodySite,
+    ReferenceBuilder? bodyStructure,
     ReferenceBuilder? subject,
     ReferenceBuilder? encounter,
     OnsetXConditionBuilder? onsetX,
     AbatementXConditionBuilder? abatementX,
     FhirDateTimeBuilder? recordedDate,
-    List<ConditionParticipantBuilder>? participant,
+    ReferenceBuilder? recorder,
+    ReferenceBuilder? asserter,
     List<ConditionStageBuilder>? stage,
     List<CodeableReferenceBuilder>? evidence,
     List<AnnotationBuilder>? note,
@@ -1511,6 +1559,7 @@ class ConditionBuilder extends DomainResourceBuilder {
       severity: severity ?? this.severity,
       code: code ?? this.code,
       bodySite: bodySite ?? this.bodySite,
+      bodyStructure: bodyStructure ?? this.bodyStructure,
       subject: subject ?? this.subject,
       encounter: encounter ?? this.encounter,
       onsetX: onsetX ??
@@ -1528,7 +1577,8 @@ class ConditionBuilder extends DomainResourceBuilder {
           abatementString ??
           this.abatementX,
       recordedDate: recordedDate ?? this.recordedDate,
-      participant: participant ?? this.participant,
+      recorder: recorder ?? this.recorder,
+      asserter: asserter ?? this.asserter,
       stage: stage ?? this.stage,
       evidence: evidence ?? this.evidence,
       note: note ?? this.note,
@@ -1649,6 +1699,12 @@ class ConditionBuilder extends DomainResourceBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
+      bodyStructure,
+      o.bodyStructure,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       subject,
       o.subject,
     )) {
@@ -1678,9 +1734,15 @@ class ConditionBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<ConditionParticipantBuilder>(
-      participant,
-      o.participant,
+    if (!equalsDeepWithNull(
+      recorder,
+      o.recorder,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      asserter,
+      o.asserter,
     )) {
       return false;
     }
@@ -1699,453 +1761,6 @@ class ConditionBuilder extends DomainResourceBuilder {
     if (!listEquals<AnnotationBuilder>(
       note,
       o.note,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [ConditionParticipantBuilder]
-/// Indicates who or what participated in the activities related to the
-/// condition and how they were involved.
-class ConditionParticipantBuilder extends BackboneElementBuilder {
-  /// Primary constructor for
-  /// [ConditionParticipantBuilder]
-
-  ConditionParticipantBuilder({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.function_,
-    this.actor,
-    super.disallowExtensions,
-  }) : super(
-          objectPath: 'Condition.participant',
-        );
-
-  /// An empty constructor for partial usage.
-  /// For Builder classes, no fields are required
-  factory ConditionParticipantBuilder.empty() => ConditionParticipantBuilder(
-        actor: ReferenceBuilder.empty(),
-      );
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory ConditionParticipantBuilder.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    const objectPath = 'Condition.participant';
-    return ConditionParticipantBuilder(
-      id: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'id',
-        FhirStringBuilder.fromJson,
-        '$objectPath.id',
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.extension',
-              },
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.modifierExtension',
-              },
-            ),
-          )
-          .toList(),
-      function_: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'function',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.function',
-      ),
-      actor: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'actor',
-        ReferenceBuilder.fromJson,
-        '$objectPath.actor',
-      ),
-    );
-  }
-
-  /// Deserialize [ConditionParticipantBuilder]
-  /// from a [String] or [YamlMap] object
-  factory ConditionParticipantBuilder.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return ConditionParticipantBuilder.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return ConditionParticipantBuilder.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'ConditionParticipantBuilder '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [ConditionParticipantBuilder]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory ConditionParticipantBuilder.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return ConditionParticipantBuilder.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'ConditionParticipant';
-
-  /// [function_]
-  /// Distinguishes the type of involvement of the actor in the activities
-  /// related to the condition.
-  CodeableConceptBuilder? function_;
-
-  /// [actor]
-  /// Indicates who or what participated in the activities related to the
-  /// condition.
-  ReferenceBuilder? actor;
-
-  /// Converts a [ConditionParticipantBuilder]
-  /// to [ConditionParticipant]
-  @override
-  ConditionParticipant build() => ConditionParticipant.fromJson(toJson());
-
-  /// Converts a [ConditionParticipantBuilder]
-  /// to a [Map<String, dynamic>]
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    void addField(String key, dynamic field) {
-      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
-        throw ArgumentError('"field" must be a FhirBaseBuilder type');
-      }
-      if (field == null) return;
-      if (field is PrimitiveTypeBuilder) {
-        json[key] = field.toJson()['value'];
-        if (field.toJson()['_value'] != null) {
-          json['_$key'] = field.toJson()['_value'];
-        }
-      } else if (field is List<FhirBaseBuilder>) {
-        if (field.isEmpty) return;
-        if (field.first is PrimitiveTypeBuilder) {
-          final fieldJson = field.map((e) => e.toJson()).toList();
-          json[key] = fieldJson.map((e) => e['value']).toList();
-          if (fieldJson.any((e) => e['_value'] != null)) {
-            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
-          }
-        } else {
-          json[key] = field.map((e) => e.toJson()).toList();
-        }
-      } else if (field is FhirBaseBuilder) {
-        json[key] = field.toJson();
-      }
-    }
-
-    addField('id', id);
-    addField('extension', extension_);
-    addField('modifierExtension', modifierExtension);
-    addField('function', function_);
-    addField('actor', actor);
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'function',
-      'actor',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBaseBuilder> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBaseBuilder>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'function':
-        if (function_ != null) {
-          fields.add(function_!);
-        }
-      case 'actor':
-        if (actor != null) {
-          fields.add(actor!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBaseBuilder? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  void setChildByName(String childName, dynamic child) {
-    // child must be null, or a (List of) FhirBaseBuilder(s).
-    if (child == null) {
-      return; // In builders, setting to null is allowed
-    }
-    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
-      throw Exception('Cannot set child value for $childName');
-    }
-
-    switch (childName) {
-      case 'id':
-        {
-          if (child is FhirStringBuilder) {
-            id = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                id = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'extension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            extension_ = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            extension_ = [
-              ...(extension_ ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'modifierExtension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            modifierExtension = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            modifierExtension = [
-              ...(modifierExtension ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'function':
-        {
-          if (child is CodeableConceptBuilder) {
-            function_ = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'actor':
-        {
-          if (child is ReferenceBuilder) {
-            actor = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      default:
-        throw Exception('Cannot set child value for $childName');
-    }
-  }
-
-  /// Return the possible Dart types for the field named [fieldName].
-  /// For polymorphic fields, multiple types are possible.
-  @override
-  List<String> typeByElementName(String fieldName) {
-    switch (fieldName) {
-      case 'id':
-        return ['FhirStringBuilder'];
-      case 'extension':
-        return ['FhirExtensionBuilder'];
-      case 'modifierExtension':
-        return ['FhirExtensionBuilder'];
-      case 'function':
-        return ['CodeableConceptBuilder'];
-      case 'actor':
-        return ['ReferenceBuilder'];
-      default:
-        return <String>[];
-    }
-  }
-
-  /// Creates a new [ConditionParticipantBuilder]
-  ///  with a chosen field set to an empty object.
-  @override
-  void createProperty(String propertyName) {
-    switch (propertyName) {
-      case 'id':
-        {
-          id = FhirStringBuilder.empty();
-          return;
-        }
-      case 'extension':
-        {
-          extension_ = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'modifierExtension':
-        {
-          modifierExtension = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'function':
-        {
-          function_ = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'actor':
-        {
-          actor = ReferenceBuilder.empty();
-          return;
-        }
-      default:
-        throw ArgumentError('No matching property: $propertyName');
-    }
-  }
-
-  @override
-  ConditionParticipantBuilder clone() => throw UnimplementedError();
-  @override
-  ConditionParticipantBuilder copyWith({
-    FhirStringBuilder? id,
-    List<FhirExtensionBuilder>? extension_,
-    List<FhirExtensionBuilder>? modifierExtension,
-    CodeableConceptBuilder? function_,
-    ReferenceBuilder? actor,
-    Map<String, dynamic>? userData,
-    List<String>? formatCommentsPre,
-    List<String>? formatCommentsPost,
-    List<dynamic>? annotations,
-    String? objectPath,
-  }) {
-    final newObjectPath = this.objectPath;
-    final newResult = ConditionParticipantBuilder(
-      id: id ?? this.id,
-      extension_: extension_ ?? this.extension_,
-      modifierExtension: modifierExtension ?? this.modifierExtension,
-      function_: function_ ?? this.function_,
-      actor: actor ?? this.actor,
-    )..objectPath = newObjectPath;
-    // Copy user data and annotations
-    if (userData != null) {
-      newResult.userData = userData;
-    }
-    if (formatCommentsPre != null) {
-      newResult.formatCommentsPre = formatCommentsPre;
-    }
-    if (formatCommentsPost != null) {
-      newResult.formatCommentsPost = formatCommentsPost;
-    }
-    if (annotations != null) {
-      newResult.annotations = annotations;
-    }
-
-    return newResult;
-  }
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! ConditionParticipantBuilder) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      function_,
-      o.function_,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      actor,
-      o.actor,
     )) {
       return false;
     }

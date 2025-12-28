@@ -220,7 +220,7 @@ class Ingredient extends DomainResource {
   /// [allergenicIndicator]
   /// If the ingredient is a known or suspected allergen. Note that this is a
   /// property of the substance, so if a reference to a SubstanceDefinition
-  /// is used to decribe that (rather than just a code), the allergen
+  /// is used to describe that (rather than just a code), the allergen
   /// information should go there, not here.
   final FhirBoolean? allergenicIndicator;
 
@@ -1438,9 +1438,9 @@ class IngredientStrength extends BackboneElement {
   Quantity? get presentationQuantity => presentationX?.isAs<Quantity>();
 
   /// [textPresentation]
-  /// A textual represention of either the whole of the presentation strength
-  /// or a part of it - with the rest being in Strength.presentation as a
-  /// ratio.
+  /// A textual representation of either the whole of the presentation
+  /// strength or a part of it - with the rest being in Strength.presentation
+  /// as a ratio.
   final FhirString? textPresentation;
 
   /// [concentrationX]
@@ -1461,7 +1461,7 @@ class IngredientStrength extends BackboneElement {
   Quantity? get concentrationQuantity => concentrationX?.isAs<Quantity>();
 
   /// [textConcentration]
-  /// A textual represention of either the whole of the concentration
+  /// A textual representation of either the whole of the concentration
   /// strength or a part of it - with the rest being in
   /// Strength.concentration as a ratio.
   final FhirString? textConcentration;

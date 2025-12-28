@@ -6,6 +6,9 @@ enum EndpointStatusEnum {
   /// active
   active,
 
+  /// limited
+  limited,
+
   /// suspended
   suspended,
 
@@ -28,6 +31,8 @@ enum EndpointStatusEnum {
     switch (this) {
       case EndpointStatusEnum.active:
         return 'active';
+      case EndpointStatusEnum.limited:
+        return 'limited';
       case EndpointStatusEnum.suspended:
         return 'suspended';
       case EndpointStatusEnum.error:
@@ -55,6 +60,8 @@ enum EndpointStatusEnum {
     switch (value) {
       case 'active':
         return EndpointStatusEnum.active;
+      case 'limited':
+        return EndpointStatusEnum.limited;
       case 'suspended':
         return EndpointStatusEnum.suspended;
       case 'error':
@@ -144,9 +151,22 @@ class EndpointStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/endpoint-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Active',
+    ),
+  );
+
+  /// limited
+  static const EndpointStatus limited = EndpointStatus._(
+    valueString: 'limited',
+    valueEnum: EndpointStatusEnum.limited,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/endpoint-status',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Limited',
     ),
   );
 
@@ -157,7 +177,7 @@ class EndpointStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/endpoint-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Suspended',
     ),
@@ -170,7 +190,7 @@ class EndpointStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/endpoint-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Error',
     ),
@@ -183,7 +203,7 @@ class EndpointStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/endpoint-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Off',
     ),
@@ -196,7 +216,7 @@ class EndpointStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/endpoint-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Entered in error',
     ),
@@ -205,6 +225,7 @@ class EndpointStatus extends FhirCodeEnum {
   /// List of all enum-like values
   static final List<EndpointStatus> values = [
     active,
+    limited,
     suspended,
     error,
     off,

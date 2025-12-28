@@ -129,7 +129,7 @@ class QuestionnaireItemDisabledDisplay extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/questionnaire-disabled-display',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Hidden',
     ),
@@ -144,7 +144,7 @@ class QuestionnaireItemDisabledDisplay extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/questionnaire-disabled-display',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Protected',
     ),

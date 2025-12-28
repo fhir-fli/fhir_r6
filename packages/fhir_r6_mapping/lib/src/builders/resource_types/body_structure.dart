@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'dart:convert';
 import 'package:fhir_r6/fhir_r6.dart'
     show
@@ -1152,8 +1150,8 @@ class BodyStructureIncludedStructureBuilder extends BackboneElementBuilder {
   CodeableConceptBuilder? laterality;
 
   /// [bodyLandmarkOrientation]
-  /// Body locations in relation to a specific body landmark (tatoo, scar,
-  /// other body structure).
+  /// Body location in relation to a specific body landmark (e.g., a body
+  /// structure such a navel, scar, or implanted device).
   List<BodyStructureBodyLandmarkOrientationBuilder>? bodyLandmarkOrientation;
 
   /// [spatialReference]
@@ -1603,8 +1601,8 @@ class BodyStructureIncludedStructureBuilder extends BackboneElementBuilder {
 }
 
 /// [BodyStructureBodyLandmarkOrientationBuilder]
-/// Body locations in relation to a specific body landmark (tatoo, scar,
-/// other body structure).
+/// Body location in relation to a specific body landmark (e.g., a body
+/// structure such a navel, scar, or implanted device).
 class BodyStructureBodyLandmarkOrientationBuilder
     extends BackboneElementBuilder {
   /// Primary constructor for
@@ -1747,8 +1745,7 @@ class BodyStructureBodyLandmarkOrientationBuilder
   String get fhirType => 'BodyStructureBodyLandmarkOrientation';
 
   /// [landmarkDescription]
-  /// A description of a landmark on the body used as a reference to locate
-  /// something else.
+  /// Body landmark description used as a reference to locate something else.
   List<CodeableConceptBuilder>? landmarkDescription;
 
   /// [clockFacePosition]

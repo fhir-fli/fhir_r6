@@ -13,7 +13,8 @@ import 'package:yaml/yaml.dart';
 
 /// [ServiceRequestBuilder]
 /// A record of a request for service such as diagnostic investigations,
-/// treatments, or operations to be performed.
+/// treatments, or operations to be performed. When the ServiceRequest is
+/// active, it represents an authorization to perform the service.
 class ServiceRequestBuilder extends DomainResourceBuilder {
   /// Primary constructor for
   /// [ServiceRequestBuilder]
@@ -51,9 +52,8 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
     FhirDateTimeBuilder? occurrenceDateTime,
     PeriodBuilder? occurrencePeriod,
     TimingBuilder? occurrenceTiming,
-    AsNeededXServiceRequestBuilder? asNeededX,
-    FhirBooleanBuilder? asNeededBoolean,
-    CodeableConceptBuilder? asNeededCodeableConcept,
+    this.asNeeded,
+    this.asNeededFor,
     this.authoredOn,
     this.requester,
     this.performerType,
@@ -74,7 +74,6 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
             occurrenceDateTime ??
             occurrencePeriod ??
             occurrenceTiming,
-        asNeededX = asNeededX ?? asNeededBoolean ?? asNeededCodeableConcept,
         super(
           objectPath: 'ServiceRequest',
           resourceType: R6ResourceType.ServiceRequest,
@@ -294,14 +293,22 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
         },
         objectPath,
       ),
-      asNeededX: JsonParser.parsePolymorphic<AsNeededXServiceRequestBuilder>(
+      asNeeded: JsonParser.parsePrimitive<FhirBooleanBuilder>(
         json,
-        {
-          'asNeededBoolean': FhirBooleanBuilder.fromJson,
-          'asNeededCodeableConcept': CodeableConceptBuilder.fromJson,
-        },
-        objectPath,
+        'asNeeded',
+        FhirBooleanBuilder.fromJson,
+        '$objectPath.asNeeded',
       ),
+      asNeededFor: (json['asNeededFor'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.asNeededFor',
+              },
+            ),
+          )
+          .toList(),
       authoredOn: JsonParser.parsePrimitive<FhirDateTimeBuilder>(
         json,
         'authoredOn',
@@ -530,21 +537,20 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
   /// [code]
   /// A code or reference that identifies a particular service (i.e.,
   /// procedure, diagnostic investigation, or panel of investigations) that
-  /// have been requested.
+  /// has been requested.
   CodeableReferenceBuilder? code;
 
   /// [orderDetail]
-  /// Additional details and instructions about the how the services are to
-  /// be delivered. For example, and order for a urinary catheter may have an
+  /// Additional details and instructions about how the services are to be
+  /// delivered. For example, an order for a urinary catheter may have an
   /// order detail for an external or indwelling catheter, or an order for a
   /// bandage may require additional instructions specifying how the bandage
-  /// should be applied.
+  /// should be applied. Questions or additional information to be gathered
+  /// from a patient may be included here.
   List<ServiceRequestOrderDetailBuilder>? orderDetail;
 
   /// [quantityX]
-  /// An amount of service being requested which can be a quantity ( for
-  /// example $1,500 home modification), a ratio ( for example, 20 half day
-  /// visits per month), or a range (2.0 to 1.8 Gy per fraction).
+  /// An amount of service being requested.
   QuantityXServiceRequestBuilder? quantityX;
 
   /// Getter for [quantityQuantity] as a QuantityBuilder
@@ -591,18 +597,15 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
   /// Getter for [occurrenceTiming] as a TimingBuilder
   TimingBuilder? get occurrenceTiming => occurrenceX?.isAs<TimingBuilder>();
 
-  /// [asNeededX]
-  /// If a CodeableConcept is present, it indicates the pre-condition for
-  /// performing the service. For example "pain", "on flare-up", etc.
-  AsNeededXServiceRequestBuilder? asNeededX;
+  /// [asNeeded]
+  /// Indicates that the service (e.g., procedure, lab test) should be
+  /// performed when needed (Boolean option).
+  FhirBooleanBuilder? asNeeded;
 
-  /// Getter for [asNeededBoolean] as a FhirBooleanBuilder
-  FhirBooleanBuilder? get asNeededBoolean =>
-      asNeededX?.isAs<FhirBooleanBuilder>();
-
-  /// Getter for [asNeededCodeableConcept] as a CodeableConceptBuilder
-  CodeableConceptBuilder? get asNeededCodeableConcept =>
-      asNeededX?.isAs<CodeableConceptBuilder>();
+  /// [asNeededFor]
+  /// Indicates specific criteria that need to be met to perform the service
+  /// (e.g., lab results or symptoms).
+  List<CodeableConceptBuilder>? asNeededFor;
 
   /// [authoredOn]
   /// When the request transitioned to being actionable.
@@ -628,9 +631,8 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
   List<CodeableReferenceBuilder>? location;
 
   /// [reason]
-  /// An explanation or justification for why this service is being requested
-  /// in coded or textual form. This is often for billing purposes. May
-  /// relate to the resources referred to in `supportingInfo`.
+  /// The reason or the indication for requesting the service (e.g.,
+  /// procedure, lab test).
   List<CodeableReferenceBuilder>? reason;
 
   /// [insurance]
@@ -643,8 +645,8 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
   /// Additional clinical information about the patient or specimen that may
   /// influence the services or their interpretations. This information
   /// includes diagnosis, clinical findings and other observations. In
-  /// laboratory ordering these are typically referred to as "ask at order
-  /// entry questions (AOEs)". This includes observations explicitly
+  /// laboratory ordering these are typically referred to as 'ask at order
+  /// entry questions (AOEs).' This includes observations explicitly
   /// requested by the producer (filler) to provide context or supporting
   /// information needed to complete the order. For example, reporting the
   /// amount of inspired oxygen for blood gas measurements.
@@ -748,11 +750,8 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
       addField('occurrence${fhirType.capitalizeFirstLetter()}', occurrenceX);
     }
 
-    if (asNeededX != null) {
-      final fhirType = asNeededX!.fhirType;
-      addField('asNeeded${fhirType.capitalizeFirstLetter()}', asNeededX);
-    }
-
+    addField('asNeeded', asNeeded);
+    addField('asNeededFor', asNeededFor);
     addField('authoredOn', authoredOn);
     addField('requester', requester);
     addField('performerType', performerType);
@@ -800,7 +799,8 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
       'focus',
       'encounter',
       'occurrenceX',
-      'asNeededX',
+      'asNeeded',
+      'asNeededFor',
       'authoredOn',
       'requester',
       'performerType',
@@ -964,20 +964,12 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
           fields.add(occurrenceX!);
         }
       case 'asNeeded':
-        if (asNeededX != null) {
-          fields.add(asNeededX!);
+        if (asNeeded != null) {
+          fields.add(asNeeded!);
         }
-      case 'asNeededX':
-        if (asNeededX != null) {
-          fields.add(asNeededX!);
-        }
-      case 'asNeededBoolean':
-        if (asNeededX is FhirBooleanBuilder) {
-          fields.add(asNeededX!);
-        }
-      case 'asNeededCodeableConcept':
-        if (asNeededX is CodeableConceptBuilder) {
-          fields.add(asNeededX!);
+      case 'asNeededFor':
+        if (asNeededFor != null) {
+          fields.addAll(asNeededFor!);
         }
       case 'authoredOn':
         if (authoredOn != null) {
@@ -1605,40 +1597,40 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
           }
         }
       case 'asNeeded':
-      case 'asNeededX':
         {
-          if (child is AsNeededXServiceRequestBuilder) {
-            asNeededX = child;
+          if (child is FhirBooleanBuilder) {
+            asNeeded = child;
             return;
-          } else {
-            if (child is FhirBooleanBuilder) {
-              asNeededX = child;
-              return;
-            }
-            if (child is CodeableConceptBuilder) {
-              asNeededX = child;
-              return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirBooleanBuilder.tryParse(stringValue);
+              if (converted != null) {
+                asNeeded = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
             }
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'asNeededBoolean':
+      case 'asNeededFor':
         {
-          if (child is FhirBooleanBuilder) {
-            asNeededX = child;
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
+            asNeededFor = child;
             return;
-          } else {
-            throw Exception('Invalid child type for $childName');
-          }
-        }
-      case 'asNeededCodeableConcept':
-        {
-          if (child is CodeableConceptBuilder) {
-            asNeededX = child;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            asNeededFor = [
+              ...(asNeededFor ?? []),
+              child,
+            ];
             return;
-          } else {
-            throw Exception('Invalid child type for $childName');
           }
+          throw Exception('Invalid child type for $childName');
         }
       case 'authoredOn':
         {
@@ -1929,14 +1921,8 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
       case 'occurrenceTiming':
         return ['TimingBuilder'];
       case 'asNeeded':
-      case 'asNeededX':
-        return [
-          'FhirBooleanBuilder',
-          'CodeableConceptBuilder',
-        ];
-      case 'asNeededBoolean':
         return ['FhirBooleanBuilder'];
-      case 'asNeededCodeableConcept':
+      case 'asNeededFor':
         return ['CodeableConceptBuilder'];
       case 'authoredOn':
         return ['FhirDateTimeBuilder'];
@@ -2131,15 +2117,13 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
           return;
         }
       case 'asNeeded':
-      case 'asNeededX':
-      case 'asNeededBoolean':
         {
-          asNeededX = FhirBooleanBuilder.empty();
+          asNeeded = FhirBooleanBuilder.empty();
           return;
         }
-      case 'asNeededCodeableConcept':
+      case 'asNeededFor':
         {
-          asNeededX = CodeableConceptBuilder.empty();
+          asNeededFor = <CodeableConceptBuilder>[];
           return;
         }
       case 'authoredOn':
@@ -2247,7 +2231,8 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
     List<ReferenceBuilder>? focus,
     ReferenceBuilder? encounter,
     OccurrenceXServiceRequestBuilder? occurrenceX,
-    AsNeededXServiceRequestBuilder? asNeededX,
+    FhirBooleanBuilder? asNeeded,
+    List<CodeableConceptBuilder>? asNeededFor,
     FhirDateTimeBuilder? authoredOn,
     ReferenceBuilder? requester,
     CodeableConceptBuilder? performerType,
@@ -2268,8 +2253,6 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
     FhirDateTimeBuilder? occurrenceDateTime,
     PeriodBuilder? occurrencePeriod,
     TimingBuilder? occurrenceTiming,
-    FhirBooleanBuilder? asNeededBoolean,
-    CodeableConceptBuilder? asNeededCodeableConcept,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -2312,10 +2295,8 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
           occurrencePeriod ??
           occurrenceTiming ??
           this.occurrenceX,
-      asNeededX: asNeededX ??
-          asNeededBoolean ??
-          asNeededCodeableConcept ??
-          this.asNeededX,
+      asNeeded: asNeeded ?? this.asNeeded,
+      asNeededFor: asNeededFor ?? this.asNeededFor,
       authoredOn: authoredOn ?? this.authoredOn,
       requester: requester ?? this.requester,
       performerType: performerType ?? this.performerType,
@@ -2513,8 +2494,14 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      asNeededX,
-      o.asNeededX,
+      asNeeded,
+      o.asNeeded,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConceptBuilder>(
+      asNeededFor,
+      o.asNeededFor,
     )) {
       return false;
     }
@@ -2607,11 +2594,12 @@ class ServiceRequestBuilder extends DomainResourceBuilder {
 }
 
 /// [ServiceRequestOrderDetailBuilder]
-/// Additional details and instructions about the how the services are to
-/// be delivered. For example, and order for a urinary catheter may have an
+/// Additional details and instructions about how the services are to be
+/// delivered. For example, an order for a urinary catheter may have an
 /// order detail for an external or indwelling catheter, or an order for a
 /// bandage may require additional instructions specifying how the bandage
-/// should be applied.
+/// should be applied. Questions or additional information to be gathered
+/// from a patient may be included here.
 class ServiceRequestOrderDetailBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [ServiceRequestOrderDetailBuilder]

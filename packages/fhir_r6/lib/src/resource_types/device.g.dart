@@ -18,8 +18,7 @@ abstract class $DeviceCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
-    FhirString? displayName,
-    CodeableReference? definition,
+    Reference? definition,
     List<DeviceUdiCarrier>? udiCarrier,
     FHIRDeviceStatus? status,
     CodeableConcept? availabilityStatus,
@@ -34,18 +33,12 @@ abstract class $DeviceCopyWith<T> extends $DomainResourceCopyWith<T> {
     FhirString? partNumber,
     List<CodeableConcept>? category,
     List<CodeableConcept>? type,
-    List<DeviceVersion>? version,
+    List<DeviceDeviceVersion>? deviceVersion,
     List<DeviceConformsTo>? conformsTo,
     List<DeviceProperty>? property,
-    CodeableConcept? mode,
-    Count? cycle,
-    FhirDuration? duration,
-    Reference? owner,
+    List<DeviceAdditive>? additive,
     List<ContactPoint>? contact,
     Reference? location,
-    FhirUri? url,
-    List<Reference>? endpoint,
-    List<CodeableReference>? gateway,
     List<Annotation>? note,
     List<CodeableConcept>? safety,
     Reference? parent,
@@ -70,7 +63,6 @@ class _$DeviceCopyWithImpl<T> implements $DeviceCopyWith<T> {
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? identifier = fhirSentinel,
-    Object? displayName = fhirSentinel,
     Object? definition = fhirSentinel,
     Object? udiCarrier = fhirSentinel,
     Object? status = fhirSentinel,
@@ -86,18 +78,12 @@ class _$DeviceCopyWithImpl<T> implements $DeviceCopyWith<T> {
     Object? partNumber = fhirSentinel,
     Object? category = fhirSentinel,
     Object? type = fhirSentinel,
-    Object? version = fhirSentinel,
+    Object? deviceVersion = fhirSentinel,
     Object? conformsTo = fhirSentinel,
     Object? property = fhirSentinel,
-    Object? mode = fhirSentinel,
-    Object? cycle = fhirSentinel,
-    Object? duration = fhirSentinel,
-    Object? owner = fhirSentinel,
+    Object? additive = fhirSentinel,
     Object? contact = fhirSentinel,
     Object? location = fhirSentinel,
-    Object? url = fhirSentinel,
-    Object? endpoint = fhirSentinel,
-    Object? gateway = fhirSentinel,
     Object? note = fhirSentinel,
     Object? safety = fhirSentinel,
     Object? parent = fhirSentinel,
@@ -126,12 +112,9 @@ class _$DeviceCopyWithImpl<T> implements $DeviceCopyWith<T> {
         identifier: identical(identifier, fhirSentinel)
             ? _value.identifier
             : identifier as List<Identifier>?,
-        displayName: identical(displayName, fhirSentinel)
-            ? _value.displayName
-            : displayName as FhirString?,
         definition: identical(definition, fhirSentinel)
             ? _value.definition
-            : definition as CodeableReference?,
+            : definition as Reference?,
         udiCarrier: identical(udiCarrier, fhirSentinel)
             ? _value.udiCarrier
             : udiCarrier as List<DeviceUdiCarrier>?,
@@ -174,37 +157,24 @@ class _$DeviceCopyWithImpl<T> implements $DeviceCopyWith<T> {
         type: identical(type, fhirSentinel)
             ? _value.type
             : type as List<CodeableConcept>?,
-        version: identical(version, fhirSentinel)
-            ? _value.version
-            : version as List<DeviceVersion>?,
+        deviceVersion: identical(deviceVersion, fhirSentinel)
+            ? _value.deviceVersion
+            : deviceVersion as List<DeviceDeviceVersion>?,
         conformsTo: identical(conformsTo, fhirSentinel)
             ? _value.conformsTo
             : conformsTo as List<DeviceConformsTo>?,
         property: identical(property, fhirSentinel)
             ? _value.property
             : property as List<DeviceProperty>?,
-        mode: identical(mode, fhirSentinel)
-            ? _value.mode
-            : mode as CodeableConcept?,
-        cycle: identical(cycle, fhirSentinel) ? _value.cycle : cycle as Count?,
-        duration: identical(duration, fhirSentinel)
-            ? _value.duration
-            : duration as FhirDuration?,
-        owner:
-            identical(owner, fhirSentinel) ? _value.owner : owner as Reference?,
+        additive: identical(additive, fhirSentinel)
+            ? _value.additive
+            : additive as List<DeviceAdditive>?,
         contact: identical(contact, fhirSentinel)
             ? _value.contact
             : contact as List<ContactPoint>?,
         location: identical(location, fhirSentinel)
             ? _value.location
             : location as Reference?,
-        url: identical(url, fhirSentinel) ? _value.url : url as FhirUri?,
-        endpoint: identical(endpoint, fhirSentinel)
-            ? _value.endpoint
-            : endpoint as List<Reference>?,
-        gateway: identical(gateway, fhirSentinel)
-            ? _value.gateway
-            : gateway as List<CodeableReference>?,
         note: identical(note, fhirSentinel)
             ? _value.note
             : note as List<Annotation>?,
@@ -234,6 +204,7 @@ abstract class $DeviceUdiCarrierCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     FhirString? deviceIdentifier,
+    FhirUri? deviceIdentifierSystem,
     FhirUri? issuer,
     FhirUri? jurisdiction,
     FhirBase64Binary? carrierAIDC,
@@ -256,6 +227,7 @@ class _$DeviceUdiCarrierCopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? deviceIdentifier = fhirSentinel,
+    Object? deviceIdentifierSystem = fhirSentinel,
     Object? issuer = fhirSentinel,
     Object? jurisdiction = fhirSentinel,
     Object? carrierAIDC = fhirSentinel,
@@ -275,6 +247,9 @@ class _$DeviceUdiCarrierCopyWithImpl<T>
         deviceIdentifier: identical(deviceIdentifier, fhirSentinel)
             ? _value.deviceIdentifier
             : (deviceIdentifier as FhirString?) ?? _value.deviceIdentifier,
+        deviceIdentifierSystem: identical(deviceIdentifierSystem, fhirSentinel)
+            ? _value.deviceIdentifierSystem
+            : deviceIdentifierSystem as FhirUri?,
         issuer: identical(issuer, fhirSentinel)
             ? _value.issuer
             : (issuer as FhirUri?) ?? _value.issuer,
@@ -313,7 +288,7 @@ abstract class $DeviceNameCopyWith<T> extends $BackboneElementCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     FhirString? value,
-    DeviceNameType? type,
+    CodeableConcept? type,
     FhirBoolean? display,
     bool? disallowExtensions,
   });
@@ -349,7 +324,7 @@ class _$DeviceNameCopyWithImpl<T> implements $DeviceNameCopyWith<T> {
             : (value as FhirString?) ?? _value.value,
         type: identical(type, fhirSentinel)
             ? _value.type
-            : (type as DeviceNameType?) ?? _value.type,
+            : (type as CodeableConcept?) ?? _value.type,
         display: identical(display, fhirSentinel)
             ? _value.display
             : display as FhirBoolean?,
@@ -369,7 +344,8 @@ extension DeviceNameCopyWithExtension on DeviceName {
       );
 }
 
-abstract class $DeviceVersionCopyWith<T> extends $BackboneElementCopyWith<T> {
+abstract class $DeviceDeviceVersionCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
   @override
   T call({
     FhirString? id,
@@ -383,11 +359,12 @@ abstract class $DeviceVersionCopyWith<T> extends $BackboneElementCopyWith<T> {
   });
 }
 
-class _$DeviceVersionCopyWithImpl<T> implements $DeviceVersionCopyWith<T> {
-  final DeviceVersion _value;
-  final T Function(DeviceVersion) _then;
+class _$DeviceDeviceVersionCopyWithImpl<T>
+    implements $DeviceDeviceVersionCopyWith<T> {
+  final DeviceDeviceVersion _value;
+  final T Function(DeviceDeviceVersion) _then;
 
-  _$DeviceVersionCopyWithImpl(this._value, this._then);
+  _$DeviceDeviceVersionCopyWithImpl(this._value, this._then);
 
   @override
   T call({
@@ -401,7 +378,7 @@ class _$DeviceVersionCopyWithImpl<T> implements $DeviceVersionCopyWith<T> {
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
-      DeviceVersion(
+      DeviceDeviceVersion(
         id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
         extension_: identical(extension_, fhirSentinel)
             ? _value.extension_
@@ -429,9 +406,9 @@ class _$DeviceVersionCopyWithImpl<T> implements $DeviceVersionCopyWith<T> {
   }
 }
 
-extension DeviceVersionCopyWithExtension on DeviceVersion {
-  $DeviceVersionCopyWith<DeviceVersion> get copyWith =>
-      _$DeviceVersionCopyWithImpl<DeviceVersion>(
+extension DeviceDeviceVersionCopyWithExtension on DeviceDeviceVersion {
+  $DeviceDeviceVersionCopyWith<DeviceDeviceVersion> get copyWith =>
+      _$DeviceDeviceVersionCopyWithImpl<DeviceDeviceVersion>(
         this,
         (value) => value,
       );
@@ -509,7 +486,7 @@ abstract class $DevicePropertyCopyWith<T> extends $BackboneElementCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    Quantity? valueX,
+    ValueXDeviceProperty? valueX,
     bool? disallowExtensions,
   });
 }
@@ -543,7 +520,7 @@ class _$DevicePropertyCopyWithImpl<T> implements $DevicePropertyCopyWith<T> {
             : (type as CodeableConcept?) ?? _value.type,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as Quantity?) ?? _value.valueX,
+            : (valueX as ValueXDeviceProperty?) ?? _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -555,6 +532,74 @@ class _$DevicePropertyCopyWithImpl<T> implements $DevicePropertyCopyWith<T> {
 extension DevicePropertyCopyWithExtension on DeviceProperty {
   $DevicePropertyCopyWith<DeviceProperty> get copyWith =>
       _$DevicePropertyCopyWithImpl<DeviceProperty>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $DeviceAdditiveCopyWith<T> extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    CodeableReference? type,
+    Quantity? quantity,
+    Reference? performer,
+    FhirDateTime? performed,
+    bool? disallowExtensions,
+  });
+}
+
+class _$DeviceAdditiveCopyWithImpl<T> implements $DeviceAdditiveCopyWith<T> {
+  final DeviceAdditive _value;
+  final T Function(DeviceAdditive) _then;
+
+  _$DeviceAdditiveCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? type = fhirSentinel,
+    Object? quantity = fhirSentinel,
+    Object? performer = fhirSentinel,
+    Object? performed = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      DeviceAdditive(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        type: identical(type, fhirSentinel)
+            ? _value.type
+            : (type as CodeableReference?) ?? _value.type,
+        quantity: identical(quantity, fhirSentinel)
+            ? _value.quantity
+            : quantity as Quantity?,
+        performer: identical(performer, fhirSentinel)
+            ? _value.performer
+            : performer as Reference?,
+        performed: identical(performed, fhirSentinel)
+            ? _value.performed
+            : performed as FhirDateTime?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension DeviceAdditiveCopyWithExtension on DeviceAdditive {
+  $DeviceAdditiveCopyWith<DeviceAdditive> get copyWith =>
+      _$DeviceAdditiveCopyWithImpl<DeviceAdditive>(
         this,
         (value) => value,
       );

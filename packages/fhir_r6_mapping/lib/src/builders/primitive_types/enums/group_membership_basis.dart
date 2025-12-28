@@ -6,6 +6,9 @@ enum GroupMembershipBasisBuilderEnum {
   /// definitional
   definitional,
 
+  /// conceptual
+  conceptual,
+
   /// enumerated
   enumerated,
   ;
@@ -19,6 +22,8 @@ enum GroupMembershipBasisBuilderEnum {
     switch (this) {
       case GroupMembershipBasisBuilderEnum.definitional:
         return 'definitional';
+      case GroupMembershipBasisBuilderEnum.conceptual:
+        return 'conceptual';
       case GroupMembershipBasisBuilderEnum.enumerated:
         return 'enumerated';
     }
@@ -44,6 +49,8 @@ enum GroupMembershipBasisBuilderEnum {
     switch (value) {
       case 'definitional':
         return GroupMembershipBasisBuilderEnum.definitional;
+      case 'conceptual':
+        return GroupMembershipBasisBuilderEnum.conceptual;
       case 'enumerated':
         return GroupMembershipBasisBuilderEnum.enumerated;
     }
@@ -140,9 +147,22 @@ class GroupMembershipBasisBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-membership-basis',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Definitional',
+    ),
+  );
+
+  /// conceptual
+  static GroupMembershipBasisBuilder conceptual = GroupMembershipBasisBuilder._(
+    valueString: 'conceptual',
+    valueEnum: GroupMembershipBasisBuilderEnum.conceptual,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/group-membership-basis',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'Conceptual',
     ),
   );
 
@@ -153,7 +173,7 @@ class GroupMembershipBasisBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-membership-basis',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Enumerated',
     ),
@@ -169,6 +189,7 @@ class GroupMembershipBasisBuilder extends FhirCodeEnumBuilder {
   /// List of all enum-like values
   static List<GroupMembershipBasisBuilder> values = [
     definitional,
+    conceptual,
     enumerated,
   ];
 

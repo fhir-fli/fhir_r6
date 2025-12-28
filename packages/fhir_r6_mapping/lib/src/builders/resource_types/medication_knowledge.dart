@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'dart:convert';
 import 'package:fhir_r6/fhir_r6.dart'
     show
@@ -47,7 +45,7 @@ class MedicationKnowledgeBuilder extends DomainResourceBuilder {
     this.code,
     this.status,
     this.author,
-    this.intendedJurisdiction,
+    this.jurisdiction,
     this.name,
     this.relatedMedicationKnowledge,
     this.associatedMedication,
@@ -154,29 +152,29 @@ class MedicationKnowledgeBuilder extends DomainResourceBuilder {
         CodeableConceptBuilder.fromJson,
         '$objectPath.code',
       ),
-      status: JsonParser.parsePrimitive<MedicationKnowledgeStatusCodesBuilder>(
+      status: JsonParser.parsePrimitive<PublicationStatusBuilder>(
         json,
         'status',
-        MedicationKnowledgeStatusCodesBuilder.fromJson,
+        PublicationStatusBuilder.fromJson,
         '$objectPath.status',
       ),
-      author: JsonParser.parseObject<ReferenceBuilder>(
+      author: JsonParser.parseObject<ContactDetailBuilder>(
         json,
         'author',
-        ReferenceBuilder.fromJson,
+        ContactDetailBuilder.fromJson,
         '$objectPath.author',
       ),
-      intendedJurisdiction: (json['intendedJurisdiction'] as List<dynamic>?)
+      jurisdiction: (json['jurisdiction'] as List<dynamic>?)
           ?.map<CodeableConceptBuilder>(
             (v) => CodeableConceptBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.intendedJurisdiction',
+                'objectPath': '$objectPath.jurisdiction',
               },
             ),
           )
           .toList(),
-      name: JsonParser.parsePrimitiveList<FhirStringBuilder>(
+      name: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'name',
         FhirStringBuilder.fromJson,
@@ -379,22 +377,22 @@ class MedicationKnowledgeBuilder extends DomainResourceBuilder {
   /// MedicationKnowledge is in active use within the drug database or
   /// inventory system. The status refers to the validity about the
   /// information of the medication and not to its medicinal properties.
-  MedicationKnowledgeStatusCodesBuilder? status;
+  PublicationStatusBuilder? status;
 
   /// [author]
   /// The creator or owner of the knowledge or information about the
   /// medication.
-  ReferenceBuilder? author;
+  ContactDetailBuilder? author;
 
-  /// [intendedJurisdiction]
+  /// [jurisdiction]
   /// Lists the jurisdictions that this medication knowledge was written for.
-  List<CodeableConceptBuilder>? intendedJurisdiction;
+  List<CodeableConceptBuilder>? jurisdiction;
 
   /// [name]
   /// All of the names for a medication, for example, the name(s) given to a
   /// medication in different countries. For example, acetaminophen and
   /// paracetamol or salbutamol and albuterol.
-  List<FhirStringBuilder>? name;
+  FhirStringBuilder? name;
 
   /// [relatedMedicationKnowledge]
   /// Associated or related medications. For example, if the medication is a
@@ -516,7 +514,7 @@ class MedicationKnowledgeBuilder extends DomainResourceBuilder {
     addField('code', code);
     addField('status', status);
     addField('author', author);
-    addField('intendedJurisdiction', intendedJurisdiction);
+    addField('jurisdiction', jurisdiction);
     addField('name', name);
     addField('relatedMedicationKnowledge', relatedMedicationKnowledge);
     addField('associatedMedication', associatedMedication);
@@ -551,7 +549,7 @@ class MedicationKnowledgeBuilder extends DomainResourceBuilder {
       'code',
       'status',
       'author',
-      'intendedJurisdiction',
+      'jurisdiction',
       'name',
       'relatedMedicationKnowledge',
       'associatedMedication',
@@ -627,13 +625,13 @@ class MedicationKnowledgeBuilder extends DomainResourceBuilder {
         if (author != null) {
           fields.add(author!);
         }
-      case 'intendedJurisdiction':
-        if (intendedJurisdiction != null) {
-          fields.addAll(intendedJurisdiction!);
+      case 'jurisdiction':
+        if (jurisdiction != null) {
+          fields.addAll(jurisdiction!);
         }
       case 'name':
         if (name != null) {
-          fields.addAll(name!);
+          fields.add(name!);
         }
       case 'relatedMedicationKnowledge':
         if (relatedMedicationKnowledge != null) {
@@ -873,7 +871,7 @@ class MedicationKnowledgeBuilder extends DomainResourceBuilder {
         }
       case 'status':
         {
-          if (child is MedicationKnowledgeStatusCodesBuilder) {
+          if (child is PublicationStatusBuilder) {
             status = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
@@ -882,8 +880,7 @@ class MedicationKnowledgeBuilder extends DomainResourceBuilder {
               final stringValue = child.toString();
               // For enums, try to create directly from the string value
               try {
-                final converted =
-                    MedicationKnowledgeStatusCodesBuilder(stringValue);
+                final converted = PublicationStatusBuilder(stringValue);
                 status = converted;
                 return;
               } catch (e) {
@@ -897,22 +894,22 @@ class MedicationKnowledgeBuilder extends DomainResourceBuilder {
         }
       case 'author':
         {
-          if (child is ReferenceBuilder) {
+          if (child is ContactDetailBuilder) {
             author = child;
             return;
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'intendedJurisdiction':
+      case 'jurisdiction':
         {
           if (child is List<CodeableConceptBuilder>) {
             // Replace or create new list
-            intendedJurisdiction = child;
+            jurisdiction = child;
             return;
           } else if (child is CodeableConceptBuilder) {
             // Add single element to existing list or create new list
-            intendedJurisdiction = [
-              ...(intendedJurisdiction ?? []),
+            jurisdiction = [
+              ...(jurisdiction ?? []),
               child,
             ];
             return;
@@ -921,45 +918,16 @@ class MedicationKnowledgeBuilder extends DomainResourceBuilder {
         }
       case 'name':
         {
-          if (child is List<FhirStringBuilder>) {
-            // Replace or create new list
+          if (child is FhirStringBuilder) {
             name = child;
             return;
-          } else if (child is FhirStringBuilder) {
-            // Add single element to existing list or create new list
-            name = [
-              ...(name ?? []),
-              child,
-            ];
-            return;
-          } else if (child is List<PrimitiveTypeBuilder>) {
-            // Try to convert list of primitive types
-            final convertedList = <FhirStringBuilder>[];
-            for (final element in child) {
-              try {
-                final stringValue = element.toString();
-                final converted = FhirStringBuilder.tryParse(stringValue);
-                if (converted != null) {
-                  convertedList.add(converted);
-                }
-              } catch (e) {
-                // Continue if conversion fails
-              }
-            }
-            if (convertedList.isNotEmpty) {
-              name = convertedList;
-              return;
-            }
           } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert a single primitive
+            // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
               final converted = FhirStringBuilder.tryParse(stringValue);
               if (converted != null) {
-                name = [
-                  ...(name ?? []),
-                  converted,
-                ];
+                name = converted;
                 return;
               }
             } catch (e) {
@@ -1224,8 +1192,8 @@ class MedicationKnowledgeBuilder extends DomainResourceBuilder {
       case 'status':
         return ['FhirCodeEnumBuilder'];
       case 'author':
-        return ['ReferenceBuilder'];
-      case 'intendedJurisdiction':
+        return ['ContactDetailBuilder'];
+      case 'jurisdiction':
         return ['CodeableConceptBuilder'];
       case 'name':
         return ['FhirStringBuilder'];
@@ -1319,22 +1287,22 @@ class MedicationKnowledgeBuilder extends DomainResourceBuilder {
         }
       case 'status':
         {
-          status = MedicationKnowledgeStatusCodesBuilder.empty();
+          status = PublicationStatusBuilder.empty();
           return;
         }
       case 'author':
         {
-          author = ReferenceBuilder.empty();
+          author = ContactDetailBuilder.empty();
           return;
         }
-      case 'intendedJurisdiction':
+      case 'jurisdiction':
         {
-          intendedJurisdiction = <CodeableConceptBuilder>[];
+          jurisdiction = <CodeableConceptBuilder>[];
           return;
         }
       case 'name':
         {
-          name = <FhirStringBuilder>[];
+          name = FhirStringBuilder.empty();
           return;
         }
       case 'relatedMedicationKnowledge':
@@ -1429,10 +1397,10 @@ class MedicationKnowledgeBuilder extends DomainResourceBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     List<IdentifierBuilder>? identifier,
     CodeableConceptBuilder? code,
-    MedicationKnowledgeStatusCodesBuilder? status,
-    ReferenceBuilder? author,
-    List<CodeableConceptBuilder>? intendedJurisdiction,
-    List<FhirStringBuilder>? name,
+    PublicationStatusBuilder? status,
+    ContactDetailBuilder? author,
+    List<CodeableConceptBuilder>? jurisdiction,
+    FhirStringBuilder? name,
     List<MedicationKnowledgeRelatedMedicationKnowledgeBuilder>?
         relatedMedicationKnowledge,
     List<ReferenceBuilder>? associatedMedication,
@@ -1468,7 +1436,7 @@ class MedicationKnowledgeBuilder extends DomainResourceBuilder {
       code: code ?? this.code,
       status: status ?? this.status,
       author: author ?? this.author,
-      intendedJurisdiction: intendedJurisdiction ?? this.intendedJurisdiction,
+      jurisdiction: jurisdiction ?? this.jurisdiction,
       name: name ?? this.name,
       relatedMedicationKnowledge:
           relatedMedicationKnowledge ?? this.relatedMedicationKnowledge,
@@ -1586,12 +1554,12 @@ class MedicationKnowledgeBuilder extends DomainResourceBuilder {
       return false;
     }
     if (!listEquals<CodeableConceptBuilder>(
-      intendedJurisdiction,
-      o.intendedJurisdiction,
+      jurisdiction,
+      o.jurisdiction,
     )) {
       return false;
     }
-    if (!listEquals<FhirStringBuilder>(
+    if (!equalsDeepWithNull(
       name,
       o.name,
     )) {

@@ -2,11 +2,12 @@ import 'dart:convert';
 import 'package:fhir_r6/fhir_r6.dart'
     show
         Device,
+        DeviceAdditive,
         DeviceConformsTo,
+        DeviceDeviceVersion,
         DeviceName,
         DeviceProperty,
         DeviceUdiCarrier,
-        DeviceVersion,
         R6ResourceType,
         yamlMapToJson,
         yamlToJson;
@@ -14,9 +15,9 @@ import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [DeviceBuilder]
-/// A type of a manufactured item that is used in the provision of
-/// healthcare without being substantially changed through that activity.
-/// The device may be a medical or non-medical device.
+/// A manufactured item that is used in the provision of healthcare without
+/// being substantially changed through that activity. The device may be a
+/// medical or non-medical device.
 class DeviceBuilder extends DomainResourceBuilder {
   /// Primary constructor for
   /// [DeviceBuilder]
@@ -31,7 +32,6 @@ class DeviceBuilder extends DomainResourceBuilder {
     super.extension_,
     super.modifierExtension,
     this.identifier,
-    this.displayName,
     this.definition,
     this.udiCarrier,
     this.status,
@@ -47,18 +47,12 @@ class DeviceBuilder extends DomainResourceBuilder {
     this.partNumber,
     this.category,
     this.type,
-    this.version,
+    this.deviceVersion,
     this.conformsTo,
     this.property,
-    this.mode,
-    this.cycle,
-    this.duration,
-    this.owner,
+    this.additive,
     this.contact,
     this.location,
-    this.url,
-    this.endpoint,
-    this.gateway,
     this.note,
     this.safety,
     this.parent,
@@ -147,16 +141,10 @@ class DeviceBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      displayName: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'displayName',
-        FhirStringBuilder.fromJson,
-        '$objectPath.displayName',
-      ),
-      definition: JsonParser.parseObject<CodeableReferenceBuilder>(
+      definition: JsonParser.parseObject<ReferenceBuilder>(
         json,
         'definition',
-        CodeableReferenceBuilder.fromJson,
+        ReferenceBuilder.fromJson,
         '$objectPath.definition',
       ),
       udiCarrier: (json['udiCarrier'] as List<dynamic>?)
@@ -259,12 +247,12 @@ class DeviceBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      version: (json['version'] as List<dynamic>?)
-          ?.map<DeviceVersionBuilder>(
-            (v) => DeviceVersionBuilder.fromJson(
+      deviceVersion: (json['deviceVersion'] as List<dynamic>?)
+          ?.map<DeviceDeviceVersionBuilder>(
+            (v) => DeviceDeviceVersionBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.version',
+                'objectPath': '$objectPath.deviceVersion',
               },
             ),
           )
@@ -289,30 +277,16 @@ class DeviceBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      mode: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'mode',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.mode',
-      ),
-      cycle: JsonParser.parseObject<CountBuilder>(
-        json,
-        'cycle',
-        CountBuilder.fromJson,
-        '$objectPath.cycle',
-      ),
-      duration: JsonParser.parseObject<FhirDurationBuilder>(
-        json,
-        'duration',
-        FhirDurationBuilder.fromJson,
-        '$objectPath.duration',
-      ),
-      owner: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'owner',
-        ReferenceBuilder.fromJson,
-        '$objectPath.owner',
-      ),
+      additive: (json['additive'] as List<dynamic>?)
+          ?.map<DeviceAdditiveBuilder>(
+            (v) => DeviceAdditiveBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.additive',
+              },
+            ),
+          )
+          .toList(),
       contact: (json['contact'] as List<dynamic>?)
           ?.map<ContactPointBuilder>(
             (v) => ContactPointBuilder.fromJson(
@@ -329,32 +303,6 @@ class DeviceBuilder extends DomainResourceBuilder {
         ReferenceBuilder.fromJson,
         '$objectPath.location',
       ),
-      url: JsonParser.parsePrimitive<FhirUriBuilder>(
-        json,
-        'url',
-        FhirUriBuilder.fromJson,
-        '$objectPath.url',
-      ),
-      endpoint: (json['endpoint'] as List<dynamic>?)
-          ?.map<ReferenceBuilder>(
-            (v) => ReferenceBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.endpoint',
-              },
-            ),
-          )
-          .toList(),
-      gateway: (json['gateway'] as List<dynamic>?)
-          ?.map<CodeableReferenceBuilder>(
-            (v) => CodeableReferenceBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.gateway',
-              },
-            ),
-          )
-          .toList(),
       note: (json['note'] as List<dynamic>?)
           ?.map<AnnotationBuilder>(
             (v) => AnnotationBuilder.fromJson(
@@ -431,21 +379,14 @@ class DeviceBuilder extends DomainResourceBuilder {
   /// organizations or owners.
   List<IdentifierBuilder>? identifier;
 
-  /// [displayName]
-  /// The name used to display by default when the device is referenced.
-  /// Based on intent of use by the resource creator, this may reflect one of
-  /// the names in Device.name, or may be another simple name.
-  FhirStringBuilder? displayName;
-
   /// [definition]
   /// The reference to the definition for the device.
-  CodeableReferenceBuilder? definition;
+  ReferenceBuilder? definition;
 
   /// [udiCarrier]
-  /// Unique device identifier (UDI) assigned to device label or package.
-  /// Note that the Device may include multiple udiCarriers as it either may
-  /// include just the udiCarrier for the jurisdiction it is sold, or for
-  /// multiple jurisdictions it could have been sold.
+  /// Unique Device Identifier (UDI) placed on a device label or package.
+  /// Note that the Device may include multiple UDIs if it is sold in
+  /// multiple jurisdictions.
   List<DeviceUdiCarrierBuilder>? udiCarrier;
 
   /// [status]
@@ -458,9 +399,8 @@ class DeviceBuilder extends DomainResourceBuilder {
   CodeableConceptBuilder? availabilityStatus;
 
   /// [biologicalSourceEvent]
-  /// An identifier that supports traceability to the event during which
-  /// material in this product from one or more biological entities was
-  /// obtained or pooled.
+  /// A production identifier of the donation, collection, or pooling event
+  /// from which biological material in this device was derived.
   IdentifierBuilder? biologicalSourceEvent;
 
   /// [manufacturer]
@@ -511,10 +451,10 @@ class DeviceBuilder extends DomainResourceBuilder {
   /// instance of the device.
   List<CodeableConceptBuilder>? type;
 
-  /// [version]
+  /// [deviceVersion]
   /// The actual design of the device or software version running on the
   /// device.
-  List<DeviceVersionBuilder>? version;
+  List<DeviceDeviceVersionBuilder>? deviceVersion;
 
   /// [conformsTo]
   /// Identifies the standards, specifications, or formal guidances for the
@@ -530,24 +470,12 @@ class DeviceBuilder extends DomainResourceBuilder {
   /// captured in more specific attributes.
   List<DevicePropertyBuilder>? property;
 
-  /// [mode]
-  /// The designated condition for performing a task with the device.
-  CodeableConceptBuilder? mode;
-
-  /// [cycle]
-  /// The series of occurrences that repeats during the operation of the
-  /// device.
-  CountBuilder? cycle;
-
-  /// [duration]
-  /// A measurement of time during the device's operation (e.g., days, hours,
-  /// mins, etc.).
-  FhirDurationBuilder? duration;
-
-  /// [owner]
-  /// An organization that is responsible for the provision and ongoing
-  /// maintenance of the device.
-  ReferenceBuilder? owner;
+  /// [additive]
+  /// Material added to a container device (typically used in specimen
+  /// collection or initial processing). The material may be added by the
+  /// device manufacturer or by a different party subsequent to
+  /// manufacturing.
+  List<DeviceAdditiveBuilder>? additive;
 
   /// [contact]
   /// Contact details for an organization or a particular human that is
@@ -557,21 +485,6 @@ class DeviceBuilder extends DomainResourceBuilder {
   /// [location]
   /// The place where the device can be found.
   ReferenceBuilder? location;
-
-  /// [url]
-  /// A network address on which the device may be contacted directly.
-  FhirUriBuilder? url;
-
-  /// [endpoint]
-  /// Technical endpoints providing access to services provided by the device
-  /// defined at this resource.
-  List<ReferenceBuilder>? endpoint;
-
-  /// [gateway]
-  /// The linked device acting as a communication controller, data collector,
-  /// translator, or concentrator for the current device (e.g., mobile phone
-  /// application that relays a blood pressure device's data).
-  List<CodeableReferenceBuilder>? gateway;
 
   /// [note]
   /// Descriptive information, usage information or implantation information
@@ -634,7 +547,6 @@ class DeviceBuilder extends DomainResourceBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('identifier', identifier);
-    addField('displayName', displayName);
     addField('definition', definition);
     addField('udiCarrier', udiCarrier);
     addField('status', status);
@@ -650,18 +562,12 @@ class DeviceBuilder extends DomainResourceBuilder {
     addField('partNumber', partNumber);
     addField('category', category);
     addField('type', type);
-    addField('version', version);
+    addField('deviceVersion', deviceVersion);
     addField('conformsTo', conformsTo);
     addField('property', property);
-    addField('mode', mode);
-    addField('cycle', cycle);
-    addField('duration', duration);
-    addField('owner', owner);
+    addField('additive', additive);
     addField('contact', contact);
     addField('location', location);
-    addField('url', url);
-    addField('endpoint', endpoint);
-    addField('gateway', gateway);
     addField('note', note);
     addField('safety', safety);
     addField('parent', parent);
@@ -681,7 +587,6 @@ class DeviceBuilder extends DomainResourceBuilder {
       'extension',
       'modifierExtension',
       'identifier',
-      'displayName',
       'definition',
       'udiCarrier',
       'status',
@@ -697,18 +602,12 @@ class DeviceBuilder extends DomainResourceBuilder {
       'partNumber',
       'category',
       'type',
-      'version',
+      'deviceVersion',
       'conformsTo',
       'property',
-      'mode',
-      'cycle',
-      'duration',
-      'owner',
+      'additive',
       'contact',
       'location',
-      'url',
-      'endpoint',
-      'gateway',
       'note',
       'safety',
       'parent',
@@ -759,10 +658,6 @@ class DeviceBuilder extends DomainResourceBuilder {
       case 'identifier':
         if (identifier != null) {
           fields.addAll(identifier!);
-        }
-      case 'displayName':
-        if (displayName != null) {
-          fields.add(displayName!);
         }
       case 'definition':
         if (definition != null) {
@@ -824,9 +719,9 @@ class DeviceBuilder extends DomainResourceBuilder {
         if (type != null) {
           fields.addAll(type!);
         }
-      case 'version':
-        if (version != null) {
-          fields.addAll(version!);
+      case 'deviceVersion':
+        if (deviceVersion != null) {
+          fields.addAll(deviceVersion!);
         }
       case 'conformsTo':
         if (conformsTo != null) {
@@ -836,21 +731,9 @@ class DeviceBuilder extends DomainResourceBuilder {
         if (property != null) {
           fields.addAll(property!);
         }
-      case 'mode':
-        if (mode != null) {
-          fields.add(mode!);
-        }
-      case 'cycle':
-        if (cycle != null) {
-          fields.add(cycle!);
-        }
-      case 'duration':
-        if (duration != null) {
-          fields.add(duration!);
-        }
-      case 'owner':
-        if (owner != null) {
-          fields.add(owner!);
+      case 'additive':
+        if (additive != null) {
+          fields.addAll(additive!);
         }
       case 'contact':
         if (contact != null) {
@@ -859,18 +742,6 @@ class DeviceBuilder extends DomainResourceBuilder {
       case 'location':
         if (location != null) {
           fields.add(location!);
-        }
-      case 'url':
-        if (url != null) {
-          fields.add(url!);
-        }
-      case 'endpoint':
-        if (endpoint != null) {
-          fields.addAll(endpoint!);
-        }
-      case 'gateway':
-        if (gateway != null) {
-          fields.addAll(gateway!);
         }
       case 'note':
         if (note != null) {
@@ -1056,29 +927,9 @@ class DeviceBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'displayName':
-        {
-          if (child is FhirStringBuilder) {
-            displayName = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                displayName = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
       case 'definition':
         {
-          if (child is CodeableReferenceBuilder) {
+          if (child is ReferenceBuilder) {
             definition = child;
             return;
           }
@@ -1327,16 +1178,16 @@ class DeviceBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'version':
+      case 'deviceVersion':
         {
-          if (child is List<DeviceVersionBuilder>) {
+          if (child is List<DeviceDeviceVersionBuilder>) {
             // Replace or create new list
-            version = child;
+            deviceVersion = child;
             return;
-          } else if (child is DeviceVersionBuilder) {
+          } else if (child is DeviceDeviceVersionBuilder) {
             // Add single element to existing list or create new list
-            version = [
-              ...(version ?? []),
+            deviceVersion = [
+              ...(deviceVersion ?? []),
               child,
             ];
             return;
@@ -1375,34 +1226,18 @@ class DeviceBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'mode':
+      case 'additive':
         {
-          if (child is CodeableConceptBuilder) {
-            mode = child;
+          if (child is List<DeviceAdditiveBuilder>) {
+            // Replace or create new list
+            additive = child;
             return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'cycle':
-        {
-          if (child is CountBuilder) {
-            cycle = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'duration':
-        {
-          if (child is FhirDurationBuilder) {
-            duration = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'owner':
-        {
-          if (child is ReferenceBuilder) {
-            owner = child;
+          } else if (child is DeviceAdditiveBuilder) {
+            // Add single element to existing list or create new list
+            additive = [
+              ...(additive ?? []),
+              child,
+            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -1427,58 +1262,6 @@ class DeviceBuilder extends DomainResourceBuilder {
         {
           if (child is ReferenceBuilder) {
             location = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'url':
-        {
-          if (child is FhirUriBuilder) {
-            url = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirUriBuilder.tryParse(stringValue);
-              if (converted != null) {
-                url = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'endpoint':
-        {
-          if (child is List<ReferenceBuilder>) {
-            // Replace or create new list
-            endpoint = child;
-            return;
-          } else if (child is ReferenceBuilder) {
-            // Add single element to existing list or create new list
-            endpoint = [
-              ...(endpoint ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'gateway':
-        {
-          if (child is List<CodeableReferenceBuilder>) {
-            // Replace or create new list
-            gateway = child;
-            return;
-          } else if (child is CodeableReferenceBuilder) {
-            // Add single element to existing list or create new list
-            gateway = [
-              ...(gateway ?? []),
-              child,
-            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -1551,10 +1334,8 @@ class DeviceBuilder extends DomainResourceBuilder {
         return ['FhirExtensionBuilder'];
       case 'identifier':
         return ['IdentifierBuilder'];
-      case 'displayName':
-        return ['FhirStringBuilder'];
       case 'definition':
-        return ['CodeableReferenceBuilder'];
+        return ['ReferenceBuilder'];
       case 'udiCarrier':
         return ['DeviceUdiCarrierBuilder'];
       case 'status':
@@ -1583,30 +1364,18 @@ class DeviceBuilder extends DomainResourceBuilder {
         return ['CodeableConceptBuilder'];
       case 'type':
         return ['CodeableConceptBuilder'];
-      case 'version':
-        return ['DeviceVersionBuilder'];
+      case 'deviceVersion':
+        return ['DeviceDeviceVersionBuilder'];
       case 'conformsTo':
         return ['DeviceConformsToBuilder'];
       case 'property':
         return ['DevicePropertyBuilder'];
-      case 'mode':
-        return ['CodeableConceptBuilder'];
-      case 'cycle':
-        return ['CountBuilder'];
-      case 'duration':
-        return ['FhirDurationBuilder'];
-      case 'owner':
-        return ['ReferenceBuilder'];
+      case 'additive':
+        return ['DeviceAdditiveBuilder'];
       case 'contact':
         return ['ContactPointBuilder'];
       case 'location':
         return ['ReferenceBuilder'];
-      case 'url':
-        return ['FhirUriBuilder'];
-      case 'endpoint':
-        return ['ReferenceBuilder'];
-      case 'gateway':
-        return ['CodeableReferenceBuilder'];
       case 'note':
         return ['AnnotationBuilder'];
       case 'safety':
@@ -1668,14 +1437,9 @@ class DeviceBuilder extends DomainResourceBuilder {
           identifier = <IdentifierBuilder>[];
           return;
         }
-      case 'displayName':
-        {
-          displayName = FhirStringBuilder.empty();
-          return;
-        }
       case 'definition':
         {
-          definition = CodeableReferenceBuilder.empty();
+          definition = ReferenceBuilder.empty();
           return;
         }
       case 'udiCarrier':
@@ -1748,9 +1512,9 @@ class DeviceBuilder extends DomainResourceBuilder {
           type = <CodeableConceptBuilder>[];
           return;
         }
-      case 'version':
+      case 'deviceVersion':
         {
-          version = <DeviceVersionBuilder>[];
+          deviceVersion = <DeviceDeviceVersionBuilder>[];
           return;
         }
       case 'conformsTo':
@@ -1763,24 +1527,9 @@ class DeviceBuilder extends DomainResourceBuilder {
           property = <DevicePropertyBuilder>[];
           return;
         }
-      case 'mode':
+      case 'additive':
         {
-          mode = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'cycle':
-        {
-          cycle = CountBuilder.empty();
-          return;
-        }
-      case 'duration':
-        {
-          duration = FhirDurationBuilder.empty();
-          return;
-        }
-      case 'owner':
-        {
-          owner = ReferenceBuilder.empty();
+          additive = <DeviceAdditiveBuilder>[];
           return;
         }
       case 'contact':
@@ -1791,21 +1540,6 @@ class DeviceBuilder extends DomainResourceBuilder {
       case 'location':
         {
           location = ReferenceBuilder.empty();
-          return;
-        }
-      case 'url':
-        {
-          url = FhirUriBuilder.empty();
-          return;
-        }
-      case 'endpoint':
-        {
-          endpoint = <ReferenceBuilder>[];
-          return;
-        }
-      case 'gateway':
-        {
-          gateway = <CodeableReferenceBuilder>[];
           return;
         }
       case 'note':
@@ -1841,8 +1575,7 @@ class DeviceBuilder extends DomainResourceBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     List<IdentifierBuilder>? identifier,
-    FhirStringBuilder? displayName,
-    CodeableReferenceBuilder? definition,
+    ReferenceBuilder? definition,
     List<DeviceUdiCarrierBuilder>? udiCarrier,
     FHIRDeviceStatusBuilder? status,
     CodeableConceptBuilder? availabilityStatus,
@@ -1857,18 +1590,12 @@ class DeviceBuilder extends DomainResourceBuilder {
     FhirStringBuilder? partNumber,
     List<CodeableConceptBuilder>? category,
     List<CodeableConceptBuilder>? type,
-    List<DeviceVersionBuilder>? version,
+    List<DeviceDeviceVersionBuilder>? deviceVersion,
     List<DeviceConformsToBuilder>? conformsTo,
     List<DevicePropertyBuilder>? property,
-    CodeableConceptBuilder? mode,
-    CountBuilder? cycle,
-    FhirDurationBuilder? duration,
-    ReferenceBuilder? owner,
+    List<DeviceAdditiveBuilder>? additive,
     List<ContactPointBuilder>? contact,
     ReferenceBuilder? location,
-    FhirUriBuilder? url,
-    List<ReferenceBuilder>? endpoint,
-    List<CodeableReferenceBuilder>? gateway,
     List<AnnotationBuilder>? note,
     List<CodeableConceptBuilder>? safety,
     ReferenceBuilder? parent,
@@ -1888,7 +1615,6 @@ class DeviceBuilder extends DomainResourceBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       identifier: identifier ?? this.identifier,
-      displayName: displayName ?? this.displayName,
       definition: definition ?? this.definition,
       udiCarrier: udiCarrier ?? this.udiCarrier,
       status: status ?? this.status,
@@ -1905,18 +1631,12 @@ class DeviceBuilder extends DomainResourceBuilder {
       partNumber: partNumber ?? this.partNumber,
       category: category ?? this.category,
       type: type ?? this.type,
-      version: version ?? this.version,
+      deviceVersion: deviceVersion ?? this.deviceVersion,
       conformsTo: conformsTo ?? this.conformsTo,
       property: property ?? this.property,
-      mode: mode ?? this.mode,
-      cycle: cycle ?? this.cycle,
-      duration: duration ?? this.duration,
-      owner: owner ?? this.owner,
+      additive: additive ?? this.additive,
       contact: contact ?? this.contact,
       location: location ?? this.location,
-      url: url ?? this.url,
-      endpoint: endpoint ?? this.endpoint,
-      gateway: gateway ?? this.gateway,
       note: note ?? this.note,
       safety: safety ?? this.safety,
       parent: parent ?? this.parent,
@@ -1997,12 +1717,6 @@ class DeviceBuilder extends DomainResourceBuilder {
     if (!listEquals<IdentifierBuilder>(
       identifier,
       o.identifier,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      displayName,
-      o.displayName,
     )) {
       return false;
     }
@@ -2096,9 +1810,9 @@ class DeviceBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<DeviceVersionBuilder>(
-      version,
-      o.version,
+    if (!listEquals<DeviceDeviceVersionBuilder>(
+      deviceVersion,
+      o.deviceVersion,
     )) {
       return false;
     }
@@ -2114,27 +1828,9 @@ class DeviceBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      mode,
-      o.mode,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      cycle,
-      o.cycle,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      duration,
-      o.duration,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      owner,
-      o.owner,
+    if (!listEquals<DeviceAdditiveBuilder>(
+      additive,
+      o.additive,
     )) {
       return false;
     }
@@ -2147,24 +1843,6 @@ class DeviceBuilder extends DomainResourceBuilder {
     if (!equalsDeepWithNull(
       location,
       o.location,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      url,
-      o.url,
-    )) {
-      return false;
-    }
-    if (!listEquals<ReferenceBuilder>(
-      endpoint,
-      o.endpoint,
-    )) {
-      return false;
-    }
-    if (!listEquals<CodeableReferenceBuilder>(
-      gateway,
-      o.gateway,
     )) {
       return false;
     }
@@ -2191,10 +1869,9 @@ class DeviceBuilder extends DomainResourceBuilder {
 }
 
 /// [DeviceUdiCarrierBuilder]
-/// Unique device identifier (UDI) assigned to device label or package.
-/// Note that the Device may include multiple udiCarriers as it either may
-/// include just the udiCarrier for the jurisdiction it is sold, or for
-/// multiple jurisdictions it could have been sold.
+/// Unique Device Identifier (UDI) placed on a device label or package.
+/// Note that the Device may include multiple UDIs if it is sold in
+/// multiple jurisdictions.
 class DeviceUdiCarrierBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [DeviceUdiCarrierBuilder]
@@ -2204,6 +1881,7 @@ class DeviceUdiCarrierBuilder extends BackboneElementBuilder {
     super.extension_,
     super.modifierExtension,
     this.deviceIdentifier,
+    this.deviceIdentifierSystem,
     this.issuer,
     this.jurisdiction,
     this.carrierAIDC,
@@ -2258,6 +1936,12 @@ class DeviceUdiCarrierBuilder extends BackboneElementBuilder {
         'deviceIdentifier',
         FhirStringBuilder.fromJson,
         '$objectPath.deviceIdentifier',
+      ),
+      deviceIdentifierSystem: JsonParser.parsePrimitive<FhirUriBuilder>(
+        json,
+        'deviceIdentifierSystem',
+        FhirUriBuilder.fromJson,
+        '$objectPath.deviceIdentifierSystem',
       ),
       issuer: JsonParser.parsePrimitive<FhirUriBuilder>(
         json,
@@ -2335,9 +2019,17 @@ class DeviceUdiCarrierBuilder extends BackboneElementBuilder {
   String get fhirType => 'DeviceUdiCarrier';
 
   /// [deviceIdentifier]
-  /// The device identifier (DI) is a mandatory, fixed portion of a UDI that
-  /// identifies the labeler and the specific version or model of a device.
+  /// The device identifier (UDI-DI) is a mandatory, fixed portion of a UDI
+  /// that identifies the labeler and the specific version or model of a
+  /// device. The UDI-DI portion is placed on a device label or package. Note
+  /// that the DeviceDefinition may include multiple UDI-DIs if it is sold in
+  /// multiple jurisdictions.
   FhirStringBuilder? deviceIdentifier;
+
+  /// [deviceIdentifierSystem]
+  /// Establishes the namespace for the device identifier value that is an
+  /// URL, OID, urn or uuid.
+  FhirUriBuilder? deviceIdentifierSystem;
 
   /// [issuer]
   /// Organization that is charged with issuing UDIs for devices. For
@@ -2363,10 +2055,10 @@ class DeviceUdiCarrierBuilder extends BackboneElementBuilder {
 
   /// [carrierAIDC]
   /// The full UDI carrier of the Automatic Identification and Data Capture
-  /// (AIDC) technology representation of the barcode string as printed on
-  /// the packaging of the device - e.g., a barcode or RFID. Because of
-  /// limitations on character sets in XML and the need to round-trip JSON
-  /// data through XML, AIDC Formats *SHALL* be base64 encoded.
+  /// (AIDC) technology representation as printed on the packaging of the
+  /// device - e.g., a barcode or RFID. Because of limitations on character
+  /// sets in XML and the need to round-trip JSON data through XML, AIDC
+  /// Formats *SHALL* be base64 encoded.
   FhirBase64BinaryBuilder? carrierAIDC;
 
   /// [carrierHRF]
@@ -2418,6 +2110,7 @@ class DeviceUdiCarrierBuilder extends BackboneElementBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('deviceIdentifier', deviceIdentifier);
+    addField('deviceIdentifierSystem', deviceIdentifierSystem);
     addField('issuer', issuer);
     addField('jurisdiction', jurisdiction);
     addField('carrierAIDC', carrierAIDC);
@@ -2434,6 +2127,7 @@ class DeviceUdiCarrierBuilder extends BackboneElementBuilder {
       'extension',
       'modifierExtension',
       'deviceIdentifier',
+      'deviceIdentifierSystem',
       'issuer',
       'jurisdiction',
       'carrierAIDC',
@@ -2466,6 +2160,10 @@ class DeviceUdiCarrierBuilder extends BackboneElementBuilder {
       case 'deviceIdentifier':
         if (deviceIdentifier != null) {
           fields.add(deviceIdentifier!);
+        }
+      case 'deviceIdentifierSystem':
+        if (deviceIdentifierSystem != null) {
+          fields.add(deviceIdentifierSystem!);
         }
       case 'issuer':
         if (issuer != null) {
@@ -2580,6 +2278,26 @@ class DeviceUdiCarrierBuilder extends BackboneElementBuilder {
               final converted = FhirStringBuilder.tryParse(stringValue);
               if (converted != null) {
                 deviceIdentifier = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'deviceIdentifierSystem':
+        {
+          if (child is FhirUriBuilder) {
+            deviceIdentifierSystem = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirUriBuilder.tryParse(stringValue);
+              if (converted != null) {
+                deviceIdentifierSystem = converted;
                 return;
               }
             } catch (e) {
@@ -2709,6 +2427,8 @@ class DeviceUdiCarrierBuilder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'deviceIdentifier':
         return ['FhirStringBuilder'];
+      case 'deviceIdentifierSystem':
+        return ['FhirUriBuilder'];
       case 'issuer':
         return ['FhirUriBuilder'];
       case 'jurisdiction':
@@ -2749,6 +2469,11 @@ class DeviceUdiCarrierBuilder extends BackboneElementBuilder {
           deviceIdentifier = FhirStringBuilder.empty();
           return;
         }
+      case 'deviceIdentifierSystem':
+        {
+          deviceIdentifierSystem = FhirUriBuilder.empty();
+          return;
+        }
       case 'issuer':
         {
           issuer = FhirUriBuilder.empty();
@@ -2787,6 +2512,7 @@ class DeviceUdiCarrierBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     FhirStringBuilder? deviceIdentifier,
+    FhirUriBuilder? deviceIdentifierSystem,
     FhirUriBuilder? issuer,
     FhirUriBuilder? jurisdiction,
     FhirBase64BinaryBuilder? carrierAIDC,
@@ -2804,6 +2530,8 @@ class DeviceUdiCarrierBuilder extends BackboneElementBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       deviceIdentifier: deviceIdentifier ?? this.deviceIdentifier,
+      deviceIdentifierSystem:
+          deviceIdentifierSystem ?? this.deviceIdentifierSystem,
       issuer: issuer ?? this.issuer,
       jurisdiction: jurisdiction ?? this.jurisdiction,
       carrierAIDC: carrierAIDC ?? this.carrierAIDC,
@@ -2856,6 +2584,12 @@ class DeviceUdiCarrierBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       deviceIdentifier,
       o.deviceIdentifier,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      deviceIdentifierSystem,
+      o.deviceIdentifierSystem,
     )) {
       return false;
     }
@@ -2918,7 +2652,7 @@ class DeviceNameBuilder extends BackboneElementBuilder {
   /// For Builder classes, no fields are required
   factory DeviceNameBuilder.empty() => DeviceNameBuilder(
         value: FhirStringBuilder.empty(),
-        type: DeviceNameTypeBuilder.values.first,
+        type: CodeableConceptBuilder.empty(),
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -2959,10 +2693,10 @@ class DeviceNameBuilder extends BackboneElementBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.value',
       ),
-      type: JsonParser.parsePrimitive<DeviceNameTypeBuilder>(
+      type: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
         'type',
-        DeviceNameTypeBuilder.fromJson,
+        CodeableConceptBuilder.fromJson,
         '$objectPath.type',
       ),
       display: JsonParser.parsePrimitive<FhirBooleanBuilder>(
@@ -3023,7 +2757,7 @@ class DeviceNameBuilder extends BackboneElementBuilder {
   /// [type]
   /// Indicates the kind of name. RegisteredName | UserFriendlyName |
   /// PatientReportedName.
-  DeviceNameTypeBuilder? type;
+  CodeableConceptBuilder? type;
 
   /// [display]
   /// Indicates the default or preferred name to be displayed.
@@ -3223,24 +2957,9 @@ class DeviceNameBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          if (child is DeviceNameTypeBuilder) {
+          if (child is CodeableConceptBuilder) {
             type = child;
             return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              // For enums, try to create directly from the string value
-              try {
-                final converted = DeviceNameTypeBuilder(stringValue);
-                type = converted;
-                return;
-              } catch (e) {
-                // Continue if enum creation fails
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -3283,7 +3002,7 @@ class DeviceNameBuilder extends BackboneElementBuilder {
       case 'value':
         return ['FhirStringBuilder'];
       case 'type':
-        return ['FhirCodeEnumBuilder'];
+        return ['CodeableConceptBuilder'];
       case 'display':
         return ['FhirBooleanBuilder'];
       default:
@@ -3318,7 +3037,7 @@ class DeviceNameBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          type = DeviceNameTypeBuilder.empty();
+          type = CodeableConceptBuilder.empty();
           return;
         }
       case 'display':
@@ -3339,7 +3058,7 @@ class DeviceNameBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     FhirStringBuilder? value,
-    DeviceNameTypeBuilder? type,
+    CodeableConceptBuilder? type,
     FhirBooleanBuilder? display,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -3421,14 +3140,14 @@ class DeviceNameBuilder extends BackboneElementBuilder {
   }
 }
 
-/// [DeviceVersionBuilder]
+/// [DeviceDeviceVersionBuilder]
 /// The actual design of the device or software version running on the
 /// device.
-class DeviceVersionBuilder extends BackboneElementBuilder {
+class DeviceDeviceVersionBuilder extends BackboneElementBuilder {
   /// Primary constructor for
-  /// [DeviceVersionBuilder]
+  /// [DeviceDeviceVersionBuilder]
 
-  DeviceVersionBuilder({
+  DeviceDeviceVersionBuilder({
     super.id,
     super.extension_,
     super.modifierExtension,
@@ -3438,21 +3157,21 @@ class DeviceVersionBuilder extends BackboneElementBuilder {
     this.value,
     super.disallowExtensions,
   }) : super(
-          objectPath: 'Device.version',
+          objectPath: 'Device.deviceVersion',
         );
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
-  factory DeviceVersionBuilder.empty() => DeviceVersionBuilder(
+  factory DeviceDeviceVersionBuilder.empty() => DeviceDeviceVersionBuilder(
         value: FhirStringBuilder.empty(),
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory DeviceVersionBuilder.fromJson(
+  factory DeviceDeviceVersionBuilder.fromJson(
     Map<String, dynamic> json,
   ) {
-    const objectPath = 'Device.version';
-    return DeviceVersionBuilder(
+    const objectPath = 'Device.deviceVersion';
+    return DeviceDeviceVersionBuilder(
       id: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'id',
@@ -3506,22 +3225,22 @@ class DeviceVersionBuilder extends BackboneElementBuilder {
     );
   }
 
-  /// Deserialize [DeviceVersionBuilder]
+  /// Deserialize [DeviceDeviceVersionBuilder]
   /// from a [String] or [YamlMap] object
-  factory DeviceVersionBuilder.fromYaml(
+  factory DeviceDeviceVersionBuilder.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return DeviceVersionBuilder.fromJson(
+      return DeviceDeviceVersionBuilder.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return DeviceVersionBuilder.fromJson(
+      return DeviceDeviceVersionBuilder.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'DeviceVersionBuilder '
+        'DeviceDeviceVersionBuilder '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -3529,16 +3248,16 @@ class DeviceVersionBuilder extends BackboneElementBuilder {
   }
 
   /// Factory constructor for
-  /// [DeviceVersionBuilder]
+  /// [DeviceDeviceVersionBuilder]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory DeviceVersionBuilder.fromJsonString(
+  factory DeviceDeviceVersionBuilder.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return DeviceVersionBuilder.fromJson(json);
+      return DeviceDeviceVersionBuilder.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -3546,7 +3265,7 @@ class DeviceVersionBuilder extends BackboneElementBuilder {
   }
 
   @override
-  String get fhirType => 'DeviceVersion';
+  String get fhirType => 'DeviceDeviceVersion';
 
   /// [type]
   /// The type of the device version, e.g. manufacturer, approved, internal.
@@ -3565,12 +3284,12 @@ class DeviceVersionBuilder extends BackboneElementBuilder {
   /// The version text.
   FhirStringBuilder? value;
 
-  /// Converts a [DeviceVersionBuilder]
-  /// to [DeviceVersion]
+  /// Converts a [DeviceDeviceVersionBuilder]
+  /// to [DeviceDeviceVersion]
   @override
-  DeviceVersion build() => DeviceVersion.fromJson(toJson());
+  DeviceDeviceVersion build() => DeviceDeviceVersion.fromJson(toJson());
 
-  /// Converts a [DeviceVersionBuilder]
+  /// Converts a [DeviceDeviceVersionBuilder]
   /// to a [Map<String, dynamic>]
   @override
   Map<String, dynamic> toJson() {
@@ -3828,7 +3547,7 @@ class DeviceVersionBuilder extends BackboneElementBuilder {
     }
   }
 
-  /// Creates a new [DeviceVersionBuilder]
+  /// Creates a new [DeviceDeviceVersionBuilder]
   ///  with a chosen field set to an empty object.
   @override
   void createProperty(String propertyName) {
@@ -3874,9 +3593,9 @@ class DeviceVersionBuilder extends BackboneElementBuilder {
   }
 
   @override
-  DeviceVersionBuilder clone() => throw UnimplementedError();
+  DeviceDeviceVersionBuilder clone() => throw UnimplementedError();
   @override
-  DeviceVersionBuilder copyWith({
+  DeviceDeviceVersionBuilder copyWith({
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
@@ -3891,7 +3610,7 @@ class DeviceVersionBuilder extends BackboneElementBuilder {
     String? objectPath,
   }) {
     final newObjectPath = this.objectPath;
-    final newResult = DeviceVersionBuilder(
+    final newResult = DeviceDeviceVersionBuilder(
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
@@ -3920,7 +3639,7 @@ class DeviceVersionBuilder extends BackboneElementBuilder {
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! DeviceVersionBuilder) {
+    if (o is! DeviceDeviceVersionBuilder) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -5160,6 +4879,549 @@ class DevicePropertyBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       valueX,
       o.valueX,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [DeviceAdditiveBuilder]
+/// Material added to a container device (typically used in specimen
+/// collection or initial processing). The material may be added by the
+/// device manufacturer or by a different party subsequent to
+/// manufacturing.
+class DeviceAdditiveBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [DeviceAdditiveBuilder]
+
+  DeviceAdditiveBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.type,
+    this.quantity,
+    this.performer,
+    this.performed,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'Device.additive',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory DeviceAdditiveBuilder.empty() => DeviceAdditiveBuilder(
+        type: CodeableReferenceBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory DeviceAdditiveBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'Device.additive';
+    return DeviceAdditiveBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      type: JsonParser.parseObject<CodeableReferenceBuilder>(
+        json,
+        'type',
+        CodeableReferenceBuilder.fromJson,
+        '$objectPath.type',
+      ),
+      quantity: JsonParser.parseObject<QuantityBuilder>(
+        json,
+        'quantity',
+        QuantityBuilder.fromJson,
+        '$objectPath.quantity',
+      ),
+      performer: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'performer',
+        ReferenceBuilder.fromJson,
+        '$objectPath.performer',
+      ),
+      performed: JsonParser.parsePrimitive<FhirDateTimeBuilder>(
+        json,
+        'performed',
+        FhirDateTimeBuilder.fromJson,
+        '$objectPath.performed',
+      ),
+    );
+  }
+
+  /// Deserialize [DeviceAdditiveBuilder]
+  /// from a [String] or [YamlMap] object
+  factory DeviceAdditiveBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return DeviceAdditiveBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return DeviceAdditiveBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'DeviceAdditiveBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [DeviceAdditiveBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory DeviceAdditiveBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return DeviceAdditiveBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'DeviceAdditive';
+
+  /// [type]
+  /// The type of the substance added to the container. This is represented
+  /// as a concept from a code system or described in a Substance resource.
+  CodeableReferenceBuilder? type;
+
+  /// [quantity]
+  /// The quantity of the additive substance in the container; may be volume,
+  /// dimensions, or other appropriate measurements, depending on the
+  /// container and additive substance type.
+  QuantityBuilder? quantity;
+
+  /// [performer]
+  /// The performer who adds the substance to the container.
+  ReferenceBuilder? performer;
+
+  /// [performed]
+  /// Time when the additive substance was placed into the container by the
+  /// performer.
+  FhirDateTimeBuilder? performed;
+
+  /// Converts a [DeviceAdditiveBuilder]
+  /// to [DeviceAdditive]
+  @override
+  DeviceAdditive build() => DeviceAdditive.fromJson(toJson());
+
+  /// Converts a [DeviceAdditiveBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('type', type);
+    addField('quantity', quantity);
+    addField('performer', performer);
+    addField('performed', performed);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'type',
+      'quantity',
+      'performer',
+      'performed',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'type':
+        if (type != null) {
+          fields.add(type!);
+        }
+      case 'quantity':
+        if (quantity != null) {
+          fields.add(quantity!);
+        }
+      case 'performer':
+        if (performer != null) {
+          fields.add(performer!);
+        }
+      case 'performed':
+        if (performed != null) {
+          fields.add(performed!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'type':
+        {
+          if (child is CodeableReferenceBuilder) {
+            type = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'quantity':
+        {
+          if (child is QuantityBuilder) {
+            quantity = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'performer':
+        {
+          if (child is ReferenceBuilder) {
+            performer = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'performed':
+        {
+          if (child is FhirDateTimeBuilder) {
+            performed = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirDateTimeBuilder.tryParse(stringValue);
+              if (converted != null) {
+                performed = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'type':
+        return ['CodeableReferenceBuilder'];
+      case 'quantity':
+        return ['QuantityBuilder'];
+      case 'performer':
+        return ['ReferenceBuilder'];
+      case 'performed':
+        return ['FhirDateTimeBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [DeviceAdditiveBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'type':
+        {
+          type = CodeableReferenceBuilder.empty();
+          return;
+        }
+      case 'quantity':
+        {
+          quantity = QuantityBuilder.empty();
+          return;
+        }
+      case 'performer':
+        {
+          performer = ReferenceBuilder.empty();
+          return;
+        }
+      case 'performed':
+        {
+          performed = FhirDateTimeBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  DeviceAdditiveBuilder clone() => throw UnimplementedError();
+  @override
+  DeviceAdditiveBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    CodeableReferenceBuilder? type,
+    QuantityBuilder? quantity,
+    ReferenceBuilder? performer,
+    FhirDateTimeBuilder? performed,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = DeviceAdditiveBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      type: type ?? this.type,
+      quantity: quantity ?? this.quantity,
+      performer: performer ?? this.performer,
+      performed: performed ?? this.performed,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! DeviceAdditiveBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      type,
+      o.type,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      quantity,
+      o.quantity,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      performer,
+      o.performer,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      performed,
+      o.performed,
     )) {
       return false;
     }

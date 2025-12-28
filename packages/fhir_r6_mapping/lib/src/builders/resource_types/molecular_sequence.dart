@@ -2,9 +2,13 @@ import 'dart:convert';
 import 'package:fhir_r6/fhir_r6.dart'
     show
         MolecularSequence,
+        MolecularSequenceConcatenated,
         MolecularSequenceEdit,
+        MolecularSequenceExtracted,
+        MolecularSequenceLiteral,
         MolecularSequenceRelative,
-        MolecularSequenceStartingSequence,
+        MolecularSequenceRepeated,
+        MolecularSequenceSequenceElement,
         R6ResourceType,
         yamlMapToJson,
         yamlToJson;
@@ -28,14 +32,12 @@ class MolecularSequenceBuilder extends DomainResourceBuilder {
     super.modifierExtension,
     this.identifier,
     this.type,
-    this.subject,
-    this.focus,
-    this.specimen,
-    this.device,
-    this.performer,
     this.literal,
-    this.formatted,
+    this.file,
     this.relative,
+    this.extracted,
+    this.repeated,
+    this.concatenated,
   }) : super(
           objectPath: 'MolecularSequence',
           resourceType: R6ResourceType.MolecularSequence,
@@ -127,52 +129,22 @@ class MolecularSequenceBuilder extends DomainResourceBuilder {
         SequenceTypeBuilder.fromJson,
         '$objectPath.type',
       ),
-      subject: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'subject',
-        ReferenceBuilder.fromJson,
-        '$objectPath.subject',
-      ),
-      focus: (json['focus'] as List<dynamic>?)
-          ?.map<ReferenceBuilder>(
-            (v) => ReferenceBuilder.fromJson(
+      literal: (json['literal'] as List<dynamic>?)
+          ?.map<MolecularSequenceLiteralBuilder>(
+            (v) => MolecularSequenceLiteralBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.focus',
+                'objectPath': '$objectPath.literal',
               },
             ),
           )
           .toList(),
-      specimen: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'specimen',
-        ReferenceBuilder.fromJson,
-        '$objectPath.specimen',
-      ),
-      device: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'device',
-        ReferenceBuilder.fromJson,
-        '$objectPath.device',
-      ),
-      performer: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'performer',
-        ReferenceBuilder.fromJson,
-        '$objectPath.performer',
-      ),
-      literal: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'literal',
-        FhirStringBuilder.fromJson,
-        '$objectPath.literal',
-      ),
-      formatted: (json['formatted'] as List<dynamic>?)
+      file: (json['file'] as List<dynamic>?)
           ?.map<AttachmentBuilder>(
             (v) => AttachmentBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.formatted',
+                'objectPath': '$objectPath.file',
               },
             ),
           )
@@ -187,6 +159,33 @@ class MolecularSequenceBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
+      extracted: (json['extracted'] as List<dynamic>?)
+          ?.map<MolecularSequenceExtractedBuilder>(
+            (v) => MolecularSequenceExtractedBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extracted',
+              },
+            ),
+          )
+          .toList(),
+      repeated: (json['repeated'] as List<dynamic>?)
+          ?.map<MolecularSequenceRepeatedBuilder>(
+            (v) => MolecularSequenceRepeatedBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.repeated',
+              },
+            ),
+          )
+          .toList(),
+      concatenated:
+          JsonParser.parseObject<MolecularSequenceConcatenatedBuilder>(
+        json,
+        'concatenated',
+        MolecularSequenceConcatenatedBuilder.fromJson,
+        '$objectPath.concatenated',
+      ),
     );
   }
 
@@ -237,45 +236,37 @@ class MolecularSequenceBuilder extends DomainResourceBuilder {
   List<IdentifierBuilder>? identifier;
 
   /// [type]
-  /// Amino Acid Sequence/ DNA Sequence / RNA Sequence.
+  /// The type of the Molecular Sequence (Amino Acid Sequence, DNA Sequence,
+  /// RNA Sequence).
   SequenceTypeBuilder? type;
 
-  /// [subject]
-  /// Indicates the subject this sequence is associated too.
-  ReferenceBuilder? subject;
-
-  /// [focus]
-  /// The actual focus of a molecular sequence when it is not the patient of
-  /// record representing something or someone associated with the patient
-  /// such as a spouse, parent, child, or sibling. For example, in trio
-  /// testing, the subject would be the child (proband) and the focus would
-  /// be the parent.
-  List<ReferenceBuilder>? focus;
-
-  /// [specimen]
-  /// Specimen used for sequencing.
-  ReferenceBuilder? specimen;
-
-  /// [device]
-  /// The method for sequencing, for example, chip information.
-  ReferenceBuilder? device;
-
-  /// [performer]
-  /// The organization or lab that should be responsible for this result.
-  ReferenceBuilder? performer;
-
   /// [literal]
-  /// Sequence that was observed.
-  FhirStringBuilder? literal;
+  /// A literal representation of a Molecular Sequence.
+  List<MolecularSequenceLiteralBuilder>? literal;
 
-  /// [formatted]
+  /// [file]
   /// Sequence that was observed as file content. Can be an actual file
   /// contents, or referenced by a URL to an external system.
-  List<AttachmentBuilder>? formatted;
+  List<AttachmentBuilder>? file;
 
   /// [relative]
-  /// A sequence defined relative to another sequence.
+  /// A Molecular Sequence that is represented as an ordered series of edits
+  /// on a specified starting sequence.
   List<MolecularSequenceRelativeBuilder>? relative;
+
+  /// [extracted]
+  /// A Molecular Sequence that is represented as an extracted portion of a
+  /// different Molecular Sequence.
+  List<MolecularSequenceExtractedBuilder>? extracted;
+
+  /// [repeated]
+  /// A Molecular Sequence that is represented as a repeated sequence motif.
+  List<MolecularSequenceRepeatedBuilder>? repeated;
+
+  /// [concatenated]
+  /// A Molecular Sequence that is represented as an ordered concatenation of
+  /// two or more Molecular Sequences.
+  MolecularSequenceConcatenatedBuilder? concatenated;
 
   /// Converts a [MolecularSequenceBuilder]
   /// to [MolecularSequence]
@@ -324,14 +315,12 @@ class MolecularSequenceBuilder extends DomainResourceBuilder {
     addField('modifierExtension', modifierExtension);
     addField('identifier', identifier);
     addField('type', type);
-    addField('subject', subject);
-    addField('focus', focus);
-    addField('specimen', specimen);
-    addField('device', device);
-    addField('performer', performer);
     addField('literal', literal);
-    addField('formatted', formatted);
+    addField('file', file);
     addField('relative', relative);
+    addField('extracted', extracted);
+    addField('repeated', repeated);
+    addField('concatenated', concatenated);
     return json;
   }
 
@@ -349,14 +338,12 @@ class MolecularSequenceBuilder extends DomainResourceBuilder {
       'modifierExtension',
       'identifier',
       'type',
-      'subject',
-      'focus',
-      'specimen',
-      'device',
-      'performer',
       'literal',
-      'formatted',
+      'file',
       'relative',
+      'extracted',
+      'repeated',
+      'concatenated',
     ];
   }
 
@@ -409,37 +396,29 @@ class MolecularSequenceBuilder extends DomainResourceBuilder {
         if (type != null) {
           fields.add(type!);
         }
-      case 'subject':
-        if (subject != null) {
-          fields.add(subject!);
-        }
-      case 'focus':
-        if (focus != null) {
-          fields.addAll(focus!);
-        }
-      case 'specimen':
-        if (specimen != null) {
-          fields.add(specimen!);
-        }
-      case 'device':
-        if (device != null) {
-          fields.add(device!);
-        }
-      case 'performer':
-        if (performer != null) {
-          fields.add(performer!);
-        }
       case 'literal':
         if (literal != null) {
-          fields.add(literal!);
+          fields.addAll(literal!);
         }
-      case 'formatted':
-        if (formatted != null) {
-          fields.addAll(formatted!);
+      case 'file':
+        if (file != null) {
+          fields.addAll(file!);
         }
       case 'relative':
         if (relative != null) {
           fields.addAll(relative!);
+        }
+      case 'extracted':
+        if (extracted != null) {
+          fields.addAll(extracted!);
+        }
+      case 'repeated':
+        if (repeated != null) {
+          fields.addAll(repeated!);
+        }
+      case 'concatenated':
+        if (concatenated != null) {
+          fields.add(concatenated!);
         }
       default:
         if (checkValid) {
@@ -636,84 +615,32 @@ class MolecularSequenceBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'subject':
+      case 'literal':
         {
-          if (child is ReferenceBuilder) {
-            subject = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'focus':
-        {
-          if (child is List<ReferenceBuilder>) {
+          if (child is List<MolecularSequenceLiteralBuilder>) {
             // Replace or create new list
-            focus = child;
+            literal = child;
             return;
-          } else if (child is ReferenceBuilder) {
+          } else if (child is MolecularSequenceLiteralBuilder) {
             // Add single element to existing list or create new list
-            focus = [
-              ...(focus ?? []),
+            literal = [
+              ...(literal ?? []),
               child,
             ];
             return;
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'specimen':
-        {
-          if (child is ReferenceBuilder) {
-            specimen = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'device':
-        {
-          if (child is ReferenceBuilder) {
-            device = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'performer':
-        {
-          if (child is ReferenceBuilder) {
-            performer = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'literal':
-        {
-          if (child is FhirStringBuilder) {
-            literal = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                literal = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'formatted':
+      case 'file':
         {
           if (child is List<AttachmentBuilder>) {
             // Replace or create new list
-            formatted = child;
+            file = child;
             return;
           } else if (child is AttachmentBuilder) {
             // Add single element to existing list or create new list
-            formatted = [
-              ...(formatted ?? []),
+            file = [
+              ...(file ?? []),
               child,
             ];
             return;
@@ -732,6 +659,46 @@ class MolecularSequenceBuilder extends DomainResourceBuilder {
               ...(relative ?? []),
               child,
             ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extracted':
+        {
+          if (child is List<MolecularSequenceExtractedBuilder>) {
+            // Replace or create new list
+            extracted = child;
+            return;
+          } else if (child is MolecularSequenceExtractedBuilder) {
+            // Add single element to existing list or create new list
+            extracted = [
+              ...(extracted ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'repeated':
+        {
+          if (child is List<MolecularSequenceRepeatedBuilder>) {
+            // Replace or create new list
+            repeated = child;
+            return;
+          } else if (child is MolecularSequenceRepeatedBuilder) {
+            // Add single element to existing list or create new list
+            repeated = [
+              ...(repeated ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'concatenated':
+        {
+          if (child is MolecularSequenceConcatenatedBuilder) {
+            concatenated = child;
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -766,22 +733,18 @@ class MolecularSequenceBuilder extends DomainResourceBuilder {
         return ['IdentifierBuilder'];
       case 'type':
         return ['FhirCodeEnumBuilder'];
-      case 'subject':
-        return ['ReferenceBuilder'];
-      case 'focus':
-        return ['ReferenceBuilder'];
-      case 'specimen':
-        return ['ReferenceBuilder'];
-      case 'device':
-        return ['ReferenceBuilder'];
-      case 'performer':
-        return ['ReferenceBuilder'];
       case 'literal':
-        return ['FhirStringBuilder'];
-      case 'formatted':
+        return ['MolecularSequenceLiteralBuilder'];
+      case 'file':
         return ['AttachmentBuilder'];
       case 'relative':
         return ['MolecularSequenceRelativeBuilder'];
+      case 'extracted':
+        return ['MolecularSequenceExtractedBuilder'];
+      case 'repeated':
+        return ['MolecularSequenceRepeatedBuilder'];
+      case 'concatenated':
+        return ['MolecularSequenceConcatenatedBuilder'];
       default:
         return <String>[];
     }
@@ -842,44 +805,34 @@ class MolecularSequenceBuilder extends DomainResourceBuilder {
           type = SequenceTypeBuilder.empty();
           return;
         }
-      case 'subject':
-        {
-          subject = ReferenceBuilder.empty();
-          return;
-        }
-      case 'focus':
-        {
-          focus = <ReferenceBuilder>[];
-          return;
-        }
-      case 'specimen':
-        {
-          specimen = ReferenceBuilder.empty();
-          return;
-        }
-      case 'device':
-        {
-          device = ReferenceBuilder.empty();
-          return;
-        }
-      case 'performer':
-        {
-          performer = ReferenceBuilder.empty();
-          return;
-        }
       case 'literal':
         {
-          literal = FhirStringBuilder.empty();
+          literal = <MolecularSequenceLiteralBuilder>[];
           return;
         }
-      case 'formatted':
+      case 'file':
         {
-          formatted = <AttachmentBuilder>[];
+          file = <AttachmentBuilder>[];
           return;
         }
       case 'relative':
         {
           relative = <MolecularSequenceRelativeBuilder>[];
+          return;
+        }
+      case 'extracted':
+        {
+          extracted = <MolecularSequenceExtractedBuilder>[];
+          return;
+        }
+      case 'repeated':
+        {
+          repeated = <MolecularSequenceRepeatedBuilder>[];
+          return;
+        }
+      case 'concatenated':
+        {
+          concatenated = MolecularSequenceConcatenatedBuilder.empty();
           return;
         }
       default:
@@ -901,14 +854,12 @@ class MolecularSequenceBuilder extends DomainResourceBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     List<IdentifierBuilder>? identifier,
     SequenceTypeBuilder? type,
-    ReferenceBuilder? subject,
-    List<ReferenceBuilder>? focus,
-    ReferenceBuilder? specimen,
-    ReferenceBuilder? device,
-    ReferenceBuilder? performer,
-    FhirStringBuilder? literal,
-    List<AttachmentBuilder>? formatted,
+    List<MolecularSequenceLiteralBuilder>? literal,
+    List<AttachmentBuilder>? file,
     List<MolecularSequenceRelativeBuilder>? relative,
+    List<MolecularSequenceExtractedBuilder>? extracted,
+    List<MolecularSequenceRepeatedBuilder>? repeated,
+    MolecularSequenceConcatenatedBuilder? concatenated,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -926,14 +877,12 @@ class MolecularSequenceBuilder extends DomainResourceBuilder {
       modifierExtension: modifierExtension ?? this.modifierExtension,
       identifier: identifier ?? this.identifier,
       type: type ?? this.type,
-      subject: subject ?? this.subject,
-      focus: focus ?? this.focus,
-      specimen: specimen ?? this.specimen,
-      device: device ?? this.device,
-      performer: performer ?? this.performer,
       literal: literal ?? this.literal,
-      formatted: formatted ?? this.formatted,
+      file: file ?? this.file,
       relative: relative ?? this.relative,
+      extracted: extracted ?? this.extracted,
+      repeated: repeated ?? this.repeated,
+      concatenated: concatenated ?? this.concatenated,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -1020,45 +969,15 @@ class MolecularSequenceBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      subject,
-      o.subject,
-    )) {
-      return false;
-    }
-    if (!listEquals<ReferenceBuilder>(
-      focus,
-      o.focus,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      specimen,
-      o.specimen,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      device,
-      o.device,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      performer,
-      o.performer,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
+    if (!listEquals<MolecularSequenceLiteralBuilder>(
       literal,
       o.literal,
     )) {
       return false;
     }
     if (!listEquals<AttachmentBuilder>(
-      formatted,
-      o.formatted,
+      file,
+      o.file,
     )) {
       return false;
     }
@@ -1068,12 +987,449 @@ class MolecularSequenceBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
+    if (!listEquals<MolecularSequenceExtractedBuilder>(
+      extracted,
+      o.extracted,
+    )) {
+      return false;
+    }
+    if (!listEquals<MolecularSequenceRepeatedBuilder>(
+      repeated,
+      o.repeated,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      concatenated,
+      o.concatenated,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [MolecularSequenceLiteralBuilder]
+/// A literal representation of a Molecular Sequence.
+class MolecularSequenceLiteralBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [MolecularSequenceLiteralBuilder]
+
+  MolecularSequenceLiteralBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.sequenceValue,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'MolecularSequence.literal',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory MolecularSequenceLiteralBuilder.empty() =>
+      MolecularSequenceLiteralBuilder(
+        sequenceValue: FhirStringBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory MolecularSequenceLiteralBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'MolecularSequence.literal';
+    return MolecularSequenceLiteralBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      sequenceValue: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'sequenceValue',
+        FhirStringBuilder.fromJson,
+        '$objectPath.sequenceValue',
+      ),
+    );
+  }
+
+  /// Deserialize [MolecularSequenceLiteralBuilder]
+  /// from a [String] or [YamlMap] object
+  factory MolecularSequenceLiteralBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return MolecularSequenceLiteralBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return MolecularSequenceLiteralBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'MolecularSequenceLiteralBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [MolecularSequenceLiteralBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory MolecularSequenceLiteralBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return MolecularSequenceLiteralBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'MolecularSequenceLiteral';
+
+  /// [sequenceValue]
+  /// The primary (linear) sequence, expressed as a literal string.
+  FhirStringBuilder? sequenceValue;
+
+  /// Converts a [MolecularSequenceLiteralBuilder]
+  /// to [MolecularSequenceLiteral]
+  @override
+  MolecularSequenceLiteral build() =>
+      MolecularSequenceLiteral.fromJson(toJson());
+
+  /// Converts a [MolecularSequenceLiteralBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('sequenceValue', sequenceValue);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'sequenceValue',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'sequenceValue':
+        if (sequenceValue != null) {
+          fields.add(sequenceValue!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'sequenceValue':
+        {
+          if (child is FhirStringBuilder) {
+            sequenceValue = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                sequenceValue = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'sequenceValue':
+        return ['FhirStringBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [MolecularSequenceLiteralBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'sequenceValue':
+        {
+          sequenceValue = FhirStringBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  MolecularSequenceLiteralBuilder clone() => throw UnimplementedError();
+  @override
+  MolecularSequenceLiteralBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    FhirStringBuilder? sequenceValue,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = MolecularSequenceLiteralBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      sequenceValue: sequenceValue ?? this.sequenceValue,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! MolecularSequenceLiteralBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      sequenceValue,
+      o.sequenceValue,
+    )) {
+      return false;
+    }
     return true;
   }
 }
 
 /// [MolecularSequenceRelativeBuilder]
-/// A sequence defined relative to another sequence.
+/// A Molecular Sequence that is represented as an ordered series of edits
+/// on a specified starting sequence.
 class MolecularSequenceRelativeBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [MolecularSequenceRelativeBuilder]
@@ -1082,9 +1438,6 @@ class MolecularSequenceRelativeBuilder extends BackboneElementBuilder {
     super.id,
     super.extension_,
     super.modifierExtension,
-    this.coordinateSystem,
-    this.ordinalPosition,
-    this.sequenceRange,
     this.startingSequence,
     this.edit,
     super.disallowExtensions,
@@ -1096,7 +1449,7 @@ class MolecularSequenceRelativeBuilder extends BackboneElementBuilder {
   /// For Builder classes, no fields are required
   factory MolecularSequenceRelativeBuilder.empty() =>
       MolecularSequenceRelativeBuilder(
-        coordinateSystem: CodeableConceptBuilder.empty(),
+        startingSequence: ReferenceBuilder.empty(),
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -1131,29 +1484,10 @@ class MolecularSequenceRelativeBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      coordinateSystem: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'coordinateSystem',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.coordinateSystem',
-      ),
-      ordinalPosition: JsonParser.parsePrimitive<FhirIntegerBuilder>(
-        json,
-        'ordinalPosition',
-        FhirIntegerBuilder.fromJson,
-        '$objectPath.ordinalPosition',
-      ),
-      sequenceRange: JsonParser.parseObject<RangeBuilder>(
-        json,
-        'sequenceRange',
-        RangeBuilder.fromJson,
-        '$objectPath.sequenceRange',
-      ),
-      startingSequence:
-          JsonParser.parseObject<MolecularSequenceStartingSequenceBuilder>(
+      startingSequence: JsonParser.parseObject<ReferenceBuilder>(
         json,
         'startingSequence',
-        MolecularSequenceStartingSequenceBuilder.fromJson,
+        ReferenceBuilder.fromJson,
         '$objectPath.startingSequence',
       ),
       edit: (json['edit'] as List<dynamic>?)
@@ -1211,30 +1545,13 @@ class MolecularSequenceRelativeBuilder extends BackboneElementBuilder {
   @override
   String get fhirType => 'MolecularSequenceRelative';
 
-  /// [coordinateSystem]
-  /// These are different ways of identifying nucleotides or amino acids
-  /// within a sequence. Different databases and file types may use different
-  /// systems. For detail definitions, see https://loinc.org/92822-6/ for
-  /// more detail.
-  CodeableConceptBuilder? coordinateSystem;
-
-  /// [ordinalPosition]
-  /// Indicates the order in which the sequence should be considered when
-  /// putting multiple 'relative' elements together.
-  FhirIntegerBuilder? ordinalPosition;
-
-  /// [sequenceRange]
-  /// Indicates the nucleotide range in the composed sequence when multiple
-  /// 'relative' elements are used together.
-  RangeBuilder? sequenceRange;
-
   /// [startingSequence]
-  /// A sequence that is used as a starting sequence to describe variants
-  /// that are present in a sequence analyzed.
-  MolecularSequenceStartingSequenceBuilder? startingSequence;
+  /// The Molecular Sequence that serves as the starting sequence, on which
+  /// edits will be applied.
+  ReferenceBuilder? startingSequence;
 
   /// [edit]
-  /// Changes in sequence from the starting sequence.
+  /// An edit (change) made to a sequence.
   List<MolecularSequenceEditBuilder>? edit;
 
   /// Converts a [MolecularSequenceRelativeBuilder]
@@ -1277,9 +1594,6 @@ class MolecularSequenceRelativeBuilder extends BackboneElementBuilder {
     addField('id', id);
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
-    addField('coordinateSystem', coordinateSystem);
-    addField('ordinalPosition', ordinalPosition);
-    addField('sequenceRange', sequenceRange);
     addField('startingSequence', startingSequence);
     addField('edit', edit);
     return json;
@@ -1292,9 +1606,6 @@ class MolecularSequenceRelativeBuilder extends BackboneElementBuilder {
       'id',
       'extension',
       'modifierExtension',
-      'coordinateSystem',
-      'ordinalPosition',
-      'sequenceRange',
       'startingSequence',
       'edit',
     ];
@@ -1320,18 +1631,6 @@ class MolecularSequenceRelativeBuilder extends BackboneElementBuilder {
       case 'modifierExtension':
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
-        }
-      case 'coordinateSystem':
-        if (coordinateSystem != null) {
-          fields.add(coordinateSystem!);
-        }
-      case 'ordinalPosition':
-        if (ordinalPosition != null) {
-          fields.add(ordinalPosition!);
-        }
-      case 'sequenceRange':
-        if (sequenceRange != null) {
-          fields.add(sequenceRange!);
         }
       case 'startingSequence':
         if (startingSequence != null) {
@@ -1422,50 +1721,9 @@ class MolecularSequenceRelativeBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'coordinateSystem':
-        {
-          if (child is CodeableConceptBuilder) {
-            coordinateSystem = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'ordinalPosition':
-        {
-          if (child is FhirIntegerBuilder) {
-            ordinalPosition = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              // For number types,
-              // first parse to num then pass the number directly
-              final numValue = num.tryParse(stringValue);
-              if (numValue != null) {
-                final converted = FhirIntegerBuilder.tryParse(numValue);
-                if (converted != null) {
-                  ordinalPosition = converted;
-                  return;
-                }
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'sequenceRange':
-        {
-          if (child is RangeBuilder) {
-            sequenceRange = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
       case 'startingSequence':
         {
-          if (child is MolecularSequenceStartingSequenceBuilder) {
+          if (child is ReferenceBuilder) {
             startingSequence = child;
             return;
           }
@@ -1503,14 +1761,8 @@ class MolecularSequenceRelativeBuilder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
-      case 'coordinateSystem':
-        return ['CodeableConceptBuilder'];
-      case 'ordinalPosition':
-        return ['FhirIntegerBuilder'];
-      case 'sequenceRange':
-        return ['RangeBuilder'];
       case 'startingSequence':
-        return ['MolecularSequenceStartingSequenceBuilder'];
+        return ['ReferenceBuilder'];
       case 'edit':
         return ['MolecularSequenceEditBuilder'];
       default:
@@ -1538,24 +1790,9 @@ class MolecularSequenceRelativeBuilder extends BackboneElementBuilder {
           modifierExtension = <FhirExtensionBuilder>[];
           return;
         }
-      case 'coordinateSystem':
-        {
-          coordinateSystem = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'ordinalPosition':
-        {
-          ordinalPosition = FhirIntegerBuilder.empty();
-          return;
-        }
-      case 'sequenceRange':
-        {
-          sequenceRange = RangeBuilder.empty();
-          return;
-        }
       case 'startingSequence':
         {
-          startingSequence = MolecularSequenceStartingSequenceBuilder.empty();
+          startingSequence = ReferenceBuilder.empty();
           return;
         }
       case 'edit':
@@ -1575,10 +1812,7 @@ class MolecularSequenceRelativeBuilder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    CodeableConceptBuilder? coordinateSystem,
-    FhirIntegerBuilder? ordinalPosition,
-    RangeBuilder? sequenceRange,
-    MolecularSequenceStartingSequenceBuilder? startingSequence,
+    ReferenceBuilder? startingSequence,
     List<MolecularSequenceEditBuilder>? edit,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -1591,9 +1825,6 @@ class MolecularSequenceRelativeBuilder extends BackboneElementBuilder {
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
-      coordinateSystem: coordinateSystem ?? this.coordinateSystem,
-      ordinalPosition: ordinalPosition ?? this.ordinalPosition,
-      sequenceRange: sequenceRange ?? this.sequenceRange,
       startingSequence: startingSequence ?? this.startingSequence,
       edit: edit ?? this.edit,
     )..objectPath = newObjectPath;
@@ -1641,24 +1872,6 @@ class MolecularSequenceRelativeBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      coordinateSystem,
-      o.coordinateSystem,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      ordinalPosition,
-      o.ordinalPosition,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      sequenceRange,
-      o.sequenceRange,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
       startingSequence,
       o.startingSequence,
     )) {
@@ -1674,841 +1887,8 @@ class MolecularSequenceRelativeBuilder extends BackboneElementBuilder {
   }
 }
 
-/// [MolecularSequenceStartingSequenceBuilder]
-/// A sequence that is used as a starting sequence to describe variants
-/// that are present in a sequence analyzed.
-class MolecularSequenceStartingSequenceBuilder extends BackboneElementBuilder {
-  /// Primary constructor for
-  /// [MolecularSequenceStartingSequenceBuilder]
-
-  MolecularSequenceStartingSequenceBuilder({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.genomeAssembly,
-    this.chromosome,
-    SequenceXMolecularSequenceStartingSequenceBuilder? sequenceX,
-    CodeableConceptBuilder? sequenceCodeableConcept,
-    FhirStringBuilder? sequenceString,
-    ReferenceBuilder? sequenceReference,
-    this.windowStart,
-    this.windowEnd,
-    this.orientation,
-    this.strand,
-    super.disallowExtensions,
-  })  : sequenceX = sequenceX ??
-            sequenceCodeableConcept ??
-            sequenceString ??
-            sequenceReference,
-        super(
-          objectPath: 'MolecularSequence.relative.startingSequence',
-        );
-
-  /// An empty constructor for partial usage.
-  /// For Builder classes, no fields are required
-  factory MolecularSequenceStartingSequenceBuilder.empty() =>
-      MolecularSequenceStartingSequenceBuilder();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory MolecularSequenceStartingSequenceBuilder.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    const objectPath = 'MolecularSequence.relative.startingSequence';
-    return MolecularSequenceStartingSequenceBuilder(
-      id: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'id',
-        FhirStringBuilder.fromJson,
-        '$objectPath.id',
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.extension',
-              },
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.modifierExtension',
-              },
-            ),
-          )
-          .toList(),
-      genomeAssembly: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'genomeAssembly',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.genomeAssembly',
-      ),
-      chromosome: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'chromosome',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.chromosome',
-      ),
-      sequenceX: JsonParser.parsePolymorphic<
-          SequenceXMolecularSequenceStartingSequenceBuilder>(
-        json,
-        {
-          'sequenceCodeableConcept': CodeableConceptBuilder.fromJson,
-          'sequenceString': FhirStringBuilder.fromJson,
-          'sequenceReference': ReferenceBuilder.fromJson,
-        },
-        objectPath,
-      ),
-      windowStart: JsonParser.parsePrimitive<FhirIntegerBuilder>(
-        json,
-        'windowStart',
-        FhirIntegerBuilder.fromJson,
-        '$objectPath.windowStart',
-      ),
-      windowEnd: JsonParser.parsePrimitive<FhirIntegerBuilder>(
-        json,
-        'windowEnd',
-        FhirIntegerBuilder.fromJson,
-        '$objectPath.windowEnd',
-      ),
-      orientation: JsonParser.parsePrimitive<OrientationTypeBuilder>(
-        json,
-        'orientation',
-        OrientationTypeBuilder.fromJson,
-        '$objectPath.orientation',
-      ),
-      strand: JsonParser.parsePrimitive<StrandTypeBuilder>(
-        json,
-        'strand',
-        StrandTypeBuilder.fromJson,
-        '$objectPath.strand',
-      ),
-    );
-  }
-
-  /// Deserialize [MolecularSequenceStartingSequenceBuilder]
-  /// from a [String] or [YamlMap] object
-  factory MolecularSequenceStartingSequenceBuilder.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return MolecularSequenceStartingSequenceBuilder.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return MolecularSequenceStartingSequenceBuilder.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'MolecularSequenceStartingSequenceBuilder '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [MolecularSequenceStartingSequenceBuilder]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory MolecularSequenceStartingSequenceBuilder.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return MolecularSequenceStartingSequenceBuilder.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'MolecularSequenceStartingSequence';
-
-  /// [genomeAssembly]
-  /// The genome assembly used for starting sequence, e.g. GRCh38.
-  CodeableConceptBuilder? genomeAssembly;
-
-  /// [chromosome]
-  /// Structural unit composed of a nucleic acid molecule which controls its
-  /// own replication through the interaction of specific proteins at one or
-  /// more origins of replication
-  /// ([SO:0000340](http://www.sequenceontology.org/browser/current_svn/term/SO:0000340)).
-  CodeableConceptBuilder? chromosome;
-
-  /// [sequenceX]
-  /// The reference sequence that represents the starting sequence.
-  SequenceXMolecularSequenceStartingSequenceBuilder? sequenceX;
-
-  /// Getter for [sequenceCodeableConcept] as a CodeableConceptBuilder
-  CodeableConceptBuilder? get sequenceCodeableConcept =>
-      sequenceX?.isAs<CodeableConceptBuilder>();
-
-  /// Getter for [sequenceString] as a FhirStringBuilder
-  FhirStringBuilder? get sequenceString => sequenceX?.isAs<FhirStringBuilder>();
-
-  /// Getter for [sequenceReference] as a ReferenceBuilder
-  ReferenceBuilder? get sequenceReference =>
-      sequenceX?.isAs<ReferenceBuilder>();
-
-  /// [windowStart]
-  /// Start position of the window on the starting sequence. This value
-  /// should honor the rules of the coordinateSystem.
-  FhirIntegerBuilder? windowStart;
-
-  /// [windowEnd]
-  /// End position of the window on the starting sequence. This value should
-  /// honor the rules of the coordinateSystem.
-  FhirIntegerBuilder? windowEnd;
-
-  /// [orientation]
-  /// A relative reference to a DNA strand based on gene orientation. The
-  /// strand that contains the open reading frame of the gene is the "sense"
-  /// strand, and the opposite complementary strand is the "antisense"
-  /// strand.
-  OrientationTypeBuilder? orientation;
-
-  /// [strand]
-  /// An absolute reference to a strand. The Watson strand is the strand
-  /// whose 5'-end is on the short arm of the chromosome, and the Crick
-  /// strand as the one whose 5'-end is on the long arm.
-  StrandTypeBuilder? strand;
-
-  /// Converts a [MolecularSequenceStartingSequenceBuilder]
-  /// to [MolecularSequenceStartingSequence]
-  @override
-  MolecularSequenceStartingSequence build() =>
-      MolecularSequenceStartingSequence.fromJson(toJson());
-
-  /// Converts a [MolecularSequenceStartingSequenceBuilder]
-  /// to a [Map<String, dynamic>]
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    void addField(String key, dynamic field) {
-      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
-        throw ArgumentError('"field" must be a FhirBaseBuilder type');
-      }
-      if (field == null) return;
-      if (field is PrimitiveTypeBuilder) {
-        json[key] = field.toJson()['value'];
-        if (field.toJson()['_value'] != null) {
-          json['_$key'] = field.toJson()['_value'];
-        }
-      } else if (field is List<FhirBaseBuilder>) {
-        if (field.isEmpty) return;
-        if (field.first is PrimitiveTypeBuilder) {
-          final fieldJson = field.map((e) => e.toJson()).toList();
-          json[key] = fieldJson.map((e) => e['value']).toList();
-          if (fieldJson.any((e) => e['_value'] != null)) {
-            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
-          }
-        } else {
-          json[key] = field.map((e) => e.toJson()).toList();
-        }
-      } else if (field is FhirBaseBuilder) {
-        json[key] = field.toJson();
-      }
-    }
-
-    addField('id', id);
-    addField('extension', extension_);
-    addField('modifierExtension', modifierExtension);
-    addField('genomeAssembly', genomeAssembly);
-    addField('chromosome', chromosome);
-    if (sequenceX != null) {
-      final fhirType = sequenceX!.fhirType;
-      addField('sequence${fhirType.capitalizeFirstLetter()}', sequenceX);
-    }
-
-    addField('windowStart', windowStart);
-    addField('windowEnd', windowEnd);
-    addField('orientation', orientation);
-    addField('strand', strand);
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'genomeAssembly',
-      'chromosome',
-      'sequenceX',
-      'windowStart',
-      'windowEnd',
-      'orientation',
-      'strand',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBaseBuilder> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBaseBuilder>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'genomeAssembly':
-        if (genomeAssembly != null) {
-          fields.add(genomeAssembly!);
-        }
-      case 'chromosome':
-        if (chromosome != null) {
-          fields.add(chromosome!);
-        }
-      case 'sequence':
-        if (sequenceX != null) {
-          fields.add(sequenceX!);
-        }
-      case 'sequenceX':
-        if (sequenceX != null) {
-          fields.add(sequenceX!);
-        }
-      case 'sequenceCodeableConcept':
-        if (sequenceX is CodeableConceptBuilder) {
-          fields.add(sequenceX!);
-        }
-      case 'sequenceString':
-        if (sequenceX is FhirStringBuilder) {
-          fields.add(sequenceX!);
-        }
-      case 'sequenceReference':
-        if (sequenceX is ReferenceBuilder) {
-          fields.add(sequenceX!);
-        }
-      case 'windowStart':
-        if (windowStart != null) {
-          fields.add(windowStart!);
-        }
-      case 'windowEnd':
-        if (windowEnd != null) {
-          fields.add(windowEnd!);
-        }
-      case 'orientation':
-        if (orientation != null) {
-          fields.add(orientation!);
-        }
-      case 'strand':
-        if (strand != null) {
-          fields.add(strand!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBaseBuilder? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  void setChildByName(String childName, dynamic child) {
-    // child must be null, or a (List of) FhirBaseBuilder(s).
-    if (child == null) {
-      return; // In builders, setting to null is allowed
-    }
-    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
-      throw Exception('Cannot set child value for $childName');
-    }
-
-    switch (childName) {
-      case 'id':
-        {
-          if (child is FhirStringBuilder) {
-            id = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                id = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'extension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            extension_ = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            extension_ = [
-              ...(extension_ ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'modifierExtension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            modifierExtension = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            modifierExtension = [
-              ...(modifierExtension ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'genomeAssembly':
-        {
-          if (child is CodeableConceptBuilder) {
-            genomeAssembly = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'chromosome':
-        {
-          if (child is CodeableConceptBuilder) {
-            chromosome = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'sequence':
-      case 'sequenceX':
-        {
-          if (child is SequenceXMolecularSequenceStartingSequenceBuilder) {
-            sequenceX = child;
-            return;
-          } else {
-            if (child is CodeableConceptBuilder) {
-              sequenceX = child;
-              return;
-            }
-            if (child is FhirStringBuilder) {
-              sequenceX = child;
-              return;
-            }
-            if (child is ReferenceBuilder) {
-              sequenceX = child;
-              return;
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'sequenceCodeableConcept':
-        {
-          if (child is CodeableConceptBuilder) {
-            sequenceX = child;
-            return;
-          } else {
-            throw Exception('Invalid child type for $childName');
-          }
-        }
-      case 'sequenceString':
-        {
-          if (child is FhirStringBuilder) {
-            sequenceX = child;
-            return;
-          } else {
-            throw Exception('Invalid child type for $childName');
-          }
-        }
-      case 'sequenceReference':
-        {
-          if (child is ReferenceBuilder) {
-            sequenceX = child;
-            return;
-          } else {
-            throw Exception('Invalid child type for $childName');
-          }
-        }
-      case 'windowStart':
-        {
-          if (child is FhirIntegerBuilder) {
-            windowStart = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              // For number types,
-              // first parse to num then pass the number directly
-              final numValue = num.tryParse(stringValue);
-              if (numValue != null) {
-                final converted = FhirIntegerBuilder.tryParse(numValue);
-                if (converted != null) {
-                  windowStart = converted;
-                  return;
-                }
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'windowEnd':
-        {
-          if (child is FhirIntegerBuilder) {
-            windowEnd = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              // For number types,
-              // first parse to num then pass the number directly
-              final numValue = num.tryParse(stringValue);
-              if (numValue != null) {
-                final converted = FhirIntegerBuilder.tryParse(numValue);
-                if (converted != null) {
-                  windowEnd = converted;
-                  return;
-                }
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'orientation':
-        {
-          if (child is OrientationTypeBuilder) {
-            orientation = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              // For enums, try to create directly from the string value
-              try {
-                final converted = OrientationTypeBuilder(stringValue);
-                orientation = converted;
-                return;
-              } catch (e) {
-                // Continue if enum creation fails
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'strand':
-        {
-          if (child is StrandTypeBuilder) {
-            strand = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              // For enums, try to create directly from the string value
-              try {
-                final converted = StrandTypeBuilder(stringValue);
-                strand = converted;
-                return;
-              } catch (e) {
-                // Continue if enum creation fails
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      default:
-        throw Exception('Cannot set child value for $childName');
-    }
-  }
-
-  /// Return the possible Dart types for the field named [fieldName].
-  /// For polymorphic fields, multiple types are possible.
-  @override
-  List<String> typeByElementName(String fieldName) {
-    switch (fieldName) {
-      case 'id':
-        return ['FhirStringBuilder'];
-      case 'extension':
-        return ['FhirExtensionBuilder'];
-      case 'modifierExtension':
-        return ['FhirExtensionBuilder'];
-      case 'genomeAssembly':
-        return ['CodeableConceptBuilder'];
-      case 'chromosome':
-        return ['CodeableConceptBuilder'];
-      case 'sequence':
-      case 'sequenceX':
-        return [
-          'CodeableConceptBuilder',
-          'FhirStringBuilder',
-          'ReferenceBuilder',
-        ];
-      case 'sequenceCodeableConcept':
-        return ['CodeableConceptBuilder'];
-      case 'sequenceString':
-        return ['FhirStringBuilder'];
-      case 'sequenceReference':
-        return ['ReferenceBuilder'];
-      case 'windowStart':
-        return ['FhirIntegerBuilder'];
-      case 'windowEnd':
-        return ['FhirIntegerBuilder'];
-      case 'orientation':
-        return ['FhirCodeEnumBuilder'];
-      case 'strand':
-        return ['FhirCodeEnumBuilder'];
-      default:
-        return <String>[];
-    }
-  }
-
-  /// Creates a new [MolecularSequenceStartingSequenceBuilder]
-  ///  with a chosen field set to an empty object.
-  @override
-  void createProperty(String propertyName) {
-    switch (propertyName) {
-      case 'id':
-        {
-          id = FhirStringBuilder.empty();
-          return;
-        }
-      case 'extension':
-        {
-          extension_ = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'modifierExtension':
-        {
-          modifierExtension = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'genomeAssembly':
-        {
-          genomeAssembly = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'chromosome':
-        {
-          chromosome = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'sequence':
-      case 'sequenceX':
-      case 'sequenceCodeableConcept':
-        {
-          sequenceX = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'sequenceString':
-        {
-          sequenceX = FhirStringBuilder.empty();
-          return;
-        }
-      case 'sequenceReference':
-        {
-          sequenceX = ReferenceBuilder.empty();
-          return;
-        }
-      case 'windowStart':
-        {
-          windowStart = FhirIntegerBuilder.empty();
-          return;
-        }
-      case 'windowEnd':
-        {
-          windowEnd = FhirIntegerBuilder.empty();
-          return;
-        }
-      case 'orientation':
-        {
-          orientation = OrientationTypeBuilder.empty();
-          return;
-        }
-      case 'strand':
-        {
-          strand = StrandTypeBuilder.empty();
-          return;
-        }
-      default:
-        throw ArgumentError('No matching property: $propertyName');
-    }
-  }
-
-  @override
-  MolecularSequenceStartingSequenceBuilder clone() =>
-      throw UnimplementedError();
-  @override
-  MolecularSequenceStartingSequenceBuilder copyWith({
-    FhirStringBuilder? id,
-    List<FhirExtensionBuilder>? extension_,
-    List<FhirExtensionBuilder>? modifierExtension,
-    CodeableConceptBuilder? genomeAssembly,
-    CodeableConceptBuilder? chromosome,
-    SequenceXMolecularSequenceStartingSequenceBuilder? sequenceX,
-    FhirIntegerBuilder? windowStart,
-    FhirIntegerBuilder? windowEnd,
-    OrientationTypeBuilder? orientation,
-    StrandTypeBuilder? strand,
-    CodeableConceptBuilder? sequenceCodeableConcept,
-    FhirStringBuilder? sequenceString,
-    ReferenceBuilder? sequenceReference,
-    Map<String, dynamic>? userData,
-    List<String>? formatCommentsPre,
-    List<String>? formatCommentsPost,
-    List<dynamic>? annotations,
-    String? objectPath,
-  }) {
-    final newObjectPath = this.objectPath;
-    final newResult = MolecularSequenceStartingSequenceBuilder(
-      id: id ?? this.id,
-      extension_: extension_ ?? this.extension_,
-      modifierExtension: modifierExtension ?? this.modifierExtension,
-      genomeAssembly: genomeAssembly ?? this.genomeAssembly,
-      chromosome: chromosome ?? this.chromosome,
-      sequenceX: sequenceX ??
-          sequenceCodeableConcept ??
-          sequenceString ??
-          sequenceReference ??
-          this.sequenceX,
-      windowStart: windowStart ?? this.windowStart,
-      windowEnd: windowEnd ?? this.windowEnd,
-      orientation: orientation ?? this.orientation,
-      strand: strand ?? this.strand,
-    )..objectPath = newObjectPath;
-    // Copy user data and annotations
-    if (userData != null) {
-      newResult.userData = userData;
-    }
-    if (formatCommentsPre != null) {
-      newResult.formatCommentsPre = formatCommentsPre;
-    }
-    if (formatCommentsPost != null) {
-      newResult.formatCommentsPost = formatCommentsPost;
-    }
-    if (annotations != null) {
-      newResult.annotations = annotations;
-    }
-
-    return newResult;
-  }
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! MolecularSequenceStartingSequenceBuilder) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      genomeAssembly,
-      o.genomeAssembly,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      chromosome,
-      o.chromosome,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      sequenceX,
-      o.sequenceX,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      windowStart,
-      o.windowStart,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      windowEnd,
-      o.windowEnd,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      orientation,
-      o.orientation,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      strand,
-      o.strand,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
 /// [MolecularSequenceEditBuilder]
-/// Changes in sequence from the starting sequence.
+/// An edit (change) made to a sequence.
 class MolecularSequenceEditBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [MolecularSequenceEditBuilder]
@@ -2517,6 +1897,8 @@ class MolecularSequenceEditBuilder extends BackboneElementBuilder {
     super.id,
     super.extension_,
     super.modifierExtension,
+    this.editOrder,
+    this.coordinateSystem,
     this.start,
     this.end,
     this.replacementSequence,
@@ -2528,8 +1910,12 @@ class MolecularSequenceEditBuilder extends BackboneElementBuilder {
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
-  factory MolecularSequenceEditBuilder.empty() =>
-      MolecularSequenceEditBuilder();
+  factory MolecularSequenceEditBuilder.empty() => MolecularSequenceEditBuilder(
+        coordinateSystem: CodeableConceptBuilder.empty(),
+        start: FhirIntegerBuilder.empty(),
+        end: FhirIntegerBuilder.empty(),
+        replacementSequence: ReferenceBuilder.empty(),
+      );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
   factory MolecularSequenceEditBuilder.fromJson(
@@ -2563,6 +1949,18 @@ class MolecularSequenceEditBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
+      editOrder: JsonParser.parsePrimitive<FhirIntegerBuilder>(
+        json,
+        'editOrder',
+        FhirIntegerBuilder.fromJson,
+        '$objectPath.editOrder',
+      ),
+      coordinateSystem: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'coordinateSystem',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.coordinateSystem',
+      ),
       start: JsonParser.parsePrimitive<FhirIntegerBuilder>(
         json,
         'start',
@@ -2575,16 +1973,16 @@ class MolecularSequenceEditBuilder extends BackboneElementBuilder {
         FhirIntegerBuilder.fromJson,
         '$objectPath.end',
       ),
-      replacementSequence: JsonParser.parsePrimitive<FhirStringBuilder>(
+      replacementSequence: JsonParser.parseObject<ReferenceBuilder>(
         json,
         'replacementSequence',
-        FhirStringBuilder.fromJson,
+        ReferenceBuilder.fromJson,
         '$objectPath.replacementSequence',
       ),
-      replacedSequence: JsonParser.parsePrimitive<FhirStringBuilder>(
+      replacedSequence: JsonParser.parseObject<ReferenceBuilder>(
         json,
         'replacedSequence',
-        FhirStringBuilder.fromJson,
+        ReferenceBuilder.fromJson,
         '$objectPath.replacedSequence',
       ),
     );
@@ -2632,33 +2030,33 @@ class MolecularSequenceEditBuilder extends BackboneElementBuilder {
   @override
   String get fhirType => 'MolecularSequenceEdit';
 
+  /// [editOrder]
+  /// The order of this edit, relative to other edits on the starting
+  /// sequence.
+  FhirIntegerBuilder? editOrder;
+
+  /// [coordinateSystem]
+  /// The coordinate system used to define the edited intervals on the
+  /// starting sequence. Coordinate systems are usually 0- or 1-based.
+  CodeableConceptBuilder? coordinateSystem;
+
   /// [start]
-  /// Start position of the edit on the starting sequence. If the coordinate
-  /// system is either 0-based or 1-based, then start position is inclusive.
+  /// The start coordinate of the interval that will be edited.
   FhirIntegerBuilder? start;
 
   /// [end]
-  /// End position of the edit on the starting sequence. If the coordinate
-  /// system is 0-based then end is exclusive and does not include the last
-  /// position. If the coordinate system is 1-base, then end is inclusive and
-  /// includes the last position.
+  /// The end coordinate of the interval that will be edited.
   FhirIntegerBuilder? end;
 
   /// [replacementSequence]
-  /// Allele that was observed. Nucleotide(s)/amino acids from start position
-  /// of sequence to stop position of sequence on the positive (+) strand of
-  /// the observed sequence. When the sequence type is DNA, it should be the
-  /// sequence on the positive (+) strand. This will lay in the range between
-  /// variant.start and variant.end.
-  FhirStringBuilder? replacementSequence;
+  /// The sequence that defines the replacement sequence used in the edit
+  /// operation.
+  ReferenceBuilder? replacementSequence;
 
   /// [replacedSequence]
-  /// Allele in the starting sequence. Nucleotide(s)/amino acids from start
-  /// position of sequence to stop position of sequence on the positive (+)
-  /// strand of the starting sequence. When the sequence type is DNA, it
-  /// should be the sequence on the positive (+) strand. This will lay in the
-  /// range between variant.start and variant.end.
-  FhirStringBuilder? replacedSequence;
+  /// The sequence on the 'starting' sequence for the edit operation, defined
+  /// by the specified interval, that will be replaced during the edit.
+  ReferenceBuilder? replacedSequence;
 
   /// Converts a [MolecularSequenceEditBuilder]
   /// to [MolecularSequenceEdit]
@@ -2699,6 +2097,8 @@ class MolecularSequenceEditBuilder extends BackboneElementBuilder {
     addField('id', id);
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
+    addField('editOrder', editOrder);
+    addField('coordinateSystem', coordinateSystem);
     addField('start', start);
     addField('end', end);
     addField('replacementSequence', replacementSequence);
@@ -2713,6 +2113,8 @@ class MolecularSequenceEditBuilder extends BackboneElementBuilder {
       'id',
       'extension',
       'modifierExtension',
+      'editOrder',
+      'coordinateSystem',
       'start',
       'end',
       'replacementSequence',
@@ -2740,6 +2142,14 @@ class MolecularSequenceEditBuilder extends BackboneElementBuilder {
       case 'modifierExtension':
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
+        }
+      case 'editOrder':
+        if (editOrder != null) {
+          fields.add(editOrder!);
+        }
+      case 'coordinateSystem':
+        if (coordinateSystem != null) {
+          fields.add(coordinateSystem!);
         }
       case 'start':
         if (start != null) {
@@ -2838,6 +2248,39 @@ class MolecularSequenceEditBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'editOrder':
+        {
+          if (child is FhirIntegerBuilder) {
+            editOrder = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For number types,
+              // first parse to num then pass the number directly
+              final numValue = num.tryParse(stringValue);
+              if (numValue != null) {
+                final converted = FhirIntegerBuilder.tryParse(numValue);
+                if (converted != null) {
+                  editOrder = converted;
+                  return;
+                }
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'coordinateSystem':
+        {
+          if (child is CodeableConceptBuilder) {
+            coordinateSystem = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'start':
         {
           if (child is FhirIntegerBuilder) {
@@ -2890,41 +2333,17 @@ class MolecularSequenceEditBuilder extends BackboneElementBuilder {
         }
       case 'replacementSequence':
         {
-          if (child is FhirStringBuilder) {
+          if (child is ReferenceBuilder) {
             replacementSequence = child;
             return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                replacementSequence = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
       case 'replacedSequence':
         {
-          if (child is FhirStringBuilder) {
+          if (child is ReferenceBuilder) {
             replacedSequence = child;
             return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                replacedSequence = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -2944,14 +2363,18 @@ class MolecularSequenceEditBuilder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
+      case 'editOrder':
+        return ['FhirIntegerBuilder'];
+      case 'coordinateSystem':
+        return ['CodeableConceptBuilder'];
       case 'start':
         return ['FhirIntegerBuilder'];
       case 'end':
         return ['FhirIntegerBuilder'];
       case 'replacementSequence':
-        return ['FhirStringBuilder'];
+        return ['ReferenceBuilder'];
       case 'replacedSequence':
-        return ['FhirStringBuilder'];
+        return ['ReferenceBuilder'];
       default:
         return <String>[];
     }
@@ -2977,6 +2400,16 @@ class MolecularSequenceEditBuilder extends BackboneElementBuilder {
           modifierExtension = <FhirExtensionBuilder>[];
           return;
         }
+      case 'editOrder':
+        {
+          editOrder = FhirIntegerBuilder.empty();
+          return;
+        }
+      case 'coordinateSystem':
+        {
+          coordinateSystem = CodeableConceptBuilder.empty();
+          return;
+        }
       case 'start':
         {
           start = FhirIntegerBuilder.empty();
@@ -2989,12 +2422,12 @@ class MolecularSequenceEditBuilder extends BackboneElementBuilder {
         }
       case 'replacementSequence':
         {
-          replacementSequence = FhirStringBuilder.empty();
+          replacementSequence = ReferenceBuilder.empty();
           return;
         }
       case 'replacedSequence':
         {
-          replacedSequence = FhirStringBuilder.empty();
+          replacedSequence = ReferenceBuilder.empty();
           return;
         }
       default:
@@ -3009,10 +2442,12 @@ class MolecularSequenceEditBuilder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
+    FhirIntegerBuilder? editOrder,
+    CodeableConceptBuilder? coordinateSystem,
     FhirIntegerBuilder? start,
     FhirIntegerBuilder? end,
-    FhirStringBuilder? replacementSequence,
-    FhirStringBuilder? replacedSequence,
+    ReferenceBuilder? replacementSequence,
+    ReferenceBuilder? replacedSequence,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -3024,6 +2459,8 @@ class MolecularSequenceEditBuilder extends BackboneElementBuilder {
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
+      editOrder: editOrder ?? this.editOrder,
+      coordinateSystem: coordinateSystem ?? this.coordinateSystem,
       start: start ?? this.start,
       end: end ?? this.end,
       replacementSequence: replacementSequence ?? this.replacementSequence,
@@ -3073,6 +2510,18 @@ class MolecularSequenceEditBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
+      editOrder,
+      o.editOrder,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      coordinateSystem,
+      o.coordinateSystem,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       start,
       o.start,
     )) {
@@ -3093,6 +2542,1976 @@ class MolecularSequenceEditBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       replacedSequence,
       o.replacedSequence,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [MolecularSequenceExtractedBuilder]
+/// A Molecular Sequence that is represented as an extracted portion of a
+/// different Molecular Sequence.
+class MolecularSequenceExtractedBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [MolecularSequenceExtractedBuilder]
+
+  MolecularSequenceExtractedBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.startingSequence,
+    this.start,
+    this.end,
+    this.coordinateSystem,
+    this.reverseComplement,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'MolecularSequence.extracted',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory MolecularSequenceExtractedBuilder.empty() =>
+      MolecularSequenceExtractedBuilder(
+        startingSequence: ReferenceBuilder.empty(),
+        start: FhirIntegerBuilder.empty(),
+        end: FhirIntegerBuilder.empty(),
+        coordinateSystem: CodeableConceptBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory MolecularSequenceExtractedBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'MolecularSequence.extracted';
+    return MolecularSequenceExtractedBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      startingSequence: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'startingSequence',
+        ReferenceBuilder.fromJson,
+        '$objectPath.startingSequence',
+      ),
+      start: JsonParser.parsePrimitive<FhirIntegerBuilder>(
+        json,
+        'start',
+        FhirIntegerBuilder.fromJson,
+        '$objectPath.start',
+      ),
+      end: JsonParser.parsePrimitive<FhirIntegerBuilder>(
+        json,
+        'end',
+        FhirIntegerBuilder.fromJson,
+        '$objectPath.end',
+      ),
+      coordinateSystem: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'coordinateSystem',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.coordinateSystem',
+      ),
+      reverseComplement: JsonParser.parsePrimitive<FhirBooleanBuilder>(
+        json,
+        'reverseComplement',
+        FhirBooleanBuilder.fromJson,
+        '$objectPath.reverseComplement',
+      ),
+    );
+  }
+
+  /// Deserialize [MolecularSequenceExtractedBuilder]
+  /// from a [String] or [YamlMap] object
+  factory MolecularSequenceExtractedBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return MolecularSequenceExtractedBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return MolecularSequenceExtractedBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'MolecularSequenceExtractedBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [MolecularSequenceExtractedBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory MolecularSequenceExtractedBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return MolecularSequenceExtractedBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'MolecularSequenceExtracted';
+
+  /// [startingSequence]
+  /// The Molecular Sequence that serves as the parent sequence, from which
+  /// the intended sequence will be extracted.
+  ReferenceBuilder? startingSequence;
+
+  /// [start]
+  /// The start coordinate (on the parent sequence) of the interval that
+  /// defines the subsequence to be extracted.
+  FhirIntegerBuilder? start;
+
+  /// [end]
+  /// The end coordinate (on the parent sequence) of the interval that
+  /// defines the subsequence to be extracted.
+  FhirIntegerBuilder? end;
+
+  /// [coordinateSystem]
+  /// The coordinate system used to define the interval that defines the
+  /// subsequence to be extracted. Coordinate systems are usually 0- or
+  /// 1-based.
+  CodeableConceptBuilder? coordinateSystem;
+
+  /// [reverseComplement]
+  /// A flag that indicates whether the extracted sequence should be reverse
+  /// complemented.
+  FhirBooleanBuilder? reverseComplement;
+
+  /// Converts a [MolecularSequenceExtractedBuilder]
+  /// to [MolecularSequenceExtracted]
+  @override
+  MolecularSequenceExtracted build() =>
+      MolecularSequenceExtracted.fromJson(toJson());
+
+  /// Converts a [MolecularSequenceExtractedBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('startingSequence', startingSequence);
+    addField('start', start);
+    addField('end', end);
+    addField('coordinateSystem', coordinateSystem);
+    addField('reverseComplement', reverseComplement);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'startingSequence',
+      'start',
+      'end',
+      'coordinateSystem',
+      'reverseComplement',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'startingSequence':
+        if (startingSequence != null) {
+          fields.add(startingSequence!);
+        }
+      case 'start':
+        if (start != null) {
+          fields.add(start!);
+        }
+      case 'end':
+        if (end != null) {
+          fields.add(end!);
+        }
+      case 'coordinateSystem':
+        if (coordinateSystem != null) {
+          fields.add(coordinateSystem!);
+        }
+      case 'reverseComplement':
+        if (reverseComplement != null) {
+          fields.add(reverseComplement!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'startingSequence':
+        {
+          if (child is ReferenceBuilder) {
+            startingSequence = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'start':
+        {
+          if (child is FhirIntegerBuilder) {
+            start = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For number types,
+              // first parse to num then pass the number directly
+              final numValue = num.tryParse(stringValue);
+              if (numValue != null) {
+                final converted = FhirIntegerBuilder.tryParse(numValue);
+                if (converted != null) {
+                  start = converted;
+                  return;
+                }
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'end':
+        {
+          if (child is FhirIntegerBuilder) {
+            end = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For number types,
+              // first parse to num then pass the number directly
+              final numValue = num.tryParse(stringValue);
+              if (numValue != null) {
+                final converted = FhirIntegerBuilder.tryParse(numValue);
+                if (converted != null) {
+                  end = converted;
+                  return;
+                }
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'coordinateSystem':
+        {
+          if (child is CodeableConceptBuilder) {
+            coordinateSystem = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'reverseComplement':
+        {
+          if (child is FhirBooleanBuilder) {
+            reverseComplement = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirBooleanBuilder.tryParse(stringValue);
+              if (converted != null) {
+                reverseComplement = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'startingSequence':
+        return ['ReferenceBuilder'];
+      case 'start':
+        return ['FhirIntegerBuilder'];
+      case 'end':
+        return ['FhirIntegerBuilder'];
+      case 'coordinateSystem':
+        return ['CodeableConceptBuilder'];
+      case 'reverseComplement':
+        return ['FhirBooleanBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [MolecularSequenceExtractedBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'startingSequence':
+        {
+          startingSequence = ReferenceBuilder.empty();
+          return;
+        }
+      case 'start':
+        {
+          start = FhirIntegerBuilder.empty();
+          return;
+        }
+      case 'end':
+        {
+          end = FhirIntegerBuilder.empty();
+          return;
+        }
+      case 'coordinateSystem':
+        {
+          coordinateSystem = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'reverseComplement':
+        {
+          reverseComplement = FhirBooleanBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  MolecularSequenceExtractedBuilder clone() => throw UnimplementedError();
+  @override
+  MolecularSequenceExtractedBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    ReferenceBuilder? startingSequence,
+    FhirIntegerBuilder? start,
+    FhirIntegerBuilder? end,
+    CodeableConceptBuilder? coordinateSystem,
+    FhirBooleanBuilder? reverseComplement,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = MolecularSequenceExtractedBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      startingSequence: startingSequence ?? this.startingSequence,
+      start: start ?? this.start,
+      end: end ?? this.end,
+      coordinateSystem: coordinateSystem ?? this.coordinateSystem,
+      reverseComplement: reverseComplement ?? this.reverseComplement,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! MolecularSequenceExtractedBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      startingSequence,
+      o.startingSequence,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      start,
+      o.start,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      end,
+      o.end,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      coordinateSystem,
+      o.coordinateSystem,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reverseComplement,
+      o.reverseComplement,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [MolecularSequenceRepeatedBuilder]
+/// A Molecular Sequence that is represented as a repeated sequence motif.
+class MolecularSequenceRepeatedBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [MolecularSequenceRepeatedBuilder]
+
+  MolecularSequenceRepeatedBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.sequenceMotif,
+    this.copyCount,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'MolecularSequence.repeated',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory MolecularSequenceRepeatedBuilder.empty() =>
+      MolecularSequenceRepeatedBuilder(
+        sequenceMotif: ReferenceBuilder.empty(),
+        copyCount: FhirIntegerBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory MolecularSequenceRepeatedBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'MolecularSequence.repeated';
+    return MolecularSequenceRepeatedBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      sequenceMotif: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'sequenceMotif',
+        ReferenceBuilder.fromJson,
+        '$objectPath.sequenceMotif',
+      ),
+      copyCount: JsonParser.parsePrimitive<FhirIntegerBuilder>(
+        json,
+        'copyCount',
+        FhirIntegerBuilder.fromJson,
+        '$objectPath.copyCount',
+      ),
+    );
+  }
+
+  /// Deserialize [MolecularSequenceRepeatedBuilder]
+  /// from a [String] or [YamlMap] object
+  factory MolecularSequenceRepeatedBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return MolecularSequenceRepeatedBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return MolecularSequenceRepeatedBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'MolecularSequenceRepeatedBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [MolecularSequenceRepeatedBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory MolecularSequenceRepeatedBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return MolecularSequenceRepeatedBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'MolecularSequenceRepeated';
+
+  /// [sequenceMotif]
+  /// The sequence that defines the repeated motif.
+  ReferenceBuilder? sequenceMotif;
+
+  /// [copyCount]
+  /// The number of repeats (copies) of the sequence motif.
+  FhirIntegerBuilder? copyCount;
+
+  /// Converts a [MolecularSequenceRepeatedBuilder]
+  /// to [MolecularSequenceRepeated]
+  @override
+  MolecularSequenceRepeated build() =>
+      MolecularSequenceRepeated.fromJson(toJson());
+
+  /// Converts a [MolecularSequenceRepeatedBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('sequenceMotif', sequenceMotif);
+    addField('copyCount', copyCount);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'sequenceMotif',
+      'copyCount',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'sequenceMotif':
+        if (sequenceMotif != null) {
+          fields.add(sequenceMotif!);
+        }
+      case 'copyCount':
+        if (copyCount != null) {
+          fields.add(copyCount!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'sequenceMotif':
+        {
+          if (child is ReferenceBuilder) {
+            sequenceMotif = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'copyCount':
+        {
+          if (child is FhirIntegerBuilder) {
+            copyCount = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For number types,
+              // first parse to num then pass the number directly
+              final numValue = num.tryParse(stringValue);
+              if (numValue != null) {
+                final converted = FhirIntegerBuilder.tryParse(numValue);
+                if (converted != null) {
+                  copyCount = converted;
+                  return;
+                }
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'sequenceMotif':
+        return ['ReferenceBuilder'];
+      case 'copyCount':
+        return ['FhirIntegerBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [MolecularSequenceRepeatedBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'sequenceMotif':
+        {
+          sequenceMotif = ReferenceBuilder.empty();
+          return;
+        }
+      case 'copyCount':
+        {
+          copyCount = FhirIntegerBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  MolecularSequenceRepeatedBuilder clone() => throw UnimplementedError();
+  @override
+  MolecularSequenceRepeatedBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    ReferenceBuilder? sequenceMotif,
+    FhirIntegerBuilder? copyCount,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = MolecularSequenceRepeatedBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      sequenceMotif: sequenceMotif ?? this.sequenceMotif,
+      copyCount: copyCount ?? this.copyCount,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! MolecularSequenceRepeatedBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      sequenceMotif,
+      o.sequenceMotif,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      copyCount,
+      o.copyCount,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [MolecularSequenceConcatenatedBuilder]
+/// A Molecular Sequence that is represented as an ordered concatenation of
+/// two or more Molecular Sequences.
+class MolecularSequenceConcatenatedBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [MolecularSequenceConcatenatedBuilder]
+
+  MolecularSequenceConcatenatedBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.sequenceElement,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'MolecularSequence.concatenated',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory MolecularSequenceConcatenatedBuilder.empty() =>
+      MolecularSequenceConcatenatedBuilder(
+        sequenceElement: <MolecularSequenceSequenceElementBuilder>[],
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory MolecularSequenceConcatenatedBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'MolecularSequence.concatenated';
+    return MolecularSequenceConcatenatedBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      sequenceElement: (json['sequenceElement'] as List<dynamic>?)
+          ?.map<MolecularSequenceSequenceElementBuilder>(
+            (v) => MolecularSequenceSequenceElementBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.sequenceElement',
+              },
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  /// Deserialize [MolecularSequenceConcatenatedBuilder]
+  /// from a [String] or [YamlMap] object
+  factory MolecularSequenceConcatenatedBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return MolecularSequenceConcatenatedBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return MolecularSequenceConcatenatedBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'MolecularSequenceConcatenatedBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [MolecularSequenceConcatenatedBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory MolecularSequenceConcatenatedBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return MolecularSequenceConcatenatedBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'MolecularSequenceConcatenated';
+
+  /// [sequenceElement]
+  /// One element of a concatenated Molecular Sequence.
+  List<MolecularSequenceSequenceElementBuilder>? sequenceElement;
+
+  /// Converts a [MolecularSequenceConcatenatedBuilder]
+  /// to [MolecularSequenceConcatenated]
+  @override
+  MolecularSequenceConcatenated build() =>
+      MolecularSequenceConcatenated.fromJson(toJson());
+
+  /// Converts a [MolecularSequenceConcatenatedBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('sequenceElement', sequenceElement);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'sequenceElement',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'sequenceElement':
+        if (sequenceElement != null) {
+          fields.addAll(sequenceElement!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'sequenceElement':
+        {
+          if (child is List<MolecularSequenceSequenceElementBuilder>) {
+            // Replace or create new list
+            sequenceElement = child;
+            return;
+          } else if (child is MolecularSequenceSequenceElementBuilder) {
+            // Add single element to existing list or create new list
+            sequenceElement = [
+              ...(sequenceElement ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'sequenceElement':
+        return ['MolecularSequenceSequenceElementBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [MolecularSequenceConcatenatedBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'sequenceElement':
+        {
+          sequenceElement = <MolecularSequenceSequenceElementBuilder>[];
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  MolecularSequenceConcatenatedBuilder clone() => throw UnimplementedError();
+  @override
+  MolecularSequenceConcatenatedBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    List<MolecularSequenceSequenceElementBuilder>? sequenceElement,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = MolecularSequenceConcatenatedBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      sequenceElement: sequenceElement ?? this.sequenceElement,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! MolecularSequenceConcatenatedBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!listEquals<MolecularSequenceSequenceElementBuilder>(
+      sequenceElement,
+      o.sequenceElement,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [MolecularSequenceSequenceElementBuilder]
+/// One element of a concatenated Molecular Sequence.
+class MolecularSequenceSequenceElementBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [MolecularSequenceSequenceElementBuilder]
+
+  MolecularSequenceSequenceElementBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.sequence,
+    this.ordinalIndex,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'MolecularSequence.concatenated.sequenceElement',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory MolecularSequenceSequenceElementBuilder.empty() =>
+      MolecularSequenceSequenceElementBuilder(
+        sequence: ReferenceBuilder.empty(),
+        ordinalIndex: FhirIntegerBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory MolecularSequenceSequenceElementBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'MolecularSequence.concatenated.sequenceElement';
+    return MolecularSequenceSequenceElementBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      sequence: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'sequence',
+        ReferenceBuilder.fromJson,
+        '$objectPath.sequence',
+      ),
+      ordinalIndex: JsonParser.parsePrimitive<FhirIntegerBuilder>(
+        json,
+        'ordinalIndex',
+        FhirIntegerBuilder.fromJson,
+        '$objectPath.ordinalIndex',
+      ),
+    );
+  }
+
+  /// Deserialize [MolecularSequenceSequenceElementBuilder]
+  /// from a [String] or [YamlMap] object
+  factory MolecularSequenceSequenceElementBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return MolecularSequenceSequenceElementBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return MolecularSequenceSequenceElementBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'MolecularSequenceSequenceElementBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [MolecularSequenceSequenceElementBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory MolecularSequenceSequenceElementBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return MolecularSequenceSequenceElementBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'MolecularSequenceSequenceElement';
+
+  /// [sequence]
+  /// The Molecular Sequence corresponding to this element.
+  ReferenceBuilder? sequence;
+
+  /// [ordinalIndex]
+  /// The ordinal position of this sequence element within the concatenated
+  /// Molecular Sequence.
+  FhirIntegerBuilder? ordinalIndex;
+
+  /// Converts a [MolecularSequenceSequenceElementBuilder]
+  /// to [MolecularSequenceSequenceElement]
+  @override
+  MolecularSequenceSequenceElement build() =>
+      MolecularSequenceSequenceElement.fromJson(toJson());
+
+  /// Converts a [MolecularSequenceSequenceElementBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('sequence', sequence);
+    addField('ordinalIndex', ordinalIndex);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'sequence',
+      'ordinalIndex',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'sequence':
+        if (sequence != null) {
+          fields.add(sequence!);
+        }
+      case 'ordinalIndex':
+        if (ordinalIndex != null) {
+          fields.add(ordinalIndex!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'sequence':
+        {
+          if (child is ReferenceBuilder) {
+            sequence = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'ordinalIndex':
+        {
+          if (child is FhirIntegerBuilder) {
+            ordinalIndex = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For number types,
+              // first parse to num then pass the number directly
+              final numValue = num.tryParse(stringValue);
+              if (numValue != null) {
+                final converted = FhirIntegerBuilder.tryParse(numValue);
+                if (converted != null) {
+                  ordinalIndex = converted;
+                  return;
+                }
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'sequence':
+        return ['ReferenceBuilder'];
+      case 'ordinalIndex':
+        return ['FhirIntegerBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [MolecularSequenceSequenceElementBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'sequence':
+        {
+          sequence = ReferenceBuilder.empty();
+          return;
+        }
+      case 'ordinalIndex':
+        {
+          ordinalIndex = FhirIntegerBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  MolecularSequenceSequenceElementBuilder clone() => throw UnimplementedError();
+  @override
+  MolecularSequenceSequenceElementBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    ReferenceBuilder? sequence,
+    FhirIntegerBuilder? ordinalIndex,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = MolecularSequenceSequenceElementBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      sequence: sequence ?? this.sequence,
+      ordinalIndex: ordinalIndex ?? this.ordinalIndex,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! MolecularSequenceSequenceElementBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      sequence,
+      o.sequence,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      ordinalIndex,
+      o.ordinalIndex,
     )) {
       return false;
     }

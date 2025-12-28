@@ -1516,11 +1516,12 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
     super.id,
     super.extension_,
     super.modifierExtension,
-    this.resourceType,
+    this.resource,
     this.filterParameter,
     this.comparator,
     this.modifier,
     this.value,
+    this.event,
     super.disallowExtensions,
   }) : super(
           objectPath: 'Subscription.filterBy',
@@ -1565,11 +1566,11 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      resourceType: JsonParser.parsePrimitive<FhirUriBuilder>(
+      resource: JsonParser.parsePrimitive<FhirUriBuilder>(
         json,
-        'resourceType',
+        'resource',
         FhirUriBuilder.fromJson,
-        '$objectPath.resourceType',
+        '$objectPath.resource',
       ),
       filterParameter: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
@@ -1595,6 +1596,16 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.value',
       ),
+      event: (json['event'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.event',
+              },
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -1640,12 +1651,12 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
   @override
   String get fhirType => 'SubscriptionFilterBy';
 
-  /// [resourceType]
+  /// [resource]
   /// A resource listed in the `SubscriptionTopic` this `Subscription`
   /// references (`SubscriptionTopic.canFilterBy.resource`). This element can
   /// be used to differentiate filters for topics that include more than one
   /// resource type.
-  FhirUriBuilder? resourceType;
+  FhirUriBuilder? resource;
 
   /// [filterParameter]
   /// The filter as defined in the
@@ -1664,6 +1675,13 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
   /// The literal value or resource path as is legal in search - for example,
   /// `Patient/123` or `le1950`.
   FhirStringBuilder? value;
+
+  /// [event]
+  /// An event filter to be applied to the topic - e.g., if a topic defined
+  /// multiple event triggers, this can be used to specify a single one.
+  /// Multiple values are or-joined, multiple codings within a value are
+  /// and-joined.
+  List<CodeableConceptBuilder>? event;
 
   /// Converts a [SubscriptionFilterByBuilder]
   /// to [SubscriptionFilterBy]
@@ -1704,11 +1722,12 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
     addField('id', id);
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
-    addField('resourceType', resourceType);
+    addField('resource', resource);
     addField('filterParameter', filterParameter);
     addField('comparator', comparator);
     addField('modifier', modifier);
     addField('value', value);
+    addField('event', event);
     return json;
   }
 
@@ -1719,11 +1738,12 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
       'id',
       'extension',
       'modifierExtension',
-      'resourceType',
+      'resource',
       'filterParameter',
       'comparator',
       'modifier',
       'value',
+      'event',
     ];
   }
 
@@ -1748,9 +1768,9 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
         }
-      case 'resourceType':
-        if (resourceType != null) {
-          fields.add(resourceType!);
+      case 'resource':
+        if (resource != null) {
+          fields.add(resource!);
         }
       case 'filterParameter':
         if (filterParameter != null) {
@@ -1767,6 +1787,10 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
       case 'value':
         if (value != null) {
           fields.add(value!);
+        }
+      case 'event':
+        if (event != null) {
+          fields.addAll(event!);
         }
       default:
         if (checkValid) {
@@ -1849,10 +1873,10 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'resourceType':
+      case 'resource':
         {
           if (child is FhirUriBuilder) {
-            resourceType = child;
+            resource = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
@@ -1860,7 +1884,7 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
               final stringValue = child.toString();
               final converted = FhirUriBuilder.tryParse(stringValue);
               if (converted != null) {
-                resourceType = converted;
+                resource = converted;
                 return;
               }
             } catch (e) {
@@ -1955,6 +1979,22 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'event':
+        {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
+            event = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            event = [
+              ...(event ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -1971,7 +2011,7 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
-      case 'resourceType':
+      case 'resource':
         return ['FhirUriBuilder'];
       case 'filterParameter':
         return ['FhirStringBuilder'];
@@ -1981,6 +2021,8 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
         return ['FhirCodeEnumBuilder'];
       case 'value':
         return ['FhirStringBuilder'];
+      case 'event':
+        return ['CodeableConceptBuilder'];
       default:
         return <String>[];
     }
@@ -2006,9 +2048,9 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
           modifierExtension = <FhirExtensionBuilder>[];
           return;
         }
-      case 'resourceType':
+      case 'resource':
         {
-          resourceType = FhirUriBuilder.empty();
+          resource = FhirUriBuilder.empty();
           return;
         }
       case 'filterParameter':
@@ -2031,6 +2073,11 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
           value = FhirStringBuilder.empty();
           return;
         }
+      case 'event':
+        {
+          event = <CodeableConceptBuilder>[];
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
@@ -2043,11 +2090,12 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    FhirUriBuilder? resourceType,
+    FhirUriBuilder? resource,
     FhirStringBuilder? filterParameter,
     SearchComparatorBuilder? comparator,
     SearchModifierCodeBuilder? modifier,
     FhirStringBuilder? value,
+    List<CodeableConceptBuilder>? event,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -2059,11 +2107,12 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
-      resourceType: resourceType ?? this.resourceType,
+      resource: resource ?? this.resource,
       filterParameter: filterParameter ?? this.filterParameter,
       comparator: comparator ?? this.comparator,
       modifier: modifier ?? this.modifier,
       value: value ?? this.value,
+      event: event ?? this.event,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -2109,8 +2158,8 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      resourceType,
-      o.resourceType,
+      resource,
+      o.resource,
     )) {
       return false;
     }
@@ -2135,6 +2184,12 @@ class SubscriptionFilterByBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       value,
       o.value,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConceptBuilder>(
+      event,
+      o.event,
     )) {
       return false;
     }

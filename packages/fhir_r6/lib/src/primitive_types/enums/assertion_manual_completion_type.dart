@@ -142,7 +142,7 @@ class AssertionManualCompletionType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/assert-manual-completion-codes',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Fail',
     ),
@@ -157,7 +157,7 @@ class AssertionManualCompletionType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/assert-manual-completion-codes',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Pass',
     ),
@@ -172,7 +172,7 @@ class AssertionManualCompletionType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/assert-manual-completion-codes',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Skip',
     ),
@@ -187,7 +187,7 @@ class AssertionManualCompletionType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/assert-manual-completion-codes',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Stop',
     ),

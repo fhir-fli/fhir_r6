@@ -1225,8 +1225,8 @@ class ImmunizationPerformer extends BackboneElement {
   String get fhirType => 'ImmunizationPerformer';
 
   /// [function_]
-  /// Describes the type of performance (e.g. ordering provider,
-  /// administering provider, etc.).
+  /// Describes the function played by the performer in the immunization
+  /// event (e.g. ordering provider, administering provider, etc.).
   final CodeableConcept? function_;
 
   /// [actor]
@@ -2076,7 +2076,7 @@ class ImmunizationProtocolApplied extends BackboneElement {
     this.series,
     this.authority,
     this.targetDisease,
-    required this.doseNumber,
+    this.doseNumber,
     this.seriesDoses,
     super.disallowExtensions,
   }) : super();
@@ -2122,15 +2122,15 @@ class ImmunizationProtocolApplied extends BackboneElement {
             ),
           )
           .toList(),
-      doseNumber: JsonParser.parsePrimitive<FhirString>(
+      doseNumber: JsonParser.parseObject<CodeableConcept>(
         json,
         'doseNumber',
-        FhirString.fromJson,
-      )!,
-      seriesDoses: JsonParser.parsePrimitive<FhirString>(
+        CodeableConcept.fromJson,
+      ),
+      seriesDoses: JsonParser.parseObject<CodeableConcept>(
         json,
         'seriesDoses',
-        FhirString.fromJson,
+        CodeableConcept.fromJson,
       ),
     );
   }
@@ -2194,12 +2194,12 @@ class ImmunizationProtocolApplied extends BackboneElement {
   /// [doseNumber]
   /// Nominal position in a series as intended by the practitioner
   /// administering the dose.
-  final FhirString doseNumber;
+  final CodeableConcept? doseNumber;
 
   /// [seriesDoses]
   /// The recommended number of doses to achieve immunity as intended by the
   /// practitioner administering the dose.
-  final FhirString? seriesDoses;
+  final CodeableConcept? seriesDoses;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -2347,7 +2347,9 @@ class ImmunizationProtocolApplied extends BackboneElement {
           fields.addAll(targetDisease!);
         }
       case 'doseNumber':
-        fields.add(doseNumber);
+        if (doseNumber != null) {
+          fields.add(doseNumber!);
+        }
       case 'seriesDoses':
         if (seriesDoses != null) {
           fields.add(seriesDoses!);

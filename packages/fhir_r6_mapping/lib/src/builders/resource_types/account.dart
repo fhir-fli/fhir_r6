@@ -7,7 +7,6 @@ import 'package:fhir_r6/fhir_r6.dart'
         AccountDiagnosis,
         AccountGuarantor,
         AccountProcedure,
-        AccountRelatedAccount,
         R6ResourceType,
         yamlMapToJson,
         yamlToJson;
@@ -38,13 +37,14 @@ class AccountBuilder extends DomainResourceBuilder {
     this.name,
     this.subject,
     this.servicePeriod,
+    this.covers,
     this.coverage,
     this.owner,
     this.description,
     this.guarantor,
     this.diagnosis,
     this.procedure,
-    this.relatedAccount,
+    this.parent,
     this.currency,
     this.balance,
     this.calculatedAt,
@@ -175,6 +175,16 @@ class AccountBuilder extends DomainResourceBuilder {
         PeriodBuilder.fromJson,
         '$objectPath.servicePeriod',
       ),
+      covers: (json['covers'] as List<dynamic>?)
+          ?.map<ReferenceBuilder>(
+            (v) => ReferenceBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.covers',
+              },
+            ),
+          )
+          .toList(),
       coverage: (json['coverage'] as List<dynamic>?)
           ?.map<AccountCoverageBuilder>(
             (v) => AccountCoverageBuilder.fromJson(
@@ -227,16 +237,12 @@ class AccountBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      relatedAccount: (json['relatedAccount'] as List<dynamic>?)
-          ?.map<AccountRelatedAccountBuilder>(
-            (v) => AccountRelatedAccountBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.relatedAccount',
-              },
-            ),
-          )
-          .toList(),
+      parent: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'parent',
+        ReferenceBuilder.fromJson,
+        '$objectPath.parent',
+      ),
       currency: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
         'currency',
@@ -338,6 +344,15 @@ class AccountBuilder extends DomainResourceBuilder {
   /// The date range of services associated with this account.
   PeriodBuilder? servicePeriod;
 
+  /// [covers]
+  /// An account that collects the charges for a specific set of services
+  /// offered over a limited time period. For example, a hospital account
+  /// might contain all charges related to a given admission, including any
+  /// inpatient appointments, and possibly re-admissions, of the billing for
+  /// those re-admissions should be grouped with the initial admission for
+  /// the purpose of claim submission.
+  List<ReferenceBuilder>? covers;
+
   /// [coverage]
   /// The party(s) that are responsible for covering the payment of this
   /// account, and what order should they be applied to the account.
@@ -372,9 +387,10 @@ class AccountBuilder extends DomainResourceBuilder {
   /// to produce claim(s).
   List<AccountProcedureBuilder>? procedure;
 
-  /// [relatedAccount]
-  /// Other associated accounts related to this account.
-  List<AccountRelatedAccountBuilder>? relatedAccount;
+  /// [parent]
+  /// Reference to an associated parent Account which has this account as a
+  /// sub-account.
+  ReferenceBuilder? parent;
 
   /// [currency]
   /// The default currency for the account.
@@ -442,13 +458,14 @@ class AccountBuilder extends DomainResourceBuilder {
     addField('name', name);
     addField('subject', subject);
     addField('servicePeriod', servicePeriod);
+    addField('covers', covers);
     addField('coverage', coverage);
     addField('owner', owner);
     addField('description', description);
     addField('guarantor', guarantor);
     addField('diagnosis', diagnosis);
     addField('procedure', procedure);
-    addField('relatedAccount', relatedAccount);
+    addField('parent', parent);
     addField('currency', currency);
     addField('balance', balance);
     addField('calculatedAt', calculatedAt);
@@ -474,13 +491,14 @@ class AccountBuilder extends DomainResourceBuilder {
       'name',
       'subject',
       'servicePeriod',
+      'covers',
       'coverage',
       'owner',
       'description',
       'guarantor',
       'diagnosis',
       'procedure',
-      'relatedAccount',
+      'parent',
       'currency',
       'balance',
       'calculatedAt',
@@ -556,6 +574,10 @@ class AccountBuilder extends DomainResourceBuilder {
         if (servicePeriod != null) {
           fields.add(servicePeriod!);
         }
+      case 'covers':
+        if (covers != null) {
+          fields.addAll(covers!);
+        }
       case 'coverage':
         if (coverage != null) {
           fields.addAll(coverage!);
@@ -580,9 +602,9 @@ class AccountBuilder extends DomainResourceBuilder {
         if (procedure != null) {
           fields.addAll(procedure!);
         }
-      case 'relatedAccount':
-        if (relatedAccount != null) {
-          fields.addAll(relatedAccount!);
+      case 'parent':
+        if (parent != null) {
+          fields.add(parent!);
         }
       case 'currency':
         if (currency != null) {
@@ -851,6 +873,22 @@ class AccountBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'covers':
+        {
+          if (child is List<ReferenceBuilder>) {
+            // Replace or create new list
+            covers = child;
+            return;
+          } else if (child is ReferenceBuilder) {
+            // Add single element to existing list or create new list
+            covers = [
+              ...(covers ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'coverage':
         {
           if (child is List<AccountCoverageBuilder>) {
@@ -943,18 +981,10 @@ class AccountBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'relatedAccount':
+      case 'parent':
         {
-          if (child is List<AccountRelatedAccountBuilder>) {
-            // Replace or create new list
-            relatedAccount = child;
-            return;
-          } else if (child is AccountRelatedAccountBuilder) {
-            // Add single element to existing list or create new list
-            relatedAccount = [
-              ...(relatedAccount ?? []),
-              child,
-            ];
+          if (child is ReferenceBuilder) {
+            parent = child;
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -1043,6 +1073,8 @@ class AccountBuilder extends DomainResourceBuilder {
         return ['ReferenceBuilder'];
       case 'servicePeriod':
         return ['PeriodBuilder'];
+      case 'covers':
+        return ['ReferenceBuilder'];
       case 'coverage':
         return ['AccountCoverageBuilder'];
       case 'owner':
@@ -1055,8 +1087,8 @@ class AccountBuilder extends DomainResourceBuilder {
         return ['AccountDiagnosisBuilder'];
       case 'procedure':
         return ['AccountProcedureBuilder'];
-      case 'relatedAccount':
-        return ['AccountRelatedAccountBuilder'];
+      case 'parent':
+        return ['ReferenceBuilder'];
       case 'currency':
         return ['CodeableConceptBuilder'];
       case 'balance':
@@ -1148,6 +1180,11 @@ class AccountBuilder extends DomainResourceBuilder {
           servicePeriod = PeriodBuilder.empty();
           return;
         }
+      case 'covers':
+        {
+          covers = <ReferenceBuilder>[];
+          return;
+        }
       case 'coverage':
         {
           coverage = <AccountCoverageBuilder>[];
@@ -1178,9 +1215,9 @@ class AccountBuilder extends DomainResourceBuilder {
           procedure = <AccountProcedureBuilder>[];
           return;
         }
-      case 'relatedAccount':
+      case 'parent':
         {
-          relatedAccount = <AccountRelatedAccountBuilder>[];
+          parent = ReferenceBuilder.empty();
           return;
         }
       case 'currency':
@@ -1222,13 +1259,14 @@ class AccountBuilder extends DomainResourceBuilder {
     FhirStringBuilder? name,
     List<ReferenceBuilder>? subject,
     PeriodBuilder? servicePeriod,
+    List<ReferenceBuilder>? covers,
     List<AccountCoverageBuilder>? coverage,
     ReferenceBuilder? owner,
     FhirMarkdownBuilder? description,
     List<AccountGuarantorBuilder>? guarantor,
     List<AccountDiagnosisBuilder>? diagnosis,
     List<AccountProcedureBuilder>? procedure,
-    List<AccountRelatedAccountBuilder>? relatedAccount,
+    ReferenceBuilder? parent,
     CodeableConceptBuilder? currency,
     List<AccountBalanceBuilder>? balance,
     FhirInstantBuilder? calculatedAt,
@@ -1254,13 +1292,14 @@ class AccountBuilder extends DomainResourceBuilder {
       name: name ?? this.name,
       subject: subject ?? this.subject,
       servicePeriod: servicePeriod ?? this.servicePeriod,
+      covers: covers ?? this.covers,
       coverage: coverage ?? this.coverage,
       owner: owner ?? this.owner,
       description: description ?? this.description,
       guarantor: guarantor ?? this.guarantor,
       diagnosis: diagnosis ?? this.diagnosis,
       procedure: procedure ?? this.procedure,
-      relatedAccount: relatedAccount ?? this.relatedAccount,
+      parent: parent ?? this.parent,
       currency: currency ?? this.currency,
       balance: balance ?? this.balance,
       calculatedAt: calculatedAt ?? this.calculatedAt,
@@ -1380,6 +1419,12 @@ class AccountBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
+    if (!listEquals<ReferenceBuilder>(
+      covers,
+      o.covers,
+    )) {
+      return false;
+    }
     if (!listEquals<AccountCoverageBuilder>(
       coverage,
       o.coverage,
@@ -1416,9 +1461,9 @@ class AccountBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<AccountRelatedAccountBuilder>(
-      relatedAccount,
-      o.relatedAccount,
+    if (!equalsDeepWithNull(
+      parent,
+      o.parent,
     )) {
       return false;
     }
@@ -1925,6 +1970,7 @@ class AccountGuarantorBuilder extends BackboneElementBuilder {
     this.party,
     this.onHold,
     this.period,
+    this.account,
     super.disallowExtensions,
   }) : super(
           objectPath: 'Account.guarantor',
@@ -1932,9 +1978,7 @@ class AccountGuarantorBuilder extends BackboneElementBuilder {
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
-  factory AccountGuarantorBuilder.empty() => AccountGuarantorBuilder(
-        party: ReferenceBuilder.empty(),
-      );
+  factory AccountGuarantorBuilder.empty() => AccountGuarantorBuilder();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
   factory AccountGuarantorBuilder.fromJson(
@@ -1985,6 +2029,12 @@ class AccountGuarantorBuilder extends BackboneElementBuilder {
         'period',
         PeriodBuilder.fromJson,
         '$objectPath.period',
+      ),
+      account: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'account',
+        ReferenceBuilder.fromJson,
+        '$objectPath.account',
       ),
     );
   }
@@ -2045,6 +2095,10 @@ class AccountGuarantorBuilder extends BackboneElementBuilder {
   /// account.
   PeriodBuilder? period;
 
+  /// [account]
+  /// Reference to a specific Account belonging to the guarantor to use.
+  ReferenceBuilder? account;
+
   /// Converts a [AccountGuarantorBuilder]
   /// to [AccountGuarantor]
   @override
@@ -2087,6 +2141,7 @@ class AccountGuarantorBuilder extends BackboneElementBuilder {
     addField('party', party);
     addField('onHold', onHold);
     addField('period', period);
+    addField('account', account);
     return json;
   }
 
@@ -2100,6 +2155,7 @@ class AccountGuarantorBuilder extends BackboneElementBuilder {
       'party',
       'onHold',
       'period',
+      'account',
     ];
   }
 
@@ -2135,6 +2191,10 @@ class AccountGuarantorBuilder extends BackboneElementBuilder {
       case 'period':
         if (period != null) {
           fields.add(period!);
+        }
+      case 'account':
+        if (account != null) {
+          fields.add(account!);
         }
       default:
         if (checkValid) {
@@ -2253,6 +2313,14 @@ class AccountGuarantorBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'account':
+        {
+          if (child is ReferenceBuilder) {
+            account = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -2275,6 +2343,8 @@ class AccountGuarantorBuilder extends BackboneElementBuilder {
         return ['FhirBooleanBuilder'];
       case 'period':
         return ['PeriodBuilder'];
+      case 'account':
+        return ['ReferenceBuilder'];
       default:
         return <String>[];
     }
@@ -2315,6 +2385,11 @@ class AccountGuarantorBuilder extends BackboneElementBuilder {
           period = PeriodBuilder.empty();
           return;
         }
+      case 'account':
+        {
+          account = ReferenceBuilder.empty();
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
@@ -2330,6 +2405,7 @@ class AccountGuarantorBuilder extends BackboneElementBuilder {
     ReferenceBuilder? party,
     FhirBooleanBuilder? onHold,
     PeriodBuilder? period,
+    ReferenceBuilder? account,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -2344,6 +2420,7 @@ class AccountGuarantorBuilder extends BackboneElementBuilder {
       party: party ?? this.party,
       onHold: onHold ?? this.onHold,
       period: period ?? this.period,
+      account: account ?? this.account,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -2403,6 +2480,12 @@ class AccountGuarantorBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       period,
       o.period,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      account,
+      o.account,
     )) {
       return false;
     }
@@ -3753,450 +3836,6 @@ class AccountProcedureBuilder extends BackboneElementBuilder {
     if (!listEquals<ReferenceBuilder>(
       device,
       o.device,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [AccountRelatedAccountBuilder]
-/// Other associated accounts related to this account.
-class AccountRelatedAccountBuilder extends BackboneElementBuilder {
-  /// Primary constructor for
-  /// [AccountRelatedAccountBuilder]
-
-  AccountRelatedAccountBuilder({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.relationship,
-    this.account,
-    super.disallowExtensions,
-  }) : super(
-          objectPath: 'Account.relatedAccount',
-        );
-
-  /// An empty constructor for partial usage.
-  /// For Builder classes, no fields are required
-  factory AccountRelatedAccountBuilder.empty() => AccountRelatedAccountBuilder(
-        account: ReferenceBuilder.empty(),
-      );
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory AccountRelatedAccountBuilder.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    const objectPath = 'Account.relatedAccount';
-    return AccountRelatedAccountBuilder(
-      id: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'id',
-        FhirStringBuilder.fromJson,
-        '$objectPath.id',
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.extension',
-              },
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.modifierExtension',
-              },
-            ),
-          )
-          .toList(),
-      relationship: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'relationship',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.relationship',
-      ),
-      account: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'account',
-        ReferenceBuilder.fromJson,
-        '$objectPath.account',
-      ),
-    );
-  }
-
-  /// Deserialize [AccountRelatedAccountBuilder]
-  /// from a [String] or [YamlMap] object
-  factory AccountRelatedAccountBuilder.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return AccountRelatedAccountBuilder.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return AccountRelatedAccountBuilder.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'AccountRelatedAccountBuilder '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [AccountRelatedAccountBuilder]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory AccountRelatedAccountBuilder.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return AccountRelatedAccountBuilder.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'AccountRelatedAccount';
-
-  /// [relationship]
-  /// Relationship of the associated Account.
-  CodeableConceptBuilder? relationship;
-
-  /// [account]
-  /// Reference to an associated Account.
-  ReferenceBuilder? account;
-
-  /// Converts a [AccountRelatedAccountBuilder]
-  /// to [AccountRelatedAccount]
-  @override
-  AccountRelatedAccount build() => AccountRelatedAccount.fromJson(toJson());
-
-  /// Converts a [AccountRelatedAccountBuilder]
-  /// to a [Map<String, dynamic>]
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    void addField(String key, dynamic field) {
-      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
-        throw ArgumentError('"field" must be a FhirBaseBuilder type');
-      }
-      if (field == null) return;
-      if (field is PrimitiveTypeBuilder) {
-        json[key] = field.toJson()['value'];
-        if (field.toJson()['_value'] != null) {
-          json['_$key'] = field.toJson()['_value'];
-        }
-      } else if (field is List<FhirBaseBuilder>) {
-        if (field.isEmpty) return;
-        if (field.first is PrimitiveTypeBuilder) {
-          final fieldJson = field.map((e) => e.toJson()).toList();
-          json[key] = fieldJson.map((e) => e['value']).toList();
-          if (fieldJson.any((e) => e['_value'] != null)) {
-            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
-          }
-        } else {
-          json[key] = field.map((e) => e.toJson()).toList();
-        }
-      } else if (field is FhirBaseBuilder) {
-        json[key] = field.toJson();
-      }
-    }
-
-    addField('id', id);
-    addField('extension', extension_);
-    addField('modifierExtension', modifierExtension);
-    addField('relationship', relationship);
-    addField('account', account);
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'relationship',
-      'account',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBaseBuilder> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBaseBuilder>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'relationship':
-        if (relationship != null) {
-          fields.add(relationship!);
-        }
-      case 'account':
-        if (account != null) {
-          fields.add(account!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBaseBuilder? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  void setChildByName(String childName, dynamic child) {
-    // child must be null, or a (List of) FhirBaseBuilder(s).
-    if (child == null) {
-      return; // In builders, setting to null is allowed
-    }
-    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
-      throw Exception('Cannot set child value for $childName');
-    }
-
-    switch (childName) {
-      case 'id':
-        {
-          if (child is FhirStringBuilder) {
-            id = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                id = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'extension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            extension_ = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            extension_ = [
-              ...(extension_ ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'modifierExtension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            modifierExtension = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            modifierExtension = [
-              ...(modifierExtension ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'relationship':
-        {
-          if (child is CodeableConceptBuilder) {
-            relationship = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'account':
-        {
-          if (child is ReferenceBuilder) {
-            account = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      default:
-        throw Exception('Cannot set child value for $childName');
-    }
-  }
-
-  /// Return the possible Dart types for the field named [fieldName].
-  /// For polymorphic fields, multiple types are possible.
-  @override
-  List<String> typeByElementName(String fieldName) {
-    switch (fieldName) {
-      case 'id':
-        return ['FhirStringBuilder'];
-      case 'extension':
-        return ['FhirExtensionBuilder'];
-      case 'modifierExtension':
-        return ['FhirExtensionBuilder'];
-      case 'relationship':
-        return ['CodeableConceptBuilder'];
-      case 'account':
-        return ['ReferenceBuilder'];
-      default:
-        return <String>[];
-    }
-  }
-
-  /// Creates a new [AccountRelatedAccountBuilder]
-  ///  with a chosen field set to an empty object.
-  @override
-  void createProperty(String propertyName) {
-    switch (propertyName) {
-      case 'id':
-        {
-          id = FhirStringBuilder.empty();
-          return;
-        }
-      case 'extension':
-        {
-          extension_ = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'modifierExtension':
-        {
-          modifierExtension = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'relationship':
-        {
-          relationship = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'account':
-        {
-          account = ReferenceBuilder.empty();
-          return;
-        }
-      default:
-        throw ArgumentError('No matching property: $propertyName');
-    }
-  }
-
-  @override
-  AccountRelatedAccountBuilder clone() => throw UnimplementedError();
-  @override
-  AccountRelatedAccountBuilder copyWith({
-    FhirStringBuilder? id,
-    List<FhirExtensionBuilder>? extension_,
-    List<FhirExtensionBuilder>? modifierExtension,
-    CodeableConceptBuilder? relationship,
-    ReferenceBuilder? account,
-    Map<String, dynamic>? userData,
-    List<String>? formatCommentsPre,
-    List<String>? formatCommentsPost,
-    List<dynamic>? annotations,
-    String? objectPath,
-  }) {
-    final newObjectPath = this.objectPath;
-    final newResult = AccountRelatedAccountBuilder(
-      id: id ?? this.id,
-      extension_: extension_ ?? this.extension_,
-      modifierExtension: modifierExtension ?? this.modifierExtension,
-      relationship: relationship ?? this.relationship,
-      account: account ?? this.account,
-    )..objectPath = newObjectPath;
-    // Copy user data and annotations
-    if (userData != null) {
-      newResult.userData = userData;
-    }
-    if (formatCommentsPre != null) {
-      newResult.formatCommentsPre = formatCommentsPre;
-    }
-    if (formatCommentsPost != null) {
-      newResult.formatCommentsPost = formatCommentsPost;
-    }
-    if (annotations != null) {
-      newResult.annotations = annotations;
-    }
-
-    return newResult;
-  }
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! AccountRelatedAccountBuilder) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      relationship,
-      o.relationship,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      account,
-      o.account,
     )) {
       return false;
     }

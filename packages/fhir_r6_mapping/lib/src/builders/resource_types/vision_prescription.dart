@@ -27,6 +27,7 @@ class VisionPrescriptionBuilder extends DomainResourceBuilder {
     super.extension_,
     super.modifierExtension,
     this.identifier,
+    this.basedOn,
     this.status,
     this.created,
     this.patient,
@@ -126,6 +127,16 @@ class VisionPrescriptionBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
+      basedOn: (json['basedOn'] as List<dynamic>?)
+          ?.map<ReferenceBuilder>(
+            (v) => ReferenceBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.basedOn',
+              },
+            ),
+          )
+          .toList(),
       status: JsonParser.parsePrimitive<FinancialResourceStatusCodesBuilder>(
         json,
         'status',
@@ -221,6 +232,10 @@ class VisionPrescriptionBuilder extends DomainResourceBuilder {
   /// A unique identifier assigned to this vision prescription.
   List<IdentifierBuilder>? identifier;
 
+  /// [basedOn]
+  /// Plan/proposal/order/request fulfilled by this prescription.
+  List<ReferenceBuilder>? basedOn;
+
   /// [status]
   /// The status of the resource instance.
   FinancialResourceStatusCodesBuilder? status;
@@ -300,6 +315,7 @@ class VisionPrescriptionBuilder extends DomainResourceBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('identifier', identifier);
+    addField('basedOn', basedOn);
     addField('status', status);
     addField('created', created);
     addField('patient', patient);
@@ -323,6 +339,7 @@ class VisionPrescriptionBuilder extends DomainResourceBuilder {
       'extension',
       'modifierExtension',
       'identifier',
+      'basedOn',
       'status',
       'created',
       'patient',
@@ -377,6 +394,10 @@ class VisionPrescriptionBuilder extends DomainResourceBuilder {
       case 'identifier':
         if (identifier != null) {
           fields.addAll(identifier!);
+        }
+      case 'basedOn':
+        if (basedOn != null) {
+          fields.addAll(basedOn!);
         }
       case 'status':
         if (status != null) {
@@ -578,6 +599,22 @@ class VisionPrescriptionBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'basedOn':
+        {
+          if (child is List<ReferenceBuilder>) {
+            // Replace or create new list
+            basedOn = child;
+            return;
+          } else if (child is ReferenceBuilder) {
+            // Add single element to existing list or create new list
+            basedOn = [
+              ...(basedOn ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'status':
         {
           if (child is FinancialResourceStatusCodesBuilder) {
@@ -710,6 +747,8 @@ class VisionPrescriptionBuilder extends DomainResourceBuilder {
         return ['FhirExtensionBuilder'];
       case 'identifier':
         return ['IdentifierBuilder'];
+      case 'basedOn':
+        return ['ReferenceBuilder'];
       case 'status':
         return ['FhirCodeEnumBuilder'];
       case 'created':
@@ -779,6 +818,11 @@ class VisionPrescriptionBuilder extends DomainResourceBuilder {
           identifier = <IdentifierBuilder>[];
           return;
         }
+      case 'basedOn':
+        {
+          basedOn = <ReferenceBuilder>[];
+          return;
+        }
       case 'status':
         {
           status = FinancialResourceStatusCodesBuilder.empty();
@@ -832,6 +876,7 @@ class VisionPrescriptionBuilder extends DomainResourceBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     List<IdentifierBuilder>? identifier,
+    List<ReferenceBuilder>? basedOn,
     FinancialResourceStatusCodesBuilder? status,
     FhirDateTimeBuilder? created,
     ReferenceBuilder? patient,
@@ -855,6 +900,7 @@ class VisionPrescriptionBuilder extends DomainResourceBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       identifier: identifier ?? this.identifier,
+      basedOn: basedOn ?? this.basedOn,
       status: status ?? this.status,
       created: created ?? this.created,
       patient: patient ?? this.patient,
@@ -939,6 +985,12 @@ class VisionPrescriptionBuilder extends DomainResourceBuilder {
     if (!listEquals<IdentifierBuilder>(
       identifier,
       o.identifier,
+    )) {
+      return false;
+    }
+    if (!listEquals<ReferenceBuilder>(
+      basedOn,
+      o.basedOn,
     )) {
       return false;
     }

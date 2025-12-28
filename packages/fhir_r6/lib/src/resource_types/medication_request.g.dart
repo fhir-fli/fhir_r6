@@ -406,7 +406,7 @@ abstract class $MedicationRequestSubstitutionCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirBoolean? allowedX,
+    AllowedXMedicationRequestSubstitution? allowedX,
     CodeableConcept? reason,
     bool? disallowExtensions,
   });
@@ -439,7 +439,8 @@ class _$MedicationRequestSubstitutionCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         allowedX: identical(allowedX, fhirSentinel)
             ? _value.allowedX
-            : (allowedX as FhirBoolean?) ?? _value.allowedX,
+            : (allowedX as AllowedXMedicationRequestSubstitution?) ??
+                _value.allowedX,
         reason: identical(reason, fhirSentinel)
             ? _value.reason
             : reason as CodeableConcept?,

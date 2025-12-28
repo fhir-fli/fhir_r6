@@ -46,6 +46,7 @@ class MedicationDispenseBuilder extends DomainResourceBuilder {
     this.type,
     this.quantity,
     this.daysSupply,
+    this.fillNumber,
     this.recorded,
     this.whenPrepared,
     this.whenHandedOver,
@@ -266,6 +267,12 @@ class MedicationDispenseBuilder extends DomainResourceBuilder {
         QuantityBuilder.fromJson,
         '$objectPath.daysSupply',
       ),
+      fillNumber: JsonParser.parsePrimitive<FhirPositiveIntBuilder>(
+        json,
+        'fillNumber',
+        FhirPositiveIntBuilder.fromJson,
+        '$objectPath.fillNumber',
+      ),
       recorded: JsonParser.parsePrimitive<FhirDateTimeBuilder>(
         json,
         'recorded',
@@ -475,9 +482,19 @@ class MedicationDispenseBuilder extends DomainResourceBuilder {
   /// The amount of medication expressed as a timing amount.
   QuantityBuilder? daysSupply;
 
+  /// [fillNumber]
+  /// Represents the known number of the fill over the entire lifetime of the
+  /// prescription, i.e. if this is the first dispense by this pharmacy but
+  /// the third fill overall, then the fillNumber will be 3. Each fill number
+  /// represents one dispensation, even if that dispensation is not for the
+  /// full quantity. Partial fills are not represented by decimal quantities,
+  /// i.e., a partial fill of 40 tablets (full quantity is 100 tablets) adds
+  /// 1 to the prior fill number, not 0.4.
+  FhirPositiveIntBuilder? fillNumber;
+
   /// [recorded]
-  /// The date (and maybe time) when the dispense activity started if
-  /// whenPrepared or whenHandedOver is not populated.
+  /// The date the occurrence of the MedicationDispense was first captured in
+  /// the system.
   FhirDateTimeBuilder? recorded;
 
   /// [whenPrepared]
@@ -592,6 +609,7 @@ class MedicationDispenseBuilder extends DomainResourceBuilder {
     addField('type', type);
     addField('quantity', quantity);
     addField('daysSupply', daysSupply);
+    addField('fillNumber', fillNumber);
     addField('recorded', recorded);
     addField('whenPrepared', whenPrepared);
     addField('whenHandedOver', whenHandedOver);
@@ -634,6 +652,7 @@ class MedicationDispenseBuilder extends DomainResourceBuilder {
       'type',
       'quantity',
       'daysSupply',
+      'fillNumber',
       'recorded',
       'whenPrepared',
       'whenHandedOver',
@@ -755,6 +774,10 @@ class MedicationDispenseBuilder extends DomainResourceBuilder {
       case 'daysSupply':
         if (daysSupply != null) {
           fields.add(daysSupply!);
+        }
+      case 'fillNumber':
+        if (fillNumber != null) {
+          fields.add(fillNumber!);
         }
       case 'recorded':
         if (recorded != null) {
@@ -1172,6 +1195,31 @@ class MedicationDispenseBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'fillNumber':
+        {
+          if (child is FhirPositiveIntBuilder) {
+            fillNumber = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For number types,
+              // first parse to num then pass the number directly
+              final numValue = num.tryParse(stringValue);
+              if (numValue != null) {
+                final converted = FhirPositiveIntBuilder.tryParse(numValue);
+                if (converted != null) {
+                  fillNumber = converted;
+                  return;
+                }
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'recorded':
         {
           if (child is FhirDateTimeBuilder) {
@@ -1392,6 +1440,8 @@ class MedicationDispenseBuilder extends DomainResourceBuilder {
         return ['QuantityBuilder'];
       case 'daysSupply':
         return ['QuantityBuilder'];
+      case 'fillNumber':
+        return ['FhirPositiveIntBuilder'];
       case 'recorded':
         return ['FhirDateTimeBuilder'];
       case 'whenPrepared':
@@ -1547,6 +1597,11 @@ class MedicationDispenseBuilder extends DomainResourceBuilder {
           daysSupply = QuantityBuilder.empty();
           return;
         }
+      case 'fillNumber':
+        {
+          fillNumber = FhirPositiveIntBuilder.empty();
+          return;
+        }
       case 'recorded':
         {
           recorded = FhirDateTimeBuilder.empty();
@@ -1631,6 +1686,7 @@ class MedicationDispenseBuilder extends DomainResourceBuilder {
     CodeableConceptBuilder? type,
     QuantityBuilder? quantity,
     QuantityBuilder? daysSupply,
+    FhirPositiveIntBuilder? fillNumber,
     FhirDateTimeBuilder? recorded,
     FhirDateTimeBuilder? whenPrepared,
     FhirDateTimeBuilder? whenHandedOver,
@@ -1675,6 +1731,7 @@ class MedicationDispenseBuilder extends DomainResourceBuilder {
       type: type ?? this.type,
       quantity: quantity ?? this.quantity,
       daysSupply: daysSupply ?? this.daysSupply,
+      fillNumber: fillNumber ?? this.fillNumber,
       recorded: recorded ?? this.recorded,
       whenPrepared: whenPrepared ?? this.whenPrepared,
       whenHandedOver: whenHandedOver ?? this.whenHandedOver,
@@ -1859,6 +1916,12 @@ class MedicationDispenseBuilder extends DomainResourceBuilder {
     if (!equalsDeepWithNull(
       daysSupply,
       o.daysSupply,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      fillNumber,
+      o.fillNumber,
     )) {
       return false;
     }

@@ -25,10 +25,7 @@ class MessageHeader extends DomainResource {
     super.modifierExtension,
     required this.eventX,
     this.destination,
-    this.sender,
-    this.author,
     required this.source,
-    this.responsible,
     this.reason,
     this.response,
     this.focus,
@@ -92,6 +89,7 @@ class MessageHeader extends DomainResource {
         json,
         {
           'eventCoding': Coding.fromJson,
+          'eventUri': FhirUri.fromJson,
           'eventCanonical': FhirCanonical.fromJson,
         },
       )!,
@@ -102,26 +100,11 @@ class MessageHeader extends DomainResource {
             ),
           )
           .toList(),
-      sender: JsonParser.parseObject<Reference>(
-        json,
-        'sender',
-        Reference.fromJson,
-      ),
-      author: JsonParser.parseObject<Reference>(
-        json,
-        'author',
-        Reference.fromJson,
-      ),
       source: JsonParser.parseObject<MessageHeaderSource>(
         json,
         'source',
         MessageHeaderSource.fromJson,
       )!,
-      responsible: JsonParser.parseObject<Reference>(
-        json,
-        'responsible',
-        Reference.fromJson,
-      ),
       reason: JsonParser.parseObject<CodeableConcept>(
         json,
         'reason',
@@ -192,12 +175,15 @@ class MessageHeader extends DomainResource {
   /// [eventX]
   /// Code that identifies the event this message represents and connects it
   /// with its definition. Events defined as part of the FHIR specification
-  /// are defined by the implementation. Alternatively a canonical uri to the
-  /// EventDefinition.
+  /// are defined by the implementation. Alternatively a uri , canonical uri
+  /// to the EventDefinition or SubscriptionTopic.
   final EventXMessageHeader eventX;
 
   /// Getter for [eventCoding] as a Coding
   Coding? get eventCoding => eventX.isAs<Coding>();
+
+  /// Getter for [eventUri] as a FhirUri
+  FhirUri? get eventUri => eventX.isAs<FhirUri>();
 
   /// Getter for [eventCanonical] as a FhirCanonical
   FhirCanonical? get eventCanonical => eventX.isAs<FhirCanonical>();
@@ -206,26 +192,9 @@ class MessageHeader extends DomainResource {
   /// The destination application which the message is intended for.
   final List<MessageHeaderDestination>? destination;
 
-  /// [sender]
-  /// Identifies the sending system to allow the use of a trust relationship.
-  final Reference? sender;
-
-  /// [author]
-  /// The logical author of the message - the personor device that decided
-  /// the described event should happen. When there is more than one
-  /// candidate, pick the most proximal to the MessageHeader. Can provide
-  /// other authors in extensions.
-  final Reference? author;
-
   /// [source]
   /// The source application from which this message originated.
   final MessageHeaderSource source;
-
-  /// [responsible]
-  /// The person or organization that accepts overall responsibility for the
-  /// contents of the message. The implication is that the message event
-  /// happened under the policies of the responsible party.
-  final Reference? responsible;
 
   /// [reason]
   /// Coded indication of the cause for the event - indicates a reason for
@@ -352,20 +321,8 @@ class MessageHeader extends DomainResource {
       destination,
     );
     addField(
-      'sender',
-      sender,
-    );
-    addField(
-      'author',
-      author,
-    );
-    addField(
       'source',
       source,
-    );
-    addField(
-      'responsible',
-      responsible,
     );
     addField(
       'reason',
@@ -400,10 +357,7 @@ class MessageHeader extends DomainResource {
       'modifierExtension',
       'eventX',
       'destination',
-      'sender',
-      'author',
       'source',
-      'responsible',
       'reason',
       'response',
       'focus',
@@ -460,6 +414,10 @@ class MessageHeader extends DomainResource {
         if (eventX is Coding) {
           fields.add(eventX);
         }
+      case 'eventUri':
+        if (eventX is FhirUri) {
+          fields.add(eventX);
+        }
       case 'eventCanonical':
         if (eventX is FhirCanonical) {
           fields.add(eventX);
@@ -468,20 +426,8 @@ class MessageHeader extends DomainResource {
         if (destination != null) {
           fields.addAll(destination!);
         }
-      case 'sender':
-        if (sender != null) {
-          fields.add(sender!);
-        }
-      case 'author':
-        if (author != null) {
-          fields.add(author!);
-        }
       case 'source':
         fields.add(source);
-      case 'responsible':
-        if (responsible != null) {
-          fields.add(responsible!);
-        }
       case 'reason':
         if (reason != null) {
           fields.add(reason!);
@@ -600,26 +546,8 @@ class MessageHeader extends DomainResource {
       return false;
     }
     if (!equalsDeepWithNull(
-      sender,
-      o.sender,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      author,
-      o.author,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
       source,
       o.source,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      responsible,
-      o.responsible,
     )) {
       return false;
     }
@@ -665,7 +593,6 @@ class MessageHeaderDestination extends BackboneElement {
     FhirUrl? endpointUrl,
     Reference? endpointReference,
     this.name,
-    this.target,
     this.receiver,
     super.disallowExtensions,
   })  : endpointX = endpointX ?? endpointUrl ?? endpointReference,
@@ -706,11 +633,6 @@ class MessageHeaderDestination extends BackboneElement {
         json,
         'name',
         FhirString.fromJson,
-      ),
-      target: JsonParser.parseObject<Reference>(
-        json,
-        'target',
-        Reference.fromJson,
       ),
       receiver: JsonParser.parseObject<Reference>(
         json,
@@ -775,11 +697,6 @@ class MessageHeaderDestination extends BackboneElement {
   /// [name]
   /// Human-readable name for the target system.
   final FhirString? name;
-
-  /// [target]
-  /// Identifies the target end system in situations where the initial
-  /// message transmission is to an intermediary system.
-  final Reference? target;
 
   /// [receiver]
   /// Allows data conveyed by a message to be addressed to a particular
@@ -874,10 +791,6 @@ class MessageHeaderDestination extends BackboneElement {
       name,
     );
     addField(
-      'target',
-      target,
-    );
-    addField(
       'receiver',
       receiver,
     );
@@ -893,7 +806,6 @@ class MessageHeaderDestination extends BackboneElement {
       'modifierExtension',
       'endpointX',
       'name',
-      'target',
       'receiver',
     ];
   }
@@ -934,10 +846,6 @@ class MessageHeaderDestination extends BackboneElement {
       case 'name':
         if (name != null) {
           fields.add(name!);
-        }
-      case 'target':
-        if (target != null) {
-          fields.add(target!);
         }
       case 'receiver':
         if (receiver != null) {
@@ -1015,12 +923,6 @@ class MessageHeaderDestination extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
-      target,
-      o.target,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
       receiver,
       o.receiver,
     )) {
@@ -1047,6 +949,7 @@ class MessageHeaderSource extends BackboneElement {
     this.software,
     this.version,
     this.contact,
+    this.sender,
     super.disallowExtensions,
   })  : endpointX = endpointX ?? endpointUrl ?? endpointReference,
         super();
@@ -1101,6 +1004,11 @@ class MessageHeaderSource extends BackboneElement {
         json,
         'contact',
         ContactPoint.fromJson,
+      ),
+      sender: JsonParser.parseObject<Reference>(
+        json,
+        'sender',
+        Reference.fromJson,
       ),
     );
   }
@@ -1174,6 +1082,10 @@ class MessageHeaderSource extends BackboneElement {
   /// An e-mail, phone, website or other contact point to use to resolve
   /// issues with message communications.
   final ContactPoint? contact;
+
+  /// [sender]
+  /// Identifies the sending entity to allow the use of a trust relationship.
+  final Reference? sender;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1273,6 +1185,10 @@ class MessageHeaderSource extends BackboneElement {
       'contact',
       contact,
     );
+    addField(
+      'sender',
+      sender,
+    );
     return json;
   }
 
@@ -1288,6 +1204,7 @@ class MessageHeaderSource extends BackboneElement {
       'software',
       'version',
       'contact',
+      'sender',
     ];
   }
 
@@ -1339,6 +1256,10 @@ class MessageHeaderSource extends BackboneElement {
       case 'contact':
         if (contact != null) {
           fields.add(contact!);
+        }
+      case 'sender':
+        if (sender != null) {
+          fields.add(sender!);
         }
       default:
         if (checkValid) {
@@ -1426,6 +1347,12 @@ class MessageHeaderSource extends BackboneElement {
     if (!equalsDeepWithNull(
       contact,
       o.contact,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      sender,
+      o.sender,
     )) {
       return false;
     }

@@ -118,8 +118,8 @@ abstract class $ImmunizationRecommendationRecommendationCopyWith<T>
     List<ImmunizationRecommendationDateCriterion>? dateCriterion,
     FhirMarkdown? description,
     FhirString? series,
-    FhirString? doseNumber,
-    FhirString? seriesDoses,
+    CodeableConcept? doseNumber,
+    CodeableConcept? seriesDoses,
     List<Reference>? supportingImmunization,
     List<Reference>? supportingPatientInformation,
     bool? disallowExtensions,
@@ -132,9 +132,7 @@ class _$ImmunizationRecommendationRecommendationCopyWithImpl<T>
   final T Function(ImmunizationRecommendationRecommendation) _then;
 
   _$ImmunizationRecommendationRecommendationCopyWithImpl(
-    this._value,
-    this._then,
-  );
+      this._value, this._then);
 
   @override
   T call({
@@ -191,10 +189,10 @@ class _$ImmunizationRecommendationRecommendationCopyWithImpl<T>
             : series as FhirString?,
         doseNumber: identical(doseNumber, fhirSentinel)
             ? _value.doseNumber
-            : doseNumber as FhirString?,
+            : doseNumber as CodeableConcept?,
         seriesDoses: identical(seriesDoses, fhirSentinel)
             ? _value.seriesDoses
-            : seriesDoses as FhirString?,
+            : seriesDoses as CodeableConcept?,
         supportingImmunization: identical(supportingImmunization, fhirSentinel)
             ? _value.supportingImmunization
             : supportingImmunization as List<Reference>?,
@@ -240,9 +238,7 @@ class _$ImmunizationRecommendationDateCriterionCopyWithImpl<T>
   final T Function(ImmunizationRecommendationDateCriterion) _then;
 
   _$ImmunizationRecommendationDateCriterionCopyWithImpl(
-    this._value,
-    this._then,
-  );
+      this._value, this._then);
 
   @override
   T call({

@@ -21,7 +21,7 @@ abstract class $BiologicallyDerivedProductDispenseCopyWith<T>
     List<Identifier>? identifier,
     List<Reference>? basedOn,
     List<Reference>? partOf,
-    BiologicallyDerivedProductDispenseCodes? status,
+    BiologicallyDerivedProductDispenseStatus? status,
     CodeableConcept? originRelationshipType,
     Reference? product,
     Reference? patient,
@@ -104,7 +104,7 @@ class _$BiologicallyDerivedProductDispenseCopyWithImpl<T>
             : partOf as List<Reference>?,
         status: identical(status, fhirSentinel)
             ? _value.status
-            : (status as BiologicallyDerivedProductDispenseCodes?) ??
+            : (status as BiologicallyDerivedProductDispenseStatus?) ??
                 _value.status,
         originRelationshipType: identical(originRelationshipType, fhirSentinel)
             ? _value.originRelationshipType
@@ -177,9 +177,7 @@ class _$BiologicallyDerivedProductDispensePerformerCopyWithImpl<T>
   final T Function(BiologicallyDerivedProductDispensePerformer) _then;
 
   _$BiologicallyDerivedProductDispensePerformerCopyWithImpl(
-    this._value,
-    this._then,
-  );
+      this._value, this._then);
 
   @override
   T call({

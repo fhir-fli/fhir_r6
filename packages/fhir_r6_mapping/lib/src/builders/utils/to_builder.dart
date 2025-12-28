@@ -883,14 +883,6 @@ extension BuilderFhirBase on FhirBase {
         return CitationCitedArtifactBuilder.fromJson(
           toJson(),
         );
-      case 'citationversion':
-        return CitationVersionBuilder.fromJson(
-          toJson(),
-        );
-      case 'citation_version':
-        return CitationVersionBuilder.fromJson(
-          toJson(),
-        );
       case 'citationstatusdate1':
         return CitationStatusDate1Builder.fromJson(
           toJson(),
@@ -1177,18 +1169,6 @@ extension BuilderFhirBase on FhirBase {
         );
       case 'claimresponse_error':
         return ClaimResponseErrorBuilder.fromJson(
-          toJson(),
-        );
-      case 'clinicalimpression':
-        return ClinicalImpressionBuilder.fromJson(
-          toJson(),
-        );
-      case 'clinicalimpressionfinding':
-        return ClinicalImpressionFindingBuilder.fromJson(
-          toJson(),
-        );
-      case 'clinicalimpression_finding':
-        return ClinicalImpressionFindingBuilder.fromJson(
           toJson(),
         );
       case 'clinicalusedefinition':
@@ -1707,14 +1687,6 @@ extension BuilderFhirBase on FhirBase {
         return DeviceUdiCarrierBuilder.fromJson(
           toJson(),
         );
-      case 'deviceversion':
-        return DeviceVersionBuilder.fromJson(
-          toJson(),
-        );
-      case 'device_version':
-        return DeviceVersionBuilder.fromJson(
-          toJson(),
-        );
       case 'deviceproperty':
         return DevicePropertyBuilder.fromJson(
           toJson(),
@@ -1945,50 +1917,6 @@ extension BuilderFhirBase on FhirBase {
         );
       case 'evidence_certainty':
         return EvidenceCertaintyBuilder.fromJson(
-          toJson(),
-        );
-      case 'evidencereport':
-        return EvidenceReportBuilder.fromJson(
-          toJson(),
-        );
-      case 'evidencereportsubject':
-        return EvidenceReportSubjectBuilder.fromJson(
-          toJson(),
-        );
-      case 'evidencereport_subject':
-        return EvidenceReportSubjectBuilder.fromJson(
-          toJson(),
-        );
-      case 'evidencereportcharacteristic':
-        return EvidenceReportCharacteristicBuilder.fromJson(
-          toJson(),
-        );
-      case 'evidencereport_characteristic':
-        return EvidenceReportCharacteristicBuilder.fromJson(
-          toJson(),
-        );
-      case 'evidencereportrelatesto':
-        return EvidenceReportRelatesToBuilder.fromJson(
-          toJson(),
-        );
-      case 'evidencereport_relatesto':
-        return EvidenceReportRelatesToBuilder.fromJson(
-          toJson(),
-        );
-      case 'evidencereportsection':
-        return EvidenceReportSectionBuilder.fromJson(
-          toJson(),
-        );
-      case 'evidencereport_section':
-        return EvidenceReportSectionBuilder.fromJson(
-          toJson(),
-        );
-      case 'evidencevariablecharacteristic':
-        return EvidenceVariableCharacteristicBuilder.fromJson(
-          toJson(),
-        );
-      case 'evidencevariable_characteristic':
-        return EvidenceVariableCharacteristicBuilder.fromJson(
           toJson(),
         );
       case 'evidencevariablecategory':
@@ -2531,36 +2459,12 @@ extension BuilderFhirBase on FhirBase {
         return InsurancePlanBuilder.fromJson(
           toJson(),
         );
-      case 'insuranceplancoverage':
-        return InsurancePlanCoverageBuilder.fromJson(
-          toJson(),
-        );
-      case 'insuranceplan_coverage':
-        return InsurancePlanCoverageBuilder.fromJson(
-          toJson(),
-        );
       case 'insuranceplanbenefit':
         return InsurancePlanBenefitBuilder.fromJson(
           toJson(),
         );
       case 'insuranceplan_benefit':
         return InsurancePlanBenefitBuilder.fromJson(
-          toJson(),
-        );
-      case 'insuranceplanlimit':
-        return InsurancePlanLimitBuilder.fromJson(
-          toJson(),
-        );
-      case 'insuranceplan_limit':
-        return InsurancePlanLimitBuilder.fromJson(
-          toJson(),
-        );
-      case 'insuranceplanplan':
-        return InsurancePlanPlanBuilder.fromJson(
-          toJson(),
-        );
-      case 'insuranceplan_plan':
-        return InsurancePlanPlanBuilder.fromJson(
           toJson(),
         );
       case 'insuranceplangeneralcost':
@@ -2577,14 +2481,6 @@ extension BuilderFhirBase on FhirBase {
         );
       case 'insuranceplan_specificcost':
         return InsurancePlanSpecificCostBuilder.fromJson(
-          toJson(),
-        );
-      case 'insuranceplanbenefit1':
-        return InsurancePlanBenefit1Builder.fromJson(
-          toJson(),
-        );
-      case 'insuranceplan_benefit1':
-        return InsurancePlanBenefit1Builder.fromJson(
           toJson(),
         );
       case 'insuranceplancost':
@@ -3761,28 +3657,12 @@ extension BuilderFhirBase on FhirBase {
         return SubscriptionTopicBuilder.fromJson(
           toJson(),
         );
-      case 'subscriptiontopicresourcetrigger':
-        return SubscriptionTopicResourceTriggerBuilder.fromJson(
-          toJson(),
-        );
-      case 'subscriptiontopic_resourcetrigger':
-        return SubscriptionTopicResourceTriggerBuilder.fromJson(
-          toJson(),
-        );
       case 'subscriptiontopicquerycriteria':
         return SubscriptionTopicQueryCriteriaBuilder.fromJson(
           toJson(),
         );
       case 'subscriptiontopic_querycriteria':
         return SubscriptionTopicQueryCriteriaBuilder.fromJson(
-          toJson(),
-        );
-      case 'subscriptiontopiceventtrigger':
-        return SubscriptionTopicEventTriggerBuilder.fromJson(
-          toJson(),
-        );
-      case 'subscriptiontopic_eventtrigger':
-        return SubscriptionTopicEventTriggerBuilder.fromJson(
           toJson(),
         );
       case 'subscriptiontopiccanfilterby':
@@ -3803,14 +3683,6 @@ extension BuilderFhirBase on FhirBase {
         );
       case 'substance':
         return SubstanceBuilder.fromJson(
-          toJson(),
-        );
-      case 'substanceingredient':
-        return SubstanceIngredientBuilder.fromJson(
-          toJson(),
-        );
-      case 'substance_ingredient':
-        return SubstanceIngredientBuilder.fromJson(
           toJson(),
         );
       case 'substancedefinition':
@@ -4113,22 +3985,6 @@ extension BuilderFhirBase on FhirBase {
         return TestScriptBuilder.fromJson(
           toJson(),
         );
-      case 'testscriptorigin':
-        return TestScriptOriginBuilder.fromJson(
-          toJson(),
-        );
-      case 'testscript_origin':
-        return TestScriptOriginBuilder.fromJson(
-          toJson(),
-        );
-      case 'testscriptdestination':
-        return TestScriptDestinationBuilder.fromJson(
-          toJson(),
-        );
-      case 'testscript_destination':
-        return TestScriptDestinationBuilder.fromJson(
-          toJson(),
-        );
       case 'testscriptmetadata':
         return TestScriptMetadataBuilder.fromJson(
           toJson(),
@@ -4355,6 +4211,280 @@ extension BuilderFhirBase on FhirBase {
         );
       case 'visionprescription_prism':
         return VisionPrescriptionPrismBuilder.fromJson(
+          toJson(),
+        );
+      case 'administrableproductdefinitionrouteofadministration':
+        return AdministrableProductDefinitionRouteOfAdministrationBuilder
+            .fromJson(
+          toJson(),
+        );
+      case 'administrable_product_definition_route_of_administration':
+        return AdministrableProductDefinitionRouteOfAdministrationBuilder
+            .fromJson(
+          toJson(),
+        );
+      case 'biologicallyderivedproductdispensecodes':
+        return BiologicallyDerivedProductDispenseCodesBuilder.fromJson(
+          toJson(),
+        );
+      case 'biologically_derived_product_dispense_codes':
+        return BiologicallyDerivedProductDispenseCodesBuilder.fromJson(
+          toJson(),
+        );
+      case 'biologicallyderivedproductdispenseperformer':
+        return BiologicallyDerivedProductDispensePerformerBuilder.fromJson(
+          toJson(),
+        );
+      case 'biologically_derived_product_dispense_performer':
+        return BiologicallyDerivedProductDispensePerformerBuilder.fromJson(
+          toJson(),
+        );
+      case 'biologicallyderivedproductdispensestatus':
+        return BiologicallyDerivedProductDispenseStatusBuilder.fromJson(
+          toJson(),
+        );
+      case 'biologically_derived_product_dispense_status':
+        return BiologicallyDerivedProductDispenseStatusBuilder.fromJson(
+          toJson(),
+        );
+      case 'biologicallyderivedproductstoragescale':
+        return BiologicallyDerivedProductStorageScaleBuilder.fromJson(
+          toJson(),
+        );
+      case 'biologically_derived_product_storage_scale':
+        return BiologicallyDerivedProductStorageScaleBuilder.fromJson(
+          toJson(),
+        );
+      case 'bodystructurebodylandmarkorientation':
+        return BodyStructureBodyLandmarkOrientationBuilder.fromJson(
+          toJson(),
+        );
+      case 'body_structure_body_landmark_orientation':
+        return BodyStructureBodyLandmarkOrientationBuilder.fromJson(
+          toJson(),
+        );
+      case 'contractresourcepublicationstatuscodes':
+        return ContractResourcePublicationStatusCodesBuilder.fromJson(
+          toJson(),
+        );
+      case 'contract_resource_publication_status_codes':
+        return ContractResourcePublicationStatusCodesBuilder.fromJson(
+          toJson(),
+        );
+      case 'devicedefinitionregulatoryidentifier':
+        return DeviceDefinitionRegulatoryIdentifierBuilder.fromJson(
+          toJson(),
+        );
+      case 'device_definition_regulatory_identifier':
+        return DeviceDefinitionRegulatoryIdentifierBuilder.fromJson(
+          toJson(),
+        );
+      case 'devicedefinitionregulatoryidentifiertype':
+        return DeviceDefinitionRegulatoryIdentifierTypeBuilder.fromJson(
+          toJson(),
+        );
+      case 'device_definition_regulatory_identifier_type':
+        return DeviceDefinitionRegulatoryIdentifierTypeBuilder.fromJson(
+          toJson(),
+        );
+      case 'inventoryitemresponsibleorganization':
+        return InventoryItemResponsibleOrganizationBuilder.fromJson(
+          toJson(),
+        );
+      case 'inventory_item_responsible_organization':
+        return InventoryItemResponsibleOrganizationBuilder.fromJson(
+          toJson(),
+        );
+      case 'manufactureditemdefinitioncomponent':
+        return ManufacturedItemDefinitionComponentBuilder.fromJson(
+          toJson(),
+        );
+      case 'manufactured_item_definition_component':
+        return ManufacturedItemDefinitionComponentBuilder.fromJson(
+          toJson(),
+        );
+      case 'manufactureditemdefinitionconstituent':
+        return ManufacturedItemDefinitionConstituentBuilder.fromJson(
+          toJson(),
+        );
+      case 'manufactured_item_definition_constituent':
+        return ManufacturedItemDefinitionConstituentBuilder.fromJson(
+          toJson(),
+        );
+      case 'medicationknowledgeenvironmentalsetting':
+        return MedicationKnowledgeEnvironmentalSettingBuilder.fromJson(
+          toJson(),
+        );
+      case 'medication_knowledge_environmental_setting':
+        return MedicationKnowledgeEnvironmentalSettingBuilder.fromJson(
+          toJson(),
+        );
+      case 'medicationknowledgeindicationguideline':
+        return MedicationKnowledgeIndicationGuidelineBuilder.fromJson(
+          toJson(),
+        );
+      case 'medication_knowledge_indication_guideline':
+        return MedicationKnowledgeIndicationGuidelineBuilder.fromJson(
+          toJson(),
+        );
+      case 'medicationknowledgepatientcharacteristic':
+        return MedicationKnowledgePatientCharacteristicBuilder.fromJson(
+          toJson(),
+        );
+      case 'medication_knowledge_patient_characteristic':
+        return MedicationKnowledgePatientCharacteristicBuilder.fromJson(
+          toJson(),
+        );
+      case 'medicationknowledgestorageguideline':
+        return MedicationKnowledgeStorageGuidelineBuilder.fromJson(
+          toJson(),
+        );
+      case 'medication_knowledge_storage_guideline':
+        return MedicationKnowledgeStorageGuidelineBuilder.fromJson(
+          toJson(),
+        );
+      case 'moleculardefinitioncoordinateinterval1':
+        return MolecularDefinitionCoordinateInterval1Builder.fromJson(
+          toJson(),
+        );
+      case 'molecular_definition_coordinate_interval1':
+        return MolecularDefinitionCoordinateInterval1Builder.fromJson(
+          toJson(),
+        );
+      case 'moleculardefinitioncoordinateinterval2':
+        return MolecularDefinitionCoordinateInterval2Builder.fromJson(
+          toJson(),
+        );
+      case 'molecular_definition_coordinate_interval2':
+        return MolecularDefinitionCoordinateInterval2Builder.fromJson(
+          toJson(),
+        );
+      case 'moleculardefinitioncoordinateinterval':
+        return MolecularDefinitionCoordinateIntervalBuilder.fromJson(
+          toJson(),
+        );
+      case 'molecular_definition_coordinate_interval':
+        return MolecularDefinitionCoordinateIntervalBuilder.fromJson(
+          toJson(),
+        );
+      case 'moleculardefinitioncoordinatesystem1':
+        return MolecularDefinitionCoordinateSystem1Builder.fromJson(
+          toJson(),
+        );
+      case 'molecular_definition_coordinate_system1':
+        return MolecularDefinitionCoordinateSystem1Builder.fromJson(
+          toJson(),
+        );
+      case 'moleculardefinitioncoordinatesystem2':
+        return MolecularDefinitionCoordinateSystem2Builder.fromJson(
+          toJson(),
+        );
+      case 'molecular_definition_coordinate_system2':
+        return MolecularDefinitionCoordinateSystem2Builder.fromJson(
+          toJson(),
+        );
+      case 'moleculardefinitioncoordinatesystem':
+        return MolecularDefinitionCoordinateSystemBuilder.fromJson(
+          toJson(),
+        );
+      case 'molecular_definition_coordinate_system':
+        return MolecularDefinitionCoordinateSystemBuilder.fromJson(
+          toJson(),
+        );
+      case 'moleculardefinitioncytobandinterval':
+        return MolecularDefinitionCytobandIntervalBuilder.fromJson(
+          toJson(),
+        );
+      case 'molecular_definition_cytoband_interval':
+        return MolecularDefinitionCytobandIntervalBuilder.fromJson(
+          toJson(),
+        );
+      case 'moleculardefinitioncytobandlocation':
+        return MolecularDefinitionCytobandLocationBuilder.fromJson(
+          toJson(),
+        );
+      case 'molecular_definition_cytoband_location':
+        return MolecularDefinitionCytobandLocationBuilder.fromJson(
+          toJson(),
+        );
+      case 'moleculardefinitionsequencelocation':
+        return MolecularDefinitionSequenceLocationBuilder.fromJson(
+          toJson(),
+        );
+      case 'molecular_definition_sequence_location':
+        return MolecularDefinitionSequenceLocationBuilder.fromJson(
+          toJson(),
+        );
+      case 'observationdefinitionqualifiedvalue':
+        return ObservationDefinitionQualifiedValueBuilder.fromJson(
+          toJson(),
+        );
+      case 'observation_definition_qualified_value':
+        return ObservationDefinitionQualifiedValueBuilder.fromJson(
+          toJson(),
+        );
+      case 'substancedefinitioncharacterization':
+        return SubstanceDefinitionCharacterizationBuilder.fromJson(
+          toJson(),
+        );
+      case 'substance_definition_characterization':
+        return SubstanceDefinitionCharacterizationBuilder.fromJson(
+          toJson(),
+        );
+      case 'substancepolymerdegreeofpolymerisation':
+        return SubstancePolymerDegreeOfPolymerisationBuilder.fromJson(
+          toJson(),
+        );
+      case 'substance_polymer_degree_of_polymerisation':
+        return SubstancePolymerDegreeOfPolymerisationBuilder.fromJson(
+          toJson(),
+        );
+      case 'substancepolymerstructuralrepresentation':
+        return SubstancePolymerStructuralRepresentationBuilder.fromJson(
+          toJson(),
+        );
+      case 'substance_polymer_structural_representation':
+        return SubstancePolymerStructuralRepresentationBuilder.fromJson(
+          toJson(),
+        );
+      case 'substancereferenceinformationgeneelement':
+        return SubstanceReferenceInformationGeneElementBuilder.fromJson(
+          toJson(),
+        );
+      case 'substance_reference_information_gene_element':
+        return SubstanceReferenceInformationGeneElementBuilder.fromJson(
+          toJson(),
+        );
+      case 'substancereferenceinformationtarget':
+        return SubstanceReferenceInformationTargetBuilder.fromJson(
+          toJson(),
+        );
+      case 'substance_reference_information_target':
+        return SubstanceReferenceInformationTargetBuilder.fromJson(
+          toJson(),
+        );
+      case 'substancesourcematerialfractiondescription':
+        return SubstanceSourceMaterialFractionDescriptionBuilder.fromJson(
+          toJson(),
+        );
+      case 'substance_source_material_fraction_description':
+        return SubstanceSourceMaterialFractionDescriptionBuilder.fromJson(
+          toJson(),
+        );
+      case 'substancesourcematerialorganismgeneral':
+        return SubstanceSourceMaterialOrganismGeneralBuilder.fromJson(
+          toJson(),
+        );
+      case 'substance_source_material_organism_general':
+        return SubstanceSourceMaterialOrganismGeneralBuilder.fromJson(
+          toJson(),
+        );
+      case 'substancesourcematerialpartdescription':
+        return SubstanceSourceMaterialPartDescriptionBuilder.fromJson(
+          toJson(),
+        );
+      case 'substance_source_material_part_description':
+        return SubstanceSourceMaterialPartDescriptionBuilder.fromJson(
           toJson(),
         );
     }

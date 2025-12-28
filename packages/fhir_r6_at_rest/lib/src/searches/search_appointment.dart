@@ -10,23 +10,27 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchAppointment extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Appointment]
+  @override
   SearchAppointment identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [Appointment]
+  @override
   SearchAppointment date(
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}date'] = value.toString();
+    parameters['date'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -37,8 +41,48 @@ class SearchAppointment extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}appointment_type'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['appointment_type'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a token search for [hasRecurrenceTemplate] in the resource
+  /// [Appointment]
+  SearchAppointment hasRecurrenceTemplate(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    parameters['has_recurrence_template'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a token search for [isRecurring] in the resource
+  /// [Appointment]
+  SearchAppointment isRecurring(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    parameters['is_recurring'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a token search for [occurrenceChanged] in the resource
+  /// [Appointment]
+  SearchAppointment occurrenceChanged(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    parameters['occurrence_changed'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -49,8 +93,9 @@ class SearchAppointment extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}part_status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['part_status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -61,8 +106,9 @@ class SearchAppointment extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}reason_code'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['reason_code'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -72,8 +118,8 @@ class SearchAppointment extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}requested_period'] =
-        value.toString();
+    parameters['requested_period'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -84,8 +130,9 @@ class SearchAppointment extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}service_category'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['service_category'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -96,8 +143,9 @@ class SearchAppointment extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}service_type'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['service_type'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -108,20 +156,23 @@ class SearchAppointment extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}specialty'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['specialty'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [Appointment]
+  @override
   SearchAppointment status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

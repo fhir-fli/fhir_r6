@@ -33,7 +33,7 @@ abstract class $CompositionCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<Annotation>? note,
     List<CompositionAttester>? attester,
     Reference? custodian,
-    List<RelatedArtifact>? relatesTo,
+    List<CompositionRelatesTo>? relatesTo,
     List<CompositionEvent>? event,
     List<CompositionSection>? section,
     bool? disallowExtensions,
@@ -143,7 +143,7 @@ class _$CompositionCopyWithImpl<T> implements $CompositionCopyWith<T> {
             : custodian as Reference?,
         relatesTo: identical(relatesTo, fhirSentinel)
             ? _value.relatesTo
-            : relatesTo as List<RelatedArtifact>?,
+            : relatesTo as List<CompositionRelatesTo>?,
         event: identical(event, fhirSentinel)
             ? _value.event
             : event as List<CompositionEvent>?,
@@ -221,6 +221,66 @@ class _$CompositionAttesterCopyWithImpl<T>
 extension CompositionAttesterCopyWithExtension on CompositionAttester {
   $CompositionAttesterCopyWith<CompositionAttester> get copyWith =>
       _$CompositionAttesterCopyWithImpl<CompositionAttester>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $CompositionRelatesToCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    ArtifactRelationshipType? type,
+    TargetXCompositionRelatesTo? targetX,
+    bool? disallowExtensions,
+  });
+}
+
+class _$CompositionRelatesToCopyWithImpl<T>
+    implements $CompositionRelatesToCopyWith<T> {
+  final CompositionRelatesTo _value;
+  final T Function(CompositionRelatesTo) _then;
+
+  _$CompositionRelatesToCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? type = fhirSentinel,
+    Object? targetX = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      CompositionRelatesTo(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        type: identical(type, fhirSentinel)
+            ? _value.type
+            : (type as ArtifactRelationshipType?) ?? _value.type,
+        targetX: identical(targetX, fhirSentinel)
+            ? _value.targetX
+            : (targetX as TargetXCompositionRelatesTo?) ?? _value.targetX,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension CompositionRelatesToCopyWithExtension on CompositionRelatesTo {
+  $CompositionRelatesToCopyWith<CompositionRelatesTo> get copyWith =>
+      _$CompositionRelatesToCopyWithImpl<CompositionRelatesTo>(
         this,
         (value) => value,
       );

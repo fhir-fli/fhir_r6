@@ -1,8 +1,8 @@
 {
     "resourceType": "StructureMap",
-    "id": "R3toR4conversionforCareConnectMedicationRequestRepeatInformationextension",
+    "id": "R3toR6conversionforCareConnectMedicationRequestRepeatInformationextension",
     "url": "http://fhir.nhs.uk/StructureMap/MedicationRequestRepeatInformation-Extension-3to4",
-    "name": "R3 to R4 conversion for CareConnect MedicationRequest RepeatInformation extension",
+    "name": "R3 to R6 conversion for CareConnect MedicationRequest RepeatInformation extension",
     "status": "draft",
     "structure": [
         {

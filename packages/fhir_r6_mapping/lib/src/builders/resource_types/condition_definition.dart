@@ -3,7 +3,6 @@ import 'package:fhir_r6/fhir_r6.dart'
     show
         ConditionDefinition,
         ConditionDefinitionMedication,
-        ConditionDefinitionObservation,
         ConditionDefinitionPlan,
         ConditionDefinitionPrecondition,
         ConditionDefinitionQuestionnaire,
@@ -297,16 +296,12 @@ class ConditionDefinitionBuilder extends MetadataResourceBuilder {
         FhirUriBuilder.fromJson,
         '$objectPath.definition',
       ),
-      observation: (json['observation'] as List<dynamic>?)
-          ?.map<ConditionDefinitionObservationBuilder>(
-            (v) => ConditionDefinitionObservationBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.observation',
-              },
-            ),
-          )
-          .toList(),
+      observation: JsonParser.parsePrimitiveList<FhirCanonicalBuilder>(
+        json,
+        'observation',
+        FhirCanonicalBuilder.fromJson,
+        '$objectPath.observation',
+      ),
       medication: (json['medication'] as List<dynamic>?)
           ?.map<ConditionDefinitionMedicationBuilder>(
             (v) => ConditionDefinitionMedicationBuilder.fromJson(
@@ -473,7 +468,7 @@ class ConditionDefinitionBuilder extends MetadataResourceBuilder {
 
   /// [observation]
   /// Observations particularly relevant to this condition.
-  List<ConditionDefinitionObservationBuilder>? observation;
+  List<FhirCanonicalBuilder>? observation;
 
   /// [medication]
   /// Medications particularly relevant for this condition.
@@ -1394,17 +1389,50 @@ class ConditionDefinitionBuilder extends MetadataResourceBuilder {
         }
       case 'observation':
         {
-          if (child is List<ConditionDefinitionObservationBuilder>) {
+          if (child is List<FhirCanonicalBuilder>) {
             // Replace or create new list
             observation = child;
             return;
-          } else if (child is ConditionDefinitionObservationBuilder) {
+          } else if (child is FhirCanonicalBuilder) {
             // Add single element to existing list or create new list
             observation = [
               ...(observation ?? []),
               child,
             ];
             return;
+          } else if (child is List<PrimitiveTypeBuilder>) {
+            // Try to convert list of primitive types
+            final convertedList = <FhirCanonicalBuilder>[];
+            for (final element in child) {
+              try {
+                final stringValue = element.toString();
+                final converted = FhirCanonicalBuilder.tryParse(stringValue);
+                if (converted != null) {
+                  convertedList.add(converted);
+                }
+              } catch (e) {
+                // Continue if conversion fails
+              }
+            }
+            if (convertedList.isNotEmpty) {
+              observation = convertedList;
+              return;
+            }
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert a single primitive
+            try {
+              final stringValue = child.toString();
+              final converted = FhirCanonicalBuilder.tryParse(stringValue);
+              if (converted != null) {
+                observation = [
+                  ...(observation ?? []),
+                  converted,
+                ];
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -1569,7 +1597,7 @@ class ConditionDefinitionBuilder extends MetadataResourceBuilder {
       case 'definition':
         return ['FhirUriBuilder'];
       case 'observation':
-        return ['ConditionDefinitionObservationBuilder'];
+        return ['FhirCanonicalBuilder'];
       case 'medication':
         return ['ConditionDefinitionMedicationBuilder'];
       case 'precondition':
@@ -1754,7 +1782,7 @@ class ConditionDefinitionBuilder extends MetadataResourceBuilder {
         }
       case 'observation':
         {
-          observation = <ConditionDefinitionObservationBuilder>[];
+          observation = <FhirCanonicalBuilder>[];
           return;
         }
       case 'medication':
@@ -1822,7 +1850,7 @@ class ConditionDefinitionBuilder extends MetadataResourceBuilder {
     FhirBooleanBuilder? hasBodySite,
     FhirBooleanBuilder? hasStage,
     List<FhirUriBuilder>? definition,
-    List<ConditionDefinitionObservationBuilder>? observation,
+    List<FhirCanonicalBuilder>? observation,
     List<ConditionDefinitionMedicationBuilder>? medication,
     List<ConditionDefinitionPreconditionBuilder>? precondition,
     List<ReferenceBuilder>? team,
@@ -2089,7 +2117,7 @@ class ConditionDefinitionBuilder extends MetadataResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<ConditionDefinitionObservationBuilder>(
+    if (!listEquals<FhirCanonicalBuilder>(
       observation,
       o.observation,
     )) {
@@ -2122,450 +2150,6 @@ class ConditionDefinitionBuilder extends MetadataResourceBuilder {
     if (!listEquals<ConditionDefinitionPlanBuilder>(
       plan,
       o.plan,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [ConditionDefinitionObservationBuilder]
-/// Observations particularly relevant to this condition.
-class ConditionDefinitionObservationBuilder extends BackboneElementBuilder {
-  /// Primary constructor for
-  /// [ConditionDefinitionObservationBuilder]
-
-  ConditionDefinitionObservationBuilder({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.category,
-    this.code,
-    super.disallowExtensions,
-  }) : super(
-          objectPath: 'ConditionDefinition.observation',
-        );
-
-  /// An empty constructor for partial usage.
-  /// For Builder classes, no fields are required
-  factory ConditionDefinitionObservationBuilder.empty() =>
-      ConditionDefinitionObservationBuilder();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory ConditionDefinitionObservationBuilder.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    const objectPath = 'ConditionDefinition.observation';
-    return ConditionDefinitionObservationBuilder(
-      id: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'id',
-        FhirStringBuilder.fromJson,
-        '$objectPath.id',
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.extension',
-              },
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.modifierExtension',
-              },
-            ),
-          )
-          .toList(),
-      category: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'category',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.category',
-      ),
-      code: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'code',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.code',
-      ),
-    );
-  }
-
-  /// Deserialize [ConditionDefinitionObservationBuilder]
-  /// from a [String] or [YamlMap] object
-  factory ConditionDefinitionObservationBuilder.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return ConditionDefinitionObservationBuilder.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return ConditionDefinitionObservationBuilder.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'ConditionDefinitionObservationBuilder '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [ConditionDefinitionObservationBuilder]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory ConditionDefinitionObservationBuilder.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return ConditionDefinitionObservationBuilder.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'ConditionDefinitionObservation';
-
-  /// [category]
-  /// Category that is relevant.
-  CodeableConceptBuilder? category;
-
-  /// [code]
-  /// Code for relevant Observation.
-  CodeableConceptBuilder? code;
-
-  /// Converts a [ConditionDefinitionObservationBuilder]
-  /// to [ConditionDefinitionObservation]
-  @override
-  ConditionDefinitionObservation build() =>
-      ConditionDefinitionObservation.fromJson(toJson());
-
-  /// Converts a [ConditionDefinitionObservationBuilder]
-  /// to a [Map<String, dynamic>]
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    void addField(String key, dynamic field) {
-      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
-        throw ArgumentError('"field" must be a FhirBaseBuilder type');
-      }
-      if (field == null) return;
-      if (field is PrimitiveTypeBuilder) {
-        json[key] = field.toJson()['value'];
-        if (field.toJson()['_value'] != null) {
-          json['_$key'] = field.toJson()['_value'];
-        }
-      } else if (field is List<FhirBaseBuilder>) {
-        if (field.isEmpty) return;
-        if (field.first is PrimitiveTypeBuilder) {
-          final fieldJson = field.map((e) => e.toJson()).toList();
-          json[key] = fieldJson.map((e) => e['value']).toList();
-          if (fieldJson.any((e) => e['_value'] != null)) {
-            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
-          }
-        } else {
-          json[key] = field.map((e) => e.toJson()).toList();
-        }
-      } else if (field is FhirBaseBuilder) {
-        json[key] = field.toJson();
-      }
-    }
-
-    addField('id', id);
-    addField('extension', extension_);
-    addField('modifierExtension', modifierExtension);
-    addField('category', category);
-    addField('code', code);
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'category',
-      'code',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBaseBuilder> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBaseBuilder>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'category':
-        if (category != null) {
-          fields.add(category!);
-        }
-      case 'code':
-        if (code != null) {
-          fields.add(code!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBaseBuilder? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  void setChildByName(String childName, dynamic child) {
-    // child must be null, or a (List of) FhirBaseBuilder(s).
-    if (child == null) {
-      return; // In builders, setting to null is allowed
-    }
-    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
-      throw Exception('Cannot set child value for $childName');
-    }
-
-    switch (childName) {
-      case 'id':
-        {
-          if (child is FhirStringBuilder) {
-            id = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                id = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'extension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            extension_ = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            extension_ = [
-              ...(extension_ ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'modifierExtension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            modifierExtension = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            modifierExtension = [
-              ...(modifierExtension ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'category':
-        {
-          if (child is CodeableConceptBuilder) {
-            category = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'code':
-        {
-          if (child is CodeableConceptBuilder) {
-            code = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      default:
-        throw Exception('Cannot set child value for $childName');
-    }
-  }
-
-  /// Return the possible Dart types for the field named [fieldName].
-  /// For polymorphic fields, multiple types are possible.
-  @override
-  List<String> typeByElementName(String fieldName) {
-    switch (fieldName) {
-      case 'id':
-        return ['FhirStringBuilder'];
-      case 'extension':
-        return ['FhirExtensionBuilder'];
-      case 'modifierExtension':
-        return ['FhirExtensionBuilder'];
-      case 'category':
-        return ['CodeableConceptBuilder'];
-      case 'code':
-        return ['CodeableConceptBuilder'];
-      default:
-        return <String>[];
-    }
-  }
-
-  /// Creates a new [ConditionDefinitionObservationBuilder]
-  ///  with a chosen field set to an empty object.
-  @override
-  void createProperty(String propertyName) {
-    switch (propertyName) {
-      case 'id':
-        {
-          id = FhirStringBuilder.empty();
-          return;
-        }
-      case 'extension':
-        {
-          extension_ = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'modifierExtension':
-        {
-          modifierExtension = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'category':
-        {
-          category = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'code':
-        {
-          code = CodeableConceptBuilder.empty();
-          return;
-        }
-      default:
-        throw ArgumentError('No matching property: $propertyName');
-    }
-  }
-
-  @override
-  ConditionDefinitionObservationBuilder clone() => throw UnimplementedError();
-  @override
-  ConditionDefinitionObservationBuilder copyWith({
-    FhirStringBuilder? id,
-    List<FhirExtensionBuilder>? extension_,
-    List<FhirExtensionBuilder>? modifierExtension,
-    CodeableConceptBuilder? category,
-    CodeableConceptBuilder? code,
-    Map<String, dynamic>? userData,
-    List<String>? formatCommentsPre,
-    List<String>? formatCommentsPost,
-    List<dynamic>? annotations,
-    String? objectPath,
-  }) {
-    final newObjectPath = this.objectPath;
-    final newResult = ConditionDefinitionObservationBuilder(
-      id: id ?? this.id,
-      extension_: extension_ ?? this.extension_,
-      modifierExtension: modifierExtension ?? this.modifierExtension,
-      category: category ?? this.category,
-      code: code ?? this.code,
-    )..objectPath = newObjectPath;
-    // Copy user data and annotations
-    if (userData != null) {
-      newResult.userData = userData;
-    }
-    if (formatCommentsPre != null) {
-      newResult.formatCommentsPre = formatCommentsPre;
-    }
-    if (formatCommentsPost != null) {
-      newResult.formatCommentsPost = formatCommentsPost;
-    }
-    if (annotations != null) {
-      newResult.annotations = annotations;
-    }
-
-    return newResult;
-  }
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! ConditionDefinitionObservationBuilder) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      category,
-      o.category,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      code,
-      o.code,
     )) {
       return false;
     }

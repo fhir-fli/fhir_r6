@@ -24,10 +24,11 @@ abstract class $AdverseEventCopyWith<T> extends $DomainResourceCopyWith<T> {
     CodeableConcept? code,
     Reference? subject,
     Reference? encounter,
-    FhirDateTime? occurrenceX,
+    CauseXAdverseEvent? causeX,
+    EffectXAdverseEvent? effectX,
     FhirDateTime? detected,
     FhirDateTime? recordedDate,
-    List<Reference>? resultingEffect,
+    List<CodeableReference>? resultingEffect,
     Reference? location,
     CodeableConcept? seriousness,
     List<CodeableConcept>? outcome,
@@ -36,10 +37,10 @@ abstract class $AdverseEventCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<Reference>? study,
     FhirBoolean? expectedInResearchStudy,
     List<AdverseEventSuspectEntity>? suspectEntity,
-    List<AdverseEventContributingFactor>? contributingFactor,
-    List<AdverseEventPreventiveAction>? preventiveAction,
-    List<AdverseEventMitigatingAction>? mitigatingAction,
-    List<AdverseEventSupportingInfo>? supportingInfo,
+    List<CodeableReference>? contributingFactor,
+    List<CodeableReference>? preventiveAction,
+    List<CodeableReference>? mitigatingAction,
+    List<CodeableReference>? supportingInfo,
     List<Annotation>? note,
     bool? disallowExtensions,
   });
@@ -68,7 +69,8 @@ class _$AdverseEventCopyWithImpl<T> implements $AdverseEventCopyWith<T> {
     Object? code = fhirSentinel,
     Object? subject = fhirSentinel,
     Object? encounter = fhirSentinel,
-    Object? occurrenceX = fhirSentinel,
+    Object? causeX = fhirSentinel,
+    Object? effectX = fhirSentinel,
     Object? detected = fhirSentinel,
     Object? recordedDate = fhirSentinel,
     Object? resultingEffect = fhirSentinel,
@@ -128,9 +130,12 @@ class _$AdverseEventCopyWithImpl<T> implements $AdverseEventCopyWith<T> {
         encounter: identical(encounter, fhirSentinel)
             ? _value.encounter
             : encounter as Reference?,
-        occurrenceX: identical(occurrenceX, fhirSentinel)
-            ? _value.occurrenceX
-            : occurrenceX as FhirDateTime?,
+        causeX: identical(causeX, fhirSentinel)
+            ? _value.causeX
+            : causeX as CauseXAdverseEvent?,
+        effectX: identical(effectX, fhirSentinel)
+            ? _value.effectX
+            : effectX as EffectXAdverseEvent?,
         detected: identical(detected, fhirSentinel)
             ? _value.detected
             : detected as FhirDateTime?,
@@ -139,7 +144,7 @@ class _$AdverseEventCopyWithImpl<T> implements $AdverseEventCopyWith<T> {
             : recordedDate as FhirDateTime?,
         resultingEffect: identical(resultingEffect, fhirSentinel)
             ? _value.resultingEffect
-            : resultingEffect as List<Reference>?,
+            : resultingEffect as List<CodeableReference>?,
         location: identical(location, fhirSentinel)
             ? _value.location
             : location as Reference?,
@@ -167,16 +172,16 @@ class _$AdverseEventCopyWithImpl<T> implements $AdverseEventCopyWith<T> {
             : suspectEntity as List<AdverseEventSuspectEntity>?,
         contributingFactor: identical(contributingFactor, fhirSentinel)
             ? _value.contributingFactor
-            : contributingFactor as List<AdverseEventContributingFactor>?,
+            : contributingFactor as List<CodeableReference>?,
         preventiveAction: identical(preventiveAction, fhirSentinel)
             ? _value.preventiveAction
-            : preventiveAction as List<AdverseEventPreventiveAction>?,
+            : preventiveAction as List<CodeableReference>?,
         mitigatingAction: identical(mitigatingAction, fhirSentinel)
             ? _value.mitigatingAction
-            : mitigatingAction as List<AdverseEventMitigatingAction>?,
+            : mitigatingAction as List<CodeableReference>?,
         supportingInfo: identical(supportingInfo, fhirSentinel)
             ? _value.supportingInfo
-            : supportingInfo as List<AdverseEventSupportingInfo>?,
+            : supportingInfo as List<CodeableReference>?,
         note: identical(note, fhirSentinel)
             ? _value.note
             : note as List<Annotation>?,
@@ -260,7 +265,7 @@ abstract class $AdverseEventSuspectEntityCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    CodeableConcept? instanceX,
+    CodeableReference? instance,
     AdverseEventCausality? causality,
     bool? disallowExtensions,
   });
@@ -278,7 +283,7 @@ class _$AdverseEventSuspectEntityCopyWithImpl<T>
     Object? id = fhirSentinel,
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
-    Object? instanceX = fhirSentinel,
+    Object? instance = fhirSentinel,
     Object? causality = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -291,9 +296,9 @@ class _$AdverseEventSuspectEntityCopyWithImpl<T>
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
-        instanceX: identical(instanceX, fhirSentinel)
-            ? _value.instanceX
-            : (instanceX as CodeableConcept?) ?? _value.instanceX,
+        instance: identical(instance, fhirSentinel)
+            ? _value.instance
+            : (instance as CodeableReference?) ?? _value.instance,
         causality: identical(causality, fhirSentinel)
             ? _value.causality
             : causality as AdverseEventCausality?,
@@ -377,232 +382,4 @@ extension AdverseEventCausalityCopyWithExtension on AdverseEventCausality {
         this,
         (value) => value,
       );
-}
-
-abstract class $AdverseEventContributingFactorCopyWith<T>
-    extends $BackboneElementCopyWith<T> {
-  @override
-  T call({
-    FhirString? id,
-    List<FhirExtension>? extension_,
-    List<FhirExtension>? modifierExtension,
-    Reference? itemX,
-    bool? disallowExtensions,
-  });
-}
-
-class _$AdverseEventContributingFactorCopyWithImpl<T>
-    implements $AdverseEventContributingFactorCopyWith<T> {
-  final AdverseEventContributingFactor _value;
-  final T Function(AdverseEventContributingFactor) _then;
-
-  _$AdverseEventContributingFactorCopyWithImpl(this._value, this._then);
-
-  @override
-  T call({
-    Object? id = fhirSentinel,
-    Object? extension_ = fhirSentinel,
-    Object? modifierExtension = fhirSentinel,
-    Object? itemX = fhirSentinel,
-    Object? disallowExtensions = fhirSentinel,
-  }) {
-    return _then(
-      AdverseEventContributingFactor(
-        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
-        extension_: identical(extension_, fhirSentinel)
-            ? _value.extension_
-            : extension_ as List<FhirExtension>?,
-        modifierExtension: identical(modifierExtension, fhirSentinel)
-            ? _value.modifierExtension
-            : modifierExtension as List<FhirExtension>?,
-        itemX: identical(itemX, fhirSentinel)
-            ? _value.itemX
-            : (itemX as Reference?) ?? _value.itemX,
-        disallowExtensions: identical(disallowExtensions, fhirSentinel)
-            ? _value.disallowExtensions
-            : disallowExtensions as bool?,
-      ),
-    );
-  }
-}
-
-extension AdverseEventContributingFactorCopyWithExtension
-    on AdverseEventContributingFactor {
-  $AdverseEventContributingFactorCopyWith<AdverseEventContributingFactor>
-      get copyWith => _$AdverseEventContributingFactorCopyWithImpl<
-              AdverseEventContributingFactor>(
-            this,
-            (value) => value,
-          );
-}
-
-abstract class $AdverseEventPreventiveActionCopyWith<T>
-    extends $BackboneElementCopyWith<T> {
-  @override
-  T call({
-    FhirString? id,
-    List<FhirExtension>? extension_,
-    List<FhirExtension>? modifierExtension,
-    Reference? itemX,
-    bool? disallowExtensions,
-  });
-}
-
-class _$AdverseEventPreventiveActionCopyWithImpl<T>
-    implements $AdverseEventPreventiveActionCopyWith<T> {
-  final AdverseEventPreventiveAction _value;
-  final T Function(AdverseEventPreventiveAction) _then;
-
-  _$AdverseEventPreventiveActionCopyWithImpl(this._value, this._then);
-
-  @override
-  T call({
-    Object? id = fhirSentinel,
-    Object? extension_ = fhirSentinel,
-    Object? modifierExtension = fhirSentinel,
-    Object? itemX = fhirSentinel,
-    Object? disallowExtensions = fhirSentinel,
-  }) {
-    return _then(
-      AdverseEventPreventiveAction(
-        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
-        extension_: identical(extension_, fhirSentinel)
-            ? _value.extension_
-            : extension_ as List<FhirExtension>?,
-        modifierExtension: identical(modifierExtension, fhirSentinel)
-            ? _value.modifierExtension
-            : modifierExtension as List<FhirExtension>?,
-        itemX: identical(itemX, fhirSentinel)
-            ? _value.itemX
-            : (itemX as Reference?) ?? _value.itemX,
-        disallowExtensions: identical(disallowExtensions, fhirSentinel)
-            ? _value.disallowExtensions
-            : disallowExtensions as bool?,
-      ),
-    );
-  }
-}
-
-extension AdverseEventPreventiveActionCopyWithExtension
-    on AdverseEventPreventiveAction {
-  $AdverseEventPreventiveActionCopyWith<AdverseEventPreventiveAction>
-      get copyWith => _$AdverseEventPreventiveActionCopyWithImpl<
-              AdverseEventPreventiveAction>(
-            this,
-            (value) => value,
-          );
-}
-
-abstract class $AdverseEventMitigatingActionCopyWith<T>
-    extends $BackboneElementCopyWith<T> {
-  @override
-  T call({
-    FhirString? id,
-    List<FhirExtension>? extension_,
-    List<FhirExtension>? modifierExtension,
-    Reference? itemX,
-    bool? disallowExtensions,
-  });
-}
-
-class _$AdverseEventMitigatingActionCopyWithImpl<T>
-    implements $AdverseEventMitigatingActionCopyWith<T> {
-  final AdverseEventMitigatingAction _value;
-  final T Function(AdverseEventMitigatingAction) _then;
-
-  _$AdverseEventMitigatingActionCopyWithImpl(this._value, this._then);
-
-  @override
-  T call({
-    Object? id = fhirSentinel,
-    Object? extension_ = fhirSentinel,
-    Object? modifierExtension = fhirSentinel,
-    Object? itemX = fhirSentinel,
-    Object? disallowExtensions = fhirSentinel,
-  }) {
-    return _then(
-      AdverseEventMitigatingAction(
-        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
-        extension_: identical(extension_, fhirSentinel)
-            ? _value.extension_
-            : extension_ as List<FhirExtension>?,
-        modifierExtension: identical(modifierExtension, fhirSentinel)
-            ? _value.modifierExtension
-            : modifierExtension as List<FhirExtension>?,
-        itemX: identical(itemX, fhirSentinel)
-            ? _value.itemX
-            : (itemX as Reference?) ?? _value.itemX,
-        disallowExtensions: identical(disallowExtensions, fhirSentinel)
-            ? _value.disallowExtensions
-            : disallowExtensions as bool?,
-      ),
-    );
-  }
-}
-
-extension AdverseEventMitigatingActionCopyWithExtension
-    on AdverseEventMitigatingAction {
-  $AdverseEventMitigatingActionCopyWith<AdverseEventMitigatingAction>
-      get copyWith => _$AdverseEventMitigatingActionCopyWithImpl<
-              AdverseEventMitigatingAction>(
-            this,
-            (value) => value,
-          );
-}
-
-abstract class $AdverseEventSupportingInfoCopyWith<T>
-    extends $BackboneElementCopyWith<T> {
-  @override
-  T call({
-    FhirString? id,
-    List<FhirExtension>? extension_,
-    List<FhirExtension>? modifierExtension,
-    Reference? itemX,
-    bool? disallowExtensions,
-  });
-}
-
-class _$AdverseEventSupportingInfoCopyWithImpl<T>
-    implements $AdverseEventSupportingInfoCopyWith<T> {
-  final AdverseEventSupportingInfo _value;
-  final T Function(AdverseEventSupportingInfo) _then;
-
-  _$AdverseEventSupportingInfoCopyWithImpl(this._value, this._then);
-
-  @override
-  T call({
-    Object? id = fhirSentinel,
-    Object? extension_ = fhirSentinel,
-    Object? modifierExtension = fhirSentinel,
-    Object? itemX = fhirSentinel,
-    Object? disallowExtensions = fhirSentinel,
-  }) {
-    return _then(
-      AdverseEventSupportingInfo(
-        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
-        extension_: identical(extension_, fhirSentinel)
-            ? _value.extension_
-            : extension_ as List<FhirExtension>?,
-        modifierExtension: identical(modifierExtension, fhirSentinel)
-            ? _value.modifierExtension
-            : modifierExtension as List<FhirExtension>?,
-        itemX: identical(itemX, fhirSentinel)
-            ? _value.itemX
-            : (itemX as Reference?) ?? _value.itemX,
-        disallowExtensions: identical(disallowExtensions, fhirSentinel)
-            ? _value.disallowExtensions
-            : disallowExtensions as bool?,
-      ),
-    );
-  }
-}
-
-extension AdverseEventSupportingInfoCopyWithExtension
-    on AdverseEventSupportingInfo {
-  $AdverseEventSupportingInfoCopyWith<AdverseEventSupportingInfo>
-      get copyWith =>
-          _$AdverseEventSupportingInfoCopyWithImpl<AdverseEventSupportingInfo>(
-            this,
-            (value) => value,
-          );
 }

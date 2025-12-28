@@ -6,7 +6,7 @@ part 'nutrition_order.g.dart';
 
 /// [NutritionOrder]
 /// A request to supply a diet, formula feeding (enteral) or oral
-/// nutritional supplement to a patient/resident.
+/// nutritional supplement to an individual or group.
 class NutritionOrder extends DomainResource {
   /// Primary constructor for
   /// [NutritionOrder]
@@ -22,8 +22,6 @@ class NutritionOrder extends DomainResource {
     super.modifierExtension,
     this.identifier,
     this.instantiatesCanonical,
-    this.instantiatesUri,
-    this.instantiates,
     this.basedOn,
     this.groupIdentifier,
     required this.status,
@@ -33,7 +31,7 @@ class NutritionOrder extends DomainResource {
     this.encounter,
     this.supportingInformation,
     required this.dateTime,
-    this.orderer,
+    this.requester,
     this.performer,
     this.allergyIntolerance,
     this.foodPreferenceModifier,
@@ -42,6 +40,7 @@ class NutritionOrder extends DomainResource {
     this.oralDiet,
     this.supplement,
     this.enteralFormula,
+    this.additive,
     this.note,
   }) : super(
           resourceType: R6ResourceType.NutritionOrder,
@@ -110,16 +109,6 @@ class NutritionOrder extends DomainResource {
         'instantiatesCanonical',
         FhirCanonical.fromJson,
       ),
-      instantiatesUri: JsonParser.parsePrimitiveList<FhirUri>(
-        json,
-        'instantiatesUri',
-        FhirUri.fromJson,
-      ),
-      instantiates: JsonParser.parsePrimitiveList<FhirUri>(
-        json,
-        'instantiates',
-        FhirUri.fromJson,
-      ),
       basedOn: (json['basedOn'] as List<dynamic>?)
           ?.map<Reference>(
             (v) => Reference.fromJson(
@@ -169,9 +158,9 @@ class NutritionOrder extends DomainResource {
         'dateTime',
         FhirDateTime.fromJson,
       )!,
-      orderer: JsonParser.parseObject<Reference>(
+      requester: JsonParser.parseObject<Reference>(
         json,
-        'orderer',
+        'requester',
         Reference.fromJson,
       ),
       performer: (json['performer'] as List<dynamic>?)
@@ -224,6 +213,13 @@ class NutritionOrder extends DomainResource {
         'enteralFormula',
         NutritionOrderEnteralFormula.fromJson,
       ),
+      additive: (json['additive'] as List<dynamic>?)
+          ?.map<NutritionOrderAdditive>(
+            (v) => NutritionOrderAdditive.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       note: (json['note'] as List<dynamic>?)
           ?.map<Annotation>(
             (v) => Annotation.fromJson(
@@ -287,17 +283,6 @@ class NutritionOrder extends DomainResource {
   /// NutritionOrder.
   final List<FhirCanonical>? instantiatesCanonical;
 
-  /// [instantiatesUri]
-  /// The URL pointing to an externally maintained protocol, guideline,
-  /// orderset or other definition that is adhered to in whole or in part by
-  /// this NutritionOrder.
-  final List<FhirUri>? instantiatesUri;
-
-  /// [instantiates]
-  /// The URL pointing to a protocol, guideline, orderset or other definition
-  /// that is adhered to in whole or in part by this NutritionOrder.
-  final List<FhirUri>? instantiates;
-
   /// [basedOn]
   /// A plan or request that is fulfilled in whole or in part by this
   /// nutrition order.
@@ -342,10 +327,10 @@ class NutritionOrder extends DomainResource {
   /// The date and time that this nutrition order was requested.
   final FhirDateTime dateTime;
 
-  /// [orderer]
+  /// [requester]
   /// The practitioner that holds legal responsibility for ordering the diet,
   /// nutritional supplement, or formula feedings.
-  final Reference? orderer;
+  final Reference? requester;
 
   /// [performer]
   /// The specified desired performer of the nutrition order.
@@ -358,33 +343,41 @@ class NutritionOrder extends DomainResource {
 
   /// [foodPreferenceModifier]
   /// This modifier is used to convey order-specific modifiers about the type
-  /// of food that should be given. These can be derived from patient
-  /// allergies, intolerances, or preferences such as Halal, Vegan or Kosher.
-  /// This modifier applies to the entire nutrition order inclusive of the
-  /// oral diet, nutritional supplements and enteral formula feedings.
+  /// of food (i.e. solid and/or liquid) that should be given. These can be
+  /// derived from patient allergies, intolerances, or preferences such as
+  /// Halal, Vegan or Kosher. This modifier applies to the entire nutrition
+  /// order inclusive of the oral diet, nutritional supplements and enteral
+  /// formula feedings.
   final List<CodeableConcept>? foodPreferenceModifier;
 
   /// [excludeFoodModifier]
-  /// This modifier is used to convey Order-specific modifier about the type
-  /// of oral food or oral fluids that should not be given. These can be
-  /// derived from patient allergies, intolerances, or preferences such as No
-  /// Red Meat, No Soy or No Wheat or Gluten-Free. While it should not be
-  /// necessary to repeat allergy or intolerance information captured in the
-  /// referenced AllergyIntolerance resource in the excludeFoodModifier, this
-  /// element may be used to convey additional specificity related to foods
-  /// that should be eliminated from the patient’s diet for any reason. This
-  /// modifier applies to the entire nutrition order inclusive of the oral
-  /// diet, nutritional supplements and enteral formula feedings.
+  /// This modifier is used to convey Order-specific modifiers that should
+  /// not be given. These can be derived from patient allergies,
+  /// intolerances, or preferences such as No Red Meat, No Soy or No Wheat or
+  /// Gluten-Free. While it should not be necessary to repeat allergy or
+  /// intolerance information captured in the referenced AllergyIntolerance
+  /// resource in the excludeFoodModifier, this element may be used to convey
+  /// additional specificity related to what should be eliminated from the
+  /// patient’s diet for any reason. This modifier applies to the entire
+  /// nutrition order inclusive of the oral diet, nutritional supplements and
+  /// enteral formula feedings.
   final List<CodeableConcept>? excludeFoodModifier;
 
   /// [outsideFoodAllowed]
-  /// This modifier is used to convey whether a food item is allowed to be
-  /// brought in by the patient and/or family. If set to true, indicates that
-  /// the receiving system does not need to supply the food item.
+  /// This modifier is used to convey whether a food item, brought in by the
+  /// patient, family, and/or caregiver, can be consumed by the patient. If
+  /// set to true, indicates that the receiving system does not need to
+  /// supply the food item.
   final FhirBoolean? outsideFoodAllowed;
 
   /// [oralDiet]
-  /// Diet given orally in contrast to enteral (tube) feeding.
+  /// Diet given orally that may include texture modification, such as
+  /// International Dysphagia Diet Standardisation Initiative Framework -
+  /// Slightly Thick Level 1 drinks and Minced and International Dysphagia
+  /// Diet Standardisation Initiative Framework - Minced and Moist Level 5
+  /// food as well as, for example, Decreased potassium diet (ie, nutrient
+  /// modification), Halal diet (ie, cultural modification), and/or Low
+  /// microbial diet (eg, other modification).
   final NutritionOrderOralDiet? oralDiet;
 
   /// [supplement]
@@ -397,9 +390,14 @@ class NutritionOrder extends DomainResource {
   /// catheter, or stoma that delivers nutrition distal to the oral cavity.
   final NutritionOrderEnteralFormula? enteralFormula;
 
+  /// [additive]
+  /// Indicates modular components to be provided in addition or mixed with
+  /// the oral diet, supplement, and/or enteral feeding.
+  final List<NutritionOrderAdditive>? additive;
+
   /// [note]
-  /// Comments made about the {{title}} by the requester, performer, subject
-  /// or other participants.
+  /// Comments made about the nutrition order by the requester, performer,
+  /// subject or other participants.
   final List<Annotation>? note;
   @override
   Map<String, dynamic> toJson() {
@@ -506,14 +504,6 @@ class NutritionOrder extends DomainResource {
       instantiatesCanonical,
     );
     addField(
-      'instantiatesUri',
-      instantiatesUri,
-    );
-    addField(
-      'instantiates',
-      instantiates,
-    );
-    addField(
       'basedOn',
       basedOn,
     );
@@ -550,8 +540,8 @@ class NutritionOrder extends DomainResource {
       dateTime,
     );
     addField(
-      'orderer',
-      orderer,
+      'requester',
+      requester,
     );
     addField(
       'performer',
@@ -586,6 +576,10 @@ class NutritionOrder extends DomainResource {
       enteralFormula,
     );
     addField(
+      'additive',
+      additive,
+    );
+    addField(
       'note',
       note,
     );
@@ -606,8 +600,6 @@ class NutritionOrder extends DomainResource {
       'modifierExtension',
       'identifier',
       'instantiatesCanonical',
-      'instantiatesUri',
-      'instantiates',
       'basedOn',
       'groupIdentifier',
       'status',
@@ -617,7 +609,7 @@ class NutritionOrder extends DomainResource {
       'encounter',
       'supportingInformation',
       'dateTime',
-      'orderer',
+      'requester',
       'performer',
       'allergyIntolerance',
       'foodPreferenceModifier',
@@ -626,6 +618,7 @@ class NutritionOrder extends DomainResource {
       'oralDiet',
       'supplement',
       'enteralFormula',
+      'additive',
       'note',
     ];
   }
@@ -679,14 +672,6 @@ class NutritionOrder extends DomainResource {
         if (instantiatesCanonical != null) {
           fields.addAll(instantiatesCanonical!);
         }
-      case 'instantiatesUri':
-        if (instantiatesUri != null) {
-          fields.addAll(instantiatesUri!);
-        }
-      case 'instantiates':
-        if (instantiates != null) {
-          fields.addAll(instantiates!);
-        }
       case 'basedOn':
         if (basedOn != null) {
           fields.addAll(basedOn!);
@@ -715,9 +700,9 @@ class NutritionOrder extends DomainResource {
         }
       case 'dateTime':
         fields.add(dateTime);
-      case 'orderer':
-        if (orderer != null) {
-          fields.add(orderer!);
+      case 'requester':
+        if (requester != null) {
+          fields.add(requester!);
         }
       case 'performer':
         if (performer != null) {
@@ -750,6 +735,10 @@ class NutritionOrder extends DomainResource {
       case 'enteralFormula':
         if (enteralFormula != null) {
           fields.add(enteralFormula!);
+        }
+      case 'additive':
+        if (additive != null) {
+          fields.addAll(additive!);
         }
       case 'note':
         if (note != null) {
@@ -856,18 +845,6 @@ class NutritionOrder extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<FhirUri>(
-      instantiatesUri,
-      o.instantiatesUri,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirUri>(
-      instantiates,
-      o.instantiates,
-    )) {
-      return false;
-    }
     if (!listEquals<Reference>(
       basedOn,
       o.basedOn,
@@ -923,8 +900,8 @@ class NutritionOrder extends DomainResource {
       return false;
     }
     if (!equalsDeepWithNull(
-      orderer,
-      o.orderer,
+      requester,
+      o.requester,
     )) {
       return false;
     }
@@ -976,6 +953,12 @@ class NutritionOrder extends DomainResource {
     )) {
       return false;
     }
+    if (!listEquals<NutritionOrderAdditive>(
+      additive,
+      o.additive,
+    )) {
+      return false;
+    }
     if (!listEquals<Annotation>(
       note,
       o.note,
@@ -987,7 +970,13 @@ class NutritionOrder extends DomainResource {
 }
 
 /// [NutritionOrderOralDiet]
-/// Diet given orally in contrast to enteral (tube) feeding.
+/// Diet given orally that may include texture modification, such as
+/// International Dysphagia Diet Standardisation Initiative Framework -
+/// Slightly Thick Level 1 drinks and Minced and International Dysphagia
+/// Diet Standardisation Initiative Framework - Minced and Moist Level 5
+/// food as well as, for example, Decreased potassium diet (ie, nutrient
+/// modification), Halal diet (ie, cultural modification), and/or Low
+/// microbial diet (eg, other modification).
 class NutritionOrderOralDiet extends BackboneElement {
   /// Primary constructor for
   /// [NutritionOrderOralDiet]
@@ -1000,8 +989,8 @@ class NutritionOrderOralDiet extends BackboneElement {
     this.schedule,
     this.nutrient,
     this.texture,
-    this.fluidConsistencyType,
     this.instruction,
+    this.caloricDensity,
     super.disallowExtensions,
   }) : super();
 
@@ -1055,17 +1044,15 @@ class NutritionOrderOralDiet extends BackboneElement {
             ),
           )
           .toList(),
-      fluidConsistencyType: (json['fluidConsistencyType'] as List<dynamic>?)
-          ?.map<CodeableConcept>(
-            (v) => CodeableConcept.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
       instruction: JsonParser.parsePrimitive<FhirString>(
         json,
         'instruction',
         FhirString.fromJson,
+      ),
+      caloricDensity: JsonParser.parseObject<Quantity>(
+        json,
+        'caloricDensity',
+        Quantity.fromJson,
       ),
     );
   }
@@ -1114,7 +1101,7 @@ class NutritionOrderOralDiet extends BackboneElement {
 
   /// [type]
   /// The kind of diet or dietary restriction such as fiber restricted diet
-  /// or diabetic diet.
+  /// or diet for diabetes.
   final List<CodeableConcept>? type;
 
   /// [schedule]
@@ -1122,24 +1109,26 @@ class NutritionOrderOralDiet extends BackboneElement {
   final NutritionOrderSchedule? schedule;
 
   /// [nutrient]
-  /// Class that defines the quantity and type of nutrient modifications (for
-  /// example carbohydrate, fiber or sodium) required for the oral diet.
+  /// Defines the quantity and the nutrient modified (for example
+  /// carbohydrate, fiber or sodium) in the oral diet.
   final List<NutritionOrderNutrient>? nutrient;
 
   /// [texture]
-  /// Class that describes any texture modifications required for the patient
-  /// to safely consume various types of solid foods.
+  /// Class that describes any texture modifications in addition to the oral
+  /// diet type required for the patient to safely consume various types of
+  /// foods (i.e. solid and/or liquid).
   final List<NutritionOrderTexture>? texture;
-
-  /// [fluidConsistencyType]
-  /// The required consistency (e.g. honey-thick, nectar-thick, thin,
-  /// thickened.) of liquids or fluids served to the patient.
-  final List<CodeableConcept>? fluidConsistencyType;
 
   /// [instruction]
   /// Free text or additional instructions or information pertaining to the
   /// oral diet.
   final FhirString? instruction;
+
+  /// [caloricDensity]
+  /// The amount of energy (calories or kilojoules) that the oral diet should
+  /// provide. For example, an infant formula feeding of 30 ounces of 20
+  /// kcal/ounce (67 kcal/100 mL) formula per day.
+  final Quantity? caloricDensity;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1232,12 +1221,12 @@ class NutritionOrderOralDiet extends BackboneElement {
       texture,
     );
     addField(
-      'fluidConsistencyType',
-      fluidConsistencyType,
-    );
-    addField(
       'instruction',
       instruction,
+    );
+    addField(
+      'caloricDensity',
+      caloricDensity,
     );
     return json;
   }
@@ -1253,8 +1242,8 @@ class NutritionOrderOralDiet extends BackboneElement {
       'schedule',
       'nutrient',
       'texture',
-      'fluidConsistencyType',
       'instruction',
+      'caloricDensity',
     ];
   }
 
@@ -1295,13 +1284,13 @@ class NutritionOrderOralDiet extends BackboneElement {
         if (texture != null) {
           fields.addAll(texture!);
         }
-      case 'fluidConsistencyType':
-        if (fluidConsistencyType != null) {
-          fields.addAll(fluidConsistencyType!);
-        }
       case 'instruction':
         if (instruction != null) {
           fields.add(instruction!);
+        }
+      case 'caloricDensity':
+        if (caloricDensity != null) {
+          fields.add(caloricDensity!);
         }
       default:
         if (checkValid) {
@@ -1386,15 +1375,15 @@ class NutritionOrderOralDiet extends BackboneElement {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
-      fluidConsistencyType,
-      o.fluidConsistencyType,
+    if (!equalsDeepWithNull(
+      instruction,
+      o.instruction,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
-      instruction,
-      o.instruction,
+      caloricDensity,
+      o.caloricDensity,
     )) {
       return false;
     }
@@ -1511,13 +1500,13 @@ class NutritionOrderSchedule extends BackboneElement {
   final List<Timing>? timing;
 
   /// [asNeeded]
-  /// Indicates whether the product is only taken when needed within a
-  /// specific dosing schedule.
+  /// Indicates whether the diet is only taken when needed within a specific
+  /// administration schedule.
   final FhirBoolean? asNeeded;
 
   /// [asNeededFor]
-  /// Indicates whether the product is only taken based on a precondition for
-  /// taking the product.
+  /// Indicates whether the diet is only taken based on a precondition for
+  /// taking the diet.
   final CodeableConcept? asNeededFor;
   @override
   Map<String, dynamic> toJson() {
@@ -1737,8 +1726,8 @@ class NutritionOrderSchedule extends BackboneElement {
 }
 
 /// [NutritionOrderNutrient]
-/// Class that defines the quantity and type of nutrient modifications (for
-/// example carbohydrate, fiber or sodium) required for the oral diet.
+/// Defines the quantity and the nutrient modified (for example
+/// carbohydrate, fiber or sodium) in the oral diet.
 class NutritionOrderNutrient extends BackboneElement {
   /// Primary constructor for
   /// [NutritionOrderNutrient]
@@ -2041,8 +2030,9 @@ class NutritionOrderNutrient extends BackboneElement {
 }
 
 /// [NutritionOrderTexture]
-/// Class that describes any texture modifications required for the patient
-/// to safely consume various types of solid foods.
+/// Class that describes any texture modifications in addition to the oral
+/// diet type required for the patient to safely consume various types of
+/// foods (i.e. solid and/or liquid).
 class NutritionOrderTexture extends BackboneElement {
   /// Primary constructor for
   /// [NutritionOrderTexture]
@@ -2052,7 +2042,7 @@ class NutritionOrderTexture extends BackboneElement {
     super.extension_,
     super.modifierExtension,
     this.modifier,
-    this.foodType,
+    this.type,
     super.disallowExtensions,
   }) : super();
 
@@ -2085,9 +2075,9 @@ class NutritionOrderTexture extends BackboneElement {
         'modifier',
         CodeableConcept.fromJson,
       ),
-      foodType: JsonParser.parseObject<CodeableConcept>(
+      type: JsonParser.parseObject<CodeableConcept>(
         json,
-        'foodType',
+        'type',
         CodeableConcept.fromJson,
       ),
     );
@@ -2136,14 +2126,14 @@ class NutritionOrderTexture extends BackboneElement {
   String get fhirType => 'NutritionOrderTexture';
 
   /// [modifier]
-  /// Any texture modifications (for solid foods) that should be made, e.g.
-  /// easy to chew, chopped, ground, and pureed.
+  /// Texture modifications in the addition to the oral diet type that should
+  /// be made, e.g. easy to chew, chopped, ground, and pureed.
   final CodeableConcept? modifier;
 
-  /// [foodType]
-  /// The food type(s) (e.g. meats, all foods) that the texture modification
-  /// applies to. This could be all foods types.
-  final CodeableConcept? foodType;
+  /// [type]
+  /// The food (i.e. solid and/or liquid) type(s) (e.g. meats, all foods)
+  /// that the texture modification applies to.
+  final CodeableConcept? type;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -2224,8 +2214,8 @@ class NutritionOrderTexture extends BackboneElement {
       modifier,
     );
     addField(
-      'foodType',
-      foodType,
+      'type',
+      type,
     );
     return json;
   }
@@ -2238,7 +2228,7 @@ class NutritionOrderTexture extends BackboneElement {
       'extension',
       'modifierExtension',
       'modifier',
-      'foodType',
+      'type',
     ];
   }
 
@@ -2267,9 +2257,9 @@ class NutritionOrderTexture extends BackboneElement {
         if (modifier != null) {
           fields.add(modifier!);
         }
-      case 'foodType':
-        if (foodType != null) {
-          fields.add(foodType!);
+      case 'type':
+        if (type != null) {
+          fields.add(type!);
         }
       default:
         if (checkValid) {
@@ -2337,8 +2327,8 @@ class NutritionOrderTexture extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
-      foodType,
-      o.foodType,
+      type,
+      o.type,
     )) {
       return false;
     }
@@ -2362,6 +2352,7 @@ class NutritionOrderSupplement extends BackboneElement {
     this.schedule,
     this.quantity,
     this.instruction,
+    this.caloricDensity,
     super.disallowExtensions,
   }) : super();
 
@@ -2413,6 +2404,11 @@ class NutritionOrderSupplement extends BackboneElement {
         json,
         'instruction',
         FhirString.fromJson,
+      ),
+      caloricDensity: JsonParser.parseObject<Quantity>(
+        json,
+        'caloricDensity',
+        Quantity.fromJson,
       ),
     );
   }
@@ -2481,6 +2477,13 @@ class NutritionOrderSupplement extends BackboneElement {
   /// Free text or additional instructions or information pertaining to the
   /// oral supplement.
   final FhirString? instruction;
+
+  /// [caloricDensity]
+  /// The amount of energy (calories or kilojoules) that the supplement
+  /// should provide per specified volume, typically per ml or fluid oz. For
+  /// example, a patient may required a supplement that provides 24 calories
+  /// per fluid ounce.
+  final Quantity? caloricDensity;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -2576,6 +2579,10 @@ class NutritionOrderSupplement extends BackboneElement {
       'instruction',
       instruction,
     );
+    addField(
+      'caloricDensity',
+      caloricDensity,
+    );
     return json;
   }
 
@@ -2591,6 +2598,7 @@ class NutritionOrderSupplement extends BackboneElement {
       'schedule',
       'quantity',
       'instruction',
+      'caloricDensity',
     ];
   }
 
@@ -2634,6 +2642,10 @@ class NutritionOrderSupplement extends BackboneElement {
       case 'instruction':
         if (instruction != null) {
           fields.add(instruction!);
+        }
+      case 'caloricDensity':
+        if (caloricDensity != null) {
+          fields.add(caloricDensity!);
         }
       default:
         if (checkValid) {
@@ -2721,6 +2733,12 @@ class NutritionOrderSupplement extends BackboneElement {
     if (!equalsDeepWithNull(
       instruction,
       o.instruction,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      caloricDensity,
+      o.caloricDensity,
     )) {
       return false;
     }
@@ -3073,14 +3091,13 @@ class NutritionOrderEnteralFormula extends BackboneElement {
     super.id,
     super.extension_,
     super.modifierExtension,
-    this.baseFormulaType,
-    this.baseFormulaProductName,
+    this.type,
+    this.productName,
     this.deliveryDevice,
-    this.additive,
     this.caloricDensity,
     this.routeOfAdministration,
     this.administration,
-    this.maxVolumeToDeliver,
+    this.maxVolumeToAdminister,
     this.administrationInstruction,
     super.disallowExtensions,
   }) : super();
@@ -3109,14 +3126,14 @@ class NutritionOrderEnteralFormula extends BackboneElement {
             ),
           )
           .toList(),
-      baseFormulaType: JsonParser.parseObject<CodeableReference>(
+      type: JsonParser.parseObject<CodeableReference>(
         json,
-        'baseFormulaType',
+        'type',
         CodeableReference.fromJson,
       ),
-      baseFormulaProductName: JsonParser.parsePrimitive<FhirString>(
+      productName: JsonParser.parsePrimitive<FhirString>(
         json,
-        'baseFormulaProductName',
+        'productName',
         FhirString.fromJson,
       ),
       deliveryDevice: (json['deliveryDevice'] as List<dynamic>?)
@@ -3126,23 +3143,18 @@ class NutritionOrderEnteralFormula extends BackboneElement {
             ),
           )
           .toList(),
-      additive: (json['additive'] as List<dynamic>?)
-          ?.map<NutritionOrderAdditive>(
-            (v) => NutritionOrderAdditive.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
       caloricDensity: JsonParser.parseObject<Quantity>(
         json,
         'caloricDensity',
         Quantity.fromJson,
       ),
-      routeOfAdministration: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'routeOfAdministration',
-        CodeableConcept.fromJson,
-      ),
+      routeOfAdministration: (json['routeOfAdministration'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       administration: (json['administration'] as List<dynamic>?)
           ?.map<NutritionOrderAdministration>(
             (v) => NutritionOrderAdministration.fromJson(
@@ -3150,9 +3162,9 @@ class NutritionOrderEnteralFormula extends BackboneElement {
             ),
           )
           .toList(),
-      maxVolumeToDeliver: JsonParser.parseObject<Quantity>(
+      maxVolumeToAdminister: JsonParser.parseObject<Quantity>(
         json,
-        'maxVolumeToDeliver',
+        'maxVolumeToAdminister',
         Quantity.fromJson,
       ),
       administrationInstruction: JsonParser.parsePrimitive<FhirMarkdown>(
@@ -3205,51 +3217,46 @@ class NutritionOrderEnteralFormula extends BackboneElement {
   @override
   String get fhirType => 'NutritionOrderEnteralFormula';
 
-  /// [baseFormulaType]
-  /// The type of enteral or infant formula such as an adult standard formula
-  /// with fiber or a soy-based infant formula.
-  final CodeableReference? baseFormulaType;
+  /// [type]
+  /// The type of adult or pediatric enteral feeding such as an adult
+  /// standard formula with fiber or a soy-based infant feeding.
+  final CodeableReference? type;
 
-  /// [baseFormulaProductName]
-  /// The product or brand name of the enteral or infant formula product such
-  /// as "ACME Adult Standard Formula".
-  final FhirString? baseFormulaProductName;
+  /// [productName]
+  /// The product or brand name of the enteral feeding product such as "ACME
+  /// Adult Standard Formula".
+  final FhirString? productName;
 
   /// [deliveryDevice]
   /// The intended type of device that is to be used for the administration
   /// of the enteral formula.
   final List<CodeableReference>? deliveryDevice;
 
-  /// [additive]
-  /// Indicates modular components to be provided in addition or mixed with
-  /// the base formula.
-  final List<NutritionOrderAdditive>? additive;
-
   /// [caloricDensity]
-  /// The amount of energy (calories) that the formula should provide per
-  /// specified volume, typically per mL or fluid oz. For example, an infant
-  /// may require a formula that provides 24 calories per fluid ounce or an
-  /// adult may require an enteral formula that provides 1.5 calorie/mL.
+  /// The amount of energy (calories or kilojoules) that the feeding should
+  /// provide per specified volume, typically per mL or fluid oz. For
+  /// example, an infant may require a formula that provides 24 calories per
+  /// fluid ounce or an adult may require an enteral formula that provides
+  /// 1.5 calorie/mL.
   final Quantity? caloricDensity;
 
   /// [routeOfAdministration]
-  /// The route or physiological path of administration into the patient's
-  /// gastrointestinal tract for purposes of providing the formula feeding,
-  /// e.g. nasogastric tube.
-  final CodeableConcept? routeOfAdministration;
+  /// The administration into the patient's gastrointestinal tract for
+  /// purposes of providing the formula feeding, e.g. nasogastric tube, oral.
+  final List<CodeableConcept>? routeOfAdministration;
 
   /// [administration]
-  /// Formula administration instructions as structured data. This repeating
-  /// structure allows for changing the administration rate or volume over
-  /// time for both bolus and continuous feeding. An example of this would be
-  /// an instruction to increase the rate of continuous feeding every 2
-  /// hours.
+  /// Formula feeding administration instructions as structured data. This
+  /// repeating structure allows for changing the administration rate or
+  /// volume over time for both bolus and continuous feeding. An example of
+  /// this would be an instruction to increase the rate of continuous feeding
+  /// every 2 hours.
   final List<NutritionOrderAdministration>? administration;
 
-  /// [maxVolumeToDeliver]
-  /// The maximum total quantity of formula that may be administered to a
-  /// subject over the period of time, e.g. 1440 mL over 24 hours.
-  final Quantity? maxVolumeToDeliver;
+  /// [maxVolumeToAdminister]
+  /// The maximum total quantity of formula feeding that may be administered
+  /// to a subject over the period of time, e.g. 1440 mL over 24 hours.
+  final Quantity? maxVolumeToAdminister;
 
   /// [administrationInstruction]
   /// Free text formula administration, feeding instructions or additional
@@ -3331,20 +3338,16 @@ class NutritionOrderEnteralFormula extends BackboneElement {
       modifierExtension,
     );
     addField(
-      'baseFormulaType',
-      baseFormulaType,
+      'type',
+      type,
     );
     addField(
-      'baseFormulaProductName',
-      baseFormulaProductName,
+      'productName',
+      productName,
     );
     addField(
       'deliveryDevice',
       deliveryDevice,
-    );
-    addField(
-      'additive',
-      additive,
     );
     addField(
       'caloricDensity',
@@ -3359,8 +3362,8 @@ class NutritionOrderEnteralFormula extends BackboneElement {
       administration,
     );
     addField(
-      'maxVolumeToDeliver',
-      maxVolumeToDeliver,
+      'maxVolumeToAdminister',
+      maxVolumeToAdminister,
     );
     addField(
       'administrationInstruction',
@@ -3376,14 +3379,13 @@ class NutritionOrderEnteralFormula extends BackboneElement {
       'id',
       'extension',
       'modifierExtension',
-      'baseFormulaType',
-      'baseFormulaProductName',
+      'type',
+      'productName',
       'deliveryDevice',
-      'additive',
       'caloricDensity',
       'routeOfAdministration',
       'administration',
-      'maxVolumeToDeliver',
+      'maxVolumeToAdminister',
       'administrationInstruction',
     ];
   }
@@ -3409,21 +3411,17 @@ class NutritionOrderEnteralFormula extends BackboneElement {
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
         }
-      case 'baseFormulaType':
-        if (baseFormulaType != null) {
-          fields.add(baseFormulaType!);
+      case 'type':
+        if (type != null) {
+          fields.add(type!);
         }
-      case 'baseFormulaProductName':
-        if (baseFormulaProductName != null) {
-          fields.add(baseFormulaProductName!);
+      case 'productName':
+        if (productName != null) {
+          fields.add(productName!);
         }
       case 'deliveryDevice':
         if (deliveryDevice != null) {
           fields.addAll(deliveryDevice!);
-        }
-      case 'additive':
-        if (additive != null) {
-          fields.addAll(additive!);
         }
       case 'caloricDensity':
         if (caloricDensity != null) {
@@ -3431,15 +3429,15 @@ class NutritionOrderEnteralFormula extends BackboneElement {
         }
       case 'routeOfAdministration':
         if (routeOfAdministration != null) {
-          fields.add(routeOfAdministration!);
+          fields.addAll(routeOfAdministration!);
         }
       case 'administration':
         if (administration != null) {
           fields.addAll(administration!);
         }
-      case 'maxVolumeToDeliver':
-        if (maxVolumeToDeliver != null) {
-          fields.add(maxVolumeToDeliver!);
+      case 'maxVolumeToAdminister':
+        if (maxVolumeToAdminister != null) {
+          fields.add(maxVolumeToAdminister!);
         }
       case 'administrationInstruction':
         if (administrationInstruction != null) {
@@ -3506,14 +3504,14 @@ class NutritionOrderEnteralFormula extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
-      baseFormulaType,
-      o.baseFormulaType,
+      type,
+      o.type,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
-      baseFormulaProductName,
-      o.baseFormulaProductName,
+      productName,
+      o.productName,
     )) {
       return false;
     }
@@ -3523,19 +3521,13 @@ class NutritionOrderEnteralFormula extends BackboneElement {
     )) {
       return false;
     }
-    if (!listEquals<NutritionOrderAdditive>(
-      additive,
-      o.additive,
-    )) {
-      return false;
-    }
     if (!equalsDeepWithNull(
       caloricDensity,
       o.caloricDensity,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<CodeableConcept>(
       routeOfAdministration,
       o.routeOfAdministration,
     )) {
@@ -3548,8 +3540,8 @@ class NutritionOrderEnteralFormula extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
-      maxVolumeToDeliver,
-      o.maxVolumeToDeliver,
+      maxVolumeToAdminister,
+      o.maxVolumeToAdminister,
     )) {
       return false;
     }
@@ -3563,345 +3555,12 @@ class NutritionOrderEnteralFormula extends BackboneElement {
   }
 }
 
-/// [NutritionOrderAdditive]
-/// Indicates modular components to be provided in addition or mixed with
-/// the base formula.
-class NutritionOrderAdditive extends BackboneElement {
-  /// Primary constructor for
-  /// [NutritionOrderAdditive]
-
-  const NutritionOrderAdditive({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.type,
-    this.productName,
-    this.quantity,
-    super.disallowExtensions,
-  }) : super();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory NutritionOrderAdditive.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return NutritionOrderAdditive(
-      id: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'id',
-        FhirString.fromJson,
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      type: JsonParser.parseObject<CodeableReference>(
-        json,
-        'type',
-        CodeableReference.fromJson,
-      ),
-      productName: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'productName',
-        FhirString.fromJson,
-      ),
-      quantity: JsonParser.parseObject<Quantity>(
-        json,
-        'quantity',
-        Quantity.fromJson,
-      ),
-    );
-  }
-
-  /// Deserialize [NutritionOrderAdditive]
-  /// from a [String] or [YamlMap] object
-  factory NutritionOrderAdditive.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return NutritionOrderAdditive.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return NutritionOrderAdditive.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'NutritionOrderAdditive '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [NutritionOrderAdditive]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory NutritionOrderAdditive.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return NutritionOrderAdditive.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'NutritionOrderAdditive';
-
-  /// [type]
-  /// Indicates the type of modular component such as protein, carbohydrate,
-  /// fat or fiber to be provided in addition to or mixed with the base
-  /// formula.
-  final CodeableReference? type;
-
-  /// [productName]
-  /// The product or brand name of the type of modular component to be added
-  /// to the formula.
-  final FhirString? productName;
-
-  /// [quantity]
-  /// The amount of additive to be given in addition or to be mixed in with
-  /// the base formula.
-  final Quantity? quantity;
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    bool isNonEmpty(dynamic val) {
-      if (val == null) return false;
-      if (val is List && val.isEmpty) return false;
-      if (val is Map && val.isEmpty) return false;
-      return true;
-    }
-
-    void addField(String key, dynamic field) {
-      if (field == null) return;
-      if (!(field is FhirBase? || field is List<FhirBase>?)) {
-        throw ArgumentError('"field" must be a FhirBase type');
-      }
-      if (field is PrimitiveType) {
-        final fieldMap = field.toJson();
-        final val = fieldMap['value'];
-        final ext = fieldMap['_value'];
-        final hasVal = isNonEmpty(val);
-        final hasExt = isNonEmpty(ext);
-        if (hasVal) json[key] = val;
-        if (hasExt) json['_$key'] = ext;
-      } else if (field is List<FhirBase>) {
-        if (field.isEmpty) return;
-        final isPrimitive = field.first is PrimitiveType;
-        final tempList = <dynamic>[];
-        final tempExtensions = <dynamic>[];
-        for (final e in field) {
-          final itemMap = e.toJson();
-          if (!isNonEmpty(itemMap)) {
-            continue;
-          }
-          if (isPrimitive) {
-            final v = itemMap['value'];
-            final x = itemMap['_value'];
-            tempList.add(v);
-            tempExtensions.add(x);
-          } else {
-            tempList.add(itemMap);
-          }
-        }
-        if (tempList.isEmpty) return;
-        if (isPrimitive) {
-          final hasAnyValues = tempList.any((v) => v != null);
-          if (hasAnyValues) {
-            json[key] = tempList;
-          }
-          final anyExt = tempExtensions.any(isNonEmpty);
-          if (anyExt) {
-            json['_$key'] = tempExtensions;
-          }
-        } else {
-          json[key] = tempList;
-        }
-      } else if (field is FhirBase) {
-        final subMap = field.toJson();
-        if (isNonEmpty(subMap)) {
-          json[key] = subMap;
-        }
-      }
-    }
-
-    addField(
-      'id',
-      id,
-    );
-    addField(
-      'extension',
-      extension_,
-    );
-    addField(
-      'modifierExtension',
-      modifierExtension,
-    );
-    addField(
-      'type',
-      type,
-    );
-    addField(
-      'productName',
-      productName,
-    );
-    addField(
-      'quantity',
-      quantity,
-    );
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'type',
-      'productName',
-      'quantity',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBase> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBase>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'type':
-        if (type != null) {
-          fields.add(type!);
-        }
-      case 'productName':
-        if (productName != null) {
-          fields.add(productName!);
-        }
-      case 'quantity':
-        if (quantity != null) {
-          fields.add(quantity!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBase? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  NutritionOrderAdditive clone() => copyWith();
-
-  /// Copy function for [NutritionOrderAdditive]
-  /// Returns a copy of the current instance with the provided fields modified.
-  /// If a field is not provided, it will retain its original value.
-  /// If a null is provided, this will clearn the field, unless the
-  /// field is required, in which case it will keep its current value.
-  @override
-  $NutritionOrderAdditiveCopyWith<NutritionOrderAdditive> get copyWith =>
-      _$NutritionOrderAdditiveCopyWithImpl<NutritionOrderAdditive>(
-        this,
-        (value) => value,
-      );
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBase? o) {
-    if (o is! NutritionOrderAdditive) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      type,
-      o.type,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      productName,
-      o.productName,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      quantity,
-      o.quantity,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
 /// [NutritionOrderAdministration]
-/// Formula administration instructions as structured data. This repeating
-/// structure allows for changing the administration rate or volume over
-/// time for both bolus and continuous feeding. An example of this would be
-/// an instruction to increase the rate of continuous feeding every 2
-/// hours.
+/// Formula feeding administration instructions as structured data. This
+/// repeating structure allows for changing the administration rate or
+/// volume over time for both bolus and continuous feeding. An example of
+/// this would be an instruction to increase the rate of continuous feeding
+/// every 2 hours.
 class NutritionOrderAdministration extends BackboneElement {
   /// Primary constructor for
   /// [NutritionOrderAdministration]
@@ -4006,17 +3665,17 @@ class NutritionOrderAdministration extends BackboneElement {
   String get fhirType => 'NutritionOrderAdministration';
 
   /// [schedule]
-  /// Schedule information for an enteral formula.
+  /// Schedule information for an enteral feeding.
   final NutritionOrderSchedule? schedule;
 
   /// [quantity]
-  /// The volume of formula to provide to the patient per the specified
-  /// administration schedule.
+  /// The volume of formula feeding to provide to the patient per the
+  /// specified administration schedule.
   final Quantity? quantity;
 
   /// [rateX]
-  /// The rate of administration of formula via a feeding pump, e.g. 60 mL
-  /// per hour, according to the specified schedule.
+  /// The rate of administration of formula feeding via a feeding pump, e.g.
+  /// 60 mL per hour, according to the specified schedule.
   final RateXNutritionOrderAdministration? rateX;
 
   /// Getter for [rateQuantity] as a Quantity
@@ -4255,7 +3914,7 @@ class NutritionOrderAdministration extends BackboneElement {
 }
 
 /// [NutritionOrderSchedule2]
-/// Schedule information for an enteral formula.
+/// Schedule information for an enteral feeding.
 class NutritionOrderSchedule2 extends BackboneElement {
   /// Primary constructor for
   /// [NutritionOrderSchedule2]
@@ -4357,19 +4016,19 @@ class NutritionOrderSchedule2 extends BackboneElement {
   String get fhirType => 'NutritionOrderSchedule2';
 
   /// [timing]
-  /// The time period and frequency at which the enteral formula should be
-  /// given. The enteral formula should be given for the combination of all
+  /// The time period and frequency at which the enteral feeding should be
+  /// given. The enteral feeding should be given for the combination of all
   /// schedules if more than one schedule is present.
   final List<Timing>? timing;
 
   /// [asNeeded]
-  /// Indicates whether the enteral formula is only taken when needed within
+  /// Indicates whether the enteral feeding is only taken when needed within
   /// a specific dosing schedule.
   final FhirBoolean? asNeeded;
 
   /// [asNeededFor]
-  /// Indicates whether the enteral formula is only taken based on a
-  /// precondition for taking the enteral formula.
+  /// Indicates whether the enteral feeding is only taken based on a
+  /// precondition for taking the enteral feeding.
   final CodeableConcept? asNeededFor;
   @override
   Map<String, dynamic> toJson() {
@@ -4581,6 +4240,367 @@ class NutritionOrderSchedule2 extends BackboneElement {
     if (!equalsDeepWithNull(
       asNeededFor,
       o.asNeededFor,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [NutritionOrderAdditive]
+/// Indicates modular components to be provided in addition or mixed with
+/// the oral diet, supplement, and/or enteral feeding.
+class NutritionOrderAdditive extends BackboneElement {
+  /// Primary constructor for
+  /// [NutritionOrderAdditive]
+
+  const NutritionOrderAdditive({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.modularType,
+    this.productName,
+    this.quantity,
+    this.routeOfAdministration,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory NutritionOrderAdditive.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return NutritionOrderAdditive(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modularType: JsonParser.parseObject<CodeableReference>(
+        json,
+        'modularType',
+        CodeableReference.fromJson,
+      ),
+      productName: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'productName',
+        FhirString.fromJson,
+      ),
+      quantity: JsonParser.parseObject<Quantity>(
+        json,
+        'quantity',
+        Quantity.fromJson,
+      ),
+      routeOfAdministration: (json['routeOfAdministration'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  /// Deserialize [NutritionOrderAdditive]
+  /// from a [String] or [YamlMap] object
+  factory NutritionOrderAdditive.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return NutritionOrderAdditive.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return NutritionOrderAdditive.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'NutritionOrderAdditive '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [NutritionOrderAdditive]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory NutritionOrderAdditive.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return NutritionOrderAdditive.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'NutritionOrderAdditive';
+
+  /// [modularType]
+  /// Indicates the type of modular component such as protein, carbohydrate,
+  /// fat or fiber to be provided in addition to or mixed with the oral diet,
+  /// supplement, and/or enteral feeding.
+  final CodeableReference? modularType;
+
+  /// [productName]
+  /// The product or brand name of the type of modular additive to be added
+  /// to the oral diet, supplement, and/or enteral feeding.
+  final FhirString? productName;
+
+  /// [quantity]
+  /// The amount of additive to be given in addition or to be mixed in with
+  /// the oral diet, supplement, and/or enteral feeding.
+  final Quantity? quantity;
+
+  /// [routeOfAdministration]
+  /// The administration into the patient's gastrointestinal tract for
+  /// purposes of providing the additive, e.g. nasogastric tube, oral.
+  final List<CodeableConcept>? routeOfAdministration;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'modularType',
+      modularType,
+    );
+    addField(
+      'productName',
+      productName,
+    );
+    addField(
+      'quantity',
+      quantity,
+    );
+    addField(
+      'routeOfAdministration',
+      routeOfAdministration,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'modularType',
+      'productName',
+      'quantity',
+      'routeOfAdministration',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'modularType':
+        if (modularType != null) {
+          fields.add(modularType!);
+        }
+      case 'productName':
+        if (productName != null) {
+          fields.add(productName!);
+        }
+      case 'quantity':
+        if (quantity != null) {
+          fields.add(quantity!);
+        }
+      case 'routeOfAdministration':
+        if (routeOfAdministration != null) {
+          fields.addAll(routeOfAdministration!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  NutritionOrderAdditive clone() => copyWith();
+
+  /// Copy function for [NutritionOrderAdditive]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $NutritionOrderAdditiveCopyWith<NutritionOrderAdditive> get copyWith =>
+      _$NutritionOrderAdditiveCopyWithImpl<NutritionOrderAdditive>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! NutritionOrderAdditive) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      modularType,
+      o.modularType,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      productName,
+      o.productName,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      quantity,
+      o.quantity,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConcept>(
+      routeOfAdministration,
+      o.routeOfAdministration,
     )) {
       return false;
     }

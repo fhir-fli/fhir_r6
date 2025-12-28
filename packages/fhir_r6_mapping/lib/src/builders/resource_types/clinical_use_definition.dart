@@ -275,7 +275,8 @@ class ClinicalUseDefinitionBuilder extends DomainResourceBuilder {
 
   /// [subject]
   /// The medication, product, substance, device, procedure etc. for which
-  /// this is an indication.
+  /// this is an indication, contraindication, interaction, undesirable
+  /// effect, or warning.
   List<ReferenceBuilder>? subject;
 
   /// [status]
@@ -1365,7 +1366,7 @@ class ClinicalUseDefinitionContraindicationBuilder
   List<CodeableReferenceBuilder>? comorbidity;
 
   /// [indication]
-  /// The indication which this is a contraidication for.
+  /// The indication which this is a contraindication for.
   List<ReferenceBuilder>? indication;
 
   /// [applicability]
@@ -2470,7 +2471,7 @@ class ClinicalUseDefinitionIndicationBuilder extends BackboneElementBuilder {
   String get fhirType => 'ClinicalUseDefinitionIndication';
 
   /// [diseaseSymptomProcedure]
-  /// The situation that is being documented as an indicaton for this item.
+  /// The situation that is being documented as an indication for this item.
   CodeableReferenceBuilder? diseaseSymptomProcedure;
 
   /// [diseaseStatus]

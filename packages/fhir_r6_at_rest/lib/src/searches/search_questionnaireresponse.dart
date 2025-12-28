@@ -10,13 +10,89 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchQuestionnaireResponse extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [QuestionnaireResponse]
+  @override
   SearchQuestionnaireResponse identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a token search for [answerConcept] in the resource
+  /// [QuestionnaireResponse]
+  SearchQuestionnaireResponse answerConcept(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    parameters['answer_concept'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a date search for [answerDate] in the resource
+  /// [QuestionnaireResponse]
+  SearchQuestionnaireResponse answerDate(
+    FhirDateTime value, {
+    SearchModifier? modifier,
+  }) {
+    parameters['answer_date'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a numerical search for [answerNumber] in the resource
+  /// [QuestionnaireResponse]
+  SearchQuestionnaireResponse answerNumber(
+    FhirDecimal value, {
+    FhirString? unit,
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    if (modifier != null &&
+        !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
+      throw ArgumentError('Modifier $modifier not allowed for number type');
+    }
+    parameters['answer_number'] = (modifier != null
+        ? '$modifier:$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}');
+    return this;
+  }
+
+  /// a quantity search for [answerQuantity] in the resource
+  /// [QuestionnaireResponse]
+  SearchQuestionnaireResponse answerQuantity(
+    FhirDecimal value, {
+    FhirString? unit,
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    if (modifier != null &&
+        !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
+      throw ArgumentError('Modifier $modifier not allowed for quantity type');
+    }
+    parameters['answer_quantity'] = (modifier != null
+        ? '$modifier:$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}');
+    return this;
+  }
+
+  /// a string search for [answerString] in the resource
+  /// [QuestionnaireResponse]
+  SearchQuestionnaireResponse answerString(
+    FhirString value, {
+    SearchModifier? modifier,
+  }) {
+    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
+      throw ArgumentError('Modifier $modifier not allowed for string type');
+    }
+    parameters['answer_string'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -26,20 +102,35 @@ class SearchQuestionnaireResponse extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}authored'] =
-        value.toString();
+    parameters['authored'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a token search for [linkid] in the resource
+  /// [QuestionnaireResponse]
+  SearchQuestionnaireResponse linkid(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    parameters['linkid'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [QuestionnaireResponse]
+  @override
   SearchQuestionnaireResponse status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

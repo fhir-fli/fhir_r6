@@ -29,7 +29,7 @@ abstract class $ImmunizationCopyWith<T> extends $DomainResourceCopyWith<T> {
     Reference? patient,
     Reference? encounter,
     List<Reference>? supportingInformation,
-    FhirDateTime? occurrenceX,
+    OccurrenceXImmunization? occurrenceX,
     FhirBoolean? primarySource,
     CodeableReference? informationSource,
     Reference? location,
@@ -153,7 +153,7 @@ class _$ImmunizationCopyWithImpl<T> implements $ImmunizationCopyWith<T> {
             : supportingInformation as List<Reference>?,
         occurrenceX: identical(occurrenceX, fhirSentinel)
             ? _value.occurrenceX
-            : (occurrenceX as FhirDateTime?) ?? _value.occurrenceX,
+            : (occurrenceX as OccurrenceXImmunization?) ?? _value.occurrenceX,
         primarySource: identical(primarySource, fhirSentinel)
             ? _value.primarySource
             : primarySource as FhirBoolean?,
@@ -408,8 +408,8 @@ abstract class $ImmunizationProtocolAppliedCopyWith<T>
     FhirString? series,
     Reference? authority,
     List<CodeableConcept>? targetDisease,
-    FhirString? doseNumber,
-    FhirString? seriesDoses,
+    CodeableConcept? doseNumber,
+    CodeableConcept? seriesDoses,
     bool? disallowExtensions,
   });
 }
@@ -453,10 +453,10 @@ class _$ImmunizationProtocolAppliedCopyWithImpl<T>
             : targetDisease as List<CodeableConcept>?,
         doseNumber: identical(doseNumber, fhirSentinel)
             ? _value.doseNumber
-            : (doseNumber as FhirString?) ?? _value.doseNumber,
+            : doseNumber as CodeableConcept?,
         seriesDoses: identical(seriesDoses, fhirSentinel)
             ? _value.seriesDoses
-            : seriesDoses as FhirString?,
+            : seriesDoses as CodeableConcept?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

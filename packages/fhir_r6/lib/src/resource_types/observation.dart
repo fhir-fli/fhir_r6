@@ -32,6 +32,7 @@ class Observation extends DomainResource {
     required this.code,
     this.subject,
     this.focus,
+    this.organizer,
     this.encounter,
     EffectiveXObservation? effectiveX,
     FhirDateTime? effectiveDateTime,
@@ -206,6 +207,11 @@ class Observation extends DomainResource {
             ),
           )
           .toList(),
+      organizer: JsonParser.parsePrimitive<FhirBoolean>(
+        json,
+        'organizer',
+        FhirBoolean.fromJson,
+      ),
       encounter: JsonParser.parseObject<Reference>(
         json,
         'encounter',
@@ -423,7 +429,7 @@ class Observation extends DomainResource {
   final Reference? subject;
 
   /// [focus]
-  /// The actual focus of an observation when it is not the patient of record
+  /// The actual focus of an observation when it is not the subject of record
   /// representing something or someone associated with the patient such as a
   /// spouse, parent, fetus, or donor. For example, fetus observations in a
   /// mother's record. The focus of an observation could also be an existing
@@ -432,8 +438,14 @@ class Observation extends DomainResource {
   /// example use case would be using the Observation resource to capture
   /// whether the mother is trained to change her child's tracheostomy tube.
   /// In this example, the child is the patient of record and the mother is
-  /// the focus.
+  /// the focus. As another use case, a caregiver (RelatedPerson) has back
+  /// strain and is unable to provide ADL support to a patient (Subject).
   final List<Reference>? focus;
+
+  /// [organizer]
+  /// This observation serves as an organizer or grouper for a set of (one or
+  /// more) sub-observations.
+  final FhirBoolean? organizer;
 
   /// [encounter]
   /// The healthcare event (e.g. a patient and healthcare provider
@@ -717,6 +729,10 @@ class Observation extends DomainResource {
       focus,
     );
     addField(
+      'organizer',
+      organizer,
+    );
+    addField(
       'encounter',
       encounter,
     );
@@ -817,6 +833,7 @@ class Observation extends DomainResource {
       'code',
       'subject',
       'focus',
+      'organizer',
       'encounter',
       'effectiveX',
       'issued',
@@ -921,6 +938,10 @@ class Observation extends DomainResource {
       case 'focus':
         if (focus != null) {
           fields.addAll(focus!);
+        }
+      case 'organizer':
+        if (organizer != null) {
+          fields.add(organizer!);
         }
       case 'encounter':
         if (encounter != null) {
@@ -1204,6 +1225,12 @@ class Observation extends DomainResource {
     if (!listEquals<Reference>(
       focus,
       o.focus,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      organizer,
+      o.organizer,
     )) {
       return false;
     }

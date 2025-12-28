@@ -21,7 +21,7 @@ abstract class $TerminologyCapabilitiesCopyWith<T>
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXTerminologyCapabilities? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     PublicationStatus? status,
@@ -40,6 +40,7 @@ abstract class $TerminologyCapabilitiesCopyWith<T>
     TerminologyCapabilitiesImplementation? implementation,
     FhirBoolean? lockedDate,
     List<TerminologyCapabilitiesCodeSystem>? codeSystem,
+    TerminologyCapabilitiesSupplements? supplements,
     TerminologyCapabilitiesExpansion? expansion,
     CodeSearchSupport? codeSearch,
     TerminologyCapabilitiesValidateCode? validateCode,
@@ -88,6 +89,7 @@ class _$TerminologyCapabilitiesCopyWithImpl<T>
     Object? implementation = fhirSentinel,
     Object? lockedDate = fhirSentinel,
     Object? codeSystem = fhirSentinel,
+    Object? supplements = fhirSentinel,
     Object? expansion = fhirSentinel,
     Object? codeSearch = fhirSentinel,
     Object? validateCode = fhirSentinel,
@@ -124,7 +126,7 @@ class _$TerminologyCapabilitiesCopyWithImpl<T>
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXTerminologyCapabilities?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -177,6 +179,9 @@ class _$TerminologyCapabilitiesCopyWithImpl<T>
         codeSystem: identical(codeSystem, fhirSentinel)
             ? _value.codeSystem
             : codeSystem as List<TerminologyCapabilitiesCodeSystem>?,
+        supplements: identical(supplements, fhirSentinel)
+            ? _value.supplements
+            : supplements as TerminologyCapabilitiesSupplements?,
         expansion: identical(expansion, fhirSentinel)
             ? _value.expansion
             : expansion as TerminologyCapabilitiesExpansion?,
@@ -274,7 +279,7 @@ abstract class $TerminologyCapabilitiesImplementationCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirString? description,
+    FhirMarkdown? description,
     FhirUrl? url,
     bool? disallowExtensions,
   });
@@ -307,7 +312,7 @@ class _$TerminologyCapabilitiesImplementationCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         description: identical(description, fhirSentinel)
             ? _value.description
-            : (description as FhirString?) ?? _value.description,
+            : (description as FhirMarkdown?) ?? _value.description,
         url: identical(url, fhirSentinel) ? _value.url : url as FhirUrl?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
@@ -408,7 +413,7 @@ abstract class $TerminologyCapabilitiesVersionCopyWith<T>
     FhirString? code,
     FhirBoolean? isDefault,
     FhirBoolean? compositional,
-    List<CommonLanguages>? language,
+    List<AllLanguages>? language,
     List<TerminologyCapabilitiesFilter>? filter,
     List<FhirCode>? property,
     bool? disallowExtensions,
@@ -453,7 +458,7 @@ class _$TerminologyCapabilitiesVersionCopyWithImpl<T>
             : compositional as FhirBoolean?,
         language: identical(language, fhirSentinel)
             ? _value.language
-            : language as List<CommonLanguages>?,
+            : language as List<AllLanguages>?,
         filter: identical(filter, fhirSentinel)
             ? _value.filter
             : filter as List<TerminologyCapabilitiesFilter>?,
@@ -535,6 +540,64 @@ extension TerminologyCapabilitiesFilterCopyWithExtension
   $TerminologyCapabilitiesFilterCopyWith<TerminologyCapabilitiesFilter>
       get copyWith => _$TerminologyCapabilitiesFilterCopyWithImpl<
               TerminologyCapabilitiesFilter>(
+            this,
+            (value) => value,
+          );
+}
+
+abstract class $TerminologyCapabilitiesSupplementsCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    GlobalLangPackSupportVS? globals,
+    bool? disallowExtensions,
+  });
+}
+
+class _$TerminologyCapabilitiesSupplementsCopyWithImpl<T>
+    implements $TerminologyCapabilitiesSupplementsCopyWith<T> {
+  final TerminologyCapabilitiesSupplements _value;
+  final T Function(TerminologyCapabilitiesSupplements) _then;
+
+  _$TerminologyCapabilitiesSupplementsCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? globals = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      TerminologyCapabilitiesSupplements(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        globals: identical(globals, fhirSentinel)
+            ? _value.globals
+            : globals as GlobalLangPackSupportVS?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension TerminologyCapabilitiesSupplementsCopyWithExtension
+    on TerminologyCapabilitiesSupplements {
+  $TerminologyCapabilitiesSupplementsCopyWith<
+          TerminologyCapabilitiesSupplements>
+      get copyWith => _$TerminologyCapabilitiesSupplementsCopyWithImpl<
+              TerminologyCapabilitiesSupplements>(
             this,
             (value) => value,
           );
@@ -625,7 +688,7 @@ abstract class $TerminologyCapabilitiesParameterCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     FhirCode? name,
-    FhirString? documentation,
+    FhirMarkdown? documentation,
     bool? disallowExtensions,
   });
 }
@@ -660,7 +723,7 @@ class _$TerminologyCapabilitiesParameterCopyWithImpl<T>
             : (name as FhirCode?) ?? _value.name,
         documentation: identical(documentation, fhirSentinel)
             ? _value.documentation
-            : documentation as FhirString?,
+            : documentation as FhirMarkdown?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

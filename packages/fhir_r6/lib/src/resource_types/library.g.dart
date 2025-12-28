@@ -20,14 +20,14 @@ abstract class $LibraryCopyWith<T> extends $MetadataResourceCopyWith<T> {
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXLibrary? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     FhirString? subtitle,
     PublicationStatus? status,
     FhirBoolean? experimental,
     CodeableConcept? type,
-    CodeableConcept? subjectX,
+    SubjectXLibrary? subjectX,
     FhirDateTime? date,
     FhirString? publisher,
     List<ContactDetail>? contact,
@@ -134,7 +134,7 @@ class _$LibraryCopyWithImpl<T> implements $LibraryCopyWith<T> {
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXLibrary?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -153,7 +153,7 @@ class _$LibraryCopyWithImpl<T> implements $LibraryCopyWith<T> {
             : (type as CodeableConcept?) ?? _value.type,
         subjectX: identical(subjectX, fhirSentinel)
             ? _value.subjectX
-            : subjectX as CodeableConcept?,
+            : subjectX as SubjectXLibrary?,
         date:
             identical(date, fhirSentinel) ? _value.date : date as FhirDateTime?,
         publisher: identical(publisher, fhirSentinel)

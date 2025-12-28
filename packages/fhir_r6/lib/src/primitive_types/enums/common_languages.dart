@@ -248,6 +248,30 @@ enum CommonLanguagesEnum {
 
   /// zh-TW
   zhTw,
+
+  /// ga
+  ga,
+
+  /// hu
+  hu,
+
+  /// kk
+  kk,
+
+  /// mk
+  mk,
+
+  /// mt
+  mt,
+
+  /// sq
+  sq,
+
+  /// tr
+  tr,
+
+  /// uk
+  uk,
   ;
 
   /// Converts the enum value to a string.
@@ -421,6 +445,22 @@ enum CommonLanguagesEnum {
         return 'zh-SG';
       case CommonLanguagesEnum.zhTw:
         return 'zh-TW';
+      case CommonLanguagesEnum.ga:
+        return 'ga';
+      case CommonLanguagesEnum.hu:
+        return 'hu';
+      case CommonLanguagesEnum.kk:
+        return 'kk';
+      case CommonLanguagesEnum.mk:
+        return 'mk';
+      case CommonLanguagesEnum.mt:
+        return 'mt';
+      case CommonLanguagesEnum.sq:
+        return 'sq';
+      case CommonLanguagesEnum.tr:
+        return 'tr';
+      case CommonLanguagesEnum.uk:
+        return 'uk';
     }
   }
 
@@ -602,6 +642,22 @@ enum CommonLanguagesEnum {
         return CommonLanguagesEnum.zhSg;
       case 'zh-TW':
         return CommonLanguagesEnum.zhTw;
+      case 'ga':
+        return CommonLanguagesEnum.ga;
+      case 'hu':
+        return CommonLanguagesEnum.hu;
+      case 'kk':
+        return CommonLanguagesEnum.kk;
+      case 'mk':
+        return CommonLanguagesEnum.mk;
+      case 'mt':
+        return CommonLanguagesEnum.mt;
+      case 'sq':
+        return CommonLanguagesEnum.sq;
+      case 'tr':
+        return CommonLanguagesEnum.tr;
+      case 'uk':
+        return CommonLanguagesEnum.uk;
     }
     return null;
   }
@@ -684,7 +740,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Arabic',
     ),
@@ -697,7 +753,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Bulgarian',
     ),
@@ -710,7 +766,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Bulgarian (Bulgaria)',
     ),
@@ -723,7 +779,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Bengali',
     ),
@@ -736,7 +792,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Czech',
     ),
@@ -749,7 +805,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Czech (Czechia)',
     ),
@@ -762,7 +818,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Bosnian',
     ),
@@ -775,7 +831,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Bosnian (Bosnia and Herzegovina)',
     ),
@@ -788,7 +844,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Danish',
     ),
@@ -801,7 +857,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Danish (Denmark)',
     ),
@@ -814,7 +870,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'German',
     ),
@@ -827,7 +883,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'German (Austria)',
     ),
@@ -840,7 +896,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'German (Switzerland)',
     ),
@@ -853,7 +909,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'German (Germany)',
     ),
@@ -866,7 +922,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Greek',
     ),
@@ -879,7 +935,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Greek (Greece)',
     ),
@@ -892,7 +948,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'English',
     ),
@@ -905,7 +961,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'English (Australia)',
     ),
@@ -918,7 +974,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'English (Canada)',
     ),
@@ -931,7 +987,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'English (Great Britain)',
     ),
@@ -944,7 +1000,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'English (India)',
     ),
@@ -957,7 +1013,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'English (New Zealand)',
     ),
@@ -970,7 +1026,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'English (Singapore)',
     ),
@@ -983,7 +1039,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'English (United States)',
     ),
@@ -996,7 +1052,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Spanish',
     ),
@@ -1009,7 +1065,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Spanish (Argentina)',
     ),
@@ -1022,7 +1078,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Spanish (Spain)',
     ),
@@ -1035,7 +1091,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Spanish (Uruguay)',
     ),
@@ -1048,7 +1104,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Estonian',
     ),
@@ -1061,7 +1117,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Estonian (Estonia)',
     ),
@@ -1074,7 +1130,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Finnish',
     ),
@@ -1087,7 +1143,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'French',
     ),
@@ -1100,7 +1156,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'French (Belgium)',
     ),
@@ -1113,7 +1169,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'French (Switzerland)',
     ),
@@ -1126,7 +1182,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'French (France)',
     ),
@@ -1139,7 +1195,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Finnish (Finland)',
     ),
@@ -1152,7 +1208,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'French (Canada)',
     ),
@@ -1165,7 +1221,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Frisian',
     ),
@@ -1178,7 +1234,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Frisian (Netherlands)',
     ),
@@ -1191,7 +1247,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Hindi',
     ),
@@ -1204,7 +1260,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Croatian',
     ),
@@ -1217,7 +1273,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Croatian (Croatia)',
     ),
@@ -1230,7 +1286,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Icelandic',
     ),
@@ -1243,7 +1299,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Icelandic (Iceland)',
     ),
@@ -1256,7 +1312,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Italian',
     ),
@@ -1269,7 +1325,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Italian (Switzerland)',
     ),
@@ -1282,7 +1338,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Italian (Italy)',
     ),
@@ -1295,7 +1351,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Japanese',
     ),
@@ -1308,7 +1364,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Korean',
     ),
@@ -1321,7 +1377,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Lithuanian',
     ),
@@ -1334,7 +1390,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Lithuanian (Lithuania)',
     ),
@@ -1347,7 +1403,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Latvian',
     ),
@@ -1360,7 +1416,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Latvian (Latvia)',
     ),
@@ -1373,7 +1429,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Dutch',
     ),
@@ -1386,7 +1442,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Dutch (Belgium)',
     ),
@@ -1399,7 +1455,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Dutch (Netherlands)',
     ),
@@ -1412,7 +1468,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Norwegian',
     ),
@@ -1425,7 +1481,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Norwegian (Norway)',
     ),
@@ -1438,7 +1494,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Punjabi',
     ),
@@ -1451,7 +1507,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Polish',
     ),
@@ -1464,7 +1520,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Polish (Poland)',
     ),
@@ -1477,7 +1533,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Portuguese',
     ),
@@ -1490,7 +1546,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Portuguese (Portugal)',
     ),
@@ -1503,7 +1559,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Portuguese (Brazil)',
     ),
@@ -1516,7 +1572,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Romanian',
     ),
@@ -1529,7 +1585,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Romanian (Romania)',
     ),
@@ -1542,7 +1598,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Russian',
     ),
@@ -1555,7 +1611,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Russian (Russia)',
     ),
@@ -1568,7 +1624,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Slovakian',
     ),
@@ -1581,7 +1637,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Slovakian (Slovakia)',
     ),
@@ -1594,7 +1650,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Slovenian',
     ),
@@ -1607,7 +1663,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Slovenian (Slovenia)',
     ),
@@ -1620,7 +1676,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Serbian',
     ),
@@ -1633,7 +1689,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Serbian (Serbia)',
     ),
@@ -1646,7 +1702,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Swedish',
     ),
@@ -1659,7 +1715,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Swedish (Sweden)',
     ),
@@ -1672,7 +1728,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Telugu',
     ),
@@ -1685,7 +1741,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Chinese',
     ),
@@ -1698,7 +1754,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Chinese (China)',
     ),
@@ -1711,7 +1767,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Chinese (Hong Kong)',
     ),
@@ -1724,7 +1780,7 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Chinese (Singapore)',
     ),
@@ -1737,9 +1793,113 @@ class CommonLanguages extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/languages',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Chinese (Taiwan)',
+    ),
+  );
+
+  /// ga
+  static const CommonLanguages ga = CommonLanguages._(
+    valueString: 'ga',
+    valueEnum: CommonLanguagesEnum.ga,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/languages',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Irish',
+    ),
+  );
+
+  /// hu
+  static const CommonLanguages hu = CommonLanguages._(
+    valueString: 'hu',
+    valueEnum: CommonLanguagesEnum.hu,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/languages',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Hungarian',
+    ),
+  );
+
+  /// kk
+  static const CommonLanguages kk = CommonLanguages._(
+    valueString: 'kk',
+    valueEnum: CommonLanguagesEnum.kk,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/languages',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Kazakh',
+    ),
+  );
+
+  /// mk
+  static const CommonLanguages mk = CommonLanguages._(
+    valueString: 'mk',
+    valueEnum: CommonLanguagesEnum.mk,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/languages',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Macedonian',
+    ),
+  );
+
+  /// mt
+  static const CommonLanguages mt = CommonLanguages._(
+    valueString: 'mt',
+    valueEnum: CommonLanguagesEnum.mt,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/languages',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Maltese',
+    ),
+  );
+
+  /// sq
+  static const CommonLanguages sq = CommonLanguages._(
+    valueString: 'sq',
+    valueEnum: CommonLanguagesEnum.sq,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/languages',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Albanian',
+    ),
+  );
+
+  /// tr
+  static const CommonLanguages tr = CommonLanguages._(
+    valueString: 'tr',
+    valueEnum: CommonLanguagesEnum.tr,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/languages',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Turkish',
+    ),
+  );
+
+  /// uk
+  static const CommonLanguages uk = CommonLanguages._(
+    valueString: 'uk',
+    valueEnum: CommonLanguagesEnum.uk,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/languages',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Ukrainian',
     ),
   );
 
@@ -1827,6 +1987,14 @@ class CommonLanguages extends FhirCodeEnum {
     zhHk,
     zhSg,
     zhTw,
+    ga,
+    hu,
+    kk,
+    mk,
+    mt,
+    sq,
+    tr,
+    uk,
   ];
 
   /// Returns the enum value with an element attached

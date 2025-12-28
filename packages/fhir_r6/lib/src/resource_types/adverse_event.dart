@@ -39,10 +39,12 @@ class AdverseEvent extends DomainResource {
     this.code,
     required this.subject,
     this.encounter,
-    OccurrenceXAdverseEvent? occurrenceX,
-    FhirDateTime? occurrenceDateTime,
-    Period? occurrencePeriod,
-    Timing? occurrenceTiming,
+    CauseXAdverseEvent? causeX,
+    FhirDateTime? causeDateTime,
+    Period? causePeriod,
+    EffectXAdverseEvent? effectX,
+    FhirDateTime? effectDateTime,
+    Period? effectPeriod,
     this.detected,
     this.recordedDate,
     this.resultingEffect,
@@ -59,10 +61,8 @@ class AdverseEvent extends DomainResource {
     this.mitigatingAction,
     this.supportingInfo,
     this.note,
-  })  : occurrenceX = occurrenceX ??
-            occurrenceDateTime ??
-            occurrencePeriod ??
-            occurrenceTiming,
+  })  : causeX = causeX ?? causeDateTime ?? causePeriod,
+        effectX = effectX ?? effectDateTime ?? effectPeriod,
         super(
           resourceType: R6ResourceType.AdverseEvent,
         );
@@ -157,12 +157,18 @@ class AdverseEvent extends DomainResource {
         'encounter',
         Reference.fromJson,
       ),
-      occurrenceX: JsonParser.parsePolymorphic<OccurrenceXAdverseEvent>(
+      causeX: JsonParser.parsePolymorphic<CauseXAdverseEvent>(
         json,
         {
-          'occurrenceDateTime': FhirDateTime.fromJson,
-          'occurrencePeriod': Period.fromJson,
-          'occurrenceTiming': Timing.fromJson,
+          'causeDateTime': FhirDateTime.fromJson,
+          'causePeriod': Period.fromJson,
+        },
+      ),
+      effectX: JsonParser.parsePolymorphic<EffectXAdverseEvent>(
+        json,
+        {
+          'effectDateTime': FhirDateTime.fromJson,
+          'effectPeriod': Period.fromJson,
         },
       ),
       detected: JsonParser.parsePrimitive<FhirDateTime>(
@@ -176,8 +182,8 @@ class AdverseEvent extends DomainResource {
         FhirDateTime.fromJson,
       ),
       resultingEffect: (json['resultingEffect'] as List<dynamic>?)
-          ?.map<Reference>(
-            (v) => Reference.fromJson(
+          ?.map<CodeableReference>(
+            (v) => CodeableReference.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -231,29 +237,29 @@ class AdverseEvent extends DomainResource {
           )
           .toList(),
       contributingFactor: (json['contributingFactor'] as List<dynamic>?)
-          ?.map<AdverseEventContributingFactor>(
-            (v) => AdverseEventContributingFactor.fromJson(
+          ?.map<CodeableReference>(
+            (v) => CodeableReference.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
           .toList(),
       preventiveAction: (json['preventiveAction'] as List<dynamic>?)
-          ?.map<AdverseEventPreventiveAction>(
-            (v) => AdverseEventPreventiveAction.fromJson(
+          ?.map<CodeableReference>(
+            (v) => CodeableReference.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
           .toList(),
       mitigatingAction: (json['mitigatingAction'] as List<dynamic>?)
-          ?.map<AdverseEventMitigatingAction>(
-            (v) => AdverseEventMitigatingAction.fromJson(
+          ?.map<CodeableReference>(
+            (v) => CodeableReference.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
           .toList(),
       supportingInfo: (json['supportingInfo'] as List<dynamic>?)
-          ?.map<AdverseEventSupportingInfo>(
-            (v) => AdverseEventSupportingInfo.fromJson(
+          ?.map<CodeableReference>(
+            (v) => CodeableReference.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -343,18 +349,27 @@ class AdverseEvent extends DomainResource {
   /// The Encounter associated with the start of the AdverseEvent.
   final Reference? encounter;
 
-  /// [occurrenceX]
-  /// The date (and perhaps time) when the adverse event occurred.
-  final OccurrenceXAdverseEvent? occurrenceX;
+  /// [causeX]
+  /// The date (and perhaps time) when the cause of the AdverseEvent
+  /// occurred.
+  final CauseXAdverseEvent? causeX;
 
-  /// Getter for [occurrenceDateTime] as a FhirDateTime
-  FhirDateTime? get occurrenceDateTime => occurrenceX?.isAs<FhirDateTime>();
+  /// Getter for [causeDateTime] as a FhirDateTime
+  FhirDateTime? get causeDateTime => causeX?.isAs<FhirDateTime>();
 
-  /// Getter for [occurrencePeriod] as a Period
-  Period? get occurrencePeriod => occurrenceX?.isAs<Period>();
+  /// Getter for [causePeriod] as a Period
+  Period? get causePeriod => causeX?.isAs<Period>();
 
-  /// Getter for [occurrenceTiming] as a Timing
-  Timing? get occurrenceTiming => occurrenceX?.isAs<Timing>();
+  /// [effectX]
+  /// The date (and perhaps time) when the effect of the AdverseEvent
+  /// occurred.
+  final EffectXAdverseEvent? effectX;
+
+  /// Getter for [effectDateTime] as a FhirDateTime
+  FhirDateTime? get effectDateTime => effectX?.isAs<FhirDateTime>();
+
+  /// Getter for [effectPeriod] as a Period
+  Period? get effectPeriod => effectX?.isAs<Period>();
 
   /// [detected]
   /// Estimated or actual date the AdverseEvent began, in the opinion of the
@@ -369,7 +384,7 @@ class AdverseEvent extends DomainResource {
   /// Information about the condition that occurred as a result of the
   /// adverse event, such as hives due to the exposure to a substance (for
   /// example, a drug or a chemical) or a broken leg as a result of the fall.
-  final List<Reference>? resultingEffect;
+  final List<CodeableReference>? resultingEffect;
 
   /// [location]
   /// The information about where the adverse event occurred.
@@ -413,20 +428,29 @@ class AdverseEvent extends DomainResource {
   /// [contributingFactor]
   /// The contributing factors suspected to have increased the probability or
   /// severity of the adverse event.
-  final List<AdverseEventContributingFactor>? contributingFactor;
+  final List<CodeableReference>? contributingFactor;
 
   /// [preventiveAction]
   /// Preventive actions that contributed to avoiding the adverse event.
-  final List<AdverseEventPreventiveAction>? preventiveAction;
+  final List<CodeableReference>? preventiveAction;
 
   /// [mitigatingAction]
-  /// The ameliorating action taken after the adverse event occured in order
+  /// The ameliorating action taken after the adverse event occurred in order
   /// to reduce the extent of harm.
-  final List<AdverseEventMitigatingAction>? mitigatingAction;
+  final List<CodeableReference>? mitigatingAction;
 
   /// [supportingInfo]
-  /// Supporting information relevant to the event.
-  final List<AdverseEventSupportingInfo>? supportingInfo;
+  /// Relevant past history for the subject. In a clinical care context, an
+  /// example being a patient had an adverse event following a penicillin
+  /// administration and the patient had a previously documented penicillin
+  /// allergy. In a clinical trials context, an example is a bunion or rash
+  /// that was present prior to the study. Additionally, the supporting item
+  /// can be a document that is relevant to this instance of the adverse
+  /// event that is not part of the subject's medical history. For example, a
+  /// clinical note, staff list, or material safety data sheet (MSDS).
+  /// Supporting information is not a contributing factor, preventive action,
+  /// or mitigating action.
+  final List<CodeableReference>? supportingInfo;
 
   /// [note]
   /// Comments made about the adverse event by the performer, subject or
@@ -556,11 +580,19 @@ class AdverseEvent extends DomainResource {
       'encounter',
       encounter,
     );
-    if (occurrenceX != null) {
-      final fhirType = occurrenceX!.fhirType;
+    if (causeX != null) {
+      final fhirType = causeX!.fhirType;
       addField(
-        'occurrence${fhirType.capitalize()}',
-        occurrenceX,
+        'cause${fhirType.capitalize()}',
+        causeX,
+      );
+    }
+
+    if (effectX != null) {
+      final fhirType = effectX!.fhirType;
+      addField(
+        'effect${fhirType.capitalize()}',
+        effectX,
       );
     }
 
@@ -650,7 +682,8 @@ class AdverseEvent extends DomainResource {
       'code',
       'subject',
       'encounter',
-      'occurrenceX',
+      'causeX',
+      'effectX',
       'detected',
       'recordedDate',
       'resultingEffect',
@@ -733,21 +766,29 @@ class AdverseEvent extends DomainResource {
         if (encounter != null) {
           fields.add(encounter!);
         }
-      case 'occurrence':
-        fields.add(occurrenceX!);
-      case 'occurrenceX':
-        fields.add(occurrenceX!);
-      case 'occurrenceDateTime':
-        if (occurrenceX is FhirDateTime) {
-          fields.add(occurrenceX!);
+      case 'cause':
+        fields.add(causeX!);
+      case 'causeX':
+        fields.add(causeX!);
+      case 'causeDateTime':
+        if (causeX is FhirDateTime) {
+          fields.add(causeX!);
         }
-      case 'occurrencePeriod':
-        if (occurrenceX is Period) {
-          fields.add(occurrenceX!);
+      case 'causePeriod':
+        if (causeX is Period) {
+          fields.add(causeX!);
         }
-      case 'occurrenceTiming':
-        if (occurrenceX is Timing) {
-          fields.add(occurrenceX!);
+      case 'effect':
+        fields.add(effectX!);
+      case 'effectX':
+        fields.add(effectX!);
+      case 'effectDateTime':
+        if (effectX is FhirDateTime) {
+          fields.add(effectX!);
+        }
+      case 'effectPeriod':
+        if (effectX is Period) {
+          fields.add(effectX!);
         }
       case 'detected':
         if (detected != null) {
@@ -945,8 +986,14 @@ class AdverseEvent extends DomainResource {
       return false;
     }
     if (!equalsDeepWithNull(
-      occurrenceX,
-      o.occurrenceX,
+      causeX,
+      o.causeX,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      effectX,
+      o.effectX,
     )) {
       return false;
     }
@@ -962,7 +1009,7 @@ class AdverseEvent extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!listEquals<CodeableReference>(
       resultingEffect,
       o.resultingEffect,
     )) {
@@ -1016,25 +1063,25 @@ class AdverseEvent extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<AdverseEventContributingFactor>(
+    if (!listEquals<CodeableReference>(
       contributingFactor,
       o.contributingFactor,
     )) {
       return false;
     }
-    if (!listEquals<AdverseEventPreventiveAction>(
+    if (!listEquals<CodeableReference>(
       preventiveAction,
       o.preventiveAction,
     )) {
       return false;
     }
-    if (!listEquals<AdverseEventMitigatingAction>(
+    if (!listEquals<CodeableReference>(
       mitigatingAction,
       o.mitigatingAction,
     )) {
       return false;
     }
-    if (!listEquals<AdverseEventSupportingInfo>(
+    if (!listEquals<CodeableReference>(
       supportingInfo,
       o.supportingInfo,
     )) {
@@ -1364,7 +1411,7 @@ class AdverseEventSuspectEntity extends BackboneElement {
     super.id,
     super.extension_,
     super.modifierExtension,
-    required this.instanceX,
+    required this.instance,
     this.causality,
     super.disallowExtensions,
   }) : super();
@@ -1393,13 +1440,10 @@ class AdverseEventSuspectEntity extends BackboneElement {
             ),
           )
           .toList(),
-      instanceX:
-          JsonParser.parsePolymorphic<InstanceXAdverseEventSuspectEntity>(
+      instance: JsonParser.parseObject<CodeableReference>(
         json,
-        {
-          'instanceCodeableConcept': CodeableConcept.fromJson,
-          'instanceReference': Reference.fromJson,
-        },
+        'instance',
+        CodeableReference.fromJson,
       )!,
       causality: JsonParser.parseObject<AdverseEventCausality>(
         json,
@@ -1451,18 +1495,11 @@ class AdverseEventSuspectEntity extends BackboneElement {
   @override
   String get fhirType => 'AdverseEventSuspectEntity';
 
-  /// [instanceX]
+  /// [instance]
   /// Identifies the actual instance of what caused the adverse event. May be
   /// a substance, medication, medication administration, medication
   /// statement or a device.
-  final InstanceXAdverseEventSuspectEntity instanceX;
-
-  /// Getter for [instanceCodeableConcept] as a CodeableConcept
-  CodeableConcept? get instanceCodeableConcept =>
-      instanceX.isAs<CodeableConcept>();
-
-  /// Getter for [instanceReference] as a Reference
-  Reference? get instanceReference => instanceX.isAs<Reference>();
+  final CodeableReference instance;
 
   /// [causality]
   /// Information on the possible cause of the event.
@@ -1542,12 +1579,10 @@ class AdverseEventSuspectEntity extends BackboneElement {
       'modifierExtension',
       modifierExtension,
     );
-    final instanceXFhirType = instanceX.fhirType;
     addField(
-      'instance${instanceXFhirType.capitalize()}',
-      instanceX,
+      'instance',
+      instance,
     );
-
     addField(
       'causality',
       causality,
@@ -1562,7 +1597,7 @@ class AdverseEventSuspectEntity extends BackboneElement {
       'id',
       'extension',
       'modifierExtension',
-      'instanceX',
+      'instance',
       'causality',
     ];
   }
@@ -1589,17 +1624,7 @@ class AdverseEventSuspectEntity extends BackboneElement {
           fields.addAll(modifierExtension!);
         }
       case 'instance':
-        fields.add(instanceX);
-      case 'instanceX':
-        fields.add(instanceX);
-      case 'instanceCodeableConcept':
-        if (instanceX is CodeableConcept) {
-          fields.add(instanceX);
-        }
-      case 'instanceReference':
-        if (instanceX is Reference) {
-          fields.add(instanceX);
-        }
+        fields.add(instance);
       case 'causality':
         if (causality != null) {
           fields.add(causality!);
@@ -1664,8 +1689,8 @@ class AdverseEventSuspectEntity extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
-      instanceX,
-      o.instanceX,
+      instance,
+      o.instance,
     )) {
       return false;
     }
@@ -2002,1207 +2027,6 @@ class AdverseEventCausality extends BackboneElement {
     if (!equalsDeepWithNull(
       author,
       o.author,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [AdverseEventContributingFactor]
-/// The contributing factors suspected to have increased the probability or
-/// severity of the adverse event.
-class AdverseEventContributingFactor extends BackboneElement {
-  /// Primary constructor for
-  /// [AdverseEventContributingFactor]
-
-  const AdverseEventContributingFactor({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    required this.itemX,
-    super.disallowExtensions,
-  }) : super();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory AdverseEventContributingFactor.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return AdverseEventContributingFactor(
-      id: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'id',
-        FhirString.fromJson,
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      itemX: JsonParser.parsePolymorphic<ItemXAdverseEventContributingFactor>(
-        json,
-        {
-          'itemReference': Reference.fromJson,
-          'itemCodeableConcept': CodeableConcept.fromJson,
-        },
-      )!,
-    );
-  }
-
-  /// Deserialize [AdverseEventContributingFactor]
-  /// from a [String] or [YamlMap] object
-  factory AdverseEventContributingFactor.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return AdverseEventContributingFactor.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return AdverseEventContributingFactor.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'AdverseEventContributingFactor '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [AdverseEventContributingFactor]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory AdverseEventContributingFactor.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return AdverseEventContributingFactor.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'AdverseEventContributingFactor';
-
-  /// [itemX]
-  /// The item that is suspected to have increased the probability or
-  /// severity of the adverse event.
-  final ItemXAdverseEventContributingFactor itemX;
-
-  /// Getter for [itemReference] as a Reference
-  Reference? get itemReference => itemX.isAs<Reference>();
-
-  /// Getter for [itemCodeableConcept] as a CodeableConcept
-  CodeableConcept? get itemCodeableConcept => itemX.isAs<CodeableConcept>();
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    bool isNonEmpty(dynamic val) {
-      if (val == null) return false;
-      if (val is List && val.isEmpty) return false;
-      if (val is Map && val.isEmpty) return false;
-      return true;
-    }
-
-    void addField(String key, dynamic field) {
-      if (field == null) return;
-      if (!(field is FhirBase? || field is List<FhirBase>?)) {
-        throw ArgumentError('"field" must be a FhirBase type');
-      }
-      if (field is PrimitiveType) {
-        final fieldMap = field.toJson();
-        final val = fieldMap['value'];
-        final ext = fieldMap['_value'];
-        final hasVal = isNonEmpty(val);
-        final hasExt = isNonEmpty(ext);
-        if (hasVal) json[key] = val;
-        if (hasExt) json['_$key'] = ext;
-      } else if (field is List<FhirBase>) {
-        if (field.isEmpty) return;
-        final isPrimitive = field.first is PrimitiveType;
-        final tempList = <dynamic>[];
-        final tempExtensions = <dynamic>[];
-        for (final e in field) {
-          final itemMap = e.toJson();
-          if (!isNonEmpty(itemMap)) {
-            continue;
-          }
-          if (isPrimitive) {
-            final v = itemMap['value'];
-            final x = itemMap['_value'];
-            tempList.add(v);
-            tempExtensions.add(x);
-          } else {
-            tempList.add(itemMap);
-          }
-        }
-        if (tempList.isEmpty) return;
-        if (isPrimitive) {
-          final hasAnyValues = tempList.any((v) => v != null);
-          if (hasAnyValues) {
-            json[key] = tempList;
-          }
-          final anyExt = tempExtensions.any(isNonEmpty);
-          if (anyExt) {
-            json['_$key'] = tempExtensions;
-          }
-        } else {
-          json[key] = tempList;
-        }
-      } else if (field is FhirBase) {
-        final subMap = field.toJson();
-        if (isNonEmpty(subMap)) {
-          json[key] = subMap;
-        }
-      }
-    }
-
-    addField(
-      'id',
-      id,
-    );
-    addField(
-      'extension',
-      extension_,
-    );
-    addField(
-      'modifierExtension',
-      modifierExtension,
-    );
-    final itemXFhirType = itemX.fhirType;
-    addField(
-      'item${itemXFhirType.capitalize()}',
-      itemX,
-    );
-
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'itemX',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBase> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBase>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'item':
-        fields.add(itemX);
-      case 'itemX':
-        fields.add(itemX);
-      case 'itemReference':
-        if (itemX is Reference) {
-          fields.add(itemX);
-        }
-      case 'itemCodeableConcept':
-        if (itemX is CodeableConcept) {
-          fields.add(itemX);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBase? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  AdverseEventContributingFactor clone() => copyWith();
-
-  /// Copy function for [AdverseEventContributingFactor]
-  /// Returns a copy of the current instance with the provided fields modified.
-  /// If a field is not provided, it will retain its original value.
-  /// If a null is provided, this will clearn the field, unless the
-  /// field is required, in which case it will keep its current value.
-  @override
-  $AdverseEventContributingFactorCopyWith<AdverseEventContributingFactor>
-      get copyWith => _$AdverseEventContributingFactorCopyWithImpl<
-              AdverseEventContributingFactor>(
-            this,
-            (value) => value,
-          );
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBase? o) {
-    if (o is! AdverseEventContributingFactor) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      itemX,
-      o.itemX,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [AdverseEventPreventiveAction]
-/// Preventive actions that contributed to avoiding the adverse event.
-class AdverseEventPreventiveAction extends BackboneElement {
-  /// Primary constructor for
-  /// [AdverseEventPreventiveAction]
-
-  const AdverseEventPreventiveAction({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    required this.itemX,
-    super.disallowExtensions,
-  }) : super();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory AdverseEventPreventiveAction.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return AdverseEventPreventiveAction(
-      id: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'id',
-        FhirString.fromJson,
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      itemX: JsonParser.parsePolymorphic<ItemXAdverseEventPreventiveAction>(
-        json,
-        {
-          'itemReference': Reference.fromJson,
-          'itemCodeableConcept': CodeableConcept.fromJson,
-        },
-      )!,
-    );
-  }
-
-  /// Deserialize [AdverseEventPreventiveAction]
-  /// from a [String] or [YamlMap] object
-  factory AdverseEventPreventiveAction.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return AdverseEventPreventiveAction.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return AdverseEventPreventiveAction.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'AdverseEventPreventiveAction '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [AdverseEventPreventiveAction]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory AdverseEventPreventiveAction.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return AdverseEventPreventiveAction.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'AdverseEventPreventiveAction';
-
-  /// [itemX]
-  /// The action that contributed to avoiding the adverse event.
-  final ItemXAdverseEventPreventiveAction itemX;
-
-  /// Getter for [itemReference] as a Reference
-  Reference? get itemReference => itemX.isAs<Reference>();
-
-  /// Getter for [itemCodeableConcept] as a CodeableConcept
-  CodeableConcept? get itemCodeableConcept => itemX.isAs<CodeableConcept>();
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    bool isNonEmpty(dynamic val) {
-      if (val == null) return false;
-      if (val is List && val.isEmpty) return false;
-      if (val is Map && val.isEmpty) return false;
-      return true;
-    }
-
-    void addField(String key, dynamic field) {
-      if (field == null) return;
-      if (!(field is FhirBase? || field is List<FhirBase>?)) {
-        throw ArgumentError('"field" must be a FhirBase type');
-      }
-      if (field is PrimitiveType) {
-        final fieldMap = field.toJson();
-        final val = fieldMap['value'];
-        final ext = fieldMap['_value'];
-        final hasVal = isNonEmpty(val);
-        final hasExt = isNonEmpty(ext);
-        if (hasVal) json[key] = val;
-        if (hasExt) json['_$key'] = ext;
-      } else if (field is List<FhirBase>) {
-        if (field.isEmpty) return;
-        final isPrimitive = field.first is PrimitiveType;
-        final tempList = <dynamic>[];
-        final tempExtensions = <dynamic>[];
-        for (final e in field) {
-          final itemMap = e.toJson();
-          if (!isNonEmpty(itemMap)) {
-            continue;
-          }
-          if (isPrimitive) {
-            final v = itemMap['value'];
-            final x = itemMap['_value'];
-            tempList.add(v);
-            tempExtensions.add(x);
-          } else {
-            tempList.add(itemMap);
-          }
-        }
-        if (tempList.isEmpty) return;
-        if (isPrimitive) {
-          final hasAnyValues = tempList.any((v) => v != null);
-          if (hasAnyValues) {
-            json[key] = tempList;
-          }
-          final anyExt = tempExtensions.any(isNonEmpty);
-          if (anyExt) {
-            json['_$key'] = tempExtensions;
-          }
-        } else {
-          json[key] = tempList;
-        }
-      } else if (field is FhirBase) {
-        final subMap = field.toJson();
-        if (isNonEmpty(subMap)) {
-          json[key] = subMap;
-        }
-      }
-    }
-
-    addField(
-      'id',
-      id,
-    );
-    addField(
-      'extension',
-      extension_,
-    );
-    addField(
-      'modifierExtension',
-      modifierExtension,
-    );
-    final itemXFhirType = itemX.fhirType;
-    addField(
-      'item${itemXFhirType.capitalize()}',
-      itemX,
-    );
-
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'itemX',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBase> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBase>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'item':
-        fields.add(itemX);
-      case 'itemX':
-        fields.add(itemX);
-      case 'itemReference':
-        if (itemX is Reference) {
-          fields.add(itemX);
-        }
-      case 'itemCodeableConcept':
-        if (itemX is CodeableConcept) {
-          fields.add(itemX);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBase? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  AdverseEventPreventiveAction clone() => copyWith();
-
-  /// Copy function for [AdverseEventPreventiveAction]
-  /// Returns a copy of the current instance with the provided fields modified.
-  /// If a field is not provided, it will retain its original value.
-  /// If a null is provided, this will clearn the field, unless the
-  /// field is required, in which case it will keep its current value.
-  @override
-  $AdverseEventPreventiveActionCopyWith<AdverseEventPreventiveAction>
-      get copyWith => _$AdverseEventPreventiveActionCopyWithImpl<
-              AdverseEventPreventiveAction>(
-            this,
-            (value) => value,
-          );
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBase? o) {
-    if (o is! AdverseEventPreventiveAction) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      itemX,
-      o.itemX,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [AdverseEventMitigatingAction]
-/// The ameliorating action taken after the adverse event occured in order
-/// to reduce the extent of harm.
-class AdverseEventMitigatingAction extends BackboneElement {
-  /// Primary constructor for
-  /// [AdverseEventMitigatingAction]
-
-  const AdverseEventMitigatingAction({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    required this.itemX,
-    super.disallowExtensions,
-  }) : super();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory AdverseEventMitigatingAction.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return AdverseEventMitigatingAction(
-      id: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'id',
-        FhirString.fromJson,
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      itemX: JsonParser.parsePolymorphic<ItemXAdverseEventMitigatingAction>(
-        json,
-        {
-          'itemReference': Reference.fromJson,
-          'itemCodeableConcept': CodeableConcept.fromJson,
-        },
-      )!,
-    );
-  }
-
-  /// Deserialize [AdverseEventMitigatingAction]
-  /// from a [String] or [YamlMap] object
-  factory AdverseEventMitigatingAction.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return AdverseEventMitigatingAction.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return AdverseEventMitigatingAction.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'AdverseEventMitigatingAction '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [AdverseEventMitigatingAction]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory AdverseEventMitigatingAction.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return AdverseEventMitigatingAction.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'AdverseEventMitigatingAction';
-
-  /// [itemX]
-  /// The ameliorating action taken after the adverse event occured in order
-  /// to reduce the extent of harm.
-  final ItemXAdverseEventMitigatingAction itemX;
-
-  /// Getter for [itemReference] as a Reference
-  Reference? get itemReference => itemX.isAs<Reference>();
-
-  /// Getter for [itemCodeableConcept] as a CodeableConcept
-  CodeableConcept? get itemCodeableConcept => itemX.isAs<CodeableConcept>();
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    bool isNonEmpty(dynamic val) {
-      if (val == null) return false;
-      if (val is List && val.isEmpty) return false;
-      if (val is Map && val.isEmpty) return false;
-      return true;
-    }
-
-    void addField(String key, dynamic field) {
-      if (field == null) return;
-      if (!(field is FhirBase? || field is List<FhirBase>?)) {
-        throw ArgumentError('"field" must be a FhirBase type');
-      }
-      if (field is PrimitiveType) {
-        final fieldMap = field.toJson();
-        final val = fieldMap['value'];
-        final ext = fieldMap['_value'];
-        final hasVal = isNonEmpty(val);
-        final hasExt = isNonEmpty(ext);
-        if (hasVal) json[key] = val;
-        if (hasExt) json['_$key'] = ext;
-      } else if (field is List<FhirBase>) {
-        if (field.isEmpty) return;
-        final isPrimitive = field.first is PrimitiveType;
-        final tempList = <dynamic>[];
-        final tempExtensions = <dynamic>[];
-        for (final e in field) {
-          final itemMap = e.toJson();
-          if (!isNonEmpty(itemMap)) {
-            continue;
-          }
-          if (isPrimitive) {
-            final v = itemMap['value'];
-            final x = itemMap['_value'];
-            tempList.add(v);
-            tempExtensions.add(x);
-          } else {
-            tempList.add(itemMap);
-          }
-        }
-        if (tempList.isEmpty) return;
-        if (isPrimitive) {
-          final hasAnyValues = tempList.any((v) => v != null);
-          if (hasAnyValues) {
-            json[key] = tempList;
-          }
-          final anyExt = tempExtensions.any(isNonEmpty);
-          if (anyExt) {
-            json['_$key'] = tempExtensions;
-          }
-        } else {
-          json[key] = tempList;
-        }
-      } else if (field is FhirBase) {
-        final subMap = field.toJson();
-        if (isNonEmpty(subMap)) {
-          json[key] = subMap;
-        }
-      }
-    }
-
-    addField(
-      'id',
-      id,
-    );
-    addField(
-      'extension',
-      extension_,
-    );
-    addField(
-      'modifierExtension',
-      modifierExtension,
-    );
-    final itemXFhirType = itemX.fhirType;
-    addField(
-      'item${itemXFhirType.capitalize()}',
-      itemX,
-    );
-
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'itemX',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBase> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBase>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'item':
-        fields.add(itemX);
-      case 'itemX':
-        fields.add(itemX);
-      case 'itemReference':
-        if (itemX is Reference) {
-          fields.add(itemX);
-        }
-      case 'itemCodeableConcept':
-        if (itemX is CodeableConcept) {
-          fields.add(itemX);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBase? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  AdverseEventMitigatingAction clone() => copyWith();
-
-  /// Copy function for [AdverseEventMitigatingAction]
-  /// Returns a copy of the current instance with the provided fields modified.
-  /// If a field is not provided, it will retain its original value.
-  /// If a null is provided, this will clearn the field, unless the
-  /// field is required, in which case it will keep its current value.
-  @override
-  $AdverseEventMitigatingActionCopyWith<AdverseEventMitigatingAction>
-      get copyWith => _$AdverseEventMitigatingActionCopyWithImpl<
-              AdverseEventMitigatingAction>(
-            this,
-            (value) => value,
-          );
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBase? o) {
-    if (o is! AdverseEventMitigatingAction) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      itemX,
-      o.itemX,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [AdverseEventSupportingInfo]
-/// Supporting information relevant to the event.
-class AdverseEventSupportingInfo extends BackboneElement {
-  /// Primary constructor for
-  /// [AdverseEventSupportingInfo]
-
-  const AdverseEventSupportingInfo({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    required this.itemX,
-    super.disallowExtensions,
-  }) : super();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory AdverseEventSupportingInfo.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return AdverseEventSupportingInfo(
-      id: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'id',
-        FhirString.fromJson,
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      itemX: JsonParser.parsePolymorphic<ItemXAdverseEventSupportingInfo>(
-        json,
-        {
-          'itemReference': Reference.fromJson,
-          'itemCodeableConcept': CodeableConcept.fromJson,
-        },
-      )!,
-    );
-  }
-
-  /// Deserialize [AdverseEventSupportingInfo]
-  /// from a [String] or [YamlMap] object
-  factory AdverseEventSupportingInfo.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return AdverseEventSupportingInfo.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return AdverseEventSupportingInfo.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'AdverseEventSupportingInfo '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [AdverseEventSupportingInfo]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory AdverseEventSupportingInfo.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return AdverseEventSupportingInfo.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'AdverseEventSupportingInfo';
-
-  /// [itemX]
-  /// Relevant past history for the subject. In a clinical care context, an
-  /// example being a patient had an adverse event following a pencillin
-  /// administration and the patient had a previously documented penicillin
-  /// allergy. In a clinical trials context, an example is a bunion or rash
-  /// that was present prior to the study. Additionally, the supporting item
-  /// can be a document that is relevant to this instance of the adverse
-  /// event that is not part of the subject's medical history. For example, a
-  /// clinical note, staff list, or material safety data sheet (MSDS).
-  /// Supporting information is not a contributing factor, preventive action,
-  /// or mitigating action.
-  final ItemXAdverseEventSupportingInfo itemX;
-
-  /// Getter for [itemReference] as a Reference
-  Reference? get itemReference => itemX.isAs<Reference>();
-
-  /// Getter for [itemCodeableConcept] as a CodeableConcept
-  CodeableConcept? get itemCodeableConcept => itemX.isAs<CodeableConcept>();
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    bool isNonEmpty(dynamic val) {
-      if (val == null) return false;
-      if (val is List && val.isEmpty) return false;
-      if (val is Map && val.isEmpty) return false;
-      return true;
-    }
-
-    void addField(String key, dynamic field) {
-      if (field == null) return;
-      if (!(field is FhirBase? || field is List<FhirBase>?)) {
-        throw ArgumentError('"field" must be a FhirBase type');
-      }
-      if (field is PrimitiveType) {
-        final fieldMap = field.toJson();
-        final val = fieldMap['value'];
-        final ext = fieldMap['_value'];
-        final hasVal = isNonEmpty(val);
-        final hasExt = isNonEmpty(ext);
-        if (hasVal) json[key] = val;
-        if (hasExt) json['_$key'] = ext;
-      } else if (field is List<FhirBase>) {
-        if (field.isEmpty) return;
-        final isPrimitive = field.first is PrimitiveType;
-        final tempList = <dynamic>[];
-        final tempExtensions = <dynamic>[];
-        for (final e in field) {
-          final itemMap = e.toJson();
-          if (!isNonEmpty(itemMap)) {
-            continue;
-          }
-          if (isPrimitive) {
-            final v = itemMap['value'];
-            final x = itemMap['_value'];
-            tempList.add(v);
-            tempExtensions.add(x);
-          } else {
-            tempList.add(itemMap);
-          }
-        }
-        if (tempList.isEmpty) return;
-        if (isPrimitive) {
-          final hasAnyValues = tempList.any((v) => v != null);
-          if (hasAnyValues) {
-            json[key] = tempList;
-          }
-          final anyExt = tempExtensions.any(isNonEmpty);
-          if (anyExt) {
-            json['_$key'] = tempExtensions;
-          }
-        } else {
-          json[key] = tempList;
-        }
-      } else if (field is FhirBase) {
-        final subMap = field.toJson();
-        if (isNonEmpty(subMap)) {
-          json[key] = subMap;
-        }
-      }
-    }
-
-    addField(
-      'id',
-      id,
-    );
-    addField(
-      'extension',
-      extension_,
-    );
-    addField(
-      'modifierExtension',
-      modifierExtension,
-    );
-    final itemXFhirType = itemX.fhirType;
-    addField(
-      'item${itemXFhirType.capitalize()}',
-      itemX,
-    );
-
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'itemX',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBase> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBase>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'item':
-        fields.add(itemX);
-      case 'itemX':
-        fields.add(itemX);
-      case 'itemReference':
-        if (itemX is Reference) {
-          fields.add(itemX);
-        }
-      case 'itemCodeableConcept':
-        if (itemX is CodeableConcept) {
-          fields.add(itemX);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBase? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  AdverseEventSupportingInfo clone() => copyWith();
-
-  /// Copy function for [AdverseEventSupportingInfo]
-  /// Returns a copy of the current instance with the provided fields modified.
-  /// If a field is not provided, it will retain its original value.
-  /// If a null is provided, this will clearn the field, unless the
-  /// field is required, in which case it will keep its current value.
-  @override
-  $AdverseEventSupportingInfoCopyWith<AdverseEventSupportingInfo>
-      get copyWith =>
-          _$AdverseEventSupportingInfoCopyWithImpl<AdverseEventSupportingInfo>(
-            this,
-            (value) => value,
-          );
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBase? o) {
-    if (o is! AdverseEventSupportingInfo) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      itemX,
-      o.itemX,
     )) {
       return false;
     }

@@ -422,21 +422,6 @@ abstract class TypeConvertor {
     // "Unable to convert a ${b.fhirType}  to a CodeableConcept"); }
   }
 
-  /// Converts a [FhirBase] to [Population], if possible
-  // static Population? castToPopulation(FhirBase? b) {
-  //   if (b == null) {
-  //     return null;
-  //   }
-
-  //   if (b is Population) {
-  //     return b;
-  //   } else {
-  //     throw FHIRException(
-  //       message: 'Unable to convert a ${b.fhirType}  to a Population',
-  //     );
-  //   }
-  // }
-
   /// Converts a [FhirBase] to [Coding], if possible
   static Coding? castToCoding(FhirBase? b) {
     if (b == null) {
@@ -744,10 +729,10 @@ abstract class TypeConvertor {
     // if (b is Reference) {return b;}
     // else if (b.isPrimitive() && Utilities.isURL(b.primitiveValue))
     //   return const Reference().setReference(b.primitiveValue);
-    // else if (b is Fhirorg.hl7.fhir.r4b.elementmodel.Element
+    // else if (b is Fhirorg.hl7.fhir.r6b.elementmodel.Element
     // && b.fhir().equals("Reference")) {
-    //   org.hl7.fhir.r4b.elementmodel.Element e =
-    // org.hl7.fhir.r4b.elementmodel.Element b;
+    //   org.hl7.fhir.r6b.elementmodel.Element e =
+    // org.hl7.fhir.r6b.elementmodel.Element b;
     //   return const Reference().setReference(
     //  e.getChildValue('reference')).setDisplay(e.getChildValue('display'));
     // } else {throw  FHIRException(message:
@@ -800,7 +785,7 @@ abstract class TypeConvertor {
   // 'Unable to convert a ${b.fhirType}  to a OrderedDistribution'); }
   // }
 
-  /// Converts a [FhirBase] to [Population], if possible
+  /// Converts a [FhirBase] to [ProductShelfLife], if possible
   ProductShelfLife? castToProductShelfLife(FhirBase? b) {
     if (b == null) {
       return null;
@@ -813,20 +798,6 @@ abstract class TypeConvertor {
       );
     }
   }
-
-  /// Converts a [FhirBase] to [ProductShelfLife], if possible
-  // ProdCharacteristic? castToProdCharacteristic(FhirBase? b) {
-  //   if (b == null) {
-  //     return null;
-  //   }
-  //   if (b is ProdCharacteristic) {
-  //     return b;
-  //   } else {
-  //     throw FHIRException(
-  //       message: 'Unable to convert a ${b.fhirType}  to a ProdCharacteristic',
-  //     );
-  //   }
-  // }
 
   // static SubstanceAmount? castToSubstanceAmount(FhirBase? b) {
   //   if (b == null) {

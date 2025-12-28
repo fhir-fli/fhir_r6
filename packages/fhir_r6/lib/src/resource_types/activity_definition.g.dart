@@ -21,13 +21,13 @@ abstract class $ActivityDefinitionCopyWith<T>
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXActivityDefinition? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     FhirString? subtitle,
     PublicationStatus? status,
     FhirBoolean? experimental,
-    CodeableConcept? subjectX,
+    SubjectXActivityDefinition? subjectX,
     FhirDateTime? date,
     FhirString? publisher,
     List<ContactDetail>? contact,
@@ -54,11 +54,11 @@ abstract class $ActivityDefinitionCopyWith<T>
     RequestIntent? intent,
     RequestPriority? priority,
     FhirBoolean? doNotPerform,
-    Timing? timingX,
-    FhirBoolean? asNeededX,
+    TimingXActivityDefinition? timingX,
+    AsNeededXActivityDefinition? asNeededX,
     CodeableReference? location,
     List<ActivityDefinitionParticipant>? participant,
-    Reference? productX,
+    ProductXActivityDefinition? productX,
     Quantity? quantity,
     List<Dosage>? dosage,
     List<CodeableConcept>? bodySite,
@@ -168,7 +168,7 @@ class _$ActivityDefinitionCopyWithImpl<T>
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXActivityDefinition?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -184,7 +184,7 @@ class _$ActivityDefinitionCopyWithImpl<T>
             : experimental as FhirBoolean?,
         subjectX: identical(subjectX, fhirSentinel)
             ? _value.subjectX
-            : subjectX as CodeableConcept?,
+            : subjectX as SubjectXActivityDefinition?,
         date:
             identical(date, fhirSentinel) ? _value.date : date as FhirDateTime?,
         publisher: identical(publisher, fhirSentinel)
@@ -264,10 +264,10 @@ class _$ActivityDefinitionCopyWithImpl<T>
             : doNotPerform as FhirBoolean?,
         timingX: identical(timingX, fhirSentinel)
             ? _value.timingX
-            : timingX as Timing?,
+            : timingX as TimingXActivityDefinition?,
         asNeededX: identical(asNeededX, fhirSentinel)
             ? _value.asNeededX
-            : asNeededX as FhirBoolean?,
+            : asNeededX as AsNeededXActivityDefinition?,
         location: identical(location, fhirSentinel)
             ? _value.location
             : location as CodeableReference?,
@@ -276,7 +276,7 @@ class _$ActivityDefinitionCopyWithImpl<T>
             : participant as List<ActivityDefinitionParticipant>?,
         productX: identical(productX, fhirSentinel)
             ? _value.productX
-            : productX as Reference?,
+            : productX as ProductXActivityDefinition?,
         quantity: identical(quantity, fhirSentinel)
             ? _value.quantity
             : quantity as Quantity?,

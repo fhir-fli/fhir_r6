@@ -17,11 +17,11 @@ abstract class $AuditEventCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<Resource>? contained,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    List<CodeableConcept>? category,
-    CodeableConcept? code,
+    CodeableConcept? type,
+    List<CodeableConcept>? subtype,
     AuditEventAction? action,
     AuditEventSeverity? severity,
-    Period? occurredX,
+    OccurredXAuditEvent? occurredX,
     FhirInstant? recorded,
     AuditEventOutcome? outcome,
     List<CodeableConcept>? authorization,
@@ -51,8 +51,8 @@ class _$AuditEventCopyWithImpl<T> implements $AuditEventCopyWith<T> {
     Object? contained = fhirSentinel,
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
-    Object? category = fhirSentinel,
-    Object? code = fhirSentinel,
+    Object? type = fhirSentinel,
+    Object? subtype = fhirSentinel,
     Object? action = fhirSentinel,
     Object? severity = fhirSentinel,
     Object? occurredX = fhirSentinel,
@@ -87,12 +87,12 @@ class _$AuditEventCopyWithImpl<T> implements $AuditEventCopyWith<T> {
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
-        category: identical(category, fhirSentinel)
-            ? _value.category
-            : category as List<CodeableConcept>?,
-        code: identical(code, fhirSentinel)
-            ? _value.code
-            : (code as CodeableConcept?) ?? _value.code,
+        type: identical(type, fhirSentinel)
+            ? _value.type
+            : (type as CodeableConcept?) ?? _value.type,
+        subtype: identical(subtype, fhirSentinel)
+            ? _value.subtype
+            : subtype as List<CodeableConcept>?,
         action: identical(action, fhirSentinel)
             ? _value.action
             : action as AuditEventAction?,
@@ -101,7 +101,7 @@ class _$AuditEventCopyWithImpl<T> implements $AuditEventCopyWith<T> {
             : severity as AuditEventSeverity?,
         occurredX: identical(occurredX, fhirSentinel)
             ? _value.occurredX
-            : occurredX as Period?,
+            : occurredX as OccurredXAuditEvent?,
         recorded: identical(recorded, fhirSentinel)
             ? _value.recorded
             : (recorded as FhirInstant?) ?? _value.recorded,
@@ -214,7 +214,7 @@ abstract class $AuditEventAgentCopyWith<T> extends $BackboneElementCopyWith<T> {
     FhirBoolean? requestor,
     Reference? location,
     List<FhirUri>? policy,
-    Reference? networkX,
+    NetworkXAuditEventAgent? networkX,
     List<CodeableConcept>? authorization,
     bool? disallowExtensions,
   });
@@ -270,7 +270,7 @@ class _$AuditEventAgentCopyWithImpl<T> implements $AuditEventAgentCopyWith<T> {
             : policy as List<FhirUri>?,
         networkX: identical(networkX, fhirSentinel)
             ? _value.networkX
-            : networkX as Reference?,
+            : networkX as NetworkXAuditEventAgent?,
         authorization: identical(authorization, fhirSentinel)
             ? _value.authorization
             : authorization as List<CodeableConcept>?,
@@ -363,6 +363,7 @@ abstract class $AuditEventEntityCopyWith<T>
     Reference? what,
     CodeableConcept? role,
     List<CodeableConcept>? securityLabel,
+    FhirString? description,
     FhirBase64Binary? query,
     List<AuditEventDetail>? detail,
     List<AuditEventAgent>? agent,
@@ -385,6 +386,7 @@ class _$AuditEventEntityCopyWithImpl<T>
     Object? what = fhirSentinel,
     Object? role = fhirSentinel,
     Object? securityLabel = fhirSentinel,
+    Object? description = fhirSentinel,
     Object? query = fhirSentinel,
     Object? detail = fhirSentinel,
     Object? agent = fhirSentinel,
@@ -406,6 +408,9 @@ class _$AuditEventEntityCopyWithImpl<T>
         securityLabel: identical(securityLabel, fhirSentinel)
             ? _value.securityLabel
             : securityLabel as List<CodeableConcept>?,
+        description: identical(description, fhirSentinel)
+            ? _value.description
+            : description as FhirString?,
         query: identical(query, fhirSentinel)
             ? _value.query
             : query as FhirBase64Binary?,
@@ -439,7 +444,7 @@ abstract class $AuditEventDetailCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    Quantity? valueX,
+    ValueXAuditEventDetail? valueX,
     bool? disallowExtensions,
   });
 }
@@ -474,7 +479,7 @@ class _$AuditEventDetailCopyWithImpl<T>
             : (type as CodeableConcept?) ?? _value.type,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as Quantity?) ?? _value.valueX,
+            : (valueX as ValueXAuditEventDetail?) ?? _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

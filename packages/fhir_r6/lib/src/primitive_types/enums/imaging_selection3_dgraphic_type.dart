@@ -156,7 +156,7 @@ class ImagingSelection3DGraphicType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'POINT',
     ),
@@ -171,7 +171,7 @@ class ImagingSelection3DGraphicType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'MULTIPOINT',
     ),
@@ -186,7 +186,7 @@ class ImagingSelection3DGraphicType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'POLYLINE',
     ),
@@ -201,7 +201,7 @@ class ImagingSelection3DGraphicType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'POLYGON',
     ),
@@ -216,7 +216,7 @@ class ImagingSelection3DGraphicType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ELLIPSE',
     ),
@@ -231,7 +231,7 @@ class ImagingSelection3DGraphicType extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ELLIPSOID',
     ),

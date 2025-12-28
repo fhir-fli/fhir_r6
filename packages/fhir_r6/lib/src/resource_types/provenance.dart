@@ -37,6 +37,7 @@ class Provenance extends DomainResource {
     this.policy,
     this.location,
     this.authorization,
+    this.why,
     this.activity,
     this.basedOn,
     this.patient,
@@ -136,6 +137,11 @@ class Provenance extends DomainResource {
             ),
           )
           .toList(),
+      why: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'why',
+        FhirMarkdown.fromJson,
+      ),
       activity: JsonParser.parseObject<CodeableConcept>(
         json,
         'activity',
@@ -241,7 +247,9 @@ class Provenance extends DomainResource {
   FhirDateTime? get occurredDateTime => occurredX?.isAs<FhirDateTime>();
 
   /// [recorded]
-  /// The instant of time at which the activity was recorded.
+  /// The date and time at which the provenance information was recorded /
+  /// updated, whether in the FHIR Provenance resource or in some other form
+  /// that is later communicated in the FHIR Provenance.
   final FhirInstant? recorded;
 
   /// [policy]
@@ -251,13 +259,18 @@ class Provenance extends DomainResource {
   final List<FhirUri>? policy;
 
   /// [location]
-  /// Where the activity occurred, if relevant.
+  /// Where the activity occurred.
   final Reference? location;
 
   /// [authorization]
   /// The authorization (e.g., PurposeOfUse) that was used during the event
   /// being recorded.
   final List<CodeableReference>? authorization;
+
+  /// [why]
+  /// Describes why the event recorded in this provenenace occurred in
+  /// textual form.
+  final FhirMarkdown? why;
 
   /// [activity]
   /// An activity is something that occurs over a period of time and acts
@@ -266,8 +279,8 @@ class Provenance extends DomainResource {
   final CodeableConcept? activity;
 
   /// [basedOn]
-  /// Allows tracing of authorizatino for the events and tracking whether
-  /// proposals/recommendations were acted upon.
+  /// A plan, proposal or order that is fulfilled in whole or in part by this
+  /// provenance.
   final List<Reference>? basedOn;
 
   /// [patient]
@@ -421,6 +434,10 @@ class Provenance extends DomainResource {
       authorization,
     );
     addField(
+      'why',
+      why,
+    );
+    addField(
       'activity',
       activity,
     );
@@ -469,6 +486,7 @@ class Provenance extends DomainResource {
       'policy',
       'location',
       'authorization',
+      'why',
       'activity',
       'basedOn',
       'patient',
@@ -549,6 +567,10 @@ class Provenance extends DomainResource {
       case 'authorization':
         if (authorization != null) {
           fields.addAll(authorization!);
+        }
+      case 'why':
+        if (why != null) {
+          fields.add(why!);
         }
       case 'activity':
         if (activity != null) {
@@ -698,6 +720,12 @@ class Provenance extends DomainResource {
     if (!listEquals<CodeableReference>(
       authorization,
       o.authorization,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      why,
+      o.why,
     )) {
       return false;
     }

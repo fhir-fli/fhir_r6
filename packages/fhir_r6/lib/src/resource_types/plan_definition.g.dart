@@ -20,14 +20,14 @@ abstract class $PlanDefinitionCopyWith<T> extends $MetadataResourceCopyWith<T> {
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXPlanDefinition? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     FhirString? subtitle,
     CodeableConcept? type,
     PublicationStatus? status,
     FhirBoolean? experimental,
-    CodeableConcept? subjectX,
+    SubjectXPlanDefinition? subjectX,
     FhirDateTime? date,
     FhirString? publisher,
     List<ContactDetail>? contact,
@@ -51,7 +51,7 @@ abstract class $PlanDefinitionCopyWith<T> extends $MetadataResourceCopyWith<T> {
     List<PlanDefinitionGoal>? goal,
     List<PlanDefinitionActor>? actor,
     List<PlanDefinitionAction>? action,
-    FhirBoolean? asNeededX,
+    AsNeededXPlanDefinition? asNeededX,
     bool? disallowExtensions,
   });
 }
@@ -138,7 +138,7 @@ class _$PlanDefinitionCopyWithImpl<T> implements $PlanDefinitionCopyWith<T> {
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXPlanDefinition?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -157,7 +157,7 @@ class _$PlanDefinitionCopyWithImpl<T> implements $PlanDefinitionCopyWith<T> {
             : experimental as FhirBoolean?,
         subjectX: identical(subjectX, fhirSentinel)
             ? _value.subjectX
-            : subjectX as CodeableConcept?,
+            : subjectX as SubjectXPlanDefinition?,
         date:
             identical(date, fhirSentinel) ? _value.date : date as FhirDateTime?,
         publisher: identical(publisher, fhirSentinel)
@@ -228,7 +228,7 @@ class _$PlanDefinitionCopyWithImpl<T> implements $PlanDefinitionCopyWith<T> {
             : action as List<PlanDefinitionAction>?,
         asNeededX: identical(asNeededX, fhirSentinel)
             ? _value.asNeededX
-            : asNeededX as FhirBoolean?,
+            : asNeededX as AsNeededXPlanDefinition?,
       ),
     );
   }
@@ -335,7 +335,7 @@ abstract class $PlanDefinitionTargetCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? measure,
-    Quantity? detailX,
+    DetailXPlanDefinitionTarget? detailX,
     FhirDuration? due,
     bool? disallowExtensions,
   });
@@ -372,7 +372,7 @@ class _$PlanDefinitionTargetCopyWithImpl<T>
             : measure as CodeableConcept?,
         detailX: identical(detailX, fhirSentinel)
             ? _value.detailX
-            : detailX as Quantity?,
+            : detailX as DetailXPlanDefinitionTarget?,
         due: identical(due, fhirSentinel) ? _value.due : due as FhirDuration?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
@@ -541,14 +541,14 @@ abstract class $PlanDefinitionActionCopyWith<T>
     CodeableConcept? code,
     List<CodeableConcept>? reason,
     List<RelatedArtifact>? documentation,
-    List<FhirId>? goalId,
-    CodeableConcept? subjectX,
+    List<FhirString>? goalId,
+    SubjectXPlanDefinitionAction? subjectX,
     List<TriggerDefinition>? trigger,
     List<PlanDefinitionCondition>? condition,
     List<PlanDefinitionInput>? input,
     List<PlanDefinitionOutput>? output,
     List<PlanDefinitionRelatedAction>? relatedAction,
-    Age? timingX,
+    TimingXPlanDefinitionAction? timingX,
     CodeableReference? location,
     List<PlanDefinitionParticipant>? participant,
     CodeableConcept? type,
@@ -557,7 +557,7 @@ abstract class $PlanDefinitionActionCopyWith<T>
     ActionRequiredBehavior? requiredBehavior,
     ActionPrecheckBehavior? precheckBehavior,
     ActionCardinalityBehavior? cardinalityBehavior,
-    FhirCanonical? definitionX,
+    DefinitionXPlanDefinitionAction? definitionX,
     FhirCanonical? transform,
     List<PlanDefinitionDynamicValue>? dynamicValue,
     List<PlanDefinitionAction>? action,
@@ -646,10 +646,10 @@ class _$PlanDefinitionActionCopyWithImpl<T>
             : documentation as List<RelatedArtifact>?,
         goalId: identical(goalId, fhirSentinel)
             ? _value.goalId
-            : goalId as List<FhirId>?,
+            : goalId as List<FhirString>?,
         subjectX: identical(subjectX, fhirSentinel)
             ? _value.subjectX
-            : subjectX as CodeableConcept?,
+            : subjectX as SubjectXPlanDefinitionAction?,
         trigger: identical(trigger, fhirSentinel)
             ? _value.trigger
             : trigger as List<TriggerDefinition>?,
@@ -665,8 +665,9 @@ class _$PlanDefinitionActionCopyWithImpl<T>
         relatedAction: identical(relatedAction, fhirSentinel)
             ? _value.relatedAction
             : relatedAction as List<PlanDefinitionRelatedAction>?,
-        timingX:
-            identical(timingX, fhirSentinel) ? _value.timingX : timingX as Age?,
+        timingX: identical(timingX, fhirSentinel)
+            ? _value.timingX
+            : timingX as TimingXPlanDefinitionAction?,
         location: identical(location, fhirSentinel)
             ? _value.location
             : location as CodeableReference?,
@@ -693,7 +694,7 @@ class _$PlanDefinitionActionCopyWithImpl<T>
             : cardinalityBehavior as ActionCardinalityBehavior?,
         definitionX: identical(definitionX, fhirSentinel)
             ? _value.definitionX
-            : definitionX as FhirCanonical?,
+            : definitionX as DefinitionXPlanDefinitionAction?,
         transform: identical(transform, fhirSentinel)
             ? _value.transform
             : transform as FhirCanonical?,
@@ -788,7 +789,7 @@ abstract class $PlanDefinitionInputCopyWith<T>
     List<FhirExtension>? modifierExtension,
     FhirString? title,
     DataRequirement? requirement,
-    FhirId? relatedData,
+    FhirString? relatedData,
     bool? disallowExtensions,
   });
 }
@@ -827,7 +828,7 @@ class _$PlanDefinitionInputCopyWithImpl<T>
             : requirement as DataRequirement?,
         relatedData: identical(relatedData, fhirSentinel)
             ? _value.relatedData
-            : relatedData as FhirId?,
+            : relatedData as FhirString?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -916,10 +917,10 @@ abstract class $PlanDefinitionRelatedActionCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirId? targetId,
+    FhirString? targetId,
     ActionRelationshipType? relationship,
     ActionRelationshipType? endRelationship,
-    FhirDuration? offsetX,
+    OffsetXPlanDefinitionRelatedAction? offsetX,
     bool? disallowExtensions,
   });
 }
@@ -953,7 +954,7 @@ class _$PlanDefinitionRelatedActionCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         targetId: identical(targetId, fhirSentinel)
             ? _value.targetId
-            : (targetId as FhirId?) ?? _value.targetId,
+            : (targetId as FhirString?) ?? _value.targetId,
         relationship: identical(relationship, fhirSentinel)
             ? _value.relationship
             : (relationship as ActionRelationshipType?) ?? _value.relationship,
@@ -962,7 +963,7 @@ class _$PlanDefinitionRelatedActionCopyWithImpl<T>
             : endRelationship as ActionRelationshipType?,
         offsetX: identical(offsetX, fhirSentinel)
             ? _value.offsetX
-            : offsetX as FhirDuration?,
+            : offsetX as OffsetXPlanDefinitionRelatedAction?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

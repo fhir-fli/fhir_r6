@@ -14,6 +14,9 @@ enum BindingStrengthEnum {
 
   /// example
   example,
+
+  /// descriptive
+  descriptive,
   ;
 
   /// Converts the enum value to a string.
@@ -31,6 +34,8 @@ enum BindingStrengthEnum {
         return 'preferred';
       case BindingStrengthEnum.example:
         return 'example';
+      case BindingStrengthEnum.descriptive:
+        return 'descriptive';
     }
   }
 
@@ -56,6 +61,8 @@ enum BindingStrengthEnum {
         return BindingStrengthEnum.preferred;
       case 'example':
         return BindingStrengthEnum.example;
+      case 'descriptive':
+        return BindingStrengthEnum.descriptive;
     }
     return null;
   }
@@ -138,7 +145,7 @@ class BindingStrength extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/binding-strength',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Required',
     ),
@@ -151,7 +158,7 @@ class BindingStrength extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/binding-strength',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Extensible',
     ),
@@ -164,7 +171,7 @@ class BindingStrength extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/binding-strength',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Preferred',
     ),
@@ -177,9 +184,22 @@ class BindingStrength extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/binding-strength',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Example',
+    ),
+  );
+
+  /// descriptive
+  static const BindingStrength descriptive = BindingStrength._(
+    valueString: 'descriptive',
+    valueEnum: BindingStrengthEnum.descriptive,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/binding-strength',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'descriptive',
     ),
   );
 
@@ -189,6 +209,7 @@ class BindingStrength extends FhirCodeEnum {
     extensible,
     preferred,
     example,
+    descriptive,
   ];
 
   /// Returns the enum value with an element attached

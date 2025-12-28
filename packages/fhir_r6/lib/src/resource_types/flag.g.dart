@@ -25,6 +25,7 @@ abstract class $FlagCopyWith<T> extends $DomainResourceCopyWith<T> {
     Period? period,
     Reference? encounter,
     Reference? author,
+    List<Reference>? supportingInfo,
     bool? disallowExtensions,
   });
 }
@@ -53,6 +54,7 @@ class _$FlagCopyWithImpl<T> implements $FlagCopyWith<T> {
     Object? period = fhirSentinel,
     Object? encounter = fhirSentinel,
     Object? author = fhirSentinel,
+    Object? supportingInfo = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -80,7 +82,7 @@ class _$FlagCopyWithImpl<T> implements $FlagCopyWith<T> {
             : identifier as List<Identifier>?,
         status: identical(status, fhirSentinel)
             ? _value.status
-            : (status as FlagStatus?) ?? _value.status,
+            : status as FlagStatus?,
         category: identical(category, fhirSentinel)
             ? _value.category
             : category as List<CodeableConcept>?,
@@ -98,6 +100,9 @@ class _$FlagCopyWithImpl<T> implements $FlagCopyWith<T> {
         author: identical(author, fhirSentinel)
             ? _value.author
             : author as Reference?,
+        supportingInfo: identical(supportingInfo, fhirSentinel)
+            ? _value.supportingInfo
+            : supportingInfo as List<Reference>?,
       ),
     );
   }

@@ -12,14 +12,17 @@ enum RequestStatusEnum {
   /// on-hold
   onHold,
 
-  /// revoked
-  revoked,
+  /// entered-in-error
+  enteredInError,
+
+  /// ended
+  ended,
 
   /// completed
   completed,
 
-  /// entered-in-error
-  enteredInError,
+  /// revoked
+  revoked,
 
   /// unknown
   unknown,
@@ -38,12 +41,14 @@ enum RequestStatusEnum {
         return 'active';
       case RequestStatusEnum.onHold:
         return 'on-hold';
-      case RequestStatusEnum.revoked:
-        return 'revoked';
-      case RequestStatusEnum.completed:
-        return 'completed';
       case RequestStatusEnum.enteredInError:
         return 'entered-in-error';
+      case RequestStatusEnum.ended:
+        return 'ended';
+      case RequestStatusEnum.completed:
+        return 'completed';
+      case RequestStatusEnum.revoked:
+        return 'revoked';
       case RequestStatusEnum.unknown:
         return 'unknown';
     }
@@ -69,12 +74,14 @@ enum RequestStatusEnum {
         return RequestStatusEnum.active;
       case 'on-hold':
         return RequestStatusEnum.onHold;
-      case 'revoked':
-        return RequestStatusEnum.revoked;
-      case 'completed':
-        return RequestStatusEnum.completed;
       case 'entered-in-error':
         return RequestStatusEnum.enteredInError;
+      case 'ended':
+        return RequestStatusEnum.ended;
+      case 'completed':
+        return RequestStatusEnum.completed;
+      case 'revoked':
+        return RequestStatusEnum.revoked;
       case 'unknown':
         return RequestStatusEnum.unknown;
     }
@@ -158,7 +165,7 @@ class RequestStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/request-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Draft',
     ),
@@ -171,7 +178,7 @@ class RequestStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/request-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Active',
     ),
@@ -184,35 +191,9 @@ class RequestStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/request-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'On Hold',
-    ),
-  );
-
-  /// revoked
-  static const RequestStatus revoked = RequestStatus._(
-    valueString: 'revoked',
-    valueEnum: RequestStatusEnum.revoked,
-    system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
-    ),
-    version: FhirString._(valueString: '5.0.0'),
-    display: FhirString._(
-      valueString: 'Revoked',
-    ),
-  );
-
-  /// completed
-  static const RequestStatus completed = RequestStatus._(
-    valueString: 'completed',
-    valueEnum: RequestStatusEnum.completed,
-    system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
-    ),
-    version: FhirString._(valueString: '5.0.0'),
-    display: FhirString._(
-      valueString: 'Completed',
     ),
   );
 
@@ -223,9 +204,48 @@ class RequestStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/request-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Entered in Error',
+    ),
+  );
+
+  /// ended
+  static const RequestStatus ended = RequestStatus._(
+    valueString: 'ended',
+    valueEnum: RequestStatusEnum.ended,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Ended',
+    ),
+  );
+
+  /// completed
+  static const RequestStatus completed = RequestStatus._(
+    valueString: 'completed',
+    valueEnum: RequestStatusEnum.completed,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Completed',
+    ),
+  );
+
+  /// revoked
+  static const RequestStatus revoked = RequestStatus._(
+    valueString: 'revoked',
+    valueEnum: RequestStatusEnum.revoked,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Revoked',
     ),
   );
 
@@ -236,7 +256,7 @@ class RequestStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/request-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Unknown',
     ),
@@ -247,9 +267,10 @@ class RequestStatus extends FhirCodeEnum {
     draft,
     active,
     onHold,
-    revoked,
-    completed,
     enteredInError,
+    ended,
+    completed,
+    revoked,
     unknown,
   ];
 

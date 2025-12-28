@@ -709,7 +709,7 @@ class QuestionnaireResponseItem extends BackboneElement {
         'linkId',
         FhirString.fromJson,
       )!,
-      definition: JsonParser.parsePrimitive<FhirUri>(
+      definition: JsonParser.parsePrimitiveList<FhirUri>(
         json,
         'definition',
         FhirUri.fromJson,
@@ -786,7 +786,7 @@ class QuestionnaireResponseItem extends BackboneElement {
   /// [definition]
   /// A reference to an [ElementDefinition](elementdefinition.html) that
   /// provides the details for the item.
-  final FhirUri? definition;
+  final List<FhirUri>? definition;
 
   /// [text]
   /// Text that is displayed above the contents of the group or as the text
@@ -938,7 +938,7 @@ class QuestionnaireResponseItem extends BackboneElement {
         fields.add(linkId);
       case 'definition':
         if (definition != null) {
-          fields.add(definition!);
+          fields.addAll(definition!);
         }
       case 'text':
         if (text != null) {
@@ -1017,7 +1017,7 @@ class QuestionnaireResponseItem extends BackboneElement {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<FhirUri>(
       definition,
       o.definition,
     )) {

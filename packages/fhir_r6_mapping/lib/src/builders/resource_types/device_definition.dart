@@ -7,6 +7,7 @@ import 'package:fhir_r6/fhir_r6.dart'
         DeviceDefinitionConformsTo,
         DeviceDefinitionCorrectiveAction,
         DeviceDefinitionDeviceName,
+        DeviceDefinitionDeviceVersion,
         DeviceDefinitionDistributor,
         DeviceDefinitionGuideline,
         DeviceDefinitionHasPart,
@@ -17,7 +18,6 @@ import 'package:fhir_r6/fhir_r6.dart'
         DeviceDefinitionProperty,
         DeviceDefinitionRegulatoryIdentifier,
         DeviceDefinitionUdiDeviceIdentifier,
-        DeviceDefinitionVersion,
         R6ResourceType,
         yamlMapToJson,
         yamlToJson;
@@ -25,8 +25,9 @@ import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [DeviceDefinitionBuilder]
-/// The characteristics, operational status and capabilities of a
-/// medical-related component of a medical device.
+/// The definition of a kind of device or device component. Typically, this
+/// definition corresponds to a device model although it may be a broader
+/// category of device.
 class DeviceDefinitionBuilder extends DomainResourceBuilder {
   /// Primary constructor for
   /// [DeviceDefinitionBuilder]
@@ -40,25 +41,39 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
     super.contained,
     super.extension_,
     super.modifierExtension,
-    this.description,
+    this.url,
     this.identifier,
-    this.udiDeviceIdentifier,
-    this.regulatoryIdentifier,
+    this.version,
+    VersionAlgorithmXDeviceDefinitionBuilder? versionAlgorithmX,
+    FhirStringBuilder? versionAlgorithmString,
+    CodingBuilder? versionAlgorithmCoding,
+    this.name,
+    this.title,
+    this.status,
+    this.experimental,
     this.partNumber,
     this.manufacturer,
-    this.deviceName,
     this.modelNumber,
+    this.date,
+    this.contact,
+    this.publisher,
+    this.useContext,
+    this.jurisdiction,
+    this.purpose,
+    this.copyright,
+    this.copyrightLabel,
+    this.udiDeviceIdentifier,
+    this.regulatoryIdentifier,
+    this.deviceName,
     this.classification,
     this.conformsTo,
     this.hasPart,
     this.packaging,
-    this.version,
+    this.deviceVersion,
     this.safety,
     this.shelfLifeStorage,
-    this.languageCode,
+    this.outputLanguage,
     this.property,
-    this.owner,
-    this.contact,
     this.link,
     this.note,
     this.material,
@@ -66,14 +81,19 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
     this.guideline,
     this.correctiveAction,
     this.chargeItem,
-  }) : super(
+  })  : versionAlgorithmX = versionAlgorithmX ??
+            versionAlgorithmString ??
+            versionAlgorithmCoding,
+        super(
           objectPath: 'DeviceDefinition',
           resourceType: R6ResourceType.DeviceDefinition,
         );
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
-  factory DeviceDefinitionBuilder.empty() => DeviceDefinitionBuilder();
+  factory DeviceDefinitionBuilder.empty() => DeviceDefinitionBuilder(
+        status: PublicationStatusBuilder.values.first,
+      );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
   factory DeviceDefinitionBuilder.fromJson(
@@ -141,11 +161,11 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      description: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+      url: JsonParser.parsePrimitive<FhirUriBuilder>(
         json,
-        'description',
-        FhirMarkdownBuilder.fromJson,
-        '$objectPath.description',
+        'url',
+        FhirUriBuilder.fromJson,
+        '$objectPath.url',
       ),
       identifier: (json['identifier'] as List<dynamic>?)
           ?.map<IdentifierBuilder>(
@@ -157,6 +177,123 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
+      version: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'version',
+        FhirStringBuilder.fromJson,
+        '$objectPath.version',
+      ),
+      versionAlgorithmX:
+          JsonParser.parsePolymorphic<VersionAlgorithmXDeviceDefinitionBuilder>(
+        json,
+        {
+          'versionAlgorithmString': FhirStringBuilder.fromJson,
+          'versionAlgorithmCoding': CodingBuilder.fromJson,
+        },
+        objectPath,
+      ),
+      name: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'name',
+        FhirStringBuilder.fromJson,
+        '$objectPath.name',
+      ),
+      title: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'title',
+        FhirStringBuilder.fromJson,
+        '$objectPath.title',
+      ),
+      status: JsonParser.parsePrimitive<PublicationStatusBuilder>(
+        json,
+        'status',
+        PublicationStatusBuilder.fromJson,
+        '$objectPath.status',
+      ),
+      experimental: JsonParser.parsePrimitive<FhirBooleanBuilder>(
+        json,
+        'experimental',
+        FhirBooleanBuilder.fromJson,
+        '$objectPath.experimental',
+      ),
+      partNumber: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'partNumber',
+        FhirStringBuilder.fromJson,
+        '$objectPath.partNumber',
+      ),
+      manufacturer: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'manufacturer',
+        ReferenceBuilder.fromJson,
+        '$objectPath.manufacturer',
+      ),
+      modelNumber: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'modelNumber',
+        FhirStringBuilder.fromJson,
+        '$objectPath.modelNumber',
+      ),
+      date: JsonParser.parsePrimitive<FhirDateTimeBuilder>(
+        json,
+        'date',
+        FhirDateTimeBuilder.fromJson,
+        '$objectPath.date',
+      ),
+      contact: (json['contact'] as List<dynamic>?)
+          ?.map<ContactDetailBuilder>(
+            (v) => ContactDetailBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.contact',
+              },
+            ),
+          )
+          .toList(),
+      publisher: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'publisher',
+        FhirStringBuilder.fromJson,
+        '$objectPath.publisher',
+      ),
+      useContext: (json['useContext'] as List<dynamic>?)
+          ?.map<UsageContextBuilder>(
+            (v) => UsageContextBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.useContext',
+              },
+            ),
+          )
+          .toList(),
+      jurisdiction: (json['jurisdiction'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.jurisdiction',
+              },
+            ),
+          )
+          .toList(),
+      purpose: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+        json,
+        'purpose',
+        FhirMarkdownBuilder.fromJson,
+        '$objectPath.purpose',
+      ),
+      copyright: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+        json,
+        'copyright',
+        FhirMarkdownBuilder.fromJson,
+        '$objectPath.copyright',
+      ),
+      copyrightLabel: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'copyrightLabel',
+        FhirStringBuilder.fromJson,
+        '$objectPath.copyrightLabel',
+      ),
       udiDeviceIdentifier: (json['udiDeviceIdentifier'] as List<dynamic>?)
           ?.map<DeviceDefinitionUdiDeviceIdentifierBuilder>(
             (v) => DeviceDefinitionUdiDeviceIdentifierBuilder.fromJson(
@@ -177,18 +314,6 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      partNumber: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'partNumber',
-        FhirStringBuilder.fromJson,
-        '$objectPath.partNumber',
-      ),
-      manufacturer: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'manufacturer',
-        ReferenceBuilder.fromJson,
-        '$objectPath.manufacturer',
-      ),
       deviceName: (json['deviceName'] as List<dynamic>?)
           ?.map<DeviceDefinitionDeviceNameBuilder>(
             (v) => DeviceDefinitionDeviceNameBuilder.fromJson(
@@ -199,12 +324,6 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      modelNumber: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'modelNumber',
-        FhirStringBuilder.fromJson,
-        '$objectPath.modelNumber',
-      ),
       classification: (json['classification'] as List<dynamic>?)
           ?.map<DeviceDefinitionClassificationBuilder>(
             (v) => DeviceDefinitionClassificationBuilder.fromJson(
@@ -245,12 +364,12 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      version: (json['version'] as List<dynamic>?)
-          ?.map<DeviceDefinitionVersionBuilder>(
-            (v) => DeviceDefinitionVersionBuilder.fromJson(
+      deviceVersion: (json['deviceVersion'] as List<dynamic>?)
+          ?.map<DeviceDefinitionDeviceVersionBuilder>(
+            (v) => DeviceDefinitionDeviceVersionBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.version',
+                'objectPath': '$objectPath.deviceVersion',
               },
             ),
           )
@@ -275,38 +394,18 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      languageCode: (json['languageCode'] as List<dynamic>?)
-          ?.map<CodeableConceptBuilder>(
-            (v) => CodeableConceptBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.languageCode',
-              },
-            ),
-          )
-          .toList(),
+      outputLanguage: JsonParser.parsePrimitiveList<AllLanguagesBuilder>(
+        json,
+        'outputLanguage',
+        AllLanguagesBuilder.fromJson,
+        '$objectPath.outputLanguage',
+      ),
       property: (json['property'] as List<dynamic>?)
           ?.map<DeviceDefinitionPropertyBuilder>(
             (v) => DeviceDefinitionPropertyBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
                 'objectPath': '$objectPath.property',
-              },
-            ),
-          )
-          .toList(),
-      owner: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'owner',
-        ReferenceBuilder.fromJson,
-        '$objectPath.owner',
-      ),
-      contact: (json['contact'] as List<dynamic>?)
-          ?.map<ContactPointBuilder>(
-            (v) => ContactPointBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.contact',
               },
             ),
           )
@@ -342,12 +441,16 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
           )
           .toList(),
       productionIdentifierInUDI:
-          JsonParser.parsePrimitiveList<DeviceProductionIdentifierInUDIBuilder>(
-        json,
-        'productionIdentifierInUDI',
-        DeviceProductionIdentifierInUDIBuilder.fromJson,
-        '$objectPath.productionIdentifierInUDI',
-      ),
+          (json['productionIdentifierInUDI'] as List<dynamic>?)
+              ?.map<CodeableConceptBuilder>(
+                (v) => CodeableConceptBuilder.fromJson(
+                  {
+                    ...v as Map<String, dynamic>,
+                    'objectPath': '$objectPath.productionIdentifierInUDI',
+                  },
+                ),
+              )
+              .toList(),
       guideline: JsonParser.parseObject<DeviceDefinitionGuidelineBuilder>(
         json,
         'guideline',
@@ -416,19 +519,123 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
   @override
   String get fhirType => 'DeviceDefinition';
 
-  /// [description]
-  /// Additional information to describe the device.
-  FhirMarkdownBuilder? description;
+  /// [url]
+  /// An absolute URI that is used to identify this DeviceDefinition when it
+  /// is referenced in a specification, model, design or an instance; also
+  /// called its canonical identifier. This SHOULD be globally unique and
+  /// SHOULD be a literal address at which an authoritative instance of this
+  /// DeviceDefinition is (or will be) published. This URL can be the target
+  /// of a canonical reference. It SHALL remain the same when the
+  /// DeviceDefinition is stored on different servers.
+  FhirUriBuilder? url;
 
   /// [identifier]
-  /// Unique instance identifiers assigned to a device by the software,
-  /// manufacturers, other organizations or owners. For example: handle ID.
-  /// The identifier is typically valued if the udiDeviceIdentifier,
-  /// partNumber or modelNumber is not valued and represents a different type
-  /// of identifier. However, it is permissible to still include those
-  /// identifiers in DeviceDefinition.identifier with the appropriate
-  /// identifier.type.
+  /// A formal identifier that is used to identify this DeviceDefinition when
+  /// it is represented in other formats, or referenced in a specification,
+  /// model, design or an instance.
   List<IdentifierBuilder>? identifier;
+
+  /// [version]
+  /// The identifier that is used to identify this version of the
+  /// DeviceDefinition when it is referenced in a specification.
+  FhirStringBuilder? version;
+
+  /// [versionAlgorithmX]
+  /// Indicates the mechanism used to compare versions to determine which is
+  /// more current.
+  VersionAlgorithmXDeviceDefinitionBuilder? versionAlgorithmX;
+
+  /// Getter for [versionAlgorithmString] as a FhirStringBuilder
+  FhirStringBuilder? get versionAlgorithmString =>
+      versionAlgorithmX?.isAs<FhirStringBuilder>();
+
+  /// Getter for [versionAlgorithmCoding] as a CodingBuilder
+  CodingBuilder? get versionAlgorithmCoding =>
+      versionAlgorithmX?.isAs<CodingBuilder>();
+
+  /// [name]
+  /// A natural language name identifying the DeviceDefinition. This name
+  /// should be usable as an identifier for the resource by machine
+  /// processing applications such as code generation.
+  FhirStringBuilder? name;
+
+  /// [title]
+  /// A short, descriptive, user-friendly title for the DeviceDefinition.
+  FhirStringBuilder? title;
+
+  /// [status]
+  /// The current state of this DeviceDefinition.
+  PublicationStatusBuilder? status;
+
+  /// [experimental]
+  /// A Boolean value to indicate that this DeviceDefinition is authored for
+  /// testing purposes (or education/evaluation/marketing) and no version of
+  /// this resource will ever be intended for genuine usage.
+  FhirBooleanBuilder? experimental;
+
+  /// [partNumber]
+  /// The part number or catalog number of the device.
+  FhirStringBuilder? partNumber;
+
+  /// [manufacturer]
+  /// A name of the manufacturer or legal representative e.g. labeler.
+  /// Whether this is the actual manufacturer or the labeler or responsible
+  /// depends on implementation and jurisdiction.
+  ReferenceBuilder? manufacturer;
+
+  /// [modelNumber]
+  /// The model number for the device for example as defined by the
+  /// manufacturer or labeler, or other agency.
+  FhirStringBuilder? modelNumber;
+
+  /// [date]
+  /// The date (and optionally time) when the DeviceDefinition was last
+  /// significantly changed. The date must change when the business version
+  /// changes and it must change if the status code changes. In addition, it
+  /// should change when the substantive content of the DeviceDefinition
+  /// changes.
+  FhirDateTimeBuilder? date;
+
+  /// [contact]
+  /// Contact details for an organization or a particular human that is
+  /// responsible for the device.
+  List<ContactDetailBuilder>? contact;
+
+  /// [publisher]
+  /// The name of the organization or individual responsible for the release
+  /// and ongoing maintenance of the device definition.
+  FhirStringBuilder? publisher;
+
+  /// [useContext]
+  /// The content was developed with a focus and intent of supporting the
+  /// contexts that are listed. These contexts may be general categories
+  /// (gender, age, ...) or may be references to specific programs (insurance
+  /// plans, studies, ...) and may be used to assist with indexing and
+  /// searching for appropriate DeviceDefinitions.
+  List<UsageContextBuilder>? useContext;
+
+  /// [jurisdiction]
+  /// A legal or geographic region in which the DeviceDefinition is intended
+  /// to be used.
+  List<CodeableConceptBuilder>? jurisdiction;
+
+  /// [purpose]
+  /// Explanation of why this DeviceDefinition is needed and why it has been
+  /// designed as it has.
+  FhirMarkdownBuilder? purpose;
+
+  /// [copyright]
+  /// A copyright statement relating to the DeviceDefinition and/or its
+  /// contents. Copyright statements are generally legal restrictions on the
+  /// use and publishing of the DeviceDefinition.
+  FhirMarkdownBuilder? copyright;
+
+  /// [copyrightLabel]
+  /// A short string (<50 characters), suitable for inclusion in a page
+  /// footer that identifies the copyright holder, effective period, and
+  /// optionally whether rights are resctricted. (e.g. 'All rights reserved',
+  /// 'Some rights reserved').
+  FhirStringBuilder? copyrightLabel;
 
   /// [udiDeviceIdentifier]
   /// Unique device identifier (UDI) assigned to device label or package.
@@ -445,24 +652,9 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
   /// example is the Basic UDI-DI in Europe.
   List<DeviceDefinitionRegulatoryIdentifierBuilder>? regulatoryIdentifier;
 
-  /// [partNumber]
-  /// The part number or catalog number of the device.
-  FhirStringBuilder? partNumber;
-
-  /// [manufacturer]
-  /// A name of the manufacturer or legal representative e.g. labeler.
-  /// Whether this is the actual manufacturer or the labeler or responsible
-  /// depends on implementation and jurisdiction.
-  ReferenceBuilder? manufacturer;
-
   /// [deviceName]
   /// The name or names of the device as given by the manufacturer.
   List<DeviceDefinitionDeviceNameBuilder>? deviceName;
-
-  /// [modelNumber]
-  /// The model number for the device for example as defined by the
-  /// manufacturer or labeler, or other agency.
-  FhirStringBuilder? modelNumber;
 
   /// [classification]
   /// What kind of device or device system this is.
@@ -484,9 +676,9 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
   /// packaged.
   List<DeviceDefinitionPackagingBuilder>? packaging;
 
-  /// [version]
+  /// [deviceVersion]
   /// The version of the device or software.
-  List<DeviceDefinitionVersionBuilder>? version;
+  List<DeviceDefinitionDeviceVersionBuilder>? deviceVersion;
 
   /// [safety]
   /// Safety characteristics of the device.
@@ -496,10 +688,10 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
   /// Shelf Life and storage information.
   List<ProductShelfLifeBuilder>? shelfLifeStorage;
 
-  /// [languageCode]
+  /// [outputLanguage]
   /// Language code for the human-readable text strings produced by the
   /// device (all supported).
-  List<CodeableConceptBuilder>? languageCode;
+  List<AllLanguagesBuilder>? outputLanguage;
 
   /// [property]
   /// Static or essentially fixed characteristics or features of this kind of
@@ -507,16 +699,6 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
   /// e.g., time or timing attributes, resolution, accuracy, and physical
   /// attributes.
   List<DeviceDefinitionPropertyBuilder>? property;
-
-  /// [owner]
-  /// An organization that is responsible for the provision and ongoing
-  /// maintenance of the device.
-  ReferenceBuilder? owner;
-
-  /// [contact]
-  /// Contact details for an organization or a particular human that is
-  /// responsible for the device.
-  List<ContactPointBuilder>? contact;
 
   /// [link]
   /// An associated device, attached to, used with, communicating with or
@@ -535,7 +717,7 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
   /// [productionIdentifierInUDI]
   /// Indicates the production identifier(s) that are expected to appear in
   /// the UDI carrier on the device label.
-  List<DeviceProductionIdentifierInUDIBuilder>? productionIdentifierInUDI;
+  List<CodeableConceptBuilder>? productionIdentifierInUDI;
 
   /// [guideline]
   /// Information aimed at providing directions for the usage of this model
@@ -595,25 +777,44 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
     addField('contained', contained);
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
-    addField('description', description);
+    addField('url', url);
     addField('identifier', identifier);
-    addField('udiDeviceIdentifier', udiDeviceIdentifier);
-    addField('regulatoryIdentifier', regulatoryIdentifier);
+    addField('version', version);
+    if (versionAlgorithmX != null) {
+      final fhirType = versionAlgorithmX!.fhirType;
+      addField(
+        'versionAlgorithm${fhirType.capitalizeFirstLetter()}',
+        versionAlgorithmX,
+      );
+    }
+
+    addField('name', name);
+    addField('title', title);
+    addField('status', status);
+    addField('experimental', experimental);
     addField('partNumber', partNumber);
     addField('manufacturer', manufacturer);
-    addField('deviceName', deviceName);
     addField('modelNumber', modelNumber);
+    addField('date', date);
+    addField('contact', contact);
+    addField('publisher', publisher);
+    addField('useContext', useContext);
+    addField('jurisdiction', jurisdiction);
+    addField('purpose', purpose);
+    addField('copyright', copyright);
+    addField('copyrightLabel', copyrightLabel);
+    addField('udiDeviceIdentifier', udiDeviceIdentifier);
+    addField('regulatoryIdentifier', regulatoryIdentifier);
+    addField('deviceName', deviceName);
     addField('classification', classification);
     addField('conformsTo', conformsTo);
     addField('hasPart', hasPart);
     addField('packaging', packaging);
-    addField('version', version);
+    addField('deviceVersion', deviceVersion);
     addField('safety', safety);
     addField('shelfLifeStorage', shelfLifeStorage);
-    addField('languageCode', languageCode);
+    addField('outputLanguage', outputLanguage);
     addField('property', property);
-    addField('owner', owner);
-    addField('contact', contact);
     addField('link', link);
     addField('note', note);
     addField('material', material);
@@ -636,25 +837,37 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
       'contained',
       'extension',
       'modifierExtension',
-      'description',
+      'url',
       'identifier',
-      'udiDeviceIdentifier',
-      'regulatoryIdentifier',
+      'version',
+      'versionAlgorithmX',
+      'name',
+      'title',
+      'status',
+      'experimental',
       'partNumber',
       'manufacturer',
-      'deviceName',
       'modelNumber',
+      'date',
+      'contact',
+      'publisher',
+      'useContext',
+      'jurisdiction',
+      'purpose',
+      'copyright',
+      'copyrightLabel',
+      'udiDeviceIdentifier',
+      'regulatoryIdentifier',
+      'deviceName',
       'classification',
       'conformsTo',
       'hasPart',
       'packaging',
-      'version',
+      'deviceVersion',
       'safety',
       'shelfLifeStorage',
-      'languageCode',
+      'outputLanguage',
       'property',
-      'owner',
-      'contact',
       'link',
       'note',
       'material',
@@ -706,21 +919,49 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
         }
-      case 'description':
-        if (description != null) {
-          fields.add(description!);
+      case 'url':
+        if (url != null) {
+          fields.add(url!);
         }
       case 'identifier':
         if (identifier != null) {
           fields.addAll(identifier!);
         }
-      case 'udiDeviceIdentifier':
-        if (udiDeviceIdentifier != null) {
-          fields.addAll(udiDeviceIdentifier!);
+      case 'version':
+        if (version != null) {
+          fields.add(version!);
         }
-      case 'regulatoryIdentifier':
-        if (regulatoryIdentifier != null) {
-          fields.addAll(regulatoryIdentifier!);
+      case 'versionAlgorithm':
+        if (versionAlgorithmX != null) {
+          fields.add(versionAlgorithmX!);
+        }
+      case 'versionAlgorithmX':
+        if (versionAlgorithmX != null) {
+          fields.add(versionAlgorithmX!);
+        }
+      case 'versionAlgorithmString':
+        if (versionAlgorithmX is FhirStringBuilder) {
+          fields.add(versionAlgorithmX!);
+        }
+      case 'versionAlgorithmCoding':
+        if (versionAlgorithmX is CodingBuilder) {
+          fields.add(versionAlgorithmX!);
+        }
+      case 'name':
+        if (name != null) {
+          fields.add(name!);
+        }
+      case 'title':
+        if (title != null) {
+          fields.add(title!);
+        }
+      case 'status':
+        if (status != null) {
+          fields.add(status!);
+        }
+      case 'experimental':
+        if (experimental != null) {
+          fields.add(experimental!);
         }
       case 'partNumber':
         if (partNumber != null) {
@@ -730,13 +971,53 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
         if (manufacturer != null) {
           fields.add(manufacturer!);
         }
-      case 'deviceName':
-        if (deviceName != null) {
-          fields.addAll(deviceName!);
-        }
       case 'modelNumber':
         if (modelNumber != null) {
           fields.add(modelNumber!);
+        }
+      case 'date':
+        if (date != null) {
+          fields.add(date!);
+        }
+      case 'contact':
+        if (contact != null) {
+          fields.addAll(contact!);
+        }
+      case 'publisher':
+        if (publisher != null) {
+          fields.add(publisher!);
+        }
+      case 'useContext':
+        if (useContext != null) {
+          fields.addAll(useContext!);
+        }
+      case 'jurisdiction':
+        if (jurisdiction != null) {
+          fields.addAll(jurisdiction!);
+        }
+      case 'purpose':
+        if (purpose != null) {
+          fields.add(purpose!);
+        }
+      case 'copyright':
+        if (copyright != null) {
+          fields.add(copyright!);
+        }
+      case 'copyrightLabel':
+        if (copyrightLabel != null) {
+          fields.add(copyrightLabel!);
+        }
+      case 'udiDeviceIdentifier':
+        if (udiDeviceIdentifier != null) {
+          fields.addAll(udiDeviceIdentifier!);
+        }
+      case 'regulatoryIdentifier':
+        if (regulatoryIdentifier != null) {
+          fields.addAll(regulatoryIdentifier!);
+        }
+      case 'deviceName':
+        if (deviceName != null) {
+          fields.addAll(deviceName!);
         }
       case 'classification':
         if (classification != null) {
@@ -754,9 +1035,9 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
         if (packaging != null) {
           fields.addAll(packaging!);
         }
-      case 'version':
-        if (version != null) {
-          fields.addAll(version!);
+      case 'deviceVersion':
+        if (deviceVersion != null) {
+          fields.addAll(deviceVersion!);
         }
       case 'safety':
         if (safety != null) {
@@ -766,21 +1047,13 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
         if (shelfLifeStorage != null) {
           fields.addAll(shelfLifeStorage!);
         }
-      case 'languageCode':
-        if (languageCode != null) {
-          fields.addAll(languageCode!);
+      case 'outputLanguage':
+        if (outputLanguage != null) {
+          fields.addAll(outputLanguage!);
         }
       case 'property':
         if (property != null) {
           fields.addAll(property!);
-        }
-      case 'owner':
-        if (owner != null) {
-          fields.add(owner!);
-        }
-      case 'contact':
-        if (contact != null) {
-          fields.addAll(contact!);
         }
       case 'link':
         if (link != null) {
@@ -966,18 +1239,18 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'description':
+      case 'url':
         {
-          if (child is FhirMarkdownBuilder) {
-            description = child;
+          if (child is FhirUriBuilder) {
+            url = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
-              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              final converted = FhirUriBuilder.tryParse(stringValue);
               if (converted != null) {
-                description = converted;
+                url = converted;
                 return;
               }
             } catch (e) {
@@ -999,6 +1272,341 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
               child,
             ];
             return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'version':
+        {
+          if (child is FhirStringBuilder) {
+            version = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                version = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'versionAlgorithm':
+      case 'versionAlgorithmX':
+        {
+          if (child is VersionAlgorithmXDeviceDefinitionBuilder) {
+            versionAlgorithmX = child;
+            return;
+          } else {
+            if (child is FhirStringBuilder) {
+              versionAlgorithmX = child;
+              return;
+            }
+            if (child is CodingBuilder) {
+              versionAlgorithmX = child;
+              return;
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'versionAlgorithmString':
+        {
+          if (child is FhirStringBuilder) {
+            versionAlgorithmX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'versionAlgorithmCoding':
+        {
+          if (child is CodingBuilder) {
+            versionAlgorithmX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'name':
+        {
+          if (child is FhirStringBuilder) {
+            name = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                name = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'title':
+        {
+          if (child is FhirStringBuilder) {
+            title = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                title = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'status':
+        {
+          if (child is PublicationStatusBuilder) {
+            status = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For enums, try to create directly from the string value
+              try {
+                final converted = PublicationStatusBuilder(stringValue);
+                status = converted;
+                return;
+              } catch (e) {
+                // Continue if enum creation fails
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'experimental':
+        {
+          if (child is FhirBooleanBuilder) {
+            experimental = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirBooleanBuilder.tryParse(stringValue);
+              if (converted != null) {
+                experimental = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'partNumber':
+        {
+          if (child is FhirStringBuilder) {
+            partNumber = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                partNumber = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'manufacturer':
+        {
+          if (child is ReferenceBuilder) {
+            manufacturer = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modelNumber':
+        {
+          if (child is FhirStringBuilder) {
+            modelNumber = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                modelNumber = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'date':
+        {
+          if (child is FhirDateTimeBuilder) {
+            date = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirDateTimeBuilder.tryParse(stringValue);
+              if (converted != null) {
+                date = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'contact':
+        {
+          if (child is List<ContactDetailBuilder>) {
+            // Replace or create new list
+            contact = child;
+            return;
+          } else if (child is ContactDetailBuilder) {
+            // Add single element to existing list or create new list
+            contact = [
+              ...(contact ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'publisher':
+        {
+          if (child is FhirStringBuilder) {
+            publisher = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                publisher = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'useContext':
+        {
+          if (child is List<UsageContextBuilder>) {
+            // Replace or create new list
+            useContext = child;
+            return;
+          } else if (child is UsageContextBuilder) {
+            // Add single element to existing list or create new list
+            useContext = [
+              ...(useContext ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'jurisdiction':
+        {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
+            jurisdiction = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            jurisdiction = [
+              ...(jurisdiction ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'purpose':
+        {
+          if (child is FhirMarkdownBuilder) {
+            purpose = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                purpose = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'copyright':
+        {
+          if (child is FhirMarkdownBuilder) {
+            copyright = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                copyright = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'copyrightLabel':
+        {
+          if (child is FhirStringBuilder) {
+            copyrightLabel = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                copyrightLabel = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -1034,34 +1642,6 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'partNumber':
-        {
-          if (child is FhirStringBuilder) {
-            partNumber = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                partNumber = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'manufacturer':
-        {
-          if (child is ReferenceBuilder) {
-            manufacturer = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
       case 'deviceName':
         {
           if (child is List<DeviceDefinitionDeviceNameBuilder>) {
@@ -1075,26 +1655,6 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
               child,
             ];
             return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'modelNumber':
-        {
-          if (child is FhirStringBuilder) {
-            modelNumber = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                modelNumber = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -1162,16 +1722,16 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'version':
+      case 'deviceVersion':
         {
-          if (child is List<DeviceDefinitionVersionBuilder>) {
+          if (child is List<DeviceDefinitionDeviceVersionBuilder>) {
             // Replace or create new list
-            version = child;
+            deviceVersion = child;
             return;
-          } else if (child is DeviceDefinitionVersionBuilder) {
+          } else if (child is DeviceDefinitionDeviceVersionBuilder) {
             // Add single element to existing list or create new list
-            version = [
-              ...(version ?? []),
+            deviceVersion = [
+              ...(deviceVersion ?? []),
               child,
             ];
             return;
@@ -1210,19 +1770,58 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'languageCode':
+      case 'outputLanguage':
         {
-          if (child is List<CodeableConceptBuilder>) {
+          if (child is List<AllLanguagesBuilder>) {
             // Replace or create new list
-            languageCode = child;
+            outputLanguage = child;
             return;
-          } else if (child is CodeableConceptBuilder) {
+          } else if (child is AllLanguagesBuilder) {
             // Add single element to existing list or create new list
-            languageCode = [
-              ...(languageCode ?? []),
+            outputLanguage = [
+              ...(outputLanguage ?? []),
               child,
             ];
             return;
+          } else if (child is List<PrimitiveTypeBuilder>) {
+            // Try to convert list of primitive types
+            final convertedList = <AllLanguagesBuilder>[];
+            for (final element in child) {
+              try {
+                final stringValue = element.toString();
+                // For enums, try to create directly from the string value
+                try {
+                  final converted = AllLanguagesBuilder(stringValue);
+                  convertedList.add(converted);
+                } catch (e) {
+                  // Continue if enum creation fails
+                }
+              } catch (e) {
+                // Continue if conversion fails
+              }
+            }
+            if (convertedList.isNotEmpty) {
+              outputLanguage = convertedList;
+              return;
+            }
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert a single primitive
+            try {
+              final stringValue = child.toString();
+              // For enums, try to create directly from the string value
+              try {
+                final converted = AllLanguagesBuilder(stringValue);
+                outputLanguage = [
+                  ...(outputLanguage ?? []),
+                  converted,
+                ];
+                return;
+              } catch (e) {
+                // Continue if enum creation fails
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -1236,30 +1835,6 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
             // Add single element to existing list or create new list
             property = [
               ...(property ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'owner':
-        {
-          if (child is ReferenceBuilder) {
-            owner = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'contact':
-        {
-          if (child is List<ContactPointBuilder>) {
-            // Replace or create new list
-            contact = child;
-            return;
-          } else if (child is ContactPointBuilder) {
-            // Add single element to existing list or create new list
-            contact = [
-              ...(contact ?? []),
               child,
             ];
             return;
@@ -1316,58 +1891,17 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
         }
       case 'productionIdentifierInUDI':
         {
-          if (child is List<DeviceProductionIdentifierInUDIBuilder>) {
+          if (child is List<CodeableConceptBuilder>) {
             // Replace or create new list
             productionIdentifierInUDI = child;
             return;
-          } else if (child is DeviceProductionIdentifierInUDIBuilder) {
+          } else if (child is CodeableConceptBuilder) {
             // Add single element to existing list or create new list
             productionIdentifierInUDI = [
               ...(productionIdentifierInUDI ?? []),
               child,
             ];
             return;
-          } else if (child is List<PrimitiveTypeBuilder>) {
-            // Try to convert list of primitive types
-            final convertedList = <DeviceProductionIdentifierInUDIBuilder>[];
-            for (final element in child) {
-              try {
-                final stringValue = element.toString();
-                // For enums, try to create directly from the string value
-                try {
-                  final converted =
-                      DeviceProductionIdentifierInUDIBuilder(stringValue);
-                  convertedList.add(converted);
-                } catch (e) {
-                  // Continue if enum creation fails
-                }
-              } catch (e) {
-                // Continue if conversion fails
-              }
-            }
-            if (convertedList.isNotEmpty) {
-              productionIdentifierInUDI = convertedList;
-              return;
-            }
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert a single primitive
-            try {
-              final stringValue = child.toString();
-              // For enums, try to create directly from the string value
-              try {
-                final converted =
-                    DeviceProductionIdentifierInUDIBuilder(stringValue);
-                productionIdentifierInUDI = [
-                  ...(productionIdentifierInUDI ?? []),
-                  converted,
-                ];
-                return;
-              } catch (e) {
-                // Continue if enum creation fails
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -1429,22 +1963,58 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
         return ['FhirExtensionBuilder'];
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
-      case 'description':
-        return ['FhirMarkdownBuilder'];
+      case 'url':
+        return ['FhirUriBuilder'];
       case 'identifier':
         return ['IdentifierBuilder'];
-      case 'udiDeviceIdentifier':
-        return ['DeviceDefinitionUdiDeviceIdentifierBuilder'];
-      case 'regulatoryIdentifier':
-        return ['DeviceDefinitionRegulatoryIdentifierBuilder'];
+      case 'version':
+        return ['FhirStringBuilder'];
+      case 'versionAlgorithm':
+      case 'versionAlgorithmX':
+        return [
+          'FhirStringBuilder',
+          'CodingBuilder',
+        ];
+      case 'versionAlgorithmString':
+        return ['FhirStringBuilder'];
+      case 'versionAlgorithmCoding':
+        return ['CodingBuilder'];
+      case 'name':
+        return ['FhirStringBuilder'];
+      case 'title':
+        return ['FhirStringBuilder'];
+      case 'status':
+        return ['FhirCodeEnumBuilder'];
+      case 'experimental':
+        return ['FhirBooleanBuilder'];
       case 'partNumber':
         return ['FhirStringBuilder'];
       case 'manufacturer':
         return ['ReferenceBuilder'];
-      case 'deviceName':
-        return ['DeviceDefinitionDeviceNameBuilder'];
       case 'modelNumber':
         return ['FhirStringBuilder'];
+      case 'date':
+        return ['FhirDateTimeBuilder'];
+      case 'contact':
+        return ['ContactDetailBuilder'];
+      case 'publisher':
+        return ['FhirStringBuilder'];
+      case 'useContext':
+        return ['UsageContextBuilder'];
+      case 'jurisdiction':
+        return ['CodeableConceptBuilder'];
+      case 'purpose':
+        return ['FhirMarkdownBuilder'];
+      case 'copyright':
+        return ['FhirMarkdownBuilder'];
+      case 'copyrightLabel':
+        return ['FhirStringBuilder'];
+      case 'udiDeviceIdentifier':
+        return ['DeviceDefinitionUdiDeviceIdentifierBuilder'];
+      case 'regulatoryIdentifier':
+        return ['DeviceDefinitionRegulatoryIdentifierBuilder'];
+      case 'deviceName':
+        return ['DeviceDefinitionDeviceNameBuilder'];
       case 'classification':
         return ['DeviceDefinitionClassificationBuilder'];
       case 'conformsTo':
@@ -1453,20 +2023,16 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
         return ['DeviceDefinitionHasPartBuilder'];
       case 'packaging':
         return ['DeviceDefinitionPackagingBuilder'];
-      case 'version':
-        return ['DeviceDefinitionVersionBuilder'];
+      case 'deviceVersion':
+        return ['DeviceDefinitionDeviceVersionBuilder'];
       case 'safety':
         return ['CodeableConceptBuilder'];
       case 'shelfLifeStorage':
         return ['ProductShelfLifeBuilder'];
-      case 'languageCode':
-        return ['CodeableConceptBuilder'];
+      case 'outputLanguage':
+        return ['FhirCodeEnumBuilder'];
       case 'property':
         return ['DeviceDefinitionPropertyBuilder'];
-      case 'owner':
-        return ['ReferenceBuilder'];
-      case 'contact':
-        return ['ContactPointBuilder'];
       case 'link':
         return ['DeviceDefinitionLinkBuilder'];
       case 'note':
@@ -1474,7 +2040,7 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
       case 'material':
         return ['DeviceDefinitionMaterialBuilder'];
       case 'productionIdentifierInUDI':
-        return ['FhirCodeEnumBuilder'];
+        return ['CodeableConceptBuilder'];
       case 'guideline':
         return ['DeviceDefinitionGuidelineBuilder'];
       case 'correctiveAction':
@@ -1531,14 +2097,106 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
           modifierExtension = <FhirExtensionBuilder>[];
           return;
         }
-      case 'description':
+      case 'url':
         {
-          description = FhirMarkdownBuilder.empty();
+          url = FhirUriBuilder.empty();
           return;
         }
       case 'identifier':
         {
           identifier = <IdentifierBuilder>[];
+          return;
+        }
+      case 'version':
+        {
+          version = FhirStringBuilder.empty();
+          return;
+        }
+      case 'versionAlgorithm':
+      case 'versionAlgorithmX':
+      case 'versionAlgorithmString':
+        {
+          versionAlgorithmX = FhirStringBuilder.empty();
+          return;
+        }
+      case 'versionAlgorithmCoding':
+        {
+          versionAlgorithmX = CodingBuilder.empty();
+          return;
+        }
+      case 'name':
+        {
+          name = FhirStringBuilder.empty();
+          return;
+        }
+      case 'title':
+        {
+          title = FhirStringBuilder.empty();
+          return;
+        }
+      case 'status':
+        {
+          status = PublicationStatusBuilder.empty();
+          return;
+        }
+      case 'experimental':
+        {
+          experimental = FhirBooleanBuilder.empty();
+          return;
+        }
+      case 'partNumber':
+        {
+          partNumber = FhirStringBuilder.empty();
+          return;
+        }
+      case 'manufacturer':
+        {
+          manufacturer = ReferenceBuilder.empty();
+          return;
+        }
+      case 'modelNumber':
+        {
+          modelNumber = FhirStringBuilder.empty();
+          return;
+        }
+      case 'date':
+        {
+          date = FhirDateTimeBuilder.empty();
+          return;
+        }
+      case 'contact':
+        {
+          contact = <ContactDetailBuilder>[];
+          return;
+        }
+      case 'publisher':
+        {
+          publisher = FhirStringBuilder.empty();
+          return;
+        }
+      case 'useContext':
+        {
+          useContext = <UsageContextBuilder>[];
+          return;
+        }
+      case 'jurisdiction':
+        {
+          jurisdiction = <CodeableConceptBuilder>[];
+          return;
+        }
+      case 'purpose':
+        {
+          purpose = FhirMarkdownBuilder.empty();
+          return;
+        }
+      case 'copyright':
+        {
+          copyright = FhirMarkdownBuilder.empty();
+          return;
+        }
+      case 'copyrightLabel':
+        {
+          copyrightLabel = FhirStringBuilder.empty();
           return;
         }
       case 'udiDeviceIdentifier':
@@ -1552,24 +2210,9 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
               <DeviceDefinitionRegulatoryIdentifierBuilder>[];
           return;
         }
-      case 'partNumber':
-        {
-          partNumber = FhirStringBuilder.empty();
-          return;
-        }
-      case 'manufacturer':
-        {
-          manufacturer = ReferenceBuilder.empty();
-          return;
-        }
       case 'deviceName':
         {
           deviceName = <DeviceDefinitionDeviceNameBuilder>[];
-          return;
-        }
-      case 'modelNumber':
-        {
-          modelNumber = FhirStringBuilder.empty();
           return;
         }
       case 'classification':
@@ -1592,9 +2235,9 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
           packaging = <DeviceDefinitionPackagingBuilder>[];
           return;
         }
-      case 'version':
+      case 'deviceVersion':
         {
-          version = <DeviceDefinitionVersionBuilder>[];
+          deviceVersion = <DeviceDefinitionDeviceVersionBuilder>[];
           return;
         }
       case 'safety':
@@ -1607,24 +2250,14 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
           shelfLifeStorage = <ProductShelfLifeBuilder>[];
           return;
         }
-      case 'languageCode':
+      case 'outputLanguage':
         {
-          languageCode = <CodeableConceptBuilder>[];
+          outputLanguage = <AllLanguagesBuilder>[];
           return;
         }
       case 'property':
         {
           property = <DeviceDefinitionPropertyBuilder>[];
-          return;
-        }
-      case 'owner':
-        {
-          owner = ReferenceBuilder.empty();
-          return;
-        }
-      case 'contact':
-        {
-          contact = <ContactPointBuilder>[];
           return;
         }
       case 'link':
@@ -1644,8 +2277,7 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
         }
       case 'productionIdentifierInUDI':
         {
-          productionIdentifierInUDI =
-              <DeviceProductionIdentifierInUDIBuilder>[];
+          productionIdentifierInUDI = <CodeableConceptBuilder>[];
           return;
         }
       case 'guideline':
@@ -1680,32 +2312,46 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
     List<ResourceBuilder>? contained,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    FhirMarkdownBuilder? description,
+    FhirUriBuilder? url,
     List<IdentifierBuilder>? identifier,
-    List<DeviceDefinitionUdiDeviceIdentifierBuilder>? udiDeviceIdentifier,
-    List<DeviceDefinitionRegulatoryIdentifierBuilder>? regulatoryIdentifier,
+    FhirStringBuilder? version,
+    VersionAlgorithmXDeviceDefinitionBuilder? versionAlgorithmX,
+    FhirStringBuilder? name,
+    FhirStringBuilder? title,
+    PublicationStatusBuilder? status,
+    FhirBooleanBuilder? experimental,
     FhirStringBuilder? partNumber,
     ReferenceBuilder? manufacturer,
-    List<DeviceDefinitionDeviceNameBuilder>? deviceName,
     FhirStringBuilder? modelNumber,
+    FhirDateTimeBuilder? date,
+    List<ContactDetailBuilder>? contact,
+    FhirStringBuilder? publisher,
+    List<UsageContextBuilder>? useContext,
+    List<CodeableConceptBuilder>? jurisdiction,
+    FhirMarkdownBuilder? purpose,
+    FhirMarkdownBuilder? copyright,
+    FhirStringBuilder? copyrightLabel,
+    List<DeviceDefinitionUdiDeviceIdentifierBuilder>? udiDeviceIdentifier,
+    List<DeviceDefinitionRegulatoryIdentifierBuilder>? regulatoryIdentifier,
+    List<DeviceDefinitionDeviceNameBuilder>? deviceName,
     List<DeviceDefinitionClassificationBuilder>? classification,
     List<DeviceDefinitionConformsToBuilder>? conformsTo,
     List<DeviceDefinitionHasPartBuilder>? hasPart,
     List<DeviceDefinitionPackagingBuilder>? packaging,
-    List<DeviceDefinitionVersionBuilder>? version,
+    List<DeviceDefinitionDeviceVersionBuilder>? deviceVersion,
     List<CodeableConceptBuilder>? safety,
     List<ProductShelfLifeBuilder>? shelfLifeStorage,
-    List<CodeableConceptBuilder>? languageCode,
+    List<AllLanguagesBuilder>? outputLanguage,
     List<DeviceDefinitionPropertyBuilder>? property,
-    ReferenceBuilder? owner,
-    List<ContactPointBuilder>? contact,
     List<DeviceDefinitionLinkBuilder>? link,
     List<AnnotationBuilder>? note,
     List<DeviceDefinitionMaterialBuilder>? material,
-    List<DeviceProductionIdentifierInUDIBuilder>? productionIdentifierInUDI,
+    List<CodeableConceptBuilder>? productionIdentifierInUDI,
     DeviceDefinitionGuidelineBuilder? guideline,
     DeviceDefinitionCorrectiveActionBuilder? correctiveAction,
     List<DeviceDefinitionChargeItemBuilder>? chargeItem,
+    FhirStringBuilder? versionAlgorithmString,
+    CodingBuilder? versionAlgorithmCoding,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -1721,25 +2367,40 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
       contained: contained ?? this.contained,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
-      description: description ?? this.description,
+      url: url ?? this.url,
       identifier: identifier ?? this.identifier,
-      udiDeviceIdentifier: udiDeviceIdentifier ?? this.udiDeviceIdentifier,
-      regulatoryIdentifier: regulatoryIdentifier ?? this.regulatoryIdentifier,
+      version: version ?? this.version,
+      versionAlgorithmX: versionAlgorithmX ??
+          versionAlgorithmString ??
+          versionAlgorithmCoding ??
+          this.versionAlgorithmX,
+      name: name ?? this.name,
+      title: title ?? this.title,
+      status: status ?? this.status,
+      experimental: experimental ?? this.experimental,
       partNumber: partNumber ?? this.partNumber,
       manufacturer: manufacturer ?? this.manufacturer,
-      deviceName: deviceName ?? this.deviceName,
       modelNumber: modelNumber ?? this.modelNumber,
+      date: date ?? this.date,
+      contact: contact ?? this.contact,
+      publisher: publisher ?? this.publisher,
+      useContext: useContext ?? this.useContext,
+      jurisdiction: jurisdiction ?? this.jurisdiction,
+      purpose: purpose ?? this.purpose,
+      copyright: copyright ?? this.copyright,
+      copyrightLabel: copyrightLabel ?? this.copyrightLabel,
+      udiDeviceIdentifier: udiDeviceIdentifier ?? this.udiDeviceIdentifier,
+      regulatoryIdentifier: regulatoryIdentifier ?? this.regulatoryIdentifier,
+      deviceName: deviceName ?? this.deviceName,
       classification: classification ?? this.classification,
       conformsTo: conformsTo ?? this.conformsTo,
       hasPart: hasPart ?? this.hasPart,
       packaging: packaging ?? this.packaging,
-      version: version ?? this.version,
+      deviceVersion: deviceVersion ?? this.deviceVersion,
       safety: safety ?? this.safety,
       shelfLifeStorage: shelfLifeStorage ?? this.shelfLifeStorage,
-      languageCode: languageCode ?? this.languageCode,
+      outputLanguage: outputLanguage ?? this.outputLanguage,
       property: property ?? this.property,
-      owner: owner ?? this.owner,
-      contact: contact ?? this.contact,
       link: link ?? this.link,
       note: note ?? this.note,
       material: material ?? this.material,
@@ -1823,8 +2484,8 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      description,
-      o.description,
+      url,
+      o.url,
     )) {
       return false;
     }
@@ -1834,15 +2495,39 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<DeviceDefinitionUdiDeviceIdentifierBuilder>(
-      udiDeviceIdentifier,
-      o.udiDeviceIdentifier,
+    if (!equalsDeepWithNull(
+      version,
+      o.version,
     )) {
       return false;
     }
-    if (!listEquals<DeviceDefinitionRegulatoryIdentifierBuilder>(
-      regulatoryIdentifier,
-      o.regulatoryIdentifier,
+    if (!equalsDeepWithNull(
+      versionAlgorithmX,
+      o.versionAlgorithmX,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      name,
+      o.name,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      title,
+      o.title,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      status,
+      o.status,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      experimental,
+      o.experimental,
     )) {
       return false;
     }
@@ -1858,15 +2543,75 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<DeviceDefinitionDeviceNameBuilder>(
-      deviceName,
-      o.deviceName,
+    if (!equalsDeepWithNull(
+      modelNumber,
+      o.modelNumber,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
-      modelNumber,
-      o.modelNumber,
+      date,
+      o.date,
+    )) {
+      return false;
+    }
+    if (!listEquals<ContactDetailBuilder>(
+      contact,
+      o.contact,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      publisher,
+      o.publisher,
+    )) {
+      return false;
+    }
+    if (!listEquals<UsageContextBuilder>(
+      useContext,
+      o.useContext,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConceptBuilder>(
+      jurisdiction,
+      o.jurisdiction,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      purpose,
+      o.purpose,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      copyright,
+      o.copyright,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      copyrightLabel,
+      o.copyrightLabel,
+    )) {
+      return false;
+    }
+    if (!listEquals<DeviceDefinitionUdiDeviceIdentifierBuilder>(
+      udiDeviceIdentifier,
+      o.udiDeviceIdentifier,
+    )) {
+      return false;
+    }
+    if (!listEquals<DeviceDefinitionRegulatoryIdentifierBuilder>(
+      regulatoryIdentifier,
+      o.regulatoryIdentifier,
+    )) {
+      return false;
+    }
+    if (!listEquals<DeviceDefinitionDeviceNameBuilder>(
+      deviceName,
+      o.deviceName,
     )) {
       return false;
     }
@@ -1894,9 +2639,9 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<DeviceDefinitionVersionBuilder>(
-      version,
-      o.version,
+    if (!listEquals<DeviceDefinitionDeviceVersionBuilder>(
+      deviceVersion,
+      o.deviceVersion,
     )) {
       return false;
     }
@@ -1912,27 +2657,15 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConceptBuilder>(
-      languageCode,
-      o.languageCode,
+    if (!listEquals<AllLanguagesBuilder>(
+      outputLanguage,
+      o.outputLanguage,
     )) {
       return false;
     }
     if (!listEquals<DeviceDefinitionPropertyBuilder>(
       property,
       o.property,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      owner,
-      o.owner,
-    )) {
-      return false;
-    }
-    if (!listEquals<ContactPointBuilder>(
-      contact,
-      o.contact,
     )) {
       return false;
     }
@@ -1954,7 +2687,7 @@ class DeviceDefinitionBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<DeviceProductionIdentifierInUDIBuilder>(
+    if (!listEquals<CodeableConceptBuilder>(
       productionIdentifierInUDI,
       o.productionIdentifierInUDI,
     )) {
@@ -3639,7 +4372,7 @@ class DeviceDefinitionDeviceNameBuilder extends BackboneElementBuilder {
   factory DeviceDefinitionDeviceNameBuilder.empty() =>
       DeviceDefinitionDeviceNameBuilder(
         name: FhirStringBuilder.empty(),
-        type: DeviceNameTypeBuilder.values.first,
+        type: CodeableConceptBuilder.empty(),
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -3680,10 +4413,10 @@ class DeviceDefinitionDeviceNameBuilder extends BackboneElementBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.name',
       ),
-      type: JsonParser.parsePrimitive<DeviceNameTypeBuilder>(
+      type: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
         'type',
-        DeviceNameTypeBuilder.fromJson,
+        CodeableConceptBuilder.fromJson,
         '$objectPath.type',
       ),
     );
@@ -3740,7 +4473,7 @@ class DeviceDefinitionDeviceNameBuilder extends BackboneElementBuilder {
   /// [type]
   /// The type of deviceName.
   /// RegisteredName | UserFriendlyName | PatientReportedName.
-  DeviceNameTypeBuilder? type;
+  CodeableConceptBuilder? type;
 
   /// Converts a [DeviceDefinitionDeviceNameBuilder]
   /// to [DeviceDefinitionDeviceName]
@@ -3931,24 +4664,9 @@ class DeviceDefinitionDeviceNameBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          if (child is DeviceNameTypeBuilder) {
+          if (child is CodeableConceptBuilder) {
             type = child;
             return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              // For enums, try to create directly from the string value
-              try {
-                final converted = DeviceNameTypeBuilder(stringValue);
-                type = converted;
-                return;
-              } catch (e) {
-                // Continue if enum creation fails
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -3971,7 +4689,7 @@ class DeviceDefinitionDeviceNameBuilder extends BackboneElementBuilder {
       case 'name':
         return ['FhirStringBuilder'];
       case 'type':
-        return ['FhirCodeEnumBuilder'];
+        return ['CodeableConceptBuilder'];
       default:
         return <String>[];
     }
@@ -4004,7 +4722,7 @@ class DeviceDefinitionDeviceNameBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          type = DeviceNameTypeBuilder.empty();
+          type = CodeableConceptBuilder.empty();
           return;
         }
       default:
@@ -4020,7 +4738,7 @@ class DeviceDefinitionDeviceNameBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     FhirStringBuilder? name,
-    DeviceNameTypeBuilder? type,
+    CodeableConceptBuilder? type,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -6728,13 +7446,13 @@ class DeviceDefinitionDistributorBuilder extends BackboneElementBuilder {
   }
 }
 
-/// [DeviceDefinitionVersionBuilder]
+/// [DeviceDefinitionDeviceVersionBuilder]
 /// The version of the device or software.
-class DeviceDefinitionVersionBuilder extends BackboneElementBuilder {
+class DeviceDefinitionDeviceVersionBuilder extends BackboneElementBuilder {
   /// Primary constructor for
-  /// [DeviceDefinitionVersionBuilder]
+  /// [DeviceDefinitionDeviceVersionBuilder]
 
-  DeviceDefinitionVersionBuilder({
+  DeviceDefinitionDeviceVersionBuilder({
     super.id,
     super.extension_,
     super.modifierExtension,
@@ -6743,22 +7461,22 @@ class DeviceDefinitionVersionBuilder extends BackboneElementBuilder {
     this.value,
     super.disallowExtensions,
   }) : super(
-          objectPath: 'DeviceDefinition.version',
+          objectPath: 'DeviceDefinition.deviceVersion',
         );
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
-  factory DeviceDefinitionVersionBuilder.empty() =>
-      DeviceDefinitionVersionBuilder(
+  factory DeviceDefinitionDeviceVersionBuilder.empty() =>
+      DeviceDefinitionDeviceVersionBuilder(
         value: FhirStringBuilder.empty(),
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory DeviceDefinitionVersionBuilder.fromJson(
+  factory DeviceDefinitionDeviceVersionBuilder.fromJson(
     Map<String, dynamic> json,
   ) {
-    const objectPath = 'DeviceDefinition.version';
-    return DeviceDefinitionVersionBuilder(
+    const objectPath = 'DeviceDefinition.deviceVersion';
+    return DeviceDefinitionDeviceVersionBuilder(
       id: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'id',
@@ -6806,22 +7524,22 @@ class DeviceDefinitionVersionBuilder extends BackboneElementBuilder {
     );
   }
 
-  /// Deserialize [DeviceDefinitionVersionBuilder]
+  /// Deserialize [DeviceDefinitionDeviceVersionBuilder]
   /// from a [String] or [YamlMap] object
-  factory DeviceDefinitionVersionBuilder.fromYaml(
+  factory DeviceDefinitionDeviceVersionBuilder.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return DeviceDefinitionVersionBuilder.fromJson(
+      return DeviceDefinitionDeviceVersionBuilder.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return DeviceDefinitionVersionBuilder.fromJson(
+      return DeviceDefinitionDeviceVersionBuilder.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'DeviceDefinitionVersionBuilder '
+        'DeviceDefinitionDeviceVersionBuilder '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -6829,16 +7547,16 @@ class DeviceDefinitionVersionBuilder extends BackboneElementBuilder {
   }
 
   /// Factory constructor for
-  /// [DeviceDefinitionVersionBuilder]
+  /// [DeviceDefinitionDeviceVersionBuilder]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory DeviceDefinitionVersionBuilder.fromJsonString(
+  factory DeviceDefinitionDeviceVersionBuilder.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return DeviceDefinitionVersionBuilder.fromJson(json);
+      return DeviceDefinitionDeviceVersionBuilder.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -6846,7 +7564,7 @@ class DeviceDefinitionVersionBuilder extends BackboneElementBuilder {
   }
 
   @override
-  String get fhirType => 'DeviceDefinitionVersion';
+  String get fhirType => 'DeviceDefinitionDeviceVersion';
 
   /// [type]
   /// The type of the device version, e.g. manufacturer, approved, internal.
@@ -6861,12 +7579,13 @@ class DeviceDefinitionVersionBuilder extends BackboneElementBuilder {
   /// The version text.
   FhirStringBuilder? value;
 
-  /// Converts a [DeviceDefinitionVersionBuilder]
-  /// to [DeviceDefinitionVersion]
+  /// Converts a [DeviceDefinitionDeviceVersionBuilder]
+  /// to [DeviceDefinitionDeviceVersion]
   @override
-  DeviceDefinitionVersion build() => DeviceDefinitionVersion.fromJson(toJson());
+  DeviceDefinitionDeviceVersion build() =>
+      DeviceDefinitionDeviceVersion.fromJson(toJson());
 
-  /// Converts a [DeviceDefinitionVersionBuilder]
+  /// Converts a [DeviceDefinitionDeviceVersionBuilder]
   /// to a [Map<String, dynamic>]
   @override
   Map<String, dynamic> toJson() {
@@ -7096,7 +7815,7 @@ class DeviceDefinitionVersionBuilder extends BackboneElementBuilder {
     }
   }
 
-  /// Creates a new [DeviceDefinitionVersionBuilder]
+  /// Creates a new [DeviceDefinitionDeviceVersionBuilder]
   ///  with a chosen field set to an empty object.
   @override
   void createProperty(String propertyName) {
@@ -7137,9 +7856,9 @@ class DeviceDefinitionVersionBuilder extends BackboneElementBuilder {
   }
 
   @override
-  DeviceDefinitionVersionBuilder clone() => throw UnimplementedError();
+  DeviceDefinitionDeviceVersionBuilder clone() => throw UnimplementedError();
   @override
-  DeviceDefinitionVersionBuilder copyWith({
+  DeviceDefinitionDeviceVersionBuilder copyWith({
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
@@ -7153,7 +7872,7 @@ class DeviceDefinitionVersionBuilder extends BackboneElementBuilder {
     String? objectPath,
   }) {
     final newObjectPath = this.objectPath;
-    final newResult = DeviceDefinitionVersionBuilder(
+    final newResult = DeviceDefinitionDeviceVersionBuilder(
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
@@ -7181,7 +7900,7 @@ class DeviceDefinitionVersionBuilder extends BackboneElementBuilder {
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! DeviceDefinitionVersionBuilder) {
+    if (o is! DeviceDefinitionDeviceVersionBuilder) {
       return false;
     }
     if (identical(this, o)) return true;

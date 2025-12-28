@@ -23,8 +23,6 @@ class Communication extends DomainResource {
     super.extension_,
     super.modifierExtension,
     this.identifier,
-    this.instantiatesCanonical,
-    this.instantiatesUri,
     this.basedOn,
     this.partOf,
     this.inResponseTo,
@@ -106,16 +104,6 @@ class Communication extends DomainResource {
             ),
           )
           .toList(),
-      instantiatesCanonical: JsonParser.parsePrimitiveList<FhirCanonical>(
-        json,
-        'instantiatesCanonical',
-        FhirCanonical.fromJson,
-      ),
-      instantiatesUri: JsonParser.parsePrimitiveList<FhirUri>(
-        json,
-        'instantiatesUri',
-        FhirUri.fromJson,
-      ),
       basedOn: (json['basedOn'] as List<dynamic>?)
           ?.map<Reference>(
             (v) => Reference.fromJson(
@@ -281,18 +269,6 @@ class Communication extends DomainResource {
   /// other systems which remain constant as the resource is updated and
   /// propagates from server to server.
   final List<Identifier>? identifier;
-
-  /// [instantiatesCanonical]
-  /// The URL pointing to a FHIR-defined protocol, guideline, orderset or
-  /// other definition that is adhered to in whole or in part by this
-  /// Communication.
-  final List<FhirCanonical>? instantiatesCanonical;
-
-  /// [instantiatesUri]
-  /// The URL pointing to an externally maintained protocol, guideline,
-  /// orderset or other definition that is adhered to in whole or in part by
-  /// this Communication.
-  final List<FhirUri>? instantiatesUri;
 
   /// [basedOn]
   /// An order, proposal or plan fulfilled in whole or in part by this
@@ -481,14 +457,6 @@ class Communication extends DomainResource {
       identifier,
     );
     addField(
-      'instantiatesCanonical',
-      instantiatesCanonical,
-    );
-    addField(
-      'instantiatesUri',
-      instantiatesUri,
-    );
-    addField(
       'basedOn',
       basedOn,
     );
@@ -580,8 +548,6 @@ class Communication extends DomainResource {
       'extension',
       'modifierExtension',
       'identifier',
-      'instantiatesCanonical',
-      'instantiatesUri',
       'basedOn',
       'partOf',
       'inResponseTo',
@@ -648,14 +614,6 @@ class Communication extends DomainResource {
       case 'identifier':
         if (identifier != null) {
           fields.addAll(identifier!);
-        }
-      case 'instantiatesCanonical':
-        if (instantiatesCanonical != null) {
-          fields.addAll(instantiatesCanonical!);
-        }
-      case 'instantiatesUri':
-        if (instantiatesUri != null) {
-          fields.addAll(instantiatesUri!);
         }
       case 'basedOn':
         if (basedOn != null) {
@@ -823,18 +781,6 @@ class Communication extends DomainResource {
     if (!listEquals<Identifier>(
       identifier,
       o.identifier,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirCanonical>(
-      instantiatesCanonical,
-      o.instantiatesCanonical,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirUri>(
-      instantiatesUri,
-      o.instantiatesUri,
     )) {
       return false;
     }

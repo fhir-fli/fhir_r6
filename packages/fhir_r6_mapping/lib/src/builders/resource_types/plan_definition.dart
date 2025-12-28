@@ -5281,10 +5281,10 @@ class PlanDefinitionActionBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      goalId: JsonParser.parsePrimitiveList<FhirIdBuilder>(
+      goalId: JsonParser.parsePrimitiveList<FhirStringBuilder>(
         json,
         'goalId',
-        FhirIdBuilder.fromJson,
+        FhirStringBuilder.fromJson,
         '$objectPath.goalId',
       ),
       subjectX:
@@ -5550,7 +5550,7 @@ class PlanDefinitionActionBuilder extends BackboneElementBuilder {
   /// quality, a goal represents acceptance criteria (Goal) for a given
   /// action (Test), so the goalId would be the unique id of a defined goal
   /// element establishing the acceptance criteria for the action.
-  List<FhirIdBuilder>? goalId;
+  List<FhirStringBuilder>? goalId;
 
   /// [subjectX]
   /// A code, group definition, or canonical reference that describes the
@@ -6237,11 +6237,11 @@ class PlanDefinitionActionBuilder extends BackboneElementBuilder {
         }
       case 'goalId':
         {
-          if (child is List<FhirIdBuilder>) {
+          if (child is List<FhirStringBuilder>) {
             // Replace or create new list
             goalId = child;
             return;
-          } else if (child is FhirIdBuilder) {
+          } else if (child is FhirStringBuilder) {
             // Add single element to existing list or create new list
             goalId = [
               ...(goalId ?? []),
@@ -6250,11 +6250,11 @@ class PlanDefinitionActionBuilder extends BackboneElementBuilder {
             return;
           } else if (child is List<PrimitiveTypeBuilder>) {
             // Try to convert list of primitive types
-            final convertedList = <FhirIdBuilder>[];
+            final convertedList = <FhirStringBuilder>[];
             for (final element in child) {
               try {
                 final stringValue = element.toString();
-                final converted = FhirIdBuilder.tryParse(stringValue);
+                final converted = FhirStringBuilder.tryParse(stringValue);
                 if (converted != null) {
                   convertedList.add(converted);
                 }
@@ -6270,7 +6270,7 @@ class PlanDefinitionActionBuilder extends BackboneElementBuilder {
             // Try to convert a single primitive
             try {
               final stringValue = child.toString();
-              final converted = FhirIdBuilder.tryParse(stringValue);
+              final converted = FhirStringBuilder.tryParse(stringValue);
               if (converted != null) {
                 goalId = [
                   ...(goalId ?? []),
@@ -6745,7 +6745,7 @@ class PlanDefinitionActionBuilder extends BackboneElementBuilder {
       case 'documentation':
         return ['RelatedArtifactBuilder'];
       case 'goalId':
-        return ['FhirIdBuilder'];
+        return ['FhirStringBuilder'];
       case 'subject':
       case 'subjectX':
         return [
@@ -6889,7 +6889,7 @@ class PlanDefinitionActionBuilder extends BackboneElementBuilder {
         }
       case 'goalId':
         {
-          goalId = <FhirIdBuilder>[];
+          goalId = <FhirStringBuilder>[];
           return;
         }
       case 'subject':
@@ -7044,7 +7044,7 @@ class PlanDefinitionActionBuilder extends BackboneElementBuilder {
     CodeableConceptBuilder? code,
     List<CodeableConceptBuilder>? reason,
     List<RelatedArtifactBuilder>? documentation,
-    List<FhirIdBuilder>? goalId,
+    List<FhirStringBuilder>? goalId,
     SubjectXPlanDefinitionActionBuilder? subjectX,
     List<TriggerDefinitionBuilder>? trigger,
     List<PlanDefinitionConditionBuilder>? condition,
@@ -7223,7 +7223,7 @@ class PlanDefinitionActionBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!listEquals<FhirIdBuilder>(
+    if (!listEquals<FhirStringBuilder>(
       goalId,
       o.goalId,
     )) {
@@ -7875,10 +7875,10 @@ class PlanDefinitionInputBuilder extends BackboneElementBuilder {
         DataRequirementBuilder.fromJson,
         '$objectPath.requirement',
       ),
-      relatedData: JsonParser.parsePrimitive<FhirIdBuilder>(
+      relatedData: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'relatedData',
-        FhirIdBuilder.fromJson,
+        FhirStringBuilder.fromJson,
         '$objectPath.relatedData',
       ),
     );
@@ -7940,7 +7940,7 @@ class PlanDefinitionInputBuilder extends BackboneElementBuilder {
   /// [relatedData]
   /// Points to an existing input or output element that provides data to
   /// this input.
-  FhirIdBuilder? relatedData;
+  FhirStringBuilder? relatedData;
 
   /// Converts a [PlanDefinitionInputBuilder]
   /// to [PlanDefinitionInput]
@@ -8144,14 +8144,14 @@ class PlanDefinitionInputBuilder extends BackboneElementBuilder {
         }
       case 'relatedData':
         {
-          if (child is FhirIdBuilder) {
+          if (child is FhirStringBuilder) {
             relatedData = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
-              final converted = FhirIdBuilder.tryParse(stringValue);
+              final converted = FhirStringBuilder.tryParse(stringValue);
               if (converted != null) {
                 relatedData = converted;
                 return;
@@ -8183,7 +8183,7 @@ class PlanDefinitionInputBuilder extends BackboneElementBuilder {
       case 'requirement':
         return ['DataRequirementBuilder'];
       case 'relatedData':
-        return ['FhirIdBuilder'];
+        return ['FhirStringBuilder'];
       default:
         return <String>[];
     }
@@ -8221,7 +8221,7 @@ class PlanDefinitionInputBuilder extends BackboneElementBuilder {
         }
       case 'relatedData':
         {
-          relatedData = FhirIdBuilder.empty();
+          relatedData = FhirStringBuilder.empty();
           return;
         }
       default:
@@ -8238,7 +8238,7 @@ class PlanDefinitionInputBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     FhirStringBuilder? title,
     DataRequirementBuilder? requirement,
-    FhirIdBuilder? relatedData,
+    FhirStringBuilder? relatedData,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -8856,7 +8856,7 @@ class PlanDefinitionRelatedActionBuilder extends BackboneElementBuilder {
   /// For Builder classes, no fields are required
   factory PlanDefinitionRelatedActionBuilder.empty() =>
       PlanDefinitionRelatedActionBuilder(
-        targetId: FhirIdBuilder.empty(),
+        targetId: FhirStringBuilder.empty(),
         relationship: ActionRelationshipTypeBuilder.values.first,
       );
 
@@ -8892,10 +8892,10 @@ class PlanDefinitionRelatedActionBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      targetId: JsonParser.parsePrimitive<FhirIdBuilder>(
+      targetId: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'targetId',
-        FhirIdBuilder.fromJson,
+        FhirStringBuilder.fromJson,
         '$objectPath.targetId',
       ),
       relationship: JsonParser.parsePrimitive<ActionRelationshipTypeBuilder>(
@@ -8966,7 +8966,7 @@ class PlanDefinitionRelatedActionBuilder extends BackboneElementBuilder {
 
   /// [targetId]
   /// The element id of the target related action.
-  FhirIdBuilder? targetId;
+  FhirStringBuilder? targetId;
 
   /// [relationship]
   /// The relationship of the start of this action to the related action.
@@ -9185,14 +9185,14 @@ class PlanDefinitionRelatedActionBuilder extends BackboneElementBuilder {
         }
       case 'targetId':
         {
-          if (child is FhirIdBuilder) {
+          if (child is FhirStringBuilder) {
             targetId = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
-              final converted = FhirIdBuilder.tryParse(stringValue);
+              final converted = FhirStringBuilder.tryParse(stringValue);
               if (converted != null) {
                 targetId = converted;
                 return;
@@ -9302,7 +9302,7 @@ class PlanDefinitionRelatedActionBuilder extends BackboneElementBuilder {
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
       case 'targetId':
-        return ['FhirIdBuilder'];
+        return ['FhirStringBuilder'];
       case 'relationship':
         return ['FhirCodeEnumBuilder'];
       case 'endRelationship':
@@ -9344,7 +9344,7 @@ class PlanDefinitionRelatedActionBuilder extends BackboneElementBuilder {
         }
       case 'targetId':
         {
-          targetId = FhirIdBuilder.empty();
+          targetId = FhirStringBuilder.empty();
           return;
         }
       case 'relationship':
@@ -9381,7 +9381,7 @@ class PlanDefinitionRelatedActionBuilder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    FhirIdBuilder? targetId,
+    FhirStringBuilder? targetId,
     ActionRelationshipTypeBuilder? relationship,
     ActionRelationshipTypeBuilder? endRelationship,
     OffsetXPlanDefinitionRelatedActionBuilder? offsetX,

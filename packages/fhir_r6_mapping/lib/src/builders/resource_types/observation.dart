@@ -39,6 +39,7 @@ class ObservationBuilder extends DomainResourceBuilder {
     this.code,
     this.subject,
     this.focus,
+    this.organizer,
     this.encounter,
     EffectiveXObservationBuilder? effectiveX,
     FhirDateTimeBuilder? effectiveDateTime,
@@ -259,6 +260,12 @@ class ObservationBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
+      organizer: JsonParser.parsePrimitive<FhirBooleanBuilder>(
+        json,
+        'organizer',
+        FhirBooleanBuilder.fromJson,
+        '$objectPath.organizer',
+      ),
       encounter: JsonParser.parseObject<ReferenceBuilder>(
         json,
         'encounter',
@@ -508,7 +515,7 @@ class ObservationBuilder extends DomainResourceBuilder {
   ReferenceBuilder? subject;
 
   /// [focus]
-  /// The actual focus of an observation when it is not the patient of record
+  /// The actual focus of an observation when it is not the subject of record
   /// representing something or someone associated with the patient such as a
   /// spouse, parent, fetus, or donor. For example, fetus observations in a
   /// mother's record. The focus of an observation could also be an existing
@@ -517,8 +524,14 @@ class ObservationBuilder extends DomainResourceBuilder {
   /// example use case would be using the Observation resource to capture
   /// whether the mother is trained to change her child's tracheostomy tube.
   /// In this example, the child is the patient of record and the mother is
-  /// the focus.
+  /// the focus. As another use case, a caregiver (RelatedPerson) has back
+  /// strain and is unable to provide ADL support to a patient (Subject).
   List<ReferenceBuilder>? focus;
+
+  /// [organizer]
+  /// This observation serves as an organizer or grouper for a set of (one or
+  /// more) sub-observations.
+  FhirBooleanBuilder? organizer;
 
   /// [encounter]
   /// The healthcare event (e.g. a patient and healthcare provider
@@ -728,6 +741,7 @@ class ObservationBuilder extends DomainResourceBuilder {
     addField('code', code);
     addField('subject', subject);
     addField('focus', focus);
+    addField('organizer', organizer);
     addField('encounter', encounter);
     if (effectiveX != null) {
       final fhirType = effectiveX!.fhirType;
@@ -778,6 +792,7 @@ class ObservationBuilder extends DomainResourceBuilder {
       'code',
       'subject',
       'focus',
+      'organizer',
       'encounter',
       'effectiveX',
       'issued',
@@ -890,6 +905,10 @@ class ObservationBuilder extends DomainResourceBuilder {
       case 'focus':
         if (focus != null) {
           fields.addAll(focus!);
+        }
+      case 'organizer':
+        if (organizer != null) {
+          fields.add(organizer!);
         }
       case 'encounter':
         if (encounter != null) {
@@ -1359,6 +1378,26 @@ class ObservationBuilder extends DomainResourceBuilder {
               child,
             ];
             return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'organizer':
+        {
+          if (child is FhirBooleanBuilder) {
+            organizer = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirBooleanBuilder.tryParse(stringValue);
+              if (converted != null) {
+                organizer = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -1845,6 +1884,8 @@ class ObservationBuilder extends DomainResourceBuilder {
         return ['ReferenceBuilder'];
       case 'focus':
         return ['ReferenceBuilder'];
+      case 'organizer':
+        return ['FhirBooleanBuilder'];
       case 'encounter':
         return ['ReferenceBuilder'];
       case 'effective':
@@ -2041,6 +2082,11 @@ class ObservationBuilder extends DomainResourceBuilder {
           focus = <ReferenceBuilder>[];
           return;
         }
+      case 'organizer':
+        {
+          organizer = FhirBooleanBuilder.empty();
+          return;
+        }
       case 'encounter':
         {
           encounter = ReferenceBuilder.empty();
@@ -2232,6 +2278,7 @@ class ObservationBuilder extends DomainResourceBuilder {
     CodeableConceptBuilder? code,
     ReferenceBuilder? subject,
     List<ReferenceBuilder>? focus,
+    FhirBooleanBuilder? organizer,
     ReferenceBuilder? encounter,
     EffectiveXObservationBuilder? effectiveX,
     FhirInstantBuilder? issued,
@@ -2296,6 +2343,7 @@ class ObservationBuilder extends DomainResourceBuilder {
       code: code ?? this.code,
       subject: subject ?? this.subject,
       focus: focus ?? this.focus,
+      organizer: organizer ?? this.organizer,
       encounter: encounter ?? this.encounter,
       effectiveX: effectiveX ??
           effectiveDateTime ??
@@ -2463,6 +2511,12 @@ class ObservationBuilder extends DomainResourceBuilder {
     if (!listEquals<ReferenceBuilder>(
       focus,
       o.focus,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      organizer,
+      o.organizer,
     )) {
       return false;
     }

@@ -31,6 +31,7 @@ class FhirEndpoint extends DomainResource {
     this.managingOrganization,
     this.contact,
     this.period,
+    this.availability,
     this.payload,
     required this.address,
     this.header,
@@ -142,6 +143,11 @@ class FhirEndpoint extends DomainResource {
         'period',
         Period.fromJson,
       ),
+      availability: JsonParser.parseObject<Availability>(
+        json,
+        'availability',
+        Availability.fromJson,
+      ),
       payload: (json['payload'] as List<dynamic>?)
           ?.map<EndpointPayload>(
             (v) => EndpointPayload.fromJson(
@@ -210,8 +216,8 @@ class FhirEndpoint extends DomainResource {
   final List<Identifier>? identifier;
 
   /// [status]
-  /// The endpoint status represents the general expected availability of an
-  /// endpoint.
+  /// The endpoint status represents whether the endpoint can currently be
+  /// used for connections or why it can't be used.
   final EndpointStatus status;
 
   /// [connectionType]
@@ -236,9 +242,11 @@ class FhirEndpoint extends DomainResource {
   final List<CodeableConcept>? environmentType;
 
   /// [managingOrganization]
-  /// The organization that manages this endpoint (even if technically
-  /// another organization is hosting this in the cloud, it is the
-  /// organization associated with the data).
+  /// The organization that provides technical management services for this
+  /// endpoint. This would be the organization that acts as the public help
+  /// desk for when the endpoint is not functioning. It does NOT necessarily
+  /// represent the organization who is the steward of data being
+  /// provided/accepted by the endpoint.
   final Reference? managingOrganization;
 
   /// [contact]
@@ -249,6 +257,11 @@ class FhirEndpoint extends DomainResource {
   /// [period]
   /// The interval during which the endpoint is expected to be operational.
   final Period? period;
+
+  /// [availability]
+  /// The times the endpoint is expected to be available, including transient
+  /// downtimes and any exceptions.
+  final Availability? availability;
 
   /// [payload]
   /// The set of payloads that are provided/available at this endpoint.
@@ -394,6 +407,10 @@ class FhirEndpoint extends DomainResource {
       period,
     );
     addField(
+      'availability',
+      availability,
+    );
+    addField(
       'payload',
       payload,
     );
@@ -429,6 +446,7 @@ class FhirEndpoint extends DomainResource {
       'managingOrganization',
       'contact',
       'period',
+      'availability',
       'payload',
       'address',
       'header',
@@ -507,6 +525,10 @@ class FhirEndpoint extends DomainResource {
       case 'period':
         if (period != null) {
           fields.add(period!);
+        }
+      case 'availability':
+        if (availability != null) {
+          fields.add(availability!);
         }
       case 'payload':
         if (payload != null) {
@@ -661,6 +683,12 @@ class FhirEndpoint extends DomainResource {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      availability,
+      o.availability,
+    )) {
+      return false;
+    }
     if (!listEquals<EndpointPayload>(
       payload,
       o.payload,
@@ -695,6 +723,8 @@ class EndpointPayload extends BackboneElement {
     super.modifierExtension,
     this.type,
     this.mimeType,
+    this.profileCanonical,
+    this.profileUri,
     super.disallowExtensions,
   }) : super();
 
@@ -733,6 +763,16 @@ class EndpointPayload extends BackboneElement {
         json,
         'mimeType',
         FhirCode.fromJson,
+      ),
+      profileCanonical: JsonParser.parsePrimitiveList<FhirCanonical>(
+        json,
+        'profileCanonical',
+        FhirCanonical.fromJson,
+      ),
+      profileUri: JsonParser.parsePrimitiveList<FhirUri>(
+        json,
+        'profileUri',
+        FhirUri.fromJson,
       ),
     );
   }
@@ -790,6 +830,19 @@ class EndpointPayload extends BackboneElement {
   /// sender could send any content (including no content depending on the
   /// connectionType).
   final List<FhirCode>? mimeType;
+
+  /// [profileCanonical]
+  /// The FHIR profile that is expected at this endpoint. It describes the
+  /// resources that are handled, or even simply which resource types -e.g.
+  /// Vital Sign Observations or QuestionnaireResponse. The `profileUri` may
+  /// be used when a FHIR Structure Definition is not available/appropriate.
+  final List<FhirCanonical>? profileCanonical;
+
+  /// [profileUri]
+  /// The profile (as a uri) that is expected at this endpoint when not
+  /// represented using a FHIR profile. e.g. CDA Template ID expressed as an
+  /// OID (in the Uri).
+  final List<FhirUri>? profileUri;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -873,6 +926,14 @@ class EndpointPayload extends BackboneElement {
       'mimeType',
       mimeType,
     );
+    addField(
+      'profileCanonical',
+      profileCanonical,
+    );
+    addField(
+      'profileUri',
+      profileUri,
+    );
     return json;
   }
 
@@ -885,6 +946,8 @@ class EndpointPayload extends BackboneElement {
       'modifierExtension',
       'type',
       'mimeType',
+      'profileCanonical',
+      'profileUri',
     ];
   }
 
@@ -916,6 +979,14 @@ class EndpointPayload extends BackboneElement {
       case 'mimeType':
         if (mimeType != null) {
           fields.addAll(mimeType!);
+        }
+      case 'profileCanonical':
+        if (profileCanonical != null) {
+          fields.addAll(profileCanonical!);
+        }
+      case 'profileUri':
+        if (profileUri != null) {
+          fields.addAll(profileUri!);
         }
       default:
         if (checkValid) {
@@ -985,6 +1056,18 @@ class EndpointPayload extends BackboneElement {
     if (!listEquals<FhirCode>(
       mimeType,
       o.mimeType,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirCanonical>(
+      profileCanonical,
+      o.profileCanonical,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirUri>(
+      profileUri,
+      o.profileUri,
     )) {
       return false;
     }

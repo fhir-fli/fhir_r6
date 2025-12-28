@@ -53,8 +53,8 @@ Resource resourceFromJson(Map<String, dynamic> json) {
       return Claim.fromJson(json);
     case 'ClaimResponse':
       return ClaimResponse.fromJson(json);
-    case 'ClinicalImpression':
-      return ClinicalImpression.fromJson(json);
+    case 'ClinicalAssessment':
+      return ClinicalAssessment.fromJson(json);
     case 'ClinicalUseDefinition':
       return ClinicalUseDefinition.fromJson(json);
     case 'CodeSystem':
@@ -87,6 +87,8 @@ Resource resourceFromJson(Map<String, dynamic> json) {
       return DetectedIssue.fromJson(json);
     case 'Device':
       return Device.fromJson(json);
+    case 'DeviceAlert':
+      return DeviceAlert.fromJson(json);
     case 'DeviceAssociation':
       return DeviceAssociation.fromJson(json);
     case 'DeviceDefinition':
@@ -117,8 +119,6 @@ Resource resourceFromJson(Map<String, dynamic> json) {
       return EventDefinition.fromJson(json);
     case 'Evidence':
       return Evidence.fromJson(json);
-    case 'EvidenceReport':
-      return EvidenceReport.fromJson(json);
     case 'EvidenceVariable':
       return EvidenceVariable.fromJson(json);
     case 'ExampleScenario':
@@ -163,6 +163,8 @@ Resource resourceFromJson(Map<String, dynamic> json) {
       return Ingredient.fromJson(json);
     case 'InsurancePlan':
       return InsurancePlan.fromJson(json);
+    case 'InsuranceProduct':
+      return InsuranceProduct.fromJson(json);
     case 'InventoryItem':
       return InventoryItem.fromJson(json);
     case 'InventoryReport':
@@ -199,6 +201,8 @@ Resource resourceFromJson(Map<String, dynamic> json) {
       return MessageDefinition.fromJson(json);
     case 'MessageHeader':
       return MessageHeader.fromJson(json);
+    case 'MolecularDefinition':
+      return MolecularDefinition.fromJson(json);
     case 'MolecularSequence':
       return MolecularSequence.fromJson(json);
     case 'NamingSystem':
@@ -235,6 +239,8 @@ Resource resourceFromJson(Map<String, dynamic> json) {
       return Permission.fromJson(json);
     case 'Person':
       return Person.fromJson(json);
+    case 'PersonalRelationship':
+      return PersonalRelationship.fromJson(json);
     case 'PlanDefinition':
       return PlanDefinition.fromJson(json);
     case 'Practitioner':

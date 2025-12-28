@@ -28,7 +28,7 @@ class EpisodeOfCare extends DomainResource {
     this.type,
     this.reason,
     this.diagnosis,
-    required this.patient,
+    required this.subject,
     this.managingOrganization,
     this.period,
     this.referralRequest,
@@ -130,9 +130,9 @@ class EpisodeOfCare extends DomainResource {
             ),
           )
           .toList(),
-      patient: JsonParser.parseObject<Reference>(
+      subject: JsonParser.parseObject<Reference>(
         json,
-        'patient',
+        'subject',
         Reference.fromJson,
       )!,
       managingOrganization: JsonParser.parseObject<Reference>(
@@ -246,9 +246,9 @@ class EpisodeOfCare extends DomainResource {
   /// of care.
   final List<EpisodeOfCareDiagnosis>? diagnosis;
 
-  /// [patient]
-  /// The patient who is the focus of this episode of care.
-  final Reference patient;
+  /// [subject]
+  /// The patient/group who is the focus of this episode of care.
+  final Reference subject;
 
   /// [managingOrganization]
   /// The organization that has assumed the specific responsibilities for
@@ -401,8 +401,8 @@ class EpisodeOfCare extends DomainResource {
       diagnosis,
     );
     addField(
-      'patient',
-      patient,
+      'subject',
+      subject,
     );
     addField(
       'managingOrganization',
@@ -449,7 +449,7 @@ class EpisodeOfCare extends DomainResource {
       'type',
       'reason',
       'diagnosis',
-      'patient',
+      'subject',
       'managingOrganization',
       'period',
       'referralRequest',
@@ -522,8 +522,8 @@ class EpisodeOfCare extends DomainResource {
         if (diagnosis != null) {
           fields.addAll(diagnosis!);
         }
-      case 'patient':
-        fields.add(patient);
+      case 'subject':
+        fields.add(subject);
       case 'managingOrganization':
         if (managingOrganization != null) {
           fields.add(managingOrganization!);
@@ -674,8 +674,8 @@ class EpisodeOfCare extends DomainResource {
       return false;
     }
     if (!equalsDeepWithNull(
-      patient,
-      o.patient,
+      subject,
+      o.subject,
     )) {
       return false;
     }
@@ -1060,11 +1060,13 @@ class EpisodeOfCareReason extends BackboneElement {
             ),
           )
           .toList(),
-      use: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'use',
-        CodeableConcept.fromJson,
-      ),
+      use: (json['use'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       value: (json['value'] as List<dynamic>?)
           ?.map<CodeableReference>(
             (v) => CodeableReference.fromJson(
@@ -1120,7 +1122,7 @@ class EpisodeOfCareReason extends BackboneElement {
   /// [use]
   /// What the reason value should be used as e.g. Chief Complaint, Health
   /// Concern, Health Maintenance (including screening).
-  final CodeableConcept? use;
+  final List<CodeableConcept>? use;
 
   /// [value]
   /// The medical reason that is expected to be addressed during the episode
@@ -1247,7 +1249,7 @@ class EpisodeOfCareReason extends BackboneElement {
         }
       case 'use':
         if (use != null) {
-          fields.add(use!);
+          fields.addAll(use!);
         }
       case 'value':
         if (value != null) {
@@ -1312,7 +1314,7 @@ class EpisodeOfCareReason extends BackboneElement {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<CodeableConcept>(
       use,
       o.use,
     )) {
@@ -1375,11 +1377,13 @@ class EpisodeOfCareDiagnosis extends BackboneElement {
             ),
           )
           .toList(),
-      use: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'use',
-        CodeableConcept.fromJson,
-      ),
+      use: (json['use'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -1433,7 +1437,7 @@ class EpisodeOfCareDiagnosis extends BackboneElement {
   /// [use]
   /// Role that this diagnosis has within the episode of care (e.g.
   /// admission, billing, discharge …).
-  final CodeableConcept? use;
+  final List<CodeableConcept>? use;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1559,7 +1563,7 @@ class EpisodeOfCareDiagnosis extends BackboneElement {
         }
       case 'use':
         if (use != null) {
-          fields.add(use!);
+          fields.addAll(use!);
         }
       default:
         if (checkValid) {
@@ -1626,7 +1630,7 @@ class EpisodeOfCareDiagnosis extends BackboneElement {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<CodeableConcept>(
       use,
       o.use,
     )) {

@@ -10,6 +10,7 @@ extension FhirMarkdownBuilderExtension on String {
 class FhirMarkdownBuilder extends FhirStringBuilder
     implements
         SourceXImplementationGuidePageBuilder,
+        DescriptionXMolecularDefinitionGenomeAssemblyBuilder,
         ValueXParametersParameterBuilder,
         ValueXTaskInputBuilder,
         ValueXTaskOutputBuilder,
@@ -23,10 +24,15 @@ class FhirMarkdownBuilder extends FhirStringBuilder
         ValueXAdministrableProductDefinitionPropertyBuilder,
         ValueXManufacturedItemDefinitionPropertyBuilder,
         ValueXMedicinalProductDefinitionCharacteristicBuilder,
-        CiteAsXArtifactAssessmentBuilder,
-        CiteAsXEvidenceBuilder,
-        CiteAsXEvidenceReportBuilder,
-        InstructionXServiceRequestPatientInstructionBuilder {
+        TargetXArtifactAssessmentRelatesToBuilder,
+        TargetXCitationRelatesToBuilder,
+        TargetXCompositionRelatesToBuilder,
+        TargetXEvidenceRelatesToBuilder,
+        TargetXEvidenceVariableRelatesToBuilder,
+        TargetXResearchStudyRelatesToBuilder,
+        InstructionXServiceRequestPatientInstructionBuilder,
+        ArtifactXTestPlanScopeBuilder,
+        ArtifactXTestPlanTestCaseScopeBuilder {
   // --------------------------------------------------------------------------
   // Private Internal Constructor
   // --------------------------------------------------------------------------

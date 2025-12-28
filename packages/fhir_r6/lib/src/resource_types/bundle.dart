@@ -156,10 +156,11 @@ class Bundle extends Resource {
   final FhirInstant? timestamp;
 
   /// [total]
-  /// If a set of search matches, this is the (potentially estimated) total
-  /// number of entries of type 'match' across all pages in the search. It
-  /// does not include search.mode = 'include' or 'outcome' entries and it
-  /// does not provide a count of the number of entries in the Bundle.
+  /// If a set of search matches or a history, this is the (potentially
+  /// estimated) total number of entries of type 'match' across all pages in
+  /// the search. It does not include search.mode = 'include' or 'outcome'
+  /// entries and it does not provide a count of the number of entries in the
+  /// Bundle.
   final FhirUnsignedInt? total;
 
   /// [link]
@@ -176,8 +177,8 @@ class Bundle extends Resource {
   final Signature? signature;
 
   /// [issues]
-  /// Captures issues and warnings that relate to the construction of the
-  /// Bundle and the content within it.
+  /// An OperationOutcome that captures issues and warnings that relate to
+  /// the construction of the Bundle and the content within it.
   final Resource? issues;
   @override
   Map<String, dynamic> toJson() {
@@ -918,11 +919,13 @@ class BundleEntry extends BackboneElement {
   /// resource. Even when not required, fullUrl MAY be set to a urn:uuid to
   /// allow referencing entries in a transaction. The fullUrl can be an
   /// arbitrary URI and is not limited to urn:uuid, urn:oid, http, and https.
-  /// The fullUrl element SHALL have a value except when:
-  /// * invoking a create
-  /// * invoking or responding to an operation where the body is not a single
-  /// identified resource
-  /// * invoking or returning the results of a search or history operation.
+  /// The fullUrl element SHALL have a value unless:
+  /// * the Bundle is a batch or transaction request or response AND
+  /// * the entry is
+  ///  * invoking a create
+  ///  * invoking or responding to an operation where the body is not a
+  /// single identified resource
+  ///  * invoking or returning the results of a search or history operation.
   final FhirUri? fullUrl;
 
   /// [resource]

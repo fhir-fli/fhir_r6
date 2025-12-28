@@ -23,8 +23,6 @@ class CarePlanBuilder extends DomainResourceBuilder {
     super.extension_,
     super.modifierExtension,
     this.identifier,
-    this.instantiatesCanonical,
-    this.instantiatesUri,
     this.basedOn,
     this.replaces,
     this.partOf,
@@ -134,19 +132,6 @@ class CarePlanBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      instantiatesCanonical:
-          JsonParser.parsePrimitiveList<FhirCanonicalBuilder>(
-        json,
-        'instantiatesCanonical',
-        FhirCanonicalBuilder.fromJson,
-        '$objectPath.instantiatesCanonical',
-      ),
-      instantiatesUri: JsonParser.parsePrimitiveList<FhirUriBuilder>(
-        json,
-        'instantiatesUri',
-        FhirUriBuilder.fromJson,
-        '$objectPath.instantiatesUri',
-      ),
       basedOn: (json['basedOn'] as List<dynamic>?)
           ?.map<ReferenceBuilder>(
             (v) => ReferenceBuilder.fromJson(
@@ -362,18 +347,6 @@ class CarePlanBuilder extends DomainResourceBuilder {
   /// propagates from server to server.
   List<IdentifierBuilder>? identifier;
 
-  /// [instantiatesCanonical]
-  /// The URL pointing to a FHIR-defined protocol, guideline, questionnaire
-  /// or other definition that is adhered to in whole or in part by this
-  /// CarePlan.
-  List<FhirCanonicalBuilder>? instantiatesCanonical;
-
-  /// [instantiatesUri]
-  /// The URL pointing to an externally maintained protocol, guideline,
-  /// questionnaire or other definition that is adhered to in whole or in
-  /// part by this CarePlan.
-  List<FhirUriBuilder>? instantiatesUri;
-
   /// [basedOn]
   /// A higher-level request resource (i.e. a plan, proposal or order) that
   /// is fulfilled in whole or in part by this care plan.
@@ -519,8 +492,6 @@ class CarePlanBuilder extends DomainResourceBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('identifier', identifier);
-    addField('instantiatesCanonical', instantiatesCanonical);
-    addField('instantiatesUri', instantiatesUri);
     addField('basedOn', basedOn);
     addField('replaces', replaces);
     addField('partOf', partOf);
@@ -557,8 +528,6 @@ class CarePlanBuilder extends DomainResourceBuilder {
       'extension',
       'modifierExtension',
       'identifier',
-      'instantiatesCanonical',
-      'instantiatesUri',
       'basedOn',
       'replaces',
       'partOf',
@@ -626,14 +595,6 @@ class CarePlanBuilder extends DomainResourceBuilder {
       case 'identifier':
         if (identifier != null) {
           fields.addAll(identifier!);
-        }
-      case 'instantiatesCanonical':
-        if (instantiatesCanonical != null) {
-          fields.addAll(instantiatesCanonical!);
-        }
-      case 'instantiatesUri':
-        if (instantiatesUri != null) {
-          fields.addAll(instantiatesUri!);
         }
       case 'basedOn':
         if (basedOn != null) {
@@ -884,104 +845,6 @@ class CarePlanBuilder extends DomainResourceBuilder {
               child,
             ];
             return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'instantiatesCanonical':
-        {
-          if (child is List<FhirCanonicalBuilder>) {
-            // Replace or create new list
-            instantiatesCanonical = child;
-            return;
-          } else if (child is FhirCanonicalBuilder) {
-            // Add single element to existing list or create new list
-            instantiatesCanonical = [
-              ...(instantiatesCanonical ?? []),
-              child,
-            ];
-            return;
-          } else if (child is List<PrimitiveTypeBuilder>) {
-            // Try to convert list of primitive types
-            final convertedList = <FhirCanonicalBuilder>[];
-            for (final element in child) {
-              try {
-                final stringValue = element.toString();
-                final converted = FhirCanonicalBuilder.tryParse(stringValue);
-                if (converted != null) {
-                  convertedList.add(converted);
-                }
-              } catch (e) {
-                // Continue if conversion fails
-              }
-            }
-            if (convertedList.isNotEmpty) {
-              instantiatesCanonical = convertedList;
-              return;
-            }
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert a single primitive
-            try {
-              final stringValue = child.toString();
-              final converted = FhirCanonicalBuilder.tryParse(stringValue);
-              if (converted != null) {
-                instantiatesCanonical = [
-                  ...(instantiatesCanonical ?? []),
-                  converted,
-                ];
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'instantiatesUri':
-        {
-          if (child is List<FhirUriBuilder>) {
-            // Replace or create new list
-            instantiatesUri = child;
-            return;
-          } else if (child is FhirUriBuilder) {
-            // Add single element to existing list or create new list
-            instantiatesUri = [
-              ...(instantiatesUri ?? []),
-              child,
-            ];
-            return;
-          } else if (child is List<PrimitiveTypeBuilder>) {
-            // Try to convert list of primitive types
-            final convertedList = <FhirUriBuilder>[];
-            for (final element in child) {
-              try {
-                final stringValue = element.toString();
-                final converted = FhirUriBuilder.tryParse(stringValue);
-                if (converted != null) {
-                  convertedList.add(converted);
-                }
-              } catch (e) {
-                // Continue if conversion fails
-              }
-            }
-            if (convertedList.isNotEmpty) {
-              instantiatesUri = convertedList;
-              return;
-            }
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert a single primitive
-            try {
-              final stringValue = child.toString();
-              final converted = FhirUriBuilder.tryParse(stringValue);
-              if (converted != null) {
-                instantiatesUri = [
-                  ...(instantiatesUri ?? []),
-                  converted,
-                ];
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -1327,10 +1190,6 @@ class CarePlanBuilder extends DomainResourceBuilder {
         return ['FhirExtensionBuilder'];
       case 'identifier':
         return ['IdentifierBuilder'];
-      case 'instantiatesCanonical':
-        return ['FhirCanonicalBuilder'];
-      case 'instantiatesUri':
-        return ['FhirUriBuilder'];
       case 'basedOn':
         return ['ReferenceBuilder'];
       case 'replaces':
@@ -1424,16 +1283,6 @@ class CarePlanBuilder extends DomainResourceBuilder {
       case 'identifier':
         {
           identifier = <IdentifierBuilder>[];
-          return;
-        }
-      case 'instantiatesCanonical':
-        {
-          instantiatesCanonical = <FhirCanonicalBuilder>[];
-          return;
-        }
-      case 'instantiatesUri':
-        {
-          instantiatesUri = <FhirUriBuilder>[];
           return;
         }
       case 'basedOn':
@@ -1554,8 +1403,6 @@ class CarePlanBuilder extends DomainResourceBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     List<IdentifierBuilder>? identifier,
-    List<FhirCanonicalBuilder>? instantiatesCanonical,
-    List<FhirUriBuilder>? instantiatesUri,
     List<ReferenceBuilder>? basedOn,
     List<ReferenceBuilder>? replaces,
     List<ReferenceBuilder>? partOf,
@@ -1592,9 +1439,6 @@ class CarePlanBuilder extends DomainResourceBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       identifier: identifier ?? this.identifier,
-      instantiatesCanonical:
-          instantiatesCanonical ?? this.instantiatesCanonical,
-      instantiatesUri: instantiatesUri ?? this.instantiatesUri,
       basedOn: basedOn ?? this.basedOn,
       replaces: replaces ?? this.replaces,
       partOf: partOf ?? this.partOf,
@@ -1692,18 +1536,6 @@ class CarePlanBuilder extends DomainResourceBuilder {
     if (!listEquals<IdentifierBuilder>(
       identifier,
       o.identifier,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirCanonicalBuilder>(
-      instantiatesCanonical,
-      o.instantiatesCanonical,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirUriBuilder>(
-      instantiatesUri,
-      o.instantiatesUri,
     )) {
       return false;
     }

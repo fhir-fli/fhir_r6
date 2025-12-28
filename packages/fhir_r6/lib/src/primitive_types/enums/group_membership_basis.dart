@@ -6,6 +6,9 @@ enum GroupMembershipBasisEnum {
   /// definitional
   definitional,
 
+  /// conceptual
+  conceptual,
+
   /// enumerated
   enumerated,
   ;
@@ -19,6 +22,8 @@ enum GroupMembershipBasisEnum {
     switch (this) {
       case GroupMembershipBasisEnum.definitional:
         return 'definitional';
+      case GroupMembershipBasisEnum.conceptual:
+        return 'conceptual';
       case GroupMembershipBasisEnum.enumerated:
         return 'enumerated';
     }
@@ -40,6 +45,8 @@ enum GroupMembershipBasisEnum {
     switch (value) {
       case 'definitional':
         return GroupMembershipBasisEnum.definitional;
+      case 'conceptual':
+        return GroupMembershipBasisEnum.conceptual;
       case 'enumerated':
         return GroupMembershipBasisEnum.enumerated;
     }
@@ -123,9 +130,22 @@ class GroupMembershipBasis extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-membership-basis',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Definitional',
+    ),
+  );
+
+  /// conceptual
+  static const GroupMembershipBasis conceptual = GroupMembershipBasis._(
+    valueString: 'conceptual',
+    valueEnum: GroupMembershipBasisEnum.conceptual,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/group-membership-basis',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Conceptual',
     ),
   );
 
@@ -136,7 +156,7 @@ class GroupMembershipBasis extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-membership-basis',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Enumerated',
     ),
@@ -145,6 +165,7 @@ class GroupMembershipBasis extends FhirCodeEnum {
   /// List of all enum-like values
   static final List<GroupMembershipBasis> values = [
     definitional,
+    conceptual,
     enumerated,
   ];
 

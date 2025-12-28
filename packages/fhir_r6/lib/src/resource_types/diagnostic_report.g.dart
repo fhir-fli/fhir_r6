@@ -23,9 +23,11 @@ abstract class $DiagnosticReportCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<CodeableConcept>? category,
     CodeableConcept? code,
     Reference? subject,
+    List<RelatedArtifact>? relatesTo,
     Reference? encounter,
-    FhirDateTime? effectiveX,
+    EffectiveXDiagnosticReport? effectiveX,
     FhirInstant? issued,
+    List<Reference>? procedure,
     List<Reference>? performer,
     List<Reference>? resultsInterpreter,
     List<Reference>? specimen,
@@ -36,8 +38,10 @@ abstract class $DiagnosticReportCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<DiagnosticReportMedia>? media,
     Reference? composition,
     FhirMarkdown? conclusion,
-    List<CodeableConcept>? conclusionCode,
+    List<CodeableReference>? conclusionCode,
+    List<CodeableReference>? recomendation,
     List<Attachment>? presentedForm,
+    List<Reference>? communication,
     bool? disallowExtensions,
   });
 }
@@ -65,9 +69,11 @@ class _$DiagnosticReportCopyWithImpl<T>
     Object? category = fhirSentinel,
     Object? code = fhirSentinel,
     Object? subject = fhirSentinel,
+    Object? relatesTo = fhirSentinel,
     Object? encounter = fhirSentinel,
     Object? effectiveX = fhirSentinel,
     Object? issued = fhirSentinel,
+    Object? procedure = fhirSentinel,
     Object? performer = fhirSentinel,
     Object? resultsInterpreter = fhirSentinel,
     Object? specimen = fhirSentinel,
@@ -79,7 +85,9 @@ class _$DiagnosticReportCopyWithImpl<T>
     Object? composition = fhirSentinel,
     Object? conclusion = fhirSentinel,
     Object? conclusionCode = fhirSentinel,
+    Object? recomendation = fhirSentinel,
     Object? presentedForm = fhirSentinel,
+    Object? communication = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -120,15 +128,21 @@ class _$DiagnosticReportCopyWithImpl<T>
         subject: identical(subject, fhirSentinel)
             ? _value.subject
             : subject as Reference?,
+        relatesTo: identical(relatesTo, fhirSentinel)
+            ? _value.relatesTo
+            : relatesTo as List<RelatedArtifact>?,
         encounter: identical(encounter, fhirSentinel)
             ? _value.encounter
             : encounter as Reference?,
         effectiveX: identical(effectiveX, fhirSentinel)
             ? _value.effectiveX
-            : effectiveX as FhirDateTime?,
+            : effectiveX as EffectiveXDiagnosticReport?,
         issued: identical(issued, fhirSentinel)
             ? _value.issued
             : issued as FhirInstant?,
+        procedure: identical(procedure, fhirSentinel)
+            ? _value.procedure
+            : procedure as List<Reference>?,
         performer: identical(performer, fhirSentinel)
             ? _value.performer
             : performer as List<Reference>?,
@@ -161,10 +175,16 @@ class _$DiagnosticReportCopyWithImpl<T>
             : conclusion as FhirMarkdown?,
         conclusionCode: identical(conclusionCode, fhirSentinel)
             ? _value.conclusionCode
-            : conclusionCode as List<CodeableConcept>?,
+            : conclusionCode as List<CodeableReference>?,
+        recomendation: identical(recomendation, fhirSentinel)
+            ? _value.recomendation
+            : recomendation as List<CodeableReference>?,
         presentedForm: identical(presentedForm, fhirSentinel)
             ? _value.presentedForm
             : presentedForm as List<Attachment>?,
+        communication: identical(communication, fhirSentinel)
+            ? _value.communication
+            : communication as List<Reference>?,
       ),
     );
   }

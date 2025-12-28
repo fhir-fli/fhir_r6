@@ -46,6 +46,7 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
     this.subject,
     this.context,
     this.event,
+    this.related,
     this.bodySite,
     this.facilityType,
     this.practiceSetting,
@@ -226,6 +227,16 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
+      related: (json['related'] as List<dynamic>?)
+          ?.map<ReferenceBuilder>(
+            (v) => ReferenceBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.related',
+              },
+            ),
+          )
+          .toList(),
       bodySite: (json['bodySite'] as List<dynamic>?)
           ?.map<CodeableReferenceBuilder>(
             (v) => CodeableReferenceBuilder.fromJson(
@@ -254,10 +265,10 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
         PeriodBuilder.fromJson,
         '$objectPath.period',
       ),
-      date: JsonParser.parsePrimitive<FhirInstantBuilder>(
+      date: JsonParser.parsePrimitive<FhirDateTimeBuilder>(
         json,
         'date',
-        FhirInstantBuilder.fromJson,
+        FhirDateTimeBuilder.fromJson,
         '$objectPath.date',
       ),
       author: (json['author'] as List<dynamic>?)
@@ -368,12 +379,13 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
   String get fhirType => 'DocumentReference';
 
   /// [identifier]
-  /// Other business identifiers associated with the document, including
-  /// version independent identifiers.
+  /// Business identifiers assigned to this document reference by the
+  /// performer and/or other systems. These identifiers remain constant as
+  /// the resource is updated and propagates from server to server.
   List<IdentifierBuilder>? identifier;
 
   /// [version]
-  /// An explicitly assigned identifer of a variation of the content in the
+  /// An explicitly assigned identifier of a variation of the content in the
   /// DocumentReference.
   FhirStringBuilder? version;
 
@@ -383,7 +395,7 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
   List<ReferenceBuilder>? basedOn;
 
   /// [status]
-  /// The status of this document reference.
+  /// The current state of the document reference.
   DocumentReferenceStatusBuilder? status;
 
   /// [docStatus]
@@ -415,8 +427,8 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
   ReferenceBuilder? subject;
 
   /// [context]
-  /// Describes the clinical encounter or type of care that the document
-  /// content is associated with.
+  /// The Encounter during which this document reference was created or to
+  /// which the creation of this record is tightly associated.
   List<ReferenceBuilder>? context;
 
   /// [event]
@@ -426,6 +438,11 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
   /// Report" in which the procedure being documented is necessarily a
   /// "History and Physical" act.
   List<CodeableReferenceBuilder>? event;
+
+  /// [related]
+  /// Any other resource this document reference was created or to which the
+  /// creation of this record is tightly associated.
+  List<ReferenceBuilder>? related;
 
   /// [bodySite]
   /// The anatomic structures included in the document.
@@ -447,7 +464,7 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
 
   /// [date]
   /// When the document reference was created.
-  FhirInstantBuilder? date;
+  FhirDateTimeBuilder? date;
 
   /// [author]
   /// Identifies who is responsible for adding the information to the
@@ -548,6 +565,7 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
     addField('subject', subject);
     addField('context', context);
     addField('event', event);
+    addField('related', related);
     addField('bodySite', bodySite);
     addField('facilityType', facilityType);
     addField('practiceSetting', practiceSetting);
@@ -586,6 +604,7 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
       'subject',
       'context',
       'event',
+      'related',
       'bodySite',
       'facilityType',
       'practiceSetting',
@@ -685,6 +704,10 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
       case 'event':
         if (event != null) {
           fields.addAll(event!);
+        }
+      case 'related':
+        if (related != null) {
+          fields.addAll(related!);
         }
       case 'bodySite':
         if (bodySite != null) {
@@ -1068,6 +1091,22 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'related':
+        {
+          if (child is List<ReferenceBuilder>) {
+            // Replace or create new list
+            related = child;
+            return;
+          } else if (child is ReferenceBuilder) {
+            // Add single element to existing list or create new list
+            related = [
+              ...(related ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'bodySite':
         {
           if (child is List<CodeableReferenceBuilder>) {
@@ -1110,14 +1149,14 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
         }
       case 'date':
         {
-          if (child is FhirInstantBuilder) {
+          if (child is FhirDateTimeBuilder) {
             date = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
-              final converted = FhirInstantBuilder.tryParse(stringValue);
+              final converted = FhirDateTimeBuilder.tryParse(stringValue);
               if (converted != null) {
                 date = converted;
                 return;
@@ -1284,6 +1323,8 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
         return ['ReferenceBuilder'];
       case 'event':
         return ['CodeableReferenceBuilder'];
+      case 'related':
+        return ['ReferenceBuilder'];
       case 'bodySite':
         return ['CodeableReferenceBuilder'];
       case 'facilityType':
@@ -1293,7 +1334,7 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
       case 'period':
         return ['PeriodBuilder'];
       case 'date':
-        return ['FhirInstantBuilder'];
+        return ['FhirDateTimeBuilder'];
       case 'author':
         return ['ReferenceBuilder'];
       case 'attester':
@@ -1413,6 +1454,11 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
           event = <CodeableReferenceBuilder>[];
           return;
         }
+      case 'related':
+        {
+          related = <ReferenceBuilder>[];
+          return;
+        }
       case 'bodySite':
         {
           bodySite = <CodeableReferenceBuilder>[];
@@ -1435,7 +1481,7 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
         }
       case 'date':
         {
-          date = FhirInstantBuilder.empty();
+          date = FhirDateTimeBuilder.empty();
           return;
         }
       case 'author':
@@ -1501,11 +1547,12 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
     ReferenceBuilder? subject,
     List<ReferenceBuilder>? context,
     List<CodeableReferenceBuilder>? event,
+    List<ReferenceBuilder>? related,
     List<CodeableReferenceBuilder>? bodySite,
     CodeableConceptBuilder? facilityType,
     CodeableConceptBuilder? practiceSetting,
     PeriodBuilder? period,
-    FhirInstantBuilder? date,
+    FhirDateTimeBuilder? date,
     List<ReferenceBuilder>? author,
     List<DocumentReferenceAttesterBuilder>? attester,
     ReferenceBuilder? custodian,
@@ -1539,6 +1586,7 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
       subject: subject ?? this.subject,
       context: context ?? this.context,
       event: event ?? this.event,
+      related: related ?? this.related,
       bodySite: bodySite ?? this.bodySite,
       facilityType: facilityType ?? this.facilityType,
       practiceSetting: practiceSetting ?? this.practiceSetting,
@@ -1688,6 +1736,12 @@ class DocumentReferenceBuilder extends DomainResourceBuilder {
     if (!listEquals<CodeableReferenceBuilder>(
       event,
       o.event,
+    )) {
+      return false;
+    }
+    if (!listEquals<ReferenceBuilder>(
+      related,
+      o.related,
     )) {
       return false;
     }

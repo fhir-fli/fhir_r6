@@ -11,8 +11,8 @@ import 'package:yaml/yaml.dart';
 
 /// [RelatedPersonBuilder]
 /// Information about a person that is involved in a patient's health or
-/// the care for a patient, but who is not the target of healthcare, nor
-/// has a formal responsibility in the care process.
+/// the care for a patient, but who is not the primary target of
+/// healthcare.
 class RelatedPersonBuilder extends DomainResourceBuilder {
   /// Primary constructor for
   /// [RelatedPersonBuilder]
@@ -30,6 +30,7 @@ class RelatedPersonBuilder extends DomainResourceBuilder {
     this.active,
     this.patient,
     this.relationship,
+    this.role,
     this.name,
     this.telecom,
     this.gender,
@@ -143,6 +144,16 @@ class RelatedPersonBuilder extends DomainResourceBuilder {
               {
                 ...v as Map<String, dynamic>,
                 'objectPath': '$objectPath.relationship',
+              },
+            ),
+          )
+          .toList(),
+      role: (json['role'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.role',
               },
             ),
           )
@@ -273,9 +284,14 @@ class RelatedPersonBuilder extends DomainResourceBuilder {
   ReferenceBuilder? patient;
 
   /// [relationship]
-  /// The nature of the relationship between the related person and the
-  /// patient.
+  /// The nature of the personal relationship between the related person and
+  /// the patient.
   List<CodeableConceptBuilder>? relationship;
+
+  /// [role]
+  /// The nature of the functional relationship between the patient and the
+  /// related person.
+  List<CodeableConceptBuilder>? role;
 
   /// [name]
   /// A name associated with the person.
@@ -362,6 +378,7 @@ class RelatedPersonBuilder extends DomainResourceBuilder {
     addField('active', active);
     addField('patient', patient);
     addField('relationship', relationship);
+    addField('role', role);
     addField('name', name);
     addField('telecom', telecom);
     addField('gender', gender);
@@ -389,6 +406,7 @@ class RelatedPersonBuilder extends DomainResourceBuilder {
       'active',
       'patient',
       'relationship',
+      'role',
       'name',
       'telecom',
       'gender',
@@ -456,6 +474,10 @@ class RelatedPersonBuilder extends DomainResourceBuilder {
       case 'relationship':
         if (relationship != null) {
           fields.addAll(relationship!);
+        }
+      case 'role':
+        if (role != null) {
+          fields.addAll(role!);
         }
       case 'name':
         if (name != null) {
@@ -705,6 +727,22 @@ class RelatedPersonBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'role':
+        {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
+            role = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            role = [
+              ...(role ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'name':
         {
           if (child is List<HumanNameBuilder>) {
@@ -870,6 +908,8 @@ class RelatedPersonBuilder extends DomainResourceBuilder {
         return ['ReferenceBuilder'];
       case 'relationship':
         return ['CodeableConceptBuilder'];
+      case 'role':
+        return ['CodeableConceptBuilder'];
       case 'name':
         return ['HumanNameBuilder'];
       case 'telecom':
@@ -956,6 +996,11 @@ class RelatedPersonBuilder extends DomainResourceBuilder {
           relationship = <CodeableConceptBuilder>[];
           return;
         }
+      case 'role':
+        {
+          role = <CodeableConceptBuilder>[];
+          return;
+        }
       case 'name':
         {
           name = <HumanNameBuilder>[];
@@ -1017,6 +1062,7 @@ class RelatedPersonBuilder extends DomainResourceBuilder {
     FhirBooleanBuilder? active,
     ReferenceBuilder? patient,
     List<CodeableConceptBuilder>? relationship,
+    List<CodeableConceptBuilder>? role,
     List<HumanNameBuilder>? name,
     List<ContactPointBuilder>? telecom,
     AdministrativeGenderBuilder? gender,
@@ -1044,6 +1090,7 @@ class RelatedPersonBuilder extends DomainResourceBuilder {
       active: active ?? this.active,
       patient: patient ?? this.patient,
       relationship: relationship ?? this.relationship,
+      role: role ?? this.role,
       name: name ?? this.name,
       telecom: telecom ?? this.telecom,
       gender: gender ?? this.gender,
@@ -1147,6 +1194,12 @@ class RelatedPersonBuilder extends DomainResourceBuilder {
     if (!listEquals<CodeableConceptBuilder>(
       relationship,
       o.relationship,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConceptBuilder>(
+      role,
+      o.role,
     )) {
       return false;
     }
@@ -1317,10 +1370,7 @@ class RelatedPersonCommunicationBuilder extends BackboneElementBuilder {
   String get fhirType => 'RelatedPersonCommunication';
 
   /// [language]
-  /// The ISO-639-1 alpha 2 code in lower case for the language, optionally
-  /// followed by a hyphen and the ISO-3166-1 alpha 2 code for the region in
-  /// upper case; e.g. "en" for English, or "en-US" for American English
-  /// versus "en-AU" for Australian English.
+  /// The language which may be used to communicate with the individual.
   CodeableConceptBuilder? language;
 
   /// [preferred]

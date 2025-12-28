@@ -32,6 +32,18 @@ enum GroupTypeEnum {
 
   /// specimen
   specimen,
+
+  /// medication
+  medication,
+
+  /// substance
+  substance,
+
+  /// biologicallyDerivedProduct
+  biologicallyDerivedProduct,
+
+  /// nutritionProduct
+  nutritionProduct,
   ;
 
   /// Converts the enum value to a string.
@@ -61,6 +73,14 @@ enum GroupTypeEnum {
         return 'relatedperson';
       case GroupTypeEnum.specimen:
         return 'specimen';
+      case GroupTypeEnum.medication:
+        return 'medication';
+      case GroupTypeEnum.substance:
+        return 'substance';
+      case GroupTypeEnum.biologicallyDerivedProduct:
+        return 'biologicallyDerivedProduct';
+      case GroupTypeEnum.nutritionProduct:
+        return 'nutritionProduct';
     }
   }
 
@@ -98,6 +118,14 @@ enum GroupTypeEnum {
         return GroupTypeEnum.relatedperson;
       case 'specimen':
         return GroupTypeEnum.specimen;
+      case 'medication':
+        return GroupTypeEnum.medication;
+      case 'substance':
+        return GroupTypeEnum.substance;
+      case 'biologicallyDerivedProduct':
+        return GroupTypeEnum.biologicallyDerivedProduct;
+      case 'nutritionProduct':
+        return GroupTypeEnum.nutritionProduct;
     }
     return null;
   }
@@ -179,7 +207,7 @@ class GroupType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Person',
     ),
@@ -192,7 +220,7 @@ class GroupType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Animal',
     ),
@@ -205,7 +233,7 @@ class GroupType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Practitioner',
     ),
@@ -218,7 +246,7 @@ class GroupType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Device',
     ),
@@ -231,7 +259,7 @@ class GroupType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'CareTeam',
     ),
@@ -244,7 +272,7 @@ class GroupType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'HealthcareService',
     ),
@@ -257,7 +285,7 @@ class GroupType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Location',
     ),
@@ -270,7 +298,7 @@ class GroupType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Organization',
     ),
@@ -283,7 +311,7 @@ class GroupType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'RelatedPerson',
     ),
@@ -296,9 +324,61 @@ class GroupType extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/group-type',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Specimen',
+    ),
+  );
+
+  /// medication
+  static const GroupType medication = GroupType._(
+    valueString: 'medication',
+    valueEnum: GroupTypeEnum.medication,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/group-type',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Medication',
+    ),
+  );
+
+  /// substance
+  static const GroupType substance = GroupType._(
+    valueString: 'substance',
+    valueEnum: GroupTypeEnum.substance,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/group-type',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Substance',
+    ),
+  );
+
+  /// biologicallyDerivedProduct
+  static const GroupType biologicallyDerivedProduct = GroupType._(
+    valueString: 'biologicallyDerivedProduct',
+    valueEnum: GroupTypeEnum.biologicallyDerivedProduct,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/group-type',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'BiologicallyDerivedProduct',
+    ),
+  );
+
+  /// nutritionProduct
+  static const GroupType nutritionProduct = GroupType._(
+    valueString: 'nutritionProduct',
+    valueEnum: GroupTypeEnum.nutritionProduct,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/group-type',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'NutritionProduct',
     ),
   );
 
@@ -314,6 +394,10 @@ class GroupType extends FhirCodeEnum {
     organization,
     relatedperson,
     specimen,
+    medication,
+    substance,
+    biologicallyDerivedProduct,
+    nutritionProduct,
   ];
 
   /// Returns the enum value with an element attached

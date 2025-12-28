@@ -1966,7 +1966,7 @@ class QuestionnaireItemBuilder extends BackboneElementBuilder {
   /// For Builder classes, no fields are required
   factory QuestionnaireItemBuilder.empty() => QuestionnaireItemBuilder(
         linkId: FhirStringBuilder.empty(),
-        type: QuestionnaireItemTypeBuilder.values.first,
+        type: QuestionnaireItemTypeUsableBuilder.values.first,
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -2035,10 +2035,10 @@ class QuestionnaireItemBuilder extends BackboneElementBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.text',
       ),
-      type: JsonParser.parsePrimitive<QuestionnaireItemTypeBuilder>(
+      type: JsonParser.parsePrimitive<QuestionnaireItemTypeUsableBuilder>(
         json,
         'type',
-        QuestionnaireItemTypeBuilder.fromJson,
+        QuestionnaireItemTypeUsableBuilder.fromJson,
         '$objectPath.type',
       ),
       enableWhen: (json['enableWhen'] as List<dynamic>?)
@@ -2211,7 +2211,7 @@ class QuestionnaireItemBuilder extends BackboneElementBuilder {
   /// The type of questionnaire item this is - whether text for display, a
   /// grouping of other items or a particular type of data to be captured
   /// (string, integer, Coding, etc.).
-  QuestionnaireItemTypeBuilder? type;
+  QuestionnaireItemTypeUsableBuilder? type;
 
   /// [enableWhen]
   /// A constraint indicating that this item should only be enabled
@@ -2637,7 +2637,7 @@ class QuestionnaireItemBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          if (child is QuestionnaireItemTypeBuilder) {
+          if (child is QuestionnaireItemTypeUsableBuilder) {
             type = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
@@ -2646,7 +2646,8 @@ class QuestionnaireItemBuilder extends BackboneElementBuilder {
               final stringValue = child.toString();
               // For enums, try to create directly from the string value
               try {
-                final converted = QuestionnaireItemTypeBuilder(stringValue);
+                final converted =
+                    QuestionnaireItemTypeUsableBuilder(stringValue);
                 type = converted;
                 return;
               } catch (e) {
@@ -3002,7 +3003,7 @@ class QuestionnaireItemBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          type = QuestionnaireItemTypeBuilder.empty();
+          type = QuestionnaireItemTypeUsableBuilder.empty();
           return;
         }
       case 'enableWhen':
@@ -3082,7 +3083,7 @@ class QuestionnaireItemBuilder extends BackboneElementBuilder {
     List<CodingBuilder>? code,
     FhirStringBuilder? prefix,
     FhirStringBuilder? text,
-    QuestionnaireItemTypeBuilder? type,
+    QuestionnaireItemTypeUsableBuilder? type,
     List<QuestionnaireEnableWhenBuilder>? enableWhen,
     EnableWhenBehaviorBuilder? enableBehavior,
     QuestionnaireItemDisabledDisplayBuilder? disabledDisplay,
@@ -4155,20 +4156,28 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
     super.extension_,
     super.modifierExtension,
     ValueXQuestionnaireAnswerOptionBuilder? valueX,
+    FhirDecimalBuilder? valueDecimal,
     FhirIntegerBuilder? valueInteger,
     FhirDateBuilder? valueDate,
+    FhirDateTimeBuilder? valueDateTime,
     FhirTimeBuilder? valueTime,
     FhirStringBuilder? valueString,
+    FhirUriBuilder? valueUri,
     CodingBuilder? valueCoding,
+    QuantityBuilder? valueQuantity,
     ReferenceBuilder? valueReference,
     this.initialSelected,
     super.disallowExtensions,
   })  : valueX = valueX ??
+            valueDecimal ??
             valueInteger ??
             valueDate ??
+            valueDateTime ??
             valueTime ??
             valueString ??
+            valueUri ??
             valueCoding ??
+            valueQuantity ??
             valueReference,
         super(
           objectPath: 'Questionnaire.item.answerOption',
@@ -4178,7 +4187,7 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
   /// For Builder classes, no fields are required
   factory QuestionnaireAnswerOptionBuilder.empty() =>
       QuestionnaireAnswerOptionBuilder(
-        valueX: FhirIntegerBuilder.empty(),
+        valueX: FhirDecimalBuilder.empty(),
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -4217,11 +4226,15 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
           JsonParser.parsePolymorphic<ValueXQuestionnaireAnswerOptionBuilder>(
         json,
         {
+          'valueDecimal': FhirDecimalBuilder.fromJson,
           'valueInteger': FhirIntegerBuilder.fromJson,
           'valueDate': FhirDateBuilder.fromJson,
+          'valueDateTime': FhirDateTimeBuilder.fromJson,
           'valueTime': FhirTimeBuilder.fromJson,
           'valueString': FhirStringBuilder.fromJson,
+          'valueUri': FhirUriBuilder.fromJson,
           'valueCoding': CodingBuilder.fromJson,
+          'valueQuantity': QuantityBuilder.fromJson,
           'valueReference': ReferenceBuilder.fromJson,
         },
         objectPath,
@@ -4281,11 +4294,17 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
   /// A potential answer that's allowed as the answer to this question.
   ValueXQuestionnaireAnswerOptionBuilder? valueX;
 
+  /// Getter for [valueDecimal] as a FhirDecimalBuilder
+  FhirDecimalBuilder? get valueDecimal => valueX?.isAs<FhirDecimalBuilder>();
+
   /// Getter for [valueInteger] as a FhirIntegerBuilder
   FhirIntegerBuilder? get valueInteger => valueX?.isAs<FhirIntegerBuilder>();
 
   /// Getter for [valueDate] as a FhirDateBuilder
   FhirDateBuilder? get valueDate => valueX?.isAs<FhirDateBuilder>();
+
+  /// Getter for [valueDateTime] as a FhirDateTimeBuilder
+  FhirDateTimeBuilder? get valueDateTime => valueX?.isAs<FhirDateTimeBuilder>();
 
   /// Getter for [valueTime] as a FhirTimeBuilder
   FhirTimeBuilder? get valueTime => valueX?.isAs<FhirTimeBuilder>();
@@ -4293,8 +4312,14 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
   /// Getter for [valueString] as a FhirStringBuilder
   FhirStringBuilder? get valueString => valueX?.isAs<FhirStringBuilder>();
 
+  /// Getter for [valueUri] as a FhirUriBuilder
+  FhirUriBuilder? get valueUri => valueX?.isAs<FhirUriBuilder>();
+
   /// Getter for [valueCoding] as a CodingBuilder
   CodingBuilder? get valueCoding => valueX?.isAs<CodingBuilder>();
+
+  /// Getter for [valueQuantity] as a QuantityBuilder
+  QuantityBuilder? get valueQuantity => valueX?.isAs<QuantityBuilder>();
 
   /// Getter for [valueReference] as a ReferenceBuilder
   ReferenceBuilder? get valueReference => valueX?.isAs<ReferenceBuilder>();
@@ -4394,12 +4419,20 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
         if (valueX != null) {
           fields.add(valueX!);
         }
+      case 'valueDecimal':
+        if (valueX is FhirDecimalBuilder) {
+          fields.add(valueX!);
+        }
       case 'valueInteger':
         if (valueX is FhirIntegerBuilder) {
           fields.add(valueX!);
         }
       case 'valueDate':
         if (valueX is FhirDateBuilder) {
+          fields.add(valueX!);
+        }
+      case 'valueDateTime':
+        if (valueX is FhirDateTimeBuilder) {
           fields.add(valueX!);
         }
       case 'valueTime':
@@ -4410,8 +4443,16 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
         if (valueX is FhirStringBuilder) {
           fields.add(valueX!);
         }
+      case 'valueUri':
+        if (valueX is FhirUriBuilder) {
+          fields.add(valueX!);
+        }
       case 'valueCoding':
         if (valueX is CodingBuilder) {
+          fields.add(valueX!);
+        }
+      case 'valueQuantity':
+        if (valueX is QuantityBuilder) {
           fields.add(valueX!);
         }
       case 'valueReference':
@@ -4510,11 +4551,19 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
             valueX = child;
             return;
           } else {
+            if (child is FhirDecimalBuilder) {
+              valueX = child;
+              return;
+            }
             if (child is FhirIntegerBuilder) {
               valueX = child;
               return;
             }
             if (child is FhirDateBuilder) {
+              valueX = child;
+              return;
+            }
+            if (child is FhirDateTimeBuilder) {
               valueX = child;
               return;
             }
@@ -4526,7 +4575,15 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
               valueX = child;
               return;
             }
+            if (child is FhirUriBuilder) {
+              valueX = child;
+              return;
+            }
             if (child is CodingBuilder) {
+              valueX = child;
+              return;
+            }
+            if (child is QuantityBuilder) {
               valueX = child;
               return;
             }
@@ -4536,6 +4593,15 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
             }
           }
           throw Exception('Invalid child type for $childName');
+        }
+      case 'valueDecimal':
+        {
+          if (child is FhirDecimalBuilder) {
+            valueX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
         }
       case 'valueInteger':
         {
@@ -4549,6 +4615,15 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
       case 'valueDate':
         {
           if (child is FhirDateBuilder) {
+            valueX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'valueDateTime':
+        {
+          if (child is FhirDateTimeBuilder) {
             valueX = child;
             return;
           } else {
@@ -4573,9 +4648,27 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
             throw Exception('Invalid child type for $childName');
           }
         }
+      case 'valueUri':
+        {
+          if (child is FhirUriBuilder) {
+            valueX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
       case 'valueCoding':
         {
           if (child is CodingBuilder) {
+            valueX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'valueQuantity':
+        {
+          if (child is QuantityBuilder) {
             valueX = child;
             return;
           } else {
@@ -4630,23 +4723,35 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
       case 'value':
       case 'valueX':
         return [
+          'FhirDecimalBuilder',
           'FhirIntegerBuilder',
           'FhirDateBuilder',
+          'FhirDateTimeBuilder',
           'FhirTimeBuilder',
           'FhirStringBuilder',
+          'FhirUriBuilder',
           'CodingBuilder',
+          'QuantityBuilder',
           'ReferenceBuilder',
         ];
+      case 'valueDecimal':
+        return ['FhirDecimalBuilder'];
       case 'valueInteger':
         return ['FhirIntegerBuilder'];
       case 'valueDate':
         return ['FhirDateBuilder'];
+      case 'valueDateTime':
+        return ['FhirDateTimeBuilder'];
       case 'valueTime':
         return ['FhirTimeBuilder'];
       case 'valueString':
         return ['FhirStringBuilder'];
+      case 'valueUri':
+        return ['FhirUriBuilder'];
       case 'valueCoding':
         return ['CodingBuilder'];
+      case 'valueQuantity':
+        return ['QuantityBuilder'];
       case 'valueReference':
         return ['ReferenceBuilder'];
       case 'initialSelected':
@@ -4678,6 +4783,11 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
         }
       case 'value':
       case 'valueX':
+      case 'valueDecimal':
+        {
+          valueX = FhirDecimalBuilder.empty();
+          return;
+        }
       case 'valueInteger':
         {
           valueX = FhirIntegerBuilder.empty();
@@ -4686,6 +4796,11 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
       case 'valueDate':
         {
           valueX = FhirDateBuilder.empty();
+          return;
+        }
+      case 'valueDateTime':
+        {
+          valueX = FhirDateTimeBuilder.empty();
           return;
         }
       case 'valueTime':
@@ -4698,9 +4813,19 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
           valueX = FhirStringBuilder.empty();
           return;
         }
+      case 'valueUri':
+        {
+          valueX = FhirUriBuilder.empty();
+          return;
+        }
       case 'valueCoding':
         {
           valueX = CodingBuilder.empty();
+          return;
+        }
+      case 'valueQuantity':
+        {
+          valueX = QuantityBuilder.empty();
           return;
         }
       case 'valueReference':
@@ -4727,11 +4852,15 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     ValueXQuestionnaireAnswerOptionBuilder? valueX,
     FhirBooleanBuilder? initialSelected,
+    FhirDecimalBuilder? valueDecimal,
     FhirIntegerBuilder? valueInteger,
     FhirDateBuilder? valueDate,
+    FhirDateTimeBuilder? valueDateTime,
     FhirTimeBuilder? valueTime,
     FhirStringBuilder? valueString,
+    FhirUriBuilder? valueUri,
     CodingBuilder? valueCoding,
+    QuantityBuilder? valueQuantity,
     ReferenceBuilder? valueReference,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -4745,11 +4874,15 @@ class QuestionnaireAnswerOptionBuilder extends BackboneElementBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       valueX: valueX ??
+          valueDecimal ??
           valueInteger ??
           valueDate ??
+          valueDateTime ??
           valueTime ??
           valueString ??
+          valueUri ??
           valueCoding ??
+          valueQuantity ??
           valueReference ??
           this.valueX,
       initialSelected: initialSelected ?? this.initialSelected,

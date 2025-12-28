@@ -12,7 +12,7 @@ abstract class $VirtualServiceDetailCopyWith<T> extends $DataTypeCopyWith<T> {
     FhirString? id,
     List<FhirExtension>? extension_,
     Coding? channelType,
-    FhirUrl? addressX,
+    AddressXVirtualServiceDetail? addressX,
     List<FhirUrl>? additionalInfo,
     FhirPositiveInt? maxParticipants,
     FhirString? sessionKey,
@@ -49,7 +49,7 @@ class _$VirtualServiceDetailCopyWithImpl<T>
             : channelType as Coding?,
         addressX: identical(addressX, fhirSentinel)
             ? _value.addressX
-            : addressX as FhirUrl?,
+            : addressX as AddressXVirtualServiceDetail?,
         additionalInfo: identical(additionalInfo, fhirSentinel)
             ? _value.additionalInfo
             : additionalInfo as List<FhirUrl>?,

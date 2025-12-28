@@ -28,7 +28,7 @@ class VersionUtilities {
     if (isR4BVer(v)) return 'hl7.fhir.r4b.core';
     if (isR5Ver(v)) return 'hl7.fhir.r5.core';
     if (isR6Ver(v)) return 'hl7.fhir.r6.core';
-    if (v == 'current') return 'hl7.fhir.r5.core';
+    if (v == 'current') return 'hl7.fhir.r6.core';
     return null;
   }
 
@@ -89,7 +89,7 @@ class VersionUtilities {
       ver?.startsWith('4.1') ?? false || (ver?.startsWith('4.3') ?? false);
   static bool isR5Ver(String? ver) => ver?.startsWith('5.0') ?? false;
   static bool isR6Ver(String? ver) => ver?.startsWith('6.0') ?? false;
-  static bool isR5VerOrLater(String? ver) => isR5Ver(ver) || isR6Ver(ver);
+  static bool isR6VerOrLater(String? ver) => isR6Ver(ver) || isR6Ver(ver);
 
   static bool isSupportedVersion(String version) {
     final cleanVersion = version.contains('-')

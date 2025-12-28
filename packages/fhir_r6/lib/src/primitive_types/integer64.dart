@@ -146,11 +146,14 @@ class FhirInteger64 extends PrimitiveType
 
   /// Creates a [FhirInteger64] from a JSON [Map].
   factory FhirInteger64.fromJson(Map<String, dynamic> json) {
-    final rawValue = json['value'] as String?;
+    final rawValue = json['value'];
     final elemJson = json['_value'] as Map<String, dynamic>?;
     final parsedElement = elemJson == null ? null : Element.fromJson(elemJson);
-    return FhirInteger64.fromString(
-      rawValue ?? '',
+    return FhirInteger64(
+      // ignore: lines_longer_than_80_chars
+      rawValue != null
+          ? (rawValue is num ? rawValue.toString() : rawValue)
+          : null,
       element: parsedElement,
     );
   }

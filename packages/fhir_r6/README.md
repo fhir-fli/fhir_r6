@@ -2,7 +2,7 @@
 
 [![pub package](https://img.shields.io/pub/v/fhir_r6.svg)](https://pub.dev/packages/fhir_r6)
 
-A Dart implementation of the FHIR (Fast Healthcare Interoperability Resources) R4 specification. This package provides FHIR R4 resource models and utilities for serialization/deserialization, working with primitive types, polymorphic fields, and more.
+A Dart implementation of the FHIR (Fast Healthcare Interoperability Resources) R6 specification. This package provides FHIR R6 resource models and utilities for serialization/deserialization, working with primitive types, polymorphic fields, and more.
 
 ## Our New Online Guide!
 
@@ -10,7 +10,7 @@ It's still a work on progress, but I plan on outlining in-depth all of the funct
 
 ## Features
 
-- **Complete FHIR R4 Resource Models**: Fully-typed Dart classes for all FHIR R4 resources generated from the official specification
+- **Complete FHIR R6 Resource Models**: Fully-typed Dart classes for all FHIR R6 resources generated from the official specification
 - **Robust Serialization/Deserialization**: Convert between Dart objects and JSON/YAML formats
 - **Type-Safe Implementation**: Strong typing and validation for all FHIR elements
 - **Reflection-Like Capabilities**: Dynamic field access and manipulation without requiring runtime reflection
@@ -20,8 +20,7 @@ It's still a work on progress, but I plan on outlining in-depth all of the funct
 
 ```yaml
 dependencies:
-  fhir_r6:
-    path: ../fhir_r6
+  fhir_r6: ^0.4.2
 ```
 
 ## Basic Usage
@@ -166,4 +165,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## Contact us
 
-You're always welcome to join the [FHIR-FLI Slack Channel](https://join.slack.com/t/fhir-fli/shared_invite/zt-337bi02s4-r5RYdLf8_CLXQxosRMdv9A), or to contact me directly, email me at grey@fhirfli.dev.
+You're always welcome to join the [FHIR-FLI Slack Channel](https://join.slack.com/t/fhir-fli/shared_invite/zt-337bi02s4-r6RYdLf8_CLXQxosRMdv9A), or to contact me directly, email me at grey.fhirfli@gmail.com.

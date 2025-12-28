@@ -238,7 +238,7 @@ abstract class $ClaimResponseEventCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    FhirDateTime? whenX,
+    WhenXClaimResponseEvent? whenX,
     bool? disallowExtensions,
   });
 }
@@ -273,7 +273,7 @@ class _$ClaimResponseEventCopyWithImpl<T>
             : (type as CodeableConcept?) ?? _value.type,
         whenX: identical(whenX, fhirSentinel)
             ? _value.whenX
-            : (whenX as FhirDateTime?) ?? _value.whenX,
+            : (whenX as WhenXClaimResponseEvent?) ?? _value.whenX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -686,8 +686,8 @@ abstract class $ClaimResponseAddItemCopyWith<T>
     List<Reference>? request,
     List<CodeableConcept>? modifier,
     List<CodeableConcept>? programCode,
-    FhirDate? servicedX,
-    CodeableConcept? locationX,
+    ServicedXClaimResponseAddItem? servicedX,
+    LocationXClaimResponseAddItem? locationX,
     Quantity? quantity,
     Money? unitPrice,
     FhirDecimal? factor,
@@ -783,10 +783,10 @@ class _$ClaimResponseAddItemCopyWithImpl<T>
             : programCode as List<CodeableConcept>?,
         servicedX: identical(servicedX, fhirSentinel)
             ? _value.servicedX
-            : servicedX as FhirDate?,
+            : servicedX as ServicedXClaimResponseAddItem?,
         locationX: identical(locationX, fhirSentinel)
             ? _value.locationX
-            : locationX as CodeableConcept?,
+            : locationX as LocationXClaimResponseAddItem?,
         quantity: identical(quantity, fhirSentinel)
             ? _value.quantity
             : quantity as Quantity?,

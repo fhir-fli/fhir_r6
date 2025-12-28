@@ -24,8 +24,9 @@ class NutritionProduct extends DomainResource {
     this.category,
     this.manufacturer,
     this.nutrient,
+    this.ingredientSummary,
     this.ingredient,
-    this.knownAllergen,
+    this.energy,
     this.characteristic,
     this.instance,
     this.note,
@@ -115,6 +116,11 @@ class NutritionProduct extends DomainResource {
             ),
           )
           .toList(),
+      ingredientSummary: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'ingredientSummary',
+        FhirMarkdown.fromJson,
+      ),
       ingredient: (json['ingredient'] as List<dynamic>?)
           ?.map<NutritionProductIngredient>(
             (v) => NutritionProductIngredient.fromJson(
@@ -122,13 +128,11 @@ class NutritionProduct extends DomainResource {
             ),
           )
           .toList(),
-      knownAllergen: (json['knownAllergen'] as List<dynamic>?)
-          ?.map<CodeableReference>(
-            (v) => CodeableReference.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
+      energy: JsonParser.parseObject<Quantity>(
+        json,
+        'energy',
+        Quantity.fromJson,
+      ),
       characteristic: (json['characteristic'] as List<dynamic>?)
           ?.map<NutritionProductCharacteristic>(
             (v) => NutritionProductCharacteristic.fromJson(
@@ -196,8 +200,11 @@ class NutritionProduct extends DomainResource {
   String get fhirType => 'NutritionProduct';
 
   /// [code]
-  /// The code assigned to the product, for example a USDA NDB number, a USDA
-  /// FDC ID number, or a Langual code.
+  /// A code that specifies the product or a textual description if no code
+  /// is available. This could be such codes as a USDA Branded Food Products
+  /// Database number, a USDA Food Data Central (FDC) ID number, Universal
+  /// Product Code (UPC), a Langual code, or a country specific food database
+  /// code.
   final CodeableConcept? code;
 
   /// [status]
@@ -205,27 +212,35 @@ class NutritionProduct extends DomainResource {
   final NutritionProductStatus status;
 
   /// [category]
-  /// Nutrition products can have different classifications - according to
-  /// its nutritional properties, preparation methods, etc.
+  /// Nutrition products fall into various categories based on their
+  /// composition (e.g., Fruit and Grain, Vegetables) or form (e.g.,
+  /// Beverages).
   final List<CodeableConcept>? category;
 
   /// [manufacturer]
   /// The organisation (manufacturer, representative or legal authorization
-  /// holder) that is responsible for the device.
+  /// holder) or person that is responsible for nutrition product.
   final List<Reference>? manufacturer;
 
   /// [nutrient]
   /// The product's nutritional information expressed by the nutrients.
   final List<NutritionProductNutrient>? nutrient;
 
+  /// [ingredientSummary]
+  /// The textual description of the ingredients in the product. For example,
+  /// the following is a concatenated list of the ingredients for a peanut
+  /// butter would read 'ROASTED PEANUTS, SUGAR, HYDROGENATED VEGETABLE OIL
+  /// (COTTONSEED, SOYBEAN AND RAPESEED OIL) TO PREVENT SEPARATION, SALT'.
+  final FhirMarkdown? ingredientSummary;
+
   /// [ingredient]
   /// Ingredients contained in this product.
   final List<NutritionProductIngredient>? ingredient;
 
-  /// [knownAllergen]
-  /// Allergens that are known or suspected to be a part of this nutrition
-  /// product.
-  final List<CodeableReference>? knownAllergen;
+  /// [energy]
+  /// The amount of energy present in the product expressed in kilocalories
+  /// or kilojoules.
+  final Quantity? energy;
 
   /// [characteristic]
   /// Specifies descriptive properties of the nutrition product.
@@ -356,12 +371,16 @@ class NutritionProduct extends DomainResource {
       nutrient,
     );
     addField(
+      'ingredientSummary',
+      ingredientSummary,
+    );
+    addField(
       'ingredient',
       ingredient,
     );
     addField(
-      'knownAllergen',
-      knownAllergen,
+      'energy',
+      energy,
     );
     addField(
       'characteristic',
@@ -395,8 +414,9 @@ class NutritionProduct extends DomainResource {
       'category',
       'manufacturer',
       'nutrient',
+      'ingredientSummary',
       'ingredient',
-      'knownAllergen',
+      'energy',
       'characteristic',
       'instance',
       'note',
@@ -462,13 +482,17 @@ class NutritionProduct extends DomainResource {
         if (nutrient != null) {
           fields.addAll(nutrient!);
         }
+      case 'ingredientSummary':
+        if (ingredientSummary != null) {
+          fields.add(ingredientSummary!);
+        }
       case 'ingredient':
         if (ingredient != null) {
           fields.addAll(ingredient!);
         }
-      case 'knownAllergen':
-        if (knownAllergen != null) {
-          fields.addAll(knownAllergen!);
+      case 'energy':
+        if (energy != null) {
+          fields.add(energy!);
         }
       case 'characteristic':
         if (characteristic != null) {
@@ -601,15 +625,21 @@ class NutritionProduct extends DomainResource {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      ingredientSummary,
+      o.ingredientSummary,
+    )) {
+      return false;
+    }
     if (!listEquals<NutritionProductIngredient>(
       ingredient,
       o.ingredient,
     )) {
       return false;
     }
-    if (!listEquals<CodeableReference>(
-      knownAllergen,
-      o.knownAllergen,
+    if (!equalsDeepWithNull(
+      energy,
+      o.energy,
     )) {
       return false;
     }
@@ -645,10 +675,13 @@ class NutritionProductNutrient extends BackboneElement {
     super.id,
     super.extension_,
     super.modifierExtension,
-    this.item,
-    this.amount,
+    required this.item,
+    AmountXNutritionProductNutrient? amountX,
+    Ratio? amountRatio,
+    Quantity? amountQuantity,
     super.disallowExtensions,
-  }) : super();
+  })  : amountX = amountX ?? amountRatio ?? amountQuantity,
+        super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
   factory NutritionProductNutrient.fromJson(
@@ -678,14 +711,14 @@ class NutritionProductNutrient extends BackboneElement {
         json,
         'item',
         CodeableReference.fromJson,
+      )!,
+      amountX: JsonParser.parsePolymorphic<AmountXNutritionProductNutrient>(
+        json,
+        {
+          'amountRatio': Ratio.fromJson,
+          'amountQuantity': Quantity.fromJson,
+        },
       ),
-      amount: (json['amount'] as List<dynamic>?)
-          ?.map<Ratio>(
-            (v) => Ratio.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
     );
   }
 
@@ -733,12 +766,18 @@ class NutritionProductNutrient extends BackboneElement {
 
   /// [item]
   /// The (relevant) nutrients in the product.
-  final CodeableReference? item;
+  final CodeableReference item;
 
-  /// [amount]
-  /// The amount of nutrient expressed in one or more units: X per pack / per
-  /// serving / per dose.
-  final List<Ratio>? amount;
+  /// [amountX]
+  /// The amount of nutrient expressed in one or more units, either X per
+  /// pack / per serving / per dose or X amount.
+  final AmountXNutritionProductNutrient? amountX;
+
+  /// Getter for [amountRatio] as a Ratio
+  Ratio? get amountRatio => amountX?.isAs<Ratio>();
+
+  /// Getter for [amountQuantity] as a Quantity
+  Quantity? get amountQuantity => amountX?.isAs<Quantity>();
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -818,10 +857,14 @@ class NutritionProductNutrient extends BackboneElement {
       'item',
       item,
     );
-    addField(
-      'amount',
-      amount,
-    );
+    if (amountX != null) {
+      final fhirType = amountX!.fhirType;
+      addField(
+        'amount${fhirType.capitalize()}',
+        amountX,
+      );
+    }
+
     return json;
   }
 
@@ -833,7 +876,7 @@ class NutritionProductNutrient extends BackboneElement {
       'extension',
       'modifierExtension',
       'item',
-      'amount',
+      'amountX',
     ];
   }
 
@@ -859,12 +902,18 @@ class NutritionProductNutrient extends BackboneElement {
           fields.addAll(modifierExtension!);
         }
       case 'item':
-        if (item != null) {
-          fields.add(item!);
-        }
+        fields.add(item);
       case 'amount':
-        if (amount != null) {
-          fields.addAll(amount!);
+        fields.add(amountX!);
+      case 'amountX':
+        fields.add(amountX!);
+      case 'amountRatio':
+        if (amountX is Ratio) {
+          fields.add(amountX!);
+        }
+      case 'amountQuantity':
+        if (amountX is Quantity) {
+          fields.add(amountX!);
         }
       default:
         if (checkValid) {
@@ -931,9 +980,9 @@ class NutritionProductNutrient extends BackboneElement {
     )) {
       return false;
     }
-    if (!listEquals<Ratio>(
-      amount,
-      o.amount,
+    if (!equalsDeepWithNull(
+      amountX,
+      o.amountX,
     )) {
       return false;
     }
@@ -952,9 +1001,13 @@ class NutritionProductIngredient extends BackboneElement {
     super.extension_,
     super.modifierExtension,
     required this.item,
-    this.amount,
+    AmountXNutritionProductIngredient? amountX,
+    Ratio? amountRatio,
+    Quantity? amountQuantity,
+    this.allergen,
     super.disallowExtensions,
-  }) : super();
+  })  : amountX = amountX ?? amountRatio ?? amountQuantity,
+        super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
   factory NutritionProductIngredient.fromJson(
@@ -985,13 +1038,18 @@ class NutritionProductIngredient extends BackboneElement {
         'item',
         CodeableReference.fromJson,
       )!,
-      amount: (json['amount'] as List<dynamic>?)
-          ?.map<Ratio>(
-            (v) => Ratio.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
+      amountX: JsonParser.parsePolymorphic<AmountXNutritionProductIngredient>(
+        json,
+        {
+          'amountRatio': Ratio.fromJson,
+          'amountQuantity': Quantity.fromJson,
+        },
+      ),
+      allergen: JsonParser.parsePrimitive<FhirBoolean>(
+        json,
+        'allergen',
+        FhirBoolean.fromJson,
+      ),
     );
   }
 
@@ -1041,9 +1099,20 @@ class NutritionProductIngredient extends BackboneElement {
   /// The ingredient contained in the product.
   final CodeableReference item;
 
-  /// [amount]
+  /// [amountX]
   /// The amount of ingredient that is in the product.
-  final List<Ratio>? amount;
+  final AmountXNutritionProductIngredient? amountX;
+
+  /// Getter for [amountRatio] as a Ratio
+  Ratio? get amountRatio => amountX?.isAs<Ratio>();
+
+  /// Getter for [amountQuantity] as a Quantity
+  Quantity? get amountQuantity => amountX?.isAs<Quantity>();
+
+  /// [allergen]
+  /// A known or suspected allergenic and/or substance that is associated
+  /// with an intolerance.
+  final FhirBoolean? allergen;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1123,9 +1192,17 @@ class NutritionProductIngredient extends BackboneElement {
       'item',
       item,
     );
+    if (amountX != null) {
+      final fhirType = amountX!.fhirType;
+      addField(
+        'amount${fhirType.capitalize()}',
+        amountX,
+      );
+    }
+
     addField(
-      'amount',
-      amount,
+      'allergen',
+      allergen,
     );
     return json;
   }
@@ -1138,7 +1215,8 @@ class NutritionProductIngredient extends BackboneElement {
       'extension',
       'modifierExtension',
       'item',
-      'amount',
+      'amountX',
+      'allergen',
     ];
   }
 
@@ -1166,8 +1244,20 @@ class NutritionProductIngredient extends BackboneElement {
       case 'item':
         fields.add(item);
       case 'amount':
-        if (amount != null) {
-          fields.addAll(amount!);
+        fields.add(amountX!);
+      case 'amountX':
+        fields.add(amountX!);
+      case 'amountRatio':
+        if (amountX is Ratio) {
+          fields.add(amountX!);
+        }
+      case 'amountQuantity':
+        if (amountX is Quantity) {
+          fields.add(amountX!);
+        }
+      case 'allergen':
+        if (allergen != null) {
+          fields.add(allergen!);
         }
       default:
         if (checkValid) {
@@ -1235,9 +1325,15 @@ class NutritionProductIngredient extends BackboneElement {
     )) {
       return false;
     }
-    if (!listEquals<Ratio>(
-      amount,
-      o.amount,
+    if (!equalsDeepWithNull(
+      amountX,
+      o.amountX,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      allergen,
+      o.allergen,
     )) {
       return false;
     }
@@ -1736,7 +1832,7 @@ class NutritionProductInstance extends BackboneElement {
   final List<Identifier>? identifier;
 
   /// [name]
-  /// The name for the specific product.
+  /// The name or brand for the specific product.
   final FhirString? name;
 
   /// [lotNumber]
@@ -1754,9 +1850,8 @@ class NutritionProductInstance extends BackboneElement {
   final FhirDateTime? useBy;
 
   /// [biologicalSourceEvent]
-  /// An identifier that supports traceability to the event during which
-  /// material in this product from one or more biological entities was
-  /// obtained or pooled.
+  /// An identifier of the donation, collection, or pooling event from which
+  /// biological material in this nutrition product was derived.
   final Identifier? biologicalSourceEvent;
   @override
   Map<String, dynamic> toJson() {

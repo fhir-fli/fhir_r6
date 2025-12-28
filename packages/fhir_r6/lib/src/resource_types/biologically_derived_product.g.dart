@@ -18,7 +18,7 @@ abstract class $BiologicallyDerivedProductCopyWith<T>
     List<Resource>? contained,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    Coding? productCategory,
+    List<CodeableConcept>? productCategory,
     CodeableConcept? productCode,
     List<Reference>? parent,
     List<Reference>? request,
@@ -89,7 +89,7 @@ class _$BiologicallyDerivedProductCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         productCategory: identical(productCategory, fhirSentinel)
             ? _value.productCategory
-            : productCategory as Coding?,
+            : productCategory as List<CodeableConcept>?,
         productCode: identical(productCode, fhirSentinel)
             ? _value.productCode
             : productCode as CodeableConcept?,
@@ -151,7 +151,8 @@ abstract class $BiologicallyDerivedProductCollectionCopyWith<T>
     List<FhirExtension>? modifierExtension,
     Reference? collector,
     Reference? source,
-    FhirDateTime? collectedX,
+    CollectedXBiologicallyDerivedProductCollection? collectedX,
+    Reference? procedure,
     bool? disallowExtensions,
   });
 }
@@ -171,6 +172,7 @@ class _$BiologicallyDerivedProductCollectionCopyWithImpl<T>
     Object? collector = fhirSentinel,
     Object? source = fhirSentinel,
     Object? collectedX = fhirSentinel,
+    Object? procedure = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -190,7 +192,10 @@ class _$BiologicallyDerivedProductCollectionCopyWithImpl<T>
             : source as Reference?,
         collectedX: identical(collectedX, fhirSentinel)
             ? _value.collectedX
-            : collectedX as FhirDateTime?,
+            : collectedX as CollectedXBiologicallyDerivedProductCollection?,
+        procedure: identical(procedure, fhirSentinel)
+            ? _value.procedure
+            : procedure as Reference?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -218,7 +223,7 @@ abstract class $BiologicallyDerivedProductPropertyCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    FhirBoolean? valueX,
+    ValueXBiologicallyDerivedProductProperty? valueX,
     bool? disallowExtensions,
   });
 }
@@ -253,7 +258,8 @@ class _$BiologicallyDerivedProductPropertyCopyWithImpl<T>
             : (type as CodeableConcept?) ?? _value.type,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as FhirBoolean?) ?? _value.valueX,
+            : (valueX as ValueXBiologicallyDerivedProductProperty?) ??
+                _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

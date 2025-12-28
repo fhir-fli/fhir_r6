@@ -43,6 +43,7 @@ class ChargeItemDefinitionBuilder extends MetadataResourceBuilder {
     super.status,
     super.experimental,
     super.date,
+    this.account,
     super.publisher,
     super.contact,
     super.description,
@@ -216,6 +217,16 @@ class ChargeItemDefinitionBuilder extends MetadataResourceBuilder {
         FhirDateTimeBuilder.fromJson,
         '$objectPath.date',
       ),
+      account: (json['account'] as List<dynamic>?)
+          ?.map<ReferenceBuilder>(
+            (v) => ReferenceBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.account',
+              },
+            ),
+          )
+          .toList(),
       publisher: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'publisher',
@@ -414,6 +425,11 @@ class ChargeItemDefinitionBuilder extends MetadataResourceBuilder {
   /// identification of what versions are replaced by a new instance.
   List<FhirCanonicalBuilder>? replaces;
 
+  /// [account]
+  /// A set of candidate accounts to which charge items using this definition
+  /// may be assigned.
+  List<ReferenceBuilder>? account;
+
   /// [purpose]
   /// Explanation of why this charge item definition is needed and why it has
   /// been designed as it has.
@@ -516,6 +532,7 @@ class ChargeItemDefinitionBuilder extends MetadataResourceBuilder {
     addField('status', status);
     addField('experimental', experimental);
     addField('date', date);
+    addField('account', account);
     addField('publisher', publisher);
     addField('contact', contact);
     addField('description', description);
@@ -557,6 +574,7 @@ class ChargeItemDefinitionBuilder extends MetadataResourceBuilder {
       'status',
       'experimental',
       'date',
+      'account',
       'publisher',
       'contact',
       'description',
@@ -674,6 +692,10 @@ class ChargeItemDefinitionBuilder extends MetadataResourceBuilder {
       case 'date':
         if (date != null) {
           fields.add(date!);
+        }
+      case 'account':
+        if (account != null) {
+          fields.addAll(account!);
         }
       case 'publisher':
         if (publisher != null) {
@@ -1229,6 +1251,22 @@ class ChargeItemDefinitionBuilder extends MetadataResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'account':
+        {
+          if (child is List<ReferenceBuilder>) {
+            // Replace or create new list
+            account = child;
+            return;
+          } else if (child is ReferenceBuilder) {
+            // Add single element to existing list or create new list
+            account = [
+              ...(account ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'publisher':
         {
           if (child is FhirStringBuilder) {
@@ -1531,6 +1569,8 @@ class ChargeItemDefinitionBuilder extends MetadataResourceBuilder {
         return ['FhirBooleanBuilder'];
       case 'date':
         return ['FhirDateTimeBuilder'];
+      case 'account':
+        return ['ReferenceBuilder'];
       case 'publisher':
         return ['FhirStringBuilder'];
       case 'contact':
@@ -1676,6 +1716,11 @@ class ChargeItemDefinitionBuilder extends MetadataResourceBuilder {
           date = FhirDateTimeBuilder.empty();
           return;
         }
+      case 'account':
+        {
+          account = <ReferenceBuilder>[];
+          return;
+        }
       case 'publisher':
         {
           publisher = FhirStringBuilder.empty();
@@ -1775,6 +1820,7 @@ class ChargeItemDefinitionBuilder extends MetadataResourceBuilder {
     PublicationStatusBuilder? status,
     FhirBooleanBuilder? experimental,
     FhirDateTimeBuilder? date,
+    List<ReferenceBuilder>? account,
     FhirStringBuilder? publisher,
     List<ContactDetailBuilder>? contact,
     FhirMarkdownBuilder? description,
@@ -1821,6 +1867,7 @@ class ChargeItemDefinitionBuilder extends MetadataResourceBuilder {
       status: status ?? this.status,
       experimental: experimental ?? this.experimental,
       date: date ?? this.date,
+      account: account ?? this.account,
       publisher: publisher ?? this.publisher,
       contact: contact ?? this.contact,
       description: description ?? this.description,
@@ -1978,6 +2025,12 @@ class ChargeItemDefinitionBuilder extends MetadataResourceBuilder {
     if (!equalsDeepWithNull(
       date,
       o.date,
+    )) {
+      return false;
+    }
+    if (!listEquals<ReferenceBuilder>(
+      account,
+      o.account,
     )) {
       return false;
     }

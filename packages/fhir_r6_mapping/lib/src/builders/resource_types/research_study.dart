@@ -5,23 +5,24 @@ import 'package:fhir_r6/fhir_r6.dart'
         ResearchStudy,
         ResearchStudyAssociatedParty,
         ResearchStudyComparisonGroup,
+        ResearchStudyEventHandling,
         ResearchStudyLabel,
         ResearchStudyObjective,
         ResearchStudyOutcomeMeasure,
         ResearchStudyProgressStatus,
         ResearchStudyRecruitment,
+        ResearchStudyRelatesTo,
         yamlMapToJson,
         yamlToJson;
 import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [ResearchStudyBuilder]
-/// A scientific study of nature that sometimes includes processes involved
-/// in health and disease. For example, clinical trials are research
-/// studies that involve people. These studies may be related to new ways
-/// to screen, prevent, diagnose, and treat disease. They may also study
-/// certain outcomes and certain groups of people by looking at data
-/// collected in the past or future.
+/// A scientific study intended to increase health-related knowledge. For
+/// example, clinical trials are research studies that involve people.
+/// These studies may be related to new ways to screen, prevent, diagnose,
+/// and treat disease. They may also study certain outcomes and certain
+/// groups of people by looking at data collected in the past or future.
 class ResearchStudyBuilder extends DomainResourceBuilder {
   /// Primary constructor for
   /// [ResearchStudyBuilder]
@@ -43,7 +44,8 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
     this.label,
     this.protocol,
     this.partOf,
-    this.relatedArtifact,
+    this.citeAs,
+    this.relatesTo,
     this.date,
     this.status,
     this.primaryPurposeType,
@@ -65,7 +67,6 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
     this.recruitment,
     this.comparisonGroup,
     this.objective,
-    this.outcomeMeasure,
     this.result,
   }) : super(
           objectPath: 'ResearchStudy',
@@ -208,12 +209,18 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      relatedArtifact: (json['relatedArtifact'] as List<dynamic>?)
-          ?.map<RelatedArtifactBuilder>(
-            (v) => RelatedArtifactBuilder.fromJson(
+      citeAs: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+        json,
+        'citeAs',
+        FhirMarkdownBuilder.fromJson,
+        '$objectPath.citeAs',
+      ),
+      relatesTo: (json['relatesTo'] as List<dynamic>?)
+          ?.map<ResearchStudyRelatesToBuilder>(
+            (v) => ResearchStudyRelatesToBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.relatedArtifact',
+                'objectPath': '$objectPath.relatesTo',
               },
             ),
           )
@@ -392,16 +399,6 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      outcomeMeasure: (json['outcomeMeasure'] as List<dynamic>?)
-          ?.map<ResearchStudyOutcomeMeasureBuilder>(
-            (v) => ResearchStudyOutcomeMeasureBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.outcomeMeasure',
-              },
-            ),
-          )
-          .toList(),
       result: (json['result'] as List<dynamic>?)
           ?.map<ReferenceBuilder>(
             (v) => ReferenceBuilder.fromJson(
@@ -493,13 +490,14 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
   /// or step.
   List<ReferenceBuilder>? partOf;
 
-  /// [relatedArtifact]
-  /// Citations, references, URLs and other related documents. When using
-  /// relatedArtifact to share URLs, the relatedArtifact.type will often be
-  /// set to one of "documentation" or "supported-with" and the URL value
-  /// will often be in relatedArtifact.document.url but another possible
-  /// location is relatedArtifact.resource when it is a canonical URL.
-  List<RelatedArtifactBuilder>? relatedArtifact;
+  /// [citeAs]
+  /// Display of the bibliographic citation of this ResearchStudy.
+  FhirMarkdownBuilder? citeAs;
+
+  /// [relatesTo]
+  /// Relationships that this ResearchStudy has with other FHIR or non-FHIR
+  /// resources that already exist.
+  List<ResearchStudyRelatesToBuilder>? relatesTo;
 
   /// [date]
   /// The date (and optionally time) when the ResearchStudy Resource was last
@@ -613,14 +611,6 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
   /// study.
   List<ResearchStudyObjectiveBuilder>? objective;
 
-  /// [outcomeMeasure]
-  /// An "outcome measure", "endpoint", "effect measure" or "measure of
-  /// effect" is a specific measurement or observation used to quantify the
-  /// effect of experimental variables on the participants in a study, or for
-  /// observational studies, to describe patterns of diseases or traits or
-  /// associations with exposures, risk factors or treatment.
-  List<ResearchStudyOutcomeMeasureBuilder>? outcomeMeasure;
-
   /// [result]
   /// Link to one or more sets of results generated by the study. Could also
   /// link to a research registry holding the results such as
@@ -680,7 +670,8 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
     addField('label', label);
     addField('protocol', protocol);
     addField('partOf', partOf);
-    addField('relatedArtifact', relatedArtifact);
+    addField('citeAs', citeAs);
+    addField('relatesTo', relatesTo);
     addField('date', date);
     addField('status', status);
     addField('primaryPurposeType', primaryPurposeType);
@@ -702,7 +693,6 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
     addField('recruitment', recruitment);
     addField('comparisonGroup', comparisonGroup);
     addField('objective', objective);
-    addField('outcomeMeasure', outcomeMeasure);
     addField('result', result);
     return json;
   }
@@ -727,7 +717,8 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
       'label',
       'protocol',
       'partOf',
-      'relatedArtifact',
+      'citeAs',
+      'relatesTo',
       'date',
       'status',
       'primaryPurposeType',
@@ -749,7 +740,6 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
       'recruitment',
       'comparisonGroup',
       'objective',
-      'outcomeMeasure',
       'result',
     ];
   }
@@ -827,9 +817,13 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
         if (partOf != null) {
           fields.addAll(partOf!);
         }
-      case 'relatedArtifact':
-        if (relatedArtifact != null) {
-          fields.addAll(relatedArtifact!);
+      case 'citeAs':
+        if (citeAs != null) {
+          fields.add(citeAs!);
+        }
+      case 'relatesTo':
+        if (relatesTo != null) {
+          fields.addAll(relatesTo!);
         }
       case 'date':
         if (date != null) {
@@ -914,10 +908,6 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
       case 'objective':
         if (objective != null) {
           fields.addAll(objective!);
-        }
-      case 'outcomeMeasure':
-        if (outcomeMeasure != null) {
-          fields.addAll(outcomeMeasure!);
         }
       case 'result':
         if (result != null) {
@@ -1223,16 +1213,36 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'relatedArtifact':
+      case 'citeAs':
         {
-          if (child is List<RelatedArtifactBuilder>) {
-            // Replace or create new list
-            relatedArtifact = child;
+          if (child is FhirMarkdownBuilder) {
+            citeAs = child;
             return;
-          } else if (child is RelatedArtifactBuilder) {
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                citeAs = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'relatesTo':
+        {
+          if (child is List<ResearchStudyRelatesToBuilder>) {
+            // Replace or create new list
+            relatesTo = child;
+            return;
+          } else if (child is ResearchStudyRelatesToBuilder) {
             // Add single element to existing list or create new list
-            relatedArtifact = [
-              ...(relatedArtifact ?? []),
+            relatesTo = [
+              ...(relatesTo ?? []),
               child,
             ];
             return;
@@ -1554,22 +1564,6 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'outcomeMeasure':
-        {
-          if (child is List<ResearchStudyOutcomeMeasureBuilder>) {
-            // Replace or create new list
-            outcomeMeasure = child;
-            return;
-          } else if (child is ResearchStudyOutcomeMeasureBuilder) {
-            // Add single element to existing list or create new list
-            outcomeMeasure = [
-              ...(outcomeMeasure ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
       case 'result':
         {
           if (child is List<ReferenceBuilder>) {
@@ -1628,8 +1622,10 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
         return ['ReferenceBuilder'];
       case 'partOf':
         return ['ReferenceBuilder'];
-      case 'relatedArtifact':
-        return ['RelatedArtifactBuilder'];
+      case 'citeAs':
+        return ['FhirMarkdownBuilder'];
+      case 'relatesTo':
+        return ['ResearchStudyRelatesToBuilder'];
       case 'date':
         return ['FhirDateTimeBuilder'];
       case 'status':
@@ -1672,8 +1668,6 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
         return ['ResearchStudyComparisonGroupBuilder'];
       case 'objective':
         return ['ResearchStudyObjectiveBuilder'];
-      case 'outcomeMeasure':
-        return ['ResearchStudyOutcomeMeasureBuilder'];
       case 'result':
         return ['ReferenceBuilder'];
       default:
@@ -1766,9 +1760,14 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
           partOf = <ReferenceBuilder>[];
           return;
         }
-      case 'relatedArtifact':
+      case 'citeAs':
         {
-          relatedArtifact = <RelatedArtifactBuilder>[];
+          citeAs = FhirMarkdownBuilder.empty();
+          return;
+        }
+      case 'relatesTo':
+        {
+          relatesTo = <ResearchStudyRelatesToBuilder>[];
           return;
         }
       case 'date':
@@ -1876,11 +1875,6 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
           objective = <ResearchStudyObjectiveBuilder>[];
           return;
         }
-      case 'outcomeMeasure':
-        {
-          outcomeMeasure = <ResearchStudyOutcomeMeasureBuilder>[];
-          return;
-        }
       case 'result':
         {
           result = <ReferenceBuilder>[];
@@ -1911,7 +1905,8 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
     List<ResearchStudyLabelBuilder>? label,
     List<ReferenceBuilder>? protocol,
     List<ReferenceBuilder>? partOf,
-    List<RelatedArtifactBuilder>? relatedArtifact,
+    FhirMarkdownBuilder? citeAs,
+    List<ResearchStudyRelatesToBuilder>? relatesTo,
     FhirDateTimeBuilder? date,
     PublicationStatusBuilder? status,
     CodeableConceptBuilder? primaryPurposeType,
@@ -1933,7 +1928,6 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
     ResearchStudyRecruitmentBuilder? recruitment,
     List<ResearchStudyComparisonGroupBuilder>? comparisonGroup,
     List<ResearchStudyObjectiveBuilder>? objective,
-    List<ResearchStudyOutcomeMeasureBuilder>? outcomeMeasure,
     List<ReferenceBuilder>? result,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -1958,7 +1952,8 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
       label: label ?? this.label,
       protocol: protocol ?? this.protocol,
       partOf: partOf ?? this.partOf,
-      relatedArtifact: relatedArtifact ?? this.relatedArtifact,
+      citeAs: citeAs ?? this.citeAs,
+      relatesTo: relatesTo ?? this.relatesTo,
       date: date ?? this.date,
       status: status ?? this.status,
       primaryPurposeType: primaryPurposeType ?? this.primaryPurposeType,
@@ -1980,7 +1975,6 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
       recruitment: recruitment ?? this.recruitment,
       comparisonGroup: comparisonGroup ?? this.comparisonGroup,
       objective: objective ?? this.objective,
-      outcomeMeasure: outcomeMeasure ?? this.outcomeMeasure,
       result: result ?? this.result,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
@@ -2104,9 +2098,15 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<RelatedArtifactBuilder>(
-      relatedArtifact,
-      o.relatedArtifact,
+    if (!equalsDeepWithNull(
+      citeAs,
+      o.citeAs,
+    )) {
+      return false;
+    }
+    if (!listEquals<ResearchStudyRelatesToBuilder>(
+      relatesTo,
+      o.relatesTo,
     )) {
       return false;
     }
@@ -2233,12 +2233,6 @@ class ResearchStudyBuilder extends DomainResourceBuilder {
     if (!listEquals<ResearchStudyObjectiveBuilder>(
       objective,
       o.objective,
-    )) {
-      return false;
-    }
-    if (!listEquals<ResearchStudyOutcomeMeasureBuilder>(
-      outcomeMeasure,
-      o.outcomeMeasure,
     )) {
       return false;
     }
@@ -2699,6 +2693,647 @@ class ResearchStudyLabelBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       value,
       o.value,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [ResearchStudyRelatesToBuilder]
+/// Relationships that this ResearchStudy has with other FHIR or non-FHIR
+/// resources that already exist.
+class ResearchStudyRelatesToBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [ResearchStudyRelatesToBuilder]
+
+  ResearchStudyRelatesToBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.type,
+    TargetXResearchStudyRelatesToBuilder? targetX,
+    FhirUriBuilder? targetUri,
+    AttachmentBuilder? targetAttachment,
+    FhirCanonicalBuilder? targetCanonical,
+    ReferenceBuilder? targetReference,
+    FhirMarkdownBuilder? targetMarkdown,
+    super.disallowExtensions,
+  })  : targetX = targetX ??
+            targetUri ??
+            targetAttachment ??
+            targetCanonical ??
+            targetReference ??
+            targetMarkdown,
+        super(
+          objectPath: 'ResearchStudy.relatesTo',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory ResearchStudyRelatesToBuilder.empty() =>
+      ResearchStudyRelatesToBuilder(
+        type: ArtifactRelationshipTypeBuilder.values.first,
+        targetX: FhirUriBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory ResearchStudyRelatesToBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'ResearchStudy.relatesTo';
+    return ResearchStudyRelatesToBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      type: JsonParser.parsePrimitive<ArtifactRelationshipTypeBuilder>(
+        json,
+        'type',
+        ArtifactRelationshipTypeBuilder.fromJson,
+        '$objectPath.type',
+      ),
+      targetX:
+          JsonParser.parsePolymorphic<TargetXResearchStudyRelatesToBuilder>(
+        json,
+        {
+          'targetUri': FhirUriBuilder.fromJson,
+          'targetAttachment': AttachmentBuilder.fromJson,
+          'targetCanonical': FhirCanonicalBuilder.fromJson,
+          'targetReference': ReferenceBuilder.fromJson,
+          'targetMarkdown': FhirMarkdownBuilder.fromJson,
+        },
+        objectPath,
+      ),
+    );
+  }
+
+  /// Deserialize [ResearchStudyRelatesToBuilder]
+  /// from a [String] or [YamlMap] object
+  factory ResearchStudyRelatesToBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return ResearchStudyRelatesToBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return ResearchStudyRelatesToBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'ResearchStudyRelatesToBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [ResearchStudyRelatesToBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory ResearchStudyRelatesToBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return ResearchStudyRelatesToBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'ResearchStudyRelatesTo';
+
+  /// [type]
+  /// The type of relationship to the related artifact.
+  ArtifactRelationshipTypeBuilder? type;
+
+  /// [targetX]
+  /// The artifact that is related to this ResearchStudy Resource.
+  TargetXResearchStudyRelatesToBuilder? targetX;
+
+  /// Getter for [targetUri] as a FhirUriBuilder
+  FhirUriBuilder? get targetUri => targetX?.isAs<FhirUriBuilder>();
+
+  /// Getter for [targetAttachment] as a AttachmentBuilder
+  AttachmentBuilder? get targetAttachment => targetX?.isAs<AttachmentBuilder>();
+
+  /// Getter for [targetCanonical] as a FhirCanonicalBuilder
+  FhirCanonicalBuilder? get targetCanonical =>
+      targetX?.isAs<FhirCanonicalBuilder>();
+
+  /// Getter for [targetReference] as a ReferenceBuilder
+  ReferenceBuilder? get targetReference => targetX?.isAs<ReferenceBuilder>();
+
+  /// Getter for [targetMarkdown] as a FhirMarkdownBuilder
+  FhirMarkdownBuilder? get targetMarkdown =>
+      targetX?.isAs<FhirMarkdownBuilder>();
+
+  /// Converts a [ResearchStudyRelatesToBuilder]
+  /// to [ResearchStudyRelatesTo]
+  @override
+  ResearchStudyRelatesTo build() => ResearchStudyRelatesTo.fromJson(toJson());
+
+  /// Converts a [ResearchStudyRelatesToBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('type', type);
+    if (targetX != null) {
+      final fhirType = targetX!.fhirType;
+      addField('target${fhirType.capitalizeFirstLetter()}', targetX);
+    }
+
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'type',
+      'targetX',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'type':
+        if (type != null) {
+          fields.add(type!);
+        }
+      case 'target':
+        if (targetX != null) {
+          fields.add(targetX!);
+        }
+      case 'targetX':
+        if (targetX != null) {
+          fields.add(targetX!);
+        }
+      case 'targetUri':
+        if (targetX is FhirUriBuilder) {
+          fields.add(targetX!);
+        }
+      case 'targetAttachment':
+        if (targetX is AttachmentBuilder) {
+          fields.add(targetX!);
+        }
+      case 'targetCanonical':
+        if (targetX is FhirCanonicalBuilder) {
+          fields.add(targetX!);
+        }
+      case 'targetReference':
+        if (targetX is ReferenceBuilder) {
+          fields.add(targetX!);
+        }
+      case 'targetMarkdown':
+        if (targetX is FhirMarkdownBuilder) {
+          fields.add(targetX!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'type':
+        {
+          if (child is ArtifactRelationshipTypeBuilder) {
+            type = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For enums, try to create directly from the string value
+              try {
+                final converted = ArtifactRelationshipTypeBuilder(stringValue);
+                type = converted;
+                return;
+              } catch (e) {
+                // Continue if enum creation fails
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'target':
+      case 'targetX':
+        {
+          if (child is TargetXResearchStudyRelatesToBuilder) {
+            targetX = child;
+            return;
+          } else {
+            if (child is FhirUriBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is AttachmentBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is FhirCanonicalBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is ReferenceBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is FhirMarkdownBuilder) {
+              targetX = child;
+              return;
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'targetUri':
+        {
+          if (child is FhirUriBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetAttachment':
+        {
+          if (child is AttachmentBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetCanonical':
+        {
+          if (child is FhirCanonicalBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetReference':
+        {
+          if (child is ReferenceBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetMarkdown':
+        {
+          if (child is FhirMarkdownBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'type':
+        return ['FhirCodeEnumBuilder'];
+      case 'target':
+      case 'targetX':
+        return [
+          'FhirUriBuilder',
+          'AttachmentBuilder',
+          'FhirCanonicalBuilder',
+          'ReferenceBuilder',
+          'FhirMarkdownBuilder',
+        ];
+      case 'targetUri':
+        return ['FhirUriBuilder'];
+      case 'targetAttachment':
+        return ['AttachmentBuilder'];
+      case 'targetCanonical':
+        return ['FhirCanonicalBuilder'];
+      case 'targetReference':
+        return ['ReferenceBuilder'];
+      case 'targetMarkdown':
+        return ['FhirMarkdownBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [ResearchStudyRelatesToBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'type':
+        {
+          type = ArtifactRelationshipTypeBuilder.empty();
+          return;
+        }
+      case 'target':
+      case 'targetX':
+      case 'targetUri':
+        {
+          targetX = FhirUriBuilder.empty();
+          return;
+        }
+      case 'targetAttachment':
+        {
+          targetX = AttachmentBuilder.empty();
+          return;
+        }
+      case 'targetCanonical':
+        {
+          targetX = FhirCanonicalBuilder.empty();
+          return;
+        }
+      case 'targetReference':
+        {
+          targetX = ReferenceBuilder.empty();
+          return;
+        }
+      case 'targetMarkdown':
+        {
+          targetX = FhirMarkdownBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  ResearchStudyRelatesToBuilder clone() => throw UnimplementedError();
+  @override
+  ResearchStudyRelatesToBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    ArtifactRelationshipTypeBuilder? type,
+    TargetXResearchStudyRelatesToBuilder? targetX,
+    FhirUriBuilder? targetUri,
+    AttachmentBuilder? targetAttachment,
+    FhirCanonicalBuilder? targetCanonical,
+    ReferenceBuilder? targetReference,
+    FhirMarkdownBuilder? targetMarkdown,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = ResearchStudyRelatesToBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      type: type ?? this.type,
+      targetX: targetX ??
+          targetUri ??
+          targetAttachment ??
+          targetCanonical ??
+          targetReference ??
+          targetMarkdown ??
+          this.targetX,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! ResearchStudyRelatesToBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      type,
+      o.type,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      targetX,
+      o.targetX,
     )) {
       return false;
     }
@@ -3944,11 +4579,14 @@ class ResearchStudyRecruitmentBuilder extends BackboneElementBuilder {
   FhirUnsignedIntBuilder? actualNumber;
 
   /// [eligibility]
-  /// Inclusion and exclusion criteria.
+  /// Inclusion and exclusion criteria. The referenced Group Resource should
+  /// have a membership element value of either 'definitional' or
+  /// 'conceptual'.
   ReferenceBuilder? eligibility;
 
   /// [actualGroup]
-  /// Group of participants who were enrolled in study.
+  /// Group of participants who were enrolled in study. The referenced Group
+  /// Resource should have a membership element value of 'enumerated'.
   ReferenceBuilder? actualGroup;
 
   /// Converts a [ResearchStudyRecruitmentBuilder]
@@ -4382,11 +5020,9 @@ class ResearchStudyComparisonGroupBuilder extends BackboneElementBuilder {
     super.id,
     super.extension_,
     super.modifierExtension,
-    this.linkId,
-    this.name,
-    this.type,
-    this.description,
-    this.intendedExposure,
+    this.targetNumber,
+    this.actualNumber,
+    this.eligibility,
     this.observedGroup,
     super.disallowExtensions,
   }) : super(
@@ -4396,9 +5032,7 @@ class ResearchStudyComparisonGroupBuilder extends BackboneElementBuilder {
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
   factory ResearchStudyComparisonGroupBuilder.empty() =>
-      ResearchStudyComparisonGroupBuilder(
-        name: FhirStringBuilder.empty(),
-      );
+      ResearchStudyComparisonGroupBuilder();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
   factory ResearchStudyComparisonGroupBuilder.fromJson(
@@ -4432,40 +5066,24 @@ class ResearchStudyComparisonGroupBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      linkId: JsonParser.parsePrimitive<FhirIdBuilder>(
+      targetNumber: JsonParser.parsePrimitive<FhirUnsignedIntBuilder>(
         json,
-        'linkId',
-        FhirIdBuilder.fromJson,
-        '$objectPath.linkId',
+        'targetNumber',
+        FhirUnsignedIntBuilder.fromJson,
+        '$objectPath.targetNumber',
       ),
-      name: JsonParser.parsePrimitive<FhirStringBuilder>(
+      actualNumber: JsonParser.parsePrimitive<FhirUnsignedIntBuilder>(
         json,
-        'name',
-        FhirStringBuilder.fromJson,
-        '$objectPath.name',
+        'actualNumber',
+        FhirUnsignedIntBuilder.fromJson,
+        '$objectPath.actualNumber',
       ),
-      type: JsonParser.parseObject<CodeableConceptBuilder>(
+      eligibility: JsonParser.parseObject<ReferenceBuilder>(
         json,
-        'type',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.type',
+        'eligibility',
+        ReferenceBuilder.fromJson,
+        '$objectPath.eligibility',
       ),
-      description: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
-        json,
-        'description',
-        FhirMarkdownBuilder.fromJson,
-        '$objectPath.description',
-      ),
-      intendedExposure: (json['intendedExposure'] as List<dynamic>?)
-          ?.map<ReferenceBuilder>(
-            (v) => ReferenceBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.intendedExposure',
-              },
-            ),
-          )
-          .toList(),
       observedGroup: JsonParser.parseObject<ReferenceBuilder>(
         json,
         'observedGroup',
@@ -4517,31 +5135,26 @@ class ResearchStudyComparisonGroupBuilder extends BackboneElementBuilder {
   @override
   String get fhirType => 'ResearchStudyComparisonGroup';
 
-  /// [linkId]
-  /// Allows the comparisonGroup for the study and the comparisonGroup for
-  /// the subject to be linked easily.
-  FhirIdBuilder? linkId;
+  /// [targetNumber]
+  /// Estimated total number of participants to be enrolled in the comparison
+  /// group.
+  FhirUnsignedIntBuilder? targetNumber;
 
-  /// [name]
-  /// Unique, human-readable label for this comparisonGroup of the study.
-  FhirStringBuilder? name;
+  /// [actualNumber]
+  /// Actual total number of participants enrolled in the comparison group.
+  FhirUnsignedIntBuilder? actualNumber;
 
-  /// [type]
-  /// Categorization of study comparisonGroup, e.g. experimental, active
-  /// comparator, placebo comparater.
-  CodeableConceptBuilder? type;
-
-  /// [description]
-  /// A succinct description of the path through the study that would be
-  /// followed by a subject adhering to this comparisonGroup.
-  FhirMarkdownBuilder? description;
-
-  /// [intendedExposure]
-  /// Interventions or exposures in this comparisonGroup or cohort.
-  List<ReferenceBuilder>? intendedExposure;
+  /// [eligibility]
+  /// Inclusion and exclusion criteria for the comparison group as a subset
+  /// of the eligibility for the overall study. The referenced Group Resource
+  /// should have a membership element value of either 'definitional' or
+  /// 'conceptual'.
+  ReferenceBuilder? eligibility;
 
   /// [observedGroup]
-  /// Group of participants who were enrolled in study comparisonGroup.
+  /// Group of participants who were enrolled in the comparison group as a
+  /// subset of those enrolled in the overall study. The referenced Group
+  /// Resource should have a membership element value of 'enumerated'.
   ReferenceBuilder? observedGroup;
 
   /// Converts a [ResearchStudyComparisonGroupBuilder]
@@ -4584,11 +5197,9 @@ class ResearchStudyComparisonGroupBuilder extends BackboneElementBuilder {
     addField('id', id);
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
-    addField('linkId', linkId);
-    addField('name', name);
-    addField('type', type);
-    addField('description', description);
-    addField('intendedExposure', intendedExposure);
+    addField('targetNumber', targetNumber);
+    addField('actualNumber', actualNumber);
+    addField('eligibility', eligibility);
     addField('observedGroup', observedGroup);
     return json;
   }
@@ -4600,11 +5211,9 @@ class ResearchStudyComparisonGroupBuilder extends BackboneElementBuilder {
       'id',
       'extension',
       'modifierExtension',
-      'linkId',
-      'name',
-      'type',
-      'description',
-      'intendedExposure',
+      'targetNumber',
+      'actualNumber',
+      'eligibility',
       'observedGroup',
     ];
   }
@@ -4630,25 +5239,17 @@ class ResearchStudyComparisonGroupBuilder extends BackboneElementBuilder {
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
         }
-      case 'linkId':
-        if (linkId != null) {
-          fields.add(linkId!);
+      case 'targetNumber':
+        if (targetNumber != null) {
+          fields.add(targetNumber!);
         }
-      case 'name':
-        if (name != null) {
-          fields.add(name!);
+      case 'actualNumber':
+        if (actualNumber != null) {
+          fields.add(actualNumber!);
         }
-      case 'type':
-        if (type != null) {
-          fields.add(type!);
-        }
-      case 'description':
-        if (description != null) {
-          fields.add(description!);
-        }
-      case 'intendedExposure':
-        if (intendedExposure != null) {
-          fields.addAll(intendedExposure!);
+      case 'eligibility':
+        if (eligibility != null) {
+          fields.add(eligibility!);
         }
       case 'observedGroup':
         if (observedGroup != null) {
@@ -4735,19 +5336,24 @@ class ResearchStudyComparisonGroupBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'linkId':
+      case 'targetNumber':
         {
-          if (child is FhirIdBuilder) {
-            linkId = child;
+          if (child is FhirUnsignedIntBuilder) {
+            targetNumber = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
-              final converted = FhirIdBuilder.tryParse(stringValue);
-              if (converted != null) {
-                linkId = converted;
-                return;
+              // For number types,
+              // first parse to num then pass the number directly
+              final numValue = num.tryParse(stringValue);
+              if (numValue != null) {
+                final converted = FhirUnsignedIntBuilder.tryParse(numValue);
+                if (converted != null) {
+                  targetNumber = converted;
+                  return;
+                }
               }
             } catch (e) {
               // Continue if conversion fails
@@ -4755,19 +5361,24 @@ class ResearchStudyComparisonGroupBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'name':
+      case 'actualNumber':
         {
-          if (child is FhirStringBuilder) {
-            name = child;
+          if (child is FhirUnsignedIntBuilder) {
+            actualNumber = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                name = converted;
-                return;
+              // For number types,
+              // first parse to num then pass the number directly
+              final numValue = num.tryParse(stringValue);
+              if (numValue != null) {
+                final converted = FhirUnsignedIntBuilder.tryParse(numValue);
+                if (converted != null) {
+                  actualNumber = converted;
+                  return;
+                }
               }
             } catch (e) {
               // Continue if conversion fails
@@ -4775,46 +5386,10 @@ class ResearchStudyComparisonGroupBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'type':
+      case 'eligibility':
         {
-          if (child is CodeableConceptBuilder) {
-            type = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'description':
-        {
-          if (child is FhirMarkdownBuilder) {
-            description = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirMarkdownBuilder.tryParse(stringValue);
-              if (converted != null) {
-                description = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'intendedExposure':
-        {
-          if (child is List<ReferenceBuilder>) {
-            // Replace or create new list
-            intendedExposure = child;
-            return;
-          } else if (child is ReferenceBuilder) {
-            // Add single element to existing list or create new list
-            intendedExposure = [
-              ...(intendedExposure ?? []),
-              child,
-            ];
+          if (child is ReferenceBuilder) {
+            eligibility = child;
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -4843,15 +5418,11 @@ class ResearchStudyComparisonGroupBuilder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
-      case 'linkId':
-        return ['FhirIdBuilder'];
-      case 'name':
-        return ['FhirStringBuilder'];
-      case 'type':
-        return ['CodeableConceptBuilder'];
-      case 'description':
-        return ['FhirMarkdownBuilder'];
-      case 'intendedExposure':
+      case 'targetNumber':
+        return ['FhirUnsignedIntBuilder'];
+      case 'actualNumber':
+        return ['FhirUnsignedIntBuilder'];
+      case 'eligibility':
         return ['ReferenceBuilder'];
       case 'observedGroup':
         return ['ReferenceBuilder'];
@@ -4880,29 +5451,19 @@ class ResearchStudyComparisonGroupBuilder extends BackboneElementBuilder {
           modifierExtension = <FhirExtensionBuilder>[];
           return;
         }
-      case 'linkId':
+      case 'targetNumber':
         {
-          linkId = FhirIdBuilder.empty();
+          targetNumber = FhirUnsignedIntBuilder.empty();
           return;
         }
-      case 'name':
+      case 'actualNumber':
         {
-          name = FhirStringBuilder.empty();
+          actualNumber = FhirUnsignedIntBuilder.empty();
           return;
         }
-      case 'type':
+      case 'eligibility':
         {
-          type = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'description':
-        {
-          description = FhirMarkdownBuilder.empty();
-          return;
-        }
-      case 'intendedExposure':
-        {
-          intendedExposure = <ReferenceBuilder>[];
+          eligibility = ReferenceBuilder.empty();
           return;
         }
       case 'observedGroup':
@@ -4922,11 +5483,9 @@ class ResearchStudyComparisonGroupBuilder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    FhirIdBuilder? linkId,
-    FhirStringBuilder? name,
-    CodeableConceptBuilder? type,
-    FhirMarkdownBuilder? description,
-    List<ReferenceBuilder>? intendedExposure,
+    FhirUnsignedIntBuilder? targetNumber,
+    FhirUnsignedIntBuilder? actualNumber,
+    ReferenceBuilder? eligibility,
     ReferenceBuilder? observedGroup,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -4939,11 +5498,9 @@ class ResearchStudyComparisonGroupBuilder extends BackboneElementBuilder {
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
-      linkId: linkId ?? this.linkId,
-      name: name ?? this.name,
-      type: type ?? this.type,
-      description: description ?? this.description,
-      intendedExposure: intendedExposure ?? this.intendedExposure,
+      targetNumber: targetNumber ?? this.targetNumber,
+      actualNumber: actualNumber ?? this.actualNumber,
+      eligibility: eligibility ?? this.eligibility,
       observedGroup: observedGroup ?? this.observedGroup,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
@@ -4990,32 +5547,20 @@ class ResearchStudyComparisonGroupBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      linkId,
-      o.linkId,
+      targetNumber,
+      o.targetNumber,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
-      name,
-      o.name,
+      actualNumber,
+      o.actualNumber,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
-      type,
-      o.type,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      description,
-      o.description,
-    )) {
-      return false;
-    }
-    if (!listEquals<ReferenceBuilder>(
-      intendedExposure,
-      o.intendedExposure,
+      eligibility,
+      o.eligibility,
     )) {
       return false;
     }
@@ -5044,6 +5589,7 @@ class ResearchStudyObjectiveBuilder extends BackboneElementBuilder {
     this.name,
     this.type,
     this.description,
+    this.outcomeMeasure,
     super.disallowExtensions,
   }) : super(
           objectPath: 'ResearchStudy.objective',
@@ -5104,6 +5650,16 @@ class ResearchStudyObjectiveBuilder extends BackboneElementBuilder {
         FhirMarkdownBuilder.fromJson,
         '$objectPath.description',
       ),
+      outcomeMeasure: (json['outcomeMeasure'] as List<dynamic>?)
+          ?.map<ResearchStudyOutcomeMeasureBuilder>(
+            (v) => ResearchStudyOutcomeMeasureBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.outcomeMeasure',
+              },
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -5163,6 +5719,14 @@ class ResearchStudyObjectiveBuilder extends BackboneElementBuilder {
   /// (see ResearchStudy.description).
   FhirMarkdownBuilder? description;
 
+  /// [outcomeMeasure]
+  /// An "outcome measure", "endpoint", "effect measure" or "measure of
+  /// effect" is a specific measurement or observation used to quantify the
+  /// effect of experimental variables on the participants in a study, or for
+  /// observational studies, to describe patterns of diseases or traits or
+  /// associations with exposures, risk factors or treatment.
+  List<ResearchStudyOutcomeMeasureBuilder>? outcomeMeasure;
+
   /// Converts a [ResearchStudyObjectiveBuilder]
   /// to [ResearchStudyObjective]
   @override
@@ -5205,6 +5769,7 @@ class ResearchStudyObjectiveBuilder extends BackboneElementBuilder {
     addField('name', name);
     addField('type', type);
     addField('description', description);
+    addField('outcomeMeasure', outcomeMeasure);
     return json;
   }
 
@@ -5218,6 +5783,7 @@ class ResearchStudyObjectiveBuilder extends BackboneElementBuilder {
       'name',
       'type',
       'description',
+      'outcomeMeasure',
     ];
   }
 
@@ -5253,6 +5819,10 @@ class ResearchStudyObjectiveBuilder extends BackboneElementBuilder {
       case 'description':
         if (description != null) {
           fields.add(description!);
+        }
+      case 'outcomeMeasure':
+        if (outcomeMeasure != null) {
+          fields.addAll(outcomeMeasure!);
         }
       default:
         if (checkValid) {
@@ -5383,6 +5953,22 @@ class ResearchStudyObjectiveBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'outcomeMeasure':
+        {
+          if (child is List<ResearchStudyOutcomeMeasureBuilder>) {
+            // Replace or create new list
+            outcomeMeasure = child;
+            return;
+          } else if (child is ResearchStudyOutcomeMeasureBuilder) {
+            // Add single element to existing list or create new list
+            outcomeMeasure = [
+              ...(outcomeMeasure ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -5405,6 +5991,8 @@ class ResearchStudyObjectiveBuilder extends BackboneElementBuilder {
         return ['CodeableConceptBuilder'];
       case 'description':
         return ['FhirMarkdownBuilder'];
+      case 'outcomeMeasure':
+        return ['ResearchStudyOutcomeMeasureBuilder'];
       default:
         return <String>[];
     }
@@ -5445,6 +6033,11 @@ class ResearchStudyObjectiveBuilder extends BackboneElementBuilder {
           description = FhirMarkdownBuilder.empty();
           return;
         }
+      case 'outcomeMeasure':
+        {
+          outcomeMeasure = <ResearchStudyOutcomeMeasureBuilder>[];
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
@@ -5460,6 +6053,7 @@ class ResearchStudyObjectiveBuilder extends BackboneElementBuilder {
     FhirStringBuilder? name,
     CodeableConceptBuilder? type,
     FhirMarkdownBuilder? description,
+    List<ResearchStudyOutcomeMeasureBuilder>? outcomeMeasure,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -5474,6 +6068,7 @@ class ResearchStudyObjectiveBuilder extends BackboneElementBuilder {
       name: name ?? this.name,
       type: type ?? this.type,
       description: description ?? this.description,
+      outcomeMeasure: outcomeMeasure ?? this.outcomeMeasure,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -5536,6 +6131,12 @@ class ResearchStudyObjectiveBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
+    if (!listEquals<ResearchStudyOutcomeMeasureBuilder>(
+      outcomeMeasure,
+      o.outcomeMeasure,
+    )) {
+      return false;
+    }
     return true;
   }
 }
@@ -5557,22 +6158,29 @@ class ResearchStudyOutcomeMeasureBuilder extends BackboneElementBuilder {
     this.name,
     this.type,
     this.description,
-    this.reference,
+    this.endpoint,
+    this.population,
+    this.intervention,
+    this.comparator,
+    this.summaryMeasure,
+    this.eventHandling,
     super.disallowExtensions,
   }) : super(
-          objectPath: 'ResearchStudy.outcomeMeasure',
+          objectPath: 'ResearchStudy.objective.outcomeMeasure',
         );
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
   factory ResearchStudyOutcomeMeasureBuilder.empty() =>
-      ResearchStudyOutcomeMeasureBuilder();
+      ResearchStudyOutcomeMeasureBuilder(
+        endpoint: ReferenceBuilder.empty(),
+      );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
   factory ResearchStudyOutcomeMeasureBuilder.fromJson(
     Map<String, dynamic> json,
   ) {
-    const objectPath = 'ResearchStudy.outcomeMeasure';
+    const objectPath = 'ResearchStudy.objective.outcomeMeasure';
     return ResearchStudyOutcomeMeasureBuilder(
       id: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
@@ -5606,28 +6214,58 @@ class ResearchStudyOutcomeMeasureBuilder extends BackboneElementBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.name',
       ),
-      type: (json['type'] as List<dynamic>?)
-          ?.map<CodeableConceptBuilder>(
-            (v) => CodeableConceptBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.type',
-              },
-            ),
-          )
-          .toList(),
+      type: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'type',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.type',
+      ),
       description: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
         json,
         'description',
         FhirMarkdownBuilder.fromJson,
         '$objectPath.description',
       ),
-      reference: JsonParser.parseObject<ReferenceBuilder>(
+      endpoint: JsonParser.parseObject<ReferenceBuilder>(
         json,
-        'reference',
+        'endpoint',
         ReferenceBuilder.fromJson,
-        '$objectPath.reference',
+        '$objectPath.endpoint',
       ),
+      population: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'population',
+        ReferenceBuilder.fromJson,
+        '$objectPath.population',
+      ),
+      intervention: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'intervention',
+        ReferenceBuilder.fromJson,
+        '$objectPath.intervention',
+      ),
+      comparator: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'comparator',
+        ReferenceBuilder.fromJson,
+        '$objectPath.comparator',
+      ),
+      summaryMeasure: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'summaryMeasure',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.summaryMeasure',
+      ),
+      eventHandling: (json['eventHandling'] as List<dynamic>?)
+          ?.map<ResearchStudyEventHandlingBuilder>(
+            (v) => ResearchStudyEventHandlingBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.eventHandling',
+              },
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -5674,21 +6312,40 @@ class ResearchStudyOutcomeMeasureBuilder extends BackboneElementBuilder {
   String get fhirType => 'ResearchStudyOutcomeMeasure';
 
   /// [name]
-  /// Label for the outcome.
+  /// Label for the outcome measure.
   FhirStringBuilder? name;
 
   /// [type]
-  /// The parameter or characteristic being assessed as one of the values by
-  /// which the study is assessed.
-  List<CodeableConceptBuilder>? type;
+  /// The kind of outcome measure.
+  CodeableConceptBuilder? type;
 
   /// [description]
-  /// Description of the outcome.
+  /// Description of the outcome measure.
   FhirMarkdownBuilder? description;
 
-  /// [reference]
-  /// Structured outcome definition.
-  ReferenceBuilder? reference;
+  /// [endpoint]
+  /// Definition of the outcome measure.
+  ReferenceBuilder? endpoint;
+
+  /// [population]
+  /// Population for this estimand.
+  ReferenceBuilder? population;
+
+  /// [intervention]
+  /// Comparison group of interest.
+  ReferenceBuilder? intervention;
+
+  /// [comparator]
+  /// Comparison group for comparison.
+  ReferenceBuilder? comparator;
+
+  /// [summaryMeasure]
+  /// Statistical measure for treatment effect estimate.
+  CodeableConceptBuilder? summaryMeasure;
+
+  /// [eventHandling]
+  /// Handling of intercurrent event.
+  List<ResearchStudyEventHandlingBuilder>? eventHandling;
 
   /// Converts a [ResearchStudyOutcomeMeasureBuilder]
   /// to [ResearchStudyOutcomeMeasure]
@@ -5733,7 +6390,12 @@ class ResearchStudyOutcomeMeasureBuilder extends BackboneElementBuilder {
     addField('name', name);
     addField('type', type);
     addField('description', description);
-    addField('reference', reference);
+    addField('endpoint', endpoint);
+    addField('population', population);
+    addField('intervention', intervention);
+    addField('comparator', comparator);
+    addField('summaryMeasure', summaryMeasure);
+    addField('eventHandling', eventHandling);
     return json;
   }
 
@@ -5747,7 +6409,12 @@ class ResearchStudyOutcomeMeasureBuilder extends BackboneElementBuilder {
       'name',
       'type',
       'description',
-      'reference',
+      'endpoint',
+      'population',
+      'intervention',
+      'comparator',
+      'summaryMeasure',
+      'eventHandling',
     ];
   }
 
@@ -5778,15 +6445,35 @@ class ResearchStudyOutcomeMeasureBuilder extends BackboneElementBuilder {
         }
       case 'type':
         if (type != null) {
-          fields.addAll(type!);
+          fields.add(type!);
         }
       case 'description':
         if (description != null) {
           fields.add(description!);
         }
-      case 'reference':
-        if (reference != null) {
-          fields.add(reference!);
+      case 'endpoint':
+        if (endpoint != null) {
+          fields.add(endpoint!);
+        }
+      case 'population':
+        if (population != null) {
+          fields.add(population!);
+        }
+      case 'intervention':
+        if (intervention != null) {
+          fields.add(intervention!);
+        }
+      case 'comparator':
+        if (comparator != null) {
+          fields.add(comparator!);
+        }
+      case 'summaryMeasure':
+        if (summaryMeasure != null) {
+          fields.add(summaryMeasure!);
+        }
+      case 'eventHandling':
+        if (eventHandling != null) {
+          fields.addAll(eventHandling!);
         }
       default:
         if (checkValid) {
@@ -5891,16 +6578,8 @@ class ResearchStudyOutcomeMeasureBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          if (child is List<CodeableConceptBuilder>) {
-            // Replace or create new list
+          if (child is CodeableConceptBuilder) {
             type = child;
-            return;
-          } else if (child is CodeableConceptBuilder) {
-            // Add single element to existing list or create new list
-            type = [
-              ...(type ?? []),
-              child,
-            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -5925,10 +6604,58 @@ class ResearchStudyOutcomeMeasureBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'reference':
+      case 'endpoint':
         {
           if (child is ReferenceBuilder) {
-            reference = child;
+            endpoint = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'population':
+        {
+          if (child is ReferenceBuilder) {
+            population = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'intervention':
+        {
+          if (child is ReferenceBuilder) {
+            intervention = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'comparator':
+        {
+          if (child is ReferenceBuilder) {
+            comparator = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'summaryMeasure':
+        {
+          if (child is CodeableConceptBuilder) {
+            summaryMeasure = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'eventHandling':
+        {
+          if (child is List<ResearchStudyEventHandlingBuilder>) {
+            // Replace or create new list
+            eventHandling = child;
+            return;
+          } else if (child is ResearchStudyEventHandlingBuilder) {
+            // Add single element to existing list or create new list
+            eventHandling = [
+              ...(eventHandling ?? []),
+              child,
+            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -5955,8 +6682,18 @@ class ResearchStudyOutcomeMeasureBuilder extends BackboneElementBuilder {
         return ['CodeableConceptBuilder'];
       case 'description':
         return ['FhirMarkdownBuilder'];
-      case 'reference':
+      case 'endpoint':
         return ['ReferenceBuilder'];
+      case 'population':
+        return ['ReferenceBuilder'];
+      case 'intervention':
+        return ['ReferenceBuilder'];
+      case 'comparator':
+        return ['ReferenceBuilder'];
+      case 'summaryMeasure':
+        return ['CodeableConceptBuilder'];
+      case 'eventHandling':
+        return ['ResearchStudyEventHandlingBuilder'];
       default:
         return <String>[];
     }
@@ -5989,7 +6726,7 @@ class ResearchStudyOutcomeMeasureBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          type = <CodeableConceptBuilder>[];
+          type = CodeableConceptBuilder.empty();
           return;
         }
       case 'description':
@@ -5997,9 +6734,34 @@ class ResearchStudyOutcomeMeasureBuilder extends BackboneElementBuilder {
           description = FhirMarkdownBuilder.empty();
           return;
         }
-      case 'reference':
+      case 'endpoint':
         {
-          reference = ReferenceBuilder.empty();
+          endpoint = ReferenceBuilder.empty();
+          return;
+        }
+      case 'population':
+        {
+          population = ReferenceBuilder.empty();
+          return;
+        }
+      case 'intervention':
+        {
+          intervention = ReferenceBuilder.empty();
+          return;
+        }
+      case 'comparator':
+        {
+          comparator = ReferenceBuilder.empty();
+          return;
+        }
+      case 'summaryMeasure':
+        {
+          summaryMeasure = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'eventHandling':
+        {
+          eventHandling = <ResearchStudyEventHandlingBuilder>[];
           return;
         }
       default:
@@ -6015,9 +6777,14 @@ class ResearchStudyOutcomeMeasureBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     FhirStringBuilder? name,
-    List<CodeableConceptBuilder>? type,
+    CodeableConceptBuilder? type,
     FhirMarkdownBuilder? description,
-    ReferenceBuilder? reference,
+    ReferenceBuilder? endpoint,
+    ReferenceBuilder? population,
+    ReferenceBuilder? intervention,
+    ReferenceBuilder? comparator,
+    CodeableConceptBuilder? summaryMeasure,
+    List<ResearchStudyEventHandlingBuilder>? eventHandling,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -6032,7 +6799,12 @@ class ResearchStudyOutcomeMeasureBuilder extends BackboneElementBuilder {
       name: name ?? this.name,
       type: type ?? this.type,
       description: description ?? this.description,
-      reference: reference ?? this.reference,
+      endpoint: endpoint ?? this.endpoint,
+      population: population ?? this.population,
+      intervention: intervention ?? this.intervention,
+      comparator: comparator ?? this.comparator,
+      summaryMeasure: summaryMeasure ?? this.summaryMeasure,
+      eventHandling: eventHandling ?? this.eventHandling,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -6083,7 +6855,7 @@ class ResearchStudyOutcomeMeasureBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConceptBuilder>(
+    if (!equalsDeepWithNull(
       type,
       o.type,
     )) {
@@ -6096,8 +6868,574 @@ class ResearchStudyOutcomeMeasureBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      reference,
-      o.reference,
+      endpoint,
+      o.endpoint,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      population,
+      o.population,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      intervention,
+      o.intervention,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      comparator,
+      o.comparator,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      summaryMeasure,
+      o.summaryMeasure,
+    )) {
+      return false;
+    }
+    if (!listEquals<ResearchStudyEventHandlingBuilder>(
+      eventHandling,
+      o.eventHandling,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [ResearchStudyEventHandlingBuilder]
+/// Handling of intercurrent event.
+class ResearchStudyEventHandlingBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [ResearchStudyEventHandlingBuilder]
+
+  ResearchStudyEventHandlingBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.event,
+    this.group,
+    this.handling,
+    this.description,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'ResearchStudy.objective.outcomeMeasure.eventHandling',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory ResearchStudyEventHandlingBuilder.empty() =>
+      ResearchStudyEventHandlingBuilder();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory ResearchStudyEventHandlingBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'ResearchStudy.objective.outcomeMeasure.eventHandling';
+    return ResearchStudyEventHandlingBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      event: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'event',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.event',
+      ),
+      group: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'group',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.group',
+      ),
+      handling: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'handling',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.handling',
+      ),
+      description: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+        json,
+        'description',
+        FhirMarkdownBuilder.fromJson,
+        '$objectPath.description',
+      ),
+    );
+  }
+
+  /// Deserialize [ResearchStudyEventHandlingBuilder]
+  /// from a [String] or [YamlMap] object
+  factory ResearchStudyEventHandlingBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return ResearchStudyEventHandlingBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return ResearchStudyEventHandlingBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'ResearchStudyEventHandlingBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [ResearchStudyEventHandlingBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory ResearchStudyEventHandlingBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return ResearchStudyEventHandlingBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'ResearchStudyEventHandling';
+
+  /// [event]
+  /// The event.
+  CodeableConceptBuilder? event;
+
+  /// [group]
+  /// The group that is affected by this event handling.
+  CodeableConceptBuilder? group;
+
+  /// [handling]
+  /// How the data is handled.
+  CodeableConceptBuilder? handling;
+
+  /// [description]
+  /// Text summary of event handling.
+  FhirMarkdownBuilder? description;
+
+  /// Converts a [ResearchStudyEventHandlingBuilder]
+  /// to [ResearchStudyEventHandling]
+  @override
+  ResearchStudyEventHandling build() =>
+      ResearchStudyEventHandling.fromJson(toJson());
+
+  /// Converts a [ResearchStudyEventHandlingBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('event', event);
+    addField('group', group);
+    addField('handling', handling);
+    addField('description', description);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'event',
+      'group',
+      'handling',
+      'description',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'event':
+        if (event != null) {
+          fields.add(event!);
+        }
+      case 'group':
+        if (group != null) {
+          fields.add(group!);
+        }
+      case 'handling':
+        if (handling != null) {
+          fields.add(handling!);
+        }
+      case 'description':
+        if (description != null) {
+          fields.add(description!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'event':
+        {
+          if (child is CodeableConceptBuilder) {
+            event = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'group':
+        {
+          if (child is CodeableConceptBuilder) {
+            group = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'handling':
+        {
+          if (child is CodeableConceptBuilder) {
+            handling = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'description':
+        {
+          if (child is FhirMarkdownBuilder) {
+            description = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                description = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'event':
+        return ['CodeableConceptBuilder'];
+      case 'group':
+        return ['CodeableConceptBuilder'];
+      case 'handling':
+        return ['CodeableConceptBuilder'];
+      case 'description':
+        return ['FhirMarkdownBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [ResearchStudyEventHandlingBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'event':
+        {
+          event = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'group':
+        {
+          group = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'handling':
+        {
+          handling = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'description':
+        {
+          description = FhirMarkdownBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  ResearchStudyEventHandlingBuilder clone() => throw UnimplementedError();
+  @override
+  ResearchStudyEventHandlingBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    CodeableConceptBuilder? event,
+    CodeableConceptBuilder? group,
+    CodeableConceptBuilder? handling,
+    FhirMarkdownBuilder? description,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = ResearchStudyEventHandlingBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      event: event ?? this.event,
+      group: group ?? this.group,
+      handling: handling ?? this.handling,
+      description: description ?? this.description,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! ResearchStudyEventHandlingBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      event,
+      o.event,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      group,
+      o.group,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      handling,
+      o.handling,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      description,
+      o.description,
     )) {
       return false;
     }

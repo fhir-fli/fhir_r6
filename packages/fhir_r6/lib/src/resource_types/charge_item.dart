@@ -224,8 +224,8 @@ class ChargeItem extends DomainResource {
         FhirDateTime.fromJson,
       ),
       reason: (json['reason'] as List<dynamic>?)
-          ?.map<CodeableConcept>(
-            (v) => CodeableConcept.fromJson(
+          ?.map<CodeableReference>(
+            (v) => CodeableReference.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -408,7 +408,7 @@ class ChargeItem extends DomainResource {
 
   /// [reason]
   /// Describes why the event occurred in coded or textual form.
-  final List<CodeableConcept>? reason;
+  final List<CodeableReference>? reason;
 
   /// [service]
   /// Indicated the rendered service that caused this charge.
@@ -1039,7 +1039,7 @@ class ChargeItem extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!listEquals<CodeableReference>(
       reason,
       o.reason,
     )) {

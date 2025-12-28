@@ -37,6 +37,7 @@ class ChargeItemDefinition extends MetadataResource {
     required super.status,
     super.experimental,
     super.date,
+    this.account,
     super.publisher,
     super.contact,
     super.description,
@@ -174,6 +175,13 @@ class ChargeItemDefinition extends MetadataResource {
         'date',
         FhirDateTime.fromJson,
       ),
+      account: (json['account'] as List<dynamic>?)
+          ?.map<Reference>(
+            (v) => Reference.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       publisher: JsonParser.parsePrimitive<FhirString>(
         json,
         'publisher',
@@ -344,6 +352,11 @@ class ChargeItemDefinition extends MetadataResource {
   /// As new versions of a protocol or guideline are defined, allows
   /// identification of what versions are replaced by a new instance.
   final List<FhirCanonical>? replaces;
+
+  /// [account]
+  /// A set of candidate accounts to which charge items using this definition
+  /// may be assigned.
+  final List<Reference>? account;
 
   /// [purpose]
   /// Explanation of why this charge item definition is needed and why it has
@@ -531,6 +544,10 @@ class ChargeItemDefinition extends MetadataResource {
       date,
     );
     addField(
+      'account',
+      account,
+    );
+    addField(
       'publisher',
       publisher,
     );
@@ -613,6 +630,7 @@ class ChargeItemDefinition extends MetadataResource {
       'status',
       'experimental',
       'date',
+      'account',
       'publisher',
       'contact',
       'description',
@@ -726,6 +744,10 @@ class ChargeItemDefinition extends MetadataResource {
       case 'date':
         if (date != null) {
           fields.add(date!);
+        }
+      case 'account':
+        if (account != null) {
+          fields.addAll(account!);
         }
       case 'publisher':
         if (publisher != null) {
@@ -941,6 +963,12 @@ class ChargeItemDefinition extends MetadataResource {
     if (!equalsDeepWithNull(
       date,
       o.date,
+    )) {
+      return false;
+    }
+    if (!listEquals<Reference>(
+      account,
+      o.account,
     )) {
       return false;
     }

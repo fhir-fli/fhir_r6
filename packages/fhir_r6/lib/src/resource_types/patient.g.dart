@@ -23,10 +23,10 @@ abstract class $PatientCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<ContactPoint>? telecom,
     AdministrativeGender? gender,
     FhirDate? birthDate,
-    FhirBoolean? deceasedX,
+    DeceasedXPatient? deceasedX,
     List<Address>? address,
     CodeableConcept? maritalStatus,
-    FhirBoolean? multipleBirthX,
+    MultipleBirthXPatient? multipleBirthX,
     List<Attachment>? photo,
     List<PatientContact>? contact,
     List<PatientCommunication>? communication,
@@ -111,7 +111,7 @@ class _$PatientCopyWithImpl<T> implements $PatientCopyWith<T> {
             : birthDate as FhirDate?,
         deceasedX: identical(deceasedX, fhirSentinel)
             ? _value.deceasedX
-            : deceasedX as FhirBoolean?,
+            : deceasedX as DeceasedXPatient?,
         address: identical(address, fhirSentinel)
             ? _value.address
             : address as List<Address>?,
@@ -120,7 +120,7 @@ class _$PatientCopyWithImpl<T> implements $PatientCopyWith<T> {
             : maritalStatus as CodeableConcept?,
         multipleBirthX: identical(multipleBirthX, fhirSentinel)
             ? _value.multipleBirthX
-            : multipleBirthX as FhirBoolean?,
+            : multipleBirthX as MultipleBirthXPatient?,
         photo: identical(photo, fhirSentinel)
             ? _value.photo
             : photo as List<Attachment>?,
@@ -158,9 +158,12 @@ abstract class $PatientContactCopyWith<T> extends $BackboneElementCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     List<CodeableConcept>? relationship,
+    List<CodeableConcept>? role,
     HumanName? name,
+    List<HumanName>? additionalName,
     List<ContactPoint>? telecom,
     Address? address,
+    List<Address>? additionalAddress,
     AdministrativeGender? gender,
     Reference? organization,
     Period? period,
@@ -180,9 +183,12 @@ class _$PatientContactCopyWithImpl<T> implements $PatientContactCopyWith<T> {
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? relationship = fhirSentinel,
+    Object? role = fhirSentinel,
     Object? name = fhirSentinel,
+    Object? additionalName = fhirSentinel,
     Object? telecom = fhirSentinel,
     Object? address = fhirSentinel,
+    Object? additionalAddress = fhirSentinel,
     Object? gender = fhirSentinel,
     Object? organization = fhirSentinel,
     Object? period = fhirSentinel,
@@ -200,13 +206,22 @@ class _$PatientContactCopyWithImpl<T> implements $PatientContactCopyWith<T> {
         relationship: identical(relationship, fhirSentinel)
             ? _value.relationship
             : relationship as List<CodeableConcept>?,
+        role: identical(role, fhirSentinel)
+            ? _value.role
+            : role as List<CodeableConcept>?,
         name: identical(name, fhirSentinel) ? _value.name : name as HumanName?,
+        additionalName: identical(additionalName, fhirSentinel)
+            ? _value.additionalName
+            : additionalName as List<HumanName>?,
         telecom: identical(telecom, fhirSentinel)
             ? _value.telecom
             : telecom as List<ContactPoint>?,
         address: identical(address, fhirSentinel)
             ? _value.address
             : address as Address?,
+        additionalAddress: identical(additionalAddress, fhirSentinel)
+            ? _value.additionalAddress
+            : additionalAddress as List<Address>?,
         gender: identical(gender, fhirSentinel)
             ? _value.gender
             : gender as AdministrativeGender?,

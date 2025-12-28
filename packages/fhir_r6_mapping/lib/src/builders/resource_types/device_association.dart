@@ -26,7 +26,7 @@ class DeviceAssociationBuilder extends DomainResourceBuilder {
     super.modifierExtension,
     this.identifier,
     this.device,
-    this.category,
+    this.relationship,
     this.status,
     this.statusReason,
     this.subject,
@@ -127,12 +127,12 @@ class DeviceAssociationBuilder extends DomainResourceBuilder {
         ReferenceBuilder.fromJson,
         '$objectPath.device',
       ),
-      category: (json['category'] as List<dynamic>?)
+      relationship: (json['relationship'] as List<dynamic>?)
           ?.map<CodeableConceptBuilder>(
             (v) => CodeableConceptBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.category',
+                'objectPath': '$objectPath.relationship',
               },
             ),
           )
@@ -234,9 +234,9 @@ class DeviceAssociationBuilder extends DomainResourceBuilder {
   /// Reference to the devices associated with the patient or group.
   ReferenceBuilder? device;
 
-  /// [category]
+  /// [relationship]
   /// Describes the relationship between the device and subject.
-  List<CodeableConceptBuilder>? category;
+  List<CodeableConceptBuilder>? relationship;
 
   /// [status]
   /// Indicates the state of the Device association.
@@ -311,7 +311,7 @@ class DeviceAssociationBuilder extends DomainResourceBuilder {
     addField('modifierExtension', modifierExtension);
     addField('identifier', identifier);
     addField('device', device);
-    addField('category', category);
+    addField('relationship', relationship);
     addField('status', status);
     addField('statusReason', statusReason);
     addField('subject', subject);
@@ -335,7 +335,7 @@ class DeviceAssociationBuilder extends DomainResourceBuilder {
       'modifierExtension',
       'identifier',
       'device',
-      'category',
+      'relationship',
       'status',
       'statusReason',
       'subject',
@@ -394,9 +394,9 @@ class DeviceAssociationBuilder extends DomainResourceBuilder {
         if (device != null) {
           fields.add(device!);
         }
-      case 'category':
-        if (category != null) {
-          fields.addAll(category!);
+      case 'relationship':
+        if (relationship != null) {
+          fields.addAll(relationship!);
         }
       case 'status':
         if (status != null) {
@@ -602,16 +602,16 @@ class DeviceAssociationBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'category':
+      case 'relationship':
         {
           if (child is List<CodeableConceptBuilder>) {
             // Replace or create new list
-            category = child;
+            relationship = child;
             return;
           } else if (child is CodeableConceptBuilder) {
             // Add single element to existing list or create new list
-            category = [
-              ...(category ?? []),
+            relationship = [
+              ...(relationship ?? []),
               child,
             ];
             return;
@@ -712,7 +712,7 @@ class DeviceAssociationBuilder extends DomainResourceBuilder {
         return ['IdentifierBuilder'];
       case 'device':
         return ['ReferenceBuilder'];
-      case 'category':
+      case 'relationship':
         return ['CodeableConceptBuilder'];
       case 'status':
         return ['CodeableConceptBuilder'];
@@ -786,9 +786,9 @@ class DeviceAssociationBuilder extends DomainResourceBuilder {
           device = ReferenceBuilder.empty();
           return;
         }
-      case 'category':
+      case 'relationship':
         {
-          category = <CodeableConceptBuilder>[];
+          relationship = <CodeableConceptBuilder>[];
           return;
         }
       case 'status':
@@ -840,7 +840,7 @@ class DeviceAssociationBuilder extends DomainResourceBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     List<IdentifierBuilder>? identifier,
     ReferenceBuilder? device,
-    List<CodeableConceptBuilder>? category,
+    List<CodeableConceptBuilder>? relationship,
     CodeableConceptBuilder? status,
     List<CodeableConceptBuilder>? statusReason,
     ReferenceBuilder? subject,
@@ -864,7 +864,7 @@ class DeviceAssociationBuilder extends DomainResourceBuilder {
       modifierExtension: modifierExtension ?? this.modifierExtension,
       identifier: identifier ?? this.identifier,
       device: device ?? this.device,
-      category: category ?? this.category,
+      relationship: relationship ?? this.relationship,
       status: status ?? this.status,
       statusReason: statusReason ?? this.statusReason,
       subject: subject ?? this.subject,
@@ -958,8 +958,8 @@ class DeviceAssociationBuilder extends DomainResourceBuilder {
       return false;
     }
     if (!listEquals<CodeableConceptBuilder>(
-      category,
-      o.category,
+      relationship,
+      o.relationship,
     )) {
       return false;
     }

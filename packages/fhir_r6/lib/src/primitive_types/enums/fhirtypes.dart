@@ -42,6 +42,9 @@ enum FHIRTypesEnum {
   /// ProductShelfLife
   productShelfLife,
 
+  /// RelativeTime
+  relativeTime,
+
   /// Timing
   timing,
 
@@ -291,8 +294,8 @@ enum FHIRTypesEnum {
   /// ClaimResponse
   claimResponse,
 
-  /// ClinicalImpression
-  clinicalImpression,
+  /// ClinicalAssessment
+  clinicalAssessment,
 
   /// ClinicalUseDefinition
   clinicalUseDefinition,
@@ -342,6 +345,9 @@ enum FHIRTypesEnum {
   /// Device
   device,
 
+  /// DeviceAlert
+  deviceAlert,
+
   /// DeviceAssociation
   deviceAssociation,
 
@@ -389,9 +395,6 @@ enum FHIRTypesEnum {
 
   /// Evidence
   evidence,
-
-  /// EvidenceReport
-  evidenceReport,
 
   /// EvidenceVariable
   evidenceVariable,
@@ -453,6 +456,9 @@ enum FHIRTypesEnum {
   /// InsurancePlan
   insurancePlan,
 
+  /// InsuranceProduct
+  insuranceProduct,
+
   /// InventoryItem
   inventoryItem,
 
@@ -513,6 +519,9 @@ enum FHIRTypesEnum {
   /// MetadataResource
   metadataResource,
 
+  /// MolecularDefinition
+  molecularDefinition,
+
   /// MolecularSequence
   molecularSequence,
 
@@ -563,6 +572,9 @@ enum FHIRTypesEnum {
 
   /// Person
   person,
+
+  /// PersonalRelationship
+  personalRelationship,
 
   /// PlanDefinition
   planDefinition,
@@ -730,6 +742,8 @@ enum FHIRTypesEnum {
         return 'MarketingStatus';
       case FHIRTypesEnum.productShelfLife:
         return 'ProductShelfLife';
+      case FHIRTypesEnum.relativeTime:
+        return 'RelativeTime';
       case FHIRTypesEnum.timing:
         return 'Timing';
       case FHIRTypesEnum.codeableConcept:
@@ -896,8 +910,8 @@ enum FHIRTypesEnum {
         return 'Claim';
       case FHIRTypesEnum.claimResponse:
         return 'ClaimResponse';
-      case FHIRTypesEnum.clinicalImpression:
-        return 'ClinicalImpression';
+      case FHIRTypesEnum.clinicalAssessment:
+        return 'ClinicalAssessment';
       case FHIRTypesEnum.clinicalUseDefinition:
         return 'ClinicalUseDefinition';
       case FHIRTypesEnum.codeSystem:
@@ -930,6 +944,8 @@ enum FHIRTypesEnum {
         return 'DetectedIssue';
       case FHIRTypesEnum.device:
         return 'Device';
+      case FHIRTypesEnum.deviceAlert:
+        return 'DeviceAlert';
       case FHIRTypesEnum.deviceAssociation:
         return 'DeviceAssociation';
       case FHIRTypesEnum.deviceDefinition:
@@ -962,8 +978,6 @@ enum FHIRTypesEnum {
         return 'EventDefinition';
       case FHIRTypesEnum.evidence:
         return 'Evidence';
-      case FHIRTypesEnum.evidenceReport:
-        return 'EvidenceReport';
       case FHIRTypesEnum.evidenceVariable:
         return 'EvidenceVariable';
       case FHIRTypesEnum.exampleScenario:
@@ -1004,6 +1018,8 @@ enum FHIRTypesEnum {
         return 'Ingredient';
       case FHIRTypesEnum.insurancePlan:
         return 'InsurancePlan';
+      case FHIRTypesEnum.insuranceProduct:
+        return 'InsuranceProduct';
       case FHIRTypesEnum.inventoryItem:
         return 'InventoryItem';
       case FHIRTypesEnum.inventoryReport:
@@ -1044,6 +1060,8 @@ enum FHIRTypesEnum {
         return 'MessageHeader';
       case FHIRTypesEnum.metadataResource:
         return 'MetadataResource';
+      case FHIRTypesEnum.molecularDefinition:
+        return 'MolecularDefinition';
       case FHIRTypesEnum.molecularSequence:
         return 'MolecularSequence';
       case FHIRTypesEnum.namingSystem:
@@ -1078,6 +1096,8 @@ enum FHIRTypesEnum {
         return 'Permission';
       case FHIRTypesEnum.person:
         return 'Person';
+      case FHIRTypesEnum.personalRelationship:
+        return 'PersonalRelationship';
       case FHIRTypesEnum.planDefinition:
         return 'PlanDefinition';
       case FHIRTypesEnum.practitioner:
@@ -1209,6 +1229,8 @@ enum FHIRTypesEnum {
         return FHIRTypesEnum.marketingStatus;
       case 'ProductShelfLife':
         return FHIRTypesEnum.productShelfLife;
+      case 'RelativeTime':
+        return FHIRTypesEnum.relativeTime;
       case 'Timing':
         return FHIRTypesEnum.timing;
       case 'CodeableConcept':
@@ -1375,8 +1397,8 @@ enum FHIRTypesEnum {
         return FHIRTypesEnum.claim;
       case 'ClaimResponse':
         return FHIRTypesEnum.claimResponse;
-      case 'ClinicalImpression':
-        return FHIRTypesEnum.clinicalImpression;
+      case 'ClinicalAssessment':
+        return FHIRTypesEnum.clinicalAssessment;
       case 'ClinicalUseDefinition':
         return FHIRTypesEnum.clinicalUseDefinition;
       case 'CodeSystem':
@@ -1409,6 +1431,8 @@ enum FHIRTypesEnum {
         return FHIRTypesEnum.detectedIssue;
       case 'Device':
         return FHIRTypesEnum.device;
+      case 'DeviceAlert':
+        return FHIRTypesEnum.deviceAlert;
       case 'DeviceAssociation':
         return FHIRTypesEnum.deviceAssociation;
       case 'DeviceDefinition':
@@ -1441,8 +1465,6 @@ enum FHIRTypesEnum {
         return FHIRTypesEnum.eventDefinition;
       case 'Evidence':
         return FHIRTypesEnum.evidence;
-      case 'EvidenceReport':
-        return FHIRTypesEnum.evidenceReport;
       case 'EvidenceVariable':
         return FHIRTypesEnum.evidenceVariable;
       case 'ExampleScenario':
@@ -1483,6 +1505,8 @@ enum FHIRTypesEnum {
         return FHIRTypesEnum.ingredient;
       case 'InsurancePlan':
         return FHIRTypesEnum.insurancePlan;
+      case 'InsuranceProduct':
+        return FHIRTypesEnum.insuranceProduct;
       case 'InventoryItem':
         return FHIRTypesEnum.inventoryItem;
       case 'InventoryReport':
@@ -1523,6 +1547,8 @@ enum FHIRTypesEnum {
         return FHIRTypesEnum.messageHeader;
       case 'MetadataResource':
         return FHIRTypesEnum.metadataResource;
+      case 'MolecularDefinition':
+        return FHIRTypesEnum.molecularDefinition;
       case 'MolecularSequence':
         return FHIRTypesEnum.molecularSequence;
       case 'NamingSystem':
@@ -1557,6 +1583,8 @@ enum FHIRTypesEnum {
         return FHIRTypesEnum.permission;
       case 'Person':
         return FHIRTypesEnum.person;
+      case 'PersonalRelationship':
+        return FHIRTypesEnum.personalRelationship;
       case 'PlanDefinition':
         return FHIRTypesEnum.planDefinition;
       case 'Practitioner':
@@ -1726,7 +1754,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Base',
     ),
@@ -1739,7 +1767,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Element',
     ),
@@ -1752,7 +1780,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'BackboneElement',
     ),
@@ -1765,7 +1793,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'DataType',
     ),
@@ -1778,7 +1806,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Address',
     ),
@@ -1791,7 +1819,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Annotation',
     ),
@@ -1804,7 +1832,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Attachment',
     ),
@@ -1817,7 +1845,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Availability',
     ),
@@ -1830,7 +1858,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'BackboneType',
     ),
@@ -1843,7 +1871,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Dosage',
     ),
@@ -1856,7 +1884,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ElementDefinition',
     ),
@@ -1869,7 +1897,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'MarketingStatus',
     ),
@@ -1882,9 +1910,22 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ProductShelfLife',
+    ),
+  );
+
+  /// RelativeTime
+  static const FHIRTypes relativeTime = FHIRTypes._(
+    valueString: 'RelativeTime',
+    valueEnum: FHIRTypesEnum.relativeTime,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'RelativeTime',
     ),
   );
 
@@ -1895,7 +1936,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Timing',
     ),
@@ -1908,7 +1949,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'CodeableConcept',
     ),
@@ -1921,7 +1962,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'CodeableReference',
     ),
@@ -1934,7 +1975,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Coding',
     ),
@@ -1947,7 +1988,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ContactDetail',
     ),
@@ -1960,7 +2001,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ContactPoint',
     ),
@@ -1973,7 +2014,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Contributor',
     ),
@@ -1986,7 +2027,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'DataRequirement',
     ),
@@ -1999,7 +2040,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Expression',
     ),
@@ -2012,7 +2053,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ExtendedContactDetail',
     ),
@@ -2025,7 +2066,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Extension',
     ),
@@ -2038,7 +2079,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'HumanName',
     ),
@@ -2051,7 +2092,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Identifier',
     ),
@@ -2064,7 +2105,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Meta',
     ),
@@ -2077,7 +2118,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'MonetaryComponent',
     ),
@@ -2090,7 +2131,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Money',
     ),
@@ -2103,7 +2144,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Narrative',
     ),
@@ -2116,7 +2157,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ParameterDefinition',
     ),
@@ -2129,7 +2170,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Period',
     ),
@@ -2142,7 +2183,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'PrimitiveType',
     ),
@@ -2155,7 +2196,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'base64Binary',
     ),
@@ -2168,7 +2209,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'boolean',
     ),
@@ -2181,7 +2222,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'date',
     ),
@@ -2194,7 +2235,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'dateTime',
     ),
@@ -2207,7 +2248,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'decimal',
     ),
@@ -2220,7 +2261,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'instant',
     ),
@@ -2233,7 +2274,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'integer',
     ),
@@ -2246,7 +2287,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'positiveInt',
     ),
@@ -2259,7 +2300,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'unsignedInt',
     ),
@@ -2272,7 +2313,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'integer64',
     ),
@@ -2285,7 +2326,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'string',
     ),
@@ -2298,7 +2339,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'code',
     ),
@@ -2311,7 +2352,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'id',
     ),
@@ -2324,7 +2365,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'markdown',
     ),
@@ -2337,7 +2378,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'time',
     ),
@@ -2350,7 +2391,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'uri',
     ),
@@ -2363,7 +2404,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'canonical',
     ),
@@ -2376,7 +2417,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'oid',
     ),
@@ -2389,7 +2430,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'url',
     ),
@@ -2402,7 +2443,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'uuid',
     ),
@@ -2415,7 +2456,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Quantity',
     ),
@@ -2428,7 +2469,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Age',
     ),
@@ -2441,7 +2482,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Count',
     ),
@@ -2454,7 +2495,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Distance',
     ),
@@ -2467,7 +2508,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Duration',
     ),
@@ -2480,7 +2521,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Range',
     ),
@@ -2493,7 +2534,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Ratio',
     ),
@@ -2506,7 +2547,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'RatioRange',
     ),
@@ -2519,7 +2560,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Reference',
     ),
@@ -2532,7 +2573,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'RelatedArtifact',
     ),
@@ -2545,7 +2586,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'SampledData',
     ),
@@ -2558,7 +2599,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Signature',
     ),
@@ -2571,7 +2612,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'TriggerDefinition',
     ),
@@ -2584,7 +2625,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'UsageContext',
     ),
@@ -2597,7 +2638,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'VirtualServiceDetail',
     ),
@@ -2610,7 +2651,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'xhtml',
     ),
@@ -2623,7 +2664,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Resource',
     ),
@@ -2636,7 +2677,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Binary',
     ),
@@ -2649,7 +2690,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Bundle',
     ),
@@ -2662,7 +2703,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'DomainResource',
     ),
@@ -2675,7 +2716,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Account',
     ),
@@ -2688,7 +2729,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ActivityDefinition',
     ),
@@ -2701,7 +2742,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ActorDefinition',
     ),
@@ -2714,7 +2755,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'AdministrableProductDefinition',
     ),
@@ -2727,7 +2768,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'AdverseEvent',
     ),
@@ -2740,7 +2781,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'AllergyIntolerance',
     ),
@@ -2753,7 +2794,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Appointment',
     ),
@@ -2766,7 +2807,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'AppointmentResponse',
     ),
@@ -2779,7 +2820,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ArtifactAssessment',
     ),
@@ -2792,7 +2833,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'AuditEvent',
     ),
@@ -2805,7 +2846,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Basic',
     ),
@@ -2818,7 +2859,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'BiologicallyDerivedProduct',
     ),
@@ -2831,7 +2872,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'BiologicallyDerivedProductDispense',
     ),
@@ -2844,7 +2885,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'BodyStructure',
     ),
@@ -2857,7 +2898,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'CanonicalResource',
     ),
@@ -2870,7 +2911,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'CapabilityStatement',
     ),
@@ -2883,7 +2924,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'CarePlan',
     ),
@@ -2896,7 +2937,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'CareTeam',
     ),
@@ -2909,7 +2950,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ChargeItem',
     ),
@@ -2922,7 +2963,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ChargeItemDefinition',
     ),
@@ -2935,7 +2976,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Citation',
     ),
@@ -2948,7 +2989,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Claim',
     ),
@@ -2961,22 +3002,22 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ClaimResponse',
     ),
   );
 
-  /// ClinicalImpression
-  static const FHIRTypes clinicalImpression = FHIRTypes._(
-    valueString: 'ClinicalImpression',
-    valueEnum: FHIRTypesEnum.clinicalImpression,
+  /// ClinicalAssessment
+  static const FHIRTypes clinicalAssessment = FHIRTypes._(
+    valueString: 'ClinicalAssessment',
+    valueEnum: FHIRTypesEnum.clinicalAssessment,
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
-      valueString: 'ClinicalImpression',
+      valueString: 'ClinicalAssessment',
     ),
   );
 
@@ -2987,7 +3028,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ClinicalUseDefinition',
     ),
@@ -3000,7 +3041,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'CodeSystem',
     ),
@@ -3013,7 +3054,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Communication',
     ),
@@ -3026,7 +3067,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'CommunicationRequest',
     ),
@@ -3039,7 +3080,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'CompartmentDefinition',
     ),
@@ -3052,7 +3093,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Composition',
     ),
@@ -3065,7 +3106,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ConceptMap',
     ),
@@ -3078,7 +3119,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Condition',
     ),
@@ -3091,7 +3132,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ConditionDefinition',
     ),
@@ -3104,7 +3145,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Consent',
     ),
@@ -3117,7 +3158,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Contract',
     ),
@@ -3130,7 +3171,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Coverage',
     ),
@@ -3143,7 +3184,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'CoverageEligibilityRequest',
     ),
@@ -3156,7 +3197,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'CoverageEligibilityResponse',
     ),
@@ -3169,7 +3210,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'DetectedIssue',
     ),
@@ -3182,9 +3223,22 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Device',
+    ),
+  );
+
+  /// DeviceAlert
+  static const FHIRTypes deviceAlert = FHIRTypes._(
+    valueString: 'DeviceAlert',
+    valueEnum: FHIRTypesEnum.deviceAlert,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'DeviceAlert',
     ),
   );
 
@@ -3195,7 +3249,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'DeviceAssociation',
     ),
@@ -3208,7 +3262,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'DeviceDefinition',
     ),
@@ -3221,7 +3275,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'DeviceDispense',
     ),
@@ -3234,7 +3288,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'DeviceMetric',
     ),
@@ -3247,7 +3301,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'DeviceRequest',
     ),
@@ -3260,7 +3314,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'DeviceUsage',
     ),
@@ -3273,7 +3327,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'DiagnosticReport',
     ),
@@ -3286,7 +3340,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'DocumentReference',
     ),
@@ -3299,7 +3353,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Encounter',
     ),
@@ -3312,7 +3366,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'EncounterHistory',
     ),
@@ -3325,7 +3379,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Endpoint',
     ),
@@ -3338,7 +3392,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'EnrollmentRequest',
     ),
@@ -3351,7 +3405,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'EnrollmentResponse',
     ),
@@ -3364,7 +3418,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'EpisodeOfCare',
     ),
@@ -3377,7 +3431,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'EventDefinition',
     ),
@@ -3390,22 +3444,9 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Evidence',
-    ),
-  );
-
-  /// EvidenceReport
-  static const FHIRTypes evidenceReport = FHIRTypes._(
-    valueString: 'EvidenceReport',
-    valueEnum: FHIRTypesEnum.evidenceReport,
-    system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
-    ),
-    version: FhirString._(valueString: '5.0.0'),
-    display: FhirString._(
-      valueString: 'EvidenceReport',
     ),
   );
 
@@ -3416,7 +3457,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'EvidenceVariable',
     ),
@@ -3429,7 +3470,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ExampleScenario',
     ),
@@ -3442,7 +3483,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ExplanationOfBenefit',
     ),
@@ -3455,7 +3496,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'FamilyMemberHistory',
     ),
@@ -3468,7 +3509,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Flag',
     ),
@@ -3481,7 +3522,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'FormularyItem',
     ),
@@ -3494,7 +3535,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'GenomicStudy',
     ),
@@ -3507,7 +3548,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Goal',
     ),
@@ -3520,7 +3561,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'GraphDefinition',
     ),
@@ -3533,7 +3574,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Group',
     ),
@@ -3546,7 +3587,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'GuidanceResponse',
     ),
@@ -3559,7 +3600,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'HealthcareService',
     ),
@@ -3572,7 +3613,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ImagingSelection',
     ),
@@ -3585,7 +3626,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ImagingStudy',
     ),
@@ -3598,7 +3639,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Immunization',
     ),
@@ -3611,7 +3652,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ImmunizationEvaluation',
     ),
@@ -3624,7 +3665,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ImmunizationRecommendation',
     ),
@@ -3637,7 +3678,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ImplementationGuide',
     ),
@@ -3650,7 +3691,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Ingredient',
     ),
@@ -3663,9 +3704,22 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'InsurancePlan',
+    ),
+  );
+
+  /// InsuranceProduct
+  static const FHIRTypes insuranceProduct = FHIRTypes._(
+    valueString: 'InsuranceProduct',
+    valueEnum: FHIRTypesEnum.insuranceProduct,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'InsuranceProduct',
     ),
   );
 
@@ -3676,7 +3730,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'InventoryItem',
     ),
@@ -3689,7 +3743,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'InventoryReport',
     ),
@@ -3702,7 +3756,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Invoice',
     ),
@@ -3715,7 +3769,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Library',
     ),
@@ -3728,7 +3782,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Linkage',
     ),
@@ -3741,7 +3795,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'List',
     ),
@@ -3754,7 +3808,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Location',
     ),
@@ -3767,7 +3821,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ManufacturedItemDefinition',
     ),
@@ -3780,7 +3834,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Measure',
     ),
@@ -3793,7 +3847,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'MeasureReport',
     ),
@@ -3806,7 +3860,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Medication',
     ),
@@ -3819,7 +3873,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'MedicationAdministration',
     ),
@@ -3832,7 +3886,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'MedicationDispense',
     ),
@@ -3845,7 +3899,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'MedicationKnowledge',
     ),
@@ -3858,7 +3912,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'MedicationRequest',
     ),
@@ -3871,7 +3925,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'MedicationStatement',
     ),
@@ -3884,7 +3938,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'MedicinalProductDefinition',
     ),
@@ -3897,7 +3951,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'MessageDefinition',
     ),
@@ -3910,7 +3964,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'MessageHeader',
     ),
@@ -3923,9 +3977,22 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'MetadataResource',
+    ),
+  );
+
+  /// MolecularDefinition
+  static const FHIRTypes molecularDefinition = FHIRTypes._(
+    valueString: 'MolecularDefinition',
+    valueEnum: FHIRTypesEnum.molecularDefinition,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'MolecularDefinition',
     ),
   );
 
@@ -3936,7 +4003,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'MolecularSequence',
     ),
@@ -3949,7 +4016,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'NamingSystem',
     ),
@@ -3962,7 +4029,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'NutritionIntake',
     ),
@@ -3975,7 +4042,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'NutritionOrder',
     ),
@@ -3988,7 +4055,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'NutritionProduct',
     ),
@@ -4001,7 +4068,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Observation',
     ),
@@ -4014,7 +4081,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ObservationDefinition',
     ),
@@ -4027,7 +4094,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'OperationDefinition',
     ),
@@ -4040,7 +4107,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'OperationOutcome',
     ),
@@ -4053,7 +4120,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Organization',
     ),
@@ -4066,7 +4133,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'OrganizationAffiliation',
     ),
@@ -4079,7 +4146,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'PackagedProductDefinition',
     ),
@@ -4092,7 +4159,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Patient',
     ),
@@ -4105,7 +4172,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'PaymentNotice',
     ),
@@ -4118,7 +4185,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'PaymentReconciliation',
     ),
@@ -4131,7 +4198,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Permission',
     ),
@@ -4144,9 +4211,22 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Person',
+    ),
+  );
+
+  /// PersonalRelationship
+  static const FHIRTypes personalRelationship = FHIRTypes._(
+    valueString: 'PersonalRelationship',
+    valueEnum: FHIRTypesEnum.personalRelationship,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'PersonalRelationship',
     ),
   );
 
@@ -4157,7 +4237,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'PlanDefinition',
     ),
@@ -4170,7 +4250,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Practitioner',
     ),
@@ -4183,7 +4263,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'PractitionerRole',
     ),
@@ -4196,7 +4276,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Procedure',
     ),
@@ -4209,7 +4289,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Provenance',
     ),
@@ -4222,7 +4302,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Questionnaire',
     ),
@@ -4235,7 +4315,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'QuestionnaireResponse',
     ),
@@ -4248,7 +4328,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'RegulatedAuthorization',
     ),
@@ -4261,7 +4341,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'RelatedPerson',
     ),
@@ -4274,7 +4354,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'RequestOrchestration',
     ),
@@ -4287,7 +4367,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Requirements',
     ),
@@ -4300,7 +4380,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ResearchStudy',
     ),
@@ -4313,7 +4393,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ResearchSubject',
     ),
@@ -4326,7 +4406,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'RiskAssessment',
     ),
@@ -4339,7 +4419,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Schedule',
     ),
@@ -4352,7 +4432,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'SearchParameter',
     ),
@@ -4365,7 +4445,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ServiceRequest',
     ),
@@ -4378,7 +4458,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Slot',
     ),
@@ -4391,7 +4471,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Specimen',
     ),
@@ -4404,7 +4484,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'SpecimenDefinition',
     ),
@@ -4417,7 +4497,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'StructureDefinition',
     ),
@@ -4430,7 +4510,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'StructureMap',
     ),
@@ -4443,7 +4523,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Subscription',
     ),
@@ -4456,7 +4536,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'SubscriptionStatus',
     ),
@@ -4469,7 +4549,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'SubscriptionTopic',
     ),
@@ -4482,7 +4562,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Substance',
     ),
@@ -4495,7 +4575,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'SubstanceDefinition',
     ),
@@ -4508,7 +4588,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'SubstanceNucleicAcid',
     ),
@@ -4521,7 +4601,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'SubstancePolymer',
     ),
@@ -4534,7 +4614,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'SubstanceProtein',
     ),
@@ -4547,7 +4627,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'SubstanceReferenceInformation',
     ),
@@ -4560,7 +4640,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'SubstanceSourceMaterial',
     ),
@@ -4573,7 +4653,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'SupplyDelivery',
     ),
@@ -4586,7 +4666,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'SupplyRequest',
     ),
@@ -4599,7 +4679,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Task',
     ),
@@ -4612,7 +4692,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'TerminologyCapabilities',
     ),
@@ -4625,7 +4705,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'TestPlan',
     ),
@@ -4638,7 +4718,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'TestReport',
     ),
@@ -4651,7 +4731,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'TestScript',
     ),
@@ -4664,7 +4744,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Transport',
     ),
@@ -4677,7 +4757,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'ValueSet',
     ),
@@ -4690,7 +4770,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'VerificationResult',
     ),
@@ -4703,7 +4783,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'VisionPrescription',
     ),
@@ -4716,7 +4796,7 @@ class FHIRTypes extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/fhir-types',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Parameters',
     ),
@@ -4737,6 +4817,7 @@ class FHIRTypes extends FhirCodeEnum {
     elementDefinition,
     marketingStatus,
     productShelfLife,
+    relativeTime,
     timing,
     codeableConcept,
     codeableReference,
@@ -4820,7 +4901,7 @@ class FHIRTypes extends FhirCodeEnum {
     citation,
     claim,
     claimResponse,
-    clinicalImpression,
+    clinicalAssessment,
     clinicalUseDefinition,
     codeSystem,
     communication,
@@ -4837,6 +4918,7 @@ class FHIRTypes extends FhirCodeEnum {
     coverageEligibilityResponse,
     detectedIssue,
     device,
+    deviceAlert,
     deviceAssociation,
     deviceDefinition,
     deviceDispense,
@@ -4853,7 +4935,6 @@ class FHIRTypes extends FhirCodeEnum {
     episodeOfCare,
     eventDefinition,
     evidence,
-    evidenceReport,
     evidenceVariable,
     exampleScenario,
     explanationOfBenefit,
@@ -4874,6 +4955,7 @@ class FHIRTypes extends FhirCodeEnum {
     implementationGuide,
     ingredient,
     insurancePlan,
+    insuranceProduct,
     inventoryItem,
     inventoryReport,
     invoice,
@@ -4894,6 +4976,7 @@ class FHIRTypes extends FhirCodeEnum {
     messageDefinition,
     messageHeader,
     metadataResource,
+    molecularDefinition,
     molecularSequence,
     namingSystem,
     nutritionIntake,
@@ -4911,6 +4994,7 @@ class FHIRTypes extends FhirCodeEnum {
     paymentReconciliation,
     permission,
     person,
+    personalRelationship,
     planDefinition,
     practitioner,
     practitionerRole,

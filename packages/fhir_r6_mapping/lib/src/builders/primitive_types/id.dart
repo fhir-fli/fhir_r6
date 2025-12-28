@@ -26,9 +26,7 @@ class FhirIdBuilder extends FhirUriBuilder
         FixedXElementDefinitionBuilder,
         PatternXElementDefinitionBuilder,
         ValueXElementDefinitionExampleBuilder,
-        ValueXExtensionBuilder,
-        ValueXEvidenceVariableDefinitionByTypeAndValueBuilder,
-        EventXEvidenceVariableTimeFromEventBuilder {
+        ValueXExtensionBuilder {
   // --------------------------------------------------------------------------
   // Private Internal Constructor
   // --------------------------------------------------------------------------

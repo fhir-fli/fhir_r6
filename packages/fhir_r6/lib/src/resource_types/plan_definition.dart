@@ -2985,10 +2985,10 @@ class PlanDefinitionAction extends BackboneElement {
             ),
           )
           .toList(),
-      goalId: JsonParser.parsePrimitiveList<FhirId>(
+      goalId: JsonParser.parsePrimitiveList<FhirString>(
         json,
         'goalId',
-        FhirId.fromJson,
+        FhirString.fromJson,
       ),
       subjectX: JsonParser.parsePolymorphic<SubjectXPlanDefinitionAction>(
         json,
@@ -3211,7 +3211,7 @@ class PlanDefinitionAction extends BackboneElement {
   /// quality, a goal represents acceptance criteria (Goal) for a given
   /// action (Test), so the goalId would be the unique id of a defined goal
   /// element establishing the acceptance criteria for the action.
-  final List<FhirId>? goalId;
+  final List<FhirString>? goalId;
 
   /// [subjectX]
   /// A code, group definition, or canonical reference that describes the
@@ -3872,7 +3872,7 @@ class PlanDefinitionAction extends BackboneElement {
     )) {
       return false;
     }
-    if (!listEquals<FhirId>(
+    if (!listEquals<FhirString>(
       goalId,
       o.goalId,
     )) {
@@ -4349,10 +4349,10 @@ class PlanDefinitionInput extends BackboneElement {
         'requirement',
         DataRequirement.fromJson,
       ),
-      relatedData: JsonParser.parsePrimitive<FhirId>(
+      relatedData: JsonParser.parsePrimitive<FhirString>(
         json,
         'relatedData',
-        FhirId.fromJson,
+        FhirString.fromJson,
       ),
     );
   }
@@ -4413,7 +4413,7 @@ class PlanDefinitionInput extends BackboneElement {
   /// [relatedData]
   /// Points to an existing input or output element that provides data to
   /// this input.
-  final FhirId? relatedData;
+  final FhirString? relatedData;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -5008,10 +5008,10 @@ class PlanDefinitionRelatedAction extends BackboneElement {
             ),
           )
           .toList(),
-      targetId: JsonParser.parsePrimitive<FhirId>(
+      targetId: JsonParser.parsePrimitive<FhirString>(
         json,
         'targetId',
-        FhirId.fromJson,
+        FhirString.fromJson,
       )!,
       relationship: JsonParser.parsePrimitive<ActionRelationshipType>(
         json,
@@ -5077,7 +5077,7 @@ class PlanDefinitionRelatedAction extends BackboneElement {
 
   /// [targetId]
   /// The element id of the target related action.
-  final FhirId targetId;
+  final FhirString targetId;
 
   /// [relationship]
   /// The relationship of the start of this action to the related action.

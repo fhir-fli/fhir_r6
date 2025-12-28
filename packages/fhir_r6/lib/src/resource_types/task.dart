@@ -5,7 +5,12 @@ import 'package:yaml/yaml.dart';
 part 'task.g.dart';
 
 /// [Task]
-/// A task to be performed.
+/// A task to be performed as a part of a workflow and the related
+/// informations like inputs, outputs and execution progress. While very
+/// simple workflows can be implemented with [Request](request.html) alone,
+/// most workflows would require a Task (explicit or contained) as a means
+/// to track the execution progress (i.e. inputs, outputs, status). Please
+/// refer to [Fulfillment/Execution](request.html#fulfillment).
 class Task extends DomainResource {
   /// Primary constructor for
   /// [Task]
@@ -178,10 +183,10 @@ class Task extends DomainResource {
         'code',
         CodeableConcept.fromJson,
       ),
-      description: JsonParser.parsePrimitive<FhirString>(
+      description: JsonParser.parsePrimitive<FhirMarkdown>(
         json,
         'description',
-        FhirString.fromJson,
+        FhirMarkdown.fromJson,
       ),
       focus: JsonParser.parseObject<Reference>(
         json,
@@ -392,7 +397,7 @@ class Task extends DomainResource {
 
   /// [intent]
   /// Indicates the "level" of actionability associated with the Task, i.e.
-  /// i+R[9]Cs this a proposed task, a planned task, an actionable task, etc.
+  /// this a proposed task, a planned task, an actionable task, etc.
   final TaskIntent intent;
 
   /// [priority]
@@ -411,7 +416,7 @@ class Task extends DomainResource {
 
   /// [description]
   /// A free-text description of what is to be performed.
-  final FhirString? description;
+  final FhirMarkdown? description;
 
   /// [focus]
   /// The request being fulfilled or the resource being manipulated (changed,
@@ -479,7 +484,7 @@ class Task extends DomainResource {
   final List<Reference>? insurance;
 
   /// [note]
-  /// Free-text information captured about the task as it progresses.
+  /// Free-text information about the task during its lifecycle.
   final List<Annotation>? note;
 
   /// [relevantHistory]
@@ -2026,8 +2031,7 @@ class TaskInput extends BackboneElement {
   String get fhirType => 'TaskInput';
 
   /// [type]
-  /// A code or description indicating how the input is intended to be used
-  /// as part of the task execution.
+  /// A code or description to distinguish between inputs.
   final CodeableConcept type;
 
   /// [valueX]
@@ -2766,7 +2770,7 @@ class TaskOutput extends BackboneElement {
   String get fhirType => 'TaskOutput';
 
   /// [type]
-  /// The name of the Output parameter.
+  /// A code or description to distinguish between outputs.
   final CodeableConcept type;
 
   /// [valueX]

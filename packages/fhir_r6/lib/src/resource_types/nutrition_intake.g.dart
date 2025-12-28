@@ -18,8 +18,6 @@ abstract class $NutritionIntakeCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
-    List<FhirCanonical>? instantiatesCanonical,
-    List<FhirUri>? instantiatesUri,
     List<Reference>? basedOn,
     List<Reference>? partOf,
     EventStatus? status,
@@ -27,11 +25,10 @@ abstract class $NutritionIntakeCopyWith<T> extends $DomainResourceCopyWith<T> {
     CodeableConcept? code,
     Reference? subject,
     Reference? encounter,
-    FhirDateTime? occurrenceX,
+    OccurrenceXNutritionIntake? occurrenceX,
     FhirDateTime? recorded,
-    FhirBoolean? reportedX,
-    List<NutritionIntakeConsumedItem>? consumedItem,
-    List<NutritionIntakeIngredientLabel>? ingredientLabel,
+    ReportedXNutritionIntake? reportedX,
+    List<NutritionIntakeNutritionItem>? nutritionItem,
     List<NutritionIntakePerformer>? performer,
     Reference? location,
     List<Reference>? derivedFrom,
@@ -58,8 +55,6 @@ class _$NutritionIntakeCopyWithImpl<T> implements $NutritionIntakeCopyWith<T> {
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? identifier = fhirSentinel,
-    Object? instantiatesCanonical = fhirSentinel,
-    Object? instantiatesUri = fhirSentinel,
     Object? basedOn = fhirSentinel,
     Object? partOf = fhirSentinel,
     Object? status = fhirSentinel,
@@ -70,8 +65,7 @@ class _$NutritionIntakeCopyWithImpl<T> implements $NutritionIntakeCopyWith<T> {
     Object? occurrenceX = fhirSentinel,
     Object? recorded = fhirSentinel,
     Object? reportedX = fhirSentinel,
-    Object? consumedItem = fhirSentinel,
-    Object? ingredientLabel = fhirSentinel,
+    Object? nutritionItem = fhirSentinel,
     Object? performer = fhirSentinel,
     Object? location = fhirSentinel,
     Object? derivedFrom = fhirSentinel,
@@ -102,12 +96,6 @@ class _$NutritionIntakeCopyWithImpl<T> implements $NutritionIntakeCopyWith<T> {
         identifier: identical(identifier, fhirSentinel)
             ? _value.identifier
             : identifier as List<Identifier>?,
-        instantiatesCanonical: identical(instantiatesCanonical, fhirSentinel)
-            ? _value.instantiatesCanonical
-            : instantiatesCanonical as List<FhirCanonical>?,
-        instantiatesUri: identical(instantiatesUri, fhirSentinel)
-            ? _value.instantiatesUri
-            : instantiatesUri as List<FhirUri>?,
         basedOn: identical(basedOn, fhirSentinel)
             ? _value.basedOn
             : basedOn as List<Reference>?,
@@ -131,20 +119,16 @@ class _$NutritionIntakeCopyWithImpl<T> implements $NutritionIntakeCopyWith<T> {
             : encounter as Reference?,
         occurrenceX: identical(occurrenceX, fhirSentinel)
             ? _value.occurrenceX
-            : occurrenceX as FhirDateTime?,
+            : occurrenceX as OccurrenceXNutritionIntake?,
         recorded: identical(recorded, fhirSentinel)
             ? _value.recorded
             : recorded as FhirDateTime?,
         reportedX: identical(reportedX, fhirSentinel)
             ? _value.reportedX
-            : reportedX as FhirBoolean?,
-        consumedItem: identical(consumedItem, fhirSentinel)
-            ? _value.consumedItem
-            : (consumedItem as List<NutritionIntakeConsumedItem>?) ??
-                _value.consumedItem,
-        ingredientLabel: identical(ingredientLabel, fhirSentinel)
-            ? _value.ingredientLabel
-            : ingredientLabel as List<NutritionIntakeIngredientLabel>?,
+            : reportedX as ReportedXNutritionIntake?,
+        nutritionItem: identical(nutritionItem, fhirSentinel)
+            ? _value.nutritionItem
+            : nutritionItem as List<NutritionIntakeNutritionItem>?,
         performer: identical(performer, fhirSentinel)
             ? _value.performer
             : performer as List<NutritionIntakePerformer>?,
@@ -173,7 +157,7 @@ extension NutritionIntakeCopyWithExtension on NutritionIntake {
       );
 }
 
-abstract class $NutritionIntakeConsumedItemCopyWith<T>
+abstract class $NutritionIntakeNutritionItemCopyWith<T>
     extends $BackboneElementCopyWith<T> {
   @override
   T call({
@@ -182,11 +166,80 @@ abstract class $NutritionIntakeConsumedItemCopyWith<T>
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
     CodeableReference? nutritionProduct,
+    List<NutritionIntakeConsumedItem>? consumedItem,
+    List<NutritionIntakeNotConsumedItem>? notConsumedItem,
+    bool? disallowExtensions,
+  });
+}
+
+class _$NutritionIntakeNutritionItemCopyWithImpl<T>
+    implements $NutritionIntakeNutritionItemCopyWith<T> {
+  final NutritionIntakeNutritionItem _value;
+  final T Function(NutritionIntakeNutritionItem) _then;
+
+  _$NutritionIntakeNutritionItemCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? type = fhirSentinel,
+    Object? nutritionProduct = fhirSentinel,
+    Object? consumedItem = fhirSentinel,
+    Object? notConsumedItem = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      NutritionIntakeNutritionItem(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        type: identical(type, fhirSentinel)
+            ? _value.type
+            : type as CodeableConcept?,
+        nutritionProduct: identical(nutritionProduct, fhirSentinel)
+            ? _value.nutritionProduct
+            : nutritionProduct as CodeableReference?,
+        consumedItem: identical(consumedItem, fhirSentinel)
+            ? _value.consumedItem
+            : consumedItem as List<NutritionIntakeConsumedItem>?,
+        notConsumedItem: identical(notConsumedItem, fhirSentinel)
+            ? _value.notConsumedItem
+            : notConsumedItem as List<NutritionIntakeNotConsumedItem>?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension NutritionIntakeNutritionItemCopyWithExtension
+    on NutritionIntakeNutritionItem {
+  $NutritionIntakeNutritionItemCopyWith<NutritionIntakeNutritionItem>
+      get copyWith => _$NutritionIntakeNutritionItemCopyWithImpl<
+              NutritionIntakeNutritionItem>(
+            this,
+            (value) => value,
+          );
+}
+
+abstract class $NutritionIntakeConsumedItemCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
     Timing? schedule,
     Quantity? amount,
-    Quantity? rate,
-    FhirBoolean? notConsumed,
-    CodeableConcept? notConsumedReason,
+    RateXNutritionIntakeConsumedItem? rateX,
+    List<NutritionIntakeTotalIntake>? totalIntake,
     bool? disallowExtensions,
   });
 }
@@ -203,13 +256,10 @@ class _$NutritionIntakeConsumedItemCopyWithImpl<T>
     Object? id = fhirSentinel,
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
-    Object? type = fhirSentinel,
-    Object? nutritionProduct = fhirSentinel,
     Object? schedule = fhirSentinel,
     Object? amount = fhirSentinel,
-    Object? rate = fhirSentinel,
-    Object? notConsumed = fhirSentinel,
-    Object? notConsumedReason = fhirSentinel,
+    Object? rateX = fhirSentinel,
+    Object? totalIntake = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -221,26 +271,18 @@ class _$NutritionIntakeConsumedItemCopyWithImpl<T>
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
-        type: identical(type, fhirSentinel)
-            ? _value.type
-            : (type as CodeableConcept?) ?? _value.type,
-        nutritionProduct: identical(nutritionProduct, fhirSentinel)
-            ? _value.nutritionProduct
-            : (nutritionProduct as CodeableReference?) ??
-                _value.nutritionProduct,
         schedule: identical(schedule, fhirSentinel)
             ? _value.schedule
             : schedule as Timing?,
         amount: identical(amount, fhirSentinel)
             ? _value.amount
             : amount as Quantity?,
-        rate: identical(rate, fhirSentinel) ? _value.rate : rate as Quantity?,
-        notConsumed: identical(notConsumed, fhirSentinel)
-            ? _value.notConsumed
-            : notConsumed as FhirBoolean?,
-        notConsumedReason: identical(notConsumedReason, fhirSentinel)
-            ? _value.notConsumedReason
-            : notConsumedReason as CodeableConcept?,
+        rateX: identical(rateX, fhirSentinel)
+            ? _value.rateX
+            : rateX as RateXNutritionIntakeConsumedItem?,
+        totalIntake: identical(totalIntake, fhirSentinel)
+            ? _value.totalIntake
+            : totalIntake as List<NutritionIntakeTotalIntake>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -259,7 +301,7 @@ extension NutritionIntakeConsumedItemCopyWithExtension
           );
 }
 
-abstract class $NutritionIntakeIngredientLabelCopyWith<T>
+abstract class $NutritionIntakeTotalIntakeCopyWith<T>
     extends $BackboneElementCopyWith<T> {
   @override
   T call({
@@ -268,16 +310,17 @@ abstract class $NutritionIntakeIngredientLabelCopyWith<T>
     List<FhirExtension>? modifierExtension,
     CodeableReference? nutrient,
     Quantity? amount,
+    Quantity? energy,
     bool? disallowExtensions,
   });
 }
 
-class _$NutritionIntakeIngredientLabelCopyWithImpl<T>
-    implements $NutritionIntakeIngredientLabelCopyWith<T> {
-  final NutritionIntakeIngredientLabel _value;
-  final T Function(NutritionIntakeIngredientLabel) _then;
+class _$NutritionIntakeTotalIntakeCopyWithImpl<T>
+    implements $NutritionIntakeTotalIntakeCopyWith<T> {
+  final NutritionIntakeTotalIntake _value;
+  final T Function(NutritionIntakeTotalIntake) _then;
 
-  _$NutritionIntakeIngredientLabelCopyWithImpl(this._value, this._then);
+  _$NutritionIntakeTotalIntakeCopyWithImpl(this._value, this._then);
 
   @override
   T call({
@@ -286,10 +329,11 @@ class _$NutritionIntakeIngredientLabelCopyWithImpl<T>
     Object? modifierExtension = fhirSentinel,
     Object? nutrient = fhirSentinel,
     Object? amount = fhirSentinel,
+    Object? energy = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
-      NutritionIntakeIngredientLabel(
+      NutritionIntakeTotalIntake(
         id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
         extension_: identical(extension_, fhirSentinel)
             ? _value.extension_
@@ -303,6 +347,9 @@ class _$NutritionIntakeIngredientLabelCopyWithImpl<T>
         amount: identical(amount, fhirSentinel)
             ? _value.amount
             : (amount as Quantity?) ?? _value.amount,
+        energy: identical(energy, fhirSentinel)
+            ? _value.energy
+            : energy as Quantity?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -311,11 +358,78 @@ class _$NutritionIntakeIngredientLabelCopyWithImpl<T>
   }
 }
 
-extension NutritionIntakeIngredientLabelCopyWithExtension
-    on NutritionIntakeIngredientLabel {
-  $NutritionIntakeIngredientLabelCopyWith<NutritionIntakeIngredientLabel>
-      get copyWith => _$NutritionIntakeIngredientLabelCopyWithImpl<
-              NutritionIntakeIngredientLabel>(
+extension NutritionIntakeTotalIntakeCopyWithExtension
+    on NutritionIntakeTotalIntake {
+  $NutritionIntakeTotalIntakeCopyWith<NutritionIntakeTotalIntake>
+      get copyWith =>
+          _$NutritionIntakeTotalIntakeCopyWithImpl<NutritionIntakeTotalIntake>(
+            this,
+            (value) => value,
+          );
+}
+
+abstract class $NutritionIntakeNotConsumedItemCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    CodeableConcept? reason,
+    Timing? schedule,
+    Quantity? amount,
+    bool? disallowExtensions,
+  });
+}
+
+class _$NutritionIntakeNotConsumedItemCopyWithImpl<T>
+    implements $NutritionIntakeNotConsumedItemCopyWith<T> {
+  final NutritionIntakeNotConsumedItem _value;
+  final T Function(NutritionIntakeNotConsumedItem) _then;
+
+  _$NutritionIntakeNotConsumedItemCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? reason = fhirSentinel,
+    Object? schedule = fhirSentinel,
+    Object? amount = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      NutritionIntakeNotConsumedItem(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        reason: identical(reason, fhirSentinel)
+            ? _value.reason
+            : reason as CodeableConcept?,
+        schedule: identical(schedule, fhirSentinel)
+            ? _value.schedule
+            : schedule as Timing?,
+        amount: identical(amount, fhirSentinel)
+            ? _value.amount
+            : amount as Quantity?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension NutritionIntakeNotConsumedItemCopyWithExtension
+    on NutritionIntakeNotConsumedItem {
+  $NutritionIntakeNotConsumedItemCopyWith<NutritionIntakeNotConsumedItem>
+      get copyWith => _$NutritionIntakeNotConsumedItemCopyWithImpl<
+              NutritionIntakeNotConsumedItem>(
             this,
             (value) => value,
           );

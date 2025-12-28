@@ -129,6 +129,7 @@ abstract class $OrganizationQualificationCopyWith<T>
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
     CodeableConcept? code,
+    CodeableConcept? status,
     Period? period,
     Reference? issuer,
     bool? disallowExtensions,
@@ -149,6 +150,7 @@ class _$OrganizationQualificationCopyWithImpl<T>
     Object? modifierExtension = fhirSentinel,
     Object? identifier = fhirSentinel,
     Object? code = fhirSentinel,
+    Object? status = fhirSentinel,
     Object? period = fhirSentinel,
     Object? issuer = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
@@ -168,6 +170,9 @@ class _$OrganizationQualificationCopyWithImpl<T>
         code: identical(code, fhirSentinel)
             ? _value.code
             : (code as CodeableConcept?) ?? _value.code,
+        status: identical(status, fhirSentinel)
+            ? _value.status
+            : status as CodeableConcept?,
         period:
             identical(period, fhirSentinel) ? _value.period : period as Period?,
         issuer: identical(issuer, fhirSentinel)

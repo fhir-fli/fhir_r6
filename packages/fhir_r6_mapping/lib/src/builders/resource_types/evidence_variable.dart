@@ -3,10 +3,10 @@ import 'package:fhir_r6/fhir_r6.dart'
     show
         EvidenceVariable,
         EvidenceVariableCategory,
-        EvidenceVariableCharacteristic,
-        EvidenceVariableDefinitionByCombination,
-        EvidenceVariableDefinitionByTypeAndValue,
-        EvidenceVariableTimeFromEvent,
+        EvidenceVariableConstraint,
+        EvidenceVariableDataStorage,
+        EvidenceVariableDefinitionModifier,
+        EvidenceVariableRelatesTo,
         R6ResourceType,
         yamlMapToJson,
         yamlToJson;
@@ -38,11 +38,17 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
     this.name,
     this.title,
     this.shortTitle,
+    this.citeAs,
     super.status,
     super.experimental,
     super.date,
+    super.author,
     super.publisher,
     super.contact,
+    this.recorder,
+    super.editor,
+    super.reviewer,
+    super.endorser,
     super.description,
     this.note,
     super.useContext,
@@ -52,15 +58,20 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
     super.approvalDate,
     super.lastReviewDate,
     super.effectivePeriod,
-    super.author,
-    super.editor,
-    super.reviewer,
-    super.endorser,
-    super.relatedArtifact,
+    this.relatesTo,
     this.actual,
-    this.characteristic,
+    this.definition,
+    this.definitionModifier,
     this.handling,
     this.category,
+    this.conditional,
+    this.classifier,
+    this.dataStorage,
+    this.timing,
+    this.period,
+    this.constraint,
+    this.missingDataMeaning,
+    this.unacceptableDataHandling,
   })  : versionAlgorithmX = versionAlgorithmX ??
             versionAlgorithmString ??
             versionAlgorithmCoding,
@@ -190,6 +201,12 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
         FhirStringBuilder.fromJson,
         '$objectPath.shortTitle',
       ),
+      citeAs: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+        json,
+        'citeAs',
+        FhirMarkdownBuilder.fromJson,
+        '$objectPath.citeAs',
+      ),
       status: JsonParser.parsePrimitive<PublicationStatusBuilder>(
         json,
         'status',
@@ -208,6 +225,16 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
         FhirDateTimeBuilder.fromJson,
         '$objectPath.date',
       ),
+      author: (json['author'] as List<dynamic>?)
+          ?.map<ContactDetailBuilder>(
+            (v) => ContactDetailBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.author',
+              },
+            ),
+          )
+          .toList(),
       publisher: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'publisher',
@@ -220,6 +247,46 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
               {
                 ...v as Map<String, dynamic>,
                 'objectPath': '$objectPath.contact',
+              },
+            ),
+          )
+          .toList(),
+      recorder: (json['recorder'] as List<dynamic>?)
+          ?.map<ContactDetailBuilder>(
+            (v) => ContactDetailBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.recorder',
+              },
+            ),
+          )
+          .toList(),
+      editor: (json['editor'] as List<dynamic>?)
+          ?.map<ContactDetailBuilder>(
+            (v) => ContactDetailBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.editor',
+              },
+            ),
+          )
+          .toList(),
+      reviewer: (json['reviewer'] as List<dynamic>?)
+          ?.map<ContactDetailBuilder>(
+            (v) => ContactDetailBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.reviewer',
+              },
+            ),
+          )
+          .toList(),
+      endorser: (json['endorser'] as List<dynamic>?)
+          ?.map<ContactDetailBuilder>(
+            (v) => ContactDetailBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.endorser',
               },
             ),
           )
@@ -286,52 +353,12 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
         PeriodBuilder.fromJson,
         '$objectPath.effectivePeriod',
       ),
-      author: (json['author'] as List<dynamic>?)
-          ?.map<ContactDetailBuilder>(
-            (v) => ContactDetailBuilder.fromJson(
+      relatesTo: (json['relatesTo'] as List<dynamic>?)
+          ?.map<EvidenceVariableRelatesToBuilder>(
+            (v) => EvidenceVariableRelatesToBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.author',
-              },
-            ),
-          )
-          .toList(),
-      editor: (json['editor'] as List<dynamic>?)
-          ?.map<ContactDetailBuilder>(
-            (v) => ContactDetailBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.editor',
-              },
-            ),
-          )
-          .toList(),
-      reviewer: (json['reviewer'] as List<dynamic>?)
-          ?.map<ContactDetailBuilder>(
-            (v) => ContactDetailBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.reviewer',
-              },
-            ),
-          )
-          .toList(),
-      endorser: (json['endorser'] as List<dynamic>?)
-          ?.map<ContactDetailBuilder>(
-            (v) => ContactDetailBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.endorser',
-              },
-            ),
-          )
-          .toList(),
-      relatedArtifact: (json['relatedArtifact'] as List<dynamic>?)
-          ?.map<RelatedArtifactBuilder>(
-            (v) => RelatedArtifactBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.relatedArtifact',
+                'objectPath': '$objectPath.relatesTo',
               },
             ),
           )
@@ -342,12 +369,18 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
         FhirBooleanBuilder.fromJson,
         '$objectPath.actual',
       ),
-      characteristic: (json['characteristic'] as List<dynamic>?)
-          ?.map<EvidenceVariableCharacteristicBuilder>(
-            (v) => EvidenceVariableCharacteristicBuilder.fromJson(
+      definition: JsonParser.parseObject<CodeableReferenceBuilder>(
+        json,
+        'definition',
+        CodeableReferenceBuilder.fromJson,
+        '$objectPath.definition',
+      ),
+      definitionModifier: (json['definitionModifier'] as List<dynamic>?)
+          ?.map<EvidenceVariableDefinitionModifierBuilder>(
+            (v) => EvidenceVariableDefinitionModifierBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.characteristic',
+                'objectPath': '$objectPath.definitionModifier',
               },
             ),
           )
@@ -368,6 +401,75 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
             ),
           )
           .toList(),
+      conditional: JsonParser.parseObject<FhirExpressionBuilder>(
+        json,
+        'conditional',
+        FhirExpressionBuilder.fromJson,
+        '$objectPath.conditional',
+      ),
+      classifier: (json['classifier'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.classifier',
+              },
+            ),
+          )
+          .toList(),
+      dataStorage: (json['dataStorage'] as List<dynamic>?)
+          ?.map<EvidenceVariableDataStorageBuilder>(
+            (v) => EvidenceVariableDataStorageBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.dataStorage',
+              },
+            ),
+          )
+          .toList(),
+      timing: JsonParser.parseObject<RelativeTimeBuilder>(
+        json,
+        'timing',
+        RelativeTimeBuilder.fromJson,
+        '$objectPath.timing',
+      ),
+      period: JsonParser.parseObject<PeriodBuilder>(
+        json,
+        'period',
+        PeriodBuilder.fromJson,
+        '$objectPath.period',
+      ),
+      constraint: (json['constraint'] as List<dynamic>?)
+          ?.map<EvidenceVariableConstraintBuilder>(
+            (v) => EvidenceVariableConstraintBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.constraint',
+              },
+            ),
+          )
+          .toList(),
+      missingDataMeaning: (json['missingDataMeaning'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.missingDataMeaning',
+              },
+            ),
+          )
+          .toList(),
+      unacceptableDataHandling:
+          (json['unacceptableDataHandling'] as List<dynamic>?)
+              ?.map<CodeableConceptBuilder>(
+                (v) => CodeableConceptBuilder.fromJson(
+                  {
+                    ...v as Map<String, dynamic>,
+                    'objectPath': '$objectPath.unacceptableDataHandling',
+                  },
+                ),
+              )
+              .toList(),
     );
   }
 
@@ -447,6 +549,17 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
   /// descriptive contexts where the full, formal title is not necessary.
   FhirStringBuilder? shortTitle;
 
+  /// [citeAs]
+  /// Display of the suggested method of how to cite this EvidenceVariable.
+  FhirMarkdownBuilder? citeAs;
+
+  /// [recorder]
+  /// The person or entity that entered the data into the EvidenceVariable
+  /// Resource instance, if different than the author or creator of the
+  /// intellectual property contained within the EvidenceVariable Resource
+  /// instance.
+  List<ContactDetailBuilder>? recorder;
+
   /// [note]
   /// A human-readable string to clarify or explain concepts about the
   /// resource.
@@ -458,35 +571,80 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
   FhirMarkdownBuilder? purpose;
 
   /// [copyright]
-  /// A copyright statement relating to the resource and/or its contents.
-  /// Copyright statements are generally legal restrictions on the use and
-  /// publishing of the resource.
+  /// A copyright statement relating to the EvidenceVariable and/or its
+  /// contents. Copyright statements are legal notices of intellectual
+  /// property ownership and may include restrictions on the use and
+  /// publishing of the EvidenceVariable.
   FhirMarkdownBuilder? copyright;
 
   /// [copyrightLabel]
   /// A short string (<50 characters), suitable for inclusion in a page
   /// footer that identifies the copyright holder, effective period, and
-  /// optionally whether rights are resctricted. (e.g. 'All rights reserved',
+  /// optionally whether rights are restricted . (e.g. 'All rights reserved',
   /// 'Some rights reserved').
   FhirStringBuilder? copyrightLabel;
+
+  /// [relatesTo]
+  /// Relationships that this EvidenceVariable has with other FHIR or
+  /// non-FHIR resources that already exist.
+  List<EvidenceVariableRelatesToBuilder>? relatesTo;
 
   /// [actual]
   /// True if the actual variable measured, false if a conceptual
   /// representation of the intended variable.
   FhirBooleanBuilder? actual;
 
-  /// [characteristic]
-  /// A defining factor of the EvidenceVariable. Multiple characteristics are
-  /// applied with "and" semantics.
-  List<EvidenceVariableCharacteristicBuilder>? characteristic;
+  /// [definition]
+  /// The meaning of the evidence variable.
+  CodeableReferenceBuilder? definition;
+
+  /// [definitionModifier]
+  /// Further specification of the definition.
+  List<EvidenceVariableDefinitionModifierBuilder>? definitionModifier;
 
   /// [handling]
   /// The method of handling in statistical analysis.
   EvidenceVariableHandlingBuilder? handling;
 
   /// [category]
-  /// A grouping for ordinal or polychotomous variables.
+  /// A grouping for dichotomous, ordinal, or polychotomouos variables.
   List<EvidenceVariableCategoryBuilder>? category;
+
+  /// [conditional]
+  /// The context, situation, or parameters that determine whether the data
+  /// is obtained to determine the value of the variable.
+  FhirExpressionBuilder? conditional;
+
+  /// [classifier]
+  /// Classification of the variable.
+  List<CodeableConceptBuilder>? classifier;
+
+  /// [dataStorage]
+  /// How the data element is organized and where the data element
+  /// (expressing the value of the variable) is found in the dataset.
+  List<EvidenceVariableDataStorageBuilder>? dataStorage;
+
+  /// [timing]
+  /// When the variable is observed in relation to a reference point in time
+  /// defined by context or event.
+  RelativeTimeBuilder? timing;
+
+  /// [period]
+  /// When the variable is observed in relation to calendar dates and times.
+  PeriodBuilder? period;
+
+  /// [constraint]
+  /// Limit on acceptability of data used to express values of the variable.
+  List<EvidenceVariableConstraintBuilder>? constraint;
+
+  /// [missingDataMeaning]
+  /// A method or transformation applied for missing data.
+  List<CodeableConceptBuilder>? missingDataMeaning;
+
+  /// [unacceptableDataHandling]
+  /// A method or transformation applied for data that does not match
+  /// required patterns.
+  List<CodeableConceptBuilder>? unacceptableDataHandling;
 
   /// Converts a [EvidenceVariableBuilder]
   /// to [EvidenceVariable]
@@ -547,11 +705,17 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
     addField('name', name);
     addField('title', title);
     addField('shortTitle', shortTitle);
+    addField('citeAs', citeAs);
     addField('status', status);
     addField('experimental', experimental);
     addField('date', date);
+    addField('author', author);
     addField('publisher', publisher);
     addField('contact', contact);
+    addField('recorder', recorder);
+    addField('editor', editor);
+    addField('reviewer', reviewer);
+    addField('endorser', endorser);
     addField('description', description);
     addField('note', note);
     addField('useContext', useContext);
@@ -561,15 +725,20 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
     addField('approvalDate', approvalDate);
     addField('lastReviewDate', lastReviewDate);
     addField('effectivePeriod', effectivePeriod);
-    addField('author', author);
-    addField('editor', editor);
-    addField('reviewer', reviewer);
-    addField('endorser', endorser);
-    addField('relatedArtifact', relatedArtifact);
+    addField('relatesTo', relatesTo);
     addField('actual', actual);
-    addField('characteristic', characteristic);
+    addField('definition', definition);
+    addField('definitionModifier', definitionModifier);
     addField('handling', handling);
     addField('category', category);
+    addField('conditional', conditional);
+    addField('classifier', classifier);
+    addField('dataStorage', dataStorage);
+    addField('timing', timing);
+    addField('period', period);
+    addField('constraint', constraint);
+    addField('missingDataMeaning', missingDataMeaning);
+    addField('unacceptableDataHandling', unacceptableDataHandling);
     return json;
   }
 
@@ -592,11 +761,17 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
       'name',
       'title',
       'shortTitle',
+      'citeAs',
       'status',
       'experimental',
       'date',
+      'author',
       'publisher',
       'contact',
+      'recorder',
+      'editor',
+      'reviewer',
+      'endorser',
       'description',
       'note',
       'useContext',
@@ -606,15 +781,20 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
       'approvalDate',
       'lastReviewDate',
       'effectivePeriod',
-      'author',
-      'editor',
-      'reviewer',
-      'endorser',
-      'relatedArtifact',
+      'relatesTo',
       'actual',
-      'characteristic',
+      'definition',
+      'definitionModifier',
       'handling',
       'category',
+      'conditional',
+      'classifier',
+      'dataStorage',
+      'timing',
+      'period',
+      'constraint',
+      'missingDataMeaning',
+      'unacceptableDataHandling',
     ];
   }
 
@@ -699,6 +879,10 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
         if (shortTitle != null) {
           fields.add(shortTitle!);
         }
+      case 'citeAs':
+        if (citeAs != null) {
+          fields.add(citeAs!);
+        }
       case 'status':
         if (status != null) {
           fields.add(status!);
@@ -711,6 +895,10 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
         if (date != null) {
           fields.add(date!);
         }
+      case 'author':
+        if (author != null) {
+          fields.addAll(author!);
+        }
       case 'publisher':
         if (publisher != null) {
           fields.add(publisher!);
@@ -718,6 +906,22 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
       case 'contact':
         if (contact != null) {
           fields.addAll(contact!);
+        }
+      case 'recorder':
+        if (recorder != null) {
+          fields.addAll(recorder!);
+        }
+      case 'editor':
+        if (editor != null) {
+          fields.addAll(editor!);
+        }
+      case 'reviewer':
+        if (reviewer != null) {
+          fields.addAll(reviewer!);
+        }
+      case 'endorser':
+        if (endorser != null) {
+          fields.addAll(endorser!);
         }
       case 'description':
         if (description != null) {
@@ -755,33 +959,21 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
         if (effectivePeriod != null) {
           fields.add(effectivePeriod!);
         }
-      case 'author':
-        if (author != null) {
-          fields.addAll(author!);
-        }
-      case 'editor':
-        if (editor != null) {
-          fields.addAll(editor!);
-        }
-      case 'reviewer':
-        if (reviewer != null) {
-          fields.addAll(reviewer!);
-        }
-      case 'endorser':
-        if (endorser != null) {
-          fields.addAll(endorser!);
-        }
-      case 'relatedArtifact':
-        if (relatedArtifact != null) {
-          fields.addAll(relatedArtifact!);
+      case 'relatesTo':
+        if (relatesTo != null) {
+          fields.addAll(relatesTo!);
         }
       case 'actual':
         if (actual != null) {
           fields.add(actual!);
         }
-      case 'characteristic':
-        if (characteristic != null) {
-          fields.addAll(characteristic!);
+      case 'definition':
+        if (definition != null) {
+          fields.add(definition!);
+        }
+      case 'definitionModifier':
+        if (definitionModifier != null) {
+          fields.addAll(definitionModifier!);
         }
       case 'handling':
         if (handling != null) {
@@ -790,6 +982,38 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
       case 'category':
         if (category != null) {
           fields.addAll(category!);
+        }
+      case 'conditional':
+        if (conditional != null) {
+          fields.add(conditional!);
+        }
+      case 'classifier':
+        if (classifier != null) {
+          fields.addAll(classifier!);
+        }
+      case 'dataStorage':
+        if (dataStorage != null) {
+          fields.addAll(dataStorage!);
+        }
+      case 'timing':
+        if (timing != null) {
+          fields.add(timing!);
+        }
+      case 'period':
+        if (period != null) {
+          fields.add(period!);
+        }
+      case 'constraint':
+        if (constraint != null) {
+          fields.addAll(constraint!);
+        }
+      case 'missingDataMeaning':
+        if (missingDataMeaning != null) {
+          fields.addAll(missingDataMeaning!);
+        }
+      case 'unacceptableDataHandling':
+        if (unacceptableDataHandling != null) {
+          fields.addAll(unacceptableDataHandling!);
         }
       default:
         if (checkValid) {
@@ -1099,6 +1323,26 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'citeAs':
+        {
+          if (child is FhirMarkdownBuilder) {
+            citeAs = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                citeAs = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'status':
         {
           if (child is PublicationStatusBuilder) {
@@ -1162,6 +1406,22 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'author':
+        {
+          if (child is List<ContactDetailBuilder>) {
+            // Replace or create new list
+            author = child;
+            return;
+          } else if (child is ContactDetailBuilder) {
+            // Add single element to existing list or create new list
+            author = [
+              ...(author ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'publisher':
         {
           if (child is FhirStringBuilder) {
@@ -1192,6 +1452,70 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
             // Add single element to existing list or create new list
             contact = [
               ...(contact ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'recorder':
+        {
+          if (child is List<ContactDetailBuilder>) {
+            // Replace or create new list
+            recorder = child;
+            return;
+          } else if (child is ContactDetailBuilder) {
+            // Add single element to existing list or create new list
+            recorder = [
+              ...(recorder ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'editor':
+        {
+          if (child is List<ContactDetailBuilder>) {
+            // Replace or create new list
+            editor = child;
+            return;
+          } else if (child is ContactDetailBuilder) {
+            // Add single element to existing list or create new list
+            editor = [
+              ...(editor ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'reviewer':
+        {
+          if (child is List<ContactDetailBuilder>) {
+            // Replace or create new list
+            reviewer = child;
+            return;
+          } else if (child is ContactDetailBuilder) {
+            // Add single element to existing list or create new list
+            reviewer = [
+              ...(reviewer ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'endorser':
+        {
+          if (child is List<ContactDetailBuilder>) {
+            // Replace or create new list
+            endorser = child;
+            return;
+          } else if (child is ContactDetailBuilder) {
+            // Add single element to existing list or create new list
+            endorser = [
+              ...(endorser ?? []),
               child,
             ];
             return;
@@ -1358,80 +1682,16 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'author':
+      case 'relatesTo':
         {
-          if (child is List<ContactDetailBuilder>) {
+          if (child is List<EvidenceVariableRelatesToBuilder>) {
             // Replace or create new list
-            author = child;
+            relatesTo = child;
             return;
-          } else if (child is ContactDetailBuilder) {
+          } else if (child is EvidenceVariableRelatesToBuilder) {
             // Add single element to existing list or create new list
-            author = [
-              ...(author ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'editor':
-        {
-          if (child is List<ContactDetailBuilder>) {
-            // Replace or create new list
-            editor = child;
-            return;
-          } else if (child is ContactDetailBuilder) {
-            // Add single element to existing list or create new list
-            editor = [
-              ...(editor ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'reviewer':
-        {
-          if (child is List<ContactDetailBuilder>) {
-            // Replace or create new list
-            reviewer = child;
-            return;
-          } else if (child is ContactDetailBuilder) {
-            // Add single element to existing list or create new list
-            reviewer = [
-              ...(reviewer ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'endorser':
-        {
-          if (child is List<ContactDetailBuilder>) {
-            // Replace or create new list
-            endorser = child;
-            return;
-          } else if (child is ContactDetailBuilder) {
-            // Add single element to existing list or create new list
-            endorser = [
-              ...(endorser ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'relatedArtifact':
-        {
-          if (child is List<RelatedArtifactBuilder>) {
-            // Replace or create new list
-            relatedArtifact = child;
-            return;
-          } else if (child is RelatedArtifactBuilder) {
-            // Add single element to existing list or create new list
-            relatedArtifact = [
-              ...(relatedArtifact ?? []),
+            relatesTo = [
+              ...(relatesTo ?? []),
               child,
             ];
             return;
@@ -1458,16 +1718,24 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'characteristic':
+      case 'definition':
         {
-          if (child is List<EvidenceVariableCharacteristicBuilder>) {
-            // Replace or create new list
-            characteristic = child;
+          if (child is CodeableReferenceBuilder) {
+            definition = child;
             return;
-          } else if (child is EvidenceVariableCharacteristicBuilder) {
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'definitionModifier':
+        {
+          if (child is List<EvidenceVariableDefinitionModifierBuilder>) {
+            // Replace or create new list
+            definitionModifier = child;
+            return;
+          } else if (child is EvidenceVariableDefinitionModifierBuilder) {
             // Add single element to existing list or create new list
-            characteristic = [
-              ...(characteristic ?? []),
+            definitionModifier = [
+              ...(definitionModifier ?? []),
               child,
             ];
             return;
@@ -1507,6 +1775,110 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
             // Add single element to existing list or create new list
             category = [
               ...(category ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'conditional':
+        {
+          if (child is FhirExpressionBuilder) {
+            conditional = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'classifier':
+        {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
+            classifier = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            classifier = [
+              ...(classifier ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'dataStorage':
+        {
+          if (child is List<EvidenceVariableDataStorageBuilder>) {
+            // Replace or create new list
+            dataStorage = child;
+            return;
+          } else if (child is EvidenceVariableDataStorageBuilder) {
+            // Add single element to existing list or create new list
+            dataStorage = [
+              ...(dataStorage ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'timing':
+        {
+          if (child is RelativeTimeBuilder) {
+            timing = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'period':
+        {
+          if (child is PeriodBuilder) {
+            period = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'constraint':
+        {
+          if (child is List<EvidenceVariableConstraintBuilder>) {
+            // Replace or create new list
+            constraint = child;
+            return;
+          } else if (child is EvidenceVariableConstraintBuilder) {
+            // Add single element to existing list or create new list
+            constraint = [
+              ...(constraint ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'missingDataMeaning':
+        {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
+            missingDataMeaning = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            missingDataMeaning = [
+              ...(missingDataMeaning ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'unacceptableDataHandling':
+        {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
+            unacceptableDataHandling = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            unacceptableDataHandling = [
+              ...(unacceptableDataHandling ?? []),
               child,
             ];
             return;
@@ -1561,15 +1933,27 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
         return ['FhirStringBuilder'];
       case 'shortTitle':
         return ['FhirStringBuilder'];
+      case 'citeAs':
+        return ['FhirMarkdownBuilder'];
       case 'status':
         return ['FhirCodeEnumBuilder'];
       case 'experimental':
         return ['FhirBooleanBuilder'];
       case 'date':
         return ['FhirDateTimeBuilder'];
+      case 'author':
+        return ['ContactDetailBuilder'];
       case 'publisher':
         return ['FhirStringBuilder'];
       case 'contact':
+        return ['ContactDetailBuilder'];
+      case 'recorder':
+        return ['ContactDetailBuilder'];
+      case 'editor':
+        return ['ContactDetailBuilder'];
+      case 'reviewer':
+        return ['ContactDetailBuilder'];
+      case 'endorser':
         return ['ContactDetailBuilder'];
       case 'description':
         return ['FhirMarkdownBuilder'];
@@ -1589,24 +1973,34 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
         return ['FhirDateBuilder'];
       case 'effectivePeriod':
         return ['PeriodBuilder'];
-      case 'author':
-        return ['ContactDetailBuilder'];
-      case 'editor':
-        return ['ContactDetailBuilder'];
-      case 'reviewer':
-        return ['ContactDetailBuilder'];
-      case 'endorser':
-        return ['ContactDetailBuilder'];
-      case 'relatedArtifact':
-        return ['RelatedArtifactBuilder'];
+      case 'relatesTo':
+        return ['EvidenceVariableRelatesToBuilder'];
       case 'actual':
         return ['FhirBooleanBuilder'];
-      case 'characteristic':
-        return ['EvidenceVariableCharacteristicBuilder'];
+      case 'definition':
+        return ['CodeableReferenceBuilder'];
+      case 'definitionModifier':
+        return ['EvidenceVariableDefinitionModifierBuilder'];
       case 'handling':
         return ['FhirCodeEnumBuilder'];
       case 'category':
         return ['EvidenceVariableCategoryBuilder'];
+      case 'conditional':
+        return ['FhirExpressionBuilder'];
+      case 'classifier':
+        return ['CodeableConceptBuilder'];
+      case 'dataStorage':
+        return ['EvidenceVariableDataStorageBuilder'];
+      case 'timing':
+        return ['RelativeTimeBuilder'];
+      case 'period':
+        return ['PeriodBuilder'];
+      case 'constraint':
+        return ['EvidenceVariableConstraintBuilder'];
+      case 'missingDataMeaning':
+        return ['CodeableConceptBuilder'];
+      case 'unacceptableDataHandling':
+        return ['CodeableConceptBuilder'];
       default:
         return <String>[];
     }
@@ -1699,6 +2093,11 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
           shortTitle = FhirStringBuilder.empty();
           return;
         }
+      case 'citeAs':
+        {
+          citeAs = FhirMarkdownBuilder.empty();
+          return;
+        }
       case 'status':
         {
           status = PublicationStatusBuilder.empty();
@@ -1714,6 +2113,11 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
           date = FhirDateTimeBuilder.empty();
           return;
         }
+      case 'author':
+        {
+          author = <ContactDetailBuilder>[];
+          return;
+        }
       case 'publisher':
         {
           publisher = FhirStringBuilder.empty();
@@ -1722,6 +2126,26 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
       case 'contact':
         {
           contact = <ContactDetailBuilder>[];
+          return;
+        }
+      case 'recorder':
+        {
+          recorder = <ContactDetailBuilder>[];
+          return;
+        }
+      case 'editor':
+        {
+          editor = <ContactDetailBuilder>[];
+          return;
+        }
+      case 'reviewer':
+        {
+          reviewer = <ContactDetailBuilder>[];
+          return;
+        }
+      case 'endorser':
+        {
+          endorser = <ContactDetailBuilder>[];
           return;
         }
       case 'description':
@@ -1769,29 +2193,9 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
           effectivePeriod = PeriodBuilder.empty();
           return;
         }
-      case 'author':
+      case 'relatesTo':
         {
-          author = <ContactDetailBuilder>[];
-          return;
-        }
-      case 'editor':
-        {
-          editor = <ContactDetailBuilder>[];
-          return;
-        }
-      case 'reviewer':
-        {
-          reviewer = <ContactDetailBuilder>[];
-          return;
-        }
-      case 'endorser':
-        {
-          endorser = <ContactDetailBuilder>[];
-          return;
-        }
-      case 'relatedArtifact':
-        {
-          relatedArtifact = <RelatedArtifactBuilder>[];
+          relatesTo = <EvidenceVariableRelatesToBuilder>[];
           return;
         }
       case 'actual':
@@ -1799,9 +2203,14 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
           actual = FhirBooleanBuilder.empty();
           return;
         }
-      case 'characteristic':
+      case 'definition':
         {
-          characteristic = <EvidenceVariableCharacteristicBuilder>[];
+          definition = CodeableReferenceBuilder.empty();
+          return;
+        }
+      case 'definitionModifier':
+        {
+          definitionModifier = <EvidenceVariableDefinitionModifierBuilder>[];
           return;
         }
       case 'handling':
@@ -1812,6 +2221,46 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
       case 'category':
         {
           category = <EvidenceVariableCategoryBuilder>[];
+          return;
+        }
+      case 'conditional':
+        {
+          conditional = FhirExpressionBuilder.empty();
+          return;
+        }
+      case 'classifier':
+        {
+          classifier = <CodeableConceptBuilder>[];
+          return;
+        }
+      case 'dataStorage':
+        {
+          dataStorage = <EvidenceVariableDataStorageBuilder>[];
+          return;
+        }
+      case 'timing':
+        {
+          timing = RelativeTimeBuilder.empty();
+          return;
+        }
+      case 'period':
+        {
+          period = PeriodBuilder.empty();
+          return;
+        }
+      case 'constraint':
+        {
+          constraint = <EvidenceVariableConstraintBuilder>[];
+          return;
+        }
+      case 'missingDataMeaning':
+        {
+          missingDataMeaning = <CodeableConceptBuilder>[];
+          return;
+        }
+      case 'unacceptableDataHandling':
+        {
+          unacceptableDataHandling = <CodeableConceptBuilder>[];
           return;
         }
       default:
@@ -1838,11 +2287,17 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
     FhirStringBuilder? name,
     FhirStringBuilder? title,
     FhirStringBuilder? shortTitle,
+    FhirMarkdownBuilder? citeAs,
     PublicationStatusBuilder? status,
     FhirBooleanBuilder? experimental,
     FhirDateTimeBuilder? date,
+    List<ContactDetailBuilder>? author,
     FhirStringBuilder? publisher,
     List<ContactDetailBuilder>? contact,
+    List<ContactDetailBuilder>? recorder,
+    List<ContactDetailBuilder>? editor,
+    List<ContactDetailBuilder>? reviewer,
+    List<ContactDetailBuilder>? endorser,
     FhirMarkdownBuilder? description,
     List<AnnotationBuilder>? note,
     List<UsageContextBuilder>? useContext,
@@ -1852,15 +2307,20 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
     FhirDateBuilder? approvalDate,
     FhirDateBuilder? lastReviewDate,
     PeriodBuilder? effectivePeriod,
-    List<ContactDetailBuilder>? author,
-    List<ContactDetailBuilder>? editor,
-    List<ContactDetailBuilder>? reviewer,
-    List<ContactDetailBuilder>? endorser,
-    List<RelatedArtifactBuilder>? relatedArtifact,
+    List<EvidenceVariableRelatesToBuilder>? relatesTo,
     FhirBooleanBuilder? actual,
-    List<EvidenceVariableCharacteristicBuilder>? characteristic,
+    CodeableReferenceBuilder? definition,
+    List<EvidenceVariableDefinitionModifierBuilder>? definitionModifier,
     EvidenceVariableHandlingBuilder? handling,
     List<EvidenceVariableCategoryBuilder>? category,
+    FhirExpressionBuilder? conditional,
+    List<CodeableConceptBuilder>? classifier,
+    List<EvidenceVariableDataStorageBuilder>? dataStorage,
+    RelativeTimeBuilder? timing,
+    PeriodBuilder? period,
+    List<EvidenceVariableConstraintBuilder>? constraint,
+    List<CodeableConceptBuilder>? missingDataMeaning,
+    List<CodeableConceptBuilder>? unacceptableDataHandling,
     FhirStringBuilder? versionAlgorithmString,
     CodingBuilder? versionAlgorithmCoding,
     Map<String, dynamic>? userData,
@@ -1889,11 +2349,17 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
       name: name ?? this.name,
       title: title ?? this.title,
       shortTitle: shortTitle ?? this.shortTitle,
+      citeAs: citeAs ?? this.citeAs,
       status: status ?? this.status,
       experimental: experimental ?? this.experimental,
       date: date ?? this.date,
+      author: author ?? this.author,
       publisher: publisher ?? this.publisher,
       contact: contact ?? this.contact,
+      recorder: recorder ?? this.recorder,
+      editor: editor ?? this.editor,
+      reviewer: reviewer ?? this.reviewer,
+      endorser: endorser ?? this.endorser,
       description: description ?? this.description,
       note: note ?? this.note,
       useContext: useContext ?? this.useContext,
@@ -1903,15 +2369,21 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
       approvalDate: approvalDate ?? this.approvalDate,
       lastReviewDate: lastReviewDate ?? this.lastReviewDate,
       effectivePeriod: effectivePeriod ?? this.effectivePeriod,
-      author: author ?? this.author,
-      editor: editor ?? this.editor,
-      reviewer: reviewer ?? this.reviewer,
-      endorser: endorser ?? this.endorser,
-      relatedArtifact: relatedArtifact ?? this.relatedArtifact,
+      relatesTo: relatesTo ?? this.relatesTo,
       actual: actual ?? this.actual,
-      characteristic: characteristic ?? this.characteristic,
+      definition: definition ?? this.definition,
+      definitionModifier: definitionModifier ?? this.definitionModifier,
       handling: handling ?? this.handling,
       category: category ?? this.category,
+      conditional: conditional ?? this.conditional,
+      classifier: classifier ?? this.classifier,
+      dataStorage: dataStorage ?? this.dataStorage,
+      timing: timing ?? this.timing,
+      period: period ?? this.period,
+      constraint: constraint ?? this.constraint,
+      missingDataMeaning: missingDataMeaning ?? this.missingDataMeaning,
+      unacceptableDataHandling:
+          unacceptableDataHandling ?? this.unacceptableDataHandling,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -2029,6 +2501,12 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
+      citeAs,
+      o.citeAs,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       status,
       o.status,
     )) {
@@ -2046,6 +2524,12 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
     )) {
       return false;
     }
+    if (!listEquals<ContactDetailBuilder>(
+      author,
+      o.author,
+    )) {
+      return false;
+    }
     if (!equalsDeepWithNull(
       publisher,
       o.publisher,
@@ -2055,6 +2539,30 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
     if (!listEquals<ContactDetailBuilder>(
       contact,
       o.contact,
+    )) {
+      return false;
+    }
+    if (!listEquals<ContactDetailBuilder>(
+      recorder,
+      o.recorder,
+    )) {
+      return false;
+    }
+    if (!listEquals<ContactDetailBuilder>(
+      editor,
+      o.editor,
+    )) {
+      return false;
+    }
+    if (!listEquals<ContactDetailBuilder>(
+      reviewer,
+      o.reviewer,
+    )) {
+      return false;
+    }
+    if (!listEquals<ContactDetailBuilder>(
+      endorser,
+      o.endorser,
     )) {
       return false;
     }
@@ -2112,33 +2620,9 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<ContactDetailBuilder>(
-      author,
-      o.author,
-    )) {
-      return false;
-    }
-    if (!listEquals<ContactDetailBuilder>(
-      editor,
-      o.editor,
-    )) {
-      return false;
-    }
-    if (!listEquals<ContactDetailBuilder>(
-      reviewer,
-      o.reviewer,
-    )) {
-      return false;
-    }
-    if (!listEquals<ContactDetailBuilder>(
-      endorser,
-      o.endorser,
-    )) {
-      return false;
-    }
-    if (!listEquals<RelatedArtifactBuilder>(
-      relatedArtifact,
-      o.relatedArtifact,
+    if (!listEquals<EvidenceVariableRelatesToBuilder>(
+      relatesTo,
+      o.relatesTo,
     )) {
       return false;
     }
@@ -2148,9 +2632,15 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<EvidenceVariableCharacteristicBuilder>(
-      characteristic,
-      o.characteristic,
+    if (!equalsDeepWithNull(
+      definition,
+      o.definition,
+    )) {
+      return false;
+    }
+    if (!listEquals<EvidenceVariableDefinitionModifierBuilder>(
+      definitionModifier,
+      o.definitionModifier,
     )) {
       return false;
     }
@@ -2166,1172 +2656,51 @@ class EvidenceVariableBuilder extends MetadataResourceBuilder {
     )) {
       return false;
     }
-    return true;
-  }
-}
-
-/// [EvidenceVariableCharacteristicBuilder]
-/// A defining factor of the EvidenceVariable. Multiple characteristics are
-/// applied with "and" semantics.
-class EvidenceVariableCharacteristicBuilder extends BackboneElementBuilder {
-  /// Primary constructor for
-  /// [EvidenceVariableCharacteristicBuilder]
-
-  EvidenceVariableCharacteristicBuilder({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.linkId,
-    this.description,
-    this.note,
-    this.exclude,
-    this.definitionReference,
-    this.definitionCanonical,
-    this.definitionCodeableConcept,
-    this.definitionExpression,
-    this.definitionId,
-    this.definitionByTypeAndValue,
-    this.definitionByCombination,
-    InstancesXEvidenceVariableCharacteristicBuilder? instancesX,
-    QuantityBuilder? instancesQuantity,
-    RangeBuilder? instancesRange,
-    DurationXEvidenceVariableCharacteristicBuilder? durationX,
-    QuantityBuilder? durationQuantity,
-    RangeBuilder? durationRange,
-    this.timeFromEvent,
-    super.disallowExtensions,
-  })  : instancesX = instancesX ?? instancesQuantity ?? instancesRange,
-        durationX = durationX ?? durationQuantity ?? durationRange,
-        super(
-          objectPath: 'EvidenceVariable.characteristic',
-        );
-
-  /// An empty constructor for partial usage.
-  /// For Builder classes, no fields are required
-  factory EvidenceVariableCharacteristicBuilder.empty() =>
-      EvidenceVariableCharacteristicBuilder();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory EvidenceVariableCharacteristicBuilder.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    const objectPath = 'EvidenceVariable.characteristic';
-    return EvidenceVariableCharacteristicBuilder(
-      id: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'id',
-        FhirStringBuilder.fromJson,
-        '$objectPath.id',
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.extension',
-              },
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.modifierExtension',
-              },
-            ),
-          )
-          .toList(),
-      linkId: JsonParser.parsePrimitive<FhirIdBuilder>(
-        json,
-        'linkId',
-        FhirIdBuilder.fromJson,
-        '$objectPath.linkId',
-      ),
-      description: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
-        json,
-        'description',
-        FhirMarkdownBuilder.fromJson,
-        '$objectPath.description',
-      ),
-      note: (json['note'] as List<dynamic>?)
-          ?.map<AnnotationBuilder>(
-            (v) => AnnotationBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.note',
-              },
-            ),
-          )
-          .toList(),
-      exclude: JsonParser.parsePrimitive<FhirBooleanBuilder>(
-        json,
-        'exclude',
-        FhirBooleanBuilder.fromJson,
-        '$objectPath.exclude',
-      ),
-      definitionReference: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'definitionReference',
-        ReferenceBuilder.fromJson,
-        '$objectPath.definitionReference',
-      ),
-      definitionCanonical: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
-        json,
-        'definitionCanonical',
-        FhirCanonicalBuilder.fromJson,
-        '$objectPath.definitionCanonical',
-      ),
-      definitionCodeableConcept: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'definitionCodeableConcept',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.definitionCodeableConcept',
-      ),
-      definitionExpression: JsonParser.parseObject<FhirExpressionBuilder>(
-        json,
-        'definitionExpression',
-        FhirExpressionBuilder.fromJson,
-        '$objectPath.definitionExpression',
-      ),
-      definitionId: JsonParser.parsePrimitive<FhirIdBuilder>(
-        json,
-        'definitionId',
-        FhirIdBuilder.fromJson,
-        '$objectPath.definitionId',
-      ),
-      definitionByTypeAndValue: JsonParser.parseObject<
-          EvidenceVariableDefinitionByTypeAndValueBuilder>(
-        json,
-        'definitionByTypeAndValue',
-        EvidenceVariableDefinitionByTypeAndValueBuilder.fromJson,
-        '$objectPath.definitionByTypeAndValue',
-      ),
-      definitionByCombination: JsonParser.parseObject<
-          EvidenceVariableDefinitionByCombinationBuilder>(
-        json,
-        'definitionByCombination',
-        EvidenceVariableDefinitionByCombinationBuilder.fromJson,
-        '$objectPath.definitionByCombination',
-      ),
-      instancesX: JsonParser.parsePolymorphic<
-          InstancesXEvidenceVariableCharacteristicBuilder>(
-        json,
-        {
-          'instancesQuantity': QuantityBuilder.fromJson,
-          'instancesRange': RangeBuilder.fromJson,
-        },
-        objectPath,
-      ),
-      durationX: JsonParser.parsePolymorphic<
-          DurationXEvidenceVariableCharacteristicBuilder>(
-        json,
-        {
-          'durationQuantity': QuantityBuilder.fromJson,
-          'durationRange': RangeBuilder.fromJson,
-        },
-        objectPath,
-      ),
-      timeFromEvent: (json['timeFromEvent'] as List<dynamic>?)
-          ?.map<EvidenceVariableTimeFromEventBuilder>(
-            (v) => EvidenceVariableTimeFromEventBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.timeFromEvent',
-              },
-            ),
-          )
-          .toList(),
-    );
-  }
-
-  /// Deserialize [EvidenceVariableCharacteristicBuilder]
-  /// from a [String] or [YamlMap] object
-  factory EvidenceVariableCharacteristicBuilder.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return EvidenceVariableCharacteristicBuilder.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return EvidenceVariableCharacteristicBuilder.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'EvidenceVariableCharacteristicBuilder '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [EvidenceVariableCharacteristicBuilder]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory EvidenceVariableCharacteristicBuilder.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return EvidenceVariableCharacteristicBuilder.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'EvidenceVariableCharacteristic';
-
-  /// [linkId]
-  /// Label used for when a characteristic refers to another characteristic.
-  FhirIdBuilder? linkId;
-
-  /// [description]
-  /// A short, natural language description of the characteristic that could
-  /// be used to communicate the criteria to an end-user.
-  FhirMarkdownBuilder? description;
-
-  /// [note]
-  /// A human-readable string to clarify or explain concepts about the
-  /// characteristic.
-  List<AnnotationBuilder>? note;
-
-  /// [exclude]
-  /// When true, this characteristic is an exclusion criterion. In other
-  /// words, not matching this characteristic definition is equivalent to
-  /// meeting this criterion.
-  FhirBooleanBuilder? exclude;
-
-  /// [definitionReference]
-  /// Defines the characteristic using a Reference.
-  ReferenceBuilder? definitionReference;
-
-  /// [definitionCanonical]
-  /// Defines the characteristic using Canonical.
-  FhirCanonicalBuilder? definitionCanonical;
-
-  /// [definitionCodeableConcept]
-  /// Defines the characteristic using CodeableConcept.
-  CodeableConceptBuilder? definitionCodeableConcept;
-
-  /// [definitionExpression]
-  /// Defines the characteristic using Expression.
-  FhirExpressionBuilder? definitionExpression;
-
-  /// [definitionId]
-  /// Defines the characteristic using id.
-  FhirIdBuilder? definitionId;
-
-  /// [definitionByTypeAndValue]
-  /// Defines the characteristic using both a type and value[x] elements.
-  EvidenceVariableDefinitionByTypeAndValueBuilder? definitionByTypeAndValue;
-
-  /// [definitionByCombination]
-  /// Defines the characteristic as a combination of two or more
-  /// characteristics.
-  EvidenceVariableDefinitionByCombinationBuilder? definitionByCombination;
-
-  /// [instancesX]
-  /// Number of occurrences meeting the characteristic.
-  InstancesXEvidenceVariableCharacteristicBuilder? instancesX;
-
-  /// Getter for [instancesQuantity] as a QuantityBuilder
-  QuantityBuilder? get instancesQuantity => instancesX?.isAs<QuantityBuilder>();
-
-  /// Getter for [instancesRange] as a RangeBuilder
-  RangeBuilder? get instancesRange => instancesX?.isAs<RangeBuilder>();
-
-  /// [durationX]
-  /// Length of time in which the characteristic is met.
-  DurationXEvidenceVariableCharacteristicBuilder? durationX;
-
-  /// Getter for [durationQuantity] as a QuantityBuilder
-  QuantityBuilder? get durationQuantity => durationX?.isAs<QuantityBuilder>();
-
-  /// Getter for [durationRange] as a RangeBuilder
-  RangeBuilder? get durationRange => durationX?.isAs<RangeBuilder>();
-
-  /// [timeFromEvent]
-  /// Timing in which the characteristic is determined.
-  List<EvidenceVariableTimeFromEventBuilder>? timeFromEvent;
-
-  /// Converts a [EvidenceVariableCharacteristicBuilder]
-  /// to [EvidenceVariableCharacteristic]
-  @override
-  EvidenceVariableCharacteristic build() =>
-      EvidenceVariableCharacteristic.fromJson(toJson());
-
-  /// Converts a [EvidenceVariableCharacteristicBuilder]
-  /// to a [Map<String, dynamic>]
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    void addField(String key, dynamic field) {
-      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
-        throw ArgumentError('"field" must be a FhirBaseBuilder type');
-      }
-      if (field == null) return;
-      if (field is PrimitiveTypeBuilder) {
-        json[key] = field.toJson()['value'];
-        if (field.toJson()['_value'] != null) {
-          json['_$key'] = field.toJson()['_value'];
-        }
-      } else if (field is List<FhirBaseBuilder>) {
-        if (field.isEmpty) return;
-        if (field.first is PrimitiveTypeBuilder) {
-          final fieldJson = field.map((e) => e.toJson()).toList();
-          json[key] = fieldJson.map((e) => e['value']).toList();
-          if (fieldJson.any((e) => e['_value'] != null)) {
-            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
-          }
-        } else {
-          json[key] = field.map((e) => e.toJson()).toList();
-        }
-      } else if (field is FhirBaseBuilder) {
-        json[key] = field.toJson();
-      }
-    }
-
-    addField('id', id);
-    addField('extension', extension_);
-    addField('modifierExtension', modifierExtension);
-    addField('linkId', linkId);
-    addField('description', description);
-    addField('note', note);
-    addField('exclude', exclude);
-    addField('definitionReference', definitionReference);
-    addField('definitionCanonical', definitionCanonical);
-    addField('definitionCodeableConcept', definitionCodeableConcept);
-    addField('definitionExpression', definitionExpression);
-    addField('definitionId', definitionId);
-    addField('definitionByTypeAndValue', definitionByTypeAndValue);
-    addField('definitionByCombination', definitionByCombination);
-    if (instancesX != null) {
-      final fhirType = instancesX!.fhirType;
-      addField('instances${fhirType.capitalizeFirstLetter()}', instancesX);
-    }
-
-    if (durationX != null) {
-      final fhirType = durationX!.fhirType;
-      addField('duration${fhirType.capitalizeFirstLetter()}', durationX);
-    }
-
-    addField('timeFromEvent', timeFromEvent);
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'linkId',
-      'description',
-      'note',
-      'exclude',
-      'definitionReference',
-      'definitionCanonical',
-      'definitionCodeableConcept',
-      'definitionExpression',
-      'definitionId',
-      'definitionByTypeAndValue',
-      'definitionByCombination',
-      'instancesX',
-      'durationX',
-      'timeFromEvent',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBaseBuilder> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBaseBuilder>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'linkId':
-        if (linkId != null) {
-          fields.add(linkId!);
-        }
-      case 'description':
-        if (description != null) {
-          fields.add(description!);
-        }
-      case 'note':
-        if (note != null) {
-          fields.addAll(note!);
-        }
-      case 'exclude':
-        if (exclude != null) {
-          fields.add(exclude!);
-        }
-      case 'definitionReference':
-        if (definitionReference != null) {
-          fields.add(definitionReference!);
-        }
-      case 'definitionCanonical':
-        if (definitionCanonical != null) {
-          fields.add(definitionCanonical!);
-        }
-      case 'definitionCodeableConcept':
-        if (definitionCodeableConcept != null) {
-          fields.add(definitionCodeableConcept!);
-        }
-      case 'definitionExpression':
-        if (definitionExpression != null) {
-          fields.add(definitionExpression!);
-        }
-      case 'definitionId':
-        if (definitionId != null) {
-          fields.add(definitionId!);
-        }
-      case 'definitionByTypeAndValue':
-        if (definitionByTypeAndValue != null) {
-          fields.add(definitionByTypeAndValue!);
-        }
-      case 'definitionByCombination':
-        if (definitionByCombination != null) {
-          fields.add(definitionByCombination!);
-        }
-      case 'instances':
-        if (instancesX != null) {
-          fields.add(instancesX!);
-        }
-      case 'instancesX':
-        if (instancesX != null) {
-          fields.add(instancesX!);
-        }
-      case 'instancesQuantity':
-        if (instancesX is QuantityBuilder) {
-          fields.add(instancesX!);
-        }
-      case 'instancesRange':
-        if (instancesX is RangeBuilder) {
-          fields.add(instancesX!);
-        }
-      case 'duration':
-        if (durationX != null) {
-          fields.add(durationX!);
-        }
-      case 'durationX':
-        if (durationX != null) {
-          fields.add(durationX!);
-        }
-      case 'durationQuantity':
-        if (durationX is QuantityBuilder) {
-          fields.add(durationX!);
-        }
-      case 'durationRange':
-        if (durationX is RangeBuilder) {
-          fields.add(durationX!);
-        }
-      case 'timeFromEvent':
-        if (timeFromEvent != null) {
-          fields.addAll(timeFromEvent!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBaseBuilder? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  void setChildByName(String childName, dynamic child) {
-    // child must be null, or a (List of) FhirBaseBuilder(s).
-    if (child == null) {
-      return; // In builders, setting to null is allowed
-    }
-    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
-      throw Exception('Cannot set child value for $childName');
-    }
-
-    switch (childName) {
-      case 'id':
-        {
-          if (child is FhirStringBuilder) {
-            id = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                id = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'extension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            extension_ = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            extension_ = [
-              ...(extension_ ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'modifierExtension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            modifierExtension = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            modifierExtension = [
-              ...(modifierExtension ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'linkId':
-        {
-          if (child is FhirIdBuilder) {
-            linkId = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirIdBuilder.tryParse(stringValue);
-              if (converted != null) {
-                linkId = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'description':
-        {
-          if (child is FhirMarkdownBuilder) {
-            description = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirMarkdownBuilder.tryParse(stringValue);
-              if (converted != null) {
-                description = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'note':
-        {
-          if (child is List<AnnotationBuilder>) {
-            // Replace or create new list
-            note = child;
-            return;
-          } else if (child is AnnotationBuilder) {
-            // Add single element to existing list or create new list
-            note = [
-              ...(note ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'exclude':
-        {
-          if (child is FhirBooleanBuilder) {
-            exclude = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirBooleanBuilder.tryParse(stringValue);
-              if (converted != null) {
-                exclude = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'definitionReference':
-        {
-          if (child is ReferenceBuilder) {
-            definitionReference = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'definitionCanonical':
-        {
-          if (child is FhirCanonicalBuilder) {
-            definitionCanonical = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirCanonicalBuilder.tryParse(stringValue);
-              if (converted != null) {
-                definitionCanonical = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'definitionCodeableConcept':
-        {
-          if (child is CodeableConceptBuilder) {
-            definitionCodeableConcept = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'definitionExpression':
-        {
-          if (child is FhirExpressionBuilder) {
-            definitionExpression = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'definitionId':
-        {
-          if (child is FhirIdBuilder) {
-            definitionId = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirIdBuilder.tryParse(stringValue);
-              if (converted != null) {
-                definitionId = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'definitionByTypeAndValue':
-        {
-          if (child is EvidenceVariableDefinitionByTypeAndValueBuilder) {
-            definitionByTypeAndValue = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'definitionByCombination':
-        {
-          if (child is EvidenceVariableDefinitionByCombinationBuilder) {
-            definitionByCombination = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'instances':
-      case 'instancesX':
-        {
-          if (child is InstancesXEvidenceVariableCharacteristicBuilder) {
-            instancesX = child;
-            return;
-          } else {
-            if (child is QuantityBuilder) {
-              instancesX = child;
-              return;
-            }
-            if (child is RangeBuilder) {
-              instancesX = child;
-              return;
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'instancesQuantity':
-        {
-          if (child is QuantityBuilder) {
-            instancesX = child;
-            return;
-          } else {
-            throw Exception('Invalid child type for $childName');
-          }
-        }
-      case 'instancesRange':
-        {
-          if (child is RangeBuilder) {
-            instancesX = child;
-            return;
-          } else {
-            throw Exception('Invalid child type for $childName');
-          }
-        }
-      case 'duration':
-      case 'durationX':
-        {
-          if (child is DurationXEvidenceVariableCharacteristicBuilder) {
-            durationX = child;
-            return;
-          } else {
-            if (child is QuantityBuilder) {
-              durationX = child;
-              return;
-            }
-            if (child is RangeBuilder) {
-              durationX = child;
-              return;
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'durationQuantity':
-        {
-          if (child is QuantityBuilder) {
-            durationX = child;
-            return;
-          } else {
-            throw Exception('Invalid child type for $childName');
-          }
-        }
-      case 'durationRange':
-        {
-          if (child is RangeBuilder) {
-            durationX = child;
-            return;
-          } else {
-            throw Exception('Invalid child type for $childName');
-          }
-        }
-      case 'timeFromEvent':
-        {
-          if (child is List<EvidenceVariableTimeFromEventBuilder>) {
-            // Replace or create new list
-            timeFromEvent = child;
-            return;
-          } else if (child is EvidenceVariableTimeFromEventBuilder) {
-            // Add single element to existing list or create new list
-            timeFromEvent = [
-              ...(timeFromEvent ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      default:
-        throw Exception('Cannot set child value for $childName');
-    }
-  }
-
-  /// Return the possible Dart types for the field named [fieldName].
-  /// For polymorphic fields, multiple types are possible.
-  @override
-  List<String> typeByElementName(String fieldName) {
-    switch (fieldName) {
-      case 'id':
-        return ['FhirStringBuilder'];
-      case 'extension':
-        return ['FhirExtensionBuilder'];
-      case 'modifierExtension':
-        return ['FhirExtensionBuilder'];
-      case 'linkId':
-        return ['FhirIdBuilder'];
-      case 'description':
-        return ['FhirMarkdownBuilder'];
-      case 'note':
-        return ['AnnotationBuilder'];
-      case 'exclude':
-        return ['FhirBooleanBuilder'];
-      case 'definitionReference':
-        return ['ReferenceBuilder'];
-      case 'definitionCanonical':
-        return ['FhirCanonicalBuilder'];
-      case 'definitionCodeableConcept':
-        return ['CodeableConceptBuilder'];
-      case 'definitionExpression':
-        return ['FhirExpressionBuilder'];
-      case 'definitionId':
-        return ['FhirIdBuilder'];
-      case 'definitionByTypeAndValue':
-        return ['EvidenceVariableDefinitionByTypeAndValueBuilder'];
-      case 'definitionByCombination':
-        return ['EvidenceVariableDefinitionByCombinationBuilder'];
-      case 'instances':
-      case 'instancesX':
-        return [
-          'QuantityBuilder',
-          'RangeBuilder',
-        ];
-      case 'instancesQuantity':
-        return ['QuantityBuilder'];
-      case 'instancesRange':
-        return ['RangeBuilder'];
-      case 'duration':
-      case 'durationX':
-        return [
-          'QuantityBuilder',
-          'RangeBuilder',
-        ];
-      case 'durationQuantity':
-        return ['QuantityBuilder'];
-      case 'durationRange':
-        return ['RangeBuilder'];
-      case 'timeFromEvent':
-        return ['EvidenceVariableTimeFromEventBuilder'];
-      default:
-        return <String>[];
-    }
-  }
-
-  /// Creates a new [EvidenceVariableCharacteristicBuilder]
-  ///  with a chosen field set to an empty object.
-  @override
-  void createProperty(String propertyName) {
-    switch (propertyName) {
-      case 'id':
-        {
-          id = FhirStringBuilder.empty();
-          return;
-        }
-      case 'extension':
-        {
-          extension_ = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'modifierExtension':
-        {
-          modifierExtension = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'linkId':
-        {
-          linkId = FhirIdBuilder.empty();
-          return;
-        }
-      case 'description':
-        {
-          description = FhirMarkdownBuilder.empty();
-          return;
-        }
-      case 'note':
-        {
-          note = <AnnotationBuilder>[];
-          return;
-        }
-      case 'exclude':
-        {
-          exclude = FhirBooleanBuilder.empty();
-          return;
-        }
-      case 'definitionReference':
-        {
-          definitionReference = ReferenceBuilder.empty();
-          return;
-        }
-      case 'definitionCanonical':
-        {
-          definitionCanonical = FhirCanonicalBuilder.empty();
-          return;
-        }
-      case 'definitionCodeableConcept':
-        {
-          definitionCodeableConcept = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'definitionExpression':
-        {
-          definitionExpression = FhirExpressionBuilder.empty();
-          return;
-        }
-      case 'definitionId':
-        {
-          definitionId = FhirIdBuilder.empty();
-          return;
-        }
-      case 'definitionByTypeAndValue':
-        {
-          definitionByTypeAndValue =
-              EvidenceVariableDefinitionByTypeAndValueBuilder.empty();
-          return;
-        }
-      case 'definitionByCombination':
-        {
-          definitionByCombination =
-              EvidenceVariableDefinitionByCombinationBuilder.empty();
-          return;
-        }
-      case 'instances':
-      case 'instancesX':
-      case 'instancesQuantity':
-        {
-          instancesX = QuantityBuilder.empty();
-          return;
-        }
-      case 'instancesRange':
-        {
-          instancesX = RangeBuilder.empty();
-          return;
-        }
-      case 'duration':
-      case 'durationX':
-      case 'durationQuantity':
-        {
-          durationX = QuantityBuilder.empty();
-          return;
-        }
-      case 'durationRange':
-        {
-          durationX = RangeBuilder.empty();
-          return;
-        }
-      case 'timeFromEvent':
-        {
-          timeFromEvent = <EvidenceVariableTimeFromEventBuilder>[];
-          return;
-        }
-      default:
-        throw ArgumentError('No matching property: $propertyName');
-    }
-  }
-
-  @override
-  EvidenceVariableCharacteristicBuilder clone() => throw UnimplementedError();
-  @override
-  EvidenceVariableCharacteristicBuilder copyWith({
-    FhirStringBuilder? id,
-    List<FhirExtensionBuilder>? extension_,
-    List<FhirExtensionBuilder>? modifierExtension,
-    FhirIdBuilder? linkId,
-    FhirMarkdownBuilder? description,
-    List<AnnotationBuilder>? note,
-    FhirBooleanBuilder? exclude,
-    ReferenceBuilder? definitionReference,
-    FhirCanonicalBuilder? definitionCanonical,
-    CodeableConceptBuilder? definitionCodeableConcept,
-    FhirExpressionBuilder? definitionExpression,
-    FhirIdBuilder? definitionId,
-    EvidenceVariableDefinitionByTypeAndValueBuilder? definitionByTypeAndValue,
-    EvidenceVariableDefinitionByCombinationBuilder? definitionByCombination,
-    InstancesXEvidenceVariableCharacteristicBuilder? instancesX,
-    DurationXEvidenceVariableCharacteristicBuilder? durationX,
-    List<EvidenceVariableTimeFromEventBuilder>? timeFromEvent,
-    QuantityBuilder? instancesQuantity,
-    RangeBuilder? instancesRange,
-    QuantityBuilder? durationQuantity,
-    RangeBuilder? durationRange,
-    Map<String, dynamic>? userData,
-    List<String>? formatCommentsPre,
-    List<String>? formatCommentsPost,
-    List<dynamic>? annotations,
-    String? objectPath,
-  }) {
-    final newObjectPath = this.objectPath;
-    final newResult = EvidenceVariableCharacteristicBuilder(
-      id: id ?? this.id,
-      extension_: extension_ ?? this.extension_,
-      modifierExtension: modifierExtension ?? this.modifierExtension,
-      linkId: linkId ?? this.linkId,
-      description: description ?? this.description,
-      note: note ?? this.note,
-      exclude: exclude ?? this.exclude,
-      definitionReference: definitionReference ?? this.definitionReference,
-      definitionCanonical: definitionCanonical ?? this.definitionCanonical,
-      definitionCodeableConcept:
-          definitionCodeableConcept ?? this.definitionCodeableConcept,
-      definitionExpression: definitionExpression ?? this.definitionExpression,
-      definitionId: definitionId ?? this.definitionId,
-      definitionByTypeAndValue:
-          definitionByTypeAndValue ?? this.definitionByTypeAndValue,
-      definitionByCombination:
-          definitionByCombination ?? this.definitionByCombination,
-      instancesX:
-          instancesX ?? instancesQuantity ?? instancesRange ?? this.instancesX,
-      durationX:
-          durationX ?? durationQuantity ?? durationRange ?? this.durationX,
-      timeFromEvent: timeFromEvent ?? this.timeFromEvent,
-    )..objectPath = newObjectPath;
-    // Copy user data and annotations
-    if (userData != null) {
-      newResult.userData = userData;
-    }
-    if (formatCommentsPre != null) {
-      newResult.formatCommentsPre = formatCommentsPre;
-    }
-    if (formatCommentsPost != null) {
-      newResult.formatCommentsPost = formatCommentsPost;
-    }
-    if (annotations != null) {
-      newResult.annotations = annotations;
-    }
-
-    return newResult;
-  }
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! EvidenceVariableCharacteristicBuilder) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
     if (!equalsDeepWithNull(
-      id,
-      o.id,
+      conditional,
+      o.conditional,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtensionBuilder>(
-      extension_,
-      o.extension_,
+    if (!listEquals<CodeableConceptBuilder>(
+      classifier,
+      o.classifier,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtensionBuilder>(
-      modifierExtension,
-      o.modifierExtension,
+    if (!listEquals<EvidenceVariableDataStorageBuilder>(
+      dataStorage,
+      o.dataStorage,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
-      linkId,
-      o.linkId,
+      timing,
+      o.timing,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
-      description,
-      o.description,
+      period,
+      o.period,
     )) {
       return false;
     }
-    if (!listEquals<AnnotationBuilder>(
-      note,
-      o.note,
+    if (!listEquals<EvidenceVariableConstraintBuilder>(
+      constraint,
+      o.constraint,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      exclude,
-      o.exclude,
+    if (!listEquals<CodeableConceptBuilder>(
+      missingDataMeaning,
+      o.missingDataMeaning,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      definitionReference,
-      o.definitionReference,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      definitionCanonical,
-      o.definitionCanonical,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      definitionCodeableConcept,
-      o.definitionCodeableConcept,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      definitionExpression,
-      o.definitionExpression,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      definitionId,
-      o.definitionId,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      definitionByTypeAndValue,
-      o.definitionByTypeAndValue,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      definitionByCombination,
-      o.definitionByCombination,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      instancesX,
-      o.instancesX,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      durationX,
-      o.durationX,
-    )) {
-      return false;
-    }
-    if (!listEquals<EvidenceVariableTimeFromEventBuilder>(
-      timeFromEvent,
-      o.timeFromEvent,
+    if (!listEquals<CodeableConceptBuilder>(
+      unacceptableDataHandling,
+      o.unacceptableDataHandling,
     )) {
       return false;
     }
@@ -3339,56 +2708,49 @@ class EvidenceVariableCharacteristicBuilder extends BackboneElementBuilder {
   }
 }
 
-/// [EvidenceVariableDefinitionByTypeAndValueBuilder]
-/// Defines the characteristic using both a type and value[x] elements.
-class EvidenceVariableDefinitionByTypeAndValueBuilder
-    extends BackboneElementBuilder {
+/// [EvidenceVariableRelatesToBuilder]
+/// Relationships that this EvidenceVariable has with other FHIR or
+/// non-FHIR resources that already exist.
+class EvidenceVariableRelatesToBuilder extends BackboneElementBuilder {
   /// Primary constructor for
-  /// [EvidenceVariableDefinitionByTypeAndValueBuilder]
+  /// [EvidenceVariableRelatesToBuilder]
 
-  EvidenceVariableDefinitionByTypeAndValueBuilder({
+  EvidenceVariableRelatesToBuilder({
     super.id,
     super.extension_,
     super.modifierExtension,
     this.type,
-    this.method,
-    this.device,
-    ValueXEvidenceVariableDefinitionByTypeAndValueBuilder? valueX,
-    CodeableConceptBuilder? valueCodeableConcept,
-    FhirBooleanBuilder? valueBoolean,
-    QuantityBuilder? valueQuantity,
-    RangeBuilder? valueRange,
-    ReferenceBuilder? valueReference,
-    FhirIdBuilder? valueId,
-    this.offset,
+    TargetXEvidenceVariableRelatesToBuilder? targetX,
+    FhirUriBuilder? targetUri,
+    AttachmentBuilder? targetAttachment,
+    FhirCanonicalBuilder? targetCanonical,
+    ReferenceBuilder? targetReference,
+    FhirMarkdownBuilder? targetMarkdown,
     super.disallowExtensions,
-  })  : valueX = valueX ??
-            valueCodeableConcept ??
-            valueBoolean ??
-            valueQuantity ??
-            valueRange ??
-            valueReference ??
-            valueId,
+  })  : targetX = targetX ??
+            targetUri ??
+            targetAttachment ??
+            targetCanonical ??
+            targetReference ??
+            targetMarkdown,
         super(
-          objectPath:
-              'EvidenceVariable.characteristic.definitionByTypeAndValue',
+          objectPath: 'EvidenceVariable.relatesTo',
         );
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
-  factory EvidenceVariableDefinitionByTypeAndValueBuilder.empty() =>
-      EvidenceVariableDefinitionByTypeAndValueBuilder(
-        type: CodeableConceptBuilder.empty(),
-        valueX: CodeableConceptBuilder.empty(),
+  factory EvidenceVariableRelatesToBuilder.empty() =>
+      EvidenceVariableRelatesToBuilder(
+        type: ArtifactRelationshipTypeBuilder.values.first,
+        targetX: FhirUriBuilder.empty(),
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory EvidenceVariableDefinitionByTypeAndValueBuilder.fromJson(
+  factory EvidenceVariableRelatesToBuilder.fromJson(
     Map<String, dynamic> json,
   ) {
-    const objectPath =
-        'EvidenceVariable.characteristic.definitionByTypeAndValue';
-    return EvidenceVariableDefinitionByTypeAndValueBuilder(
+    const objectPath = 'EvidenceVariable.relatesTo';
+    return EvidenceVariableRelatesToBuilder(
       id: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'id',
@@ -3415,66 +2777,43 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
             ),
           )
           .toList(),
-      type: JsonParser.parseObject<CodeableConceptBuilder>(
+      type: JsonParser.parsePrimitive<ArtifactRelationshipTypeBuilder>(
         json,
         'type',
-        CodeableConceptBuilder.fromJson,
+        ArtifactRelationshipTypeBuilder.fromJson,
         '$objectPath.type',
       ),
-      method: (json['method'] as List<dynamic>?)
-          ?.map<CodeableConceptBuilder>(
-            (v) => CodeableConceptBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.method',
-              },
-            ),
-          )
-          .toList(),
-      device: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'device',
-        ReferenceBuilder.fromJson,
-        '$objectPath.device',
-      ),
-      valueX: JsonParser.parsePolymorphic<
-          ValueXEvidenceVariableDefinitionByTypeAndValueBuilder>(
+      targetX:
+          JsonParser.parsePolymorphic<TargetXEvidenceVariableRelatesToBuilder>(
         json,
         {
-          'valueCodeableConcept': CodeableConceptBuilder.fromJson,
-          'valueBoolean': FhirBooleanBuilder.fromJson,
-          'valueQuantity': QuantityBuilder.fromJson,
-          'valueRange': RangeBuilder.fromJson,
-          'valueReference': ReferenceBuilder.fromJson,
-          'valueId': FhirIdBuilder.fromJson,
+          'targetUri': FhirUriBuilder.fromJson,
+          'targetAttachment': AttachmentBuilder.fromJson,
+          'targetCanonical': FhirCanonicalBuilder.fromJson,
+          'targetReference': ReferenceBuilder.fromJson,
+          'targetMarkdown': FhirMarkdownBuilder.fromJson,
         },
         objectPath,
-      ),
-      offset: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'offset',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.offset',
       ),
     );
   }
 
-  /// Deserialize [EvidenceVariableDefinitionByTypeAndValueBuilder]
+  /// Deserialize [EvidenceVariableRelatesToBuilder]
   /// from a [String] or [YamlMap] object
-  factory EvidenceVariableDefinitionByTypeAndValueBuilder.fromYaml(
+  factory EvidenceVariableRelatesToBuilder.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return EvidenceVariableDefinitionByTypeAndValueBuilder.fromJson(
+      return EvidenceVariableRelatesToBuilder.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return EvidenceVariableDefinitionByTypeAndValueBuilder.fromJson(
+      return EvidenceVariableRelatesToBuilder.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'EvidenceVariableDefinitionByTypeAndValueBuilder '
+        'EvidenceVariableRelatesToBuilder '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -3482,16 +2821,16 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
   }
 
   /// Factory constructor for
-  /// [EvidenceVariableDefinitionByTypeAndValueBuilder]
+  /// [EvidenceVariableRelatesToBuilder]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory EvidenceVariableDefinitionByTypeAndValueBuilder.fromJsonString(
+  factory EvidenceVariableRelatesToBuilder.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return EvidenceVariableDefinitionByTypeAndValueBuilder.fromJson(json);
+      return EvidenceVariableRelatesToBuilder.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -3499,55 +2838,40 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
   }
 
   @override
-  String get fhirType => 'EvidenceVariableDefinitionByTypeAndValue';
+  String get fhirType => 'EvidenceVariableRelatesTo';
 
   /// [type]
-  /// Used to express the type of characteristic.
-  CodeableConceptBuilder? type;
+  /// The type of relationship to the related artifact.
+  ArtifactRelationshipTypeBuilder? type;
 
-  /// [method]
-  /// Method for how the characteristic value was determined.
-  List<CodeableConceptBuilder>? method;
+  /// [targetX]
+  /// The artifact that is related to this EvidenceVariable Resource.
+  TargetXEvidenceVariableRelatesToBuilder? targetX;
 
-  /// [device]
-  /// Device used for determining characteristic.
-  ReferenceBuilder? device;
+  /// Getter for [targetUri] as a FhirUriBuilder
+  FhirUriBuilder? get targetUri => targetX?.isAs<FhirUriBuilder>();
 
-  /// [valueX]
-  /// Defines the characteristic when paired with characteristic.type.
-  ValueXEvidenceVariableDefinitionByTypeAndValueBuilder? valueX;
+  /// Getter for [targetAttachment] as a AttachmentBuilder
+  AttachmentBuilder? get targetAttachment => targetX?.isAs<AttachmentBuilder>();
 
-  /// Getter for [valueCodeableConcept] as a CodeableConceptBuilder
-  CodeableConceptBuilder? get valueCodeableConcept =>
-      valueX?.isAs<CodeableConceptBuilder>();
+  /// Getter for [targetCanonical] as a FhirCanonicalBuilder
+  FhirCanonicalBuilder? get targetCanonical =>
+      targetX?.isAs<FhirCanonicalBuilder>();
 
-  /// Getter for [valueBoolean] as a FhirBooleanBuilder
-  FhirBooleanBuilder? get valueBoolean => valueX?.isAs<FhirBooleanBuilder>();
+  /// Getter for [targetReference] as a ReferenceBuilder
+  ReferenceBuilder? get targetReference => targetX?.isAs<ReferenceBuilder>();
 
-  /// Getter for [valueQuantity] as a QuantityBuilder
-  QuantityBuilder? get valueQuantity => valueX?.isAs<QuantityBuilder>();
+  /// Getter for [targetMarkdown] as a FhirMarkdownBuilder
+  FhirMarkdownBuilder? get targetMarkdown =>
+      targetX?.isAs<FhirMarkdownBuilder>();
 
-  /// Getter for [valueRange] as a RangeBuilder
-  RangeBuilder? get valueRange => valueX?.isAs<RangeBuilder>();
-
-  /// Getter for [valueReference] as a ReferenceBuilder
-  ReferenceBuilder? get valueReference => valueX?.isAs<ReferenceBuilder>();
-
-  /// Getter for [valueId] as a FhirIdBuilder
-  FhirIdBuilder? get valueId => valueX?.isAs<FhirIdBuilder>();
-
-  /// [offset]
-  /// Defines the reference point for comparison when valueQuantity or
-  /// valueRange is not compared to zero.
-  CodeableConceptBuilder? offset;
-
-  /// Converts a [EvidenceVariableDefinitionByTypeAndValueBuilder]
-  /// to [EvidenceVariableDefinitionByTypeAndValue]
+  /// Converts a [EvidenceVariableRelatesToBuilder]
+  /// to [EvidenceVariableRelatesTo]
   @override
-  EvidenceVariableDefinitionByTypeAndValue build() =>
-      EvidenceVariableDefinitionByTypeAndValue.fromJson(toJson());
+  EvidenceVariableRelatesTo build() =>
+      EvidenceVariableRelatesTo.fromJson(toJson());
 
-  /// Converts a [EvidenceVariableDefinitionByTypeAndValueBuilder]
+  /// Converts a [EvidenceVariableRelatesToBuilder]
   /// to a [Map<String, dynamic>]
   @override
   Map<String, dynamic> toJson() {
@@ -3582,14 +2906,11 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('type', type);
-    addField('method', method);
-    addField('device', device);
-    if (valueX != null) {
-      final fhirType = valueX!.fhirType;
-      addField('value${fhirType.capitalizeFirstLetter()}', valueX);
+    if (targetX != null) {
+      final fhirType = targetX!.fhirType;
+      addField('target${fhirType.capitalizeFirstLetter()}', targetX);
     }
 
-    addField('offset', offset);
     return json;
   }
 
@@ -3601,10 +2922,7 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
       'extension',
       'modifierExtension',
       'type',
-      'method',
-      'device',
-      'valueX',
-      'offset',
+      'targetX',
     ];
   }
 
@@ -3633,49 +2951,33 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
         if (type != null) {
           fields.add(type!);
         }
-      case 'method':
-        if (method != null) {
-          fields.addAll(method!);
+      case 'target':
+        if (targetX != null) {
+          fields.add(targetX!);
         }
-      case 'device':
-        if (device != null) {
-          fields.add(device!);
+      case 'targetX':
+        if (targetX != null) {
+          fields.add(targetX!);
         }
-      case 'value':
-        if (valueX != null) {
-          fields.add(valueX!);
+      case 'targetUri':
+        if (targetX is FhirUriBuilder) {
+          fields.add(targetX!);
         }
-      case 'valueX':
-        if (valueX != null) {
-          fields.add(valueX!);
+      case 'targetAttachment':
+        if (targetX is AttachmentBuilder) {
+          fields.add(targetX!);
         }
-      case 'valueCodeableConcept':
-        if (valueX is CodeableConceptBuilder) {
-          fields.add(valueX!);
+      case 'targetCanonical':
+        if (targetX is FhirCanonicalBuilder) {
+          fields.add(targetX!);
         }
-      case 'valueBoolean':
-        if (valueX is FhirBooleanBuilder) {
-          fields.add(valueX!);
+      case 'targetReference':
+        if (targetX is ReferenceBuilder) {
+          fields.add(targetX!);
         }
-      case 'valueQuantity':
-        if (valueX is QuantityBuilder) {
-          fields.add(valueX!);
-        }
-      case 'valueRange':
-        if (valueX is RangeBuilder) {
-          fields.add(valueX!);
-        }
-      case 'valueReference':
-        if (valueX is ReferenceBuilder) {
-          fields.add(valueX!);
-        }
-      case 'valueId':
-        if (valueX is FhirIdBuilder) {
-          fields.add(valueX!);
-        }
-      case 'offset':
-        if (offset != null) {
-          fields.add(offset!);
+      case 'targetMarkdown':
+        if (targetX is FhirMarkdownBuilder) {
+          fields.add(targetX!);
         }
       default:
         if (checkValid) {
@@ -3760,32 +3062,690 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
         }
       case 'type':
         {
-          if (child is CodeableConceptBuilder) {
+          if (child is ArtifactRelationshipTypeBuilder) {
             type = child;
             return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For enums, try to create directly from the string value
+              try {
+                final converted = ArtifactRelationshipTypeBuilder(stringValue);
+                type = converted;
+                return;
+              } catch (e) {
+                // Continue if enum creation fails
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'method':
+      case 'target':
+      case 'targetX':
         {
-          if (child is List<CodeableConceptBuilder>) {
-            // Replace or create new list
-            method = child;
+          if (child is TargetXEvidenceVariableRelatesToBuilder) {
+            targetX = child;
             return;
-          } else if (child is CodeableConceptBuilder) {
+          } else {
+            if (child is FhirUriBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is AttachmentBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is FhirCanonicalBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is ReferenceBuilder) {
+              targetX = child;
+              return;
+            }
+            if (child is FhirMarkdownBuilder) {
+              targetX = child;
+              return;
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'targetUri':
+        {
+          if (child is FhirUriBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetAttachment':
+        {
+          if (child is AttachmentBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetCanonical':
+        {
+          if (child is FhirCanonicalBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetReference':
+        {
+          if (child is ReferenceBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'targetMarkdown':
+        {
+          if (child is FhirMarkdownBuilder) {
+            targetX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'type':
+        return ['FhirCodeEnumBuilder'];
+      case 'target':
+      case 'targetX':
+        return [
+          'FhirUriBuilder',
+          'AttachmentBuilder',
+          'FhirCanonicalBuilder',
+          'ReferenceBuilder',
+          'FhirMarkdownBuilder',
+        ];
+      case 'targetUri':
+        return ['FhirUriBuilder'];
+      case 'targetAttachment':
+        return ['AttachmentBuilder'];
+      case 'targetCanonical':
+        return ['FhirCanonicalBuilder'];
+      case 'targetReference':
+        return ['ReferenceBuilder'];
+      case 'targetMarkdown':
+        return ['FhirMarkdownBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [EvidenceVariableRelatesToBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'type':
+        {
+          type = ArtifactRelationshipTypeBuilder.empty();
+          return;
+        }
+      case 'target':
+      case 'targetX':
+      case 'targetUri':
+        {
+          targetX = FhirUriBuilder.empty();
+          return;
+        }
+      case 'targetAttachment':
+        {
+          targetX = AttachmentBuilder.empty();
+          return;
+        }
+      case 'targetCanonical':
+        {
+          targetX = FhirCanonicalBuilder.empty();
+          return;
+        }
+      case 'targetReference':
+        {
+          targetX = ReferenceBuilder.empty();
+          return;
+        }
+      case 'targetMarkdown':
+        {
+          targetX = FhirMarkdownBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  EvidenceVariableRelatesToBuilder clone() => throw UnimplementedError();
+  @override
+  EvidenceVariableRelatesToBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    ArtifactRelationshipTypeBuilder? type,
+    TargetXEvidenceVariableRelatesToBuilder? targetX,
+    FhirUriBuilder? targetUri,
+    AttachmentBuilder? targetAttachment,
+    FhirCanonicalBuilder? targetCanonical,
+    ReferenceBuilder? targetReference,
+    FhirMarkdownBuilder? targetMarkdown,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = EvidenceVariableRelatesToBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      type: type ?? this.type,
+      targetX: targetX ??
+          targetUri ??
+          targetAttachment ??
+          targetCanonical ??
+          targetReference ??
+          targetMarkdown ??
+          this.targetX,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! EvidenceVariableRelatesToBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      type,
+      o.type,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      targetX,
+      o.targetX,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [EvidenceVariableDefinitionModifierBuilder]
+/// Further specification of the definition.
+class EvidenceVariableDefinitionModifierBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [EvidenceVariableDefinitionModifierBuilder]
+
+  EvidenceVariableDefinitionModifierBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.code,
+    ValueXEvidenceVariableDefinitionModifierBuilder? valueX,
+    CodeableConceptBuilder? valueCodeableConcept,
+    FhirBooleanBuilder? valueBoolean,
+    QuantityBuilder? valueQuantity,
+    RangeBuilder? valueRange,
+    PeriodBuilder? valuePeriod,
+    RelativeTimeBuilder? valueRelativeTime,
+    ReferenceBuilder? valueReference,
+    FhirExpressionBuilder? valueExpression,
+    FhirUriBuilder? valueUri,
+    super.disallowExtensions,
+  })  : valueX = valueX ??
+            valueCodeableConcept ??
+            valueBoolean ??
+            valueQuantity ??
+            valueRange ??
+            valuePeriod ??
+            valueRelativeTime ??
+            valueReference ??
+            valueExpression ??
+            valueUri,
+        super(
+          objectPath: 'EvidenceVariable.definitionModifier',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory EvidenceVariableDefinitionModifierBuilder.empty() =>
+      EvidenceVariableDefinitionModifierBuilder(
+        code: CodeableConceptBuilder.empty(),
+        valueX: CodeableConceptBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory EvidenceVariableDefinitionModifierBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'EvidenceVariable.definitionModifier';
+    return EvidenceVariableDefinitionModifierBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      code: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'code',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.code',
+      ),
+      valueX: JsonParser.parsePolymorphic<
+          ValueXEvidenceVariableDefinitionModifierBuilder>(
+        json,
+        {
+          'valueCodeableConcept': CodeableConceptBuilder.fromJson,
+          'valueBoolean': FhirBooleanBuilder.fromJson,
+          'valueQuantity': QuantityBuilder.fromJson,
+          'valueRange': RangeBuilder.fromJson,
+          'valuePeriod': PeriodBuilder.fromJson,
+          'valueRelativeTime': RelativeTimeBuilder.fromJson,
+          'valueReference': ReferenceBuilder.fromJson,
+          'valueExpression': FhirExpressionBuilder.fromJson,
+          'valueUri': FhirUriBuilder.fromJson,
+        },
+        objectPath,
+      ),
+    );
+  }
+
+  /// Deserialize [EvidenceVariableDefinitionModifierBuilder]
+  /// from a [String] or [YamlMap] object
+  factory EvidenceVariableDefinitionModifierBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return EvidenceVariableDefinitionModifierBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return EvidenceVariableDefinitionModifierBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'EvidenceVariableDefinitionModifierBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [EvidenceVariableDefinitionModifierBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory EvidenceVariableDefinitionModifierBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return EvidenceVariableDefinitionModifierBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'EvidenceVariableDefinitionModifier';
+
+  /// [code]
+  /// Attribute of the definition.
+  CodeableConceptBuilder? code;
+
+  /// [valueX]
+  /// Specification of the definition attribute.
+  ValueXEvidenceVariableDefinitionModifierBuilder? valueX;
+
+  /// Getter for [valueCodeableConcept] as a CodeableConceptBuilder
+  CodeableConceptBuilder? get valueCodeableConcept =>
+      valueX?.isAs<CodeableConceptBuilder>();
+
+  /// Getter for [valueBoolean] as a FhirBooleanBuilder
+  FhirBooleanBuilder? get valueBoolean => valueX?.isAs<FhirBooleanBuilder>();
+
+  /// Getter for [valueQuantity] as a QuantityBuilder
+  QuantityBuilder? get valueQuantity => valueX?.isAs<QuantityBuilder>();
+
+  /// Getter for [valueRange] as a RangeBuilder
+  RangeBuilder? get valueRange => valueX?.isAs<RangeBuilder>();
+
+  /// Getter for [valuePeriod] as a PeriodBuilder
+  PeriodBuilder? get valuePeriod => valueX?.isAs<PeriodBuilder>();
+
+  /// Getter for [valueRelativeTime] as a RelativeTimeBuilder
+  RelativeTimeBuilder? get valueRelativeTime =>
+      valueX?.isAs<RelativeTimeBuilder>();
+
+  /// Getter for [valueReference] as a ReferenceBuilder
+  ReferenceBuilder? get valueReference => valueX?.isAs<ReferenceBuilder>();
+
+  /// Getter for [valueExpression] as a FhirExpressionBuilder
+  FhirExpressionBuilder? get valueExpression =>
+      valueX?.isAs<FhirExpressionBuilder>();
+
+  /// Getter for [valueUri] as a FhirUriBuilder
+  FhirUriBuilder? get valueUri => valueX?.isAs<FhirUriBuilder>();
+
+  /// Converts a [EvidenceVariableDefinitionModifierBuilder]
+  /// to [EvidenceVariableDefinitionModifier]
+  @override
+  EvidenceVariableDefinitionModifier build() =>
+      EvidenceVariableDefinitionModifier.fromJson(toJson());
+
+  /// Converts a [EvidenceVariableDefinitionModifierBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('code', code);
+    if (valueX != null) {
+      final fhirType = valueX!.fhirType;
+      addField('value${fhirType.capitalizeFirstLetter()}', valueX);
+    }
+
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'code',
+      'valueX',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'code':
+        if (code != null) {
+          fields.add(code!);
+        }
+      case 'value':
+        if (valueX != null) {
+          fields.add(valueX!);
+        }
+      case 'valueX':
+        if (valueX != null) {
+          fields.add(valueX!);
+        }
+      case 'valueCodeableConcept':
+        if (valueX is CodeableConceptBuilder) {
+          fields.add(valueX!);
+        }
+      case 'valueBoolean':
+        if (valueX is FhirBooleanBuilder) {
+          fields.add(valueX!);
+        }
+      case 'valueQuantity':
+        if (valueX is QuantityBuilder) {
+          fields.add(valueX!);
+        }
+      case 'valueRange':
+        if (valueX is RangeBuilder) {
+          fields.add(valueX!);
+        }
+      case 'valuePeriod':
+        if (valueX is PeriodBuilder) {
+          fields.add(valueX!);
+        }
+      case 'valueRelativeTime':
+        if (valueX is RelativeTimeBuilder) {
+          fields.add(valueX!);
+        }
+      case 'valueReference':
+        if (valueX is ReferenceBuilder) {
+          fields.add(valueX!);
+        }
+      case 'valueExpression':
+        if (valueX is FhirExpressionBuilder) {
+          fields.add(valueX!);
+        }
+      case 'valueUri':
+        if (valueX is FhirUriBuilder) {
+          fields.add(valueX!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
             // Add single element to existing list or create new list
-            method = [
-              ...(method ?? []),
+            extension_ = [
+              ...(extension_ ?? []),
               child,
             ];
             return;
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'device':
+      case 'modifierExtension':
         {
-          if (child is ReferenceBuilder) {
-            device = child;
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'code':
+        {
+          if (child is CodeableConceptBuilder) {
+            code = child;
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -3793,7 +3753,7 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
       case 'value':
       case 'valueX':
         {
-          if (child is ValueXEvidenceVariableDefinitionByTypeAndValueBuilder) {
+          if (child is ValueXEvidenceVariableDefinitionModifierBuilder) {
             valueX = child;
             return;
           } else {
@@ -3813,11 +3773,23 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
               valueX = child;
               return;
             }
+            if (child is PeriodBuilder) {
+              valueX = child;
+              return;
+            }
+            if (child is RelativeTimeBuilder) {
+              valueX = child;
+              return;
+            }
             if (child is ReferenceBuilder) {
               valueX = child;
               return;
             }
-            if (child is FhirIdBuilder) {
+            if (child is FhirExpressionBuilder) {
+              valueX = child;
+              return;
+            }
+            if (child is FhirUriBuilder) {
               valueX = child;
               return;
             }
@@ -3860,6 +3832,24 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
             throw Exception('Invalid child type for $childName');
           }
         }
+      case 'valuePeriod':
+        {
+          if (child is PeriodBuilder) {
+            valueX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'valueRelativeTime':
+        {
+          if (child is RelativeTimeBuilder) {
+            valueX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
       case 'valueReference':
         {
           if (child is ReferenceBuilder) {
@@ -3869,22 +3859,23 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
             throw Exception('Invalid child type for $childName');
           }
         }
-      case 'valueId':
+      case 'valueExpression':
         {
-          if (child is FhirIdBuilder) {
+          if (child is FhirExpressionBuilder) {
             valueX = child;
             return;
           } else {
             throw Exception('Invalid child type for $childName');
           }
         }
-      case 'offset':
+      case 'valueUri':
         {
-          if (child is CodeableConceptBuilder) {
-            offset = child;
+          if (child is FhirUriBuilder) {
+            valueX = child;
             return;
+          } else {
+            throw Exception('Invalid child type for $childName');
           }
-          throw Exception('Invalid child type for $childName');
         }
       default:
         throw Exception('Cannot set child value for $childName');
@@ -3902,12 +3893,8 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
         return ['FhirExtensionBuilder'];
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
-      case 'type':
+      case 'code':
         return ['CodeableConceptBuilder'];
-      case 'method':
-        return ['CodeableConceptBuilder'];
-      case 'device':
-        return ['ReferenceBuilder'];
       case 'value':
       case 'valueX':
         return [
@@ -3915,8 +3902,11 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
           'FhirBooleanBuilder',
           'QuantityBuilder',
           'RangeBuilder',
+          'PeriodBuilder',
+          'RelativeTimeBuilder',
           'ReferenceBuilder',
-          'FhirIdBuilder',
+          'FhirExpressionBuilder',
+          'FhirUriBuilder',
         ];
       case 'valueCodeableConcept':
         return ['CodeableConceptBuilder'];
@@ -3926,18 +3916,22 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
         return ['QuantityBuilder'];
       case 'valueRange':
         return ['RangeBuilder'];
+      case 'valuePeriod':
+        return ['PeriodBuilder'];
+      case 'valueRelativeTime':
+        return ['RelativeTimeBuilder'];
       case 'valueReference':
         return ['ReferenceBuilder'];
-      case 'valueId':
-        return ['FhirIdBuilder'];
-      case 'offset':
-        return ['CodeableConceptBuilder'];
+      case 'valueExpression':
+        return ['FhirExpressionBuilder'];
+      case 'valueUri':
+        return ['FhirUriBuilder'];
       default:
         return <String>[];
     }
   }
 
-  /// Creates a new [EvidenceVariableDefinitionByTypeAndValueBuilder]
+  /// Creates a new [EvidenceVariableDefinitionModifierBuilder]
   ///  with a chosen field set to an empty object.
   @override
   void createProperty(String propertyName) {
@@ -3957,19 +3951,9 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
           modifierExtension = <FhirExtensionBuilder>[];
           return;
         }
-      case 'type':
+      case 'code':
         {
-          type = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'method':
-        {
-          method = <CodeableConceptBuilder>[];
-          return;
-        }
-      case 'device':
-        {
-          device = ReferenceBuilder.empty();
+          code = CodeableConceptBuilder.empty();
           return;
         }
       case 'value':
@@ -3994,19 +3978,29 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
           valueX = RangeBuilder.empty();
           return;
         }
+      case 'valuePeriod':
+        {
+          valueX = PeriodBuilder.empty();
+          return;
+        }
+      case 'valueRelativeTime':
+        {
+          valueX = RelativeTimeBuilder.empty();
+          return;
+        }
       case 'valueReference':
         {
           valueX = ReferenceBuilder.empty();
           return;
         }
-      case 'valueId':
+      case 'valueExpression':
         {
-          valueX = FhirIdBuilder.empty();
+          valueX = FhirExpressionBuilder.empty();
           return;
         }
-      case 'offset':
+      case 'valueUri':
         {
-          offset = CodeableConceptBuilder.empty();
+          valueX = FhirUriBuilder.empty();
           return;
         }
       default:
@@ -4015,24 +4009,24 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
   }
 
   @override
-  EvidenceVariableDefinitionByTypeAndValueBuilder clone() =>
+  EvidenceVariableDefinitionModifierBuilder clone() =>
       throw UnimplementedError();
   @override
-  EvidenceVariableDefinitionByTypeAndValueBuilder copyWith({
+  EvidenceVariableDefinitionModifierBuilder copyWith({
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    CodeableConceptBuilder? type,
-    List<CodeableConceptBuilder>? method,
-    ReferenceBuilder? device,
-    ValueXEvidenceVariableDefinitionByTypeAndValueBuilder? valueX,
-    CodeableConceptBuilder? offset,
+    CodeableConceptBuilder? code,
+    ValueXEvidenceVariableDefinitionModifierBuilder? valueX,
     CodeableConceptBuilder? valueCodeableConcept,
     FhirBooleanBuilder? valueBoolean,
     QuantityBuilder? valueQuantity,
     RangeBuilder? valueRange,
+    PeriodBuilder? valuePeriod,
+    RelativeTimeBuilder? valueRelativeTime,
     ReferenceBuilder? valueReference,
-    FhirIdBuilder? valueId,
+    FhirExpressionBuilder? valueExpression,
+    FhirUriBuilder? valueUri,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -4040,22 +4034,22 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
     String? objectPath,
   }) {
     final newObjectPath = this.objectPath;
-    final newResult = EvidenceVariableDefinitionByTypeAndValueBuilder(
+    final newResult = EvidenceVariableDefinitionModifierBuilder(
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
-      type: type ?? this.type,
-      method: method ?? this.method,
-      device: device ?? this.device,
+      code: code ?? this.code,
       valueX: valueX ??
           valueCodeableConcept ??
           valueBoolean ??
           valueQuantity ??
           valueRange ??
+          valuePeriod ??
+          valueRelativeTime ??
           valueReference ??
-          valueId ??
+          valueExpression ??
+          valueUri ??
           this.valueX,
-      offset: offset ?? this.offset,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -4077,555 +4071,7 @@ class EvidenceVariableDefinitionByTypeAndValueBuilder
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! EvidenceVariableDefinitionByTypeAndValueBuilder) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      type,
-      o.type,
-    )) {
-      return false;
-    }
-    if (!listEquals<CodeableConceptBuilder>(
-      method,
-      o.method,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      device,
-      o.device,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      valueX,
-      o.valueX,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      offset,
-      o.offset,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [EvidenceVariableDefinitionByCombinationBuilder]
-/// Defines the characteristic as a combination of two or more
-/// characteristics.
-class EvidenceVariableDefinitionByCombinationBuilder
-    extends BackboneElementBuilder {
-  /// Primary constructor for
-  /// [EvidenceVariableDefinitionByCombinationBuilder]
-
-  EvidenceVariableDefinitionByCombinationBuilder({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.code,
-    this.threshold,
-    this.characteristic,
-    super.disallowExtensions,
-  }) : super(
-          objectPath: 'EvidenceVariable.characteristic.definitionByCombination',
-        );
-
-  /// An empty constructor for partial usage.
-  /// For Builder classes, no fields are required
-  factory EvidenceVariableDefinitionByCombinationBuilder.empty() =>
-      EvidenceVariableDefinitionByCombinationBuilder(
-        code: CharacteristicCombinationBuilder.values.first,
-        characteristic: <EvidenceVariableCharacteristicBuilder>[],
-      );
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory EvidenceVariableDefinitionByCombinationBuilder.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    const objectPath =
-        'EvidenceVariable.characteristic.definitionByCombination';
-    return EvidenceVariableDefinitionByCombinationBuilder(
-      id: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'id',
-        FhirStringBuilder.fromJson,
-        '$objectPath.id',
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.extension',
-              },
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.modifierExtension',
-              },
-            ),
-          )
-          .toList(),
-      code: JsonParser.parsePrimitive<CharacteristicCombinationBuilder>(
-        json,
-        'code',
-        CharacteristicCombinationBuilder.fromJson,
-        '$objectPath.code',
-      ),
-      threshold: JsonParser.parsePrimitive<FhirPositiveIntBuilder>(
-        json,
-        'threshold',
-        FhirPositiveIntBuilder.fromJson,
-        '$objectPath.threshold',
-      ),
-      characteristic: (json['characteristic'] as List<dynamic>?)
-          ?.map<EvidenceVariableCharacteristicBuilder>(
-            (v) => EvidenceVariableCharacteristicBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.characteristic',
-              },
-            ),
-          )
-          .toList(),
-    );
-  }
-
-  /// Deserialize [EvidenceVariableDefinitionByCombinationBuilder]
-  /// from a [String] or [YamlMap] object
-  factory EvidenceVariableDefinitionByCombinationBuilder.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return EvidenceVariableDefinitionByCombinationBuilder.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return EvidenceVariableDefinitionByCombinationBuilder.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'EvidenceVariableDefinitionByCombinationBuilder '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [EvidenceVariableDefinitionByCombinationBuilder]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory EvidenceVariableDefinitionByCombinationBuilder.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return EvidenceVariableDefinitionByCombinationBuilder.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'EvidenceVariableDefinitionByCombination';
-
-  /// [code]
-  /// Used to specify if two or more characteristics are combined with OR or
-  /// AND.
-  CharacteristicCombinationBuilder? code;
-
-  /// [threshold]
-  /// Provides the value of "n" when "at-least" or "at-most" codes are used.
-  FhirPositiveIntBuilder? threshold;
-
-  /// [characteristic]
-  /// A defining factor of the characteristic.
-  List<EvidenceVariableCharacteristicBuilder>? characteristic;
-
-  /// Converts a [EvidenceVariableDefinitionByCombinationBuilder]
-  /// to [EvidenceVariableDefinitionByCombination]
-  @override
-  EvidenceVariableDefinitionByCombination build() =>
-      EvidenceVariableDefinitionByCombination.fromJson(toJson());
-
-  /// Converts a [EvidenceVariableDefinitionByCombinationBuilder]
-  /// to a [Map<String, dynamic>]
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    void addField(String key, dynamic field) {
-      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
-        throw ArgumentError('"field" must be a FhirBaseBuilder type');
-      }
-      if (field == null) return;
-      if (field is PrimitiveTypeBuilder) {
-        json[key] = field.toJson()['value'];
-        if (field.toJson()['_value'] != null) {
-          json['_$key'] = field.toJson()['_value'];
-        }
-      } else if (field is List<FhirBaseBuilder>) {
-        if (field.isEmpty) return;
-        if (field.first is PrimitiveTypeBuilder) {
-          final fieldJson = field.map((e) => e.toJson()).toList();
-          json[key] = fieldJson.map((e) => e['value']).toList();
-          if (fieldJson.any((e) => e['_value'] != null)) {
-            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
-          }
-        } else {
-          json[key] = field.map((e) => e.toJson()).toList();
-        }
-      } else if (field is FhirBaseBuilder) {
-        json[key] = field.toJson();
-      }
-    }
-
-    addField('id', id);
-    addField('extension', extension_);
-    addField('modifierExtension', modifierExtension);
-    addField('code', code);
-    addField('threshold', threshold);
-    addField('characteristic', characteristic);
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'code',
-      'threshold',
-      'characteristic',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBaseBuilder> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBaseBuilder>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'code':
-        if (code != null) {
-          fields.add(code!);
-        }
-      case 'threshold':
-        if (threshold != null) {
-          fields.add(threshold!);
-        }
-      case 'characteristic':
-        if (characteristic != null) {
-          fields.addAll(characteristic!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBaseBuilder? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  void setChildByName(String childName, dynamic child) {
-    // child must be null, or a (List of) FhirBaseBuilder(s).
-    if (child == null) {
-      return; // In builders, setting to null is allowed
-    }
-    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
-      throw Exception('Cannot set child value for $childName');
-    }
-
-    switch (childName) {
-      case 'id':
-        {
-          if (child is FhirStringBuilder) {
-            id = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                id = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'extension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            extension_ = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            extension_ = [
-              ...(extension_ ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'modifierExtension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            modifierExtension = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            modifierExtension = [
-              ...(modifierExtension ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'code':
-        {
-          if (child is CharacteristicCombinationBuilder) {
-            code = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              // For enums, try to create directly from the string value
-              try {
-                final converted = CharacteristicCombinationBuilder(stringValue);
-                code = converted;
-                return;
-              } catch (e) {
-                // Continue if enum creation fails
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'threshold':
-        {
-          if (child is FhirPositiveIntBuilder) {
-            threshold = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              // For number types,
-              // first parse to num then pass the number directly
-              final numValue = num.tryParse(stringValue);
-              if (numValue != null) {
-                final converted = FhirPositiveIntBuilder.tryParse(numValue);
-                if (converted != null) {
-                  threshold = converted;
-                  return;
-                }
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'characteristic':
-        {
-          if (child is List<EvidenceVariableCharacteristicBuilder>) {
-            // Replace or create new list
-            characteristic = child;
-            return;
-          } else if (child is EvidenceVariableCharacteristicBuilder) {
-            // Add single element to existing list or create new list
-            characteristic = [
-              ...(characteristic ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      default:
-        throw Exception('Cannot set child value for $childName');
-    }
-  }
-
-  /// Return the possible Dart types for the field named [fieldName].
-  /// For polymorphic fields, multiple types are possible.
-  @override
-  List<String> typeByElementName(String fieldName) {
-    switch (fieldName) {
-      case 'id':
-        return ['FhirStringBuilder'];
-      case 'extension':
-        return ['FhirExtensionBuilder'];
-      case 'modifierExtension':
-        return ['FhirExtensionBuilder'];
-      case 'code':
-        return ['FhirCodeEnumBuilder'];
-      case 'threshold':
-        return ['FhirPositiveIntBuilder'];
-      case 'characteristic':
-        return ['EvidenceVariableCharacteristicBuilder'];
-      default:
-        return <String>[];
-    }
-  }
-
-  /// Creates a new [EvidenceVariableDefinitionByCombinationBuilder]
-  ///  with a chosen field set to an empty object.
-  @override
-  void createProperty(String propertyName) {
-    switch (propertyName) {
-      case 'id':
-        {
-          id = FhirStringBuilder.empty();
-          return;
-        }
-      case 'extension':
-        {
-          extension_ = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'modifierExtension':
-        {
-          modifierExtension = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'code':
-        {
-          code = CharacteristicCombinationBuilder.empty();
-          return;
-        }
-      case 'threshold':
-        {
-          threshold = FhirPositiveIntBuilder.empty();
-          return;
-        }
-      case 'characteristic':
-        {
-          characteristic = <EvidenceVariableCharacteristicBuilder>[];
-          return;
-        }
-      default:
-        throw ArgumentError('No matching property: $propertyName');
-    }
-  }
-
-  @override
-  EvidenceVariableDefinitionByCombinationBuilder clone() =>
-      throw UnimplementedError();
-  @override
-  EvidenceVariableDefinitionByCombinationBuilder copyWith({
-    FhirStringBuilder? id,
-    List<FhirExtensionBuilder>? extension_,
-    List<FhirExtensionBuilder>? modifierExtension,
-    CharacteristicCombinationBuilder? code,
-    FhirPositiveIntBuilder? threshold,
-    List<EvidenceVariableCharacteristicBuilder>? characteristic,
-    Map<String, dynamic>? userData,
-    List<String>? formatCommentsPre,
-    List<String>? formatCommentsPost,
-    List<dynamic>? annotations,
-    String? objectPath,
-  }) {
-    final newObjectPath = this.objectPath;
-    final newResult = EvidenceVariableDefinitionByCombinationBuilder(
-      id: id ?? this.id,
-      extension_: extension_ ?? this.extension_,
-      modifierExtension: modifierExtension ?? this.modifierExtension,
-      code: code ?? this.code,
-      threshold: threshold ?? this.threshold,
-      characteristic: characteristic ?? this.characteristic,
-    )..objectPath = newObjectPath;
-    // Copy user data and annotations
-    if (userData != null) {
-      newResult.userData = userData;
-    }
-    if (formatCommentsPre != null) {
-      newResult.formatCommentsPre = formatCommentsPre;
-    }
-    if (formatCommentsPost != null) {
-      newResult.formatCommentsPost = formatCommentsPost;
-    }
-    if (annotations != null) {
-      newResult.annotations = annotations;
-    }
-
-    return newResult;
-  }
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! EvidenceVariableDefinitionByCombinationBuilder) {
+    if (o is! EvidenceVariableDefinitionModifierBuilder) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -4655,750 +4101,8 @@ class EvidenceVariableDefinitionByCombinationBuilder
       return false;
     }
     if (!equalsDeepWithNull(
-      threshold,
-      o.threshold,
-    )) {
-      return false;
-    }
-    if (!listEquals<EvidenceVariableCharacteristicBuilder>(
-      characteristic,
-      o.characteristic,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [EvidenceVariableTimeFromEventBuilder]
-/// Timing in which the characteristic is determined.
-class EvidenceVariableTimeFromEventBuilder extends BackboneElementBuilder {
-  /// Primary constructor for
-  /// [EvidenceVariableTimeFromEventBuilder]
-
-  EvidenceVariableTimeFromEventBuilder({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.description,
-    this.note,
-    EventXEvidenceVariableTimeFromEventBuilder? eventX,
-    CodeableConceptBuilder? eventCodeableConcept,
-    ReferenceBuilder? eventReference,
-    FhirDateTimeBuilder? eventDateTime,
-    FhirIdBuilder? eventId,
-    this.quantity,
-    this.range,
-    super.disallowExtensions,
-  })  : eventX = eventX ??
-            eventCodeableConcept ??
-            eventReference ??
-            eventDateTime ??
-            eventId,
-        super(
-          objectPath: 'EvidenceVariable.characteristic.timeFromEvent',
-        );
-
-  /// An empty constructor for partial usage.
-  /// For Builder classes, no fields are required
-  factory EvidenceVariableTimeFromEventBuilder.empty() =>
-      EvidenceVariableTimeFromEventBuilder();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory EvidenceVariableTimeFromEventBuilder.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    const objectPath = 'EvidenceVariable.characteristic.timeFromEvent';
-    return EvidenceVariableTimeFromEventBuilder(
-      id: JsonParser.parsePrimitive<FhirStringBuilder>(
-        json,
-        'id',
-        FhirStringBuilder.fromJson,
-        '$objectPath.id',
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.extension',
-              },
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtensionBuilder>(
-            (v) => FhirExtensionBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.modifierExtension',
-              },
-            ),
-          )
-          .toList(),
-      description: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
-        json,
-        'description',
-        FhirMarkdownBuilder.fromJson,
-        '$objectPath.description',
-      ),
-      note: (json['note'] as List<dynamic>?)
-          ?.map<AnnotationBuilder>(
-            (v) => AnnotationBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.note',
-              },
-            ),
-          )
-          .toList(),
-      eventX: JsonParser.parsePolymorphic<
-          EventXEvidenceVariableTimeFromEventBuilder>(
-        json,
-        {
-          'eventCodeableConcept': CodeableConceptBuilder.fromJson,
-          'eventReference': ReferenceBuilder.fromJson,
-          'eventDateTime': FhirDateTimeBuilder.fromJson,
-          'eventId': FhirIdBuilder.fromJson,
-        },
-        objectPath,
-      ),
-      quantity: JsonParser.parseObject<QuantityBuilder>(
-        json,
-        'quantity',
-        QuantityBuilder.fromJson,
-        '$objectPath.quantity',
-      ),
-      range: JsonParser.parseObject<RangeBuilder>(
-        json,
-        'range',
-        RangeBuilder.fromJson,
-        '$objectPath.range',
-      ),
-    );
-  }
-
-  /// Deserialize [EvidenceVariableTimeFromEventBuilder]
-  /// from a [String] or [YamlMap] object
-  factory EvidenceVariableTimeFromEventBuilder.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return EvidenceVariableTimeFromEventBuilder.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return EvidenceVariableTimeFromEventBuilder.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'EvidenceVariableTimeFromEventBuilder '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [EvidenceVariableTimeFromEventBuilder]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory EvidenceVariableTimeFromEventBuilder.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return EvidenceVariableTimeFromEventBuilder.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'EvidenceVariableTimeFromEvent';
-
-  /// [description]
-  /// Human readable description.
-  FhirMarkdownBuilder? description;
-
-  /// [note]
-  /// A human-readable string to clarify or explain concepts about the
-  /// timeFromEvent.
-  List<AnnotationBuilder>? note;
-
-  /// [eventX]
-  /// The event used as a base point (reference point) in time.
-  EventXEvidenceVariableTimeFromEventBuilder? eventX;
-
-  /// Getter for [eventCodeableConcept] as a CodeableConceptBuilder
-  CodeableConceptBuilder? get eventCodeableConcept =>
-      eventX?.isAs<CodeableConceptBuilder>();
-
-  /// Getter for [eventReference] as a ReferenceBuilder
-  ReferenceBuilder? get eventReference => eventX?.isAs<ReferenceBuilder>();
-
-  /// Getter for [eventDateTime] as a FhirDateTimeBuilder
-  FhirDateTimeBuilder? get eventDateTime => eventX?.isAs<FhirDateTimeBuilder>();
-
-  /// Getter for [eventId] as a FhirIdBuilder
-  FhirIdBuilder? get eventId => eventX?.isAs<FhirIdBuilder>();
-
-  /// [quantity]
-  /// Used to express the observation at a defined amount of time before or
-  /// after the event.
-  QuantityBuilder? quantity;
-
-  /// [range]
-  /// Used to express the observation within a period before and/or after the
-  /// event.
-  RangeBuilder? range;
-
-  /// Converts a [EvidenceVariableTimeFromEventBuilder]
-  /// to [EvidenceVariableTimeFromEvent]
-  @override
-  EvidenceVariableTimeFromEvent build() =>
-      EvidenceVariableTimeFromEvent.fromJson(toJson());
-
-  /// Converts a [EvidenceVariableTimeFromEventBuilder]
-  /// to a [Map<String, dynamic>]
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    void addField(String key, dynamic field) {
-      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
-        throw ArgumentError('"field" must be a FhirBaseBuilder type');
-      }
-      if (field == null) return;
-      if (field is PrimitiveTypeBuilder) {
-        json[key] = field.toJson()['value'];
-        if (field.toJson()['_value'] != null) {
-          json['_$key'] = field.toJson()['_value'];
-        }
-      } else if (field is List<FhirBaseBuilder>) {
-        if (field.isEmpty) return;
-        if (field.first is PrimitiveTypeBuilder) {
-          final fieldJson = field.map((e) => e.toJson()).toList();
-          json[key] = fieldJson.map((e) => e['value']).toList();
-          if (fieldJson.any((e) => e['_value'] != null)) {
-            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
-          }
-        } else {
-          json[key] = field.map((e) => e.toJson()).toList();
-        }
-      } else if (field is FhirBaseBuilder) {
-        json[key] = field.toJson();
-      }
-    }
-
-    addField('id', id);
-    addField('extension', extension_);
-    addField('modifierExtension', modifierExtension);
-    addField('description', description);
-    addField('note', note);
-    if (eventX != null) {
-      final fhirType = eventX!.fhirType;
-      addField('event${fhirType.capitalizeFirstLetter()}', eventX);
-    }
-
-    addField('quantity', quantity);
-    addField('range', range);
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'description',
-      'note',
-      'eventX',
-      'quantity',
-      'range',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBaseBuilder> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBaseBuilder>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'description':
-        if (description != null) {
-          fields.add(description!);
-        }
-      case 'note':
-        if (note != null) {
-          fields.addAll(note!);
-        }
-      case 'event':
-        if (eventX != null) {
-          fields.add(eventX!);
-        }
-      case 'eventX':
-        if (eventX != null) {
-          fields.add(eventX!);
-        }
-      case 'eventCodeableConcept':
-        if (eventX is CodeableConceptBuilder) {
-          fields.add(eventX!);
-        }
-      case 'eventReference':
-        if (eventX is ReferenceBuilder) {
-          fields.add(eventX!);
-        }
-      case 'eventDateTime':
-        if (eventX is FhirDateTimeBuilder) {
-          fields.add(eventX!);
-        }
-      case 'eventId':
-        if (eventX is FhirIdBuilder) {
-          fields.add(eventX!);
-        }
-      case 'quantity':
-        if (quantity != null) {
-          fields.add(quantity!);
-        }
-      case 'range':
-        if (range != null) {
-          fields.add(range!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBaseBuilder? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  void setChildByName(String childName, dynamic child) {
-    // child must be null, or a (List of) FhirBaseBuilder(s).
-    if (child == null) {
-      return; // In builders, setting to null is allowed
-    }
-    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
-      throw Exception('Cannot set child value for $childName');
-    }
-
-    switch (childName) {
-      case 'id':
-        {
-          if (child is FhirStringBuilder) {
-            id = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                id = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'extension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            extension_ = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            extension_ = [
-              ...(extension_ ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'modifierExtension':
-        {
-          if (child is List<FhirExtensionBuilder>) {
-            // Replace or create new list
-            modifierExtension = child;
-            return;
-          } else if (child is FhirExtensionBuilder) {
-            // Add single element to existing list or create new list
-            modifierExtension = [
-              ...(modifierExtension ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'description':
-        {
-          if (child is FhirMarkdownBuilder) {
-            description = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirMarkdownBuilder.tryParse(stringValue);
-              if (converted != null) {
-                description = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'note':
-        {
-          if (child is List<AnnotationBuilder>) {
-            // Replace or create new list
-            note = child;
-            return;
-          } else if (child is AnnotationBuilder) {
-            // Add single element to existing list or create new list
-            note = [
-              ...(note ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'event':
-      case 'eventX':
-        {
-          if (child is EventXEvidenceVariableTimeFromEventBuilder) {
-            eventX = child;
-            return;
-          } else {
-            if (child is CodeableConceptBuilder) {
-              eventX = child;
-              return;
-            }
-            if (child is ReferenceBuilder) {
-              eventX = child;
-              return;
-            }
-            if (child is FhirDateTimeBuilder) {
-              eventX = child;
-              return;
-            }
-            if (child is FhirIdBuilder) {
-              eventX = child;
-              return;
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'eventCodeableConcept':
-        {
-          if (child is CodeableConceptBuilder) {
-            eventX = child;
-            return;
-          } else {
-            throw Exception('Invalid child type for $childName');
-          }
-        }
-      case 'eventReference':
-        {
-          if (child is ReferenceBuilder) {
-            eventX = child;
-            return;
-          } else {
-            throw Exception('Invalid child type for $childName');
-          }
-        }
-      case 'eventDateTime':
-        {
-          if (child is FhirDateTimeBuilder) {
-            eventX = child;
-            return;
-          } else {
-            throw Exception('Invalid child type for $childName');
-          }
-        }
-      case 'eventId':
-        {
-          if (child is FhirIdBuilder) {
-            eventX = child;
-            return;
-          } else {
-            throw Exception('Invalid child type for $childName');
-          }
-        }
-      case 'quantity':
-        {
-          if (child is QuantityBuilder) {
-            quantity = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'range':
-        {
-          if (child is RangeBuilder) {
-            range = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      default:
-        throw Exception('Cannot set child value for $childName');
-    }
-  }
-
-  /// Return the possible Dart types for the field named [fieldName].
-  /// For polymorphic fields, multiple types are possible.
-  @override
-  List<String> typeByElementName(String fieldName) {
-    switch (fieldName) {
-      case 'id':
-        return ['FhirStringBuilder'];
-      case 'extension':
-        return ['FhirExtensionBuilder'];
-      case 'modifierExtension':
-        return ['FhirExtensionBuilder'];
-      case 'description':
-        return ['FhirMarkdownBuilder'];
-      case 'note':
-        return ['AnnotationBuilder'];
-      case 'event':
-      case 'eventX':
-        return [
-          'CodeableConceptBuilder',
-          'ReferenceBuilder',
-          'FhirDateTimeBuilder',
-          'FhirIdBuilder',
-        ];
-      case 'eventCodeableConcept':
-        return ['CodeableConceptBuilder'];
-      case 'eventReference':
-        return ['ReferenceBuilder'];
-      case 'eventDateTime':
-        return ['FhirDateTimeBuilder'];
-      case 'eventId':
-        return ['FhirIdBuilder'];
-      case 'quantity':
-        return ['QuantityBuilder'];
-      case 'range':
-        return ['RangeBuilder'];
-      default:
-        return <String>[];
-    }
-  }
-
-  /// Creates a new [EvidenceVariableTimeFromEventBuilder]
-  ///  with a chosen field set to an empty object.
-  @override
-  void createProperty(String propertyName) {
-    switch (propertyName) {
-      case 'id':
-        {
-          id = FhirStringBuilder.empty();
-          return;
-        }
-      case 'extension':
-        {
-          extension_ = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'modifierExtension':
-        {
-          modifierExtension = <FhirExtensionBuilder>[];
-          return;
-        }
-      case 'description':
-        {
-          description = FhirMarkdownBuilder.empty();
-          return;
-        }
-      case 'note':
-        {
-          note = <AnnotationBuilder>[];
-          return;
-        }
-      case 'event':
-      case 'eventX':
-      case 'eventCodeableConcept':
-        {
-          eventX = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'eventReference':
-        {
-          eventX = ReferenceBuilder.empty();
-          return;
-        }
-      case 'eventDateTime':
-        {
-          eventX = FhirDateTimeBuilder.empty();
-          return;
-        }
-      case 'eventId':
-        {
-          eventX = FhirIdBuilder.empty();
-          return;
-        }
-      case 'quantity':
-        {
-          quantity = QuantityBuilder.empty();
-          return;
-        }
-      case 'range':
-        {
-          range = RangeBuilder.empty();
-          return;
-        }
-      default:
-        throw ArgumentError('No matching property: $propertyName');
-    }
-  }
-
-  @override
-  EvidenceVariableTimeFromEventBuilder clone() => throw UnimplementedError();
-  @override
-  EvidenceVariableTimeFromEventBuilder copyWith({
-    FhirStringBuilder? id,
-    List<FhirExtensionBuilder>? extension_,
-    List<FhirExtensionBuilder>? modifierExtension,
-    FhirMarkdownBuilder? description,
-    List<AnnotationBuilder>? note,
-    EventXEvidenceVariableTimeFromEventBuilder? eventX,
-    QuantityBuilder? quantity,
-    RangeBuilder? range,
-    CodeableConceptBuilder? eventCodeableConcept,
-    ReferenceBuilder? eventReference,
-    FhirDateTimeBuilder? eventDateTime,
-    FhirIdBuilder? eventId,
-    Map<String, dynamic>? userData,
-    List<String>? formatCommentsPre,
-    List<String>? formatCommentsPost,
-    List<dynamic>? annotations,
-    String? objectPath,
-  }) {
-    final newObjectPath = this.objectPath;
-    final newResult = EvidenceVariableTimeFromEventBuilder(
-      id: id ?? this.id,
-      extension_: extension_ ?? this.extension_,
-      modifierExtension: modifierExtension ?? this.modifierExtension,
-      description: description ?? this.description,
-      note: note ?? this.note,
-      eventX: eventX ??
-          eventCodeableConcept ??
-          eventReference ??
-          eventDateTime ??
-          eventId ??
-          this.eventX,
-      quantity: quantity ?? this.quantity,
-      range: range ?? this.range,
-    )..objectPath = newObjectPath;
-    // Copy user data and annotations
-    if (userData != null) {
-      newResult.userData = userData;
-    }
-    if (formatCommentsPre != null) {
-      newResult.formatCommentsPre = formatCommentsPre;
-    }
-    if (formatCommentsPost != null) {
-      newResult.formatCommentsPost = formatCommentsPost;
-    }
-    if (annotations != null) {
-      newResult.annotations = annotations;
-    }
-
-    return newResult;
-  }
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! EvidenceVariableTimeFromEventBuilder) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtensionBuilder>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      description,
-      o.description,
-    )) {
-      return false;
-    }
-    if (!listEquals<AnnotationBuilder>(
-      note,
-      o.note,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      eventX,
-      o.eventX,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      quantity,
-      o.quantity,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      range,
-      o.range,
+      valueX,
+      o.valueX,
     )) {
       return false;
     }
@@ -5407,7 +4111,7 @@ class EvidenceVariableTimeFromEventBuilder extends BackboneElementBuilder {
 }
 
 /// [EvidenceVariableCategoryBuilder]
-/// A grouping for ordinal or polychotomous variables.
+/// A grouping for dichotomous, ordinal, or polychotomouos variables.
 class EvidenceVariableCategoryBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [EvidenceVariableCategoryBuilder]
@@ -5421,8 +4125,13 @@ class EvidenceVariableCategoryBuilder extends BackboneElementBuilder {
     CodeableConceptBuilder? valueCodeableConcept,
     QuantityBuilder? valueQuantity,
     RangeBuilder? valueRange,
+    ReferenceBuilder? valueReference,
     super.disallowExtensions,
-  })  : valueX = valueX ?? valueCodeableConcept ?? valueQuantity ?? valueRange,
+  })  : valueX = valueX ??
+            valueCodeableConcept ??
+            valueQuantity ??
+            valueRange ??
+            valueReference,
         super(
           objectPath: 'EvidenceVariable.category',
         );
@@ -5477,6 +4186,7 @@ class EvidenceVariableCategoryBuilder extends BackboneElementBuilder {
           'valueCodeableConcept': CodeableConceptBuilder.fromJson,
           'valueQuantity': QuantityBuilder.fromJson,
           'valueRange': RangeBuilder.fromJson,
+          'valueReference': ReferenceBuilder.fromJson,
         },
         objectPath,
       ),
@@ -5542,6 +4252,9 @@ class EvidenceVariableCategoryBuilder extends BackboneElementBuilder {
 
   /// Getter for [valueRange] as a RangeBuilder
   RangeBuilder? get valueRange => valueX?.isAs<RangeBuilder>();
+
+  /// Getter for [valueReference] as a ReferenceBuilder
+  ReferenceBuilder? get valueReference => valueX?.isAs<ReferenceBuilder>();
 
   /// Converts a [EvidenceVariableCategoryBuilder]
   /// to [EvidenceVariableCategory]
@@ -5647,6 +4360,10 @@ class EvidenceVariableCategoryBuilder extends BackboneElementBuilder {
         }
       case 'valueRange':
         if (valueX is RangeBuilder) {
+          fields.add(valueX!);
+        }
+      case 'valueReference':
+        if (valueX is ReferenceBuilder) {
           fields.add(valueX!);
         }
       default:
@@ -5769,6 +4486,10 @@ class EvidenceVariableCategoryBuilder extends BackboneElementBuilder {
               valueX = child;
               return;
             }
+            if (child is ReferenceBuilder) {
+              valueX = child;
+              return;
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -5799,6 +4520,15 @@ class EvidenceVariableCategoryBuilder extends BackboneElementBuilder {
             throw Exception('Invalid child type for $childName');
           }
         }
+      case 'valueReference':
+        {
+          if (child is ReferenceBuilder) {
+            valueX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -5823,6 +4553,7 @@ class EvidenceVariableCategoryBuilder extends BackboneElementBuilder {
           'CodeableConceptBuilder',
           'QuantityBuilder',
           'RangeBuilder',
+          'ReferenceBuilder',
         ];
       case 'valueCodeableConcept':
         return ['CodeableConceptBuilder'];
@@ -5830,6 +4561,8 @@ class EvidenceVariableCategoryBuilder extends BackboneElementBuilder {
         return ['QuantityBuilder'];
       case 'valueRange':
         return ['RangeBuilder'];
+      case 'valueReference':
+        return ['ReferenceBuilder'];
       default:
         return <String>[];
     }
@@ -5877,6 +4610,11 @@ class EvidenceVariableCategoryBuilder extends BackboneElementBuilder {
           valueX = RangeBuilder.empty();
           return;
         }
+      case 'valueReference':
+        {
+          valueX = ReferenceBuilder.empty();
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
@@ -5894,6 +4632,7 @@ class EvidenceVariableCategoryBuilder extends BackboneElementBuilder {
     CodeableConceptBuilder? valueCodeableConcept,
     QuantityBuilder? valueQuantity,
     RangeBuilder? valueRange,
+    ReferenceBuilder? valueReference,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -5910,6 +4649,7 @@ class EvidenceVariableCategoryBuilder extends BackboneElementBuilder {
           valueCodeableConcept ??
           valueQuantity ??
           valueRange ??
+          valueReference ??
           this.valueX,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
@@ -5964,6 +4704,1495 @@ class EvidenceVariableCategoryBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       valueX,
       o.valueX,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [EvidenceVariableDataStorageBuilder]
+/// How the data element is organized and where the data element
+/// (expressing the value of the variable) is found in the dataset.
+class EvidenceVariableDataStorageBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [EvidenceVariableDataStorageBuilder]
+
+  EvidenceVariableDataStorageBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.datatype,
+    this.path,
+    this.delimiter,
+    this.component,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'EvidenceVariable.dataStorage',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory EvidenceVariableDataStorageBuilder.empty() =>
+      EvidenceVariableDataStorageBuilder();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory EvidenceVariableDataStorageBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'EvidenceVariable.dataStorage';
+    return EvidenceVariableDataStorageBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      datatype: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'datatype',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.datatype',
+      ),
+      path: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'path',
+        FhirStringBuilder.fromJson,
+        '$objectPath.path',
+      ),
+      delimiter: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'delimiter',
+        FhirStringBuilder.fromJson,
+        '$objectPath.delimiter',
+      ),
+      component: (json['component'] as List<dynamic>?)
+          ?.map<EvidenceVariableDataStorageBuilder>(
+            (v) => EvidenceVariableDataStorageBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.component',
+              },
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  /// Deserialize [EvidenceVariableDataStorageBuilder]
+  /// from a [String] or [YamlMap] object
+  factory EvidenceVariableDataStorageBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return EvidenceVariableDataStorageBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return EvidenceVariableDataStorageBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'EvidenceVariableDataStorageBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [EvidenceVariableDataStorageBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory EvidenceVariableDataStorageBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return EvidenceVariableDataStorageBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'EvidenceVariableDataStorage';
+
+  /// [datatype]
+  /// The type of data used to express values of the variable.
+  CodeableConceptBuilder? datatype;
+
+  /// [path]
+  /// The mapping (order of elements) to reach the element containing the
+  /// data element in the dataset.
+  FhirStringBuilder? path;
+
+  /// [delimiter]
+  /// A character or series of characters that is used within a string to
+  /// signal the separation of discrete values.
+  FhirStringBuilder? delimiter;
+
+  /// [component]
+  /// A part of the value for a variable that is stored in 2 or more parts.
+  List<EvidenceVariableDataStorageBuilder>? component;
+
+  /// Converts a [EvidenceVariableDataStorageBuilder]
+  /// to [EvidenceVariableDataStorage]
+  @override
+  EvidenceVariableDataStorage build() =>
+      EvidenceVariableDataStorage.fromJson(toJson());
+
+  /// Converts a [EvidenceVariableDataStorageBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('datatype', datatype);
+    addField('path', path);
+    addField('delimiter', delimiter);
+    addField('component', component);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'datatype',
+      'path',
+      'delimiter',
+      'component',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'datatype':
+        if (datatype != null) {
+          fields.add(datatype!);
+        }
+      case 'path':
+        if (path != null) {
+          fields.add(path!);
+        }
+      case 'delimiter':
+        if (delimiter != null) {
+          fields.add(delimiter!);
+        }
+      case 'component':
+        if (component != null) {
+          fields.addAll(component!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'datatype':
+        {
+          if (child is CodeableConceptBuilder) {
+            datatype = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'path':
+        {
+          if (child is FhirStringBuilder) {
+            path = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                path = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'delimiter':
+        {
+          if (child is FhirStringBuilder) {
+            delimiter = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                delimiter = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'component':
+        {
+          if (child is List<EvidenceVariableDataStorageBuilder>) {
+            // Replace or create new list
+            component = child;
+            return;
+          } else if (child is EvidenceVariableDataStorageBuilder) {
+            // Add single element to existing list or create new list
+            component = [
+              ...(component ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'datatype':
+        return ['CodeableConceptBuilder'];
+      case 'path':
+        return ['FhirStringBuilder'];
+      case 'delimiter':
+        return ['FhirStringBuilder'];
+      case 'component':
+        return ['EvidenceVariableDataStorageBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [EvidenceVariableDataStorageBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'datatype':
+        {
+          datatype = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'path':
+        {
+          path = FhirStringBuilder.empty();
+          return;
+        }
+      case 'delimiter':
+        {
+          delimiter = FhirStringBuilder.empty();
+          return;
+        }
+      case 'component':
+        {
+          component = <EvidenceVariableDataStorageBuilder>[];
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  EvidenceVariableDataStorageBuilder clone() => throw UnimplementedError();
+  @override
+  EvidenceVariableDataStorageBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    CodeableConceptBuilder? datatype,
+    FhirStringBuilder? path,
+    FhirStringBuilder? delimiter,
+    List<EvidenceVariableDataStorageBuilder>? component,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = EvidenceVariableDataStorageBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      datatype: datatype ?? this.datatype,
+      path: path ?? this.path,
+      delimiter: delimiter ?? this.delimiter,
+      component: component ?? this.component,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! EvidenceVariableDataStorageBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      datatype,
+      o.datatype,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      path,
+      o.path,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      delimiter,
+      o.delimiter,
+    )) {
+      return false;
+    }
+    if (!listEquals<EvidenceVariableDataStorageBuilder>(
+      component,
+      o.component,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [EvidenceVariableConstraintBuilder]
+/// Limit on acceptability of data used to express values of the variable.
+class EvidenceVariableConstraintBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [EvidenceVariableConstraintBuilder]
+
+  EvidenceVariableConstraintBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.conditional,
+    this.minimumQuantity,
+    this.maximumQuantity,
+    this.earliestDateTime,
+    this.latestDateTime,
+    this.minimumStringLength,
+    this.maximumStringLength,
+    this.code,
+    this.expression,
+    this.expectedValueSet,
+    this.expectedUnitsValueSet,
+    this.anyValueAllowed,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'EvidenceVariable.constraint',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory EvidenceVariableConstraintBuilder.empty() =>
+      EvidenceVariableConstraintBuilder();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory EvidenceVariableConstraintBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'EvidenceVariable.constraint';
+    return EvidenceVariableConstraintBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      conditional: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'conditional',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.conditional',
+      ),
+      minimumQuantity: JsonParser.parseObject<QuantityBuilder>(
+        json,
+        'minimumQuantity',
+        QuantityBuilder.fromJson,
+        '$objectPath.minimumQuantity',
+      ),
+      maximumQuantity: JsonParser.parseObject<QuantityBuilder>(
+        json,
+        'maximumQuantity',
+        QuantityBuilder.fromJson,
+        '$objectPath.maximumQuantity',
+      ),
+      earliestDateTime: JsonParser.parsePrimitive<FhirDateTimeBuilder>(
+        json,
+        'earliestDateTime',
+        FhirDateTimeBuilder.fromJson,
+        '$objectPath.earliestDateTime',
+      ),
+      latestDateTime: JsonParser.parsePrimitive<FhirDateTimeBuilder>(
+        json,
+        'latestDateTime',
+        FhirDateTimeBuilder.fromJson,
+        '$objectPath.latestDateTime',
+      ),
+      minimumStringLength: JsonParser.parsePrimitive<FhirUnsignedIntBuilder>(
+        json,
+        'minimumStringLength',
+        FhirUnsignedIntBuilder.fromJson,
+        '$objectPath.minimumStringLength',
+      ),
+      maximumStringLength: JsonParser.parsePrimitive<FhirPositiveIntBuilder>(
+        json,
+        'maximumStringLength',
+        FhirPositiveIntBuilder.fromJson,
+        '$objectPath.maximumStringLength',
+      ),
+      code: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'code',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.code',
+      ),
+      expression: JsonParser.parseObject<FhirExpressionBuilder>(
+        json,
+        'expression',
+        FhirExpressionBuilder.fromJson,
+        '$objectPath.expression',
+      ),
+      expectedValueSet: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'expectedValueSet',
+        ReferenceBuilder.fromJson,
+        '$objectPath.expectedValueSet',
+      ),
+      expectedUnitsValueSet: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'expectedUnitsValueSet',
+        ReferenceBuilder.fromJson,
+        '$objectPath.expectedUnitsValueSet',
+      ),
+      anyValueAllowed: JsonParser.parsePrimitive<FhirBooleanBuilder>(
+        json,
+        'anyValueAllowed',
+        FhirBooleanBuilder.fromJson,
+        '$objectPath.anyValueAllowed',
+      ),
+    );
+  }
+
+  /// Deserialize [EvidenceVariableConstraintBuilder]
+  /// from a [String] or [YamlMap] object
+  factory EvidenceVariableConstraintBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return EvidenceVariableConstraintBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return EvidenceVariableConstraintBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'EvidenceVariableConstraintBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [EvidenceVariableConstraintBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory EvidenceVariableConstraintBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return EvidenceVariableConstraintBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'EvidenceVariableConstraint';
+
+  /// [conditional]
+  /// The context, situation, or parameters that determine whether this
+  /// constraint applies.
+  CodeableConceptBuilder? conditional;
+
+  /// [minimumQuantity]
+  /// The lowest permissible value of the variable, used with variables that
+  /// have a number-based datatype (with or without units).
+  QuantityBuilder? minimumQuantity;
+
+  /// [maximumQuantity]
+  /// The highest permissible value of the variable, used with variables that
+  /// have a number-based datatype (with or without units).
+  QuantityBuilder? maximumQuantity;
+
+  /// [earliestDateTime]
+  /// The earliest permissible value of the variable, used with variables
+  /// that have a date-based or dateTime-based datatype.
+  FhirDateTimeBuilder? earliestDateTime;
+
+  /// [latestDateTime]
+  /// The latest permissible value of the variable, used with variables that
+  /// have a date-based or dateTime-based datatype.
+  FhirDateTimeBuilder? latestDateTime;
+
+  /// [minimumStringLength]
+  /// The lowest number of characters allowed for a value of the variable,
+  /// used with variables that have a string-based datatype.
+  FhirUnsignedIntBuilder? minimumStringLength;
+
+  /// [maximumStringLength]
+  /// The highest number of characters allowed for a value of the variable,
+  /// used with variables that have a string-based datatype.
+  FhirPositiveIntBuilder? maximumStringLength;
+
+  /// [code]
+  /// A rule, such as a format or other expectation, for the data values.
+  CodeableConceptBuilder? code;
+
+  /// [expression]
+  /// A rule, such as a format or other expectation, for the data values,
+  /// expressed as an Expression.
+  FhirExpressionBuilder? expression;
+
+  /// [expectedValueSet]
+  /// List of anticipated values used to express value of the variable, used
+  /// with variables that have a codeable concept-based datatype.
+  ReferenceBuilder? expectedValueSet;
+
+  /// [expectedUnitsValueSet]
+  /// List of anticipated values used to express units for the value of the
+  /// variable, used with variables that have a Quantity-based datatype.
+  ReferenceBuilder? expectedUnitsValueSet;
+
+  /// [anyValueAllowed]
+  /// Whether the value expressed for a variable is allowed to not be
+  /// restricted to the expected value set.
+  FhirBooleanBuilder? anyValueAllowed;
+
+  /// Converts a [EvidenceVariableConstraintBuilder]
+  /// to [EvidenceVariableConstraint]
+  @override
+  EvidenceVariableConstraint build() =>
+      EvidenceVariableConstraint.fromJson(toJson());
+
+  /// Converts a [EvidenceVariableConstraintBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('conditional', conditional);
+    addField('minimumQuantity', minimumQuantity);
+    addField('maximumQuantity', maximumQuantity);
+    addField('earliestDateTime', earliestDateTime);
+    addField('latestDateTime', latestDateTime);
+    addField('minimumStringLength', minimumStringLength);
+    addField('maximumStringLength', maximumStringLength);
+    addField('code', code);
+    addField('expression', expression);
+    addField('expectedValueSet', expectedValueSet);
+    addField('expectedUnitsValueSet', expectedUnitsValueSet);
+    addField('anyValueAllowed', anyValueAllowed);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'conditional',
+      'minimumQuantity',
+      'maximumQuantity',
+      'earliestDateTime',
+      'latestDateTime',
+      'minimumStringLength',
+      'maximumStringLength',
+      'code',
+      'expression',
+      'expectedValueSet',
+      'expectedUnitsValueSet',
+      'anyValueAllowed',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'conditional':
+        if (conditional != null) {
+          fields.add(conditional!);
+        }
+      case 'minimumQuantity':
+        if (minimumQuantity != null) {
+          fields.add(minimumQuantity!);
+        }
+      case 'maximumQuantity':
+        if (maximumQuantity != null) {
+          fields.add(maximumQuantity!);
+        }
+      case 'earliestDateTime':
+        if (earliestDateTime != null) {
+          fields.add(earliestDateTime!);
+        }
+      case 'latestDateTime':
+        if (latestDateTime != null) {
+          fields.add(latestDateTime!);
+        }
+      case 'minimumStringLength':
+        if (minimumStringLength != null) {
+          fields.add(minimumStringLength!);
+        }
+      case 'maximumStringLength':
+        if (maximumStringLength != null) {
+          fields.add(maximumStringLength!);
+        }
+      case 'code':
+        if (code != null) {
+          fields.add(code!);
+        }
+      case 'expression':
+        if (expression != null) {
+          fields.add(expression!);
+        }
+      case 'expectedValueSet':
+        if (expectedValueSet != null) {
+          fields.add(expectedValueSet!);
+        }
+      case 'expectedUnitsValueSet':
+        if (expectedUnitsValueSet != null) {
+          fields.add(expectedUnitsValueSet!);
+        }
+      case 'anyValueAllowed':
+        if (anyValueAllowed != null) {
+          fields.add(anyValueAllowed!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'conditional':
+        {
+          if (child is CodeableConceptBuilder) {
+            conditional = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'minimumQuantity':
+        {
+          if (child is QuantityBuilder) {
+            minimumQuantity = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'maximumQuantity':
+        {
+          if (child is QuantityBuilder) {
+            maximumQuantity = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'earliestDateTime':
+        {
+          if (child is FhirDateTimeBuilder) {
+            earliestDateTime = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirDateTimeBuilder.tryParse(stringValue);
+              if (converted != null) {
+                earliestDateTime = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'latestDateTime':
+        {
+          if (child is FhirDateTimeBuilder) {
+            latestDateTime = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirDateTimeBuilder.tryParse(stringValue);
+              if (converted != null) {
+                latestDateTime = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'minimumStringLength':
+        {
+          if (child is FhirUnsignedIntBuilder) {
+            minimumStringLength = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For number types,
+              // first parse to num then pass the number directly
+              final numValue = num.tryParse(stringValue);
+              if (numValue != null) {
+                final converted = FhirUnsignedIntBuilder.tryParse(numValue);
+                if (converted != null) {
+                  minimumStringLength = converted;
+                  return;
+                }
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'maximumStringLength':
+        {
+          if (child is FhirPositiveIntBuilder) {
+            maximumStringLength = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For number types,
+              // first parse to num then pass the number directly
+              final numValue = num.tryParse(stringValue);
+              if (numValue != null) {
+                final converted = FhirPositiveIntBuilder.tryParse(numValue);
+                if (converted != null) {
+                  maximumStringLength = converted;
+                  return;
+                }
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'code':
+        {
+          if (child is CodeableConceptBuilder) {
+            code = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'expression':
+        {
+          if (child is FhirExpressionBuilder) {
+            expression = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'expectedValueSet':
+        {
+          if (child is ReferenceBuilder) {
+            expectedValueSet = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'expectedUnitsValueSet':
+        {
+          if (child is ReferenceBuilder) {
+            expectedUnitsValueSet = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'anyValueAllowed':
+        {
+          if (child is FhirBooleanBuilder) {
+            anyValueAllowed = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirBooleanBuilder.tryParse(stringValue);
+              if (converted != null) {
+                anyValueAllowed = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'conditional':
+        return ['CodeableConceptBuilder'];
+      case 'minimumQuantity':
+        return ['QuantityBuilder'];
+      case 'maximumQuantity':
+        return ['QuantityBuilder'];
+      case 'earliestDateTime':
+        return ['FhirDateTimeBuilder'];
+      case 'latestDateTime':
+        return ['FhirDateTimeBuilder'];
+      case 'minimumStringLength':
+        return ['FhirUnsignedIntBuilder'];
+      case 'maximumStringLength':
+        return ['FhirPositiveIntBuilder'];
+      case 'code':
+        return ['CodeableConceptBuilder'];
+      case 'expression':
+        return ['FhirExpressionBuilder'];
+      case 'expectedValueSet':
+        return ['ReferenceBuilder'];
+      case 'expectedUnitsValueSet':
+        return ['ReferenceBuilder'];
+      case 'anyValueAllowed':
+        return ['FhirBooleanBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [EvidenceVariableConstraintBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'conditional':
+        {
+          conditional = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'minimumQuantity':
+        {
+          minimumQuantity = QuantityBuilder.empty();
+          return;
+        }
+      case 'maximumQuantity':
+        {
+          maximumQuantity = QuantityBuilder.empty();
+          return;
+        }
+      case 'earliestDateTime':
+        {
+          earliestDateTime = FhirDateTimeBuilder.empty();
+          return;
+        }
+      case 'latestDateTime':
+        {
+          latestDateTime = FhirDateTimeBuilder.empty();
+          return;
+        }
+      case 'minimumStringLength':
+        {
+          minimumStringLength = FhirUnsignedIntBuilder.empty();
+          return;
+        }
+      case 'maximumStringLength':
+        {
+          maximumStringLength = FhirPositiveIntBuilder.empty();
+          return;
+        }
+      case 'code':
+        {
+          code = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'expression':
+        {
+          expression = FhirExpressionBuilder.empty();
+          return;
+        }
+      case 'expectedValueSet':
+        {
+          expectedValueSet = ReferenceBuilder.empty();
+          return;
+        }
+      case 'expectedUnitsValueSet':
+        {
+          expectedUnitsValueSet = ReferenceBuilder.empty();
+          return;
+        }
+      case 'anyValueAllowed':
+        {
+          anyValueAllowed = FhirBooleanBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  EvidenceVariableConstraintBuilder clone() => throw UnimplementedError();
+  @override
+  EvidenceVariableConstraintBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    CodeableConceptBuilder? conditional,
+    QuantityBuilder? minimumQuantity,
+    QuantityBuilder? maximumQuantity,
+    FhirDateTimeBuilder? earliestDateTime,
+    FhirDateTimeBuilder? latestDateTime,
+    FhirUnsignedIntBuilder? minimumStringLength,
+    FhirPositiveIntBuilder? maximumStringLength,
+    CodeableConceptBuilder? code,
+    FhirExpressionBuilder? expression,
+    ReferenceBuilder? expectedValueSet,
+    ReferenceBuilder? expectedUnitsValueSet,
+    FhirBooleanBuilder? anyValueAllowed,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = EvidenceVariableConstraintBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      conditional: conditional ?? this.conditional,
+      minimumQuantity: minimumQuantity ?? this.minimumQuantity,
+      maximumQuantity: maximumQuantity ?? this.maximumQuantity,
+      earliestDateTime: earliestDateTime ?? this.earliestDateTime,
+      latestDateTime: latestDateTime ?? this.latestDateTime,
+      minimumStringLength: minimumStringLength ?? this.minimumStringLength,
+      maximumStringLength: maximumStringLength ?? this.maximumStringLength,
+      code: code ?? this.code,
+      expression: expression ?? this.expression,
+      expectedValueSet: expectedValueSet ?? this.expectedValueSet,
+      expectedUnitsValueSet:
+          expectedUnitsValueSet ?? this.expectedUnitsValueSet,
+      anyValueAllowed: anyValueAllowed ?? this.anyValueAllowed,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! EvidenceVariableConstraintBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      conditional,
+      o.conditional,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      minimumQuantity,
+      o.minimumQuantity,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      maximumQuantity,
+      o.maximumQuantity,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      earliestDateTime,
+      o.earliestDateTime,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      latestDateTime,
+      o.latestDateTime,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      minimumStringLength,
+      o.minimumStringLength,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      maximumStringLength,
+      o.maximumStringLength,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      code,
+      o.code,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      expression,
+      o.expression,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      expectedValueSet,
+      o.expectedValueSet,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      expectedUnitsValueSet,
+      o.expectedUnitsValueSet,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      anyValueAllowed,
+      o.anyValueAllowed,
     )) {
       return false;
     }

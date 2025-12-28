@@ -236,16 +236,6 @@ FhirBaseBuilder? emptyFromType(String type) {
       return AccountGuarantorBuilder.empty();
     case 'account_guarantor':
       return AccountGuarantorBuilder.empty();
-    case 'activitydefinition':
-      return ActivityDefinitionBuilder.empty();
-    case 'activitydefinitionparticipant':
-      return ActivityDefinitionParticipantBuilder.empty();
-    case 'activitydefinition_participant':
-      return ActivityDefinitionParticipantBuilder.empty();
-    case 'activitydefinitiondynamicvalue':
-      return ActivityDefinitionDynamicValueBuilder.empty();
-    case 'activitydefinition_dynamicvalue':
-      return ActivityDefinitionDynamicValueBuilder.empty();
     case 'administrableproductdefinition':
       return AdministrableProductDefinitionBuilder.empty();
     case 'administrableproductdefinitionproperty':
@@ -444,10 +434,6 @@ FhirBaseBuilder? emptyFromType(String type) {
       return CitationCitedArtifactBuilder.empty();
     case 'citation_citedartifact':
       return CitationCitedArtifactBuilder.empty();
-    case 'citationversion':
-      return CitationVersionBuilder.empty();
-    case 'citation_version':
-      return CitationVersionBuilder.empty();
     case 'citationstatusdate1':
       return CitationStatusDate1Builder.empty();
     case 'citation_statusdate1':
@@ -592,12 +578,6 @@ FhirBaseBuilder? emptyFromType(String type) {
       return ClaimResponseErrorBuilder.empty();
     case 'claimresponse_error':
       return ClaimResponseErrorBuilder.empty();
-    case 'clinicalimpression':
-      return ClinicalImpressionBuilder.empty();
-    case 'clinicalimpressionfinding':
-      return ClinicalImpressionFindingBuilder.empty();
-    case 'clinicalimpression_finding':
-      return ClinicalImpressionFindingBuilder.empty();
     case 'clinicalusedefinition':
       return ClinicalUseDefinitionBuilder.empty();
     case 'clinicalusedefinitioncontraindication':
@@ -856,10 +836,6 @@ FhirBaseBuilder? emptyFromType(String type) {
       return DeviceUdiCarrierBuilder.empty();
     case 'device_udicarrier':
       return DeviceUdiCarrierBuilder.empty();
-    case 'deviceversion':
-      return DeviceVersionBuilder.empty();
-    case 'device_version':
-      return DeviceVersionBuilder.empty();
     case 'deviceproperty':
       return DevicePropertyBuilder.empty();
     case 'device_property':
@@ -976,28 +952,6 @@ FhirBaseBuilder? emptyFromType(String type) {
       return EvidenceCertaintyBuilder.empty();
     case 'evidence_certainty':
       return EvidenceCertaintyBuilder.empty();
-    case 'evidencereport':
-      return EvidenceReportBuilder.empty();
-    case 'evidencereportsubject':
-      return EvidenceReportSubjectBuilder.empty();
-    case 'evidencereport_subject':
-      return EvidenceReportSubjectBuilder.empty();
-    case 'evidencereportcharacteristic':
-      return EvidenceReportCharacteristicBuilder.empty();
-    case 'evidencereport_characteristic':
-      return EvidenceReportCharacteristicBuilder.empty();
-    case 'evidencereportrelatesto':
-      return EvidenceReportRelatesToBuilder.empty();
-    case 'evidencereport_relatesto':
-      return EvidenceReportRelatesToBuilder.empty();
-    case 'evidencereportsection':
-      return EvidenceReportSectionBuilder.empty();
-    case 'evidencereport_section':
-      return EvidenceReportSectionBuilder.empty();
-    case 'evidencevariablecharacteristic':
-      return EvidenceVariableCharacteristicBuilder.empty();
-    case 'evidencevariable_characteristic':
-      return EvidenceVariableCharacteristicBuilder.empty();
     case 'evidencevariablecategory':
       return EvidenceVariableCategoryBuilder.empty();
     case 'evidencevariable_category':
@@ -1268,22 +1222,10 @@ FhirBaseBuilder? emptyFromType(String type) {
       return IngredientReferenceStrengthBuilder.empty();
     case 'insuranceplan':
       return InsurancePlanBuilder.empty();
-    case 'insuranceplancoverage':
-      return InsurancePlanCoverageBuilder.empty();
-    case 'insuranceplan_coverage':
-      return InsurancePlanCoverageBuilder.empty();
     case 'insuranceplanbenefit':
       return InsurancePlanBenefitBuilder.empty();
     case 'insuranceplan_benefit':
       return InsurancePlanBenefitBuilder.empty();
-    case 'insuranceplanlimit':
-      return InsurancePlanLimitBuilder.empty();
-    case 'insuranceplan_limit':
-      return InsurancePlanLimitBuilder.empty();
-    case 'insuranceplanplan':
-      return InsurancePlanPlanBuilder.empty();
-    case 'insuranceplan_plan':
-      return InsurancePlanPlanBuilder.empty();
     case 'insuranceplangeneralcost':
       return InsurancePlanGeneralCostBuilder.empty();
     case 'insuranceplan_generalcost':
@@ -1292,10 +1234,6 @@ FhirBaseBuilder? emptyFromType(String type) {
       return InsurancePlanSpecificCostBuilder.empty();
     case 'insuranceplan_specificcost':
       return InsurancePlanSpecificCostBuilder.empty();
-    case 'insuranceplanbenefit1':
-      return InsurancePlanBenefit1Builder.empty();
-    case 'insuranceplan_benefit1':
-      return InsurancePlanBenefit1Builder.empty();
     case 'insuranceplancost':
       return InsurancePlanCostBuilder.empty();
     case 'insuranceplan_cost':
@@ -1882,18 +1820,10 @@ FhirBaseBuilder? emptyFromType(String type) {
       return SubscriptionStatusNotificationEventBuilder.empty();
     case 'subscriptiontopic':
       return SubscriptionTopicBuilder.empty();
-    case 'subscriptiontopicresourcetrigger':
-      return SubscriptionTopicResourceTriggerBuilder.empty();
-    case 'subscriptiontopic_resourcetrigger':
-      return SubscriptionTopicResourceTriggerBuilder.empty();
     case 'subscriptiontopicquerycriteria':
       return SubscriptionTopicQueryCriteriaBuilder.empty();
     case 'subscriptiontopic_querycriteria':
       return SubscriptionTopicQueryCriteriaBuilder.empty();
-    case 'subscriptiontopiceventtrigger':
-      return SubscriptionTopicEventTriggerBuilder.empty();
-    case 'subscriptiontopic_eventtrigger':
-      return SubscriptionTopicEventTriggerBuilder.empty();
     case 'subscriptiontopiccanfilterby':
       return SubscriptionTopicCanFilterByBuilder.empty();
     case 'subscriptiontopic_canfilterby':
@@ -1904,10 +1834,6 @@ FhirBaseBuilder? emptyFromType(String type) {
       return SubscriptionTopicNotificationShapeBuilder.empty();
     case 'substance':
       return SubstanceBuilder.empty();
-    case 'substanceingredient':
-      return SubstanceIngredientBuilder.empty();
-    case 'substance_ingredient':
-      return SubstanceIngredientBuilder.empty();
     case 'substancedefinition':
       return SubstanceDefinitionBuilder.empty();
     case 'substancedefinitionmoiety':
@@ -2058,14 +1984,6 @@ FhirBaseBuilder? emptyFromType(String type) {
       return TestReportAction2Builder.empty();
     case 'testscript':
       return TestScriptBuilder.empty();
-    case 'testscriptorigin':
-      return TestScriptOriginBuilder.empty();
-    case 'testscript_origin':
-      return TestScriptOriginBuilder.empty();
-    case 'testscriptdestination':
-      return TestScriptDestinationBuilder.empty();
-    case 'testscript_destination':
-      return TestScriptDestinationBuilder.empty();
     case 'testscriptmetadata':
       return TestScriptMetadataBuilder.empty();
     case 'testscript_metadata':

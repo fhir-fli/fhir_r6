@@ -134,7 +134,7 @@ class IngredientManufacturerRole extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/ingredient-manufacturer-role',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Manufacturer is specifically allowed for this ingredient',
     ),
@@ -148,7 +148,7 @@ class IngredientManufacturerRole extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/ingredient-manufacturer-role',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Manufacturer is known to make this ingredient in general',
     ),
@@ -161,7 +161,7 @@ class IngredientManufacturerRole extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/ingredient-manufacturer-role',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Manufacturer actually makes this particular ingredient',
     ),

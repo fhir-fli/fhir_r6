@@ -10,13 +10,15 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchImagingStudy extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [ImagingStudy]
+  @override
   SearchImagingStudy identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -27,20 +29,20 @@ class SearchImagingStudy extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}body_site'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['body_site'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
-  /// a token search for [dicomClass] in the resource
+  /// a uri search for [dicomClass] in the resource
   /// [ImagingStudy]
   SearchImagingStudy dicomClass(
-    FhirString value, {
-    FhirUri? system,
+    FhirUri value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}dicom_class'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['dicom_class'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -51,8 +53,9 @@ class SearchImagingStudy extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}instance'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['instance'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -63,20 +66,22 @@ class SearchImagingStudy extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}modality'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['modality'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
-  /// a token search for [reason] in the resource
+  /// a token search for [reasonConcept] in the resource
   /// [ImagingStudy]
-  SearchImagingStudy reason(
+  SearchImagingStudy reasonConcept(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}reason'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['reason_concept'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -87,8 +92,9 @@ class SearchImagingStudy extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}series'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['series'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -98,20 +104,22 @@ class SearchImagingStudy extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}started'] =
-        value.toString();
+    parameters['started'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [ImagingStudy]
+  @override
   SearchImagingStudy status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

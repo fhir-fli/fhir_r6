@@ -28,7 +28,7 @@ abstract class $MedicationAdministrationCopyWith<T>
     Reference? subject,
     Reference? encounter,
     List<Reference>? supportingInformation,
-    FhirDateTime? occurenceX,
+    OccurrenceXMedicationAdministration? occurrenceX,
     FhirDateTime? recorded,
     FhirBoolean? isSubPotent,
     List<CodeableConcept>? subPotentReason,
@@ -70,7 +70,7 @@ class _$MedicationAdministrationCopyWithImpl<T>
     Object? subject = fhirSentinel,
     Object? encounter = fhirSentinel,
     Object? supportingInformation = fhirSentinel,
-    Object? occurenceX = fhirSentinel,
+    Object? occurrenceX = fhirSentinel,
     Object? recorded = fhirSentinel,
     Object? isSubPotent = fhirSentinel,
     Object? subPotentReason = fhirSentinel,
@@ -133,9 +133,10 @@ class _$MedicationAdministrationCopyWithImpl<T>
         supportingInformation: identical(supportingInformation, fhirSentinel)
             ? _value.supportingInformation
             : supportingInformation as List<Reference>?,
-        occurenceX: identical(occurenceX, fhirSentinel)
-            ? _value.occurenceX
-            : (occurenceX as FhirDateTime?) ?? _value.occurenceX,
+        occurrenceX: identical(occurrenceX, fhirSentinel)
+            ? _value.occurrenceX
+            : (occurrenceX as OccurrenceXMedicationAdministration?) ??
+                _value.occurrenceX,
         recorded: identical(recorded, fhirSentinel)
             ? _value.recorded
             : recorded as FhirDateTime?,
@@ -254,7 +255,7 @@ abstract class $MedicationAdministrationDosageCopyWith<T>
     CodeableConcept? route,
     CodeableConcept? method,
     Quantity? dose,
-    Ratio? rateX,
+    RateXMedicationAdministrationDosage? rateX,
     bool? disallowExtensions,
   });
 }
@@ -299,7 +300,9 @@ class _$MedicationAdministrationDosageCopyWithImpl<T>
             ? _value.method
             : method as CodeableConcept?,
         dose: identical(dose, fhirSentinel) ? _value.dose : dose as Quantity?,
-        rateX: identical(rateX, fhirSentinel) ? _value.rateX : rateX as Ratio?,
+        rateX: identical(rateX, fhirSentinel)
+            ? _value.rateX
+            : rateX as RateXMedicationAdministrationDosage?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

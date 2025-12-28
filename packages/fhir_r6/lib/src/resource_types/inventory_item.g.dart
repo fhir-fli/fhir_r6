@@ -407,7 +407,7 @@ abstract class $InventoryItemCharacteristicCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? characteristicType,
-    FhirString? valueX,
+    ValueXInventoryItemCharacteristic? valueX,
     bool? disallowExtensions,
   });
 }
@@ -443,7 +443,7 @@ class _$InventoryItemCharacteristicCopyWithImpl<T>
                 _value.characteristicType,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as FhirString?) ?? _value.valueX,
+            : (valueX as ValueXInventoryItemCharacteristic?) ?? _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

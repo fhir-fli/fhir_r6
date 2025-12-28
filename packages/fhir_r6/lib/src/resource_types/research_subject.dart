@@ -22,10 +22,11 @@ class ResearchSubject extends DomainResource {
     super.modifierExtension,
     this.identifier,
     required this.status,
-    this.progress,
     this.period,
     required this.study,
     required this.subject,
+    this.subjectState,
+    this.subjectMilestone,
     this.assignedComparisonGroup,
     this.actualComparisonGroup,
     this.consent,
@@ -96,13 +97,6 @@ class ResearchSubject extends DomainResource {
         'status',
         PublicationStatus.fromJson,
       )!,
-      progress: (json['progress'] as List<dynamic>?)
-          ?.map<ResearchSubjectProgress>(
-            (v) => ResearchSubjectProgress.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
       period: JsonParser.parseObject<Period>(
         json,
         'period',
@@ -118,6 +112,20 @@ class ResearchSubject extends DomainResource {
         'subject',
         Reference.fromJson,
       )!,
+      subjectState: (json['subjectState'] as List<dynamic>?)
+          ?.map<ResearchSubjectSubjectState>(
+            (v) => ResearchSubjectSubjectState.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      subjectMilestone: (json['subjectMilestone'] as List<dynamic>?)
+          ?.map<ResearchSubjectSubjectMilestone>(
+            (v) => ResearchSubjectSubjectMilestone.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       assignedComparisonGroup: JsonParser.parsePrimitive<FhirId>(
         json,
         'assignedComparisonGroup',
@@ -188,11 +196,6 @@ class ResearchSubject extends DomainResource {
   /// The publication state of the resource (not of the subject).
   final PublicationStatus status;
 
-  /// [progress]
-  /// The current state (status) of the subject and resons for status change
-  /// where appropriate.
-  final List<ResearchSubjectProgress>? progress;
-
   /// [period]
   /// The dates the subject began and ended their participation in the study.
   final Period? period;
@@ -204,6 +207,15 @@ class ResearchSubject extends DomainResource {
   /// [subject]
   /// The record of the person, animal or other entity involved in the study.
   final Reference subject;
+
+  /// [subjectState]
+  /// A duration in the lifecycle of the ResearchSubject within a
+  /// ResearchStudy.
+  final List<ResearchSubjectSubjectState>? subjectState;
+
+  /// [subjectMilestone]
+  /// A significant event in the progress of a ResearchSubject.
+  final List<ResearchSubjectSubjectMilestone>? subjectMilestone;
 
   /// [assignedComparisonGroup]
   /// The name of the arm in the study the subject is expected to follow as
@@ -324,10 +336,6 @@ class ResearchSubject extends DomainResource {
       status,
     );
     addField(
-      'progress',
-      progress,
-    );
-    addField(
       'period',
       period,
     );
@@ -338,6 +346,14 @@ class ResearchSubject extends DomainResource {
     addField(
       'subject',
       subject,
+    );
+    addField(
+      'subjectState',
+      subjectState,
+    );
+    addField(
+      'subjectMilestone',
+      subjectMilestone,
     );
     addField(
       'assignedComparisonGroup',
@@ -368,10 +384,11 @@ class ResearchSubject extends DomainResource {
       'modifierExtension',
       'identifier',
       'status',
-      'progress',
       'period',
       'study',
       'subject',
+      'subjectState',
+      'subjectMilestone',
       'assignedComparisonGroup',
       'actualComparisonGroup',
       'consent',
@@ -425,10 +442,6 @@ class ResearchSubject extends DomainResource {
         }
       case 'status':
         fields.add(status);
-      case 'progress':
-        if (progress != null) {
-          fields.addAll(progress!);
-        }
       case 'period':
         if (period != null) {
           fields.add(period!);
@@ -437,6 +450,14 @@ class ResearchSubject extends DomainResource {
         fields.add(study);
       case 'subject':
         fields.add(subject);
+      case 'subjectState':
+        if (subjectState != null) {
+          fields.addAll(subjectState!);
+        }
+      case 'subjectMilestone':
+        if (subjectMilestone != null) {
+          fields.addAll(subjectMilestone!);
+        }
       case 'assignedComparisonGroup':
         if (assignedComparisonGroup != null) {
           fields.add(assignedComparisonGroup!);
@@ -550,12 +571,6 @@ class ResearchSubject extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<ResearchSubjectProgress>(
-      progress,
-      o.progress,
-    )) {
-      return false;
-    }
     if (!equalsDeepWithNull(
       period,
       o.period,
@@ -571,6 +586,18 @@ class ResearchSubject extends DomainResource {
     if (!equalsDeepWithNull(
       subject,
       o.subject,
+    )) {
+      return false;
+    }
+    if (!listEquals<ResearchSubjectSubjectState>(
+      subjectState,
+      o.subjectState,
+    )) {
+      return false;
+    }
+    if (!listEquals<ResearchSubjectSubjectMilestone>(
+      subjectMilestone,
+      o.subjectMilestone,
     )) {
       return false;
     }
@@ -596,31 +623,29 @@ class ResearchSubject extends DomainResource {
   }
 }
 
-/// [ResearchSubjectProgress]
-/// The current state (status) of the subject and resons for status change
-/// where appropriate.
-class ResearchSubjectProgress extends BackboneElement {
+/// [ResearchSubjectSubjectState]
+/// A duration in the lifecycle of the ResearchSubject within a
+/// ResearchStudy.
+class ResearchSubjectSubjectState extends BackboneElement {
   /// Primary constructor for
-  /// [ResearchSubjectProgress]
+  /// [ResearchSubjectSubjectState]
 
-  const ResearchSubjectProgress({
+  const ResearchSubjectSubjectState({
     super.id,
     super.extension_,
     super.modifierExtension,
-    this.type,
-    this.subjectState,
-    this.milestone,
-    this.reason,
-    this.startDate,
+    required this.code,
+    required this.startDate,
     this.endDate,
+    this.reason,
     super.disallowExtensions,
   }) : super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory ResearchSubjectProgress.fromJson(
+  factory ResearchSubjectSubjectState.fromJson(
     Map<String, dynamic> json,
   ) {
-    return ResearchSubjectProgress(
+    return ResearchSubjectSubjectState(
       id: JsonParser.parsePrimitive<FhirString>(
         json,
         'id',
@@ -640,55 +665,45 @@ class ResearchSubjectProgress extends BackboneElement {
             ),
           )
           .toList(),
-      type: JsonParser.parseObject<CodeableConcept>(
+      code: JsonParser.parseObject<CodeableConcept>(
         json,
-        'type',
+        'code',
         CodeableConcept.fromJson,
-      ),
-      subjectState: JsonParser.parseObject<CodeableConcept>(
+      )!,
+      startDate: JsonParser.parsePrimitive<FhirDateTime>(
         json,
-        'subjectState',
-        CodeableConcept.fromJson,
-      ),
-      milestone: JsonParser.parseObject<CodeableConcept>(
+        'startDate',
+        FhirDateTime.fromJson,
+      )!,
+      endDate: JsonParser.parsePrimitive<FhirDateTime>(
         json,
-        'milestone',
-        CodeableConcept.fromJson,
+        'endDate',
+        FhirDateTime.fromJson,
       ),
       reason: JsonParser.parseObject<CodeableConcept>(
         json,
         'reason',
         CodeableConcept.fromJson,
       ),
-      startDate: JsonParser.parsePrimitive<FhirDateTime>(
-        json,
-        'startDate',
-        FhirDateTime.fromJson,
-      ),
-      endDate: JsonParser.parsePrimitive<FhirDateTime>(
-        json,
-        'endDate',
-        FhirDateTime.fromJson,
-      ),
     );
   }
 
-  /// Deserialize [ResearchSubjectProgress]
+  /// Deserialize [ResearchSubjectSubjectState]
   /// from a [String] or [YamlMap] object
-  factory ResearchSubjectProgress.fromYaml(
+  factory ResearchSubjectSubjectState.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return ResearchSubjectProgress.fromJson(
+      return ResearchSubjectSubjectState.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return ResearchSubjectProgress.fromJson(
+      return ResearchSubjectSubjectState.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'ResearchSubjectProgress '
+        'ResearchSubjectSubjectState '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -696,16 +711,16 @@ class ResearchSubjectProgress extends BackboneElement {
   }
 
   /// Factory constructor for
-  /// [ResearchSubjectProgress]
+  /// [ResearchSubjectSubjectState]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory ResearchSubjectProgress.fromJsonString(
+  factory ResearchSubjectSubjectState.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return ResearchSubjectProgress.fromJson(json);
+      return ResearchSubjectSubjectState.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -713,33 +728,25 @@ class ResearchSubjectProgress extends BackboneElement {
   }
 
   @override
-  String get fhirType => 'ResearchSubjectProgress';
+  String get fhirType => 'ResearchSubjectSubjectState';
 
-  /// [type]
+  /// [code]
   /// Identifies the aspect of the subject's journey that the state refers
   /// to.
-  final CodeableConcept? type;
+  final CodeableConcept code;
 
-  /// [subjectState]
-  /// The current state of the subject.
-  final CodeableConcept? subjectState;
+  /// [startDate]
+  /// The date a research subject entered the given state.
+  final FhirDateTime startDate;
 
-  /// [milestone]
-  /// The milestones the subject has passed through.
-  final CodeableConcept? milestone;
+  /// [endDate]
+  /// The date a research subject exited or left the given state.
+  final FhirDateTime? endDate;
 
   /// [reason]
   /// The reason for the state change. If coded it should follow the formal
   /// subject state model.
   final CodeableConcept? reason;
-
-  /// [startDate]
-  /// The date when the new status started.
-  final FhirDateTime? startDate;
-
-  /// [endDate]
-  /// The date when the state ended.
-  final FhirDateTime? endDate;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -816,20 +823,8 @@ class ResearchSubjectProgress extends BackboneElement {
       modifierExtension,
     );
     addField(
-      'type',
-      type,
-    );
-    addField(
-      'subjectState',
-      subjectState,
-    );
-    addField(
-      'milestone',
-      milestone,
-    );
-    addField(
-      'reason',
-      reason,
+      'code',
+      code,
     );
     addField(
       'startDate',
@@ -838,6 +833,10 @@ class ResearchSubjectProgress extends BackboneElement {
     addField(
       'endDate',
       endDate,
+    );
+    addField(
+      'reason',
+      reason,
     );
     return json;
   }
@@ -849,12 +848,10 @@ class ResearchSubjectProgress extends BackboneElement {
       'id',
       'extension',
       'modifierExtension',
-      'type',
-      'subjectState',
-      'milestone',
-      'reason',
+      'code',
       'startDate',
       'endDate',
+      'reason',
     ];
   }
 
@@ -879,29 +876,17 @@ class ResearchSubjectProgress extends BackboneElement {
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
         }
-      case 'type':
-        if (type != null) {
-          fields.add(type!);
-        }
-      case 'subjectState':
-        if (subjectState != null) {
-          fields.add(subjectState!);
-        }
-      case 'milestone':
-        if (milestone != null) {
-          fields.add(milestone!);
+      case 'code':
+        fields.add(code);
+      case 'startDate':
+        fields.add(startDate);
+      case 'endDate':
+        if (endDate != null) {
+          fields.add(endDate!);
         }
       case 'reason':
         if (reason != null) {
           fields.add(reason!);
-        }
-      case 'startDate':
-        if (startDate != null) {
-          fields.add(startDate!);
-        }
-      case 'endDate':
-        if (endDate != null) {
-          fields.add(endDate!);
         }
       default:
         if (checkValid) {
@@ -922,24 +907,25 @@ class ResearchSubjectProgress extends BackboneElement {
   }
 
   @override
-  ResearchSubjectProgress clone() => copyWith();
+  ResearchSubjectSubjectState clone() => copyWith();
 
-  /// Copy function for [ResearchSubjectProgress]
+  /// Copy function for [ResearchSubjectSubjectState]
   /// Returns a copy of the current instance with the provided fields modified.
   /// If a field is not provided, it will retain its original value.
   /// If a null is provided, this will clearn the field, unless the
   /// field is required, in which case it will keep its current value.
   @override
-  $ResearchSubjectProgressCopyWith<ResearchSubjectProgress> get copyWith =>
-      _$ResearchSubjectProgressCopyWithImpl<ResearchSubjectProgress>(
-        this,
-        (value) => value,
-      );
+  $ResearchSubjectSubjectStateCopyWith<ResearchSubjectSubjectState>
+      get copyWith => _$ResearchSubjectSubjectStateCopyWithImpl<
+              ResearchSubjectSubjectState>(
+            this,
+            (value) => value,
+          );
 
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBase? o) {
-    if (o is! ResearchSubjectProgress) {
+    if (o is! ResearchSubjectSubjectState) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -963,26 +949,8 @@ class ResearchSubjectProgress extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
-      type,
-      o.type,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      subjectState,
-      o.subjectState,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      milestone,
-      o.milestone,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      reason,
-      o.reason,
+      code,
+      o.code,
     )) {
       return false;
     }
@@ -995,6 +963,343 @@ class ResearchSubjectProgress extends BackboneElement {
     if (!equalsDeepWithNull(
       endDate,
       o.endDate,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reason,
+      o.reason,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [ResearchSubjectSubjectMilestone]
+/// A significant event in the progress of a ResearchSubject.
+class ResearchSubjectSubjectMilestone extends BackboneElement {
+  /// Primary constructor for
+  /// [ResearchSubjectSubjectMilestone]
+
+  const ResearchSubjectSubjectMilestone({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    required this.milestone,
+    this.date,
+    this.reason,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory ResearchSubjectSubjectMilestone.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return ResearchSubjectSubjectMilestone(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      milestone: (json['milestone'] as List<dynamic>)
+          .map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      date: JsonParser.parsePrimitive<FhirDateTime>(
+        json,
+        'date',
+        FhirDateTime.fromJson,
+      ),
+      reason: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'reason',
+        CodeableConcept.fromJson,
+      ),
+    );
+  }
+
+  /// Deserialize [ResearchSubjectSubjectMilestone]
+  /// from a [String] or [YamlMap] object
+  factory ResearchSubjectSubjectMilestone.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return ResearchSubjectSubjectMilestone.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return ResearchSubjectSubjectMilestone.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'ResearchSubjectSubjectMilestone '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [ResearchSubjectSubjectMilestone]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory ResearchSubjectSubjectMilestone.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return ResearchSubjectSubjectMilestone.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'ResearchSubjectSubjectMilestone';
+
+  /// [milestone]
+  /// A specific event in the research subjects journey through a research
+  /// study.
+  final List<CodeableConcept> milestone;
+
+  /// [date]
+  /// The date/time when this milestone event was completed.
+  final FhirDateTime? date;
+
+  /// [reason]
+  /// A rationale that provides additional clarification for the milestone
+  /// that was captured or documented.
+  final CodeableConcept? reason;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'milestone',
+      milestone,
+    );
+    addField(
+      'date',
+      date,
+    );
+    addField(
+      'reason',
+      reason,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'milestone',
+      'date',
+      'reason',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'milestone':
+        fields.addAll(milestone);
+      case 'date':
+        if (date != null) {
+          fields.add(date!);
+        }
+      case 'reason':
+        if (reason != null) {
+          fields.add(reason!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  ResearchSubjectSubjectMilestone clone() => copyWith();
+
+  /// Copy function for [ResearchSubjectSubjectMilestone]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $ResearchSubjectSubjectMilestoneCopyWith<ResearchSubjectSubjectMilestone>
+      get copyWith => _$ResearchSubjectSubjectMilestoneCopyWithImpl<
+              ResearchSubjectSubjectMilestone>(
+            this,
+            (value) => value,
+          );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! ResearchSubjectSubjectMilestone) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConcept>(
+      milestone,
+      o.milestone,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      date,
+      o.date,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reason,
+      o.reason,
     )) {
       return false;
     }

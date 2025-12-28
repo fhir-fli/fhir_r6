@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'dart:convert';
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:yaml/yaml.dart';
@@ -39,6 +37,7 @@ class CapabilityStatement extends CanonicalResource {
     super.contact,
     super.description,
     super.useContext,
+    this.actorDefinition,
     super.jurisdiction,
     this.purpose,
     this.copyright,
@@ -188,6 +187,11 @@ class CapabilityStatement extends CanonicalResource {
             ),
           )
           .toList(),
+      actorDefinition: JsonParser.parsePrimitiveList<FhirCanonical>(
+        json,
+        'actorDefinition',
+        FhirCanonical.fromJson,
+      ),
       jurisdiction: (json['jurisdiction'] as List<dynamic>?)
           ?.map<CodeableConcept>(
             (v) => CodeableConcept.fromJson(
@@ -240,15 +244,15 @@ class CapabilityStatement extends CanonicalResource {
         'fhirVersion',
         FHIRVersion.fromJson,
       )!,
-      format: JsonParser.parsePrimitiveList<FhirCode>(
+      format: JsonParser.parsePrimitiveList<SupplementedMimeTypes>(
         json,
         'format',
-        FhirCode.fromJson,
+        SupplementedMimeTypes.fromJson,
       )!,
-      patchFormat: JsonParser.parsePrimitiveList<FhirCode>(
+      patchFormat: JsonParser.parsePrimitiveList<PatchMimeTypes>(
         json,
         'patchFormat',
-        FhirCode.fromJson,
+        PatchMimeTypes.fromJson,
       ),
       acceptLanguage: JsonParser.parsePrimitiveList<AllLanguages>(
         json,
@@ -354,6 +358,12 @@ class CapabilityStatement extends CanonicalResource {
   /// A short, descriptive, user-friendly title for the capability statement.
   final FhirString? title;
 
+  /// [actorDefinition]
+  /// ActorDefinitions to describe the specific sets of functionality
+  /// supported by (or that should be supported by) systems (via
+  /// obligations).
+  final List<FhirCanonical>? actorDefinition;
+
   /// [purpose]
   /// Explanation of why this capability statement is needed and why it has
   /// been designed as it has.
@@ -417,12 +427,12 @@ class CapabilityStatement extends CanonicalResource {
   /// [format]
   /// A list of the formats supported by this implementation using their
   /// content types.
-  final List<FhirCode> format;
+  final List<SupplementedMimeTypes> format;
 
   /// [patchFormat]
   /// A list of the patch formats supported by this implementation using
   /// their content types.
-  final List<FhirCode>? patchFormat;
+  final List<PatchMimeTypes>? patchFormat;
 
   /// [acceptLanguage]
   /// A list of the languages supported by this implementation that are
@@ -598,6 +608,10 @@ class CapabilityStatement extends CanonicalResource {
       useContext,
     );
     addField(
+      'actorDefinition',
+      actorDefinition,
+    );
+    addField(
       'jurisdiction',
       jurisdiction,
     );
@@ -693,6 +707,7 @@ class CapabilityStatement extends CanonicalResource {
       'contact',
       'description',
       'useContext',
+      'actorDefinition',
       'jurisdiction',
       'purpose',
       'copyright',
@@ -813,6 +828,10 @@ class CapabilityStatement extends CanonicalResource {
       case 'useContext':
         if (useContext != null) {
           fields.addAll(useContext!);
+        }
+      case 'actorDefinition':
+        if (actorDefinition != null) {
+          fields.addAll(actorDefinition!);
         }
       case 'jurisdiction':
         if (jurisdiction != null) {
@@ -1043,6 +1062,12 @@ class CapabilityStatement extends CanonicalResource {
     )) {
       return false;
     }
+    if (!listEquals<FhirCanonical>(
+      actorDefinition,
+      o.actorDefinition,
+    )) {
+      return false;
+    }
     if (!listEquals<CodeableConcept>(
       jurisdiction,
       o.jurisdiction,
@@ -1103,13 +1128,13 @@ class CapabilityStatement extends CanonicalResource {
     )) {
       return false;
     }
-    if (!listEquals<FhirCode>(
+    if (!listEquals<SupplementedMimeTypes>(
       format,
       o.format,
     )) {
       return false;
     }
-    if (!listEquals<FhirCode>(
+    if (!listEquals<PatchMimeTypes>(
       patchFormat,
       o.patchFormat,
     )) {
@@ -2625,6 +2650,7 @@ class CapabilityStatementResource extends BackboneElement {
     super.extension_,
     super.modifierExtension,
     required this.type,
+    this.definition,
     this.profile,
     this.supportedProfile,
     this.documentation,
@@ -2669,11 +2695,16 @@ class CapabilityStatementResource extends BackboneElement {
             ),
           )
           .toList(),
-      type: JsonParser.parsePrimitive<FhirCode>(
+      type: JsonParser.parsePrimitive<ExtendedResourceTypes>(
         json,
         'type',
-        FhirCode.fromJson,
+        ExtendedResourceTypes.fromJson,
       )!,
+      definition: JsonParser.parsePrimitive<FhirCanonical>(
+        json,
+        'definition',
+        FhirCanonical.fromJson,
+      ),
       profile: JsonParser.parsePrimitive<FhirCanonical>(
         json,
         'profile',
@@ -2811,8 +2842,16 @@ class CapabilityStatementResource extends BackboneElement {
   String get fhirType => 'CapabilityStatementResource';
 
   /// [type]
-  /// A type of resource exposed via the restful interface.
-  final FhirCode type;
+  /// A type of resource exposed via the restful interface, either a resource
+  /// defined in this specification, or an [additional
+  /// resource](resource.html#additional).
+  final ExtendedResourceTypes type;
+
+  /// [definition]
+  /// The definition of the resource, if the resource is an additional
+  /// resource. If it is not an additional resource, then this element must
+  /// not be present.
+  final FhirCanonical? definition;
 
   /// [profile]
   /// A system-wide profile that is applied across *all* instances of the
@@ -2988,6 +3027,10 @@ class CapabilityStatementResource extends BackboneElement {
       type,
     );
     addField(
+      'definition',
+      definition,
+    );
+    addField(
       'profile',
       profile,
     );
@@ -3066,6 +3109,7 @@ class CapabilityStatementResource extends BackboneElement {
       'extension',
       'modifierExtension',
       'type',
+      'definition',
       'profile',
       'supportedProfile',
       'documentation',
@@ -3109,6 +3153,10 @@ class CapabilityStatementResource extends BackboneElement {
         }
       case 'type':
         fields.add(type);
+      case 'definition':
+        if (definition != null) {
+          fields.add(definition!);
+        }
       case 'profile':
         if (profile != null) {
           fields.add(profile!);
@@ -3240,6 +3288,12 @@ class CapabilityStatementResource extends BackboneElement {
     if (!equalsDeepWithNull(
       type,
       o.type,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      definition,
+      o.definition,
     )) {
       return false;
     }

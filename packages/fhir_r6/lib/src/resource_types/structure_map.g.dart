@@ -20,7 +20,7 @@ abstract class $StructureMapCopyWith<T> extends $CanonicalResourceCopyWith<T> {
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXStructureMap? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     PublicationStatus? status,
@@ -112,7 +112,7 @@ class _$StructureMapCopyWithImpl<T> implements $StructureMapCopyWith<T> {
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXStructureMap?,
         name: identical(name, fhirSentinel)
             ? _value.name
             : (name as FhirString?) ?? _value.name,
@@ -538,7 +538,7 @@ abstract class $StructureMapSourceCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     FhirId? context,
-    FhirInteger? min,
+    FhirUnsignedInt? min,
     FhirString? max,
     FhirString? type,
     FhirString? defaultValue,
@@ -589,7 +589,8 @@ class _$StructureMapSourceCopyWithImpl<T>
         context: identical(context, fhirSentinel)
             ? _value.context
             : (context as FhirId?) ?? _value.context,
-        min: identical(min, fhirSentinel) ? _value.min : min as FhirInteger?,
+        min:
+            identical(min, fhirSentinel) ? _value.min : min as FhirUnsignedInt?,
         max: identical(max, fhirSentinel) ? _value.max : max as FhirString?,
         type: identical(type, fhirSentinel) ? _value.type : type as FhirString?,
         defaultValue: identical(defaultValue, fhirSentinel)
@@ -721,7 +722,7 @@ abstract class $StructureMapParameterCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirId? valueX,
+    ValueXStructureMapParameter? valueX,
     bool? disallowExtensions,
   });
 }
@@ -752,7 +753,7 @@ class _$StructureMapParameterCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as FhirId?) ?? _value.valueX,
+            : (valueX as ValueXStructureMapParameter?) ?? _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

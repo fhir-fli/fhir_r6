@@ -5,7 +5,8 @@ import 'package:yaml/yaml.dart';
 part 'permission.g.dart';
 
 /// [Permission]
-/// Permission resource holds access rules for a given data and context.
+/// Permission resource holds access rules for a given data and access
+/// request context.
 class Permission extends DomainResource {
   /// Primary constructor for
   /// [Permission]
@@ -19,6 +20,7 @@ class Permission extends DomainResource {
     super.contained,
     super.extension_,
     super.modifierExtension,
+    this.identifier,
     required this.status,
     this.asserter,
     this.date,
@@ -77,6 +79,13 @@ class Permission extends DomainResource {
       modifierExtension: (json['modifierExtension'] as List<dynamic>?)
           ?.map<FhirExtension>(
             (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      identifier: (json['identifier'] as List<dynamic>?)
+          ?.map<Identifier>(
+            (v) => Identifier.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -162,6 +171,10 @@ class Permission extends DomainResource {
 
   @override
   String get fhirType => 'Permission';
+
+  /// [identifier]
+  /// A unique identifier assigned to this permission.
+  final List<Identifier>? identifier;
 
   /// [status]
   /// Status.
@@ -288,6 +301,10 @@ class Permission extends DomainResource {
       modifierExtension,
     );
     addField(
+      'identifier',
+      identifier,
+    );
+    addField(
       'status',
       status,
     );
@@ -330,6 +347,7 @@ class Permission extends DomainResource {
       'contained',
       'extension',
       'modifierExtension',
+      'identifier',
       'status',
       'asserter',
       'date',
@@ -380,6 +398,10 @@ class Permission extends DomainResource {
       case 'modifierExtension':
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
+        }
+      case 'identifier':
+        if (identifier != null) {
+          fields.addAll(identifier!);
         }
       case 'status':
         fields.add(status);
@@ -491,6 +513,12 @@ class Permission extends DomainResource {
     if (!listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!listEquals<Identifier>(
+      identifier,
+      o.identifier,
     )) {
       return false;
     }
@@ -858,6 +886,7 @@ class PermissionRule extends BackboneElement {
     super.id,
     super.extension_,
     super.modifierExtension,
+    this.import_,
     this.type,
     this.data,
     this.activity,
@@ -889,6 +918,11 @@ class PermissionRule extends BackboneElement {
             ),
           )
           .toList(),
+      import_: JsonParser.parseObject<Reference>(
+        json,
+        'import',
+        Reference.fromJson,
+      ),
       type: JsonParser.parsePrimitive<ConsentProvisionType>(
         json,
         'type',
@@ -909,8 +943,8 @@ class PermissionRule extends BackboneElement {
           )
           .toList(),
       limit: (json['limit'] as List<dynamic>?)
-          ?.map<CodeableConcept>(
-            (v) => CodeableConcept.fromJson(
+          ?.map<PermissionLimit>(
+            (v) => PermissionLimit.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -960,6 +994,10 @@ class PermissionRule extends BackboneElement {
   @override
   String get fhirType => 'PermissionRule';
 
+  /// [import_]
+  /// This rule is expressed in another Permission resource.
+  final Reference? import_;
+
   /// [type]
   /// deny | permit.
   final ConsentProvisionType? type;
@@ -975,8 +1013,8 @@ class PermissionRule extends BackboneElement {
   final List<PermissionActivity>? activity;
 
   /// [limit]
-  /// What limits apply to the use of the data.
-  final List<CodeableConcept>? limit;
+  /// What restrictions must be applied to the use of the data by the actor.
+  final List<PermissionLimit>? limit;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1053,6 +1091,10 @@ class PermissionRule extends BackboneElement {
       modifierExtension,
     );
     addField(
+      'import',
+      import_,
+    );
+    addField(
       'type',
       type,
     );
@@ -1078,6 +1120,7 @@ class PermissionRule extends BackboneElement {
       'id',
       'extension',
       'modifierExtension',
+      'import',
       'type',
       'data',
       'activity',
@@ -1105,6 +1148,10 @@ class PermissionRule extends BackboneElement {
       case 'modifierExtension':
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
+        }
+      case 'import':
+        if (import_ != null) {
+          fields.add(import_!);
         }
       case 'type':
         if (type != null) {
@@ -1182,6 +1229,12 @@ class PermissionRule extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
+      import_,
+      o.import_,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       type,
       o.type,
     )) {
@@ -1199,7 +1252,7 @@ class PermissionRule extends BackboneElement {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!listEquals<PermissionLimit>(
       limit,
       o.limit,
     )) {
@@ -1265,13 +1318,11 @@ class PermissionData extends BackboneElement {
             ),
           )
           .toList(),
-      period: (json['period'] as List<dynamic>?)
-          ?.map<Period>(
-            (v) => Period.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
+      period: JsonParser.parseObject<Period>(
+        json,
+        'period',
+        Period.fromJson,
+      ),
       expression: JsonParser.parseObject<FhirExpression>(
         json,
         'expression',
@@ -1334,7 +1385,7 @@ class PermissionData extends BackboneElement {
   /// [period]
   /// Clinical or Operational Relevant period of time that bounds the data
   /// controlled by this rule.
-  final List<Period>? period;
+  final Period? period;
 
   /// [expression]
   /// Used when other data selection elements are insufficient.
@@ -1478,7 +1529,7 @@ class PermissionData extends BackboneElement {
         }
       case 'period':
         if (period != null) {
-          fields.addAll(period!);
+          fields.add(period!);
         }
       case 'expression':
         if (expression != null) {
@@ -1555,7 +1606,7 @@ class PermissionData extends BackboneElement {
     )) {
       return false;
     }
-    if (!listEquals<Period>(
+    if (!equalsDeepWithNull(
       period,
       o.period,
     )) {
@@ -1914,8 +1965,8 @@ class PermissionActivity extends BackboneElement {
           )
           .toList(),
       actor: (json['actor'] as List<dynamic>?)
-          ?.map<Reference>(
-            (v) => Reference.fromJson(
+          ?.map<PermissionActor>(
+            (v) => PermissionActor.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -1980,8 +2031,9 @@ class PermissionActivity extends BackboneElement {
   String get fhirType => 'PermissionActivity';
 
   /// [actor]
-  /// The actor(s) authorized for the defined activity.
-  final List<Reference>? actor;
+  /// Who or what is controlled by this rule. Use group to identify a set of
+  /// actors by some property they share (e.g. 'admitting officers').
+  final List<PermissionActor>? actor;
 
   /// [action]
   /// Actions controlled by this Rule.
@@ -2185,7 +2237,7 @@ class PermissionActivity extends BackboneElement {
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!listEquals<PermissionActor>(
       actor,
       o.actor,
     )) {
@@ -2200,6 +2252,647 @@ class PermissionActivity extends BackboneElement {
     if (!listEquals<CodeableConcept>(
       purpose,
       o.purpose,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [PermissionActor]
+/// Who or what is controlled by this rule. Use group to identify a set of
+/// actors by some property they share (e.g. 'admitting officers').
+class PermissionActor extends BackboneElement {
+  /// Primary constructor for
+  /// [PermissionActor]
+
+  const PermissionActor({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.role,
+    this.reference,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory PermissionActor.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return PermissionActor(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      role: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'role',
+        CodeableConcept.fromJson,
+      ),
+      reference: JsonParser.parseObject<Reference>(
+        json,
+        'reference',
+        Reference.fromJson,
+      ),
+    );
+  }
+
+  /// Deserialize [PermissionActor]
+  /// from a [String] or [YamlMap] object
+  factory PermissionActor.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return PermissionActor.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return PermissionActor.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'PermissionActor '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [PermissionActor]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory PermissionActor.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return PermissionActor.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'PermissionActor';
+
+  /// [role]
+  /// How the individual is involved in the activity that is described in the
+  /// rule.
+  final CodeableConcept? role;
+
+  /// [reference]
+  /// The actor(s) authorized for the defined activity.
+  final Reference? reference;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'role',
+      role,
+    );
+    addField(
+      'reference',
+      reference,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'role',
+      'reference',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'role':
+        if (role != null) {
+          fields.add(role!);
+        }
+      case 'reference':
+        if (reference != null) {
+          fields.add(reference!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  PermissionActor clone() => copyWith();
+
+  /// Copy function for [PermissionActor]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $PermissionActorCopyWith<PermissionActor> get copyWith =>
+      _$PermissionActorCopyWithImpl<PermissionActor>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! PermissionActor) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      role,
+      o.role,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reference,
+      o.reference,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [PermissionLimit]
+/// What restrictions must be applied to the use of the data by the actor.
+class PermissionLimit extends BackboneElement {
+  /// Primary constructor for
+  /// [PermissionLimit]
+
+  const PermissionLimit({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.control,
+    this.tag,
+    this.element,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory PermissionLimit.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return PermissionLimit(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      control: (json['control'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      tag: (json['tag'] as List<dynamic>?)
+          ?.map<Coding>(
+            (v) => Coding.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      element: JsonParser.parsePrimitiveList<FhirString>(
+        json,
+        'element',
+        FhirString.fromJson,
+      ),
+    );
+  }
+
+  /// Deserialize [PermissionLimit]
+  /// from a [String] or [YamlMap] object
+  factory PermissionLimit.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return PermissionLimit.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return PermissionLimit.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'PermissionLimit '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [PermissionLimit]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory PermissionLimit.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return PermissionLimit.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'PermissionLimit';
+
+  /// [control]
+  /// One or more coded restriction such as a refrain or obligation.
+  final List<CodeableConcept>? control;
+
+  /// [tag]
+  /// When this rule authorized data use, any data that is tagged with the
+  /// code here must be redacted from the data provided for that authorized
+  /// use.
+  final List<Coding>? tag;
+
+  /// [element]
+  /// When this rule authorized data use, the data at the path indicated
+  /// here, must be redacted from the authorized data provided for that
+  /// authorized use.
+  final List<FhirString>? element;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'control',
+      control,
+    );
+    addField(
+      'tag',
+      tag,
+    );
+    addField(
+      'element',
+      element,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'control',
+      'tag',
+      'element',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'control':
+        if (control != null) {
+          fields.addAll(control!);
+        }
+      case 'tag':
+        if (tag != null) {
+          fields.addAll(tag!);
+        }
+      case 'element':
+        if (element != null) {
+          fields.addAll(element!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  PermissionLimit clone() => copyWith();
+
+  /// Copy function for [PermissionLimit]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $PermissionLimitCopyWith<PermissionLimit> get copyWith =>
+      _$PermissionLimitCopyWithImpl<PermissionLimit>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! PermissionLimit) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConcept>(
+      control,
+      o.control,
+    )) {
+      return false;
+    }
+    if (!listEquals<Coding>(
+      tag,
+      o.tag,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirString>(
+      element,
+      o.element,
     )) {
       return false;
     }

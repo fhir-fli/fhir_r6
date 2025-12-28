@@ -159,9 +159,7 @@ class _$SubstanceSourceMaterialFractionDescriptionCopyWithImpl<T>
   final T Function(SubstanceSourceMaterialFractionDescription) _then;
 
   _$SubstanceSourceMaterialFractionDescriptionCopyWithImpl(
-    this._value,
-    this._then,
-  );
+      this._value, this._then);
 
   @override
   T call({

@@ -20,18 +20,19 @@ abstract class $EvidenceCopyWith<T> extends $MetadataResourceCopyWith<T> {
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXEvidence? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
-    Reference? citeAsX,
+    FhirMarkdown? citeAs,
     PublicationStatus? status,
     FhirBoolean? experimental,
     FhirDateTime? date,
     FhirDate? approvalDate,
     FhirDate? lastReviewDate,
+    List<ContactDetail>? author,
     FhirString? publisher,
     List<ContactDetail>? contact,
-    List<ContactDetail>? author,
+    List<ContactDetail>? recorder,
     List<ContactDetail>? editor,
     List<ContactDetail>? reviewer,
     List<ContactDetail>? endorser,
@@ -39,12 +40,12 @@ abstract class $EvidenceCopyWith<T> extends $MetadataResourceCopyWith<T> {
     FhirMarkdown? purpose,
     FhirMarkdown? copyright,
     FhirString? copyrightLabel,
-    List<RelatedArtifact>? relatedArtifact,
+    List<EvidenceRelatesTo>? relatesTo,
     FhirMarkdown? description,
     FhirMarkdown? assertion,
     List<Annotation>? note,
     List<EvidenceVariableDefinition>? variableDefinition,
-    CodeableConcept? synthesisType,
+    List<CodeableConcept>? synthesisType,
     List<CodeableConcept>? studyDesign,
     List<EvidenceStatistic>? statistic,
     List<EvidenceCertainty>? certainty,
@@ -75,15 +76,16 @@ class _$EvidenceCopyWithImpl<T> implements $EvidenceCopyWith<T> {
     Object? versionAlgorithmX = fhirSentinel,
     Object? name = fhirSentinel,
     Object? title = fhirSentinel,
-    Object? citeAsX = fhirSentinel,
+    Object? citeAs = fhirSentinel,
     Object? status = fhirSentinel,
     Object? experimental = fhirSentinel,
     Object? date = fhirSentinel,
     Object? approvalDate = fhirSentinel,
     Object? lastReviewDate = fhirSentinel,
+    Object? author = fhirSentinel,
     Object? publisher = fhirSentinel,
     Object? contact = fhirSentinel,
-    Object? author = fhirSentinel,
+    Object? recorder = fhirSentinel,
     Object? editor = fhirSentinel,
     Object? reviewer = fhirSentinel,
     Object? endorser = fhirSentinel,
@@ -91,7 +93,7 @@ class _$EvidenceCopyWithImpl<T> implements $EvidenceCopyWith<T> {
     Object? purpose = fhirSentinel,
     Object? copyright = fhirSentinel,
     Object? copyrightLabel = fhirSentinel,
-    Object? relatedArtifact = fhirSentinel,
+    Object? relatesTo = fhirSentinel,
     Object? description = fhirSentinel,
     Object? assertion = fhirSentinel,
     Object? note = fhirSentinel,
@@ -132,14 +134,14 @@ class _$EvidenceCopyWithImpl<T> implements $EvidenceCopyWith<T> {
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXEvidence?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
             : title as FhirString?,
-        citeAsX: identical(citeAsX, fhirSentinel)
-            ? _value.citeAsX
-            : citeAsX as Reference?,
+        citeAs: identical(citeAs, fhirSentinel)
+            ? _value.citeAs
+            : citeAs as FhirMarkdown?,
         status: identical(status, fhirSentinel)
             ? _value.status
             : (status as PublicationStatus?) ?? _value.status,
@@ -154,15 +156,18 @@ class _$EvidenceCopyWithImpl<T> implements $EvidenceCopyWith<T> {
         lastReviewDate: identical(lastReviewDate, fhirSentinel)
             ? _value.lastReviewDate
             : lastReviewDate as FhirDate?,
+        author: identical(author, fhirSentinel)
+            ? _value.author
+            : author as List<ContactDetail>?,
         publisher: identical(publisher, fhirSentinel)
             ? _value.publisher
             : publisher as FhirString?,
         contact: identical(contact, fhirSentinel)
             ? _value.contact
             : contact as List<ContactDetail>?,
-        author: identical(author, fhirSentinel)
-            ? _value.author
-            : author as List<ContactDetail>?,
+        recorder: identical(recorder, fhirSentinel)
+            ? _value.recorder
+            : recorder as List<ContactDetail>?,
         editor: identical(editor, fhirSentinel)
             ? _value.editor
             : editor as List<ContactDetail>?,
@@ -184,9 +189,9 @@ class _$EvidenceCopyWithImpl<T> implements $EvidenceCopyWith<T> {
         copyrightLabel: identical(copyrightLabel, fhirSentinel)
             ? _value.copyrightLabel
             : copyrightLabel as FhirString?,
-        relatedArtifact: identical(relatedArtifact, fhirSentinel)
-            ? _value.relatedArtifact
-            : relatedArtifact as List<RelatedArtifact>?,
+        relatesTo: identical(relatesTo, fhirSentinel)
+            ? _value.relatesTo
+            : relatesTo as List<EvidenceRelatesTo>?,
         description: identical(description, fhirSentinel)
             ? _value.description
             : description as FhirMarkdown?,
@@ -198,11 +203,10 @@ class _$EvidenceCopyWithImpl<T> implements $EvidenceCopyWith<T> {
             : note as List<Annotation>?,
         variableDefinition: identical(variableDefinition, fhirSentinel)
             ? _value.variableDefinition
-            : (variableDefinition as List<EvidenceVariableDefinition>?) ??
-                _value.variableDefinition,
+            : variableDefinition as List<EvidenceVariableDefinition>?,
         synthesisType: identical(synthesisType, fhirSentinel)
             ? _value.synthesisType
-            : synthesisType as CodeableConcept?,
+            : synthesisType as List<CodeableConcept>?,
         studyDesign: identical(studyDesign, fhirSentinel)
             ? _value.studyDesign
             : studyDesign as List<CodeableConcept>?,
@@ -224,6 +228,66 @@ extension EvidenceCopyWithExtension on Evidence {
       );
 }
 
+abstract class $EvidenceRelatesToCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    ArtifactRelationshipType? type,
+    TargetXEvidenceRelatesTo? targetX,
+    bool? disallowExtensions,
+  });
+}
+
+class _$EvidenceRelatesToCopyWithImpl<T>
+    implements $EvidenceRelatesToCopyWith<T> {
+  final EvidenceRelatesTo _value;
+  final T Function(EvidenceRelatesTo) _then;
+
+  _$EvidenceRelatesToCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? type = fhirSentinel,
+    Object? targetX = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      EvidenceRelatesTo(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        type: identical(type, fhirSentinel)
+            ? _value.type
+            : (type as ArtifactRelationshipType?) ?? _value.type,
+        targetX: identical(targetX, fhirSentinel)
+            ? _value.targetX
+            : (targetX as TargetXEvidenceRelatesTo?) ?? _value.targetX,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension EvidenceRelatesToCopyWithExtension on EvidenceRelatesTo {
+  $EvidenceRelatesToCopyWith<EvidenceRelatesTo> get copyWith =>
+      _$EvidenceRelatesToCopyWithImpl<EvidenceRelatesTo>(
+        this,
+        (value) => value,
+      );
+}
+
 abstract class $EvidenceVariableDefinitionCopyWith<T>
     extends $BackboneElementCopyWith<T> {
   @override
@@ -233,7 +297,9 @@ abstract class $EvidenceVariableDefinitionCopyWith<T>
     List<FhirExtension>? modifierExtension,
     FhirMarkdown? description,
     List<Annotation>? note,
-    CodeableConcept? variableRole,
+    EvidenceVariableRole? variableRole,
+    CodeableConcept? roleSubtype,
+    FhirString? comparatorCategory,
     Reference? observed,
     Reference? intended,
     CodeableConcept? directnessMatch,
@@ -256,6 +322,8 @@ class _$EvidenceVariableDefinitionCopyWithImpl<T>
     Object? description = fhirSentinel,
     Object? note = fhirSentinel,
     Object? variableRole = fhirSentinel,
+    Object? roleSubtype = fhirSentinel,
+    Object? comparatorCategory = fhirSentinel,
     Object? observed = fhirSentinel,
     Object? intended = fhirSentinel,
     Object? directnessMatch = fhirSentinel,
@@ -278,7 +346,13 @@ class _$EvidenceVariableDefinitionCopyWithImpl<T>
             : note as List<Annotation>?,
         variableRole: identical(variableRole, fhirSentinel)
             ? _value.variableRole
-            : (variableRole as CodeableConcept?) ?? _value.variableRole,
+            : (variableRole as EvidenceVariableRole?) ?? _value.variableRole,
+        roleSubtype: identical(roleSubtype, fhirSentinel)
+            ? _value.roleSubtype
+            : roleSubtype as CodeableConcept?,
+        comparatorCategory: identical(comparatorCategory, fhirSentinel)
+            ? _value.comparatorCategory
+            : comparatorCategory as FhirString?,
         observed: identical(observed, fhirSentinel)
             ? _value.observed
             : observed as Reference?,
@@ -573,9 +647,11 @@ abstract class $EvidenceModelCharacteristicCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? code,
-    Quantity? value,
+    ValueXEvidenceModelCharacteristic? valueX,
+    FhirBoolean? intended,
+    FhirBoolean? applied,
     List<EvidenceModelCharacteristicVariable>? variable,
-    List<EvidenceAttributeEstimate>? attributeEstimate,
+    List<EvidenceAttributeEstimate>? attribute,
     bool? disallowExtensions,
   });
 }
@@ -593,9 +669,11 @@ class _$EvidenceModelCharacteristicCopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? code = fhirSentinel,
-    Object? value = fhirSentinel,
+    Object? valueX = fhirSentinel,
+    Object? intended = fhirSentinel,
+    Object? applied = fhirSentinel,
     Object? variable = fhirSentinel,
-    Object? attributeEstimate = fhirSentinel,
+    Object? attribute = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -610,14 +688,21 @@ class _$EvidenceModelCharacteristicCopyWithImpl<T>
         code: identical(code, fhirSentinel)
             ? _value.code
             : (code as CodeableConcept?) ?? _value.code,
-        value:
-            identical(value, fhirSentinel) ? _value.value : value as Quantity?,
+        valueX: identical(valueX, fhirSentinel)
+            ? _value.valueX
+            : valueX as ValueXEvidenceModelCharacteristic?,
+        intended: identical(intended, fhirSentinel)
+            ? _value.intended
+            : intended as FhirBoolean?,
+        applied: identical(applied, fhirSentinel)
+            ? _value.applied
+            : applied as FhirBoolean?,
         variable: identical(variable, fhirSentinel)
             ? _value.variable
             : variable as List<EvidenceModelCharacteristicVariable>?,
-        attributeEstimate: identical(attributeEstimate, fhirSentinel)
-            ? _value.attributeEstimate
-            : attributeEstimate as List<EvidenceAttributeEstimate>?,
+        attribute: identical(attribute, fhirSentinel)
+            ? _value.attribute
+            : attribute as List<EvidenceAttributeEstimate>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -725,7 +810,7 @@ abstract class $EvidenceCertaintyCopyWith<T>
     List<Annotation>? note,
     CodeableConcept? type,
     CodeableConcept? rating,
-    FhirString? rater,
+    List<FhirString>? rater,
     List<EvidenceCertainty>? subcomponent,
     bool? disallowExtensions,
   });
@@ -774,7 +859,7 @@ class _$EvidenceCertaintyCopyWithImpl<T>
             : rating as CodeableConcept?,
         rater: identical(rater, fhirSentinel)
             ? _value.rater
-            : rater as FhirString?,
+            : rater as List<FhirString>?,
         subcomponent: identical(subcomponent, fhirSentinel)
             ? _value.subcomponent
             : subcomponent as List<EvidenceCertainty>?,

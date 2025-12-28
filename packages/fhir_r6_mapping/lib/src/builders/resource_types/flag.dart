@@ -28,6 +28,7 @@ class FlagBuilder extends DomainResourceBuilder {
     this.period,
     this.encounter,
     this.author,
+    this.supportingInfo,
   }) : super(
           objectPath: 'Flag',
           resourceType: R6ResourceType.Flag,
@@ -36,7 +37,6 @@ class FlagBuilder extends DomainResourceBuilder {
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
   factory FlagBuilder.empty() => FlagBuilder(
-        status: FlagStatusBuilder.values.first,
         code: CodeableConceptBuilder.empty(),
         subject: ReferenceBuilder.empty(),
       );
@@ -163,6 +163,16 @@ class FlagBuilder extends DomainResourceBuilder {
         ReferenceBuilder.fromJson,
         '$objectPath.author',
       ),
+      supportingInfo: (json['supportingInfo'] as List<dynamic>?)
+          ?.map<ReferenceBuilder>(
+            (v) => ReferenceBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.supportingInfo',
+              },
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -248,6 +258,11 @@ class FlagBuilder extends DomainResourceBuilder {
   /// The person, organization or device that created the flag.
   ReferenceBuilder? author;
 
+  /// [supportingInfo]
+  /// Additional information that may be relevant to the flag, such as why
+  /// the flag was created or how to guide management of the flag.
+  List<ReferenceBuilder>? supportingInfo;
+
   /// Converts a [FlagBuilder]
   /// to [Flag]
   @override
@@ -301,6 +316,7 @@ class FlagBuilder extends DomainResourceBuilder {
     addField('period', period);
     addField('encounter', encounter);
     addField('author', author);
+    addField('supportingInfo', supportingInfo);
     return json;
   }
 
@@ -324,6 +340,7 @@ class FlagBuilder extends DomainResourceBuilder {
       'period',
       'encounter',
       'author',
+      'supportingInfo',
     ];
   }
 
@@ -399,6 +416,10 @@ class FlagBuilder extends DomainResourceBuilder {
       case 'author':
         if (author != null) {
           fields.add(author!);
+        }
+      case 'supportingInfo':
+        if (supportingInfo != null) {
+          fields.addAll(supportingInfo!);
         }
       default:
         if (checkValid) {
@@ -651,6 +672,22 @@ class FlagBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'supportingInfo':
+        {
+          if (child is List<ReferenceBuilder>) {
+            // Replace or create new list
+            supportingInfo = child;
+            return;
+          } else if (child is ReferenceBuilder) {
+            // Add single element to existing list or create new list
+            supportingInfo = [
+              ...(supportingInfo ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -692,6 +729,8 @@ class FlagBuilder extends DomainResourceBuilder {
       case 'encounter':
         return ['ReferenceBuilder'];
       case 'author':
+        return ['ReferenceBuilder'];
+      case 'supportingInfo':
         return ['ReferenceBuilder'];
       default:
         return <String>[];
@@ -783,6 +822,11 @@ class FlagBuilder extends DomainResourceBuilder {
           author = ReferenceBuilder.empty();
           return;
         }
+      case 'supportingInfo':
+        {
+          supportingInfo = <ReferenceBuilder>[];
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
@@ -808,6 +852,7 @@ class FlagBuilder extends DomainResourceBuilder {
     PeriodBuilder? period,
     ReferenceBuilder? encounter,
     ReferenceBuilder? author,
+    List<ReferenceBuilder>? supportingInfo,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -831,6 +876,7 @@ class FlagBuilder extends DomainResourceBuilder {
       period: period ?? this.period,
       encounter: encounter ?? this.encounter,
       author: author ?? this.author,
+      supportingInfo: supportingInfo ?? this.supportingInfo,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -950,6 +996,12 @@ class FlagBuilder extends DomainResourceBuilder {
     if (!equalsDeepWithNull(
       author,
       o.author,
+    )) {
+      return false;
+    }
+    if (!listEquals<ReferenceBuilder>(
+      supportingInfo,
+      o.supportingInfo,
     )) {
       return false;
     }

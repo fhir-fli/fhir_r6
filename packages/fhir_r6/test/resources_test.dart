@@ -12,7 +12,6 @@ void main() {
     () {
       final dir = Directory('./test/assets');
       for (final file in dir.listSync()) {
-        print(file.path);
         final contents = File(file.path).readAsStringSync();
         final contentJson1 = jsonDecode(contents) as Map<String, dynamic>;
         final contentJson = jsonDecode(contents) as Map<String, dynamic>;

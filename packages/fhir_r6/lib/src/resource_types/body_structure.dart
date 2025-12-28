@@ -705,8 +705,8 @@ class BodyStructureIncludedStructure extends BackboneElement {
   final CodeableConcept? laterality;
 
   /// [bodyLandmarkOrientation]
-  /// Body locations in relation to a specific body landmark (tatoo, scar,
-  /// other body structure).
+  /// Body location in relation to a specific body landmark (e.g., a body
+  /// structure such a navel, scar, or implanted device).
   final List<BodyStructureBodyLandmarkOrientation>? bodyLandmarkOrientation;
 
   /// [spatialReference]
@@ -963,8 +963,8 @@ class BodyStructureIncludedStructure extends BackboneElement {
 }
 
 /// [BodyStructureBodyLandmarkOrientation]
-/// Body locations in relation to a specific body landmark (tatoo, scar,
-/// other body structure).
+/// Body location in relation to a specific body landmark (e.g., a body
+/// structure such a navel, scar, or implanted device).
 class BodyStructureBodyLandmarkOrientation extends BackboneElement {
   /// Primary constructor for
   /// [BodyStructureBodyLandmarkOrientation]
@@ -1078,8 +1078,7 @@ class BodyStructureBodyLandmarkOrientation extends BackboneElement {
   String get fhirType => 'BodyStructureBodyLandmarkOrientation';
 
   /// [landmarkDescription]
-  /// A description of a landmark on the body used as a reference to locate
-  /// something else.
+  /// Body landmark description used as a reference to locate something else.
   final List<CodeableConcept>? landmarkDescription;
 
   /// [clockFacePosition]

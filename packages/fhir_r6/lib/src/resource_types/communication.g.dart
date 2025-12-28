@@ -18,8 +18,6 @@ abstract class $CommunicationCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
-    List<FhirCanonical>? instantiatesCanonical,
-    List<FhirUri>? instantiatesUri,
     List<Reference>? basedOn,
     List<Reference>? partOf,
     List<Reference>? inResponseTo,
@@ -60,8 +58,6 @@ class _$CommunicationCopyWithImpl<T> implements $CommunicationCopyWith<T> {
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? identifier = fhirSentinel,
-    Object? instantiatesCanonical = fhirSentinel,
-    Object? instantiatesUri = fhirSentinel,
     Object? basedOn = fhirSentinel,
     Object? partOf = fhirSentinel,
     Object? inResponseTo = fhirSentinel,
@@ -106,12 +102,6 @@ class _$CommunicationCopyWithImpl<T> implements $CommunicationCopyWith<T> {
         identifier: identical(identifier, fhirSentinel)
             ? _value.identifier
             : identifier as List<Identifier>?,
-        instantiatesCanonical: identical(instantiatesCanonical, fhirSentinel)
-            ? _value.instantiatesCanonical
-            : instantiatesCanonical as List<FhirCanonical>?,
-        instantiatesUri: identical(instantiatesUri, fhirSentinel)
-            ? _value.instantiatesUri
-            : instantiatesUri as List<FhirUri>?,
         basedOn: identical(basedOn, fhirSentinel)
             ? _value.basedOn
             : basedOn as List<Reference>?,
@@ -188,7 +178,7 @@ abstract class $CommunicationPayloadCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    Attachment? contentX,
+    ContentXCommunicationPayload? contentX,
     bool? disallowExtensions,
   });
 }
@@ -219,7 +209,7 @@ class _$CommunicationPayloadCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         contentX: identical(contentX, fhirSentinel)
             ? _value.contentX
-            : (contentX as Attachment?) ?? _value.contentX,
+            : (contentX as ContentXCommunicationPayload?) ?? _value.contentX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

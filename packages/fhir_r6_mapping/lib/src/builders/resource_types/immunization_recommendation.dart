@@ -208,7 +208,8 @@ class ImmunizationRecommendationBuilder extends DomainResourceBuilder {
   FhirDateTimeBuilder? date;
 
   /// [authority]
-  /// Indicates the authority who published the protocol (e.g. ACIP).
+  /// Indicates the authority who published the schedule (e.g. ACIP, WHO,
+  /// NITAG).
   ReferenceBuilder? authority;
 
   /// [recommendation]
@@ -971,16 +972,16 @@ class ImmunizationRecommendationRecommendationBuilder
         FhirStringBuilder.fromJson,
         '$objectPath.series',
       ),
-      doseNumber: JsonParser.parsePrimitive<FhirStringBuilder>(
+      doseNumber: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
         'doseNumber',
-        FhirStringBuilder.fromJson,
+        CodeableConceptBuilder.fromJson,
         '$objectPath.doseNumber',
       ),
-      seriesDoses: JsonParser.parsePrimitive<FhirStringBuilder>(
+      seriesDoses: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
         'seriesDoses',
-        FhirStringBuilder.fromJson,
+        CodeableConceptBuilder.fromJson,
         '$objectPath.seriesDoses',
       ),
       supportingImmunization: (json['supportingImmunization'] as List<dynamic>?)
@@ -1081,20 +1082,21 @@ class ImmunizationRecommendationRecommendationBuilder
   FhirMarkdownBuilder? description;
 
   /// [series]
-  /// One possible path to achieve presumed immunity against a disease -
-  /// within the context of an authority.
+  /// The name of the vaccination series within the context of the authority
+  /// which defines the series. A series is one possible path to achieve
+  /// presumed immunity against a disease.
   FhirStringBuilder? series;
 
   /// [doseNumber]
   /// Nominal position of the recommended dose in a series as determined by
   /// the evaluation and forecasting process (e.g. dose 2 is the next
   /// recommended dose).
-  FhirStringBuilder? doseNumber;
+  CodeableConceptBuilder? doseNumber;
 
   /// [seriesDoses]
   /// The recommended number of doses to achieve immunity as determined by
   /// the evaluation and forecasting process.
-  FhirStringBuilder? seriesDoses;
+  CodeableConceptBuilder? seriesDoses;
 
   /// [supportingImmunization]
   /// Immunization event history and/or evaluation that supports the status
@@ -1464,41 +1466,17 @@ class ImmunizationRecommendationRecommendationBuilder
         }
       case 'doseNumber':
         {
-          if (child is FhirStringBuilder) {
+          if (child is CodeableConceptBuilder) {
             doseNumber = child;
             return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                doseNumber = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
       case 'seriesDoses':
         {
-          if (child is FhirStringBuilder) {
+          if (child is CodeableConceptBuilder) {
             seriesDoses = child;
             return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                seriesDoses = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -1567,9 +1545,9 @@ class ImmunizationRecommendationRecommendationBuilder
       case 'series':
         return ['FhirStringBuilder'];
       case 'doseNumber':
-        return ['FhirStringBuilder'];
+        return ['CodeableConceptBuilder'];
       case 'seriesDoses':
-        return ['FhirStringBuilder'];
+        return ['CodeableConceptBuilder'];
       case 'supportingImmunization':
         return ['ReferenceBuilder'];
       case 'supportingPatientInformation':
@@ -1641,12 +1619,12 @@ class ImmunizationRecommendationRecommendationBuilder
         }
       case 'doseNumber':
         {
-          doseNumber = FhirStringBuilder.empty();
+          doseNumber = CodeableConceptBuilder.empty();
           return;
         }
       case 'seriesDoses':
         {
-          seriesDoses = FhirStringBuilder.empty();
+          seriesDoses = CodeableConceptBuilder.empty();
           return;
         }
       case 'supportingImmunization':
@@ -1680,8 +1658,8 @@ class ImmunizationRecommendationRecommendationBuilder
     List<ImmunizationRecommendationDateCriterionBuilder>? dateCriterion,
     FhirMarkdownBuilder? description,
     FhirStringBuilder? series,
-    FhirStringBuilder? doseNumber,
-    FhirStringBuilder? seriesDoses,
+    CodeableConceptBuilder? doseNumber,
+    CodeableConceptBuilder? seriesDoses,
     List<ReferenceBuilder>? supportingImmunization,
     List<ReferenceBuilder>? supportingPatientInformation,
     Map<String, dynamic>? userData,

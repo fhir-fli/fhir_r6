@@ -5,16 +5,18 @@ import 'package:yaml/yaml.dart';
 part 'nutrition_intake.g.dart';
 
 /// [NutritionIntake]
-/// A record of food or fluid that is being consumed by a patient. A
-/// NutritionIntake may indicate that the patient may be consuming the food
-/// or fluid now or has consumed the food or fluid in the past. The source
-/// of this information can be the patient, significant other (such as a
-/// family member or spouse), or a clinician. A common scenario where this
-/// information is captured is during the history taking process during a
-/// patient visit or stay or through an app that tracks food or fluids
-/// consumed. The consumption information may come from sources such as the
-/// patient's memory, from a nutrition label, or from a clinician
-/// documenting observed intake.
+/// A record of intake by a patient. A NutritionIntake may indicate that
+/// the patient may be consuming the food (i.e., solid and/or liquid),
+/// breastmilk, infant formula, supplements, enteral formula now or has
+/// consumed it in the past. The source of this information can be the
+/// patient, significant other (such as a family member or spouse), or a
+/// clinician. A common scenario where this information is captured is
+/// during the history taking process during a patient visit or stay or
+/// through an app that tracks food (i.e., solid and/or liquid),
+/// breastmilk, infant formula, supplements, enteral formula consumed. The
+/// consumption information may come from sources such as the patient's
+/// memory, from a nutrition label, or from a clinician documenting
+/// observed intake.
 class NutritionIntake extends DomainResource {
   /// Primary constructor for
   /// [NutritionIntake]
@@ -29,8 +31,6 @@ class NutritionIntake extends DomainResource {
     super.extension_,
     super.modifierExtension,
     this.identifier,
-    this.instantiatesCanonical,
-    this.instantiatesUri,
     this.basedOn,
     this.partOf,
     required this.status,
@@ -45,8 +45,7 @@ class NutritionIntake extends DomainResource {
     ReportedXNutritionIntake? reportedX,
     FhirBoolean? reportedBoolean,
     Reference? reportedReference,
-    required this.consumedItem,
-    this.ingredientLabel,
+    this.nutritionItem,
     this.performer,
     this.location,
     this.derivedFrom,
@@ -116,16 +115,6 @@ class NutritionIntake extends DomainResource {
             ),
           )
           .toList(),
-      instantiatesCanonical: JsonParser.parsePrimitiveList<FhirCanonical>(
-        json,
-        'instantiatesCanonical',
-        FhirCanonical.fromJson,
-      ),
-      instantiatesUri: JsonParser.parsePrimitiveList<FhirUri>(
-        json,
-        'instantiatesUri',
-        FhirUri.fromJson,
-      ),
       basedOn: (json['basedOn'] as List<dynamic>?)
           ?.map<Reference>(
             (v) => Reference.fromJson(
@@ -186,16 +175,9 @@ class NutritionIntake extends DomainResource {
           'reportedReference': Reference.fromJson,
         },
       ),
-      consumedItem: (json['consumedItem'] as List<dynamic>)
-          .map<NutritionIntakeConsumedItem>(
-            (v) => NutritionIntakeConsumedItem.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      ingredientLabel: (json['ingredientLabel'] as List<dynamic>?)
-          ?.map<NutritionIntakeIngredientLabel>(
-            (v) => NutritionIntakeIngredientLabel.fromJson(
+      nutritionItem: (json['nutritionItem'] as List<dynamic>?)
+          ?.map<NutritionIntakeNutritionItem>(
+            (v) => NutritionIntakeNutritionItem.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -287,14 +269,6 @@ class NutritionIntake extends DomainResource {
   /// server to server.
   final List<Identifier>? identifier;
 
-  /// [instantiatesCanonical]
-  /// Instantiates FHIR protocol or definition.
-  final List<FhirCanonical>? instantiatesCanonical;
-
-  /// [instantiatesUri]
-  /// Instantiates external protocol or definition.
-  final List<FhirUri>? instantiatesUri;
-
   /// [basedOn]
   /// A plan, proposal or order that is fulfilled in whole or in part by this
   /// event.
@@ -319,7 +293,8 @@ class NutritionIntake extends DomainResource {
   final CodeableConcept? code;
 
   /// [subject]
-  /// The person, animal or group who is/was consuming the food or fluid.
+  /// The person or group who is/was consuming the food (i.e. solid and/or
+  /// liquid).
   final Reference subject;
 
   /// [encounter]
@@ -328,7 +303,7 @@ class NutritionIntake extends DomainResource {
 
   /// [occurrenceX]
   /// The interval of time during which it is being asserted that the patient
-  /// is/was consuming the food or fluid.
+  /// is/was consuming the food (i.e. solid and/or liquid).
   final OccurrenceXNutritionIntake? occurrenceX;
 
   /// Getter for [occurrenceDateTime] as a FhirDateTime
@@ -343,9 +318,10 @@ class NutritionIntake extends DomainResource {
   final FhirDateTime? recorded;
 
   /// [reportedX]
-  /// The person or organization that provided the information about the
-  /// consumption of this food or fluid. Note: Use derivedFrom when a
-  /// NutritionIntake is derived from other resources.
+  /// Indicates if this record was captured as a secondary 'reported' record
+  /// rather than as an original primary source-of-truth. It may also
+  /// indicate the source that provided the information about the
+  /// consumption.
   final ReportedXNutritionIntake? reportedX;
 
   /// Getter for [reportedBoolean] as a FhirBoolean
@@ -354,16 +330,12 @@ class NutritionIntake extends DomainResource {
   /// Getter for [reportedReference] as a Reference
   Reference? get reportedReference => reportedX?.isAs<Reference>();
 
-  /// [consumedItem]
-  /// What food or fluid product or item was consumed.
-  final List<NutritionIntakeConsumedItem> consumedItem;
-
-  /// [ingredientLabel]
-  /// Total nutrient amounts for the whole meal, product, serving, etc.
-  final List<NutritionIntakeIngredientLabel>? ingredientLabel;
+  /// [nutritionItem]
+  /// The nutrition product intended for consumption and/or administration.
+  final List<NutritionIntakeNutritionItem>? nutritionItem;
 
   /// [performer]
-  /// Who performed the intake and how they were involved.
+  /// Who or what performed the intake and how they were involved.
   final List<NutritionIntakePerformer>? performer;
 
   /// [location]
@@ -377,8 +349,8 @@ class NutritionIntake extends DomainResource {
   final List<Reference>? derivedFrom;
 
   /// [reason]
-  /// A reason, Condition or observation for why the food or fluid is /was
-  /// consumed.
+  /// A reason, Condition or observation for why the food (i.e. solid and/or
+  /// liquid) is /was consumed.
   final List<CodeableReference>? reason;
 
   /// [note]
@@ -486,14 +458,6 @@ class NutritionIntake extends DomainResource {
       identifier,
     );
     addField(
-      'instantiatesCanonical',
-      instantiatesCanonical,
-    );
-    addField(
-      'instantiatesUri',
-      instantiatesUri,
-    );
-    addField(
       'basedOn',
       basedOn,
     );
@@ -542,12 +506,8 @@ class NutritionIntake extends DomainResource {
     }
 
     addField(
-      'consumedItem',
-      consumedItem,
-    );
-    addField(
-      'ingredientLabel',
-      ingredientLabel,
+      'nutritionItem',
+      nutritionItem,
     );
     addField(
       'performer',
@@ -585,8 +545,6 @@ class NutritionIntake extends DomainResource {
       'extension',
       'modifierExtension',
       'identifier',
-      'instantiatesCanonical',
-      'instantiatesUri',
       'basedOn',
       'partOf',
       'status',
@@ -597,8 +555,7 @@ class NutritionIntake extends DomainResource {
       'occurrenceX',
       'recorded',
       'reportedX',
-      'consumedItem',
-      'ingredientLabel',
+      'nutritionItem',
       'performer',
       'location',
       'derivedFrom',
@@ -652,14 +609,6 @@ class NutritionIntake extends DomainResource {
         if (identifier != null) {
           fields.addAll(identifier!);
         }
-      case 'instantiatesCanonical':
-        if (instantiatesCanonical != null) {
-          fields.addAll(instantiatesCanonical!);
-        }
-      case 'instantiatesUri':
-        if (instantiatesUri != null) {
-          fields.addAll(instantiatesUri!);
-        }
       case 'basedOn':
         if (basedOn != null) {
           fields.addAll(basedOn!);
@@ -712,11 +661,9 @@ class NutritionIntake extends DomainResource {
         if (reportedX is Reference) {
           fields.add(reportedX!);
         }
-      case 'consumedItem':
-        fields.addAll(consumedItem);
-      case 'ingredientLabel':
-        if (ingredientLabel != null) {
-          fields.addAll(ingredientLabel!);
+      case 'nutritionItem':
+        if (nutritionItem != null) {
+          fields.addAll(nutritionItem!);
         }
       case 'performer':
         if (performer != null) {
@@ -833,18 +780,6 @@ class NutritionIntake extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<FhirCanonical>(
-      instantiatesCanonical,
-      o.instantiatesCanonical,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirUri>(
-      instantiatesUri,
-      o.instantiatesUri,
-    )) {
-      return false;
-    }
     if (!listEquals<Reference>(
       basedOn,
       o.basedOn,
@@ -905,15 +840,9 @@ class NutritionIntake extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<NutritionIntakeConsumedItem>(
-      consumedItem,
-      o.consumedItem,
-    )) {
-      return false;
-    }
-    if (!listEquals<NutritionIntakeIngredientLabel>(
-      ingredientLabel,
-      o.ingredientLabel,
+    if (!listEquals<NutritionIntakeNutritionItem>(
+      nutritionItem,
+      o.nutritionItem,
     )) {
       return false;
     }
@@ -951,31 +880,28 @@ class NutritionIntake extends DomainResource {
   }
 }
 
-/// [NutritionIntakeConsumedItem]
-/// What food or fluid product or item was consumed.
-class NutritionIntakeConsumedItem extends BackboneElement {
+/// [NutritionIntakeNutritionItem]
+/// The nutrition product intended for consumption and/or administration.
+class NutritionIntakeNutritionItem extends BackboneElement {
   /// Primary constructor for
-  /// [NutritionIntakeConsumedItem]
+  /// [NutritionIntakeNutritionItem]
 
-  const NutritionIntakeConsumedItem({
+  const NutritionIntakeNutritionItem({
     super.id,
     super.extension_,
     super.modifierExtension,
-    required this.type,
-    required this.nutritionProduct,
-    this.schedule,
-    this.amount,
-    this.rate,
-    this.notConsumed,
-    this.notConsumedReason,
+    this.type,
+    this.nutritionProduct,
+    this.consumedItem,
+    this.notConsumedItem,
     super.disallowExtensions,
   }) : super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory NutritionIntakeConsumedItem.fromJson(
+  factory NutritionIntakeNutritionItem.fromJson(
     Map<String, dynamic> json,
   ) {
-    return NutritionIntakeConsumedItem(
+    return NutritionIntakeNutritionItem(
       id: JsonParser.parsePrimitive<FhirString>(
         json,
         'id',
@@ -999,56 +925,45 @@ class NutritionIntakeConsumedItem extends BackboneElement {
         json,
         'type',
         CodeableConcept.fromJson,
-      )!,
+      ),
       nutritionProduct: JsonParser.parseObject<CodeableReference>(
         json,
         'nutritionProduct',
         CodeableReference.fromJson,
-      )!,
-      schedule: JsonParser.parseObject<Timing>(
-        json,
-        'schedule',
-        Timing.fromJson,
       ),
-      amount: JsonParser.parseObject<Quantity>(
-        json,
-        'amount',
-        Quantity.fromJson,
-      ),
-      rate: JsonParser.parseObject<Quantity>(
-        json,
-        'rate',
-        Quantity.fromJson,
-      ),
-      notConsumed: JsonParser.parsePrimitive<FhirBoolean>(
-        json,
-        'notConsumed',
-        FhirBoolean.fromJson,
-      ),
-      notConsumedReason: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'notConsumedReason',
-        CodeableConcept.fromJson,
-      ),
+      consumedItem: (json['consumedItem'] as List<dynamic>?)
+          ?.map<NutritionIntakeConsumedItem>(
+            (v) => NutritionIntakeConsumedItem.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      notConsumedItem: (json['notConsumedItem'] as List<dynamic>?)
+          ?.map<NutritionIntakeNotConsumedItem>(
+            (v) => NutritionIntakeNotConsumedItem.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
     );
   }
 
-  /// Deserialize [NutritionIntakeConsumedItem]
+  /// Deserialize [NutritionIntakeNutritionItem]
   /// from a [String] or [YamlMap] object
-  factory NutritionIntakeConsumedItem.fromYaml(
+  factory NutritionIntakeNutritionItem.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return NutritionIntakeConsumedItem.fromJson(
+      return NutritionIntakeNutritionItem.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return NutritionIntakeConsumedItem.fromJson(
+      return NutritionIntakeNutritionItem.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'NutritionIntakeConsumedItem '
+        'NutritionIntakeNutritionItem '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -1056,16 +971,16 @@ class NutritionIntakeConsumedItem extends BackboneElement {
   }
 
   /// Factory constructor for
-  /// [NutritionIntakeConsumedItem]
+  /// [NutritionIntakeNutritionItem]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory NutritionIntakeConsumedItem.fromJsonString(
+  factory NutritionIntakeNutritionItem.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return NutritionIntakeConsumedItem.fromJson(json);
+      return NutritionIntakeNutritionItem.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -1073,44 +988,28 @@ class NutritionIntakeConsumedItem extends BackboneElement {
   }
 
   @override
-  String get fhirType => 'NutritionIntakeConsumedItem';
+  String get fhirType => 'NutritionIntakeNutritionItem';
 
   /// [type]
-  /// Indicates what a category of item that was consumed: e.g., food, fluid,
-  /// enteral, etc.
-  final CodeableConcept type;
+  /// Indicates what a category of item that is intended to be consumed:
+  /// e.g., food (i.e. solid and/or liquid), breastmilk, infant formula,
+  /// supplements, enteral formula.
+  final CodeableConcept? type;
 
   /// [nutritionProduct]
-  /// Identifies the food or fluid product that was consumed. This is
-  /// potentially a link to a resource representing the details of the food
-  /// product (TBD) or a simple attribute carrying a code that identifies the
-  /// food from a known list of foods.
-  final CodeableReference nutritionProduct;
+  /// Identifies the food (i.e. solid and/or liquid) product that is to be
+  /// consumed. This is potentially a link to a resource representing the
+  /// details of the food product or a simple attribute carrying a code that
+  /// identifies the food from a known list of foods.
+  final CodeableReference? nutritionProduct;
 
-  /// [schedule]
-  /// Scheduled frequency of consumption.
-  final Timing? schedule;
+  /// [consumedItem]
+  /// What nutrition item was consumed.
+  final List<NutritionIntakeConsumedItem>? consumedItem;
 
-  /// [amount]
-  /// Quantity of the specified food.
-  final Quantity? amount;
-
-  /// [rate]
-  /// Rate at which enteral feeding was administered.
-  final Quantity? rate;
-
-  /// [notConsumed]
-  /// Indicator when a patient is in a setting where it is helpful to know if
-  /// food was not consumed, such as it was refused, held (as in tube
-  /// feedings), or otherwise not provided. If a consumption is being
-  /// recorded from an app, such as MyFitnessPal, this indicator will likely
-  /// not be used.
-  final FhirBoolean? notConsumed;
-
-  /// [notConsumedReason]
-  /// Document the reason the food or fluid was not consumed, such as
-  /// refused, held, etc.
-  final CodeableConcept? notConsumedReason;
+  /// [notConsumedItem]
+  /// What nutrition item was not consumed.
+  final List<NutritionIntakeNotConsumedItem>? notConsumedItem;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1195,24 +1094,12 @@ class NutritionIntakeConsumedItem extends BackboneElement {
       nutritionProduct,
     );
     addField(
-      'schedule',
-      schedule,
+      'consumedItem',
+      consumedItem,
     );
     addField(
-      'amount',
-      amount,
-    );
-    addField(
-      'rate',
-      rate,
-    );
-    addField(
-      'notConsumed',
-      notConsumed,
-    );
-    addField(
-      'notConsumedReason',
-      notConsumedReason,
+      'notConsumedItem',
+      notConsumedItem,
     );
     return json;
   }
@@ -1226,11 +1113,8 @@ class NutritionIntakeConsumedItem extends BackboneElement {
       'modifierExtension',
       'type',
       'nutritionProduct',
-      'schedule',
-      'amount',
-      'rate',
-      'notConsumed',
-      'notConsumedReason',
+      'consumedItem',
+      'notConsumedItem',
     ];
   }
 
@@ -1256,9 +1140,376 @@ class NutritionIntakeConsumedItem extends BackboneElement {
           fields.addAll(modifierExtension!);
         }
       case 'type':
-        fields.add(type);
+        if (type != null) {
+          fields.add(type!);
+        }
       case 'nutritionProduct':
-        fields.add(nutritionProduct);
+        if (nutritionProduct != null) {
+          fields.add(nutritionProduct!);
+        }
+      case 'consumedItem':
+        if (consumedItem != null) {
+          fields.addAll(consumedItem!);
+        }
+      case 'notConsumedItem':
+        if (notConsumedItem != null) {
+          fields.addAll(notConsumedItem!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  NutritionIntakeNutritionItem clone() => copyWith();
+
+  /// Copy function for [NutritionIntakeNutritionItem]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $NutritionIntakeNutritionItemCopyWith<NutritionIntakeNutritionItem>
+      get copyWith => _$NutritionIntakeNutritionItemCopyWithImpl<
+              NutritionIntakeNutritionItem>(
+            this,
+            (value) => value,
+          );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! NutritionIntakeNutritionItem) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      type,
+      o.type,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      nutritionProduct,
+      o.nutritionProduct,
+    )) {
+      return false;
+    }
+    if (!listEquals<NutritionIntakeConsumedItem>(
+      consumedItem,
+      o.consumedItem,
+    )) {
+      return false;
+    }
+    if (!listEquals<NutritionIntakeNotConsumedItem>(
+      notConsumedItem,
+      o.notConsumedItem,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [NutritionIntakeConsumedItem]
+/// What nutrition item was consumed.
+class NutritionIntakeConsumedItem extends BackboneElement {
+  /// Primary constructor for
+  /// [NutritionIntakeConsumedItem]
+
+  const NutritionIntakeConsumedItem({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.schedule,
+    this.amount,
+    RateXNutritionIntakeConsumedItem? rateX,
+    Quantity? rateQuantity,
+    Ratio? rateRatio,
+    this.totalIntake,
+    super.disallowExtensions,
+  })  : rateX = rateX ?? rateQuantity ?? rateRatio,
+        super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory NutritionIntakeConsumedItem.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return NutritionIntakeConsumedItem(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      schedule: JsonParser.parseObject<Timing>(
+        json,
+        'schedule',
+        Timing.fromJson,
+      ),
+      amount: JsonParser.parseObject<Quantity>(
+        json,
+        'amount',
+        Quantity.fromJson,
+      ),
+      rateX: JsonParser.parsePolymorphic<RateXNutritionIntakeConsumedItem>(
+        json,
+        {
+          'rateQuantity': Quantity.fromJson,
+          'rateRatio': Ratio.fromJson,
+        },
+      ),
+      totalIntake: (json['totalIntake'] as List<dynamic>?)
+          ?.map<NutritionIntakeTotalIntake>(
+            (v) => NutritionIntakeTotalIntake.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  /// Deserialize [NutritionIntakeConsumedItem]
+  /// from a [String] or [YamlMap] object
+  factory NutritionIntakeConsumedItem.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return NutritionIntakeConsumedItem.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return NutritionIntakeConsumedItem.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'NutritionIntakeConsumedItem '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [NutritionIntakeConsumedItem]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory NutritionIntakeConsumedItem.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return NutritionIntakeConsumedItem.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'NutritionIntakeConsumedItem';
+
+  /// [schedule]
+  /// Scheduled frequency of consumption.
+  final Timing? schedule;
+
+  /// [amount]
+  /// Quantity of the specified food (i.e. solid and/or liquid).
+  final Quantity? amount;
+
+  /// [rateX]
+  /// Rate of enteral feeding administration.
+  final RateXNutritionIntakeConsumedItem? rateX;
+
+  /// Getter for [rateQuantity] as a Quantity
+  Quantity? get rateQuantity => rateX?.isAs<Quantity>();
+
+  /// Getter for [rateRatio] as a Ratio
+  Ratio? get rateRatio => rateX?.isAs<Ratio>();
+
+  /// [totalIntake]
+  /// Nutrients and/or energy contained in the intake.
+  final List<NutritionIntakeTotalIntake>? totalIntake;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'schedule',
+      schedule,
+    );
+    addField(
+      'amount',
+      amount,
+    );
+    if (rateX != null) {
+      final fhirType = rateX!.fhirType;
+      addField(
+        'rate${fhirType.capitalize()}',
+        rateX,
+      );
+    }
+
+    addField(
+      'totalIntake',
+      totalIntake,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'schedule',
+      'amount',
+      'rateX',
+      'totalIntake',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
       case 'schedule':
         if (schedule != null) {
           fields.add(schedule!);
@@ -1268,16 +1519,20 @@ class NutritionIntakeConsumedItem extends BackboneElement {
           fields.add(amount!);
         }
       case 'rate':
-        if (rate != null) {
-          fields.add(rate!);
+        fields.add(rateX!);
+      case 'rateX':
+        fields.add(rateX!);
+      case 'rateQuantity':
+        if (rateX is Quantity) {
+          fields.add(rateX!);
         }
-      case 'notConsumed':
-        if (notConsumed != null) {
-          fields.add(notConsumed!);
+      case 'rateRatio':
+        if (rateX is Ratio) {
+          fields.add(rateX!);
         }
-      case 'notConsumedReason':
-        if (notConsumedReason != null) {
-          fields.add(notConsumedReason!);
+      case 'totalIntake':
+        if (totalIntake != null) {
+          fields.addAll(totalIntake!);
         }
       default:
         if (checkValid) {
@@ -1340,18 +1595,6 @@ class NutritionIntakeConsumedItem extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
-      type,
-      o.type,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      nutritionProduct,
-      o.nutritionProduct,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
       schedule,
       o.schedule,
     )) {
@@ -1364,20 +1607,14 @@ class NutritionIntakeConsumedItem extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
-      rate,
-      o.rate,
+      rateX,
+      o.rateX,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      notConsumed,
-      o.notConsumed,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      notConsumedReason,
-      o.notConsumedReason,
+    if (!listEquals<NutritionIntakeTotalIntake>(
+      totalIntake,
+      o.totalIntake,
     )) {
       return false;
     }
@@ -1385,26 +1622,27 @@ class NutritionIntakeConsumedItem extends BackboneElement {
   }
 }
 
-/// [NutritionIntakeIngredientLabel]
-/// Total nutrient amounts for the whole meal, product, serving, etc.
-class NutritionIntakeIngredientLabel extends BackboneElement {
+/// [NutritionIntakeTotalIntake]
+/// Nutrients and/or energy contained in the intake.
+class NutritionIntakeTotalIntake extends BackboneElement {
   /// Primary constructor for
-  /// [NutritionIntakeIngredientLabel]
+  /// [NutritionIntakeTotalIntake]
 
-  const NutritionIntakeIngredientLabel({
+  const NutritionIntakeTotalIntake({
     super.id,
     super.extension_,
     super.modifierExtension,
     required this.nutrient,
     required this.amount,
+    this.energy,
     super.disallowExtensions,
   }) : super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory NutritionIntakeIngredientLabel.fromJson(
+  factory NutritionIntakeTotalIntake.fromJson(
     Map<String, dynamic> json,
   ) {
-    return NutritionIntakeIngredientLabel(
+    return NutritionIntakeTotalIntake(
       id: JsonParser.parsePrimitive<FhirString>(
         json,
         'id',
@@ -1434,25 +1672,30 @@ class NutritionIntakeIngredientLabel extends BackboneElement {
         'amount',
         Quantity.fromJson,
       )!,
+      energy: JsonParser.parseObject<Quantity>(
+        json,
+        'energy',
+        Quantity.fromJson,
+      ),
     );
   }
 
-  /// Deserialize [NutritionIntakeIngredientLabel]
+  /// Deserialize [NutritionIntakeTotalIntake]
   /// from a [String] or [YamlMap] object
-  factory NutritionIntakeIngredientLabel.fromYaml(
+  factory NutritionIntakeTotalIntake.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return NutritionIntakeIngredientLabel.fromJson(
+      return NutritionIntakeTotalIntake.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return NutritionIntakeIngredientLabel.fromJson(
+      return NutritionIntakeTotalIntake.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'NutritionIntakeIngredientLabel '
+        'NutritionIntakeTotalIntake '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -1460,16 +1703,16 @@ class NutritionIntakeIngredientLabel extends BackboneElement {
   }
 
   /// Factory constructor for
-  /// [NutritionIntakeIngredientLabel]
+  /// [NutritionIntakeTotalIntake]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory NutritionIntakeIngredientLabel.fromJsonString(
+  factory NutritionIntakeTotalIntake.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return NutritionIntakeIngredientLabel.fromJson(json);
+      return NutritionIntakeTotalIntake.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -1477,16 +1720,20 @@ class NutritionIntakeIngredientLabel extends BackboneElement {
   }
 
   @override
-  String get fhirType => 'NutritionIntakeIngredientLabel';
+  String get fhirType => 'NutritionIntakeTotalIntake';
 
   /// [nutrient]
-  /// Total nutrient consumed. This could be a macronutrient (protein, fat,
+  /// Type of nutrient consumed. This could be a macronutrient (protein, fat,
   /// carbohydrate), or a vitamin and mineral.
   final CodeableReference nutrient;
 
   /// [amount]
   /// Total amount of nutrient consumed.
   final Quantity amount;
+
+  /// [energy]
+  /// Total energy consumed in kilocalories or kilojoules.
+  final Quantity? energy;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1570,6 +1817,10 @@ class NutritionIntakeIngredientLabel extends BackboneElement {
       'amount',
       amount,
     );
+    addField(
+      'energy',
+      energy,
+    );
     return json;
   }
 
@@ -1582,6 +1833,7 @@ class NutritionIntakeIngredientLabel extends BackboneElement {
       'modifierExtension',
       'nutrient',
       'amount',
+      'energy',
     ];
   }
 
@@ -1610,6 +1862,10 @@ class NutritionIntakeIngredientLabel extends BackboneElement {
         fields.add(nutrient);
       case 'amount':
         fields.add(amount);
+      case 'energy':
+        if (energy != null) {
+          fields.add(energy!);
+        }
       default:
         if (checkValid) {
           throw ArgumentError('Invalid name: $fieldName');
@@ -1629,17 +1885,17 @@ class NutritionIntakeIngredientLabel extends BackboneElement {
   }
 
   @override
-  NutritionIntakeIngredientLabel clone() => copyWith();
+  NutritionIntakeTotalIntake clone() => copyWith();
 
-  /// Copy function for [NutritionIntakeIngredientLabel]
+  /// Copy function for [NutritionIntakeTotalIntake]
   /// Returns a copy of the current instance with the provided fields modified.
   /// If a field is not provided, it will retain its original value.
   /// If a null is provided, this will clearn the field, unless the
   /// field is required, in which case it will keep its current value.
   @override
-  $NutritionIntakeIngredientLabelCopyWith<NutritionIntakeIngredientLabel>
-      get copyWith => _$NutritionIntakeIngredientLabelCopyWithImpl<
-              NutritionIntakeIngredientLabel>(
+  $NutritionIntakeTotalIntakeCopyWith<NutritionIntakeTotalIntake>
+      get copyWith =>
+          _$NutritionIntakeTotalIntakeCopyWithImpl<NutritionIntakeTotalIntake>(
             this,
             (value) => value,
           );
@@ -1647,7 +1903,7 @@ class NutritionIntakeIngredientLabel extends BackboneElement {
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBase? o) {
-    if (o is! NutritionIntakeIngredientLabel) {
+    if (o is! NutritionIntakeTotalIntake) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -1682,12 +1938,349 @@ class NutritionIntakeIngredientLabel extends BackboneElement {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      energy,
+      o.energy,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [NutritionIntakeNotConsumedItem]
+/// What nutrition item was not consumed.
+class NutritionIntakeNotConsumedItem extends BackboneElement {
+  /// Primary constructor for
+  /// [NutritionIntakeNotConsumedItem]
+
+  const NutritionIntakeNotConsumedItem({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.reason,
+    this.schedule,
+    this.amount,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory NutritionIntakeNotConsumedItem.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return NutritionIntakeNotConsumedItem(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      reason: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'reason',
+        CodeableConcept.fromJson,
+      ),
+      schedule: JsonParser.parseObject<Timing>(
+        json,
+        'schedule',
+        Timing.fromJson,
+      ),
+      amount: JsonParser.parseObject<Quantity>(
+        json,
+        'amount',
+        Quantity.fromJson,
+      ),
+    );
+  }
+
+  /// Deserialize [NutritionIntakeNotConsumedItem]
+  /// from a [String] or [YamlMap] object
+  factory NutritionIntakeNotConsumedItem.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return NutritionIntakeNotConsumedItem.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return NutritionIntakeNotConsumedItem.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'NutritionIntakeNotConsumedItem '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [NutritionIntakeNotConsumedItem]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory NutritionIntakeNotConsumedItem.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return NutritionIntakeNotConsumedItem.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'NutritionIntakeNotConsumedItem';
+
+  /// [reason]
+  /// Document the reason the nutrition item was not consumed, such as
+  /// refused, held, etc.
+  final CodeableConcept? reason;
+
+  /// [schedule]
+  /// The intended frequency of consumption that was not followed.
+  final Timing? schedule;
+
+  /// [amount]
+  /// Quantity of the specified food (i.e. solid and/or liquid) that was not
+  /// consumed.
+  final Quantity? amount;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'reason',
+      reason,
+    );
+    addField(
+      'schedule',
+      schedule,
+    );
+    addField(
+      'amount',
+      amount,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'reason',
+      'schedule',
+      'amount',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'reason':
+        if (reason != null) {
+          fields.add(reason!);
+        }
+      case 'schedule':
+        if (schedule != null) {
+          fields.add(schedule!);
+        }
+      case 'amount':
+        if (amount != null) {
+          fields.add(amount!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  NutritionIntakeNotConsumedItem clone() => copyWith();
+
+  /// Copy function for [NutritionIntakeNotConsumedItem]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $NutritionIntakeNotConsumedItemCopyWith<NutritionIntakeNotConsumedItem>
+      get copyWith => _$NutritionIntakeNotConsumedItemCopyWithImpl<
+              NutritionIntakeNotConsumedItem>(
+            this,
+            (value) => value,
+          );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! NutritionIntakeNotConsumedItem) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reason,
+      o.reason,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      schedule,
+      o.schedule,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      amount,
+      o.amount,
+    )) {
+      return false;
+    }
     return true;
   }
 }
 
 /// [NutritionIntakePerformer]
-/// Who performed the intake and how they were involved.
+/// Who or what performed the intake and how they were involved.
 class NutritionIntakePerformer extends BackboneElement {
   /// Primary constructor for
   /// [NutritionIntakePerformer]
@@ -1781,11 +2374,11 @@ class NutritionIntakePerformer extends BackboneElement {
   String get fhirType => 'NutritionIntakePerformer';
 
   /// [function_]
-  /// Type of performer.
+  /// Type of performance.
   final CodeableConcept? function_;
 
   /// [actor]
-  /// Who performed the intake.
+  /// Who or what performed the intake.
   final Reference actor;
   @override
   Map<String, dynamic> toJson() {

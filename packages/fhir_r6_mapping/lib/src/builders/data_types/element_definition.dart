@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'dart:convert';
 import 'package:fhir_r6/fhir_r6.dart'
     show
@@ -8697,7 +8695,7 @@ class ElementDefinitionSlicingBuilder extends ElementBuilder {
   /// [discriminator]
   /// Designates which child elements are used to discriminate between the
   /// slices when processing an instance. If one or more discriminators are
-  /// provided, the value of the child elements in the instance data SHALL
+  /// provided, the values of the child elements in the instance data SHALL
   /// completely distinguish which slice the element in the resource matches
   /// based on the allowed values for those elements in each of the slices.
   List<ElementDefinitionDiscriminatorBuilder>? discriminator;
@@ -9115,7 +9113,7 @@ class ElementDefinitionSlicingBuilder extends ElementBuilder {
 /// [ElementDefinitionDiscriminatorBuilder]
 /// Designates which child elements are used to discriminate between the
 /// slices when processing an instance. If one or more discriminators are
-/// provided, the value of the child elements in the instance data SHALL
+/// provided, the values of the child elements in the instance data SHALL
 /// completely distinguish which slice the element in the resource matches
 /// based on the allowed values for those elements in each of the slices.
 class ElementDefinitionDiscriminatorBuilder extends ElementBuilder {
@@ -13774,7 +13772,7 @@ class ElementDefinitionBindingBuilder extends ElementBuilder {
   BindingStrengthBuilder? strength;
 
   /// [description]
-  /// Describes the intended use of this particular set of codes.
+  /// Free-text guidance on the codes that are appropriate for this element.
   FhirMarkdownBuilder? description;
 
   /// [valueSet]
@@ -14192,6 +14190,7 @@ class ElementDefinitionAdditionalBuilder extends ElementBuilder {
   ElementDefinitionAdditionalBuilder({
     super.id,
     super.extension_,
+    this.key,
     this.purpose,
     this.valueSet,
     this.documentation,
@@ -14233,6 +14232,12 @@ class ElementDefinitionAdditionalBuilder extends ElementBuilder {
             ),
           )
           .toList(),
+      key: JsonParser.parsePrimitive<FhirIdBuilder>(
+        json,
+        'key',
+        FhirIdBuilder.fromJson,
+        '$objectPath.key',
+      ),
       purpose: JsonParser.parsePrimitive<AdditionalBindingPurposeVSBuilder>(
         json,
         'purpose',
@@ -14318,6 +14323,11 @@ class ElementDefinitionAdditionalBuilder extends ElementBuilder {
   @override
   String get fhirType => 'ElementDefinitionAdditional';
 
+  /// [key]
+  /// A unique identifier for the additional binding within the element that
+  /// allows additional bindings to be matched across profiles.
+  FhirIdBuilder? key;
+
   /// [purpose]
   /// The use of this additional binding.
   AdditionalBindingPurposeVSBuilder? purpose;
@@ -14387,6 +14397,7 @@ class ElementDefinitionAdditionalBuilder extends ElementBuilder {
 
     addField('id', id);
     addField('extension', extension_);
+    addField('key', key);
     addField('purpose', purpose);
     addField('valueSet', valueSet);
     addField('documentation', documentation);
@@ -14402,6 +14413,7 @@ class ElementDefinitionAdditionalBuilder extends ElementBuilder {
     return [
       'id',
       'extension',
+      'key',
       'purpose',
       'valueSet',
       'documentation',
@@ -14427,6 +14439,10 @@ class ElementDefinitionAdditionalBuilder extends ElementBuilder {
       case 'extension':
         if (extension_ != null) {
           fields.addAll(extension_!);
+        }
+      case 'key':
+        if (key != null) {
+          fields.add(key!);
         }
       case 'purpose':
         if (purpose != null) {
@@ -14514,6 +14530,26 @@ class ElementDefinitionAdditionalBuilder extends ElementBuilder {
               child,
             ];
             return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'key':
+        {
+          if (child is FhirIdBuilder) {
+            key = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirIdBuilder.tryParse(stringValue);
+              if (converted != null) {
+                key = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -14651,6 +14687,8 @@ class ElementDefinitionAdditionalBuilder extends ElementBuilder {
         return ['FhirStringBuilder'];
       case 'extension':
         return ['FhirExtensionBuilder'];
+      case 'key':
+        return ['FhirIdBuilder'];
       case 'purpose':
         return ['FhirCodeEnumBuilder'];
       case 'valueSet':
@@ -14681,6 +14719,11 @@ class ElementDefinitionAdditionalBuilder extends ElementBuilder {
       case 'extension':
         {
           extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'key':
+        {
+          key = FhirIdBuilder.empty();
           return;
         }
       case 'purpose':
@@ -14724,6 +14767,7 @@ class ElementDefinitionAdditionalBuilder extends ElementBuilder {
   ElementDefinitionAdditionalBuilder copyWith({
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
+    FhirIdBuilder? key,
     AdditionalBindingPurposeVSBuilder? purpose,
     FhirCanonicalBuilder? valueSet,
     FhirMarkdownBuilder? documentation,
@@ -14740,6 +14784,7 @@ class ElementDefinitionAdditionalBuilder extends ElementBuilder {
     final newResult = ElementDefinitionAdditionalBuilder(
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
+      key: key ?? this.key,
       purpose: purpose ?? this.purpose,
       valueSet: valueSet ?? this.valueSet,
       documentation: documentation ?? this.documentation,
@@ -14781,6 +14826,12 @@ class ElementDefinitionAdditionalBuilder extends ElementBuilder {
     if (!listEquals<FhirExtensionBuilder>(
       extension_,
       o.extension_,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      key,
+      o.key,
     )) {
       return false;
     }

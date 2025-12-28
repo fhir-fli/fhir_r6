@@ -832,11 +832,12 @@ class SubscriptionFilterBy extends BackboneElement {
     super.id,
     super.extension_,
     super.modifierExtension,
-    this.resourceType,
+    this.resource,
     required this.filterParameter,
     this.comparator,
     this.modifier,
     required this.value,
+    this.event,
     super.disallowExtensions,
   }) : super();
 
@@ -864,9 +865,9 @@ class SubscriptionFilterBy extends BackboneElement {
             ),
           )
           .toList(),
-      resourceType: JsonParser.parsePrimitive<FhirUri>(
+      resource: JsonParser.parsePrimitive<FhirUri>(
         json,
-        'resourceType',
+        'resource',
         FhirUri.fromJson,
       ),
       filterParameter: JsonParser.parsePrimitive<FhirString>(
@@ -889,6 +890,13 @@ class SubscriptionFilterBy extends BackboneElement {
         'value',
         FhirString.fromJson,
       )!,
+      event: (json['event'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -934,12 +942,12 @@ class SubscriptionFilterBy extends BackboneElement {
   @override
   String get fhirType => 'SubscriptionFilterBy';
 
-  /// [resourceType]
+  /// [resource]
   /// A resource listed in the `SubscriptionTopic` this `Subscription`
   /// references (`SubscriptionTopic.canFilterBy.resource`). This element can
   /// be used to differentiate filters for topics that include more than one
   /// resource type.
-  final FhirUri? resourceType;
+  final FhirUri? resource;
 
   /// [filterParameter]
   /// The filter as defined in the
@@ -958,6 +966,13 @@ class SubscriptionFilterBy extends BackboneElement {
   /// The literal value or resource path as is legal in search - for example,
   /// `Patient/123` or `le1950`.
   final FhirString value;
+
+  /// [event]
+  /// An event filter to be applied to the topic - e.g., if a topic defined
+  /// multiple event triggers, this can be used to specify a single one.
+  /// Multiple values are or-joined, multiple codings within a value are
+  /// and-joined.
+  final List<CodeableConcept>? event;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1034,8 +1049,8 @@ class SubscriptionFilterBy extends BackboneElement {
       modifierExtension,
     );
     addField(
-      'resourceType',
-      resourceType,
+      'resource',
+      resource,
     );
     addField(
       'filterParameter',
@@ -1053,6 +1068,10 @@ class SubscriptionFilterBy extends BackboneElement {
       'value',
       value,
     );
+    addField(
+      'event',
+      event,
+    );
     return json;
   }
 
@@ -1063,11 +1082,12 @@ class SubscriptionFilterBy extends BackboneElement {
       'id',
       'extension',
       'modifierExtension',
-      'resourceType',
+      'resource',
       'filterParameter',
       'comparator',
       'modifier',
       'value',
+      'event',
     ];
   }
 
@@ -1092,9 +1112,9 @@ class SubscriptionFilterBy extends BackboneElement {
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
         }
-      case 'resourceType':
-        if (resourceType != null) {
-          fields.add(resourceType!);
+      case 'resource':
+        if (resource != null) {
+          fields.add(resource!);
         }
       case 'filterParameter':
         fields.add(filterParameter);
@@ -1108,6 +1128,10 @@ class SubscriptionFilterBy extends BackboneElement {
         }
       case 'value':
         fields.add(value);
+      case 'event':
+        if (event != null) {
+          fields.addAll(event!);
+        }
       default:
         if (checkValid) {
           throw ArgumentError('Invalid name: $fieldName');
@@ -1168,8 +1192,8 @@ class SubscriptionFilterBy extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
-      resourceType,
-      o.resourceType,
+      resource,
+      o.resource,
     )) {
       return false;
     }
@@ -1194,6 +1218,12 @@ class SubscriptionFilterBy extends BackboneElement {
     if (!equalsDeepWithNull(
       value,
       o.value,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConcept>(
+      event,
+      o.event,
     )) {
       return false;
     }

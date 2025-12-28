@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'dart:convert';
 import 'package:fhir_r6/fhir_r6.dart'
     show
@@ -56,6 +54,7 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
     super.contact,
     super.description,
     super.useContext,
+    this.actorDefinition,
     super.jurisdiction,
     this.purpose,
     this.copyright,
@@ -88,7 +87,7 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
         date: FhirDateTimeBuilder.empty(),
         kind: CapabilityStatementKindBuilder.values.first,
         fhirVersion: FHIRVersionBuilder.values.first,
-        format: <FhirCodeBuilder>[],
+        format: <SupplementedMimeTypesBuilder>[],
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -250,6 +249,12 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
             ),
           )
           .toList(),
+      actorDefinition: JsonParser.parsePrimitiveList<FhirCanonicalBuilder>(
+        json,
+        'actorDefinition',
+        FhirCanonicalBuilder.fromJson,
+        '$objectPath.actorDefinition',
+      ),
       jurisdiction: (json['jurisdiction'] as List<dynamic>?)
           ?.map<CodeableConceptBuilder>(
             (v) => CodeableConceptBuilder.fromJson(
@@ -315,16 +320,16 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
         FHIRVersionBuilder.fromJson,
         '$objectPath.fhirVersion',
       ),
-      format: JsonParser.parsePrimitiveList<FhirCodeBuilder>(
+      format: JsonParser.parsePrimitiveList<SupplementedMimeTypesBuilder>(
         json,
         'format',
-        FhirCodeBuilder.fromJson,
+        SupplementedMimeTypesBuilder.fromJson,
         '$objectPath.format',
       ),
-      patchFormat: JsonParser.parsePrimitiveList<FhirCodeBuilder>(
+      patchFormat: JsonParser.parsePrimitiveList<PatchMimeTypesBuilder>(
         json,
         'patchFormat',
-        FhirCodeBuilder.fromJson,
+        PatchMimeTypesBuilder.fromJson,
         '$objectPath.patchFormat',
       ),
       acceptLanguage: JsonParser.parsePrimitiveList<AllLanguagesBuilder>(
@@ -443,6 +448,12 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
   /// A short, descriptive, user-friendly title for the capability statement.
   FhirStringBuilder? title;
 
+  /// [actorDefinition]
+  /// ActorDefinitions to describe the specific sets of functionality
+  /// supported by (or that should be supported by) systems (via
+  /// obligations).
+  List<FhirCanonicalBuilder>? actorDefinition;
+
   /// [purpose]
   /// Explanation of why this capability statement is needed and why it has
   /// been designed as it has.
@@ -506,12 +517,12 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
   /// [format]
   /// A list of the formats supported by this implementation using their
   /// content types.
-  List<FhirCodeBuilder>? format;
+  List<SupplementedMimeTypesBuilder>? format;
 
   /// [patchFormat]
   /// A list of the patch formats supported by this implementation using
   /// their content types.
-  List<FhirCodeBuilder>? patchFormat;
+  List<PatchMimeTypesBuilder>? patchFormat;
 
   /// [acceptLanguage]
   /// A list of the languages supported by this implementation that are
@@ -600,6 +611,7 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
     addField('contact', contact);
     addField('description', description);
     addField('useContext', useContext);
+    addField('actorDefinition', actorDefinition);
     addField('jurisdiction', jurisdiction);
     addField('purpose', purpose);
     addField('copyright', copyright);
@@ -645,6 +657,7 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
       'contact',
       'description',
       'useContext',
+      'actorDefinition',
       'jurisdiction',
       'purpose',
       'copyright',
@@ -769,6 +782,10 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
       case 'useContext':
         if (useContext != null) {
           fields.addAll(useContext!);
+        }
+      case 'actorDefinition':
+        if (actorDefinition != null) {
+          fields.addAll(actorDefinition!);
         }
       case 'jurisdiction':
         if (jurisdiction != null) {
@@ -1261,6 +1278,55 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'actorDefinition':
+        {
+          if (child is List<FhirCanonicalBuilder>) {
+            // Replace or create new list
+            actorDefinition = child;
+            return;
+          } else if (child is FhirCanonicalBuilder) {
+            // Add single element to existing list or create new list
+            actorDefinition = [
+              ...(actorDefinition ?? []),
+              child,
+            ];
+            return;
+          } else if (child is List<PrimitiveTypeBuilder>) {
+            // Try to convert list of primitive types
+            final convertedList = <FhirCanonicalBuilder>[];
+            for (final element in child) {
+              try {
+                final stringValue = element.toString();
+                final converted = FhirCanonicalBuilder.tryParse(stringValue);
+                if (converted != null) {
+                  convertedList.add(converted);
+                }
+              } catch (e) {
+                // Continue if conversion fails
+              }
+            }
+            if (convertedList.isNotEmpty) {
+              actorDefinition = convertedList;
+              return;
+            }
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert a single primitive
+            try {
+              final stringValue = child.toString();
+              final converted = FhirCanonicalBuilder.tryParse(stringValue);
+              if (converted != null) {
+                actorDefinition = [
+                  ...(actorDefinition ?? []),
+                  converted,
+                ];
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'jurisdiction':
         {
           if (child is List<CodeableConceptBuilder>) {
@@ -1499,11 +1565,11 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
         }
       case 'format':
         {
-          if (child is List<FhirCodeBuilder>) {
+          if (child is List<SupplementedMimeTypesBuilder>) {
             // Replace or create new list
             format = child;
             return;
-          } else if (child is FhirCodeBuilder) {
+          } else if (child is SupplementedMimeTypesBuilder) {
             // Add single element to existing list or create new list
             format = [
               ...(format ?? []),
@@ -1512,13 +1578,16 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
             return;
           } else if (child is List<PrimitiveTypeBuilder>) {
             // Try to convert list of primitive types
-            final convertedList = <FhirCodeBuilder>[];
+            final convertedList = <SupplementedMimeTypesBuilder>[];
             for (final element in child) {
               try {
                 final stringValue = element.toString();
-                final converted = FhirCodeBuilder.tryParse(stringValue);
-                if (converted != null) {
+                // For enums, try to create directly from the string value
+                try {
+                  final converted = SupplementedMimeTypesBuilder(stringValue);
                   convertedList.add(converted);
+                } catch (e) {
+                  // Continue if enum creation fails
                 }
               } catch (e) {
                 // Continue if conversion fails
@@ -1532,13 +1601,16 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
             // Try to convert a single primitive
             try {
               final stringValue = child.toString();
-              final converted = FhirCodeBuilder.tryParse(stringValue);
-              if (converted != null) {
+              // For enums, try to create directly from the string value
+              try {
+                final converted = SupplementedMimeTypesBuilder(stringValue);
                 format = [
                   ...(format ?? []),
                   converted,
                 ];
                 return;
+              } catch (e) {
+                // Continue if enum creation fails
               }
             } catch (e) {
               // Continue if conversion fails
@@ -1548,11 +1620,11 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
         }
       case 'patchFormat':
         {
-          if (child is List<FhirCodeBuilder>) {
+          if (child is List<PatchMimeTypesBuilder>) {
             // Replace or create new list
             patchFormat = child;
             return;
-          } else if (child is FhirCodeBuilder) {
+          } else if (child is PatchMimeTypesBuilder) {
             // Add single element to existing list or create new list
             patchFormat = [
               ...(patchFormat ?? []),
@@ -1561,13 +1633,16 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
             return;
           } else if (child is List<PrimitiveTypeBuilder>) {
             // Try to convert list of primitive types
-            final convertedList = <FhirCodeBuilder>[];
+            final convertedList = <PatchMimeTypesBuilder>[];
             for (final element in child) {
               try {
                 final stringValue = element.toString();
-                final converted = FhirCodeBuilder.tryParse(stringValue);
-                if (converted != null) {
+                // For enums, try to create directly from the string value
+                try {
+                  final converted = PatchMimeTypesBuilder(stringValue);
                   convertedList.add(converted);
+                } catch (e) {
+                  // Continue if enum creation fails
                 }
               } catch (e) {
                 // Continue if conversion fails
@@ -1581,13 +1656,16 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
             // Try to convert a single primitive
             try {
               final stringValue = child.toString();
-              final converted = FhirCodeBuilder.tryParse(stringValue);
-              if (converted != null) {
+              // For enums, try to create directly from the string value
+              try {
+                final converted = PatchMimeTypesBuilder(stringValue);
                 patchFormat = [
                   ...(patchFormat ?? []),
                   converted,
                 ];
                 return;
+              } catch (e) {
+                // Continue if enum creation fails
               }
             } catch (e) {
               // Continue if conversion fails
@@ -1807,6 +1885,8 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
         return ['FhirMarkdownBuilder'];
       case 'useContext':
         return ['UsageContextBuilder'];
+      case 'actorDefinition':
+        return ['FhirCanonicalBuilder'];
       case 'jurisdiction':
         return ['CodeableConceptBuilder'];
       case 'purpose':
@@ -1828,9 +1908,9 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
       case 'fhirVersion':
         return ['FhirCodeEnumBuilder'];
       case 'format':
-        return ['FhirCodeBuilder'];
+        return ['FhirCodeEnumBuilder'];
       case 'patchFormat':
-        return ['FhirCodeBuilder'];
+        return ['FhirCodeEnumBuilder'];
       case 'acceptLanguage':
         return ['FhirCodeEnumBuilder'];
       case 'implementationGuide':
@@ -1963,6 +2043,11 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
           useContext = <UsageContextBuilder>[];
           return;
         }
+      case 'actorDefinition':
+        {
+          actorDefinition = <FhirCanonicalBuilder>[];
+          return;
+        }
       case 'jurisdiction':
         {
           jurisdiction = <CodeableConceptBuilder>[];
@@ -2015,12 +2100,12 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
         }
       case 'format':
         {
-          format = <FhirCodeBuilder>[];
+          format = <SupplementedMimeTypesBuilder>[];
           return;
         }
       case 'patchFormat':
         {
-          patchFormat = <FhirCodeBuilder>[];
+          patchFormat = <PatchMimeTypesBuilder>[];
           return;
         }
       case 'acceptLanguage':
@@ -2078,6 +2163,7 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
     List<ContactDetailBuilder>? contact,
     FhirMarkdownBuilder? description,
     List<UsageContextBuilder>? useContext,
+    List<FhirCanonicalBuilder>? actorDefinition,
     List<CodeableConceptBuilder>? jurisdiction,
     FhirMarkdownBuilder? purpose,
     FhirMarkdownBuilder? copyright,
@@ -2088,8 +2174,8 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
     CapabilityStatementSoftwareBuilder? software,
     CapabilityStatementImplementationBuilder? implementation,
     FHIRVersionBuilder? fhirVersion,
-    List<FhirCodeBuilder>? format,
-    List<FhirCodeBuilder>? patchFormat,
+    List<SupplementedMimeTypesBuilder>? format,
+    List<PatchMimeTypesBuilder>? patchFormat,
     List<AllLanguagesBuilder>? acceptLanguage,
     List<FhirCanonicalBuilder>? implementationGuide,
     List<CapabilityStatementRestBuilder>? rest,
@@ -2128,6 +2214,7 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
       contact: contact ?? this.contact,
       description: description ?? this.description,
       useContext: useContext ?? this.useContext,
+      actorDefinition: actorDefinition ?? this.actorDefinition,
       jurisdiction: jurisdiction ?? this.jurisdiction,
       purpose: purpose ?? this.purpose,
       copyright: copyright ?? this.copyright,
@@ -2297,6 +2384,12 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
     )) {
       return false;
     }
+    if (!listEquals<FhirCanonicalBuilder>(
+      actorDefinition,
+      o.actorDefinition,
+    )) {
+      return false;
+    }
     if (!listEquals<CodeableConceptBuilder>(
       jurisdiction,
       o.jurisdiction,
@@ -2357,13 +2450,13 @@ class CapabilityStatementBuilder extends CanonicalResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<FhirCodeBuilder>(
+    if (!listEquals<SupplementedMimeTypesBuilder>(
       format,
       o.format,
     )) {
       return false;
     }
-    if (!listEquals<FhirCodeBuilder>(
+    if (!listEquals<PatchMimeTypesBuilder>(
       patchFormat,
       o.patchFormat,
     )) {
@@ -4789,6 +4882,7 @@ class CapabilityStatementResourceBuilder extends BackboneElementBuilder {
     super.extension_,
     super.modifierExtension,
     this.type,
+    this.definition,
     this.profile,
     this.supportedProfile,
     this.documentation,
@@ -4815,7 +4909,7 @@ class CapabilityStatementResourceBuilder extends BackboneElementBuilder {
   /// For Builder classes, no fields are required
   factory CapabilityStatementResourceBuilder.empty() =>
       CapabilityStatementResourceBuilder(
-        type: FhirCodeBuilder.empty(),
+        type: ExtendedResourceTypesBuilder.values.first,
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -4850,11 +4944,17 @@ class CapabilityStatementResourceBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      type: JsonParser.parsePrimitive<FhirCodeBuilder>(
+      type: JsonParser.parsePrimitive<ExtendedResourceTypesBuilder>(
         json,
         'type',
-        FhirCodeBuilder.fromJson,
+        ExtendedResourceTypesBuilder.fromJson,
         '$objectPath.type',
+      ),
+      definition: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
+        json,
+        'definition',
+        FhirCanonicalBuilder.fromJson,
+        '$objectPath.definition',
       ),
       profile: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
         json,
@@ -5018,8 +5118,16 @@ class CapabilityStatementResourceBuilder extends BackboneElementBuilder {
   String get fhirType => 'CapabilityStatementResource';
 
   /// [type]
-  /// A type of resource exposed via the restful interface.
-  FhirCodeBuilder? type;
+  /// A type of resource exposed via the restful interface, either a resource
+  /// defined in this specification, or an [additional
+  /// resource](resource.html#additional).
+  ExtendedResourceTypesBuilder? type;
+
+  /// [definition]
+  /// The definition of the resource, if the resource is an additional
+  /// resource. If it is not an additional resource, then this element must
+  /// not be present.
+  FhirCanonicalBuilder? definition;
 
   /// [profile]
   /// A system-wide profile that is applied across *all* instances of the
@@ -5157,6 +5265,7 @@ class CapabilityStatementResourceBuilder extends BackboneElementBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('type', type);
+    addField('definition', definition);
     addField('profile', profile);
     addField('supportedProfile', supportedProfile);
     addField('documentation', documentation);
@@ -5185,6 +5294,7 @@ class CapabilityStatementResourceBuilder extends BackboneElementBuilder {
       'extension',
       'modifierExtension',
       'type',
+      'definition',
       'profile',
       'supportedProfile',
       'documentation',
@@ -5229,6 +5339,10 @@ class CapabilityStatementResourceBuilder extends BackboneElementBuilder {
       case 'type':
         if (type != null) {
           fields.add(type!);
+        }
+      case 'definition':
+        if (definition != null) {
+          fields.add(definition!);
         }
       case 'profile':
         if (profile != null) {
@@ -5381,16 +5495,39 @@ class CapabilityStatementResourceBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          if (child is FhirCodeBuilder) {
+          if (child is ExtendedResourceTypesBuilder) {
             type = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
             try {
               final stringValue = child.toString();
-              final converted = FhirCodeBuilder.tryParse(stringValue);
-              if (converted != null) {
+              // For enums, try to create directly from the string value
+              try {
+                final converted = ExtendedResourceTypesBuilder(stringValue);
                 type = converted;
+                return;
+              } catch (e) {
+                // Continue if enum creation fails
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'definition':
+        {
+          if (child is FhirCanonicalBuilder) {
+            definition = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirCanonicalBuilder.tryParse(stringValue);
+              if (converted != null) {
+                definition = converted;
                 return;
               }
             } catch (e) {
@@ -5875,7 +6012,9 @@ class CapabilityStatementResourceBuilder extends BackboneElementBuilder {
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
       case 'type':
-        return ['FhirCodeBuilder'];
+        return ['FhirCodeEnumBuilder'];
+      case 'definition':
+        return ['FhirCanonicalBuilder'];
       case 'profile':
         return ['FhirCanonicalBuilder'];
       case 'supportedProfile':
@@ -5937,7 +6076,12 @@ class CapabilityStatementResourceBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          type = FhirCodeBuilder.empty();
+          type = ExtendedResourceTypesBuilder.empty();
+          return;
+        }
+      case 'definition':
+        {
+          definition = FhirCanonicalBuilder.empty();
           return;
         }
       case 'profile':
@@ -6037,7 +6181,8 @@ class CapabilityStatementResourceBuilder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    FhirCodeBuilder? type,
+    ExtendedResourceTypesBuilder? type,
+    FhirCanonicalBuilder? definition,
     FhirCanonicalBuilder? profile,
     List<FhirCanonicalBuilder>? supportedProfile,
     FhirMarkdownBuilder? documentation,
@@ -6067,6 +6212,7 @@ class CapabilityStatementResourceBuilder extends BackboneElementBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       type: type ?? this.type,
+      definition: definition ?? this.definition,
       profile: profile ?? this.profile,
       supportedProfile: supportedProfile ?? this.supportedProfile,
       documentation: documentation ?? this.documentation,
@@ -6131,6 +6277,12 @@ class CapabilityStatementResourceBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       type,
       o.type,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      definition,
+      o.definition,
     )) {
       return false;
     }

@@ -5,7 +5,12 @@ import 'package:yaml/yaml.dart';
 part 'insurance_plan.g.dart';
 
 /// [InsurancePlan]
-/// Details of a Health Insurance product/plan provided by an organization.
+/// InsurancePlan describes the costs to the subscriber or beneficiary
+/// associated with benefits, as well as additional information about the
+/// offering, such as who administers the plan, a coverage area, contact
+/// information, etc. The specific benefits covered by the plan are
+/// described in the `InsuranceProduct` referenced in
+/// `InsurancePlan.product`.
 class InsurancePlan extends DomainResource {
   /// Primary constructor for
   /// [InsurancePlan]
@@ -20,19 +25,12 @@ class InsurancePlan extends DomainResource {
     super.extension_,
     super.modifierExtension,
     this.identifier,
-    this.status,
     this.type,
-    this.name,
-    this.alias,
-    this.period,
-    this.ownedBy,
-    this.administeredBy,
+    this.product,
     this.coverageArea,
-    this.contact,
-    this.endpoint,
     this.network,
-    this.coverage,
-    this.plan,
+    this.generalCost,
+    this.specificCost,
   }) : super(
           resourceType: R6ResourceType.InsurancePlan,
         );
@@ -95,58 +93,17 @@ class InsurancePlan extends DomainResource {
             ),
           )
           .toList(),
-      status: JsonParser.parsePrimitive<PublicationStatus>(
+      type: JsonParser.parseObject<CodeableConcept>(
         json,
-        'status',
-        PublicationStatus.fromJson,
+        'type',
+        CodeableConcept.fromJson,
       ),
-      type: (json['type'] as List<dynamic>?)
-          ?.map<CodeableConcept>(
-            (v) => CodeableConcept.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      name: JsonParser.parsePrimitive<FhirString>(
+      product: JsonParser.parseObject<Reference>(
         json,
-        'name',
-        FhirString.fromJson,
-      ),
-      alias: JsonParser.parsePrimitiveList<FhirString>(
-        json,
-        'alias',
-        FhirString.fromJson,
-      ),
-      period: JsonParser.parseObject<Period>(
-        json,
-        'period',
-        Period.fromJson,
-      ),
-      ownedBy: JsonParser.parseObject<Reference>(
-        json,
-        'ownedBy',
-        Reference.fromJson,
-      ),
-      administeredBy: JsonParser.parseObject<Reference>(
-        json,
-        'administeredBy',
+        'product',
         Reference.fromJson,
       ),
       coverageArea: (json['coverageArea'] as List<dynamic>?)
-          ?.map<Reference>(
-            (v) => Reference.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      contact: (json['contact'] as List<dynamic>?)
-          ?.map<ExtendedContactDetail>(
-            (v) => ExtendedContactDetail.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      endpoint: (json['endpoint'] as List<dynamic>?)
           ?.map<Reference>(
             (v) => Reference.fromJson(
               {...v as Map<String, dynamic>},
@@ -160,16 +117,16 @@ class InsurancePlan extends DomainResource {
             ),
           )
           .toList(),
-      coverage: (json['coverage'] as List<dynamic>?)
-          ?.map<InsurancePlanCoverage>(
-            (v) => InsurancePlanCoverage.fromJson(
+      generalCost: (json['generalCost'] as List<dynamic>?)
+          ?.map<InsurancePlanGeneralCost>(
+            (v) => InsurancePlanGeneralCost.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
           .toList(),
-      plan: (json['plan'] as List<dynamic>?)
-          ?.map<InsurancePlanPlan>(
-            (v) => InsurancePlanPlan.fromJson(
+      specificCost: (json['specificCost'] as List<dynamic>?)
+          ?.map<InsurancePlanSpecificCost>(
+            (v) => InsurancePlanSpecificCost.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -220,73 +177,34 @@ class InsurancePlan extends DomainResource {
   String get fhirType => 'InsurancePlan';
 
   /// [identifier]
-  /// Business identifiers assigned to this health insurance product which
-  /// remain constant as the resource is updated and propagates from server
-  /// to server.
+  /// Identifiers, such as the plan ID and/or group ID associated with the
+  /// insurance plan.
   final List<Identifier>? identifier;
 
-  /// [status]
-  /// The current state of the health insurance product.
-  final PublicationStatus? status;
-
   /// [type]
-  /// The kind of health insurance product.
-  final List<CodeableConcept>? type;
+  /// Type of plan. For example, "Platinum" or "High Deductable".
+  final CodeableConcept? type;
 
-  /// [name]
-  /// Official name of the health insurance product as designated by the
-  /// owner.
-  final FhirString? name;
-
-  /// [alias]
-  /// A list of alternate names that the product is known as, or was known as
-  /// in the past.
-  final List<FhirString>? alias;
-
-  /// [period]
-  /// The period of time that the health insurance product is available.
-  final Period? period;
-
-  /// [ownedBy]
-  /// The entity that is providing the health insurance product and
-  /// underwriting the risk. This is typically an insurance carriers, other
-  /// third-party payers, or health plan sponsors comonly referred to as
-  /// 'payers'.
-  final Reference? ownedBy;
-
-  /// [administeredBy]
-  /// An organization which administer other services such as underwriting,
-  /// customer service and/or claims processing on behalf of the health
-  /// insurance product owner.
-  final Reference? administeredBy;
+  /// [product]
+  /// The product that this plan is available under.
+  final Reference? product;
 
   /// [coverageArea]
-  /// The geographic region in which a health insurance product's benefits
+  /// The geographic region in which a health insurance plan's benefits
   /// apply.
   final List<Reference>? coverageArea;
 
-  /// [contact]
-  /// The contact details of communication devices available relevant to the
-  /// specific Insurance Plan/Product. This can include addresses, phone
-  /// numbers, fax numbers, mobile numbers, email addresses and web sites.
-  final List<ExtendedContactDetail>? contact;
-
-  /// [endpoint]
-  /// The technical endpoints providing access to services operated for the
-  /// health insurance product.
-  final List<Reference>? endpoint;
-
   /// [network]
-  /// Reference to the network included in the health insurance product.
+  /// Reference to the network that providing the type of coverage.
   final List<Reference>? network;
 
-  /// [coverage]
-  /// Details about the coverage offered by the insurance product.
-  final List<InsurancePlanCoverage>? coverage;
+  /// [generalCost]
+  /// Overall costs associated with the plan.
+  final List<InsurancePlanGeneralCost>? generalCost;
 
-  /// [plan]
-  /// Details about an insurance plan.
-  final List<InsurancePlanPlan>? plan;
+  /// [specificCost]
+  /// Costs associated with the coverage provided by the product-plan.
+  final List<InsurancePlanSpecificCost>? specificCost;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -388,56 +306,28 @@ class InsurancePlan extends DomainResource {
       identifier,
     );
     addField(
-      'status',
-      status,
-    );
-    addField(
       'type',
       type,
     );
     addField(
-      'name',
-      name,
-    );
-    addField(
-      'alias',
-      alias,
-    );
-    addField(
-      'period',
-      period,
-    );
-    addField(
-      'ownedBy',
-      ownedBy,
-    );
-    addField(
-      'administeredBy',
-      administeredBy,
+      'product',
+      product,
     );
     addField(
       'coverageArea',
       coverageArea,
     );
     addField(
-      'contact',
-      contact,
-    );
-    addField(
-      'endpoint',
-      endpoint,
-    );
-    addField(
       'network',
       network,
     );
     addField(
-      'coverage',
-      coverage,
+      'generalCost',
+      generalCost,
     );
     addField(
-      'plan',
-      plan,
+      'specificCost',
+      specificCost,
     );
     return json;
   }
@@ -455,19 +345,12 @@ class InsurancePlan extends DomainResource {
       'extension',
       'modifierExtension',
       'identifier',
-      'status',
       'type',
-      'name',
-      'alias',
-      'period',
-      'ownedBy',
-      'administeredBy',
+      'product',
       'coverageArea',
-      'contact',
-      'endpoint',
       'network',
-      'coverage',
-      'plan',
+      'generalCost',
+      'specificCost',
     ];
   }
 
@@ -516,57 +399,29 @@ class InsurancePlan extends DomainResource {
         if (identifier != null) {
           fields.addAll(identifier!);
         }
-      case 'status':
-        if (status != null) {
-          fields.add(status!);
-        }
       case 'type':
         if (type != null) {
-          fields.addAll(type!);
+          fields.add(type!);
         }
-      case 'name':
-        if (name != null) {
-          fields.add(name!);
-        }
-      case 'alias':
-        if (alias != null) {
-          fields.addAll(alias!);
-        }
-      case 'period':
-        if (period != null) {
-          fields.add(period!);
-        }
-      case 'ownedBy':
-        if (ownedBy != null) {
-          fields.add(ownedBy!);
-        }
-      case 'administeredBy':
-        if (administeredBy != null) {
-          fields.add(administeredBy!);
+      case 'product':
+        if (product != null) {
+          fields.add(product!);
         }
       case 'coverageArea':
         if (coverageArea != null) {
           fields.addAll(coverageArea!);
         }
-      case 'contact':
-        if (contact != null) {
-          fields.addAll(contact!);
-        }
-      case 'endpoint':
-        if (endpoint != null) {
-          fields.addAll(endpoint!);
-        }
       case 'network':
         if (network != null) {
           fields.addAll(network!);
         }
-      case 'coverage':
-        if (coverage != null) {
-          fields.addAll(coverage!);
+      case 'generalCost':
+        if (generalCost != null) {
+          fields.addAll(generalCost!);
         }
-      case 'plan':
-        if (plan != null) {
-          fields.addAll(plan!);
+      case 'specificCost':
+        if (specificCost != null) {
+          fields.addAll(specificCost!);
         }
       default:
         if (checkValid) {
@@ -664,1433 +519,14 @@ class InsurancePlan extends DomainResource {
       return false;
     }
     if (!equalsDeepWithNull(
-      status,
-      o.status,
-    )) {
-      return false;
-    }
-    if (!listEquals<CodeableConcept>(
       type,
       o.type,
     )) {
       return false;
     }
     if (!equalsDeepWithNull(
-      name,
-      o.name,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirString>(
-      alias,
-      o.alias,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      period,
-      o.period,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      ownedBy,
-      o.ownedBy,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      administeredBy,
-      o.administeredBy,
-    )) {
-      return false;
-    }
-    if (!listEquals<Reference>(
-      coverageArea,
-      o.coverageArea,
-    )) {
-      return false;
-    }
-    if (!listEquals<ExtendedContactDetail>(
-      contact,
-      o.contact,
-    )) {
-      return false;
-    }
-    if (!listEquals<Reference>(
-      endpoint,
-      o.endpoint,
-    )) {
-      return false;
-    }
-    if (!listEquals<Reference>(
-      network,
-      o.network,
-    )) {
-      return false;
-    }
-    if (!listEquals<InsurancePlanCoverage>(
-      coverage,
-      o.coverage,
-    )) {
-      return false;
-    }
-    if (!listEquals<InsurancePlanPlan>(
-      plan,
-      o.plan,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [InsurancePlanCoverage]
-/// Details about the coverage offered by the insurance product.
-class InsurancePlanCoverage extends BackboneElement {
-  /// Primary constructor for
-  /// [InsurancePlanCoverage]
-
-  const InsurancePlanCoverage({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    required this.type,
-    this.network,
-    required this.benefit,
-    super.disallowExtensions,
-  }) : super();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory InsurancePlanCoverage.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return InsurancePlanCoverage(
-      id: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'id',
-        FhirString.fromJson,
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      type: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'type',
-        CodeableConcept.fromJson,
-      )!,
-      network: (json['network'] as List<dynamic>?)
-          ?.map<Reference>(
-            (v) => Reference.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      benefit: (json['benefit'] as List<dynamic>)
-          .map<InsurancePlanBenefit>(
-            (v) => InsurancePlanBenefit.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-    );
-  }
-
-  /// Deserialize [InsurancePlanCoverage]
-  /// from a [String] or [YamlMap] object
-  factory InsurancePlanCoverage.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return InsurancePlanCoverage.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return InsurancePlanCoverage.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'InsurancePlanCoverage '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [InsurancePlanCoverage]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory InsurancePlanCoverage.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return InsurancePlanCoverage.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'InsurancePlanCoverage';
-
-  /// [type]
-  /// Type of coverage (Medical; Dental; Mental Health; Substance Abuse;
-  /// Vision; Drug; Short Term; Long Term Care; Hospice; Home Health).
-  final CodeableConcept type;
-
-  /// [network]
-  /// Reference to the network that providing the type of coverage.
-  final List<Reference>? network;
-
-  /// [benefit]
-  /// Specific benefits under this type of coverage.
-  final List<InsurancePlanBenefit> benefit;
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    bool isNonEmpty(dynamic val) {
-      if (val == null) return false;
-      if (val is List && val.isEmpty) return false;
-      if (val is Map && val.isEmpty) return false;
-      return true;
-    }
-
-    void addField(String key, dynamic field) {
-      if (field == null) return;
-      if (!(field is FhirBase? || field is List<FhirBase>?)) {
-        throw ArgumentError('"field" must be a FhirBase type');
-      }
-      if (field is PrimitiveType) {
-        final fieldMap = field.toJson();
-        final val = fieldMap['value'];
-        final ext = fieldMap['_value'];
-        final hasVal = isNonEmpty(val);
-        final hasExt = isNonEmpty(ext);
-        if (hasVal) json[key] = val;
-        if (hasExt) json['_$key'] = ext;
-      } else if (field is List<FhirBase>) {
-        if (field.isEmpty) return;
-        final isPrimitive = field.first is PrimitiveType;
-        final tempList = <dynamic>[];
-        final tempExtensions = <dynamic>[];
-        for (final e in field) {
-          final itemMap = e.toJson();
-          if (!isNonEmpty(itemMap)) {
-            continue;
-          }
-          if (isPrimitive) {
-            final v = itemMap['value'];
-            final x = itemMap['_value'];
-            tempList.add(v);
-            tempExtensions.add(x);
-          } else {
-            tempList.add(itemMap);
-          }
-        }
-        if (tempList.isEmpty) return;
-        if (isPrimitive) {
-          final hasAnyValues = tempList.any((v) => v != null);
-          if (hasAnyValues) {
-            json[key] = tempList;
-          }
-          final anyExt = tempExtensions.any(isNonEmpty);
-          if (anyExt) {
-            json['_$key'] = tempExtensions;
-          }
-        } else {
-          json[key] = tempList;
-        }
-      } else if (field is FhirBase) {
-        final subMap = field.toJson();
-        if (isNonEmpty(subMap)) {
-          json[key] = subMap;
-        }
-      }
-    }
-
-    addField(
-      'id',
-      id,
-    );
-    addField(
-      'extension',
-      extension_,
-    );
-    addField(
-      'modifierExtension',
-      modifierExtension,
-    );
-    addField(
-      'type',
-      type,
-    );
-    addField(
-      'network',
-      network,
-    );
-    addField(
-      'benefit',
-      benefit,
-    );
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'type',
-      'network',
-      'benefit',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBase> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBase>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'type':
-        fields.add(type);
-      case 'network':
-        if (network != null) {
-          fields.addAll(network!);
-        }
-      case 'benefit':
-        fields.addAll(benefit);
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBase? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  InsurancePlanCoverage clone() => copyWith();
-
-  /// Copy function for [InsurancePlanCoverage]
-  /// Returns a copy of the current instance with the provided fields modified.
-  /// If a field is not provided, it will retain its original value.
-  /// If a null is provided, this will clearn the field, unless the
-  /// field is required, in which case it will keep its current value.
-  @override
-  $InsurancePlanCoverageCopyWith<InsurancePlanCoverage> get copyWith =>
-      _$InsurancePlanCoverageCopyWithImpl<InsurancePlanCoverage>(
-        this,
-        (value) => value,
-      );
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBase? o) {
-    if (o is! InsurancePlanCoverage) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      type,
-      o.type,
-    )) {
-      return false;
-    }
-    if (!listEquals<Reference>(
-      network,
-      o.network,
-    )) {
-      return false;
-    }
-    if (!listEquals<InsurancePlanBenefit>(
-      benefit,
-      o.benefit,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [InsurancePlanBenefit]
-/// Specific benefits under this type of coverage.
-class InsurancePlanBenefit extends BackboneElement {
-  /// Primary constructor for
-  /// [InsurancePlanBenefit]
-
-  const InsurancePlanBenefit({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    required this.type,
-    this.requirement,
-    this.limit,
-    super.disallowExtensions,
-  }) : super();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory InsurancePlanBenefit.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return InsurancePlanBenefit(
-      id: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'id',
-        FhirString.fromJson,
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      type: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'type',
-        CodeableConcept.fromJson,
-      )!,
-      requirement: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'requirement',
-        FhirString.fromJson,
-      ),
-      limit: (json['limit'] as List<dynamic>?)
-          ?.map<InsurancePlanLimit>(
-            (v) => InsurancePlanLimit.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-    );
-  }
-
-  /// Deserialize [InsurancePlanBenefit]
-  /// from a [String] or [YamlMap] object
-  factory InsurancePlanBenefit.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return InsurancePlanBenefit.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return InsurancePlanBenefit.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'InsurancePlanBenefit '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [InsurancePlanBenefit]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory InsurancePlanBenefit.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return InsurancePlanBenefit.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'InsurancePlanBenefit';
-
-  /// [type]
-  /// Type of benefit (primary care; speciality care; inpatient; outpatient).
-  final CodeableConcept type;
-
-  /// [requirement]
-  /// The referral requirements to have access/coverage for this benefit.
-  final FhirString? requirement;
-
-  /// [limit]
-  /// The specific limits on the benefit.
-  final List<InsurancePlanLimit>? limit;
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    bool isNonEmpty(dynamic val) {
-      if (val == null) return false;
-      if (val is List && val.isEmpty) return false;
-      if (val is Map && val.isEmpty) return false;
-      return true;
-    }
-
-    void addField(String key, dynamic field) {
-      if (field == null) return;
-      if (!(field is FhirBase? || field is List<FhirBase>?)) {
-        throw ArgumentError('"field" must be a FhirBase type');
-      }
-      if (field is PrimitiveType) {
-        final fieldMap = field.toJson();
-        final val = fieldMap['value'];
-        final ext = fieldMap['_value'];
-        final hasVal = isNonEmpty(val);
-        final hasExt = isNonEmpty(ext);
-        if (hasVal) json[key] = val;
-        if (hasExt) json['_$key'] = ext;
-      } else if (field is List<FhirBase>) {
-        if (field.isEmpty) return;
-        final isPrimitive = field.first is PrimitiveType;
-        final tempList = <dynamic>[];
-        final tempExtensions = <dynamic>[];
-        for (final e in field) {
-          final itemMap = e.toJson();
-          if (!isNonEmpty(itemMap)) {
-            continue;
-          }
-          if (isPrimitive) {
-            final v = itemMap['value'];
-            final x = itemMap['_value'];
-            tempList.add(v);
-            tempExtensions.add(x);
-          } else {
-            tempList.add(itemMap);
-          }
-        }
-        if (tempList.isEmpty) return;
-        if (isPrimitive) {
-          final hasAnyValues = tempList.any((v) => v != null);
-          if (hasAnyValues) {
-            json[key] = tempList;
-          }
-          final anyExt = tempExtensions.any(isNonEmpty);
-          if (anyExt) {
-            json['_$key'] = tempExtensions;
-          }
-        } else {
-          json[key] = tempList;
-        }
-      } else if (field is FhirBase) {
-        final subMap = field.toJson();
-        if (isNonEmpty(subMap)) {
-          json[key] = subMap;
-        }
-      }
-    }
-
-    addField(
-      'id',
-      id,
-    );
-    addField(
-      'extension',
-      extension_,
-    );
-    addField(
-      'modifierExtension',
-      modifierExtension,
-    );
-    addField(
-      'type',
-      type,
-    );
-    addField(
-      'requirement',
-      requirement,
-    );
-    addField(
-      'limit',
-      limit,
-    );
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'type',
-      'requirement',
-      'limit',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBase> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBase>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'type':
-        fields.add(type);
-      case 'requirement':
-        if (requirement != null) {
-          fields.add(requirement!);
-        }
-      case 'limit':
-        if (limit != null) {
-          fields.addAll(limit!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBase? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  InsurancePlanBenefit clone() => copyWith();
-
-  /// Copy function for [InsurancePlanBenefit]
-  /// Returns a copy of the current instance with the provided fields modified.
-  /// If a field is not provided, it will retain its original value.
-  /// If a null is provided, this will clearn the field, unless the
-  /// field is required, in which case it will keep its current value.
-  @override
-  $InsurancePlanBenefitCopyWith<InsurancePlanBenefit> get copyWith =>
-      _$InsurancePlanBenefitCopyWithImpl<InsurancePlanBenefit>(
-        this,
-        (value) => value,
-      );
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBase? o) {
-    if (o is! InsurancePlanBenefit) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      type,
-      o.type,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      requirement,
-      o.requirement,
-    )) {
-      return false;
-    }
-    if (!listEquals<InsurancePlanLimit>(
-      limit,
-      o.limit,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [InsurancePlanLimit]
-/// The specific limits on the benefit.
-class InsurancePlanLimit extends BackboneElement {
-  /// Primary constructor for
-  /// [InsurancePlanLimit]
-
-  const InsurancePlanLimit({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.value,
-    this.code,
-    super.disallowExtensions,
-  }) : super();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory InsurancePlanLimit.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return InsurancePlanLimit(
-      id: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'id',
-        FhirString.fromJson,
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      value: JsonParser.parseObject<Quantity>(
-        json,
-        'value',
-        Quantity.fromJson,
-      ),
-      code: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'code',
-        CodeableConcept.fromJson,
-      ),
-    );
-  }
-
-  /// Deserialize [InsurancePlanLimit]
-  /// from a [String] or [YamlMap] object
-  factory InsurancePlanLimit.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return InsurancePlanLimit.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return InsurancePlanLimit.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'InsurancePlanLimit '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [InsurancePlanLimit]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory InsurancePlanLimit.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return InsurancePlanLimit.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'InsurancePlanLimit';
-
-  /// [value]
-  /// The maximum amount of a service item a plan will pay for a covered
-  /// benefit. For examples. wellness visits, or eyeglasses.
-  final Quantity? value;
-
-  /// [code]
-  /// The specific limit on the benefit.
-  final CodeableConcept? code;
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    bool isNonEmpty(dynamic val) {
-      if (val == null) return false;
-      if (val is List && val.isEmpty) return false;
-      if (val is Map && val.isEmpty) return false;
-      return true;
-    }
-
-    void addField(String key, dynamic field) {
-      if (field == null) return;
-      if (!(field is FhirBase? || field is List<FhirBase>?)) {
-        throw ArgumentError('"field" must be a FhirBase type');
-      }
-      if (field is PrimitiveType) {
-        final fieldMap = field.toJson();
-        final val = fieldMap['value'];
-        final ext = fieldMap['_value'];
-        final hasVal = isNonEmpty(val);
-        final hasExt = isNonEmpty(ext);
-        if (hasVal) json[key] = val;
-        if (hasExt) json['_$key'] = ext;
-      } else if (field is List<FhirBase>) {
-        if (field.isEmpty) return;
-        final isPrimitive = field.first is PrimitiveType;
-        final tempList = <dynamic>[];
-        final tempExtensions = <dynamic>[];
-        for (final e in field) {
-          final itemMap = e.toJson();
-          if (!isNonEmpty(itemMap)) {
-            continue;
-          }
-          if (isPrimitive) {
-            final v = itemMap['value'];
-            final x = itemMap['_value'];
-            tempList.add(v);
-            tempExtensions.add(x);
-          } else {
-            tempList.add(itemMap);
-          }
-        }
-        if (tempList.isEmpty) return;
-        if (isPrimitive) {
-          final hasAnyValues = tempList.any((v) => v != null);
-          if (hasAnyValues) {
-            json[key] = tempList;
-          }
-          final anyExt = tempExtensions.any(isNonEmpty);
-          if (anyExt) {
-            json['_$key'] = tempExtensions;
-          }
-        } else {
-          json[key] = tempList;
-        }
-      } else if (field is FhirBase) {
-        final subMap = field.toJson();
-        if (isNonEmpty(subMap)) {
-          json[key] = subMap;
-        }
-      }
-    }
-
-    addField(
-      'id',
-      id,
-    );
-    addField(
-      'extension',
-      extension_,
-    );
-    addField(
-      'modifierExtension',
-      modifierExtension,
-    );
-    addField(
-      'value',
-      value,
-    );
-    addField(
-      'code',
-      code,
-    );
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'value',
-      'code',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBase> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBase>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'value':
-        if (value != null) {
-          fields.add(value!);
-        }
-      case 'code':
-        if (code != null) {
-          fields.add(code!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBase? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  InsurancePlanLimit clone() => copyWith();
-
-  /// Copy function for [InsurancePlanLimit]
-  /// Returns a copy of the current instance with the provided fields modified.
-  /// If a field is not provided, it will retain its original value.
-  /// If a null is provided, this will clearn the field, unless the
-  /// field is required, in which case it will keep its current value.
-  @override
-  $InsurancePlanLimitCopyWith<InsurancePlanLimit> get copyWith =>
-      _$InsurancePlanLimitCopyWithImpl<InsurancePlanLimit>(
-        this,
-        (value) => value,
-      );
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBase? o) {
-    if (o is! InsurancePlanLimit) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      value,
-      o.value,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      code,
-      o.code,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [InsurancePlanPlan]
-/// Details about an insurance plan.
-class InsurancePlanPlan extends BackboneElement {
-  /// Primary constructor for
-  /// [InsurancePlanPlan]
-
-  const InsurancePlanPlan({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.identifier,
-    this.type,
-    this.coverageArea,
-    this.network,
-    this.generalCost,
-    this.specificCost,
-    super.disallowExtensions,
-  }) : super();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory InsurancePlanPlan.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return InsurancePlanPlan(
-      id: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'id',
-        FhirString.fromJson,
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      identifier: (json['identifier'] as List<dynamic>?)
-          ?.map<Identifier>(
-            (v) => Identifier.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      type: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'type',
-        CodeableConcept.fromJson,
-      ),
-      coverageArea: (json['coverageArea'] as List<dynamic>?)
-          ?.map<Reference>(
-            (v) => Reference.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      network: (json['network'] as List<dynamic>?)
-          ?.map<Reference>(
-            (v) => Reference.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      generalCost: (json['generalCost'] as List<dynamic>?)
-          ?.map<InsurancePlanGeneralCost>(
-            (v) => InsurancePlanGeneralCost.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      specificCost: (json['specificCost'] as List<dynamic>?)
-          ?.map<InsurancePlanSpecificCost>(
-            (v) => InsurancePlanSpecificCost.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-    );
-  }
-
-  /// Deserialize [InsurancePlanPlan]
-  /// from a [String] or [YamlMap] object
-  factory InsurancePlanPlan.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return InsurancePlanPlan.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return InsurancePlanPlan.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'InsurancePlanPlan '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [InsurancePlanPlan]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory InsurancePlanPlan.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return InsurancePlanPlan.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'InsurancePlanPlan';
-
-  /// [identifier]
-  /// Business identifiers assigned to this health insurance plan which
-  /// remain constant as the resource is updated and propagates from server
-  /// to server.
-  final List<Identifier>? identifier;
-
-  /// [type]
-  /// Type of plan. For example, "Platinum" or "High Deductable".
-  final CodeableConcept? type;
-
-  /// [coverageArea]
-  /// The geographic region in which a health insurance plan's benefits
-  /// apply.
-  final List<Reference>? coverageArea;
-
-  /// [network]
-  /// Reference to the network that providing the type of coverage.
-  final List<Reference>? network;
-
-  /// [generalCost]
-  /// Overall costs associated with the plan.
-  final List<InsurancePlanGeneralCost>? generalCost;
-
-  /// [specificCost]
-  /// Costs associated with the coverage provided by the product.
-  final List<InsurancePlanSpecificCost>? specificCost;
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    bool isNonEmpty(dynamic val) {
-      if (val == null) return false;
-      if (val is List && val.isEmpty) return false;
-      if (val is Map && val.isEmpty) return false;
-      return true;
-    }
-
-    void addField(String key, dynamic field) {
-      if (field == null) return;
-      if (!(field is FhirBase? || field is List<FhirBase>?)) {
-        throw ArgumentError('"field" must be a FhirBase type');
-      }
-      if (field is PrimitiveType) {
-        final fieldMap = field.toJson();
-        final val = fieldMap['value'];
-        final ext = fieldMap['_value'];
-        final hasVal = isNonEmpty(val);
-        final hasExt = isNonEmpty(ext);
-        if (hasVal) json[key] = val;
-        if (hasExt) json['_$key'] = ext;
-      } else if (field is List<FhirBase>) {
-        if (field.isEmpty) return;
-        final isPrimitive = field.first is PrimitiveType;
-        final tempList = <dynamic>[];
-        final tempExtensions = <dynamic>[];
-        for (final e in field) {
-          final itemMap = e.toJson();
-          if (!isNonEmpty(itemMap)) {
-            continue;
-          }
-          if (isPrimitive) {
-            final v = itemMap['value'];
-            final x = itemMap['_value'];
-            tempList.add(v);
-            tempExtensions.add(x);
-          } else {
-            tempList.add(itemMap);
-          }
-        }
-        if (tempList.isEmpty) return;
-        if (isPrimitive) {
-          final hasAnyValues = tempList.any((v) => v != null);
-          if (hasAnyValues) {
-            json[key] = tempList;
-          }
-          final anyExt = tempExtensions.any(isNonEmpty);
-          if (anyExt) {
-            json['_$key'] = tempExtensions;
-          }
-        } else {
-          json[key] = tempList;
-        }
-      } else if (field is FhirBase) {
-        final subMap = field.toJson();
-        if (isNonEmpty(subMap)) {
-          json[key] = subMap;
-        }
-      }
-    }
-
-    addField(
-      'id',
-      id,
-    );
-    addField(
-      'extension',
-      extension_,
-    );
-    addField(
-      'modifierExtension',
-      modifierExtension,
-    );
-    addField(
-      'identifier',
-      identifier,
-    );
-    addField(
-      'type',
-      type,
-    );
-    addField(
-      'coverageArea',
-      coverageArea,
-    );
-    addField(
-      'network',
-      network,
-    );
-    addField(
-      'generalCost',
-      generalCost,
-    );
-    addField(
-      'specificCost',
-      specificCost,
-    );
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'identifier',
-      'type',
-      'coverageArea',
-      'network',
-      'generalCost',
-      'specificCost',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBase> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBase>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'identifier':
-        if (identifier != null) {
-          fields.addAll(identifier!);
-        }
-      case 'type':
-        if (type != null) {
-          fields.add(type!);
-        }
-      case 'coverageArea':
-        if (coverageArea != null) {
-          fields.addAll(coverageArea!);
-        }
-      case 'network':
-        if (network != null) {
-          fields.addAll(network!);
-        }
-      case 'generalCost':
-        if (generalCost != null) {
-          fields.addAll(generalCost!);
-        }
-      case 'specificCost':
-        if (specificCost != null) {
-          fields.addAll(specificCost!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBase? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  InsurancePlanPlan clone() => copyWith();
-
-  /// Copy function for [InsurancePlanPlan]
-  /// Returns a copy of the current instance with the provided fields modified.
-  /// If a field is not provided, it will retain its original value.
-  /// If a null is provided, this will clearn the field, unless the
-  /// field is required, in which case it will keep its current value.
-  @override
-  $InsurancePlanPlanCopyWith<InsurancePlanPlan> get copyWith =>
-      _$InsurancePlanPlanCopyWithImpl<InsurancePlanPlan>(
-        this,
-        (value) => value,
-      );
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBase? o) {
-    if (o is! InsurancePlanPlan) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!listEquals<Identifier>(
-      identifier,
-      o.identifier,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      type,
-      o.type,
+      product,
+      o.product,
     )) {
       return false;
     }
@@ -2477,7 +913,7 @@ class InsurancePlanGeneralCost extends BackboneElement {
 }
 
 /// [InsurancePlanSpecificCost]
-/// Costs associated with the coverage provided by the product.
+/// Costs associated with the coverage provided by the product-plan.
 class InsurancePlanSpecificCost extends BackboneElement {
   /// Primary constructor for
   /// [InsurancePlanSpecificCost]
@@ -2780,13 +1216,13 @@ class InsurancePlanSpecificCost extends BackboneElement {
   }
 }
 
-/// [InsurancePlanBenefit1]
+/// [InsurancePlanBenefit]
 /// List of the specific benefits under this category of benefit.
-class InsurancePlanBenefit1 extends BackboneElement {
+class InsurancePlanBenefit extends BackboneElement {
   /// Primary constructor for
-  /// [InsurancePlanBenefit1]
+  /// [InsurancePlanBenefit]
 
-  const InsurancePlanBenefit1({
+  const InsurancePlanBenefit({
     super.id,
     super.extension_,
     super.modifierExtension,
@@ -2796,10 +1232,10 @@ class InsurancePlanBenefit1 extends BackboneElement {
   }) : super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory InsurancePlanBenefit1.fromJson(
+  factory InsurancePlanBenefit.fromJson(
     Map<String, dynamic> json,
   ) {
-    return InsurancePlanBenefit1(
+    return InsurancePlanBenefit(
       id: JsonParser.parsePrimitive<FhirString>(
         json,
         'id',
@@ -2834,22 +1270,22 @@ class InsurancePlanBenefit1 extends BackboneElement {
     );
   }
 
-  /// Deserialize [InsurancePlanBenefit1]
+  /// Deserialize [InsurancePlanBenefit]
   /// from a [String] or [YamlMap] object
-  factory InsurancePlanBenefit1.fromYaml(
+  factory InsurancePlanBenefit.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return InsurancePlanBenefit1.fromJson(
+      return InsurancePlanBenefit.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return InsurancePlanBenefit1.fromJson(
+      return InsurancePlanBenefit.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'InsurancePlanBenefit1 '
+        'InsurancePlanBenefit '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -2857,16 +1293,16 @@ class InsurancePlanBenefit1 extends BackboneElement {
   }
 
   /// Factory constructor for
-  /// [InsurancePlanBenefit1]
+  /// [InsurancePlanBenefit]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory InsurancePlanBenefit1.fromJsonString(
+  factory InsurancePlanBenefit.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return InsurancePlanBenefit1.fromJson(json);
+      return InsurancePlanBenefit.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -2874,7 +1310,7 @@ class InsurancePlanBenefit1 extends BackboneElement {
   }
 
   @override
-  String get fhirType => 'InsurancePlanBenefit1';
+  String get fhirType => 'InsurancePlanBenefit';
 
   /// [type]
   /// Type of specific benefit (preventative; primary care office visit;
@@ -3028,16 +1464,16 @@ class InsurancePlanBenefit1 extends BackboneElement {
   }
 
   @override
-  InsurancePlanBenefit1 clone() => copyWith();
+  InsurancePlanBenefit clone() => copyWith();
 
-  /// Copy function for [InsurancePlanBenefit1]
+  /// Copy function for [InsurancePlanBenefit]
   /// Returns a copy of the current instance with the provided fields modified.
   /// If a field is not provided, it will retain its original value.
   /// If a null is provided, this will clearn the field, unless the
   /// field is required, in which case it will keep its current value.
   @override
-  $InsurancePlanBenefit1CopyWith<InsurancePlanBenefit1> get copyWith =>
-      _$InsurancePlanBenefit1CopyWithImpl<InsurancePlanBenefit1>(
+  $InsurancePlanBenefitCopyWith<InsurancePlanBenefit> get copyWith =>
+      _$InsurancePlanBenefitCopyWithImpl<InsurancePlanBenefit>(
         this,
         (value) => value,
       );
@@ -3045,7 +1481,7 @@ class InsurancePlanBenefit1 extends BackboneElement {
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBase? o) {
-    if (o is! InsurancePlanBenefit1) {
+    if (o is! InsurancePlanBenefit) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -3096,7 +1532,7 @@ class InsurancePlanCost extends BackboneElement {
     super.modifierExtension,
     required this.type,
     this.applicability,
-    this.qualifiers,
+    this.qualifier,
     this.value,
     super.disallowExtensions,
   }) : super();
@@ -3135,7 +1571,7 @@ class InsurancePlanCost extends BackboneElement {
         'applicability',
         CodeableConcept.fromJson,
       ),
-      qualifiers: (json['qualifiers'] as List<dynamic>?)
+      qualifier: (json['qualifier'] as List<dynamic>?)
           ?.map<CodeableConcept>(
             (v) => CodeableConcept.fromJson(
               {...v as Map<String, dynamic>},
@@ -3202,10 +1638,10 @@ class InsurancePlanCost extends BackboneElement {
   /// (in-network; out-of-network; other).
   final CodeableConcept? applicability;
 
-  /// [qualifiers]
+  /// [qualifier]
   /// Additional information about the cost, such as information about
   /// funding sources (e.g. HSA, HRA, FSA, RRA).
-  final List<CodeableConcept>? qualifiers;
+  final List<CodeableConcept>? qualifier;
 
   /// [value]
   /// The actual cost value. (some of the costs may be represented as
@@ -3295,8 +1731,8 @@ class InsurancePlanCost extends BackboneElement {
       applicability,
     );
     addField(
-      'qualifiers',
-      qualifiers,
+      'qualifier',
+      qualifier,
     );
     addField(
       'value',
@@ -3314,7 +1750,7 @@ class InsurancePlanCost extends BackboneElement {
       'modifierExtension',
       'type',
       'applicability',
-      'qualifiers',
+      'qualifier',
       'value',
     ];
   }
@@ -3346,9 +1782,9 @@ class InsurancePlanCost extends BackboneElement {
         if (applicability != null) {
           fields.add(applicability!);
         }
-      case 'qualifiers':
-        if (qualifiers != null) {
-          fields.addAll(qualifiers!);
+      case 'qualifier':
+        if (qualifier != null) {
+          fields.addAll(qualifier!);
         }
       case 'value':
         if (value != null) {
@@ -3426,8 +1862,8 @@ class InsurancePlanCost extends BackboneElement {
       return false;
     }
     if (!listEquals<CodeableConcept>(
-      qualifiers,
-      o.qualifiers,
+      qualifier,
+      o.qualifier,
     )) {
       return false;
     }

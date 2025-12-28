@@ -14,13 +14,13 @@ part 'timing.g.dart';
 class Timing extends BackboneType
     implements
         TimingXActivityDefinition,
-        OccurrenceXAdverseEvent,
-        CoverageXCareTeamParticipant,
+        EffectiveXCareTeamParticipant,
         OccurrenceXChargeItem,
         OccurrenceXContractAction,
+        IdentifiedXDetectedIssue,
         OccurrenceXDeviceRequest,
         TimingXDeviceUsage,
-        OccurenceXMedicationAdministration,
+        OccurrenceXMedicationAdministration,
         EffectiveXMedicationStatement,
         EffectiveXObservation,
         ValueXParametersParameter,

@@ -382,7 +382,7 @@ class MedicinalProductDefinition extends DomainResource {
 
   /// [route]
   /// The path by which the product is taken into or makes contact with the
-  /// body. In some regions this is referred to as the licenced or approved
+  /// body. In some regions this is referred to as the licensed or approved
   /// route. See also AdministrableProductDefinition resource.
   /// MedicinalProductDefinition.route is the same concept as
   /// AdministrableProductDefinition.routeOfAdministration.code, and they

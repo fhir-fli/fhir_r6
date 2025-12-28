@@ -29,8 +29,8 @@ abstract class $ImmunizationEvaluationCopyWith<T>
     List<CodeableConcept>? doseStatusReason,
     FhirMarkdown? description,
     FhirString? series,
-    FhirString? doseNumber,
-    FhirString? seriesDoses,
+    CodeableConcept? doseNumber,
+    CodeableConcept? seriesDoses,
     bool? disallowExtensions,
   });
 }
@@ -121,10 +121,10 @@ class _$ImmunizationEvaluationCopyWithImpl<T>
             : series as FhirString?,
         doseNumber: identical(doseNumber, fhirSentinel)
             ? _value.doseNumber
-            : doseNumber as FhirString?,
+            : doseNumber as CodeableConcept?,
         seriesDoses: identical(seriesDoses, fhirSentinel)
             ? _value.seriesDoses
-            : seriesDoses as FhirString?,
+            : seriesDoses as CodeableConcept?,
       ),
     );
   }

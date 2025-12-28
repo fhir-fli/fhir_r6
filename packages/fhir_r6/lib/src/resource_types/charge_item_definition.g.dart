@@ -21,7 +21,7 @@ abstract class $ChargeItemDefinitionCopyWith<T>
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXChargeItemDefinition? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     List<FhirUri>? derivedFromUri,
@@ -30,6 +30,7 @@ abstract class $ChargeItemDefinitionCopyWith<T>
     PublicationStatus? status,
     FhirBoolean? experimental,
     FhirDateTime? date,
+    List<Reference>? account,
     FhirString? publisher,
     List<ContactDetail>? contact,
     FhirMarkdown? description,
@@ -77,6 +78,7 @@ class _$ChargeItemDefinitionCopyWithImpl<T>
     Object? status = fhirSentinel,
     Object? experimental = fhirSentinel,
     Object? date = fhirSentinel,
+    Object? account = fhirSentinel,
     Object? publisher = fhirSentinel,
     Object? contact = fhirSentinel,
     Object? description = fhirSentinel,
@@ -122,7 +124,7 @@ class _$ChargeItemDefinitionCopyWithImpl<T>
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXChargeItemDefinition?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -144,6 +146,9 @@ class _$ChargeItemDefinitionCopyWithImpl<T>
             : experimental as FhirBoolean?,
         date:
             identical(date, fhirSentinel) ? _value.date : date as FhirDateTime?,
+        account: identical(account, fhirSentinel)
+            ? _value.account
+            : account as List<Reference>?,
         publisher: identical(publisher, fhirSentinel)
             ? _value.publisher
             : publisher as FhirString?,

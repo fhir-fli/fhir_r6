@@ -137,7 +137,7 @@ abstract class $QuestionnaireResponseItemCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     FhirString? linkId,
-    FhirUri? definition,
+    List<FhirUri>? definition,
     FhirString? text,
     List<QuestionnaireResponseAnswer>? answer,
     List<QuestionnaireResponseItem>? item,
@@ -178,7 +178,7 @@ class _$QuestionnaireResponseItemCopyWithImpl<T>
             : (linkId as FhirString?) ?? _value.linkId,
         definition: identical(definition, fhirSentinel)
             ? _value.definition
-            : definition as FhirUri?,
+            : definition as List<FhirUri>?,
         text: identical(text, fhirSentinel) ? _value.text : text as FhirString?,
         answer: identical(answer, fhirSentinel)
             ? _value.answer
@@ -210,7 +210,7 @@ abstract class $QuestionnaireResponseAnswerCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirBoolean? valueX,
+    ValueXQuestionnaireResponseAnswer? valueX,
     List<QuestionnaireResponseItem>? item,
     bool? disallowExtensions,
   });
@@ -243,7 +243,7 @@ class _$QuestionnaireResponseAnswerCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as FhirBoolean?) ?? _value.valueX,
+            : (valueX as ValueXQuestionnaireResponseAnswer?) ?? _value.valueX,
         item: identical(item, fhirSentinel)
             ? _value.item
             : item as List<QuestionnaireResponseItem>?,

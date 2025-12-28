@@ -22,10 +22,12 @@ class FhirUri extends PrimitiveType
         ValueXContractAnswer,
         SourceXMedicationKnowledgeMedicineClassification,
         ValueXParametersParameter,
+        ValueXQuestionnaireAnswerOption,
         ValueXQuestionnaireInitial,
         ValueXQuestionnaireResponseAnswer,
         ValueXTaskInput,
         ValueXTaskOutput,
+        SourceXTestPlanTestData,
         ValueXTransportInput,
         ValueXTransportOutput,
         ValueXValueSetParameter,
@@ -36,15 +38,26 @@ class FhirUri extends PrimitiveType
         ValueXExtension,
         ValueXDocumentReferenceProfile,
         EventXMessageDefinition,
+        EventXMessageHeader,
+        ValueXEvidenceVariableDefinitionModifier,
+        ValueXGroupCharacteristic,
         ModuleXGuidanceResponse,
         ArtifactXArtifactAssessment,
+        TargetXArtifactAssessmentRelatesTo,
+        TargetXCitationRelatesTo,
+        TargetXCitationRelatesTo1,
+        TargetXCompositionRelatesTo,
+        TargetXEvidenceRelatesTo,
+        TargetXEvidenceVariableRelatesTo,
+        TargetXResearchStudyRelatesTo,
         SourceScopeXConceptMap,
         TargetScopeXConceptMap,
         StructureProfileXExampleScenarioInstance,
         DefinitionXPlanDefinitionAction,
         DefinitionXRequestOrchestrationAction,
-        LinkXTestReportRequirement,
-        LinkXTestScriptRequirement {
+        ArtifactXTestPlanScope,
+        ArtifactXTestPlanTestCaseScope,
+        LinkXTestReportRequirement {
   // --------------------------------------------------------------------------
   // Private Internal Constructor
   // --------------------------------------------------------------------------
@@ -116,7 +129,7 @@ class FhirUri extends PrimitiveType
 
   /// Constructs a [FhirUri] from a JSON [Map].
   factory FhirUri.fromJson(Map<String, dynamic> json) {
-    final rawValue = json['value'] as String?;
+    final rawValue = json['value'];
     final elementJson = json['_value'] as Map<String, dynamic>?;
     final parsedElement =
         elementJson == null ? null : Element.fromJson(elementJson);

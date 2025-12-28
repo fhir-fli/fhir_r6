@@ -295,7 +295,7 @@ abstract class $GenomicStudyInputCopyWith<T>
     List<FhirExtension>? modifierExtension,
     Reference? file,
     CodeableConcept? type,
-    Identifier? generatedByX,
+    GeneratedByXGenomicStudyInput? generatedByX,
     bool? disallowExtensions,
   });
 }
@@ -332,7 +332,7 @@ class _$GenomicStudyInputCopyWithImpl<T>
             : type as CodeableConcept?,
         generatedByX: identical(generatedByX, fhirSentinel)
             ? _value.generatedByX
-            : generatedByX as Identifier?,
+            : generatedByX as GeneratedByXGenomicStudyInput?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

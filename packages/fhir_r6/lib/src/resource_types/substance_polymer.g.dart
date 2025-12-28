@@ -477,9 +477,7 @@ class _$SubstancePolymerStructuralRepresentationCopyWithImpl<T>
   final T Function(SubstancePolymerStructuralRepresentation) _then;
 
   _$SubstancePolymerStructuralRepresentationCopyWithImpl(
-    this._value,
-    this._then,
-  );
+      this._value, this._then);
 
   @override
   T call({

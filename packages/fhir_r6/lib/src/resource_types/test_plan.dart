@@ -205,8 +205,8 @@ class TestPlan extends CanonicalResource {
           )
           .toList(),
       scope: (json['scope'] as List<dynamic>?)
-          ?.map<Reference>(
-            (v) => Reference.fromJson(
+          ?.map<TestPlanScope>(
+            (v) => TestPlanScope.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -335,7 +335,7 @@ class TestPlan extends CanonicalResource {
   /// [scope]
   /// What is being tested with this Test Plan - a conformance resource, or
   /// narrative criteria, or an external reference...
-  final List<Reference>? scope;
+  final List<TestPlanScope>? scope;
 
   /// [testTools]
   /// A description of test tools to be used in the test plan.
@@ -925,7 +925,7 @@ class TestPlan extends CanonicalResource {
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!listEquals<TestPlanScope>(
       scope,
       o.scope,
     )) {
@@ -952,6 +952,313 @@ class TestPlan extends CanonicalResource {
     if (!listEquals<TestPlanTestCase>(
       testCase,
       o.testCase,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [TestPlanScope]
+/// What is being tested with this Test Plan - a conformance resource, or
+/// narrative criteria, or an external reference...
+class TestPlanScope extends BackboneElement {
+  /// Primary constructor for
+  /// [TestPlanScope]
+
+  const TestPlanScope({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    required this.artifactX,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory TestPlanScope.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return TestPlanScope(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      artifactX: JsonParser.parsePolymorphic<ArtifactXTestPlanScope>(
+        json,
+        {
+          'artifactCanonical': FhirCanonical.fromJson,
+          'artifactMarkdown': FhirMarkdown.fromJson,
+          'artifactUri': FhirUri.fromJson,
+        },
+      )!,
+    );
+  }
+
+  /// Deserialize [TestPlanScope]
+  /// from a [String] or [YamlMap] object
+  factory TestPlanScope.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return TestPlanScope.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return TestPlanScope.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'TestPlanScope '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [TestPlanScope]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory TestPlanScope.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return TestPlanScope.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'TestPlanScope';
+
+  /// [artifactX]
+  /// The specific conformance artifact, or narrative criteria, or an
+  /// external reference being tested. The canonical reference can be
+  /// version-specific.
+  final ArtifactXTestPlanScope artifactX;
+
+  /// Getter for [artifactCanonical] as a FhirCanonical
+  FhirCanonical? get artifactCanonical => artifactX.isAs<FhirCanonical>();
+
+  /// Getter for [artifactMarkdown] as a FhirMarkdown
+  FhirMarkdown? get artifactMarkdown => artifactX.isAs<FhirMarkdown>();
+
+  /// Getter for [artifactUri] as a FhirUri
+  FhirUri? get artifactUri => artifactX.isAs<FhirUri>();
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    final artifactXFhirType = artifactX.fhirType;
+    addField(
+      'artifact${artifactXFhirType.capitalize()}',
+      artifactX,
+    );
+
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'artifactX',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'artifact':
+        fields.add(artifactX);
+      case 'artifactX':
+        fields.add(artifactX);
+      case 'artifactCanonical':
+        if (artifactX is FhirCanonical) {
+          fields.add(artifactX);
+        }
+      case 'artifactMarkdown':
+        if (artifactX is FhirMarkdown) {
+          fields.add(artifactX);
+        }
+      case 'artifactUri':
+        if (artifactX is FhirUri) {
+          fields.add(artifactX);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  TestPlanScope clone() => copyWith();
+
+  /// Copy function for [TestPlanScope]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $TestPlanScopeCopyWith<TestPlanScope> get copyWith =>
+      _$TestPlanScopeCopyWithImpl<TestPlanScope>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! TestPlanScope) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      artifactX,
+      o.artifactX,
     )) {
       return false;
     }
@@ -1276,12 +1583,16 @@ class TestPlanTestCase extends BackboneElement {
     super.id,
     super.extension_,
     super.modifierExtension,
+    required this.key,
+    this.description,
     this.sequence,
     this.scope,
+    this.requirement,
     this.dependency,
     this.testRun,
     this.testData,
     this.assertion,
+    this.testCase,
     super.disallowExtensions,
   }) : super();
 
@@ -1309,14 +1620,31 @@ class TestPlanTestCase extends BackboneElement {
             ),
           )
           .toList(),
+      key: JsonParser.parsePrimitive<FhirId>(
+        json,
+        'key',
+        FhirId.fromJson,
+      )!,
+      description: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'description',
+        FhirMarkdown.fromJson,
+      ),
       sequence: JsonParser.parsePrimitive<FhirInteger>(
         json,
         'sequence',
         FhirInteger.fromJson,
       ),
       scope: (json['scope'] as List<dynamic>?)
-          ?.map<Reference>(
-            (v) => Reference.fromJson(
+          ?.map<TestPlanScope>(
+            (v) => TestPlanScope.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      requirement: (json['requirement'] as List<dynamic>?)
+          ?.map<TestPlanRequirement>(
+            (v) => TestPlanRequirement.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -1345,6 +1673,13 @@ class TestPlanTestCase extends BackboneElement {
       assertion: (json['assertion'] as List<dynamic>?)
           ?.map<TestPlanAssertion>(
             (v) => TestPlanAssertion.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      testCase: (json['testCase'] as List<dynamic>?)
+          ?.map<TestPlanTestCase>(
+            (v) => TestPlanTestCase.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -1394,6 +1729,15 @@ class TestPlanTestCase extends BackboneElement {
   @override
   String get fhirType => 'TestPlanTestCase';
 
+  /// [key]
+  /// Key that identifies this test case (unique within this resource).
+  final FhirId key;
+
+  /// [description]
+  /// Narrative description using markdown content to explain the purpose of
+  /// this test case.
+  final FhirMarkdown? description;
+
   /// [sequence]
   /// Sequence of test case - an ordinal number that indicates the order for
   /// the present test case in the test plan.
@@ -1402,7 +1746,12 @@ class TestPlanTestCase extends BackboneElement {
   /// [scope]
   /// The scope or artifact covered by the case, when the individual test
   /// case is associated with a testable artifact.
-  final List<Reference>? scope;
+  final List<TestPlanScope>? scope;
+
+  /// [requirement]
+  /// Links or references providing traceability to the testing requirements
+  /// for this assert.
+  final List<TestPlanRequirement>? requirement;
 
   /// [dependency]
   /// The required criteria to execute the test case - e.g. preconditions,
@@ -1421,6 +1770,10 @@ class TestPlanTestCase extends BackboneElement {
   /// The test assertions - the expectations of test results from the
   /// execution of the test case.
   final List<TestPlanAssertion>? assertion;
+
+  /// [testCase]
+  /// Breaks down a larger test case into smaller components.
+  final List<TestPlanTestCase>? testCase;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1497,12 +1850,24 @@ class TestPlanTestCase extends BackboneElement {
       modifierExtension,
     );
     addField(
+      'key',
+      key,
+    );
+    addField(
+      'description',
+      description,
+    );
+    addField(
       'sequence',
       sequence,
     );
     addField(
       'scope',
       scope,
+    );
+    addField(
+      'requirement',
+      requirement,
     );
     addField(
       'dependency',
@@ -1520,6 +1885,10 @@ class TestPlanTestCase extends BackboneElement {
       'assertion',
       assertion,
     );
+    addField(
+      'testCase',
+      testCase,
+    );
     return json;
   }
 
@@ -1530,12 +1899,16 @@ class TestPlanTestCase extends BackboneElement {
       'id',
       'extension',
       'modifierExtension',
+      'key',
+      'description',
       'sequence',
       'scope',
+      'requirement',
       'dependency',
       'testRun',
       'testData',
       'assertion',
+      'testCase',
     ];
   }
 
@@ -1560,6 +1933,12 @@ class TestPlanTestCase extends BackboneElement {
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
         }
+      case 'key':
+        fields.add(key);
+      case 'description':
+        if (description != null) {
+          fields.add(description!);
+        }
       case 'sequence':
         if (sequence != null) {
           fields.add(sequence!);
@@ -1567,6 +1946,10 @@ class TestPlanTestCase extends BackboneElement {
       case 'scope':
         if (scope != null) {
           fields.addAll(scope!);
+        }
+      case 'requirement':
+        if (requirement != null) {
+          fields.addAll(requirement!);
         }
       case 'dependency':
         if (dependency != null) {
@@ -1583,6 +1966,10 @@ class TestPlanTestCase extends BackboneElement {
       case 'assertion':
         if (assertion != null) {
           fields.addAll(assertion!);
+        }
+      case 'testCase':
+        if (testCase != null) {
+          fields.addAll(testCase!);
         }
       default:
         if (checkValid) {
@@ -1644,14 +2031,32 @@ class TestPlanTestCase extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
+      key,
+      o.key,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      description,
+      o.description,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       sequence,
       o.sequence,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!listEquals<TestPlanScope>(
       scope,
       o.scope,
+    )) {
+      return false;
+    }
+    if (!listEquals<TestPlanRequirement>(
+      requirement,
+      o.requirement,
     )) {
       return false;
     }
@@ -1679,6 +2084,621 @@ class TestPlanTestCase extends BackboneElement {
     )) {
       return false;
     }
+    if (!listEquals<TestPlanTestCase>(
+      testCase,
+      o.testCase,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [TestPlanScope1]
+/// The scope or artifact covered by the case, when the individual test
+/// case is associated with a testable artifact.
+class TestPlanScope1 extends BackboneElement {
+  /// Primary constructor for
+  /// [TestPlanScope1]
+
+  const TestPlanScope1({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    required this.artifactX,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory TestPlanScope1.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return TestPlanScope1(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      artifactX: JsonParser.parsePolymorphic<ArtifactXTestPlanTestCaseScope>(
+        json,
+        {
+          'artifactCanonical': FhirCanonical.fromJson,
+          'artifactMarkdown': FhirMarkdown.fromJson,
+          'artifactUri': FhirUri.fromJson,
+        },
+      )!,
+    );
+  }
+
+  /// Deserialize [TestPlanScope1]
+  /// from a [String] or [YamlMap] object
+  factory TestPlanScope1.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return TestPlanScope1.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return TestPlanScope1.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'TestPlanScope1 '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [TestPlanScope1]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory TestPlanScope1.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return TestPlanScope1.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'TestPlanScope1';
+
+  /// [artifactX]
+  /// The specific conformance artifact, or narrative criteria, or an
+  /// external reference covered by the case. The canonical reference can be
+  /// version-specific.
+  final ArtifactXTestPlanTestCaseScope artifactX;
+
+  /// Getter for [artifactCanonical] as a FhirCanonical
+  FhirCanonical? get artifactCanonical => artifactX.isAs<FhirCanonical>();
+
+  /// Getter for [artifactMarkdown] as a FhirMarkdown
+  FhirMarkdown? get artifactMarkdown => artifactX.isAs<FhirMarkdown>();
+
+  /// Getter for [artifactUri] as a FhirUri
+  FhirUri? get artifactUri => artifactX.isAs<FhirUri>();
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    final artifactXFhirType = artifactX.fhirType;
+    addField(
+      'artifact${artifactXFhirType.capitalize()}',
+      artifactX,
+    );
+
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'artifactX',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'artifact':
+        fields.add(artifactX);
+      case 'artifactX':
+        fields.add(artifactX);
+      case 'artifactCanonical':
+        if (artifactX is FhirCanonical) {
+          fields.add(artifactX);
+        }
+      case 'artifactMarkdown':
+        if (artifactX is FhirMarkdown) {
+          fields.add(artifactX);
+        }
+      case 'artifactUri':
+        if (artifactX is FhirUri) {
+          fields.add(artifactX);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  TestPlanScope1 clone() => copyWith();
+
+  /// Copy function for [TestPlanScope1]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $TestPlanScope1CopyWith<TestPlanScope1> get copyWith =>
+      _$TestPlanScope1CopyWithImpl<TestPlanScope1>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! TestPlanScope1) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      artifactX,
+      o.artifactX,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [TestPlanRequirement]
+/// Links or references providing traceability to the testing requirements
+/// for this assert.
+class TestPlanRequirement extends BackboneElement {
+  /// Primary constructor for
+  /// [TestPlanRequirement]
+
+  const TestPlanRequirement({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    required this.reference,
+    required this.key,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory TestPlanRequirement.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return TestPlanRequirement(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      reference: JsonParser.parsePrimitive<FhirCanonical>(
+        json,
+        'reference',
+        FhirCanonical.fromJson,
+      )!,
+      key: JsonParser.parsePrimitive<FhirId>(
+        json,
+        'key',
+        FhirId.fromJson,
+      )!,
+    );
+  }
+
+  /// Deserialize [TestPlanRequirement]
+  /// from a [String] or [YamlMap] object
+  factory TestPlanRequirement.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return TestPlanRequirement.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return TestPlanRequirement.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'TestPlanRequirement '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [TestPlanRequirement]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory TestPlanRequirement.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return TestPlanRequirement.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'TestPlanRequirement';
+
+  /// [reference]
+  /// Canonical reference providing traceability to the testing requirement
+  /// for this test case.
+  final FhirCanonical reference;
+
+  /// [key]
+  /// Requirements.statement.key that identifies the statement that this test
+  /// case satisfies.
+  final FhirId key;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'reference',
+      reference,
+    );
+    addField(
+      'key',
+      key,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'reference',
+      'key',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'reference':
+        fields.add(reference);
+      case 'key':
+        fields.add(key);
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  TestPlanRequirement clone() => copyWith();
+
+  /// Copy function for [TestPlanRequirement]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $TestPlanRequirementCopyWith<TestPlanRequirement> get copyWith =>
+      _$TestPlanRequirementCopyWithImpl<TestPlanRequirement>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! TestPlanRequirement) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reference,
+      o.reference,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      key,
+      o.key,
+    )) {
+      return false;
+    }
     return true;
   }
 }
@@ -1695,7 +2715,8 @@ class TestPlanDependency1 extends BackboneElement {
     super.extension_,
     super.modifierExtension,
     this.description,
-    this.predecessor,
+    this.reference,
+    this.key,
     super.disallowExtensions,
   }) : super();
 
@@ -1728,10 +2749,15 @@ class TestPlanDependency1 extends BackboneElement {
         'description',
         FhirMarkdown.fromJson,
       ),
-      predecessor: JsonParser.parseObject<Reference>(
+      reference: JsonParser.parsePrimitive<FhirCanonical>(
         json,
-        'predecessor',
-        Reference.fromJson,
+        'reference',
+        FhirCanonical.fromJson,
+      ),
+      key: JsonParser.parsePrimitive<FhirId>(
+        json,
+        'key',
+        FhirId.fromJson,
       ),
     );
   }
@@ -1782,9 +2808,15 @@ class TestPlanDependency1 extends BackboneElement {
   /// Description of the criteria.
   final FhirMarkdown? description;
 
-  /// [predecessor]
-  /// Link to predecessor test plans.
-  final Reference? predecessor;
+  /// [reference]
+  /// Canonical reference providing traceability to the TestPlan dependency
+  /// instance for this test case.
+  final FhirCanonical? reference;
+
+  /// [key]
+  /// TestPlan.testCase.key that identifies the testCase in the TestPlan
+  /// dependency instance.
+  final FhirId? key;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1865,8 +2897,12 @@ class TestPlanDependency1 extends BackboneElement {
       description,
     );
     addField(
-      'predecessor',
-      predecessor,
+      'reference',
+      reference,
+    );
+    addField(
+      'key',
+      key,
     );
     return json;
   }
@@ -1879,7 +2915,8 @@ class TestPlanDependency1 extends BackboneElement {
       'extension',
       'modifierExtension',
       'description',
-      'predecessor',
+      'reference',
+      'key',
     ];
   }
 
@@ -1908,9 +2945,13 @@ class TestPlanDependency1 extends BackboneElement {
         if (description != null) {
           fields.add(description!);
         }
-      case 'predecessor':
-        if (predecessor != null) {
-          fields.add(predecessor!);
+      case 'reference':
+        if (reference != null) {
+          fields.add(reference!);
+        }
+      case 'key':
+        if (key != null) {
+          fields.add(key!);
         }
       default:
         if (checkValid) {
@@ -1978,8 +3019,14 @@ class TestPlanDependency1 extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
-      predecessor,
-      o.predecessor,
+      reference,
+      o.reference,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      key,
+      o.key,
     )) {
       return false;
     }
@@ -2086,7 +3133,7 @@ class TestPlanTestRun extends BackboneElement {
   final FhirMarkdown? narrative;
 
   /// [script]
-  /// The test cases in a structured language e.g. gherkin, Postman, or FHIR
+  /// The test cases in a structured language e.g. Gherkin, Postman, or FHIR
   /// TestScript.
   final TestPlanScript? script;
   @override
@@ -2292,7 +3339,7 @@ class TestPlanTestRun extends BackboneElement {
 }
 
 /// [TestPlanScript]
-/// The test cases in a structured language e.g. gherkin, Postman, or FHIR
+/// The test cases in a structured language e.g. Gherkin, Postman, or FHIR
 /// TestScript.
 class TestPlanScript extends BackboneElement {
   /// Primary constructor for
@@ -2305,9 +3352,11 @@ class TestPlanScript extends BackboneElement {
     this.language,
     SourceXTestPlanScript? sourceX,
     FhirString? sourceString,
+    Attachment? sourceAttachment,
     Reference? sourceReference,
     super.disallowExtensions,
-  })  : sourceX = sourceX ?? sourceString ?? sourceReference,
+  })  : sourceX =
+            sourceX ?? sourceString ?? sourceAttachment ?? sourceReference,
         super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -2343,6 +3392,7 @@ class TestPlanScript extends BackboneElement {
         json,
         {
           'sourceString': FhirString.fromJson,
+          'sourceAttachment': Attachment.fromJson,
           'sourceReference': Reference.fromJson,
         },
       ),
@@ -2392,16 +3442,20 @@ class TestPlanScript extends BackboneElement {
   String get fhirType => 'TestPlanScript';
 
   /// [language]
-  /// The language for the test cases e.g. 'gherkin', 'testscript'.
+  /// The structured language for the test case script e.g. Gherkin, Postman,
+  /// or FHIR TestScript.
   final CodeableConcept? language;
 
   /// [sourceX]
-  /// The actual content of the cases - references to TestScripts or
-  /// externally defined content.
+  /// The actual content of the script, references to test resource
+  /// (TestScript) or externally defined content.
   final SourceXTestPlanScript? sourceX;
 
   /// Getter for [sourceString] as a FhirString
   FhirString? get sourceString => sourceX?.isAs<FhirString>();
+
+  /// Getter for [sourceAttachment] as a Attachment
+  Attachment? get sourceAttachment => sourceX?.isAs<Attachment>();
 
   /// Getter for [sourceReference] as a Reference
   Reference? get sourceReference => sourceX?.isAs<Reference>();
@@ -2540,6 +3594,10 @@ class TestPlanScript extends BackboneElement {
         if (sourceX is FhirString) {
           fields.add(sourceX!);
         }
+      case 'sourceAttachment':
+        if (sourceX is Attachment) {
+          fields.add(sourceX!);
+        }
       case 'sourceReference':
         if (sourceX is Reference) {
           fields.add(sourceX!);
@@ -2633,9 +3691,10 @@ class TestPlanTestData extends BackboneElement {
     this.content,
     SourceXTestPlanTestData? sourceX,
     FhirString? sourceString,
+    FhirUri? sourceUri,
     Reference? sourceReference,
     super.disallowExtensions,
-  })  : sourceX = sourceX ?? sourceString ?? sourceReference,
+  })  : sourceX = sourceX ?? sourceString ?? sourceUri ?? sourceReference,
         super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -2676,6 +3735,7 @@ class TestPlanTestData extends BackboneElement {
         json,
         {
           'sourceString': FhirString.fromJson,
+          'sourceUri': FhirUri.fromJson,
           'sourceReference': Reference.fromJson,
         },
       ),
@@ -2739,6 +3799,9 @@ class TestPlanTestData extends BackboneElement {
 
   /// Getter for [sourceString] as a FhirString
   FhirString? get sourceString => sourceX?.isAs<FhirString>();
+
+  /// Getter for [sourceUri] as a FhirUri
+  FhirUri? get sourceUri => sourceX?.isAs<FhirUri>();
 
   /// Getter for [sourceReference] as a Reference
   Reference? get sourceReference => sourceX?.isAs<Reference>();
@@ -2882,6 +3945,10 @@ class TestPlanTestData extends BackboneElement {
         fields.add(sourceX!);
       case 'sourceString':
         if (sourceX is FhirString) {
+          fields.add(sourceX!);
+        }
+      case 'sourceUri':
+        if (sourceX is FhirUri) {
           fields.add(sourceX!);
         }
       case 'sourceReference':
@@ -3077,7 +4144,7 @@ class TestPlanAssertion extends BackboneElement {
   String get fhirType => 'TestPlanAssertion';
 
   /// [type]
-  /// The test assertion type - this can be used to group assertions as
+  /// The test case assertion type - this can be used to group assertions as
   /// 'required' or 'optional', or can be used for other classification of
   /// the assertion.
   final List<CodeableConcept>? type;

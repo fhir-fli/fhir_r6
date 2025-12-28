@@ -220,7 +220,8 @@ class ClinicalUseDefinition extends DomainResource {
 
   /// [subject]
   /// The medication, product, substance, device, procedure etc. for which
-  /// this is an indication.
+  /// this is an indication, contraindication, interaction, undesirable
+  /// effect, or warning.
   final List<Reference>? subject;
 
   /// [status]
@@ -823,7 +824,7 @@ class ClinicalUseDefinitionContraindication extends BackboneElement {
   final List<CodeableReference>? comorbidity;
 
   /// [indication]
-  /// The indication which this is a contraidication for.
+  /// The indication which this is a contraindication for.
   final List<Reference>? indication;
 
   /// [applicability]
@@ -1547,7 +1548,7 @@ class ClinicalUseDefinitionIndication extends BackboneElement {
   String get fhirType => 'ClinicalUseDefinitionIndication';
 
   /// [diseaseSymptomProcedure]
-  /// The situation that is being documented as an indicaton for this item.
+  /// The situation that is being documented as an indication for this item.
   final CodeableReference? diseaseSymptomProcedure;
 
   /// [diseaseStatus]

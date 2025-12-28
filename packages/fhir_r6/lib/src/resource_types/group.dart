@@ -6,9 +6,22 @@ part 'group.g.dart';
 
 /// [FhirGroup]
 /// Represents a defined collection of entities that may be discussed or
-/// acted upon collectively but which are not expected to act collectively,
-/// and are not formally or legally recognized; i.e. a collection of
-/// entities that isn't an Organization.
+/// acted upon collectively but which are not typically expected to act
+/// collectively. These collections are also not typically formally or
+/// legally recognized.
+///
+/// NOTE: Group may be used to define families or households, which in some
+/// circumstances may act collectively or have a degree of legal or formal
+/// recognition. This should be considered an exception. When Group is used
+/// for types of entities other than Patient or RelatedPerson, the
+/// expectation remains that the Group will not act collectively or have
+/// formal recognition - use Organization if these behaviors are needed.
+///
+/// For example, it is possible for a 'family' Group to be a performer of
+/// an Observation or owner of a Task. However, this is not permitted for a
+/// Group made up of Practitioners, PractitionerRoles or Organizations.
+/// Organization or CareTeam would need to be used instead. A Group of
+/// Practitioners could, however, be a subject of an Observation.
 class FhirGroup extends DomainResource {
   /// Primary constructor for
   /// [FhirGroup]
@@ -22,18 +35,37 @@ class FhirGroup extends DomainResource {
     super.contained,
     super.extension_,
     super.modifierExtension,
+    this.url,
     this.identifier,
-    this.active,
-    required this.type,
+    this.version,
+    VersionAlgorithmXGroup? versionAlgorithmX,
+    FhirString? versionAlgorithmString,
+    Coding? versionAlgorithmCoding,
+    this.name,
+    this.title,
+    this.status,
+    this.experimental,
+    this.date,
+    this.publisher,
+    this.contact,
+    this.description,
+    this.useContext,
+    this.purpose,
+    this.copyright,
+    this.copyrightLabel,
+    this.type,
     required this.membership,
     this.code,
-    this.name,
-    this.description,
     this.quantity,
     this.managingEntity,
+    this.combinationMethod,
+    this.combinationThreshold,
     this.characteristic,
     this.member,
-  }) : super(
+  })  : versionAlgorithmX = versionAlgorithmX ??
+            versionAlgorithmString ??
+            versionAlgorithmCoding,
+        super(
           resourceType: R6ResourceType.FhirGroup,
         );
 
@@ -88,6 +120,11 @@ class FhirGroup extends DomainResource {
             ),
           )
           .toList(),
+      url: JsonParser.parsePrimitive<FhirUri>(
+        json,
+        'url',
+        FhirUri.fromJson,
+      ),
       identifier: (json['identifier'] as List<dynamic>?)
           ?.map<Identifier>(
             (v) => Identifier.fromJson(
@@ -95,16 +132,87 @@ class FhirGroup extends DomainResource {
             ),
           )
           .toList(),
-      active: JsonParser.parsePrimitive<FhirBoolean>(
+      version: JsonParser.parsePrimitive<FhirString>(
         json,
-        'active',
+        'version',
+        FhirString.fromJson,
+      ),
+      versionAlgorithmX: JsonParser.parsePolymorphic<VersionAlgorithmXGroup>(
+        json,
+        {
+          'versionAlgorithmString': FhirString.fromJson,
+          'versionAlgorithmCoding': Coding.fromJson,
+        },
+      ),
+      name: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'name',
+        FhirString.fromJson,
+      ),
+      title: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'title',
+        FhirString.fromJson,
+      ),
+      status: JsonParser.parsePrimitive<PublicationStatus>(
+        json,
+        'status',
+        PublicationStatus.fromJson,
+      ),
+      experimental: JsonParser.parsePrimitive<FhirBoolean>(
+        json,
+        'experimental',
         FhirBoolean.fromJson,
+      ),
+      date: JsonParser.parsePrimitive<FhirDateTime>(
+        json,
+        'date',
+        FhirDateTime.fromJson,
+      ),
+      publisher: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'publisher',
+        FhirString.fromJson,
+      ),
+      contact: (json['contact'] as List<dynamic>?)
+          ?.map<ContactDetail>(
+            (v) => ContactDetail.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      description: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'description',
+        FhirMarkdown.fromJson,
+      ),
+      useContext: (json['useContext'] as List<dynamic>?)
+          ?.map<UsageContext>(
+            (v) => UsageContext.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      purpose: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'purpose',
+        FhirMarkdown.fromJson,
+      ),
+      copyright: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'copyright',
+        FhirMarkdown.fromJson,
+      ),
+      copyrightLabel: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'copyrightLabel',
+        FhirString.fromJson,
       ),
       type: JsonParser.parsePrimitive<GroupType>(
         json,
         'type',
         GroupType.fromJson,
-      )!,
+      ),
       membership: JsonParser.parsePrimitive<GroupMembershipBasis>(
         json,
         'membership',
@@ -115,16 +223,6 @@ class FhirGroup extends DomainResource {
         'code',
         CodeableConcept.fromJson,
       ),
-      name: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'name',
-        FhirString.fromJson,
-      ),
-      description: JsonParser.parsePrimitive<FhirMarkdown>(
-        json,
-        'description',
-        FhirMarkdown.fromJson,
-      ),
       quantity: JsonParser.parsePrimitive<FhirUnsignedInt>(
         json,
         'quantity',
@@ -134,6 +232,17 @@ class FhirGroup extends DomainResource {
         json,
         'managingEntity',
         Reference.fromJson,
+      ),
+      combinationMethod:
+          JsonParser.parsePrimitive<GroupCharacteristicCombination>(
+        json,
+        'combinationMethod',
+        GroupCharacteristicCombination.fromJson,
+      ),
+      combinationThreshold: JsonParser.parsePrimitive<FhirPositiveInt>(
+        json,
+        'combinationThreshold',
+        FhirPositiveInt.fromJson,
       ),
       characteristic: (json['characteristic'] as List<dynamic>?)
           ?.map<GroupCharacteristic>(
@@ -194,21 +303,115 @@ class FhirGroup extends DomainResource {
   @override
   String get fhirType => 'Group';
 
+  /// [url]
+  /// An absolute URI that is used to identify this Group when it is
+  /// referenced in a specification, model, design or an instance; also
+  /// called its canonical identifier. This SHOULD be globally unique and
+  /// SHOULD be a literal address at which an authoritative instance of this
+  /// Group is (or will be) published. This URL can be the target of a
+  /// canonical reference. It SHALL remain the same when the Group is stored
+  /// on different servers.
+  final FhirUri? url;
+
   /// [identifier]
   /// Business identifiers assigned to this participant by one of the
   /// applications involved. These identifiers remain constant as the
   /// resource is updated and propagates from server to server.
   final List<Identifier>? identifier;
 
-  /// [active]
-  /// Indicates whether the record for the group is available for use or is
-  /// merely being retained for historical purposes.
-  final FhirBoolean? active;
+  /// [version]
+  /// The identifier that is used to identify this version of the Group when
+  /// it is referenced in a specification, model, design or instance. This is
+  /// an arbitrary value managed by the Group author and is not expected to
+  /// be globally unique. For example, it might be a timestamp (e.g.
+  /// yyyymmdd) if a managed version is not available. There is also no
+  /// expectation that versions can be placed in a lexicographical sequence
+  /// without additional knowledge.
+  final FhirString? version;
+
+  /// [versionAlgorithmX]
+  /// Indicates the mechanism used to compare versions to determine which is
+  /// more current.
+  final VersionAlgorithmXGroup? versionAlgorithmX;
+
+  /// Getter for [versionAlgorithmString] as a FhirString
+  FhirString? get versionAlgorithmString =>
+      versionAlgorithmX?.isAs<FhirString>();
+
+  /// Getter for [versionAlgorithmCoding] as a Coding
+  Coding? get versionAlgorithmCoding => versionAlgorithmX?.isAs<Coding>();
+
+  /// [name]
+  /// A label assigned to the group for human identification and
+  /// communication.
+  final FhirString? name;
+
+  /// [title]
+  /// A short, descriptive, user-friendly title for the Group.
+  final FhirString? title;
+
+  /// [status]
+  /// The current state of this Group.
+  final PublicationStatus? status;
+
+  /// [experimental]
+  /// A Boolean value to indicate that this Group is authored for testing
+  /// purposes (or education/evaluation/marketing) and no version of this
+  /// resource will ever be intended for genuine usage.
+  final FhirBoolean? experimental;
+
+  /// [date]
+  /// The date (and optionally time) when the Group was last significantly
+  /// changed. The date must change when the business version changes and it
+  /// must change if the status code changes. In addition, it should change
+  /// when the substantive content of the Group changes.
+  final FhirDateTime? date;
+
+  /// [publisher]
+  /// The name of the organization or individual responsible for the release
+  /// and ongoing maintenance of the Group.
+  final FhirString? publisher;
+
+  /// [contact]
+  /// Contact details to assist a user in finding and communicating with the
+  /// publisher.
+  final List<ContactDetail>? contact;
+
+  /// [description]
+  /// Explanation of what the group represents and how it is intended to be
+  /// used.
+  final FhirMarkdown? description;
+
+  /// [useContext]
+  /// The content was developed with a focus and intent of supporting the
+  /// contexts that are listed. These contexts may be general categories
+  /// (gender, age, ...) or may be references to specific programs (insurance
+  /// plans, studies, ...) and may be used to assist with indexing and
+  /// searching for appropriate Groups.
+  final List<UsageContext>? useContext;
+
+  /// [purpose]
+  /// Explanation of why this Group is needed and why it has been designed as
+  /// it has.
+  final FhirMarkdown? purpose;
+
+  /// [copyright]
+  /// A copyright statement relating to the Group and/or its contents.
+  /// Copyright statements are generally legal restrictions on the use and
+  /// publishing of the Group.
+  final FhirMarkdown? copyright;
+
+  /// [copyrightLabel]
+  /// A short string (<50 characters), suitable for inclusion in a page
+  /// footer that identifies the copyright holder, effective period, and
+  /// optionally whether rights are resctricted. (e.g. 'All rights reserved',
+  /// 'Some rights reserved').
+  final FhirString? copyrightLabel;
 
   /// [type]
   /// Identifies the broad classification of the kind of resources the group
   /// includes.
-  final GroupType type;
+  final GroupType? type;
 
   /// [membership]
   /// Basis for membership in the Group:
@@ -219,25 +422,19 @@ class FhirGroup extends DomainResource {
   /// referenced by the group or not. If members are present, they are
   /// individuals that happen to be known as meeting the
   /// Group.characteristics. The list cannot be presumed to be complete.
+  /// * 'conceptual': The Group.characteristics specified are both necessary
+  /// and sufficient to determine membership. The 'conceptual' Group is a
+  /// 'definitional' Group in which the Group.type is not bound to FHIR
+  /// types.
   /// * 'enumerated': The Group.characteristics are necessary but not
   /// sufficient to determine membership. Membership is determined by being
   /// listed as one of the Group.member.
   final GroupMembershipBasis membership;
 
   /// [code]
-  /// Provides a specific type of resource the group includes; e.g. "cow",
-  /// "syringe", etc.
+  /// A code that describes the use of the group. The use of the group
+  /// usually dictates what kind of entities can be members of the group.
   final CodeableConcept? code;
-
-  /// [name]
-  /// A label assigned to the group for human identification and
-  /// communication.
-  final FhirString? name;
-
-  /// [description]
-  /// Explanation of what the group represents and how it is intended to be
-  /// used.
-  final FhirMarkdown? description;
 
   /// [quantity]
   /// A count of the number of resource instances that are part of the group.
@@ -247,6 +444,15 @@ class FhirGroup extends DomainResource {
   /// Entity responsible for defining and maintaining Group characteristics
   /// and/or registered members.
   final Reference? managingEntity;
+
+  /// [combinationMethod]
+  /// Used to specify how two or more characteristics are combined.
+  final GroupCharacteristicCombination? combinationMethod;
+
+  /// [combinationThreshold]
+  /// Provides the value of "n" when "at-least" or "at-most" codes are used
+  /// for combinationMethod.
+  final FhirPositiveInt? combinationThreshold;
 
   /// [characteristic]
   /// Identifies traits whose presence r absence is shared by members of the
@@ -353,12 +559,72 @@ class FhirGroup extends DomainResource {
       modifierExtension,
     );
     addField(
+      'url',
+      url,
+    );
+    addField(
       'identifier',
       identifier,
     );
     addField(
-      'active',
-      active,
+      'version',
+      version,
+    );
+    if (versionAlgorithmX != null) {
+      final fhirType = versionAlgorithmX!.fhirType;
+      addField(
+        'versionAlgorithm${fhirType.capitalize()}',
+        versionAlgorithmX,
+      );
+    }
+
+    addField(
+      'name',
+      name,
+    );
+    addField(
+      'title',
+      title,
+    );
+    addField(
+      'status',
+      status,
+    );
+    addField(
+      'experimental',
+      experimental,
+    );
+    addField(
+      'date',
+      date,
+    );
+    addField(
+      'publisher',
+      publisher,
+    );
+    addField(
+      'contact',
+      contact,
+    );
+    addField(
+      'description',
+      description,
+    );
+    addField(
+      'useContext',
+      useContext,
+    );
+    addField(
+      'purpose',
+      purpose,
+    );
+    addField(
+      'copyright',
+      copyright,
+    );
+    addField(
+      'copyrightLabel',
+      copyrightLabel,
     );
     addField(
       'type',
@@ -373,20 +639,20 @@ class FhirGroup extends DomainResource {
       code,
     );
     addField(
-      'name',
-      name,
-    );
-    addField(
-      'description',
-      description,
-    );
-    addField(
       'quantity',
       quantity,
     );
     addField(
       'managingEntity',
       managingEntity,
+    );
+    addField(
+      'combinationMethod',
+      combinationMethod,
+    );
+    addField(
+      'combinationThreshold',
+      combinationThreshold,
     );
     addField(
       'characteristic',
@@ -411,15 +677,29 @@ class FhirGroup extends DomainResource {
       'contained',
       'extension',
       'modifierExtension',
+      'url',
       'identifier',
-      'active',
+      'version',
+      'versionAlgorithmX',
+      'name',
+      'title',
+      'status',
+      'experimental',
+      'date',
+      'publisher',
+      'contact',
+      'description',
+      'useContext',
+      'purpose',
+      'copyright',
+      'copyrightLabel',
       'type',
       'membership',
       'code',
-      'name',
-      'description',
       'quantity',
       'managingEntity',
+      'combinationMethod',
+      'combinationThreshold',
       'characteristic',
       'member',
     ];
@@ -466,29 +746,87 @@ class FhirGroup extends DomainResource {
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
         }
+      case 'url':
+        if (url != null) {
+          fields.add(url!);
+        }
       case 'identifier':
         if (identifier != null) {
           fields.addAll(identifier!);
         }
-      case 'active':
-        if (active != null) {
-          fields.add(active!);
+      case 'version':
+        if (version != null) {
+          fields.add(version!);
         }
-      case 'type':
-        fields.add(type);
-      case 'membership':
-        fields.add(membership);
-      case 'code':
-        if (code != null) {
-          fields.add(code!);
+      case 'versionAlgorithm':
+        fields.add(versionAlgorithmX!);
+      case 'versionAlgorithmX':
+        fields.add(versionAlgorithmX!);
+      case 'versionAlgorithmString':
+        if (versionAlgorithmX is FhirString) {
+          fields.add(versionAlgorithmX!);
+        }
+      case 'versionAlgorithmCoding':
+        if (versionAlgorithmX is Coding) {
+          fields.add(versionAlgorithmX!);
         }
       case 'name':
         if (name != null) {
           fields.add(name!);
         }
+      case 'title':
+        if (title != null) {
+          fields.add(title!);
+        }
+      case 'status':
+        if (status != null) {
+          fields.add(status!);
+        }
+      case 'experimental':
+        if (experimental != null) {
+          fields.add(experimental!);
+        }
+      case 'date':
+        if (date != null) {
+          fields.add(date!);
+        }
+      case 'publisher':
+        if (publisher != null) {
+          fields.add(publisher!);
+        }
+      case 'contact':
+        if (contact != null) {
+          fields.addAll(contact!);
+        }
       case 'description':
         if (description != null) {
           fields.add(description!);
+        }
+      case 'useContext':
+        if (useContext != null) {
+          fields.addAll(useContext!);
+        }
+      case 'purpose':
+        if (purpose != null) {
+          fields.add(purpose!);
+        }
+      case 'copyright':
+        if (copyright != null) {
+          fields.add(copyright!);
+        }
+      case 'copyrightLabel':
+        if (copyrightLabel != null) {
+          fields.add(copyrightLabel!);
+        }
+      case 'type':
+        if (type != null) {
+          fields.add(type!);
+        }
+      case 'membership':
+        fields.add(membership);
+      case 'code':
+        if (code != null) {
+          fields.add(code!);
         }
       case 'quantity':
         if (quantity != null) {
@@ -497,6 +835,14 @@ class FhirGroup extends DomainResource {
       case 'managingEntity':
         if (managingEntity != null) {
           fields.add(managingEntity!);
+        }
+      case 'combinationMethod':
+        if (combinationMethod != null) {
+          fields.add(combinationMethod!);
+        }
+      case 'combinationThreshold':
+        if (combinationThreshold != null) {
+          fields.add(combinationThreshold!);
         }
       case 'characteristic':
         if (characteristic != null) {
@@ -595,6 +941,12 @@ class FhirGroup extends DomainResource {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      url,
+      o.url,
+    )) {
+      return false;
+    }
     if (!listEquals<Identifier>(
       identifier,
       o.identifier,
@@ -602,8 +954,86 @@ class FhirGroup extends DomainResource {
       return false;
     }
     if (!equalsDeepWithNull(
-      active,
-      o.active,
+      version,
+      o.version,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      versionAlgorithmX,
+      o.versionAlgorithmX,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      name,
+      o.name,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      title,
+      o.title,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      status,
+      o.status,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      experimental,
+      o.experimental,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      date,
+      o.date,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      publisher,
+      o.publisher,
+    )) {
+      return false;
+    }
+    if (!listEquals<ContactDetail>(
+      contact,
+      o.contact,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      description,
+      o.description,
+    )) {
+      return false;
+    }
+    if (!listEquals<UsageContext>(
+      useContext,
+      o.useContext,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      purpose,
+      o.purpose,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      copyright,
+      o.copyright,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      copyrightLabel,
+      o.copyrightLabel,
     )) {
       return false;
     }
@@ -626,18 +1056,6 @@ class FhirGroup extends DomainResource {
       return false;
     }
     if (!equalsDeepWithNull(
-      name,
-      o.name,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      description,
-      o.description,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
       quantity,
       o.quantity,
     )) {
@@ -646,6 +1064,18 @@ class FhirGroup extends DomainResource {
     if (!equalsDeepWithNull(
       managingEntity,
       o.managingEntity,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      combinationMethod,
+      o.combinationMethod,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      combinationThreshold,
+      o.combinationThreshold,
     )) {
       return false;
     }
@@ -679,9 +1109,26 @@ class GroupCharacteristic extends BackboneElement {
     required this.code,
     required this.valueX,
     required this.exclude,
+    this.description,
+    this.method,
+    DeterminedByXGroupCharacteristic? determinedByX,
+    Reference? determinedByReference,
+    FhirExpression? determinedByExpression,
+    this.offset,
+    InstancesXGroupCharacteristic? instancesX,
+    FhirUnsignedInt? instancesUnsignedInt,
+    Range? instancesRange,
+    DurationXGroupCharacteristic? durationX,
+    FhirDuration? durationDuration,
+    Range? durationRange,
     this.period,
+    this.timing,
     super.disallowExtensions,
-  }) : super();
+  })  : determinedByX =
+            determinedByX ?? determinedByReference ?? determinedByExpression,
+        instancesX = instancesX ?? instancesUnsignedInt ?? instancesRange,
+        durationX = durationX ?? durationDuration ?? durationRange,
+        super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
   factory GroupCharacteristic.fromJson(
@@ -720,6 +1167,8 @@ class GroupCharacteristic extends BackboneElement {
           'valueQuantity': Quantity.fromJson,
           'valueRange': Range.fromJson,
           'valueReference': Reference.fromJson,
+          'valueUri': FhirUri.fromJson,
+          'valueExpression': FhirExpression.fromJson,
         },
       )!,
       exclude: JsonParser.parsePrimitive<FhirBoolean>(
@@ -727,11 +1176,57 @@ class GroupCharacteristic extends BackboneElement {
         'exclude',
         FhirBoolean.fromJson,
       )!,
+      description: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'description',
+        FhirMarkdown.fromJson,
+      ),
+      method: (json['method'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      determinedByX:
+          JsonParser.parsePolymorphic<DeterminedByXGroupCharacteristic>(
+        json,
+        {
+          'determinedByReference': Reference.fromJson,
+          'determinedByExpression': FhirExpression.fromJson,
+        },
+      ),
+      offset: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'offset',
+        CodeableConcept.fromJson,
+      ),
+      instancesX: JsonParser.parsePolymorphic<InstancesXGroupCharacteristic>(
+        json,
+        {
+          'instancesUnsignedInt': FhirUnsignedInt.fromJson,
+          'instancesRange': Range.fromJson,
+        },
+      ),
+      durationX: JsonParser.parsePolymorphic<DurationXGroupCharacteristic>(
+        json,
+        {
+          'durationDuration': FhirDuration.fromJson,
+          'durationRange': Range.fromJson,
+        },
+      ),
       period: JsonParser.parseObject<Period>(
         json,
         'period',
         Period.fromJson,
       ),
+      timing: (json['timing'] as List<dynamic>?)
+          ?.map<RelativeTime>(
+            (v) => RelativeTime.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -801,15 +1296,71 @@ class GroupCharacteristic extends BackboneElement {
   /// Getter for [valueReference] as a Reference
   Reference? get valueReference => valueX.isAs<Reference>();
 
+  /// Getter for [valueUri] as a FhirUri
+  FhirUri? get valueUri => valueX.isAs<FhirUri>();
+
+  /// Getter for [valueExpression] as a FhirExpression
+  FhirExpression? get valueExpression => valueX.isAs<FhirExpression>();
+
   /// [exclude]
   /// If true, indicates the characteristic is one that is NOT held by
   /// members of the group.
   final FhirBoolean exclude;
 
+  /// [description]
+  /// A short, natural language description of the characteristic that could
+  /// be used to communicate the criteria to an end-user.
+  final FhirMarkdown? description;
+
+  /// [method]
+  /// Method for how the characteristic value was determined.
+  final List<CodeableConcept>? method;
+
+  /// [determinedByX]
+  /// Defines the characteristic (without using type and value) by either a
+  /// Reference or an Expression.
+  final DeterminedByXGroupCharacteristic? determinedByX;
+
+  /// Getter for [determinedByReference] as a Reference
+  Reference? get determinedByReference => determinedByX?.isAs<Reference>();
+
+  /// Getter for [determinedByExpression] as a FhirExpression
+  FhirExpression? get determinedByExpression =>
+      determinedByX?.isAs<FhirExpression>();
+
+  /// [offset]
+  /// Defines the reference point for comparison when other than 0.
+  final CodeableConcept? offset;
+
+  /// [instancesX]
+  /// Number of occurrences meeting the characteristic.
+  final InstancesXGroupCharacteristic? instancesX;
+
+  /// Getter for [instancesUnsignedInt] as a FhirUnsignedInt
+  FhirUnsignedInt? get instancesUnsignedInt =>
+      instancesX?.isAs<FhirUnsignedInt>();
+
+  /// Getter for [instancesRange] as a Range
+  Range? get instancesRange => instancesX?.isAs<Range>();
+
+  /// [durationX]
+  /// Length of time in which the characteristic is met.
+  final DurationXGroupCharacteristic? durationX;
+
+  /// Getter for [durationDuration] as a FhirDuration
+  FhirDuration? get durationDuration => durationX?.isAs<FhirDuration>();
+
+  /// Getter for [durationRange] as a Range
+  Range? get durationRange => durationX?.isAs<Range>();
+
   /// [period]
   /// The period over which the characteristic is tested; e.g. the patient
   /// had an operation during the month of June.
   final Period? period;
+
+  /// [timing]
+  /// Timing in which the characteristic is determined.
+  final List<RelativeTime>? timing;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -900,8 +1451,48 @@ class GroupCharacteristic extends BackboneElement {
       exclude,
     );
     addField(
+      'description',
+      description,
+    );
+    addField(
+      'method',
+      method,
+    );
+    if (determinedByX != null) {
+      final fhirType = determinedByX!.fhirType;
+      addField(
+        'determinedBy${fhirType.capitalize()}',
+        determinedByX,
+      );
+    }
+
+    addField(
+      'offset',
+      offset,
+    );
+    if (instancesX != null) {
+      final fhirType = instancesX!.fhirType;
+      addField(
+        'instances${fhirType.capitalize()}',
+        instancesX,
+      );
+    }
+
+    if (durationX != null) {
+      final fhirType = durationX!.fhirType;
+      addField(
+        'duration${fhirType.capitalize()}',
+        durationX,
+      );
+    }
+
+    addField(
       'period',
       period,
+    );
+    addField(
+      'timing',
+      timing,
     );
     return json;
   }
@@ -916,7 +1507,14 @@ class GroupCharacteristic extends BackboneElement {
       'code',
       'valueX',
       'exclude',
+      'description',
+      'method',
+      'determinedByX',
+      'offset',
+      'instancesX',
+      'durationX',
       'period',
+      'timing',
     ];
   }
 
@@ -967,11 +1565,71 @@ class GroupCharacteristic extends BackboneElement {
         if (valueX is Reference) {
           fields.add(valueX);
         }
+      case 'valueUri':
+        if (valueX is FhirUri) {
+          fields.add(valueX);
+        }
+      case 'valueExpression':
+        if (valueX is FhirExpression) {
+          fields.add(valueX);
+        }
       case 'exclude':
         fields.add(exclude);
+      case 'description':
+        if (description != null) {
+          fields.add(description!);
+        }
+      case 'method':
+        if (method != null) {
+          fields.addAll(method!);
+        }
+      case 'determinedBy':
+        fields.add(determinedByX!);
+      case 'determinedByX':
+        fields.add(determinedByX!);
+      case 'determinedByReference':
+        if (determinedByX is Reference) {
+          fields.add(determinedByX!);
+        }
+      case 'determinedByExpression':
+        if (determinedByX is FhirExpression) {
+          fields.add(determinedByX!);
+        }
+      case 'offset':
+        if (offset != null) {
+          fields.add(offset!);
+        }
+      case 'instances':
+        fields.add(instancesX!);
+      case 'instancesX':
+        fields.add(instancesX!);
+      case 'instancesUnsignedInt':
+        if (instancesX is FhirUnsignedInt) {
+          fields.add(instancesX!);
+        }
+      case 'instancesRange':
+        if (instancesX is Range) {
+          fields.add(instancesX!);
+        }
+      case 'duration':
+        fields.add(durationX!);
+      case 'durationX':
+        fields.add(durationX!);
+      case 'durationDuration':
+        if (durationX is FhirDuration) {
+          fields.add(durationX!);
+        }
+      case 'durationRange':
+        if (durationX is Range) {
+          fields.add(durationX!);
+        }
       case 'period':
         if (period != null) {
           fields.add(period!);
+        }
+      case 'timing':
+        if (timing != null) {
+          fields.addAll(timing!);
         }
       default:
         if (checkValid) {
@@ -1051,8 +1709,50 @@ class GroupCharacteristic extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
+      description,
+      o.description,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConcept>(
+      method,
+      o.method,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      determinedByX,
+      o.determinedByX,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      offset,
+      o.offset,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      instancesX,
+      o.instancesX,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      durationX,
+      o.durationX,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       period,
       o.period,
+    )) {
+      return false;
+    }
+    if (!listEquals<RelativeTime>(
+      timing,
+      o.timing,
     )) {
       return false;
     }
@@ -1071,6 +1771,7 @@ class GroupMember extends BackboneElement {
     super.extension_,
     super.modifierExtension,
     required this.entity,
+    this.involvement,
     this.period,
     this.inactive,
     super.disallowExtensions,
@@ -1105,6 +1806,13 @@ class GroupMember extends BackboneElement {
         'entity',
         Reference.fromJson,
       )!,
+      involvement: (json['involvement'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       period: JsonParser.parseObject<Period>(
         json,
         'period',
@@ -1165,6 +1873,13 @@ class GroupMember extends BackboneElement {
   /// consistent with Group.type. If the entity is another group, then the
   /// type must be the same.
   final Reference entity;
+
+  /// [involvement]
+  /// A code that describes how a user is involved in the group. Some groups
+  /// (e.g. exposure-group) typically don't have variance between members, or
+  /// it is not tracked, while for other groups (e.g. family, household) this
+  /// may be meaningful.
+  final List<CodeableConcept>? involvement;
 
   /// [period]
   /// The period that the member was in the group, if known.
@@ -1254,6 +1969,10 @@ class GroupMember extends BackboneElement {
       entity,
     );
     addField(
+      'involvement',
+      involvement,
+    );
+    addField(
       'period',
       period,
     );
@@ -1272,6 +1991,7 @@ class GroupMember extends BackboneElement {
       'extension',
       'modifierExtension',
       'entity',
+      'involvement',
       'period',
       'inactive',
     ];
@@ -1300,6 +2020,10 @@ class GroupMember extends BackboneElement {
         }
       case 'entity':
         fields.add(entity);
+      case 'involvement':
+        if (involvement != null) {
+          fields.addAll(involvement!);
+        }
       case 'period':
         if (period != null) {
           fields.add(period!);
@@ -1370,6 +2094,12 @@ class GroupMember extends BackboneElement {
     if (!equalsDeepWithNull(
       entity,
       o.entity,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConcept>(
+      involvement,
+      o.involvement,
     )) {
       return false;
     }

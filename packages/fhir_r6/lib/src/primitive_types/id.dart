@@ -26,9 +26,7 @@ class FhirId extends FhirUri
         FixedXElementDefinition,
         PatternXElementDefinition,
         ValueXElementDefinitionExample,
-        ValueXExtension,
-        ValueXEvidenceVariableDefinitionByTypeAndValue,
-        EventXEvidenceVariableTimeFromEvent {
+        ValueXExtension {
   // --------------------------------------------------------------------------
   // Private Internal Constructor
   // --------------------------------------------------------------------------
@@ -90,7 +88,7 @@ class FhirId extends FhirUri
 
   /// Constructs a [FhirId] from a JSON [Map].
   factory FhirId.fromJson(Map<String, dynamic> json) {
-    final rawValue = json['value'] as String?;
+    final rawValue = json['value'];
     final elementJson = json['_value'] as Map<String, dynamic>?;
     final parsedElement =
         elementJson == null ? null : Element.fromJson(elementJson);

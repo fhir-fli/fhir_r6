@@ -135,7 +135,7 @@ class ConditionQuestionnairePurpose extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Pre-admit',
     ),
@@ -150,7 +150,7 @@ class ConditionQuestionnairePurpose extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Diff Diagnosis',
     ),
@@ -165,7 +165,7 @@ class ConditionQuestionnairePurpose extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Outcome',
     ),

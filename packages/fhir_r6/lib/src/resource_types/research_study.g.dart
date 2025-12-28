@@ -25,7 +25,8 @@ abstract class $ResearchStudyCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<ResearchStudyLabel>? label,
     List<Reference>? protocol,
     List<Reference>? partOf,
-    List<RelatedArtifact>? relatedArtifact,
+    FhirMarkdown? citeAs,
+    List<ResearchStudyRelatesTo>? relatesTo,
     FhirDateTime? date,
     PublicationStatus? status,
     CodeableConcept? primaryPurposeType,
@@ -47,7 +48,6 @@ abstract class $ResearchStudyCopyWith<T> extends $DomainResourceCopyWith<T> {
     ResearchStudyRecruitment? recruitment,
     List<ResearchStudyComparisonGroup>? comparisonGroup,
     List<ResearchStudyObjective>? objective,
-    List<ResearchStudyOutcomeMeasure>? outcomeMeasure,
     List<Reference>? result,
     bool? disallowExtensions,
   });
@@ -77,7 +77,8 @@ class _$ResearchStudyCopyWithImpl<T> implements $ResearchStudyCopyWith<T> {
     Object? label = fhirSentinel,
     Object? protocol = fhirSentinel,
     Object? partOf = fhirSentinel,
-    Object? relatedArtifact = fhirSentinel,
+    Object? citeAs = fhirSentinel,
+    Object? relatesTo = fhirSentinel,
     Object? date = fhirSentinel,
     Object? status = fhirSentinel,
     Object? primaryPurposeType = fhirSentinel,
@@ -99,7 +100,6 @@ class _$ResearchStudyCopyWithImpl<T> implements $ResearchStudyCopyWith<T> {
     Object? recruitment = fhirSentinel,
     Object? comparisonGroup = fhirSentinel,
     Object? objective = fhirSentinel,
-    Object? outcomeMeasure = fhirSentinel,
     Object? result = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -143,9 +143,12 @@ class _$ResearchStudyCopyWithImpl<T> implements $ResearchStudyCopyWith<T> {
         partOf: identical(partOf, fhirSentinel)
             ? _value.partOf
             : partOf as List<Reference>?,
-        relatedArtifact: identical(relatedArtifact, fhirSentinel)
-            ? _value.relatedArtifact
-            : relatedArtifact as List<RelatedArtifact>?,
+        citeAs: identical(citeAs, fhirSentinel)
+            ? _value.citeAs
+            : citeAs as FhirMarkdown?,
+        relatesTo: identical(relatesTo, fhirSentinel)
+            ? _value.relatesTo
+            : relatesTo as List<ResearchStudyRelatesTo>?,
         date:
             identical(date, fhirSentinel) ? _value.date : date as FhirDateTime?,
         status: identical(status, fhirSentinel)
@@ -207,9 +210,6 @@ class _$ResearchStudyCopyWithImpl<T> implements $ResearchStudyCopyWith<T> {
         objective: identical(objective, fhirSentinel)
             ? _value.objective
             : objective as List<ResearchStudyObjective>?,
-        outcomeMeasure: identical(outcomeMeasure, fhirSentinel)
-            ? _value.outcomeMeasure
-            : outcomeMeasure as List<ResearchStudyOutcomeMeasure>?,
         result: identical(result, fhirSentinel)
             ? _value.result
             : result as List<Reference>?,
@@ -281,6 +281,66 @@ class _$ResearchStudyLabelCopyWithImpl<T>
 extension ResearchStudyLabelCopyWithExtension on ResearchStudyLabel {
   $ResearchStudyLabelCopyWith<ResearchStudyLabel> get copyWith =>
       _$ResearchStudyLabelCopyWithImpl<ResearchStudyLabel>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $ResearchStudyRelatesToCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    ArtifactRelationshipType? type,
+    TargetXResearchStudyRelatesTo? targetX,
+    bool? disallowExtensions,
+  });
+}
+
+class _$ResearchStudyRelatesToCopyWithImpl<T>
+    implements $ResearchStudyRelatesToCopyWith<T> {
+  final ResearchStudyRelatesTo _value;
+  final T Function(ResearchStudyRelatesTo) _then;
+
+  _$ResearchStudyRelatesToCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? type = fhirSentinel,
+    Object? targetX = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      ResearchStudyRelatesTo(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        type: identical(type, fhirSentinel)
+            ? _value.type
+            : (type as ArtifactRelationshipType?) ?? _value.type,
+        targetX: identical(targetX, fhirSentinel)
+            ? _value.targetX
+            : (targetX as TargetXResearchStudyRelatesTo?) ?? _value.targetX,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension ResearchStudyRelatesToCopyWithExtension on ResearchStudyRelatesTo {
+  $ResearchStudyRelatesToCopyWith<ResearchStudyRelatesTo> get copyWith =>
+      _$ResearchStudyRelatesToCopyWithImpl<ResearchStudyRelatesTo>(
         this,
         (value) => value,
       );
@@ -504,11 +564,9 @@ abstract class $ResearchStudyComparisonGroupCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirId? linkId,
-    FhirString? name,
-    CodeableConcept? type,
-    FhirMarkdown? description,
-    List<Reference>? intendedExposure,
+    FhirUnsignedInt? targetNumber,
+    FhirUnsignedInt? actualNumber,
+    Reference? eligibility,
     Reference? observedGroup,
     bool? disallowExtensions,
   });
@@ -526,11 +584,9 @@ class _$ResearchStudyComparisonGroupCopyWithImpl<T>
     Object? id = fhirSentinel,
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
-    Object? linkId = fhirSentinel,
-    Object? name = fhirSentinel,
-    Object? type = fhirSentinel,
-    Object? description = fhirSentinel,
-    Object? intendedExposure = fhirSentinel,
+    Object? targetNumber = fhirSentinel,
+    Object? actualNumber = fhirSentinel,
+    Object? eligibility = fhirSentinel,
     Object? observedGroup = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -543,20 +599,15 @@ class _$ResearchStudyComparisonGroupCopyWithImpl<T>
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
-        linkId:
-            identical(linkId, fhirSentinel) ? _value.linkId : linkId as FhirId?,
-        name: identical(name, fhirSentinel)
-            ? _value.name
-            : (name as FhirString?) ?? _value.name,
-        type: identical(type, fhirSentinel)
-            ? _value.type
-            : type as CodeableConcept?,
-        description: identical(description, fhirSentinel)
-            ? _value.description
-            : description as FhirMarkdown?,
-        intendedExposure: identical(intendedExposure, fhirSentinel)
-            ? _value.intendedExposure
-            : intendedExposure as List<Reference>?,
+        targetNumber: identical(targetNumber, fhirSentinel)
+            ? _value.targetNumber
+            : targetNumber as FhirUnsignedInt?,
+        actualNumber: identical(actualNumber, fhirSentinel)
+            ? _value.actualNumber
+            : actualNumber as FhirUnsignedInt?,
+        eligibility: identical(eligibility, fhirSentinel)
+            ? _value.eligibility
+            : eligibility as Reference?,
         observedGroup: identical(observedGroup, fhirSentinel)
             ? _value.observedGroup
             : observedGroup as Reference?,
@@ -588,6 +639,7 @@ abstract class $ResearchStudyObjectiveCopyWith<T>
     FhirString? name,
     CodeableConcept? type,
     FhirMarkdown? description,
+    List<ResearchStudyOutcomeMeasure>? outcomeMeasure,
     bool? disallowExtensions,
   });
 }
@@ -607,6 +659,7 @@ class _$ResearchStudyObjectiveCopyWithImpl<T>
     Object? name = fhirSentinel,
     Object? type = fhirSentinel,
     Object? description = fhirSentinel,
+    Object? outcomeMeasure = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -625,6 +678,9 @@ class _$ResearchStudyObjectiveCopyWithImpl<T>
         description: identical(description, fhirSentinel)
             ? _value.description
             : description as FhirMarkdown?,
+        outcomeMeasure: identical(outcomeMeasure, fhirSentinel)
+            ? _value.outcomeMeasure
+            : outcomeMeasure as List<ResearchStudyOutcomeMeasure>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -649,9 +705,14 @@ abstract class $ResearchStudyOutcomeMeasureCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     FhirString? name,
-    List<CodeableConcept>? type,
+    CodeableConcept? type,
     FhirMarkdown? description,
-    Reference? reference,
+    Reference? endpoint,
+    Reference? population,
+    Reference? intervention,
+    Reference? comparator,
+    CodeableConcept? summaryMeasure,
+    List<ResearchStudyEventHandling>? eventHandling,
     bool? disallowExtensions,
   });
 }
@@ -671,7 +732,12 @@ class _$ResearchStudyOutcomeMeasureCopyWithImpl<T>
     Object? name = fhirSentinel,
     Object? type = fhirSentinel,
     Object? description = fhirSentinel,
-    Object? reference = fhirSentinel,
+    Object? endpoint = fhirSentinel,
+    Object? population = fhirSentinel,
+    Object? intervention = fhirSentinel,
+    Object? comparator = fhirSentinel,
+    Object? summaryMeasure = fhirSentinel,
+    Object? eventHandling = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -686,13 +752,28 @@ class _$ResearchStudyOutcomeMeasureCopyWithImpl<T>
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         type: identical(type, fhirSentinel)
             ? _value.type
-            : type as List<CodeableConcept>?,
+            : type as CodeableConcept?,
         description: identical(description, fhirSentinel)
             ? _value.description
             : description as FhirMarkdown?,
-        reference: identical(reference, fhirSentinel)
-            ? _value.reference
-            : reference as Reference?,
+        endpoint: identical(endpoint, fhirSentinel)
+            ? _value.endpoint
+            : (endpoint as Reference?) ?? _value.endpoint,
+        population: identical(population, fhirSentinel)
+            ? _value.population
+            : population as Reference?,
+        intervention: identical(intervention, fhirSentinel)
+            ? _value.intervention
+            : intervention as Reference?,
+        comparator: identical(comparator, fhirSentinel)
+            ? _value.comparator
+            : comparator as Reference?,
+        summaryMeasure: identical(summaryMeasure, fhirSentinel)
+            ? _value.summaryMeasure
+            : summaryMeasure as CodeableConcept?,
+        eventHandling: identical(eventHandling, fhirSentinel)
+            ? _value.eventHandling
+            : eventHandling as List<ResearchStudyEventHandling>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -706,6 +787,78 @@ extension ResearchStudyOutcomeMeasureCopyWithExtension
   $ResearchStudyOutcomeMeasureCopyWith<ResearchStudyOutcomeMeasure>
       get copyWith => _$ResearchStudyOutcomeMeasureCopyWithImpl<
               ResearchStudyOutcomeMeasure>(
+            this,
+            (value) => value,
+          );
+}
+
+abstract class $ResearchStudyEventHandlingCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    CodeableConcept? event,
+    CodeableConcept? group,
+    CodeableConcept? handling,
+    FhirMarkdown? description,
+    bool? disallowExtensions,
+  });
+}
+
+class _$ResearchStudyEventHandlingCopyWithImpl<T>
+    implements $ResearchStudyEventHandlingCopyWith<T> {
+  final ResearchStudyEventHandling _value;
+  final T Function(ResearchStudyEventHandling) _then;
+
+  _$ResearchStudyEventHandlingCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? event = fhirSentinel,
+    Object? group = fhirSentinel,
+    Object? handling = fhirSentinel,
+    Object? description = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      ResearchStudyEventHandling(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        event: identical(event, fhirSentinel)
+            ? _value.event
+            : event as CodeableConcept?,
+        group: identical(group, fhirSentinel)
+            ? _value.group
+            : group as CodeableConcept?,
+        handling: identical(handling, fhirSentinel)
+            ? _value.handling
+            : handling as CodeableConcept?,
+        description: identical(description, fhirSentinel)
+            ? _value.description
+            : description as FhirMarkdown?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension ResearchStudyEventHandlingCopyWithExtension
+    on ResearchStudyEventHandling {
+  $ResearchStudyEventHandlingCopyWith<ResearchStudyEventHandling>
+      get copyWith =>
+          _$ResearchStudyEventHandlingCopyWithImpl<ResearchStudyEventHandling>(
             this,
             (value) => value,
           );

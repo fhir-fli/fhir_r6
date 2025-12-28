@@ -20,7 +20,7 @@ abstract class $TestPlanCopyWith<T> extends $CanonicalResourceCopyWith<T> {
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXTestPlan? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     PublicationStatus? status,
@@ -35,7 +35,7 @@ abstract class $TestPlanCopyWith<T> extends $CanonicalResourceCopyWith<T> {
     FhirMarkdown? copyright,
     FhirString? copyrightLabel,
     List<CodeableConcept>? category,
-    List<Reference>? scope,
+    List<TestPlanScope>? scope,
     FhirMarkdown? testTools,
     List<TestPlanDependency>? dependency,
     FhirMarkdown? exitCriteria,
@@ -114,7 +114,7 @@ class _$TestPlanCopyWithImpl<T> implements $TestPlanCopyWith<T> {
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXTestPlan?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -156,7 +156,7 @@ class _$TestPlanCopyWithImpl<T> implements $TestPlanCopyWith<T> {
             : category as List<CodeableConcept>?,
         scope: identical(scope, fhirSentinel)
             ? _value.scope
-            : scope as List<Reference>?,
+            : scope as List<TestPlanScope>?,
         testTools: identical(testTools, fhirSentinel)
             ? _value.testTools
             : testTools as FhirMarkdown?,
@@ -176,6 +176,59 @@ class _$TestPlanCopyWithImpl<T> implements $TestPlanCopyWith<T> {
 
 extension TestPlanCopyWithExtension on TestPlan {
   $TestPlanCopyWith<TestPlan> get copyWith => _$TestPlanCopyWithImpl<TestPlan>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $TestPlanScopeCopyWith<T> extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    ArtifactXTestPlanScope? artifactX,
+    bool? disallowExtensions,
+  });
+}
+
+class _$TestPlanScopeCopyWithImpl<T> implements $TestPlanScopeCopyWith<T> {
+  final TestPlanScope _value;
+  final T Function(TestPlanScope) _then;
+
+  _$TestPlanScopeCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? artifactX = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      TestPlanScope(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        artifactX: identical(artifactX, fhirSentinel)
+            ? _value.artifactX
+            : (artifactX as ArtifactXTestPlanScope?) ?? _value.artifactX,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension TestPlanScopeCopyWithExtension on TestPlanScope {
+  $TestPlanScopeCopyWith<TestPlanScope> get copyWith =>
+      _$TestPlanScopeCopyWithImpl<TestPlanScope>(
         this,
         (value) => value,
       );
@@ -248,12 +301,16 @@ abstract class $TestPlanTestCaseCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
+    FhirId? key,
+    FhirMarkdown? description,
     FhirInteger? sequence,
-    List<Reference>? scope,
+    List<TestPlanScope>? scope,
+    List<TestPlanRequirement>? requirement,
     List<TestPlanDependency>? dependency,
     List<TestPlanTestRun>? testRun,
     List<TestPlanTestData>? testData,
     List<TestPlanAssertion>? assertion,
+    List<TestPlanTestCase>? testCase,
     bool? disallowExtensions,
   });
 }
@@ -270,12 +327,16 @@ class _$TestPlanTestCaseCopyWithImpl<T>
     Object? id = fhirSentinel,
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
+    Object? key = fhirSentinel,
+    Object? description = fhirSentinel,
     Object? sequence = fhirSentinel,
     Object? scope = fhirSentinel,
+    Object? requirement = fhirSentinel,
     Object? dependency = fhirSentinel,
     Object? testRun = fhirSentinel,
     Object? testData = fhirSentinel,
     Object? assertion = fhirSentinel,
+    Object? testCase = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -287,12 +348,21 @@ class _$TestPlanTestCaseCopyWithImpl<T>
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
+        key: identical(key, fhirSentinel)
+            ? _value.key
+            : (key as FhirId?) ?? _value.key,
+        description: identical(description, fhirSentinel)
+            ? _value.description
+            : description as FhirMarkdown?,
         sequence: identical(sequence, fhirSentinel)
             ? _value.sequence
             : sequence as FhirInteger?,
         scope: identical(scope, fhirSentinel)
             ? _value.scope
-            : scope as List<Reference>?,
+            : scope as List<TestPlanScope>?,
+        requirement: identical(requirement, fhirSentinel)
+            ? _value.requirement
+            : requirement as List<TestPlanRequirement>?,
         dependency: identical(dependency, fhirSentinel)
             ? _value.dependency
             : dependency as List<TestPlanDependency>?,
@@ -305,6 +375,9 @@ class _$TestPlanTestCaseCopyWithImpl<T>
         assertion: identical(assertion, fhirSentinel)
             ? _value.assertion
             : assertion as List<TestPlanAssertion>?,
+        testCase: identical(testCase, fhirSentinel)
+            ? _value.testCase
+            : testCase as List<TestPlanTestCase>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -321,6 +394,120 @@ extension TestPlanTestCaseCopyWithExtension on TestPlanTestCase {
       );
 }
 
+abstract class $TestPlanScope1CopyWith<T> extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    ArtifactXTestPlanTestCaseScope? artifactX,
+    bool? disallowExtensions,
+  });
+}
+
+class _$TestPlanScope1CopyWithImpl<T> implements $TestPlanScope1CopyWith<T> {
+  final TestPlanScope1 _value;
+  final T Function(TestPlanScope1) _then;
+
+  _$TestPlanScope1CopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? artifactX = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      TestPlanScope1(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        artifactX: identical(artifactX, fhirSentinel)
+            ? _value.artifactX
+            : (artifactX as ArtifactXTestPlanTestCaseScope?) ??
+                _value.artifactX,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension TestPlanScope1CopyWithExtension on TestPlanScope1 {
+  $TestPlanScope1CopyWith<TestPlanScope1> get copyWith =>
+      _$TestPlanScope1CopyWithImpl<TestPlanScope1>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $TestPlanRequirementCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    FhirCanonical? reference,
+    FhirId? key,
+    bool? disallowExtensions,
+  });
+}
+
+class _$TestPlanRequirementCopyWithImpl<T>
+    implements $TestPlanRequirementCopyWith<T> {
+  final TestPlanRequirement _value;
+  final T Function(TestPlanRequirement) _then;
+
+  _$TestPlanRequirementCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? reference = fhirSentinel,
+    Object? key = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      TestPlanRequirement(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        reference: identical(reference, fhirSentinel)
+            ? _value.reference
+            : (reference as FhirCanonical?) ?? _value.reference,
+        key: identical(key, fhirSentinel)
+            ? _value.key
+            : (key as FhirId?) ?? _value.key,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension TestPlanRequirementCopyWithExtension on TestPlanRequirement {
+  $TestPlanRequirementCopyWith<TestPlanRequirement> get copyWith =>
+      _$TestPlanRequirementCopyWithImpl<TestPlanRequirement>(
+        this,
+        (value) => value,
+      );
+}
+
 abstract class $TestPlanDependency1CopyWith<T>
     extends $BackboneElementCopyWith<T> {
   @override
@@ -329,7 +516,8 @@ abstract class $TestPlanDependency1CopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     FhirMarkdown? description,
-    Reference? predecessor,
+    FhirCanonical? reference,
+    FhirId? key,
     bool? disallowExtensions,
   });
 }
@@ -347,7 +535,8 @@ class _$TestPlanDependency1CopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? description = fhirSentinel,
-    Object? predecessor = fhirSentinel,
+    Object? reference = fhirSentinel,
+    Object? key = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -362,9 +551,10 @@ class _$TestPlanDependency1CopyWithImpl<T>
         description: identical(description, fhirSentinel)
             ? _value.description
             : description as FhirMarkdown?,
-        predecessor: identical(predecessor, fhirSentinel)
-            ? _value.predecessor
-            : predecessor as Reference?,
+        reference: identical(reference, fhirSentinel)
+            ? _value.reference
+            : reference as FhirCanonical?,
+        key: identical(key, fhirSentinel) ? _value.key : key as FhirId?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -446,7 +636,7 @@ abstract class $TestPlanScriptCopyWith<T> extends $BackboneElementCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? language,
-    FhirString? sourceX,
+    SourceXTestPlanScript? sourceX,
     bool? disallowExtensions,
   });
 }
@@ -480,7 +670,7 @@ class _$TestPlanScriptCopyWithImpl<T> implements $TestPlanScriptCopyWith<T> {
             : language as CodeableConcept?,
         sourceX: identical(sourceX, fhirSentinel)
             ? _value.sourceX
-            : sourceX as FhirString?,
+            : sourceX as SourceXTestPlanScript?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -506,7 +696,7 @@ abstract class $TestPlanTestDataCopyWith<T>
     List<FhirExtension>? modifierExtension,
     Coding? type,
     Reference? content,
-    FhirString? sourceX,
+    SourceXTestPlanTestData? sourceX,
     bool? disallowExtensions,
   });
 }
@@ -545,7 +735,7 @@ class _$TestPlanTestDataCopyWithImpl<T>
             : content as Reference?,
         sourceX: identical(sourceX, fhirSentinel)
             ? _value.sourceX
-            : sourceX as FhirString?,
+            : sourceX as SourceXTestPlanTestData?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

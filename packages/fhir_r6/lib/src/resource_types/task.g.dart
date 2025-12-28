@@ -30,7 +30,7 @@ abstract class $TaskCopyWith<T> extends $DomainResourceCopyWith<T> {
     RequestPriority? priority,
     FhirBoolean? doNotPerform,
     CodeableConcept? code,
-    FhirString? description,
+    FhirMarkdown? description,
     Reference? focus,
     Reference? for_,
     Reference? encounter,
@@ -166,7 +166,7 @@ class _$TaskCopyWithImpl<T> implements $TaskCopyWith<T> {
             : code as CodeableConcept?,
         description: identical(description, fhirSentinel)
             ? _value.description
-            : description as FhirString?,
+            : description as FhirMarkdown?,
         focus:
             identical(focus, fhirSentinel) ? _value.focus : focus as Reference?,
         for_: identical(for_, fhirSentinel) ? _value.for_ : for_ as Reference?,
@@ -359,7 +359,7 @@ abstract class $TaskInputCopyWith<T> extends $BackboneElementCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    FhirBase64Binary? valueX,
+    ValueXTaskInput? valueX,
     bool? disallowExtensions,
   });
 }
@@ -393,7 +393,7 @@ class _$TaskInputCopyWithImpl<T> implements $TaskInputCopyWith<T> {
             : (type as CodeableConcept?) ?? _value.type,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as FhirBase64Binary?) ?? _value.valueX,
+            : (valueX as ValueXTaskInput?) ?? _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -417,7 +417,7 @@ abstract class $TaskOutputCopyWith<T> extends $BackboneElementCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    FhirBase64Binary? valueX,
+    ValueXTaskOutput? valueX,
     bool? disallowExtensions,
   });
 }
@@ -451,7 +451,7 @@ class _$TaskOutputCopyWithImpl<T> implements $TaskOutputCopyWith<T> {
             : (type as CodeableConcept?) ?? _value.type,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as FhirBase64Binary?) ?? _value.valueX,
+            : (valueX as ValueXTaskOutput?) ?? _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

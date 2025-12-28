@@ -15,8 +15,9 @@ class SearchClinicalUseDefinition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}contraindication'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['contraindication'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -27,34 +28,42 @@ class SearchClinicalUseDefinition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}effect'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['effect'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [identifier] in the resource
   /// [ClinicalUseDefinition]
+  @override
   SearchClinicalUseDefinition identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [indication] in the resource
   /// [ClinicalUseDefinition]
-  SearchClinicalUseDefinition indication(
-    FhirString value, {
-    FhirUri? system,
-    SearchModifier? modifier,
-  }) {
-    parameters['${modifier != null ? '$modifier' : ''}indication'] =
-        system != null ? '$system|$value' : '$value';
-    return this;
-  }
+  // SearchClinicalUseDefinition indication(
+  //   FhirString value, {
+  //   FhirUri? system,
+  //   SearchModifier? modifier,
+  // }) {
+  //   parameters['indication'] = system != null
+  //       ? (modifier != null
+  //           ? '${modifier.toString()}:${system.toString()}|${value.toString()}'
+  //           : '${system.toString()}|${value.toString()}')
+  //       : (modifier != null
+  //           ? '${modifier.toString()}:${value.toString()}'
+  //           : value.toString());
+  //   return this;
+  // }
 
   /// a token search for [interaction] in the resource
   /// [ClinicalUseDefinition]
@@ -63,20 +72,23 @@ class SearchClinicalUseDefinition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}interaction'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['interaction'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [ClinicalUseDefinition]
+  @override
   SearchClinicalUseDefinition status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -87,8 +99,9 @@ class SearchClinicalUseDefinition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}type'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['type'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

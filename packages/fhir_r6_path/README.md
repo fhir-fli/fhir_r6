@@ -2,7 +2,7 @@
 
 [![pub package](https://img.shields.io/pub/v/fhir_r6_path.svg)](https://pub.dev/packages/fhir_r6_path)
 
-A Dart implementation of the [FHIRPath](https://hl7.org/fhirpath/) specification for FHIR R4 resources, allowing you to query and manipulate FHIR data using standardized expressions.
+A Dart implementation of the [FHIRPath](https://hl7.org/fhirpath/) specification for FHIR R6 resources, allowing you to query and manipulate FHIR data using standardized expressions.
 
 FHIR® is the registered trademark of HL7 and is used with the permission of HL7. Use of the FHIR trademark does not constitute endorsement of this product by HL7.
 
@@ -12,7 +12,7 @@ FHIR® is the registered trademark of HL7 and is used with the permission of HL7
 - **High performance** evaluation engine with optimization for repeated use
 - **Resource caching** for canonical resources like CodeSystems and StructureDefinitions
 - **Async API** for seamless integration with Flutter and Dart applications
-- **Type-safe** working with FHIR R4 resources from the `fhir_r6` package
+- **Type-safe** working with FHIR R6 resources from the `fhir_r6` package
 
 ## Installation
 
@@ -142,7 +142,7 @@ try {
 
 ## Documentation
 
-For more detailed documentation, see the [FHIR-FLI documentation site](https://docs.fire.ly).
+For more detailed documentation, see the [FHIR-FLI documentation site](https://fhir-fli.github.io/fhir_fli_documentation/docs).
 
 For the complete FHIRPath specification, see the [official HL7 documentation](https://hl7.org/fhirpath/).
 

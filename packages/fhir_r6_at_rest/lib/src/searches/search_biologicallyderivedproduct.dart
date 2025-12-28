@@ -15,33 +15,37 @@ class SearchBiologicallyDerivedProduct extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters[
-            '${modifier != null ? '$modifier' : ''}biological_source_event'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['biological_source_event'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [code] in the resource
   /// [BiologicallyDerivedProduct]
+  @override
   SearchBiologicallyDerivedProduct code(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}code'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['code'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [identifier] in the resource
   /// [BiologicallyDerivedProduct]
+  @override
   SearchBiologicallyDerivedProduct identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -52,8 +56,9 @@ class SearchBiologicallyDerivedProduct extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}product_category'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['product_category'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -64,8 +69,9 @@ class SearchBiologicallyDerivedProduct extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}product_status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['product_status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -76,8 +82,9 @@ class SearchBiologicallyDerivedProduct extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}serial_number'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['serial_number'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

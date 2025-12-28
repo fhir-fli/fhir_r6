@@ -6,7 +6,8 @@ part 'service_request.g.dart';
 
 /// [ServiceRequest]
 /// A record of a request for service such as diagnostic investigations,
-/// treatments, or operations to be performed.
+/// treatments, or operations to be performed. When the ServiceRequest is
+/// active, it represents an authorization to perform the service.
 class ServiceRequest extends DomainResource {
   /// Primary constructor for
   /// [ServiceRequest]
@@ -44,9 +45,8 @@ class ServiceRequest extends DomainResource {
     FhirDateTime? occurrenceDateTime,
     Period? occurrencePeriod,
     Timing? occurrenceTiming,
-    AsNeededXServiceRequest? asNeededX,
-    FhirBoolean? asNeededBoolean,
-    CodeableConcept? asNeededCodeableConcept,
+    this.asNeeded,
+    this.asNeededFor,
     this.authoredOn,
     this.requester,
     this.performerType,
@@ -67,7 +67,6 @@ class ServiceRequest extends DomainResource {
             occurrenceDateTime ??
             occurrencePeriod ??
             occurrenceTiming,
-        asNeededX = asNeededX ?? asNeededBoolean ?? asNeededCodeableConcept,
         super(
           resourceType: R6ResourceType.ServiceRequest,
         );
@@ -231,13 +230,18 @@ class ServiceRequest extends DomainResource {
           'occurrenceTiming': Timing.fromJson,
         },
       ),
-      asNeededX: JsonParser.parsePolymorphic<AsNeededXServiceRequest>(
+      asNeeded: JsonParser.parsePrimitive<FhirBoolean>(
         json,
-        {
-          'asNeededBoolean': FhirBoolean.fromJson,
-          'asNeededCodeableConcept': CodeableConcept.fromJson,
-        },
+        'asNeeded',
+        FhirBoolean.fromJson,
       ),
+      asNeededFor: (json['asNeededFor'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       authoredOn: JsonParser.parsePrimitive<FhirDateTime>(
         json,
         'authoredOn',
@@ -432,21 +436,20 @@ class ServiceRequest extends DomainResource {
   /// [code]
   /// A code or reference that identifies a particular service (i.e.,
   /// procedure, diagnostic investigation, or panel of investigations) that
-  /// have been requested.
+  /// has been requested.
   final CodeableReference? code;
 
   /// [orderDetail]
-  /// Additional details and instructions about the how the services are to
-  /// be delivered. For example, and order for a urinary catheter may have an
+  /// Additional details and instructions about how the services are to be
+  /// delivered. For example, an order for a urinary catheter may have an
   /// order detail for an external or indwelling catheter, or an order for a
   /// bandage may require additional instructions specifying how the bandage
-  /// should be applied.
+  /// should be applied. Questions or additional information to be gathered
+  /// from a patient may be included here.
   final List<ServiceRequestOrderDetail>? orderDetail;
 
   /// [quantityX]
-  /// An amount of service being requested which can be a quantity ( for
-  /// example $1,500 home modification), a ratio ( for example, 20 half day
-  /// visits per month), or a range (2.0 to 1.8 Gy per fraction).
+  /// An amount of service being requested.
   final QuantityXServiceRequest? quantityX;
 
   /// Getter for [quantityQuantity] as a Quantity
@@ -492,17 +495,15 @@ class ServiceRequest extends DomainResource {
   /// Getter for [occurrenceTiming] as a Timing
   Timing? get occurrenceTiming => occurrenceX?.isAs<Timing>();
 
-  /// [asNeededX]
-  /// If a CodeableConcept is present, it indicates the pre-condition for
-  /// performing the service. For example "pain", "on flare-up", etc.
-  final AsNeededXServiceRequest? asNeededX;
+  /// [asNeeded]
+  /// Indicates that the service (e.g., procedure, lab test) should be
+  /// performed when needed (Boolean option).
+  final FhirBoolean? asNeeded;
 
-  /// Getter for [asNeededBoolean] as a FhirBoolean
-  FhirBoolean? get asNeededBoolean => asNeededX?.isAs<FhirBoolean>();
-
-  /// Getter for [asNeededCodeableConcept] as a CodeableConcept
-  CodeableConcept? get asNeededCodeableConcept =>
-      asNeededX?.isAs<CodeableConcept>();
+  /// [asNeededFor]
+  /// Indicates specific criteria that need to be met to perform the service
+  /// (e.g., lab results or symptoms).
+  final List<CodeableConcept>? asNeededFor;
 
   /// [authoredOn]
   /// When the request transitioned to being actionable.
@@ -528,9 +529,8 @@ class ServiceRequest extends DomainResource {
   final List<CodeableReference>? location;
 
   /// [reason]
-  /// An explanation or justification for why this service is being requested
-  /// in coded or textual form. This is often for billing purposes. May
-  /// relate to the resources referred to in `supportingInfo`.
+  /// The reason or the indication for requesting the service (e.g.,
+  /// procedure, lab test).
   final List<CodeableReference>? reason;
 
   /// [insurance]
@@ -543,8 +543,8 @@ class ServiceRequest extends DomainResource {
   /// Additional clinical information about the patient or specimen that may
   /// influence the services or their interpretations. This information
   /// includes diagnosis, clinical findings and other observations. In
-  /// laboratory ordering these are typically referred to as "ask at order
-  /// entry questions (AOEs)". This includes observations explicitly
+  /// laboratory ordering these are typically referred to as 'ask at order
+  /// entry questions (AOEs).' This includes observations explicitly
   /// requested by the producer (filler) to provide context or supporting
   /// information needed to complete the order. For example, reporting the
   /// amount of inspired oxygen for blood gas measurements.
@@ -752,14 +752,14 @@ class ServiceRequest extends DomainResource {
       );
     }
 
-    if (asNeededX != null) {
-      final fhirType = asNeededX!.fhirType;
-      addField(
-        'asNeeded${fhirType.capitalize()}',
-        asNeededX,
-      );
-    }
-
+    addField(
+      'asNeeded',
+      asNeeded,
+    );
+    addField(
+      'asNeededFor',
+      asNeededFor,
+    );
     addField(
       'authoredOn',
       authoredOn,
@@ -849,7 +849,8 @@ class ServiceRequest extends DomainResource {
       'focus',
       'encounter',
       'occurrenceX',
-      'asNeededX',
+      'asNeeded',
+      'asNeededFor',
       'authoredOn',
       'requester',
       'performerType',
@@ -999,16 +1000,12 @@ class ServiceRequest extends DomainResource {
           fields.add(occurrenceX!);
         }
       case 'asNeeded':
-        fields.add(asNeededX!);
-      case 'asNeededX':
-        fields.add(asNeededX!);
-      case 'asNeededBoolean':
-        if (asNeededX is FhirBoolean) {
-          fields.add(asNeededX!);
+        if (asNeeded != null) {
+          fields.add(asNeeded!);
         }
-      case 'asNeededCodeableConcept':
-        if (asNeededX is CodeableConcept) {
-          fields.add(asNeededX!);
+      case 'asNeededFor':
+        if (asNeededFor != null) {
+          fields.addAll(asNeededFor!);
         }
       case 'authoredOn':
         if (authoredOn != null) {
@@ -1264,8 +1261,14 @@ class ServiceRequest extends DomainResource {
       return false;
     }
     if (!equalsDeepWithNull(
-      asNeededX,
-      o.asNeededX,
+      asNeeded,
+      o.asNeeded,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConcept>(
+      asNeededFor,
+      o.asNeededFor,
     )) {
       return false;
     }
@@ -1358,11 +1361,12 @@ class ServiceRequest extends DomainResource {
 }
 
 /// [ServiceRequestOrderDetail]
-/// Additional details and instructions about the how the services are to
-/// be delivered. For example, and order for a urinary catheter may have an
+/// Additional details and instructions about how the services are to be
+/// delivered. For example, an order for a urinary catheter may have an
 /// order detail for an external or indwelling catheter, or an order for a
 /// bandage may require additional instructions specifying how the bandage
-/// should be applied.
+/// should be applied. Questions or additional information to be gathered
+/// from a patient may be included here.
 class ServiceRequestOrderDetail extends BackboneElement {
   /// Primary constructor for
   /// [ServiceRequestOrderDetail]

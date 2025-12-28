@@ -17,6 +17,9 @@ enum ImagingStudyStatusEnum {
 
   /// unknown
   unknown,
+
+  /// inactive
+  inactive,
   ;
 
   /// Converts the enum value to a string.
@@ -36,6 +39,8 @@ enum ImagingStudyStatusEnum {
         return 'entered-in-error';
       case ImagingStudyStatusEnum.unknown:
         return 'unknown';
+      case ImagingStudyStatusEnum.inactive:
+        return 'inactive';
     }
   }
 
@@ -63,6 +68,8 @@ enum ImagingStudyStatusEnum {
         return ImagingStudyStatusEnum.enteredInError;
       case 'unknown':
         return ImagingStudyStatusEnum.unknown;
+      case 'inactive':
+        return ImagingStudyStatusEnum.inactive;
     }
     return null;
   }
@@ -144,7 +151,7 @@ class ImagingStudyStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/imagingstudy-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Registered',
     ),
@@ -157,7 +164,7 @@ class ImagingStudyStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/imagingstudy-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Available',
     ),
@@ -170,7 +177,7 @@ class ImagingStudyStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/imagingstudy-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Cancelled',
     ),
@@ -183,7 +190,7 @@ class ImagingStudyStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/imagingstudy-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Entered in Error',
     ),
@@ -196,9 +203,22 @@ class ImagingStudyStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/imagingstudy-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Unknown',
+    ),
+  );
+
+  /// inactive
+  static const ImagingStudyStatus inactive = ImagingStudyStatus._(
+    valueString: 'inactive',
+    valueEnum: ImagingStudyStatusEnum.inactive,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/imagingstudy-status',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Inactive',
     ),
   );
 
@@ -209,6 +229,7 @@ class ImagingStudyStatus extends FhirCodeEnum {
     cancelled,
     enteredInError,
     unknown,
+    inactive,
   ];
 
   /// Returns the enum value with an element attached

@@ -11,6 +11,7 @@ abstract class $AvailabilityCopyWith<T> extends $DataTypeCopyWith<T> {
   T call({
     FhirString? id,
     List<FhirExtension>? extension_,
+    Period? period,
     List<AvailabilityAvailableTime>? availableTime,
     List<AvailabilityNotAvailableTime>? notAvailableTime,
     bool? disallowExtensions,
@@ -27,6 +28,7 @@ class _$AvailabilityCopyWithImpl<T> implements $AvailabilityCopyWith<T> {
   T call({
     Object? id = fhirSentinel,
     Object? extension_ = fhirSentinel,
+    Object? period = fhirSentinel,
     Object? availableTime = fhirSentinel,
     Object? notAvailableTime = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
@@ -37,6 +39,8 @@ class _$AvailabilityCopyWithImpl<T> implements $AvailabilityCopyWith<T> {
         extension_: identical(extension_, fhirSentinel)
             ? _value.extension_
             : extension_ as List<FhirExtension>?,
+        period:
+            identical(period, fhirSentinel) ? _value.period : period as Period?,
         availableTime: identical(availableTime, fhirSentinel)
             ? _value.availableTime
             : availableTime as List<AvailabilityAvailableTime>?,

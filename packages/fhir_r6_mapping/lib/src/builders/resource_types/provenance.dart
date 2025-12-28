@@ -43,6 +43,7 @@ class ProvenanceBuilder extends DomainResourceBuilder {
     this.policy,
     this.location,
     this.authorization,
+    this.why,
     this.activity,
     this.basedOn,
     this.patient,
@@ -175,6 +176,12 @@ class ProvenanceBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
+      why: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+        json,
+        'why',
+        FhirMarkdownBuilder.fromJson,
+        '$objectPath.why',
+      ),
       activity: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
         'activity',
@@ -296,7 +303,9 @@ class ProvenanceBuilder extends DomainResourceBuilder {
       occurredX?.isAs<FhirDateTimeBuilder>();
 
   /// [recorded]
-  /// The instant of time at which the activity was recorded.
+  /// The date and time at which the provenance information was recorded /
+  /// updated, whether in the FHIR Provenance resource or in some other form
+  /// that is later communicated in the FHIR Provenance.
   FhirInstantBuilder? recorded;
 
   /// [policy]
@@ -306,13 +315,18 @@ class ProvenanceBuilder extends DomainResourceBuilder {
   List<FhirUriBuilder>? policy;
 
   /// [location]
-  /// Where the activity occurred, if relevant.
+  /// Where the activity occurred.
   ReferenceBuilder? location;
 
   /// [authorization]
   /// The authorization (e.g., PurposeOfUse) that was used during the event
   /// being recorded.
   List<CodeableReferenceBuilder>? authorization;
+
+  /// [why]
+  /// Describes why the event recorded in this provenenace occurred in
+  /// textual form.
+  FhirMarkdownBuilder? why;
 
   /// [activity]
   /// An activity is something that occurs over a period of time and acts
@@ -321,8 +335,8 @@ class ProvenanceBuilder extends DomainResourceBuilder {
   CodeableConceptBuilder? activity;
 
   /// [basedOn]
-  /// Allows tracing of authorizatino for the events and tracking whether
-  /// proposals/recommendations were acted upon.
+  /// A plan, proposal or order that is fulfilled in whole or in part by this
+  /// provenance.
   List<ReferenceBuilder>? basedOn;
 
   /// [patient]
@@ -407,6 +421,7 @@ class ProvenanceBuilder extends DomainResourceBuilder {
     addField('policy', policy);
     addField('location', location);
     addField('authorization', authorization);
+    addField('why', why);
     addField('activity', activity);
     addField('basedOn', basedOn);
     addField('patient', patient);
@@ -435,6 +450,7 @@ class ProvenanceBuilder extends DomainResourceBuilder {
       'policy',
       'location',
       'authorization',
+      'why',
       'activity',
       'basedOn',
       'patient',
@@ -521,6 +537,10 @@ class ProvenanceBuilder extends DomainResourceBuilder {
       case 'authorization':
         if (authorization != null) {
           fields.addAll(authorization!);
+        }
+      case 'why':
+        if (why != null) {
+          fields.add(why!);
         }
       case 'activity':
         if (activity != null) {
@@ -851,6 +871,26 @@ class ProvenanceBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'why':
+        {
+          if (child is FhirMarkdownBuilder) {
+            why = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                why = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'activity':
         {
           if (child is CodeableConceptBuilder) {
@@ -985,6 +1025,8 @@ class ProvenanceBuilder extends DomainResourceBuilder {
         return ['ReferenceBuilder'];
       case 'authorization':
         return ['CodeableReferenceBuilder'];
+      case 'why':
+        return ['FhirMarkdownBuilder'];
       case 'activity':
         return ['CodeableConceptBuilder'];
       case 'basedOn':
@@ -1086,6 +1128,11 @@ class ProvenanceBuilder extends DomainResourceBuilder {
           authorization = <CodeableReferenceBuilder>[];
           return;
         }
+      case 'why':
+        {
+          why = FhirMarkdownBuilder.empty();
+          return;
+        }
       case 'activity':
         {
           activity = CodeableConceptBuilder.empty();
@@ -1144,6 +1191,7 @@ class ProvenanceBuilder extends DomainResourceBuilder {
     List<FhirUriBuilder>? policy,
     ReferenceBuilder? location,
     List<CodeableReferenceBuilder>? authorization,
+    FhirMarkdownBuilder? why,
     CodeableConceptBuilder? activity,
     List<ReferenceBuilder>? basedOn,
     ReferenceBuilder? patient,
@@ -1175,6 +1223,7 @@ class ProvenanceBuilder extends DomainResourceBuilder {
       policy: policy ?? this.policy,
       location: location ?? this.location,
       authorization: authorization ?? this.authorization,
+      why: why ?? this.why,
       activity: activity ?? this.activity,
       basedOn: basedOn ?? this.basedOn,
       patient: patient ?? this.patient,
@@ -1289,6 +1338,12 @@ class ProvenanceBuilder extends DomainResourceBuilder {
     if (!listEquals<CodeableReferenceBuilder>(
       authorization,
       o.authorization,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      why,
+      o.why,
     )) {
       return false;
     }

@@ -1574,10 +1574,10 @@ class ValueSetInclude extends BackboneElement {
         'valueSet',
         FhirCanonical.fromJson,
       ),
-      copyright: JsonParser.parsePrimitive<FhirString>(
+      copyright: JsonParser.parsePrimitive<FhirMarkdown>(
         json,
         'copyright',
-        FhirString.fromJson,
+        FhirMarkdown.fromJson,
       ),
     );
   }
@@ -1658,7 +1658,7 @@ class ValueSetInclude extends BackboneElement {
   /// associated ValueSet.compose.include.version element is not present); or
   /// the code system and version combination (if the associated
   /// ValueSet.compose.include.version element is present).
-  final FhirString? copyright;
+  final FhirMarkdown? copyright;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -2722,12 +2722,17 @@ class ValueSetFilter extends BackboneElement {
   final FilterOperator op;
 
   /// [value]
-  /// The match value may be either a code defined by the system, or a string
-  /// value, which is a regex match on the literal string of the property
-  /// value (if the filter represents a property defined in CodeSystem) or of
-  /// the system filter value (if the filter represents a filter defined in
-  /// CodeSystem) when the operation is 'regex', or one of the values (true
-  /// and false), when the operation is 'exists'.
+  /// ValueSet.compose.include.filter.value is represented as a string, and
+  /// the string value must be one of the three types below:
+  /// When the filter operation (ValueSet.compose.include.filter.op) is equal
+  /// to "regex", the value (ValueSet.compose.include.filter.value) is a
+  /// regex expression. This is used to match string values (including
+  /// integer and decimal, if necessary).
+  /// When the filter operation (ValueSet.compose.include.filter.op) is equal
+  /// to "exists", the value (ValueSet.compose.include.filter.value) is a
+  /// boolean and must be equal to "true" or "false".
+  /// For all other filter operations (ValueSet.compose.include.filter.op)
+  /// the value (ValueSet.compose.include.filter.value) represents a code.
   final FhirString value;
   @override
   Map<String, dynamic> toJson() {
@@ -4581,7 +4586,7 @@ class ValueSetContains extends BackboneElement {
     )) {
       return false;
     }
-    if (!listEquals<ValueSetProperty>(
+    if (!listEquals<ValueSetProperty1>(
       property,
       o.property,
     )) {
@@ -5382,15 +5387,15 @@ class ValueSetScope extends BackboneElement {
             ),
           )
           .toList(),
-      inclusionCriteria: JsonParser.parsePrimitive<FhirString>(
+      inclusionCriteria: JsonParser.parsePrimitive<FhirMarkdown>(
         json,
         'inclusionCriteria',
-        FhirString.fromJson,
+        FhirMarkdown.fromJson,
       ),
-      exclusionCriteria: JsonParser.parsePrimitive<FhirString>(
+      exclusionCriteria: JsonParser.parsePrimitive<FhirMarkdown>(
         json,
         'exclusionCriteria',
-        FhirString.fromJson,
+        FhirMarkdown.fromJson,
       ),
     );
   }
@@ -5439,11 +5444,11 @@ class ValueSetScope extends BackboneElement {
 
   /// [inclusionCriteria]
   /// Criteria describing which concepts or codes should be included and why.
-  final FhirString? inclusionCriteria;
+  final FhirMarkdown? inclusionCriteria;
 
   /// [exclusionCriteria]
   /// Criteria describing which concepts or codes should be excluded and why.
-  final FhirString? exclusionCriteria;
+  final FhirMarkdown? exclusionCriteria;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};

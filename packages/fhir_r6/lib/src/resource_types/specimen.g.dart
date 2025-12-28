@@ -217,14 +217,14 @@ abstract class $SpecimenCollectionCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     Reference? collector,
-    FhirDateTime? collectedX,
+    CollectedXSpecimenCollection? collectedX,
     FhirDuration? duration,
     Quantity? quantity,
     CodeableConcept? method,
     CodeableReference? device,
     Reference? procedure,
     CodeableReference? bodySite,
-    CodeableConcept? fastingStatusX,
+    FastingStatusXSpecimenCollection? fastingStatusX,
     bool? disallowExtensions,
   });
 }
@@ -266,7 +266,7 @@ class _$SpecimenCollectionCopyWithImpl<T>
             : collector as Reference?,
         collectedX: identical(collectedX, fhirSentinel)
             ? _value.collectedX
-            : collectedX as FhirDateTime?,
+            : collectedX as CollectedXSpecimenCollection?,
         duration: identical(duration, fhirSentinel)
             ? _value.duration
             : duration as FhirDuration?,
@@ -287,7 +287,7 @@ class _$SpecimenCollectionCopyWithImpl<T>
             : bodySite as CodeableReference?,
         fastingStatusX: identical(fastingStatusX, fhirSentinel)
             ? _value.fastingStatusX
-            : fastingStatusX as CodeableConcept?,
+            : fastingStatusX as FastingStatusXSpecimenCollection?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -313,8 +313,10 @@ abstract class $SpecimenProcessingCopyWith<T>
     List<FhirExtension>? modifierExtension,
     FhirString? description,
     CodeableConcept? method,
+    Reference? performer,
+    Reference? device,
     List<Reference>? additive,
-    FhirDateTime? timeX,
+    TimeXSpecimenProcessing? timeX,
     bool? disallowExtensions,
   });
 }
@@ -333,6 +335,8 @@ class _$SpecimenProcessingCopyWithImpl<T>
     Object? modifierExtension = fhirSentinel,
     Object? description = fhirSentinel,
     Object? method = fhirSentinel,
+    Object? performer = fhirSentinel,
+    Object? device = fhirSentinel,
     Object? additive = fhirSentinel,
     Object? timeX = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
@@ -352,12 +356,18 @@ class _$SpecimenProcessingCopyWithImpl<T>
         method: identical(method, fhirSentinel)
             ? _value.method
             : method as CodeableConcept?,
+        performer: identical(performer, fhirSentinel)
+            ? _value.performer
+            : performer as Reference?,
+        device: identical(device, fhirSentinel)
+            ? _value.device
+            : device as Reference?,
         additive: identical(additive, fhirSentinel)
             ? _value.additive
             : additive as List<Reference>?,
         timeX: identical(timeX, fhirSentinel)
             ? _value.timeX
-            : timeX as FhirDateTime?,
+            : timeX as TimeXSpecimenProcessing?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -382,7 +392,6 @@ abstract class $SpecimenContainerCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     Reference? device,
-    Reference? location,
     Quantity? specimenQuantity,
     bool? disallowExtensions,
   });
@@ -401,7 +410,6 @@ class _$SpecimenContainerCopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? device = fhirSentinel,
-    Object? location = fhirSentinel,
     Object? specimenQuantity = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -417,9 +425,6 @@ class _$SpecimenContainerCopyWithImpl<T>
         device: identical(device, fhirSentinel)
             ? _value.device
             : (device as Reference?) ?? _value.device,
-        location: identical(location, fhirSentinel)
-            ? _value.location
-            : location as Reference?,
         specimenQuantity: identical(specimenQuantity, fhirSentinel)
             ? _value.specimenQuantity
             : specimenQuantity as Quantity?,

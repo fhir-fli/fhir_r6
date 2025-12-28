@@ -28,13 +28,14 @@ class Account extends DomainResource {
     this.name,
     this.subject,
     this.servicePeriod,
+    this.covers,
     this.coverage,
     this.owner,
     this.description,
     this.guarantor,
     this.diagnosis,
     this.procedure,
-    this.relatedAccount,
+    this.parent,
     this.currency,
     this.balance,
     this.calculatedAt,
@@ -132,6 +133,13 @@ class Account extends DomainResource {
         'servicePeriod',
         Period.fromJson,
       ),
+      covers: (json['covers'] as List<dynamic>?)
+          ?.map<Reference>(
+            (v) => Reference.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       coverage: (json['coverage'] as List<dynamic>?)
           ?.map<AccountCoverage>(
             (v) => AccountCoverage.fromJson(
@@ -170,13 +178,11 @@ class Account extends DomainResource {
             ),
           )
           .toList(),
-      relatedAccount: (json['relatedAccount'] as List<dynamic>?)
-          ?.map<AccountRelatedAccount>(
-            (v) => AccountRelatedAccount.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
+      parent: JsonParser.parseObject<Reference>(
+        json,
+        'parent',
+        Reference.fromJson,
+      ),
       currency: JsonParser.parseObject<CodeableConcept>(
         json,
         'currency',
@@ -273,6 +279,15 @@ class Account extends DomainResource {
   /// The date range of services associated with this account.
   final Period? servicePeriod;
 
+  /// [covers]
+  /// An account that collects the charges for a specific set of services
+  /// offered over a limited time period. For example, a hospital account
+  /// might contain all charges related to a given admission, including any
+  /// inpatient appointments, and possibly re-admissions, of the billing for
+  /// those re-admissions should be grouped with the initial admission for
+  /// the purpose of claim submission.
+  final List<Reference>? covers;
+
   /// [coverage]
   /// The party(s) that are responsible for covering the payment of this
   /// account, and what order should they be applied to the account.
@@ -307,9 +322,10 @@ class Account extends DomainResource {
   /// to produce claim(s).
   final List<AccountProcedure>? procedure;
 
-  /// [relatedAccount]
-  /// Other associated accounts related to this account.
-  final List<AccountRelatedAccount>? relatedAccount;
+  /// [parent]
+  /// Reference to an associated parent Account which has this account as a
+  /// sub-account.
+  final Reference? parent;
 
   /// [currency]
   /// The default currency for the account.
@@ -449,6 +465,10 @@ class Account extends DomainResource {
       servicePeriod,
     );
     addField(
+      'covers',
+      covers,
+    );
+    addField(
       'coverage',
       coverage,
     );
@@ -473,8 +493,8 @@ class Account extends DomainResource {
       procedure,
     );
     addField(
-      'relatedAccount',
-      relatedAccount,
+      'parent',
+      parent,
     );
     addField(
       'currency',
@@ -510,13 +530,14 @@ class Account extends DomainResource {
       'name',
       'subject',
       'servicePeriod',
+      'covers',
       'coverage',
       'owner',
       'description',
       'guarantor',
       'diagnosis',
       'procedure',
-      'relatedAccount',
+      'parent',
       'currency',
       'balance',
       'calculatedAt',
@@ -590,6 +611,10 @@ class Account extends DomainResource {
         if (servicePeriod != null) {
           fields.add(servicePeriod!);
         }
+      case 'covers':
+        if (covers != null) {
+          fields.addAll(covers!);
+        }
       case 'coverage':
         if (coverage != null) {
           fields.addAll(coverage!);
@@ -614,9 +639,9 @@ class Account extends DomainResource {
         if (procedure != null) {
           fields.addAll(procedure!);
         }
-      case 'relatedAccount':
-        if (relatedAccount != null) {
-          fields.addAll(relatedAccount!);
+      case 'parent':
+        if (parent != null) {
+          fields.add(parent!);
         }
       case 'currency':
         if (currency != null) {
@@ -760,6 +785,12 @@ class Account extends DomainResource {
     )) {
       return false;
     }
+    if (!listEquals<Reference>(
+      covers,
+      o.covers,
+    )) {
+      return false;
+    }
     if (!listEquals<AccountCoverage>(
       coverage,
       o.coverage,
@@ -796,9 +827,9 @@ class Account extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<AccountRelatedAccount>(
-      relatedAccount,
-      o.relatedAccount,
+    if (!equalsDeepWithNull(
+      parent,
+      o.parent,
     )) {
       return false;
     }
@@ -1142,9 +1173,10 @@ class AccountGuarantor extends BackboneElement {
     super.id,
     super.extension_,
     super.modifierExtension,
-    required this.party,
+    this.party,
     this.onHold,
     this.period,
+    this.account,
     super.disallowExtensions,
   }) : super();
 
@@ -1176,7 +1208,7 @@ class AccountGuarantor extends BackboneElement {
         json,
         'party',
         Reference.fromJson,
-      )!,
+      ),
       onHold: JsonParser.parsePrimitive<FhirBoolean>(
         json,
         'onHold',
@@ -1186,6 +1218,11 @@ class AccountGuarantor extends BackboneElement {
         json,
         'period',
         Period.fromJson,
+      ),
+      account: JsonParser.parseObject<Reference>(
+        json,
+        'account',
+        Reference.fromJson,
       ),
     );
   }
@@ -1234,7 +1271,7 @@ class AccountGuarantor extends BackboneElement {
 
   /// [party]
   /// The entity who is responsible.
-  final Reference party;
+  final Reference? party;
 
   /// [onHold]
   /// A guarantor may be placed on credit hold or otherwise have their role
@@ -1245,6 +1282,10 @@ class AccountGuarantor extends BackboneElement {
   /// The timeframe during which the guarantor accepts responsibility for the
   /// account.
   final Period? period;
+
+  /// [account]
+  /// Reference to a specific Account belonging to the guarantor to use.
+  final Reference? account;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1332,6 +1373,10 @@ class AccountGuarantor extends BackboneElement {
       'period',
       period,
     );
+    addField(
+      'account',
+      account,
+    );
     return json;
   }
 
@@ -1345,6 +1390,7 @@ class AccountGuarantor extends BackboneElement {
       'party',
       'onHold',
       'period',
+      'account',
     ];
   }
 
@@ -1370,7 +1416,9 @@ class AccountGuarantor extends BackboneElement {
           fields.addAll(modifierExtension!);
         }
       case 'party':
-        fields.add(party);
+        if (party != null) {
+          fields.add(party!);
+        }
       case 'onHold':
         if (onHold != null) {
           fields.add(onHold!);
@@ -1378,6 +1426,10 @@ class AccountGuarantor extends BackboneElement {
       case 'period':
         if (period != null) {
           fields.add(period!);
+        }
+      case 'account':
+        if (account != null) {
+          fields.add(account!);
         }
       default:
         if (checkValid) {
@@ -1453,6 +1505,12 @@ class AccountGuarantor extends BackboneElement {
     if (!equalsDeepWithNull(
       period,
       o.period,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      account,
+      o.account,
     )) {
       return false;
     }
@@ -2277,307 +2335,6 @@ class AccountProcedure extends BackboneElement {
     if (!listEquals<Reference>(
       device,
       o.device,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [AccountRelatedAccount]
-/// Other associated accounts related to this account.
-class AccountRelatedAccount extends BackboneElement {
-  /// Primary constructor for
-  /// [AccountRelatedAccount]
-
-  const AccountRelatedAccount({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.relationship,
-    required this.account,
-    super.disallowExtensions,
-  }) : super();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory AccountRelatedAccount.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return AccountRelatedAccount(
-      id: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'id',
-        FhirString.fromJson,
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      relationship: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'relationship',
-        CodeableConcept.fromJson,
-      ),
-      account: JsonParser.parseObject<Reference>(
-        json,
-        'account',
-        Reference.fromJson,
-      )!,
-    );
-  }
-
-  /// Deserialize [AccountRelatedAccount]
-  /// from a [String] or [YamlMap] object
-  factory AccountRelatedAccount.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return AccountRelatedAccount.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return AccountRelatedAccount.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'AccountRelatedAccount '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [AccountRelatedAccount]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory AccountRelatedAccount.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return AccountRelatedAccount.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'AccountRelatedAccount';
-
-  /// [relationship]
-  /// Relationship of the associated Account.
-  final CodeableConcept? relationship;
-
-  /// [account]
-  /// Reference to an associated Account.
-  final Reference account;
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    bool isNonEmpty(dynamic val) {
-      if (val == null) return false;
-      if (val is List && val.isEmpty) return false;
-      if (val is Map && val.isEmpty) return false;
-      return true;
-    }
-
-    void addField(String key, dynamic field) {
-      if (field == null) return;
-      if (!(field is FhirBase? || field is List<FhirBase>?)) {
-        throw ArgumentError('"field" must be a FhirBase type');
-      }
-      if (field is PrimitiveType) {
-        final fieldMap = field.toJson();
-        final val = fieldMap['value'];
-        final ext = fieldMap['_value'];
-        final hasVal = isNonEmpty(val);
-        final hasExt = isNonEmpty(ext);
-        if (hasVal) json[key] = val;
-        if (hasExt) json['_$key'] = ext;
-      } else if (field is List<FhirBase>) {
-        if (field.isEmpty) return;
-        final isPrimitive = field.first is PrimitiveType;
-        final tempList = <dynamic>[];
-        final tempExtensions = <dynamic>[];
-        for (final e in field) {
-          final itemMap = e.toJson();
-          if (!isNonEmpty(itemMap)) {
-            continue;
-          }
-          if (isPrimitive) {
-            final v = itemMap['value'];
-            final x = itemMap['_value'];
-            tempList.add(v);
-            tempExtensions.add(x);
-          } else {
-            tempList.add(itemMap);
-          }
-        }
-        if (tempList.isEmpty) return;
-        if (isPrimitive) {
-          final hasAnyValues = tempList.any((v) => v != null);
-          if (hasAnyValues) {
-            json[key] = tempList;
-          }
-          final anyExt = tempExtensions.any(isNonEmpty);
-          if (anyExt) {
-            json['_$key'] = tempExtensions;
-          }
-        } else {
-          json[key] = tempList;
-        }
-      } else if (field is FhirBase) {
-        final subMap = field.toJson();
-        if (isNonEmpty(subMap)) {
-          json[key] = subMap;
-        }
-      }
-    }
-
-    addField(
-      'id',
-      id,
-    );
-    addField(
-      'extension',
-      extension_,
-    );
-    addField(
-      'modifierExtension',
-      modifierExtension,
-    );
-    addField(
-      'relationship',
-      relationship,
-    );
-    addField(
-      'account',
-      account,
-    );
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'relationship',
-      'account',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBase> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBase>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'relationship':
-        if (relationship != null) {
-          fields.add(relationship!);
-        }
-      case 'account':
-        fields.add(account);
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBase? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  AccountRelatedAccount clone() => copyWith();
-
-  /// Copy function for [AccountRelatedAccount]
-  /// Returns a copy of the current instance with the provided fields modified.
-  /// If a field is not provided, it will retain its original value.
-  /// If a null is provided, this will clearn the field, unless the
-  /// field is required, in which case it will keep its current value.
-  @override
-  $AccountRelatedAccountCopyWith<AccountRelatedAccount> get copyWith =>
-      _$AccountRelatedAccountCopyWithImpl<AccountRelatedAccount>(
-        this,
-        (value) => value,
-      );
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBase? o) {
-    if (o is! AccountRelatedAccount) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      relationship,
-      o.relationship,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      account,
-      o.account,
     )) {
       return false;
     }

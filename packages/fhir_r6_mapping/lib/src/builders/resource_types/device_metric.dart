@@ -43,7 +43,7 @@ class DeviceMetricBuilder extends DomainResourceBuilder {
   factory DeviceMetricBuilder.empty() => DeviceMetricBuilder(
         type: CodeableConceptBuilder.empty(),
         device: ReferenceBuilder.empty(),
-        category: DeviceMetricCategoryBuilder.values.first,
+        category: CodeableConceptBuilder.empty(),
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -153,10 +153,10 @@ class DeviceMetricBuilder extends DomainResourceBuilder {
         ColorCodesOrRGBBuilder.fromJson,
         '$objectPath.color',
       ),
-      category: JsonParser.parsePrimitive<DeviceMetricCategoryBuilder>(
+      category: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
         'category',
-        DeviceMetricCategoryBuilder.fromJson,
+        CodeableConceptBuilder.fromJson,
         '$objectPath.category',
       ),
       measurementFrequency: JsonParser.parseObject<QuantityBuilder>(
@@ -256,8 +256,9 @@ class DeviceMetricBuilder extends DomainResourceBuilder {
 
   /// [category]
   /// Indicates the category of the observation generation process. A
-  /// DeviceMetric can be for example a setting, measurement, or calculation.
-  DeviceMetricCategoryBuilder? category;
+  /// DeviceMetric can be, for example, a setting, measurement, or
+  /// calculation.
+  CodeableConceptBuilder? category;
 
   /// [measurementFrequency]
   /// The frequency at which the metric is taken or recorded. Devices measure
@@ -678,24 +679,9 @@ class DeviceMetricBuilder extends DomainResourceBuilder {
         }
       case 'category':
         {
-          if (child is DeviceMetricCategoryBuilder) {
+          if (child is CodeableConceptBuilder) {
             category = child;
             return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              // For enums, try to create directly from the string value
-              try {
-                final converted = DeviceMetricCategoryBuilder(stringValue);
-                category = converted;
-                return;
-              } catch (e) {
-                // Continue if enum creation fails
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -762,7 +748,7 @@ class DeviceMetricBuilder extends DomainResourceBuilder {
       case 'color':
         return ['FhirCodeEnumBuilder'];
       case 'category':
-        return ['FhirCodeEnumBuilder'];
+        return ['CodeableConceptBuilder'];
       case 'measurementFrequency':
         return ['QuantityBuilder'];
       case 'calibration':
@@ -849,7 +835,7 @@ class DeviceMetricBuilder extends DomainResourceBuilder {
         }
       case 'category':
         {
-          category = DeviceMetricCategoryBuilder.empty();
+          category = CodeableConceptBuilder.empty();
           return;
         }
       case 'measurementFrequency':
@@ -885,7 +871,7 @@ class DeviceMetricBuilder extends DomainResourceBuilder {
     ReferenceBuilder? device,
     DeviceMetricOperationalStatusBuilder? operationalStatus,
     ColorCodesOrRGBBuilder? color,
-    DeviceMetricCategoryBuilder? category,
+    CodeableConceptBuilder? category,
     QuantityBuilder? measurementFrequency,
     List<DeviceMetricCalibrationBuilder>? calibration,
     Map<String, dynamic>? userData,
@@ -1100,10 +1086,10 @@ class DeviceMetricCalibrationBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      type: JsonParser.parsePrimitive<DeviceMetricCalibrationTypeBuilder>(
+      type: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
         'type',
-        DeviceMetricCalibrationTypeBuilder.fromJson,
+        CodeableConceptBuilder.fromJson,
         '$objectPath.type',
       ),
       state: JsonParser.parsePrimitive<DeviceMetricCalibrationStateBuilder>(
@@ -1165,7 +1151,7 @@ class DeviceMetricCalibrationBuilder extends BackboneElementBuilder {
 
   /// [type]
   /// Describes the type of the calibration method.
-  DeviceMetricCalibrationTypeBuilder? type;
+  CodeableConceptBuilder? type;
 
   /// [state]
   /// Describes the state of the calibration.
@@ -1349,25 +1335,9 @@ class DeviceMetricCalibrationBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          if (child is DeviceMetricCalibrationTypeBuilder) {
+          if (child is CodeableConceptBuilder) {
             type = child;
             return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              // For enums, try to create directly from the string value
-              try {
-                final converted =
-                    DeviceMetricCalibrationTypeBuilder(stringValue);
-                type = converted;
-                return;
-              } catch (e) {
-                // Continue if enum creation fails
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -1432,7 +1402,7 @@ class DeviceMetricCalibrationBuilder extends BackboneElementBuilder {
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
       case 'type':
-        return ['FhirCodeEnumBuilder'];
+        return ['CodeableConceptBuilder'];
       case 'state':
         return ['FhirCodeEnumBuilder'];
       case 'time':
@@ -1464,7 +1434,7 @@ class DeviceMetricCalibrationBuilder extends BackboneElementBuilder {
         }
       case 'type':
         {
-          type = DeviceMetricCalibrationTypeBuilder.empty();
+          type = CodeableConceptBuilder.empty();
           return;
         }
       case 'state':
@@ -1489,7 +1459,7 @@ class DeviceMetricCalibrationBuilder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    DeviceMetricCalibrationTypeBuilder? type,
+    CodeableConceptBuilder? type,
     DeviceMetricCalibrationStateBuilder? state,
     FhirInstantBuilder? time,
     Map<String, dynamic>? userData,

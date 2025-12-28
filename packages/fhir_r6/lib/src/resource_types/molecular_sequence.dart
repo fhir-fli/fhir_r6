@@ -21,14 +21,12 @@ class MolecularSequence extends DomainResource {
     super.modifierExtension,
     this.identifier,
     this.type,
-    this.subject,
-    this.focus,
-    this.specimen,
-    this.device,
-    this.performer,
     this.literal,
-    this.formatted,
+    this.file,
     this.relative,
+    this.extracted,
+    this.repeated,
+    this.concatenated,
   }) : super(
           resourceType: R6ResourceType.MolecularSequence,
         );
@@ -96,39 +94,14 @@ class MolecularSequence extends DomainResource {
         'type',
         SequenceType.fromJson,
       ),
-      subject: JsonParser.parseObject<Reference>(
-        json,
-        'subject',
-        Reference.fromJson,
-      ),
-      focus: (json['focus'] as List<dynamic>?)
-          ?.map<Reference>(
-            (v) => Reference.fromJson(
+      literal: (json['literal'] as List<dynamic>?)
+          ?.map<MolecularSequenceLiteral>(
+            (v) => MolecularSequenceLiteral.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
           .toList(),
-      specimen: JsonParser.parseObject<Reference>(
-        json,
-        'specimen',
-        Reference.fromJson,
-      ),
-      device: JsonParser.parseObject<Reference>(
-        json,
-        'device',
-        Reference.fromJson,
-      ),
-      performer: JsonParser.parseObject<Reference>(
-        json,
-        'performer',
-        Reference.fromJson,
-      ),
-      literal: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'literal',
-        FhirString.fromJson,
-      ),
-      formatted: (json['formatted'] as List<dynamic>?)
+      file: (json['file'] as List<dynamic>?)
           ?.map<Attachment>(
             (v) => Attachment.fromJson(
               {...v as Map<String, dynamic>},
@@ -142,6 +115,25 @@ class MolecularSequence extends DomainResource {
             ),
           )
           .toList(),
+      extracted: (json['extracted'] as List<dynamic>?)
+          ?.map<MolecularSequenceExtracted>(
+            (v) => MolecularSequenceExtracted.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      repeated: (json['repeated'] as List<dynamic>?)
+          ?.map<MolecularSequenceRepeated>(
+            (v) => MolecularSequenceRepeated.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      concatenated: JsonParser.parseObject<MolecularSequenceConcatenated>(
+        json,
+        'concatenated',
+        MolecularSequenceConcatenated.fromJson,
+      ),
     );
   }
 
@@ -192,45 +184,37 @@ class MolecularSequence extends DomainResource {
   final List<Identifier>? identifier;
 
   /// [type]
-  /// Amino Acid Sequence/ DNA Sequence / RNA Sequence.
+  /// The type of the Molecular Sequence (Amino Acid Sequence, DNA Sequence,
+  /// RNA Sequence).
   final SequenceType? type;
 
-  /// [subject]
-  /// Indicates the subject this sequence is associated too.
-  final Reference? subject;
-
-  /// [focus]
-  /// The actual focus of a molecular sequence when it is not the patient of
-  /// record representing something or someone associated with the patient
-  /// such as a spouse, parent, child, or sibling. For example, in trio
-  /// testing, the subject would be the child (proband) and the focus would
-  /// be the parent.
-  final List<Reference>? focus;
-
-  /// [specimen]
-  /// Specimen used for sequencing.
-  final Reference? specimen;
-
-  /// [device]
-  /// The method for sequencing, for example, chip information.
-  final Reference? device;
-
-  /// [performer]
-  /// The organization or lab that should be responsible for this result.
-  final Reference? performer;
-
   /// [literal]
-  /// Sequence that was observed.
-  final FhirString? literal;
+  /// A literal representation of a Molecular Sequence.
+  final List<MolecularSequenceLiteral>? literal;
 
-  /// [formatted]
+  /// [file]
   /// Sequence that was observed as file content. Can be an actual file
   /// contents, or referenced by a URL to an external system.
-  final List<Attachment>? formatted;
+  final List<Attachment>? file;
 
   /// [relative]
-  /// A sequence defined relative to another sequence.
+  /// A Molecular Sequence that is represented as an ordered series of edits
+  /// on a specified starting sequence.
   final List<MolecularSequenceRelative>? relative;
+
+  /// [extracted]
+  /// A Molecular Sequence that is represented as an extracted portion of a
+  /// different Molecular Sequence.
+  final List<MolecularSequenceExtracted>? extracted;
+
+  /// [repeated]
+  /// A Molecular Sequence that is represented as a repeated sequence motif.
+  final List<MolecularSequenceRepeated>? repeated;
+
+  /// [concatenated]
+  /// A Molecular Sequence that is represented as an ordered concatenation of
+  /// two or more Molecular Sequences.
+  final MolecularSequenceConcatenated? concatenated;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -336,36 +320,28 @@ class MolecularSequence extends DomainResource {
       type,
     );
     addField(
-      'subject',
-      subject,
-    );
-    addField(
-      'focus',
-      focus,
-    );
-    addField(
-      'specimen',
-      specimen,
-    );
-    addField(
-      'device',
-      device,
-    );
-    addField(
-      'performer',
-      performer,
-    );
-    addField(
       'literal',
       literal,
     );
     addField(
-      'formatted',
-      formatted,
+      'file',
+      file,
     );
     addField(
       'relative',
       relative,
+    );
+    addField(
+      'extracted',
+      extracted,
+    );
+    addField(
+      'repeated',
+      repeated,
+    );
+    addField(
+      'concatenated',
+      concatenated,
     );
     return json;
   }
@@ -384,14 +360,12 @@ class MolecularSequence extends DomainResource {
       'modifierExtension',
       'identifier',
       'type',
-      'subject',
-      'focus',
-      'specimen',
-      'device',
-      'performer',
       'literal',
-      'formatted',
+      'file',
       'relative',
+      'extracted',
+      'repeated',
+      'concatenated',
     ];
   }
 
@@ -444,37 +418,29 @@ class MolecularSequence extends DomainResource {
         if (type != null) {
           fields.add(type!);
         }
-      case 'subject':
-        if (subject != null) {
-          fields.add(subject!);
-        }
-      case 'focus':
-        if (focus != null) {
-          fields.addAll(focus!);
-        }
-      case 'specimen':
-        if (specimen != null) {
-          fields.add(specimen!);
-        }
-      case 'device':
-        if (device != null) {
-          fields.add(device!);
-        }
-      case 'performer':
-        if (performer != null) {
-          fields.add(performer!);
-        }
       case 'literal':
         if (literal != null) {
-          fields.add(literal!);
+          fields.addAll(literal!);
         }
-      case 'formatted':
-        if (formatted != null) {
-          fields.addAll(formatted!);
+      case 'file':
+        if (file != null) {
+          fields.addAll(file!);
         }
       case 'relative':
         if (relative != null) {
           fields.addAll(relative!);
+        }
+      case 'extracted':
+        if (extracted != null) {
+          fields.addAll(extracted!);
+        }
+      case 'repeated':
+        if (repeated != null) {
+          fields.addAll(repeated!);
+        }
+      case 'concatenated':
+        if (concatenated != null) {
+          fields.add(concatenated!);
         }
       default:
         if (checkValid) {
@@ -577,45 +543,15 @@ class MolecularSequence extends DomainResource {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      subject,
-      o.subject,
-    )) {
-      return false;
-    }
-    if (!listEquals<Reference>(
-      focus,
-      o.focus,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      specimen,
-      o.specimen,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      device,
-      o.device,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      performer,
-      o.performer,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
+    if (!listEquals<MolecularSequenceLiteral>(
       literal,
       o.literal,
     )) {
       return false;
     }
     if (!listEquals<Attachment>(
-      formatted,
-      o.formatted,
+      file,
+      o.file,
     )) {
       return false;
     }
@@ -625,12 +561,307 @@ class MolecularSequence extends DomainResource {
     )) {
       return false;
     }
+    if (!listEquals<MolecularSequenceExtracted>(
+      extracted,
+      o.extracted,
+    )) {
+      return false;
+    }
+    if (!listEquals<MolecularSequenceRepeated>(
+      repeated,
+      o.repeated,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      concatenated,
+      o.concatenated,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [MolecularSequenceLiteral]
+/// A literal representation of a Molecular Sequence.
+class MolecularSequenceLiteral extends BackboneElement {
+  /// Primary constructor for
+  /// [MolecularSequenceLiteral]
+
+  const MolecularSequenceLiteral({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    required this.sequenceValue,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory MolecularSequenceLiteral.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return MolecularSequenceLiteral(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      sequenceValue: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'sequenceValue',
+        FhirString.fromJson,
+      )!,
+    );
+  }
+
+  /// Deserialize [MolecularSequenceLiteral]
+  /// from a [String] or [YamlMap] object
+  factory MolecularSequenceLiteral.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return MolecularSequenceLiteral.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return MolecularSequenceLiteral.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'MolecularSequenceLiteral '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [MolecularSequenceLiteral]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory MolecularSequenceLiteral.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return MolecularSequenceLiteral.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'MolecularSequenceLiteral';
+
+  /// [sequenceValue]
+  /// The primary (linear) sequence, expressed as a literal string.
+  final FhirString sequenceValue;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'sequenceValue',
+      sequenceValue,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'sequenceValue',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'sequenceValue':
+        fields.add(sequenceValue);
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  MolecularSequenceLiteral clone() => copyWith();
+
+  /// Copy function for [MolecularSequenceLiteral]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $MolecularSequenceLiteralCopyWith<MolecularSequenceLiteral> get copyWith =>
+      _$MolecularSequenceLiteralCopyWithImpl<MolecularSequenceLiteral>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! MolecularSequenceLiteral) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      sequenceValue,
+      o.sequenceValue,
+    )) {
+      return false;
+    }
     return true;
   }
 }
 
 /// [MolecularSequenceRelative]
-/// A sequence defined relative to another sequence.
+/// A Molecular Sequence that is represented as an ordered series of edits
+/// on a specified starting sequence.
 class MolecularSequenceRelative extends BackboneElement {
   /// Primary constructor for
   /// [MolecularSequenceRelative]
@@ -639,10 +870,7 @@ class MolecularSequenceRelative extends BackboneElement {
     super.id,
     super.extension_,
     super.modifierExtension,
-    required this.coordinateSystem,
-    this.ordinalPosition,
-    this.sequenceRange,
-    this.startingSequence,
+    required this.startingSequence,
     this.edit,
     super.disallowExtensions,
   }) : super();
@@ -671,27 +899,11 @@ class MolecularSequenceRelative extends BackboneElement {
             ),
           )
           .toList(),
-      coordinateSystem: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'coordinateSystem',
-        CodeableConcept.fromJson,
-      )!,
-      ordinalPosition: JsonParser.parsePrimitive<FhirInteger>(
-        json,
-        'ordinalPosition',
-        FhirInteger.fromJson,
-      ),
-      sequenceRange: JsonParser.parseObject<Range>(
-        json,
-        'sequenceRange',
-        Range.fromJson,
-      ),
-      startingSequence:
-          JsonParser.parseObject<MolecularSequenceStartingSequence>(
+      startingSequence: JsonParser.parseObject<Reference>(
         json,
         'startingSequence',
-        MolecularSequenceStartingSequence.fromJson,
-      ),
+        Reference.fromJson,
+      )!,
       edit: (json['edit'] as List<dynamic>?)
           ?.map<MolecularSequenceEdit>(
             (v) => MolecularSequenceEdit.fromJson(
@@ -744,30 +956,13 @@ class MolecularSequenceRelative extends BackboneElement {
   @override
   String get fhirType => 'MolecularSequenceRelative';
 
-  /// [coordinateSystem]
-  /// These are different ways of identifying nucleotides or amino acids
-  /// within a sequence. Different databases and file types may use different
-  /// systems. For detail definitions, see https://loinc.org/92822-6/ for
-  /// more detail.
-  final CodeableConcept coordinateSystem;
-
-  /// [ordinalPosition]
-  /// Indicates the order in which the sequence should be considered when
-  /// putting multiple 'relative' elements together.
-  final FhirInteger? ordinalPosition;
-
-  /// [sequenceRange]
-  /// Indicates the nucleotide range in the composed sequence when multiple
-  /// 'relative' elements are used together.
-  final Range? sequenceRange;
-
   /// [startingSequence]
-  /// A sequence that is used as a starting sequence to describe variants
-  /// that are present in a sequence analyzed.
-  final MolecularSequenceStartingSequence? startingSequence;
+  /// The Molecular Sequence that serves as the starting sequence, on which
+  /// edits will be applied.
+  final Reference startingSequence;
 
   /// [edit]
-  /// Changes in sequence from the starting sequence.
+  /// An edit (change) made to a sequence.
   final List<MolecularSequenceEdit>? edit;
   @override
   Map<String, dynamic> toJson() {
@@ -845,18 +1040,6 @@ class MolecularSequenceRelative extends BackboneElement {
       modifierExtension,
     );
     addField(
-      'coordinateSystem',
-      coordinateSystem,
-    );
-    addField(
-      'ordinalPosition',
-      ordinalPosition,
-    );
-    addField(
-      'sequenceRange',
-      sequenceRange,
-    );
-    addField(
       'startingSequence',
       startingSequence,
     );
@@ -874,9 +1057,6 @@ class MolecularSequenceRelative extends BackboneElement {
       'id',
       'extension',
       'modifierExtension',
-      'coordinateSystem',
-      'ordinalPosition',
-      'sequenceRange',
       'startingSequence',
       'edit',
     ];
@@ -903,20 +1083,8 @@ class MolecularSequenceRelative extends BackboneElement {
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
         }
-      case 'coordinateSystem':
-        fields.add(coordinateSystem);
-      case 'ordinalPosition':
-        if (ordinalPosition != null) {
-          fields.add(ordinalPosition!);
-        }
-      case 'sequenceRange':
-        if (sequenceRange != null) {
-          fields.add(sequenceRange!);
-        }
       case 'startingSequence':
-        if (startingSequence != null) {
-          fields.add(startingSequence!);
-        }
+        fields.add(startingSequence);
       case 'edit':
         if (edit != null) {
           fields.addAll(edit!);
@@ -981,24 +1149,6 @@ class MolecularSequenceRelative extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
-      coordinateSystem,
-      o.coordinateSystem,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      ordinalPosition,
-      o.ordinalPosition,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      sequenceRange,
-      o.sequenceRange,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
       startingSequence,
       o.startingSequence,
     )) {
@@ -1014,485 +1164,8 @@ class MolecularSequenceRelative extends BackboneElement {
   }
 }
 
-/// [MolecularSequenceStartingSequence]
-/// A sequence that is used as a starting sequence to describe variants
-/// that are present in a sequence analyzed.
-class MolecularSequenceStartingSequence extends BackboneElement {
-  /// Primary constructor for
-  /// [MolecularSequenceStartingSequence]
-
-  const MolecularSequenceStartingSequence({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.genomeAssembly,
-    this.chromosome,
-    SequenceXMolecularSequenceStartingSequence? sequenceX,
-    CodeableConcept? sequenceCodeableConcept,
-    FhirString? sequenceString,
-    Reference? sequenceReference,
-    this.windowStart,
-    this.windowEnd,
-    this.orientation,
-    this.strand,
-    super.disallowExtensions,
-  })  : sequenceX = sequenceX ??
-            sequenceCodeableConcept ??
-            sequenceString ??
-            sequenceReference,
-        super();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory MolecularSequenceStartingSequence.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return MolecularSequenceStartingSequence(
-      id: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'id',
-        FhirString.fromJson,
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      genomeAssembly: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'genomeAssembly',
-        CodeableConcept.fromJson,
-      ),
-      chromosome: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'chromosome',
-        CodeableConcept.fromJson,
-      ),
-      sequenceX: JsonParser.parsePolymorphic<
-          SequenceXMolecularSequenceStartingSequence>(
-        json,
-        {
-          'sequenceCodeableConcept': CodeableConcept.fromJson,
-          'sequenceString': FhirString.fromJson,
-          'sequenceReference': Reference.fromJson,
-        },
-      ),
-      windowStart: JsonParser.parsePrimitive<FhirInteger>(
-        json,
-        'windowStart',
-        FhirInteger.fromJson,
-      ),
-      windowEnd: JsonParser.parsePrimitive<FhirInteger>(
-        json,
-        'windowEnd',
-        FhirInteger.fromJson,
-      ),
-      orientation: JsonParser.parsePrimitive<OrientationType>(
-        json,
-        'orientation',
-        OrientationType.fromJson,
-      ),
-      strand: JsonParser.parsePrimitive<StrandType>(
-        json,
-        'strand',
-        StrandType.fromJson,
-      ),
-    );
-  }
-
-  /// Deserialize [MolecularSequenceStartingSequence]
-  /// from a [String] or [YamlMap] object
-  factory MolecularSequenceStartingSequence.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return MolecularSequenceStartingSequence.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return MolecularSequenceStartingSequence.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'MolecularSequenceStartingSequence '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [MolecularSequenceStartingSequence]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory MolecularSequenceStartingSequence.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return MolecularSequenceStartingSequence.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'MolecularSequenceStartingSequence';
-
-  /// [genomeAssembly]
-  /// The genome assembly used for starting sequence, e.g. GRCh38.
-  final CodeableConcept? genomeAssembly;
-
-  /// [chromosome]
-  /// Structural unit composed of a nucleic acid molecule which controls its
-  /// own replication through the interaction of specific proteins at one or
-  /// more origins of replication
-  /// ([SO:0000340](http://www.sequenceontology.org/browser/current_svn/term/SO:0000340)).
-  final CodeableConcept? chromosome;
-
-  /// [sequenceX]
-  /// The reference sequence that represents the starting sequence.
-  final SequenceXMolecularSequenceStartingSequence? sequenceX;
-
-  /// Getter for [sequenceCodeableConcept] as a CodeableConcept
-  CodeableConcept? get sequenceCodeableConcept =>
-      sequenceX?.isAs<CodeableConcept>();
-
-  /// Getter for [sequenceString] as a FhirString
-  FhirString? get sequenceString => sequenceX?.isAs<FhirString>();
-
-  /// Getter for [sequenceReference] as a Reference
-  Reference? get sequenceReference => sequenceX?.isAs<Reference>();
-
-  /// [windowStart]
-  /// Start position of the window on the starting sequence. This value
-  /// should honor the rules of the coordinateSystem.
-  final FhirInteger? windowStart;
-
-  /// [windowEnd]
-  /// End position of the window on the starting sequence. This value should
-  /// honor the rules of the coordinateSystem.
-  final FhirInteger? windowEnd;
-
-  /// [orientation]
-  /// A relative reference to a DNA strand based on gene orientation. The
-  /// strand that contains the open reading frame of the gene is the "sense"
-  /// strand, and the opposite complementary strand is the "antisense"
-  /// strand.
-  final OrientationType? orientation;
-
-  /// [strand]
-  /// An absolute reference to a strand. The Watson strand is the strand
-  /// whose 5'-end is on the short arm of the chromosome, and the Crick
-  /// strand as the one whose 5'-end is on the long arm.
-  final StrandType? strand;
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    bool isNonEmpty(dynamic val) {
-      if (val == null) return false;
-      if (val is List && val.isEmpty) return false;
-      if (val is Map && val.isEmpty) return false;
-      return true;
-    }
-
-    void addField(String key, dynamic field) {
-      if (field == null) return;
-      if (!(field is FhirBase? || field is List<FhirBase>?)) {
-        throw ArgumentError('"field" must be a FhirBase type');
-      }
-      if (field is PrimitiveType) {
-        final fieldMap = field.toJson();
-        final val = fieldMap['value'];
-        final ext = fieldMap['_value'];
-        final hasVal = isNonEmpty(val);
-        final hasExt = isNonEmpty(ext);
-        if (hasVal) json[key] = val;
-        if (hasExt) json['_$key'] = ext;
-      } else if (field is List<FhirBase>) {
-        if (field.isEmpty) return;
-        final isPrimitive = field.first is PrimitiveType;
-        final tempList = <dynamic>[];
-        final tempExtensions = <dynamic>[];
-        for (final e in field) {
-          final itemMap = e.toJson();
-          if (!isNonEmpty(itemMap)) {
-            continue;
-          }
-          if (isPrimitive) {
-            final v = itemMap['value'];
-            final x = itemMap['_value'];
-            tempList.add(v);
-            tempExtensions.add(x);
-          } else {
-            tempList.add(itemMap);
-          }
-        }
-        if (tempList.isEmpty) return;
-        if (isPrimitive) {
-          final hasAnyValues = tempList.any((v) => v != null);
-          if (hasAnyValues) {
-            json[key] = tempList;
-          }
-          final anyExt = tempExtensions.any(isNonEmpty);
-          if (anyExt) {
-            json['_$key'] = tempExtensions;
-          }
-        } else {
-          json[key] = tempList;
-        }
-      } else if (field is FhirBase) {
-        final subMap = field.toJson();
-        if (isNonEmpty(subMap)) {
-          json[key] = subMap;
-        }
-      }
-    }
-
-    addField(
-      'id',
-      id,
-    );
-    addField(
-      'extension',
-      extension_,
-    );
-    addField(
-      'modifierExtension',
-      modifierExtension,
-    );
-    addField(
-      'genomeAssembly',
-      genomeAssembly,
-    );
-    addField(
-      'chromosome',
-      chromosome,
-    );
-    if (sequenceX != null) {
-      final fhirType = sequenceX!.fhirType;
-      addField(
-        'sequence${fhirType.capitalize()}',
-        sequenceX,
-      );
-    }
-
-    addField(
-      'windowStart',
-      windowStart,
-    );
-    addField(
-      'windowEnd',
-      windowEnd,
-    );
-    addField(
-      'orientation',
-      orientation,
-    );
-    addField(
-      'strand',
-      strand,
-    );
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'genomeAssembly',
-      'chromosome',
-      'sequenceX',
-      'windowStart',
-      'windowEnd',
-      'orientation',
-      'strand',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBase> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBase>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'genomeAssembly':
-        if (genomeAssembly != null) {
-          fields.add(genomeAssembly!);
-        }
-      case 'chromosome':
-        if (chromosome != null) {
-          fields.add(chromosome!);
-        }
-      case 'sequence':
-        fields.add(sequenceX!);
-      case 'sequenceX':
-        fields.add(sequenceX!);
-      case 'sequenceCodeableConcept':
-        if (sequenceX is CodeableConcept) {
-          fields.add(sequenceX!);
-        }
-      case 'sequenceString':
-        if (sequenceX is FhirString) {
-          fields.add(sequenceX!);
-        }
-      case 'sequenceReference':
-        if (sequenceX is Reference) {
-          fields.add(sequenceX!);
-        }
-      case 'windowStart':
-        if (windowStart != null) {
-          fields.add(windowStart!);
-        }
-      case 'windowEnd':
-        if (windowEnd != null) {
-          fields.add(windowEnd!);
-        }
-      case 'orientation':
-        if (orientation != null) {
-          fields.add(orientation!);
-        }
-      case 'strand':
-        if (strand != null) {
-          fields.add(strand!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBase? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  MolecularSequenceStartingSequence clone() => copyWith();
-
-  /// Copy function for [MolecularSequenceStartingSequence]
-  /// Returns a copy of the current instance with the provided fields modified.
-  /// If a field is not provided, it will retain its original value.
-  /// If a null is provided, this will clearn the field, unless the
-  /// field is required, in which case it will keep its current value.
-  @override
-  $MolecularSequenceStartingSequenceCopyWith<MolecularSequenceStartingSequence>
-      get copyWith => _$MolecularSequenceStartingSequenceCopyWithImpl<
-              MolecularSequenceStartingSequence>(
-            this,
-            (value) => value,
-          );
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBase? o) {
-    if (o is! MolecularSequenceStartingSequence) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      genomeAssembly,
-      o.genomeAssembly,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      chromosome,
-      o.chromosome,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      sequenceX,
-      o.sequenceX,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      windowStart,
-      o.windowStart,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      windowEnd,
-      o.windowEnd,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      orientation,
-      o.orientation,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      strand,
-      o.strand,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
 /// [MolecularSequenceEdit]
-/// Changes in sequence from the starting sequence.
+/// An edit (change) made to a sequence.
 class MolecularSequenceEdit extends BackboneElement {
   /// Primary constructor for
   /// [MolecularSequenceEdit]
@@ -1501,9 +1174,11 @@ class MolecularSequenceEdit extends BackboneElement {
     super.id,
     super.extension_,
     super.modifierExtension,
-    this.start,
-    this.end,
-    this.replacementSequence,
+    this.editOrder,
+    required this.coordinateSystem,
+    required this.start,
+    required this.end,
+    required this.replacementSequence,
     this.replacedSequence,
     super.disallowExtensions,
   }) : super();
@@ -1532,25 +1207,35 @@ class MolecularSequenceEdit extends BackboneElement {
             ),
           )
           .toList(),
+      editOrder: JsonParser.parsePrimitive<FhirInteger>(
+        json,
+        'editOrder',
+        FhirInteger.fromJson,
+      ),
+      coordinateSystem: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'coordinateSystem',
+        CodeableConcept.fromJson,
+      )!,
       start: JsonParser.parsePrimitive<FhirInteger>(
         json,
         'start',
         FhirInteger.fromJson,
-      ),
+      )!,
       end: JsonParser.parsePrimitive<FhirInteger>(
         json,
         'end',
         FhirInteger.fromJson,
-      ),
-      replacementSequence: JsonParser.parsePrimitive<FhirString>(
+      )!,
+      replacementSequence: JsonParser.parseObject<Reference>(
         json,
         'replacementSequence',
-        FhirString.fromJson,
-      ),
-      replacedSequence: JsonParser.parsePrimitive<FhirString>(
+        Reference.fromJson,
+      )!,
+      replacedSequence: JsonParser.parseObject<Reference>(
         json,
         'replacedSequence',
-        FhirString.fromJson,
+        Reference.fromJson,
       ),
     );
   }
@@ -1597,33 +1282,33 @@ class MolecularSequenceEdit extends BackboneElement {
   @override
   String get fhirType => 'MolecularSequenceEdit';
 
+  /// [editOrder]
+  /// The order of this edit, relative to other edits on the starting
+  /// sequence.
+  final FhirInteger? editOrder;
+
+  /// [coordinateSystem]
+  /// The coordinate system used to define the edited intervals on the
+  /// starting sequence. Coordinate systems are usually 0- or 1-based.
+  final CodeableConcept coordinateSystem;
+
   /// [start]
-  /// Start position of the edit on the starting sequence. If the coordinate
-  /// system is either 0-based or 1-based, then start position is inclusive.
-  final FhirInteger? start;
+  /// The start coordinate of the interval that will be edited.
+  final FhirInteger start;
 
   /// [end]
-  /// End position of the edit on the starting sequence. If the coordinate
-  /// system is 0-based then end is exclusive and does not include the last
-  /// position. If the coordinate system is 1-base, then end is inclusive and
-  /// includes the last position.
-  final FhirInteger? end;
+  /// The end coordinate of the interval that will be edited.
+  final FhirInteger end;
 
   /// [replacementSequence]
-  /// Allele that was observed. Nucleotide(s)/amino acids from start position
-  /// of sequence to stop position of sequence on the positive (+) strand of
-  /// the observed sequence. When the sequence type is DNA, it should be the
-  /// sequence on the positive (+) strand. This will lay in the range between
-  /// variant.start and variant.end.
-  final FhirString? replacementSequence;
+  /// The sequence that defines the replacement sequence used in the edit
+  /// operation.
+  final Reference replacementSequence;
 
   /// [replacedSequence]
-  /// Allele in the starting sequence. Nucleotide(s)/amino acids from start
-  /// position of sequence to stop position of sequence on the positive (+)
-  /// strand of the starting sequence. When the sequence type is DNA, it
-  /// should be the sequence on the positive (+) strand. This will lay in the
-  /// range between variant.start and variant.end.
-  final FhirString? replacedSequence;
+  /// The sequence on the 'starting' sequence for the edit operation, defined
+  /// by the specified interval, that will be replaced during the edit.
+  final Reference? replacedSequence;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1700,6 +1385,14 @@ class MolecularSequenceEdit extends BackboneElement {
       modifierExtension,
     );
     addField(
+      'editOrder',
+      editOrder,
+    );
+    addField(
+      'coordinateSystem',
+      coordinateSystem,
+    );
+    addField(
       'start',
       start,
     );
@@ -1725,6 +1418,8 @@ class MolecularSequenceEdit extends BackboneElement {
       'id',
       'extension',
       'modifierExtension',
+      'editOrder',
+      'coordinateSystem',
       'start',
       'end',
       'replacementSequence',
@@ -1753,18 +1448,18 @@ class MolecularSequenceEdit extends BackboneElement {
         if (modifierExtension != null) {
           fields.addAll(modifierExtension!);
         }
+      case 'editOrder':
+        if (editOrder != null) {
+          fields.add(editOrder!);
+        }
+      case 'coordinateSystem':
+        fields.add(coordinateSystem);
       case 'start':
-        if (start != null) {
-          fields.add(start!);
-        }
+        fields.add(start);
       case 'end':
-        if (end != null) {
-          fields.add(end!);
-        }
+        fields.add(end);
       case 'replacementSequence':
-        if (replacementSequence != null) {
-          fields.add(replacementSequence!);
-        }
+        fields.add(replacementSequence);
       case 'replacedSequence':
         if (replacedSequence != null) {
           fields.add(replacedSequence!);
@@ -1829,6 +1524,18 @@ class MolecularSequenceEdit extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
+      editOrder,
+      o.editOrder,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      coordinateSystem,
+      o.coordinateSystem,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       start,
       o.start,
     )) {
@@ -1849,6 +1556,1264 @@ class MolecularSequenceEdit extends BackboneElement {
     if (!equalsDeepWithNull(
       replacedSequence,
       o.replacedSequence,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [MolecularSequenceExtracted]
+/// A Molecular Sequence that is represented as an extracted portion of a
+/// different Molecular Sequence.
+class MolecularSequenceExtracted extends BackboneElement {
+  /// Primary constructor for
+  /// [MolecularSequenceExtracted]
+
+  const MolecularSequenceExtracted({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    required this.startingSequence,
+    required this.start,
+    required this.end,
+    required this.coordinateSystem,
+    this.reverseComplement,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory MolecularSequenceExtracted.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return MolecularSequenceExtracted(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      startingSequence: JsonParser.parseObject<Reference>(
+        json,
+        'startingSequence',
+        Reference.fromJson,
+      )!,
+      start: JsonParser.parsePrimitive<FhirInteger>(
+        json,
+        'start',
+        FhirInteger.fromJson,
+      )!,
+      end: JsonParser.parsePrimitive<FhirInteger>(
+        json,
+        'end',
+        FhirInteger.fromJson,
+      )!,
+      coordinateSystem: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'coordinateSystem',
+        CodeableConcept.fromJson,
+      )!,
+      reverseComplement: JsonParser.parsePrimitive<FhirBoolean>(
+        json,
+        'reverseComplement',
+        FhirBoolean.fromJson,
+      ),
+    );
+  }
+
+  /// Deserialize [MolecularSequenceExtracted]
+  /// from a [String] or [YamlMap] object
+  factory MolecularSequenceExtracted.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return MolecularSequenceExtracted.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return MolecularSequenceExtracted.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'MolecularSequenceExtracted '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [MolecularSequenceExtracted]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory MolecularSequenceExtracted.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return MolecularSequenceExtracted.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'MolecularSequenceExtracted';
+
+  /// [startingSequence]
+  /// The Molecular Sequence that serves as the parent sequence, from which
+  /// the intended sequence will be extracted.
+  final Reference startingSequence;
+
+  /// [start]
+  /// The start coordinate (on the parent sequence) of the interval that
+  /// defines the subsequence to be extracted.
+  final FhirInteger start;
+
+  /// [end]
+  /// The end coordinate (on the parent sequence) of the interval that
+  /// defines the subsequence to be extracted.
+  final FhirInteger end;
+
+  /// [coordinateSystem]
+  /// The coordinate system used to define the interval that defines the
+  /// subsequence to be extracted. Coordinate systems are usually 0- or
+  /// 1-based.
+  final CodeableConcept coordinateSystem;
+
+  /// [reverseComplement]
+  /// A flag that indicates whether the extracted sequence should be reverse
+  /// complemented.
+  final FhirBoolean? reverseComplement;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'startingSequence',
+      startingSequence,
+    );
+    addField(
+      'start',
+      start,
+    );
+    addField(
+      'end',
+      end,
+    );
+    addField(
+      'coordinateSystem',
+      coordinateSystem,
+    );
+    addField(
+      'reverseComplement',
+      reverseComplement,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'startingSequence',
+      'start',
+      'end',
+      'coordinateSystem',
+      'reverseComplement',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'startingSequence':
+        fields.add(startingSequence);
+      case 'start':
+        fields.add(start);
+      case 'end':
+        fields.add(end);
+      case 'coordinateSystem':
+        fields.add(coordinateSystem);
+      case 'reverseComplement':
+        if (reverseComplement != null) {
+          fields.add(reverseComplement!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  MolecularSequenceExtracted clone() => copyWith();
+
+  /// Copy function for [MolecularSequenceExtracted]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $MolecularSequenceExtractedCopyWith<MolecularSequenceExtracted>
+      get copyWith =>
+          _$MolecularSequenceExtractedCopyWithImpl<MolecularSequenceExtracted>(
+            this,
+            (value) => value,
+          );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! MolecularSequenceExtracted) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      startingSequence,
+      o.startingSequence,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      start,
+      o.start,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      end,
+      o.end,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      coordinateSystem,
+      o.coordinateSystem,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reverseComplement,
+      o.reverseComplement,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [MolecularSequenceRepeated]
+/// A Molecular Sequence that is represented as a repeated sequence motif.
+class MolecularSequenceRepeated extends BackboneElement {
+  /// Primary constructor for
+  /// [MolecularSequenceRepeated]
+
+  const MolecularSequenceRepeated({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    required this.sequenceMotif,
+    required this.copyCount,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory MolecularSequenceRepeated.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return MolecularSequenceRepeated(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      sequenceMotif: JsonParser.parseObject<Reference>(
+        json,
+        'sequenceMotif',
+        Reference.fromJson,
+      )!,
+      copyCount: JsonParser.parsePrimitive<FhirInteger>(
+        json,
+        'copyCount',
+        FhirInteger.fromJson,
+      )!,
+    );
+  }
+
+  /// Deserialize [MolecularSequenceRepeated]
+  /// from a [String] or [YamlMap] object
+  factory MolecularSequenceRepeated.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return MolecularSequenceRepeated.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return MolecularSequenceRepeated.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'MolecularSequenceRepeated '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [MolecularSequenceRepeated]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory MolecularSequenceRepeated.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return MolecularSequenceRepeated.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'MolecularSequenceRepeated';
+
+  /// [sequenceMotif]
+  /// The sequence that defines the repeated motif.
+  final Reference sequenceMotif;
+
+  /// [copyCount]
+  /// The number of repeats (copies) of the sequence motif.
+  final FhirInteger copyCount;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'sequenceMotif',
+      sequenceMotif,
+    );
+    addField(
+      'copyCount',
+      copyCount,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'sequenceMotif',
+      'copyCount',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'sequenceMotif':
+        fields.add(sequenceMotif);
+      case 'copyCount':
+        fields.add(copyCount);
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  MolecularSequenceRepeated clone() => copyWith();
+
+  /// Copy function for [MolecularSequenceRepeated]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $MolecularSequenceRepeatedCopyWith<MolecularSequenceRepeated> get copyWith =>
+      _$MolecularSequenceRepeatedCopyWithImpl<MolecularSequenceRepeated>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! MolecularSequenceRepeated) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      sequenceMotif,
+      o.sequenceMotif,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      copyCount,
+      o.copyCount,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [MolecularSequenceConcatenated]
+/// A Molecular Sequence that is represented as an ordered concatenation of
+/// two or more Molecular Sequences.
+class MolecularSequenceConcatenated extends BackboneElement {
+  /// Primary constructor for
+  /// [MolecularSequenceConcatenated]
+
+  const MolecularSequenceConcatenated({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    required this.sequenceElement,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory MolecularSequenceConcatenated.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return MolecularSequenceConcatenated(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      sequenceElement: (json['sequenceElement'] as List<dynamic>)
+          .map<MolecularSequenceSequenceElement>(
+            (v) => MolecularSequenceSequenceElement.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  /// Deserialize [MolecularSequenceConcatenated]
+  /// from a [String] or [YamlMap] object
+  factory MolecularSequenceConcatenated.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return MolecularSequenceConcatenated.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return MolecularSequenceConcatenated.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'MolecularSequenceConcatenated '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [MolecularSequenceConcatenated]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory MolecularSequenceConcatenated.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return MolecularSequenceConcatenated.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'MolecularSequenceConcatenated';
+
+  /// [sequenceElement]
+  /// One element of a concatenated Molecular Sequence.
+  final List<MolecularSequenceSequenceElement> sequenceElement;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'sequenceElement',
+      sequenceElement,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'sequenceElement',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'sequenceElement':
+        fields.addAll(sequenceElement);
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  MolecularSequenceConcatenated clone() => copyWith();
+
+  /// Copy function for [MolecularSequenceConcatenated]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $MolecularSequenceConcatenatedCopyWith<MolecularSequenceConcatenated>
+      get copyWith => _$MolecularSequenceConcatenatedCopyWithImpl<
+              MolecularSequenceConcatenated>(
+            this,
+            (value) => value,
+          );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! MolecularSequenceConcatenated) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!listEquals<MolecularSequenceSequenceElement>(
+      sequenceElement,
+      o.sequenceElement,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [MolecularSequenceSequenceElement]
+/// One element of a concatenated Molecular Sequence.
+class MolecularSequenceSequenceElement extends BackboneElement {
+  /// Primary constructor for
+  /// [MolecularSequenceSequenceElement]
+
+  const MolecularSequenceSequenceElement({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    required this.sequence,
+    required this.ordinalIndex,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory MolecularSequenceSequenceElement.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return MolecularSequenceSequenceElement(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      sequence: JsonParser.parseObject<Reference>(
+        json,
+        'sequence',
+        Reference.fromJson,
+      )!,
+      ordinalIndex: JsonParser.parsePrimitive<FhirInteger>(
+        json,
+        'ordinalIndex',
+        FhirInteger.fromJson,
+      )!,
+    );
+  }
+
+  /// Deserialize [MolecularSequenceSequenceElement]
+  /// from a [String] or [YamlMap] object
+  factory MolecularSequenceSequenceElement.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return MolecularSequenceSequenceElement.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return MolecularSequenceSequenceElement.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'MolecularSequenceSequenceElement '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [MolecularSequenceSequenceElement]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory MolecularSequenceSequenceElement.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return MolecularSequenceSequenceElement.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'MolecularSequenceSequenceElement';
+
+  /// [sequence]
+  /// The Molecular Sequence corresponding to this element.
+  final Reference sequence;
+
+  /// [ordinalIndex]
+  /// The ordinal position of this sequence element within the concatenated
+  /// Molecular Sequence.
+  final FhirInteger ordinalIndex;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'sequence',
+      sequence,
+    );
+    addField(
+      'ordinalIndex',
+      ordinalIndex,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'sequence',
+      'ordinalIndex',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'sequence':
+        fields.add(sequence);
+      case 'ordinalIndex':
+        fields.add(ordinalIndex);
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  MolecularSequenceSequenceElement clone() => copyWith();
+
+  /// Copy function for [MolecularSequenceSequenceElement]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $MolecularSequenceSequenceElementCopyWith<MolecularSequenceSequenceElement>
+      get copyWith => _$MolecularSequenceSequenceElementCopyWithImpl<
+              MolecularSequenceSequenceElement>(
+            this,
+            (value) => value,
+          );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! MolecularSequenceSequenceElement) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      sequence,
+      o.sequence,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      ordinalIndex,
+      o.ordinalIndex,
     )) {
       return false;
     }

@@ -21,6 +21,7 @@ abstract class $RelatedPersonCopyWith<T> extends $DomainResourceCopyWith<T> {
     FhirBoolean? active,
     Reference? patient,
     List<CodeableConcept>? relationship,
+    List<CodeableConcept>? role,
     List<HumanName>? name,
     List<ContactPoint>? telecom,
     AdministrativeGender? gender,
@@ -53,6 +54,7 @@ class _$RelatedPersonCopyWithImpl<T> implements $RelatedPersonCopyWith<T> {
     Object? active = fhirSentinel,
     Object? patient = fhirSentinel,
     Object? relationship = fhirSentinel,
+    Object? role = fhirSentinel,
     Object? name = fhirSentinel,
     Object? telecom = fhirSentinel,
     Object? gender = fhirSentinel,
@@ -95,6 +97,9 @@ class _$RelatedPersonCopyWithImpl<T> implements $RelatedPersonCopyWith<T> {
         relationship: identical(relationship, fhirSentinel)
             ? _value.relationship
             : relationship as List<CodeableConcept>?,
+        role: identical(role, fhirSentinel)
+            ? _value.role
+            : role as List<CodeableConcept>?,
         name: identical(name, fhirSentinel)
             ? _value.name
             : name as List<HumanName>?,

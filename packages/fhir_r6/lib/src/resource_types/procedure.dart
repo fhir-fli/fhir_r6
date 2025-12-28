@@ -25,8 +25,6 @@ class Procedure extends DomainResource {
     super.extension_,
     super.modifierExtension,
     this.identifier,
-    this.instantiatesCanonical,
-    this.instantiatesUri,
     this.basedOn,
     this.partOf,
     required this.status,
@@ -52,6 +50,7 @@ class Procedure extends DomainResource {
     this.location,
     this.reason,
     this.bodySite,
+    this.bodyStructure,
     this.outcome,
     this.report,
     this.complication,
@@ -130,16 +129,6 @@ class Procedure extends DomainResource {
             ),
           )
           .toList(),
-      instantiatesCanonical: JsonParser.parsePrimitiveList<FhirCanonical>(
-        json,
-        'instantiatesCanonical',
-        FhirCanonical.fromJson,
-      ),
-      instantiatesUri: JsonParser.parsePrimitiveList<FhirUri>(
-        json,
-        'instantiatesUri',
-        FhirUri.fromJson,
-      ),
       basedOn: (json['basedOn'] as List<dynamic>?)
           ?.map<Reference>(
             (v) => Reference.fromJson(
@@ -245,11 +234,20 @@ class Procedure extends DomainResource {
             ),
           )
           .toList(),
-      outcome: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'outcome',
-        CodeableConcept.fromJson,
-      ),
+      bodyStructure: (json['bodyStructure'] as List<dynamic>?)
+          ?.map<Reference>(
+            (v) => Reference.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      outcome: (json['outcome'] as List<dynamic>?)
+          ?.map<CodeableReference>(
+            (v) => CodeableReference.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       report: (json['report'] as List<dynamic>?)
           ?.map<Reference>(
             (v) => Reference.fromJson(
@@ -265,8 +263,8 @@ class Procedure extends DomainResource {
           )
           .toList(),
       followUp: (json['followUp'] as List<dynamic>?)
-          ?.map<CodeableConcept>(
-            (v) => CodeableConcept.fromJson(
+          ?.map<CodeableReference>(
+            (v) => CodeableReference.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -349,18 +347,6 @@ class Procedure extends DomainResource {
   /// other systems which remain constant as the resource is updated and is
   /// propagated from server to server.
   final List<Identifier>? identifier;
-
-  /// [instantiatesCanonical]
-  /// The URL pointing to a FHIR-defined protocol, guideline, order set or
-  /// other definition that is adhered to in whole or in part by this
-  /// Procedure.
-  final List<FhirCanonical>? instantiatesCanonical;
-
-  /// [instantiatesUri]
-  /// The URL pointing to an externally maintained protocol, guideline, order
-  /// set or other definition that is adhered to in whole or in part by this
-  /// Procedure.
-  final List<FhirUri>? instantiatesUri;
 
   /// [basedOn]
   /// A reference to a resource that contains details of the request for this
@@ -488,10 +474,18 @@ class Procedure extends DomainResource {
   /// locations are allowed - e.g. multiple punch biopsies of a lesion.
   final List<CodeableConcept>? bodySite;
 
+  /// [bodyStructure]
+  /// Indicates the body structure on the subject's body where the procedure
+  /// was performed.
+  final List<Reference>? bodyStructure;
+
   /// [outcome]
-  /// The outcome of the procedure - did it resolve the reasons for the
-  /// procedure being performed?
-  final CodeableConcept? outcome;
+  /// The short term outcome of the procedure assessed during the procedure,
+  /// at the conclusion of the procedure, during the immediate
+  /// post-performance period, or at discharge. The outcome is usually
+  /// expected to be within the encounter during which the procedure was
+  /// performed.
+  final List<CodeableReference>? outcome;
 
   /// [report]
   /// This could be a histology result, pathology report, surgical report,
@@ -509,7 +503,8 @@ class Procedure extends DomainResource {
   /// If the procedure required specific follow up - e.g. removal of sutures.
   /// The follow up may be represented as a simple note or could potentially
   /// be more complex, in which case the CarePlan resource can be used.
-  final List<CodeableConcept>? followUp;
+  /// CarePlan can reference the Procedure via CarePlan.addresses.
+  final List<CodeableReference>? followUp;
 
   /// [note]
   /// Any other notes and comments about the procedure.
@@ -634,14 +629,6 @@ class Procedure extends DomainResource {
       identifier,
     );
     addField(
-      'instantiatesCanonical',
-      instantiatesCanonical,
-    );
-    addField(
-      'instantiatesUri',
-      instantiatesUri,
-    );
-    addField(
       'basedOn',
       basedOn,
     );
@@ -718,6 +705,10 @@ class Procedure extends DomainResource {
       bodySite,
     );
     addField(
+      'bodyStructure',
+      bodyStructure,
+    );
+    addField(
       'outcome',
       outcome,
     );
@@ -765,8 +756,6 @@ class Procedure extends DomainResource {
       'extension',
       'modifierExtension',
       'identifier',
-      'instantiatesCanonical',
-      'instantiatesUri',
       'basedOn',
       'partOf',
       'status',
@@ -784,6 +773,7 @@ class Procedure extends DomainResource {
       'location',
       'reason',
       'bodySite',
+      'bodyStructure',
       'outcome',
       'report',
       'complication',
@@ -839,14 +829,6 @@ class Procedure extends DomainResource {
       case 'identifier':
         if (identifier != null) {
           fields.addAll(identifier!);
-        }
-      case 'instantiatesCanonical':
-        if (instantiatesCanonical != null) {
-          fields.addAll(instantiatesCanonical!);
-        }
-      case 'instantiatesUri':
-        if (instantiatesUri != null) {
-          fields.addAll(instantiatesUri!);
         }
       case 'basedOn':
         if (basedOn != null) {
@@ -944,9 +926,13 @@ class Procedure extends DomainResource {
         if (bodySite != null) {
           fields.addAll(bodySite!);
         }
+      case 'bodyStructure':
+        if (bodyStructure != null) {
+          fields.addAll(bodyStructure!);
+        }
       case 'outcome':
         if (outcome != null) {
-          fields.add(outcome!);
+          fields.addAll(outcome!);
         }
       case 'report':
         if (report != null) {
@@ -1071,18 +1057,6 @@ class Procedure extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<FhirCanonical>(
-      instantiatesCanonical,
-      o.instantiatesCanonical,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirUri>(
-      instantiatesUri,
-      o.instantiatesUri,
-    )) {
-      return false;
-    }
     if (!listEquals<Reference>(
       basedOn,
       o.basedOn,
@@ -1185,7 +1159,13 @@ class Procedure extends DomainResource {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<Reference>(
+      bodyStructure,
+      o.bodyStructure,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableReference>(
       outcome,
       o.outcome,
     )) {
@@ -1203,7 +1183,7 @@ class Procedure extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!listEquals<CodeableReference>(
       followUp,
       o.followUp,
     )) {

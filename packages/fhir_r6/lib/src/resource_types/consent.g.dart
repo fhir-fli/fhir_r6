@@ -34,6 +34,7 @@ abstract class $ConsentCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<Reference>? policyText,
     List<ConsentVerification>? verification,
     ConsentProvisionType? decision,
+    List<Reference>? provisionReference,
     List<ConsentProvision>? provision,
     bool? disallowExtensions,
   });
@@ -72,6 +73,7 @@ class _$ConsentCopyWithImpl<T> implements $ConsentCopyWith<T> {
     Object? policyText = fhirSentinel,
     Object? verification = fhirSentinel,
     Object? decision = fhirSentinel,
+    Object? provisionReference = fhirSentinel,
     Object? provision = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -143,6 +145,9 @@ class _$ConsentCopyWithImpl<T> implements $ConsentCopyWith<T> {
         decision: identical(decision, fhirSentinel)
             ? _value.decision
             : decision as ConsentProvisionType?,
+        provisionReference: identical(provisionReference, fhirSentinel)
+            ? _value.provisionReference
+            : provisionReference as List<Reference>?,
         provision: identical(provision, fhirSentinel)
             ? _value.provision
             : provision as List<ConsentProvision>?,
@@ -166,7 +171,7 @@ abstract class $ConsentPolicyBasisCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     Reference? reference,
-    FhirUrl? url,
+    FhirUri? uri,
     bool? disallowExtensions,
   });
 }
@@ -184,7 +189,7 @@ class _$ConsentPolicyBasisCopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? reference = fhirSentinel,
-    Object? url = fhirSentinel,
+    Object? uri = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -199,7 +204,7 @@ class _$ConsentPolicyBasisCopyWithImpl<T>
         reference: identical(reference, fhirSentinel)
             ? _value.reference
             : reference as Reference?,
-        url: identical(url, fhirSentinel) ? _value.url : url as FhirUrl?,
+        uri: identical(uri, fhirSentinel) ? _value.uri : uri as FhirUri?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

@@ -39,10 +39,10 @@ class MedicationAdministrationBuilder extends DomainResourceBuilder {
     this.subject,
     this.encounter,
     this.supportingInformation,
-    OccurenceXMedicationAdministrationBuilder? occurenceX,
-    FhirDateTimeBuilder? occurenceDateTime,
-    PeriodBuilder? occurencePeriod,
-    TimingBuilder? occurenceTiming,
+    OccurrenceXMedicationAdministrationBuilder? occurrenceX,
+    FhirDateTimeBuilder? occurrenceDateTime,
+    PeriodBuilder? occurrencePeriod,
+    TimingBuilder? occurrenceTiming,
     this.recorded,
     this.isSubPotent,
     this.subPotentReason,
@@ -53,10 +53,10 @@ class MedicationAdministrationBuilder extends DomainResourceBuilder {
     this.note,
     this.dosage,
     this.eventHistory,
-  })  : occurenceX = occurenceX ??
-            occurenceDateTime ??
-            occurencePeriod ??
-            occurenceTiming,
+  })  : occurrenceX = occurrenceX ??
+            occurrenceDateTime ??
+            occurrencePeriod ??
+            occurrenceTiming,
         super(
           objectPath: 'MedicationAdministration',
           resourceType: R6ResourceType.MedicationAdministration,
@@ -69,7 +69,7 @@ class MedicationAdministrationBuilder extends DomainResourceBuilder {
         status: MedicationAdministrationStatusCodesBuilder.values.first,
         medication: CodeableReferenceBuilder.empty(),
         subject: ReferenceBuilder.empty(),
-        occurenceX: FhirDateTimeBuilder.empty(),
+        occurrenceX: FhirDateTimeBuilder.empty(),
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -223,13 +223,13 @@ class MedicationAdministrationBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      occurenceX: JsonParser.parsePolymorphic<
-          OccurenceXMedicationAdministrationBuilder>(
+      occurrenceX: JsonParser.parsePolymorphic<
+          OccurrenceXMedicationAdministrationBuilder>(
         json,
         {
-          'occurenceDateTime': FhirDateTimeBuilder.fromJson,
-          'occurencePeriod': PeriodBuilder.fromJson,
-          'occurenceTiming': TimingBuilder.fromJson,
+          'occurrenceDateTime': FhirDateTimeBuilder.fromJson,
+          'occurrencePeriod': PeriodBuilder.fromJson,
+          'occurrenceTiming': TimingBuilder.fromJson,
         },
         objectPath,
       ),
@@ -422,22 +422,22 @@ class MedicationAdministrationBuilder extends DomainResourceBuilder {
   /// be included using this attribute.
   List<ReferenceBuilder>? supportingInformation;
 
-  /// [occurenceX]
+  /// [occurrenceX]
   /// A specific date/time or interval of time during which the
   /// administration took place (or did not take place). For many
   /// administrations, such as swallowing a tablet the use of dateTime is
   /// more appropriate.
-  OccurenceXMedicationAdministrationBuilder? occurenceX;
+  OccurrenceXMedicationAdministrationBuilder? occurrenceX;
 
-  /// Getter for [occurenceDateTime] as a FhirDateTimeBuilder
-  FhirDateTimeBuilder? get occurenceDateTime =>
-      occurenceX?.isAs<FhirDateTimeBuilder>();
+  /// Getter for [occurrenceDateTime] as a FhirDateTimeBuilder
+  FhirDateTimeBuilder? get occurrenceDateTime =>
+      occurrenceX?.isAs<FhirDateTimeBuilder>();
 
-  /// Getter for [occurencePeriod] as a PeriodBuilder
-  PeriodBuilder? get occurencePeriod => occurenceX?.isAs<PeriodBuilder>();
+  /// Getter for [occurrencePeriod] as a PeriodBuilder
+  PeriodBuilder? get occurrencePeriod => occurrenceX?.isAs<PeriodBuilder>();
 
-  /// Getter for [occurenceTiming] as a TimingBuilder
-  TimingBuilder? get occurenceTiming => occurenceX?.isAs<TimingBuilder>();
+  /// Getter for [occurrenceTiming] as a TimingBuilder
+  TimingBuilder? get occurrenceTiming => occurrenceX?.isAs<TimingBuilder>();
 
   /// [recorded]
   /// The date the occurrence of the MedicationAdministration was first
@@ -547,9 +547,9 @@ class MedicationAdministrationBuilder extends DomainResourceBuilder {
     addField('subject', subject);
     addField('encounter', encounter);
     addField('supportingInformation', supportingInformation);
-    if (occurenceX != null) {
-      final fhirType = occurenceX!.fhirType;
-      addField('occurence${fhirType.capitalizeFirstLetter()}', occurenceX);
+    if (occurrenceX != null) {
+      final fhirType = occurrenceX!.fhirType;
+      addField('occurrence${fhirType.capitalizeFirstLetter()}', occurrenceX);
     }
 
     addField('recorded', recorded);
@@ -587,7 +587,7 @@ class MedicationAdministrationBuilder extends DomainResourceBuilder {
       'subject',
       'encounter',
       'supportingInformation',
-      'occurenceX',
+      'occurrenceX',
       'recorded',
       'isSubPotent',
       'subPotentReason',
@@ -682,25 +682,25 @@ class MedicationAdministrationBuilder extends DomainResourceBuilder {
         if (supportingInformation != null) {
           fields.addAll(supportingInformation!);
         }
-      case 'occurence':
-        if (occurenceX != null) {
-          fields.add(occurenceX!);
+      case 'occurrence':
+        if (occurrenceX != null) {
+          fields.add(occurrenceX!);
         }
-      case 'occurenceX':
-        if (occurenceX != null) {
-          fields.add(occurenceX!);
+      case 'occurrenceX':
+        if (occurrenceX != null) {
+          fields.add(occurrenceX!);
         }
-      case 'occurenceDateTime':
-        if (occurenceX is FhirDateTimeBuilder) {
-          fields.add(occurenceX!);
+      case 'occurrenceDateTime':
+        if (occurrenceX is FhirDateTimeBuilder) {
+          fields.add(occurrenceX!);
         }
-      case 'occurencePeriod':
-        if (occurenceX is PeriodBuilder) {
-          fields.add(occurenceX!);
+      case 'occurrencePeriod':
+        if (occurrenceX is PeriodBuilder) {
+          fields.add(occurrenceX!);
         }
-      case 'occurenceTiming':
-        if (occurenceX is TimingBuilder) {
-          fields.add(occurenceX!);
+      case 'occurrenceTiming':
+        if (occurrenceX is TimingBuilder) {
+          fields.add(occurrenceX!);
         }
       case 'recorded':
         if (recorded != null) {
@@ -1042,50 +1042,50 @@ class MedicationAdministrationBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'occurence':
-      case 'occurenceX':
+      case 'occurrence':
+      case 'occurrenceX':
         {
-          if (child is OccurenceXMedicationAdministrationBuilder) {
-            occurenceX = child;
+          if (child is OccurrenceXMedicationAdministrationBuilder) {
+            occurrenceX = child;
             return;
           } else {
             if (child is FhirDateTimeBuilder) {
-              occurenceX = child;
+              occurrenceX = child;
               return;
             }
             if (child is PeriodBuilder) {
-              occurenceX = child;
+              occurrenceX = child;
               return;
             }
             if (child is TimingBuilder) {
-              occurenceX = child;
+              occurrenceX = child;
               return;
             }
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'occurenceDateTime':
+      case 'occurrenceDateTime':
         {
           if (child is FhirDateTimeBuilder) {
-            occurenceX = child;
+            occurrenceX = child;
             return;
           } else {
             throw Exception('Invalid child type for $childName');
           }
         }
-      case 'occurencePeriod':
+      case 'occurrencePeriod':
         {
           if (child is PeriodBuilder) {
-            occurenceX = child;
+            occurrenceX = child;
             return;
           } else {
             throw Exception('Invalid child type for $childName');
           }
         }
-      case 'occurenceTiming':
+      case 'occurrenceTiming':
         {
           if (child is TimingBuilder) {
-            occurenceX = child;
+            occurrenceX = child;
             return;
           } else {
             throw Exception('Invalid child type for $childName');
@@ -1289,18 +1289,18 @@ class MedicationAdministrationBuilder extends DomainResourceBuilder {
         return ['ReferenceBuilder'];
       case 'supportingInformation':
         return ['ReferenceBuilder'];
-      case 'occurence':
-      case 'occurenceX':
+      case 'occurrence':
+      case 'occurrenceX':
         return [
           'FhirDateTimeBuilder',
           'PeriodBuilder',
           'TimingBuilder',
         ];
-      case 'occurenceDateTime':
+      case 'occurrenceDateTime':
         return ['FhirDateTimeBuilder'];
-      case 'occurencePeriod':
+      case 'occurrencePeriod':
         return ['PeriodBuilder'];
-      case 'occurenceTiming':
+      case 'occurrenceTiming':
         return ['TimingBuilder'];
       case 'recorded':
         return ['FhirDateTimeBuilder'];
@@ -1422,21 +1422,21 @@ class MedicationAdministrationBuilder extends DomainResourceBuilder {
           supportingInformation = <ReferenceBuilder>[];
           return;
         }
-      case 'occurence':
-      case 'occurenceX':
-      case 'occurenceDateTime':
+      case 'occurrence':
+      case 'occurrenceX':
+      case 'occurrenceDateTime':
         {
-          occurenceX = FhirDateTimeBuilder.empty();
+          occurrenceX = FhirDateTimeBuilder.empty();
           return;
         }
-      case 'occurencePeriod':
+      case 'occurrencePeriod':
         {
-          occurenceX = PeriodBuilder.empty();
+          occurrenceX = PeriodBuilder.empty();
           return;
         }
-      case 'occurenceTiming':
+      case 'occurrenceTiming':
         {
-          occurenceX = TimingBuilder.empty();
+          occurrenceX = TimingBuilder.empty();
           return;
         }
       case 'recorded':
@@ -1516,7 +1516,7 @@ class MedicationAdministrationBuilder extends DomainResourceBuilder {
     ReferenceBuilder? subject,
     ReferenceBuilder? encounter,
     List<ReferenceBuilder>? supportingInformation,
-    OccurenceXMedicationAdministrationBuilder? occurenceX,
+    OccurrenceXMedicationAdministrationBuilder? occurrenceX,
     FhirDateTimeBuilder? recorded,
     FhirBooleanBuilder? isSubPotent,
     List<CodeableConceptBuilder>? subPotentReason,
@@ -1527,9 +1527,9 @@ class MedicationAdministrationBuilder extends DomainResourceBuilder {
     List<AnnotationBuilder>? note,
     MedicationAdministrationDosageBuilder? dosage,
     List<ReferenceBuilder>? eventHistory,
-    FhirDateTimeBuilder? occurenceDateTime,
-    PeriodBuilder? occurencePeriod,
-    TimingBuilder? occurenceTiming,
+    FhirDateTimeBuilder? occurrenceDateTime,
+    PeriodBuilder? occurrencePeriod,
+    TimingBuilder? occurrenceTiming,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -1556,11 +1556,11 @@ class MedicationAdministrationBuilder extends DomainResourceBuilder {
       encounter: encounter ?? this.encounter,
       supportingInformation:
           supportingInformation ?? this.supportingInformation,
-      occurenceX: occurenceX ??
-          occurenceDateTime ??
-          occurencePeriod ??
-          occurenceTiming ??
-          this.occurenceX,
+      occurrenceX: occurrenceX ??
+          occurrenceDateTime ??
+          occurrencePeriod ??
+          occurrenceTiming ??
+          this.occurrenceX,
       recorded: recorded ?? this.recorded,
       isSubPotent: isSubPotent ?? this.isSubPotent,
       subPotentReason: subPotentReason ?? this.subPotentReason,
@@ -1706,8 +1706,8 @@ class MedicationAdministrationBuilder extends DomainResourceBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      occurenceX,
-      o.occurenceX,
+      occurrenceX,
+      o.occurrenceX,
     )) {
       return false;
     }

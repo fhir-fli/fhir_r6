@@ -3,8 +3,10 @@ import 'package:fhir_r6/fhir_r6.dart'
     show
         NutritionIntake,
         NutritionIntakeConsumedItem,
-        NutritionIntakeIngredientLabel,
+        NutritionIntakeNotConsumedItem,
+        NutritionIntakeNutritionItem,
         NutritionIntakePerformer,
+        NutritionIntakeTotalIntake,
         R6ResourceType,
         yamlMapToJson,
         yamlToJson;
@@ -12,16 +14,18 @@ import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [NutritionIntakeBuilder]
-/// A record of food or fluid that is being consumed by a patient. A
-/// NutritionIntake may indicate that the patient may be consuming the food
-/// or fluid now or has consumed the food or fluid in the past. The source
-/// of this information can be the patient, significant other (such as a
-/// family member or spouse), or a clinician. A common scenario where this
-/// information is captured is during the history taking process during a
-/// patient visit or stay or through an app that tracks food or fluids
-/// consumed. The consumption information may come from sources such as the
-/// patient's memory, from a nutrition label, or from a clinician
-/// documenting observed intake.
+/// A record of intake by a patient. A NutritionIntake may indicate that
+/// the patient may be consuming the food (i.e., solid and/or liquid),
+/// breastmilk, infant formula, supplements, enteral formula now or has
+/// consumed it in the past. The source of this information can be the
+/// patient, significant other (such as a family member or spouse), or a
+/// clinician. A common scenario where this information is captured is
+/// during the history taking process during a patient visit or stay or
+/// through an app that tracks food (i.e., solid and/or liquid),
+/// breastmilk, infant formula, supplements, enteral formula consumed. The
+/// consumption information may come from sources such as the patient's
+/// memory, from a nutrition label, or from a clinician documenting
+/// observed intake.
 class NutritionIntakeBuilder extends DomainResourceBuilder {
   /// Primary constructor for
   /// [NutritionIntakeBuilder]
@@ -36,8 +40,6 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
     super.extension_,
     super.modifierExtension,
     this.identifier,
-    this.instantiatesCanonical,
-    this.instantiatesUri,
     this.basedOn,
     this.partOf,
     this.status,
@@ -52,8 +54,7 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
     ReportedXNutritionIntakeBuilder? reportedX,
     FhirBooleanBuilder? reportedBoolean,
     ReferenceBuilder? reportedReference,
-    this.consumedItem,
-    this.ingredientLabel,
+    this.nutritionItem,
     this.performer,
     this.location,
     this.derivedFrom,
@@ -71,7 +72,6 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
   factory NutritionIntakeBuilder.empty() => NutritionIntakeBuilder(
         status: EventStatusBuilder.values.first,
         subject: ReferenceBuilder.empty(),
-        consumedItem: <NutritionIntakeConsumedItemBuilder>[],
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -150,19 +150,6 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      instantiatesCanonical:
-          JsonParser.parsePrimitiveList<FhirCanonicalBuilder>(
-        json,
-        'instantiatesCanonical',
-        FhirCanonicalBuilder.fromJson,
-        '$objectPath.instantiatesCanonical',
-      ),
-      instantiatesUri: JsonParser.parsePrimitiveList<FhirUriBuilder>(
-        json,
-        'instantiatesUri',
-        FhirUriBuilder.fromJson,
-        '$objectPath.instantiatesUri',
-      ),
       basedOn: (json['basedOn'] as List<dynamic>?)
           ?.map<ReferenceBuilder>(
             (v) => ReferenceBuilder.fromJson(
@@ -240,22 +227,12 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
         },
         objectPath,
       ),
-      consumedItem: (json['consumedItem'] as List<dynamic>?)
-          ?.map<NutritionIntakeConsumedItemBuilder>(
-            (v) => NutritionIntakeConsumedItemBuilder.fromJson(
+      nutritionItem: (json['nutritionItem'] as List<dynamic>?)
+          ?.map<NutritionIntakeNutritionItemBuilder>(
+            (v) => NutritionIntakeNutritionItemBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.consumedItem',
-              },
-            ),
-          )
-          .toList(),
-      ingredientLabel: (json['ingredientLabel'] as List<dynamic>?)
-          ?.map<NutritionIntakeIngredientLabelBuilder>(
-            (v) => NutritionIntakeIngredientLabelBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.ingredientLabel',
+                'objectPath': '$objectPath.nutritionItem',
               },
             ),
           )
@@ -360,14 +337,6 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
   /// server to server.
   List<IdentifierBuilder>? identifier;
 
-  /// [instantiatesCanonical]
-  /// Instantiates FHIR protocol or definition.
-  List<FhirCanonicalBuilder>? instantiatesCanonical;
-
-  /// [instantiatesUri]
-  /// Instantiates external protocol or definition.
-  List<FhirUriBuilder>? instantiatesUri;
-
   /// [basedOn]
   /// A plan, proposal or order that is fulfilled in whole or in part by this
   /// event.
@@ -392,7 +361,8 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
   CodeableConceptBuilder? code;
 
   /// [subject]
-  /// The person, animal or group who is/was consuming the food or fluid.
+  /// The person or group who is/was consuming the food (i.e. solid and/or
+  /// liquid).
   ReferenceBuilder? subject;
 
   /// [encounter]
@@ -401,7 +371,7 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
 
   /// [occurrenceX]
   /// The interval of time during which it is being asserted that the patient
-  /// is/was consuming the food or fluid.
+  /// is/was consuming the food (i.e. solid and/or liquid).
   OccurrenceXNutritionIntakeBuilder? occurrenceX;
 
   /// Getter for [occurrenceDateTime] as a FhirDateTimeBuilder
@@ -417,9 +387,10 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
   FhirDateTimeBuilder? recorded;
 
   /// [reportedX]
-  /// The person or organization that provided the information about the
-  /// consumption of this food or fluid. Note: Use derivedFrom when a
-  /// NutritionIntake is derived from other resources.
+  /// Indicates if this record was captured as a secondary 'reported' record
+  /// rather than as an original primary source-of-truth. It may also
+  /// indicate the source that provided the information about the
+  /// consumption.
   ReportedXNutritionIntakeBuilder? reportedX;
 
   /// Getter for [reportedBoolean] as a FhirBooleanBuilder
@@ -430,16 +401,12 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
   ReferenceBuilder? get reportedReference =>
       reportedX?.isAs<ReferenceBuilder>();
 
-  /// [consumedItem]
-  /// What food or fluid product or item was consumed.
-  List<NutritionIntakeConsumedItemBuilder>? consumedItem;
-
-  /// [ingredientLabel]
-  /// Total nutrient amounts for the whole meal, product, serving, etc.
-  List<NutritionIntakeIngredientLabelBuilder>? ingredientLabel;
+  /// [nutritionItem]
+  /// The nutrition product intended for consumption and/or administration.
+  List<NutritionIntakeNutritionItemBuilder>? nutritionItem;
 
   /// [performer]
-  /// Who performed the intake and how they were involved.
+  /// Who or what performed the intake and how they were involved.
   List<NutritionIntakePerformerBuilder>? performer;
 
   /// [location]
@@ -453,8 +420,8 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
   List<ReferenceBuilder>? derivedFrom;
 
   /// [reason]
-  /// A reason, Condition or observation for why the food or fluid is /was
-  /// consumed.
+  /// A reason, Condition or observation for why the food (i.e. solid and/or
+  /// liquid) is /was consumed.
   List<CodeableReferenceBuilder>? reason;
 
   /// [note]
@@ -508,8 +475,6 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('identifier', identifier);
-    addField('instantiatesCanonical', instantiatesCanonical);
-    addField('instantiatesUri', instantiatesUri);
     addField('basedOn', basedOn);
     addField('partOf', partOf);
     addField('status', status);
@@ -528,8 +493,7 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
       addField('reported${fhirType.capitalizeFirstLetter()}', reportedX);
     }
 
-    addField('consumedItem', consumedItem);
-    addField('ingredientLabel', ingredientLabel);
+    addField('nutritionItem', nutritionItem);
     addField('performer', performer);
     addField('location', location);
     addField('derivedFrom', derivedFrom);
@@ -551,8 +515,6 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
       'extension',
       'modifierExtension',
       'identifier',
-      'instantiatesCanonical',
-      'instantiatesUri',
       'basedOn',
       'partOf',
       'status',
@@ -563,8 +525,7 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
       'occurrenceX',
       'recorded',
       'reportedX',
-      'consumedItem',
-      'ingredientLabel',
+      'nutritionItem',
       'performer',
       'location',
       'derivedFrom',
@@ -617,14 +578,6 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
       case 'identifier':
         if (identifier != null) {
           fields.addAll(identifier!);
-        }
-      case 'instantiatesCanonical':
-        if (instantiatesCanonical != null) {
-          fields.addAll(instantiatesCanonical!);
-        }
-      case 'instantiatesUri':
-        if (instantiatesUri != null) {
-          fields.addAll(instantiatesUri!);
         }
       case 'basedOn':
         if (basedOn != null) {
@@ -690,13 +643,9 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
         if (reportedX is ReferenceBuilder) {
           fields.add(reportedX!);
         }
-      case 'consumedItem':
-        if (consumedItem != null) {
-          fields.addAll(consumedItem!);
-        }
-      case 'ingredientLabel':
-        if (ingredientLabel != null) {
-          fields.addAll(ingredientLabel!);
+      case 'nutritionItem':
+        if (nutritionItem != null) {
+          fields.addAll(nutritionItem!);
         }
       case 'performer':
         if (performer != null) {
@@ -890,104 +839,6 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'instantiatesCanonical':
-        {
-          if (child is List<FhirCanonicalBuilder>) {
-            // Replace or create new list
-            instantiatesCanonical = child;
-            return;
-          } else if (child is FhirCanonicalBuilder) {
-            // Add single element to existing list or create new list
-            instantiatesCanonical = [
-              ...(instantiatesCanonical ?? []),
-              child,
-            ];
-            return;
-          } else if (child is List<PrimitiveTypeBuilder>) {
-            // Try to convert list of primitive types
-            final convertedList = <FhirCanonicalBuilder>[];
-            for (final element in child) {
-              try {
-                final stringValue = element.toString();
-                final converted = FhirCanonicalBuilder.tryParse(stringValue);
-                if (converted != null) {
-                  convertedList.add(converted);
-                }
-              } catch (e) {
-                // Continue if conversion fails
-              }
-            }
-            if (convertedList.isNotEmpty) {
-              instantiatesCanonical = convertedList;
-              return;
-            }
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert a single primitive
-            try {
-              final stringValue = child.toString();
-              final converted = FhirCanonicalBuilder.tryParse(stringValue);
-              if (converted != null) {
-                instantiatesCanonical = [
-                  ...(instantiatesCanonical ?? []),
-                  converted,
-                ];
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'instantiatesUri':
-        {
-          if (child is List<FhirUriBuilder>) {
-            // Replace or create new list
-            instantiatesUri = child;
-            return;
-          } else if (child is FhirUriBuilder) {
-            // Add single element to existing list or create new list
-            instantiatesUri = [
-              ...(instantiatesUri ?? []),
-              child,
-            ];
-            return;
-          } else if (child is List<PrimitiveTypeBuilder>) {
-            // Try to convert list of primitive types
-            final convertedList = <FhirUriBuilder>[];
-            for (final element in child) {
-              try {
-                final stringValue = element.toString();
-                final converted = FhirUriBuilder.tryParse(stringValue);
-                if (converted != null) {
-                  convertedList.add(converted);
-                }
-              } catch (e) {
-                // Continue if conversion fails
-              }
-            }
-            if (convertedList.isNotEmpty) {
-              instantiatesUri = convertedList;
-              return;
-            }
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert a single primitive
-            try {
-              final stringValue = child.toString();
-              final converted = FhirUriBuilder.tryParse(stringValue);
-              if (converted != null) {
-                instantiatesUri = [
-                  ...(instantiatesUri ?? []),
-                  converted,
-                ];
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
       case 'basedOn':
         {
           if (child is List<ReferenceBuilder>) {
@@ -1175,32 +1026,16 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
             throw Exception('Invalid child type for $childName');
           }
         }
-      case 'consumedItem':
+      case 'nutritionItem':
         {
-          if (child is List<NutritionIntakeConsumedItemBuilder>) {
+          if (child is List<NutritionIntakeNutritionItemBuilder>) {
             // Replace or create new list
-            consumedItem = child;
+            nutritionItem = child;
             return;
-          } else if (child is NutritionIntakeConsumedItemBuilder) {
+          } else if (child is NutritionIntakeNutritionItemBuilder) {
             // Add single element to existing list or create new list
-            consumedItem = [
-              ...(consumedItem ?? []),
-              child,
-            ];
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'ingredientLabel':
-        {
-          if (child is List<NutritionIntakeIngredientLabelBuilder>) {
-            // Replace or create new list
-            ingredientLabel = child;
-            return;
-          } else if (child is NutritionIntakeIngredientLabelBuilder) {
-            // Add single element to existing list or create new list
-            ingredientLabel = [
-              ...(ingredientLabel ?? []),
+            nutritionItem = [
+              ...(nutritionItem ?? []),
               child,
             ];
             return;
@@ -1307,10 +1142,6 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
         return ['FhirExtensionBuilder'];
       case 'identifier':
         return ['IdentifierBuilder'];
-      case 'instantiatesCanonical':
-        return ['FhirCanonicalBuilder'];
-      case 'instantiatesUri':
-        return ['FhirUriBuilder'];
       case 'basedOn':
         return ['ReferenceBuilder'];
       case 'partOf':
@@ -1347,10 +1178,8 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
         return ['FhirBooleanBuilder'];
       case 'reportedReference':
         return ['ReferenceBuilder'];
-      case 'consumedItem':
-        return ['NutritionIntakeConsumedItemBuilder'];
-      case 'ingredientLabel':
-        return ['NutritionIntakeIngredientLabelBuilder'];
+      case 'nutritionItem':
+        return ['NutritionIntakeNutritionItemBuilder'];
       case 'performer':
         return ['NutritionIntakePerformerBuilder'];
       case 'location':
@@ -1414,16 +1243,6 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
       case 'identifier':
         {
           identifier = <IdentifierBuilder>[];
-          return;
-        }
-      case 'instantiatesCanonical':
-        {
-          instantiatesCanonical = <FhirCanonicalBuilder>[];
-          return;
-        }
-      case 'instantiatesUri':
-        {
-          instantiatesUri = <FhirUriBuilder>[];
           return;
         }
       case 'basedOn':
@@ -1490,14 +1309,9 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
           reportedX = ReferenceBuilder.empty();
           return;
         }
-      case 'consumedItem':
+      case 'nutritionItem':
         {
-          consumedItem = <NutritionIntakeConsumedItemBuilder>[];
-          return;
-        }
-      case 'ingredientLabel':
-        {
-          ingredientLabel = <NutritionIntakeIngredientLabelBuilder>[];
+          nutritionItem = <NutritionIntakeNutritionItemBuilder>[];
           return;
         }
       case 'performer':
@@ -1543,8 +1357,6 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     List<IdentifierBuilder>? identifier,
-    List<FhirCanonicalBuilder>? instantiatesCanonical,
-    List<FhirUriBuilder>? instantiatesUri,
     List<ReferenceBuilder>? basedOn,
     List<ReferenceBuilder>? partOf,
     EventStatusBuilder? status,
@@ -1555,8 +1367,7 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
     OccurrenceXNutritionIntakeBuilder? occurrenceX,
     FhirDateTimeBuilder? recorded,
     ReportedXNutritionIntakeBuilder? reportedX,
-    List<NutritionIntakeConsumedItemBuilder>? consumedItem,
-    List<NutritionIntakeIngredientLabelBuilder>? ingredientLabel,
+    List<NutritionIntakeNutritionItemBuilder>? nutritionItem,
     List<NutritionIntakePerformerBuilder>? performer,
     ReferenceBuilder? location,
     List<ReferenceBuilder>? derivedFrom,
@@ -1582,9 +1393,6 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       identifier: identifier ?? this.identifier,
-      instantiatesCanonical:
-          instantiatesCanonical ?? this.instantiatesCanonical,
-      instantiatesUri: instantiatesUri ?? this.instantiatesUri,
       basedOn: basedOn ?? this.basedOn,
       partOf: partOf ?? this.partOf,
       status: status ?? this.status,
@@ -1599,8 +1407,7 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
       recorded: recorded ?? this.recorded,
       reportedX:
           reportedX ?? reportedBoolean ?? reportedReference ?? this.reportedX,
-      consumedItem: consumedItem ?? this.consumedItem,
-      ingredientLabel: ingredientLabel ?? this.ingredientLabel,
+      nutritionItem: nutritionItem ?? this.nutritionItem,
       performer: performer ?? this.performer,
       location: location ?? this.location,
       derivedFrom: derivedFrom ?? this.derivedFrom,
@@ -1686,18 +1493,6 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<FhirCanonicalBuilder>(
-      instantiatesCanonical,
-      o.instantiatesCanonical,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirUriBuilder>(
-      instantiatesUri,
-      o.instantiatesUri,
-    )) {
-      return false;
-    }
     if (!listEquals<ReferenceBuilder>(
       basedOn,
       o.basedOn,
@@ -1758,15 +1553,9 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<NutritionIntakeConsumedItemBuilder>(
-      consumedItem,
-      o.consumedItem,
-    )) {
-      return false;
-    }
-    if (!listEquals<NutritionIntakeIngredientLabelBuilder>(
-      ingredientLabel,
-      o.ingredientLabel,
+    if (!listEquals<NutritionIntakeNutritionItemBuilder>(
+      nutritionItem,
+      o.nutritionItem,
     )) {
       return false;
     }
@@ -1804,42 +1593,36 @@ class NutritionIntakeBuilder extends DomainResourceBuilder {
   }
 }
 
-/// [NutritionIntakeConsumedItemBuilder]
-/// What food or fluid product or item was consumed.
-class NutritionIntakeConsumedItemBuilder extends BackboneElementBuilder {
+/// [NutritionIntakeNutritionItemBuilder]
+/// The nutrition product intended for consumption and/or administration.
+class NutritionIntakeNutritionItemBuilder extends BackboneElementBuilder {
   /// Primary constructor for
-  /// [NutritionIntakeConsumedItemBuilder]
+  /// [NutritionIntakeNutritionItemBuilder]
 
-  NutritionIntakeConsumedItemBuilder({
+  NutritionIntakeNutritionItemBuilder({
     super.id,
     super.extension_,
     super.modifierExtension,
     this.type,
     this.nutritionProduct,
-    this.schedule,
-    this.amount,
-    this.rate,
-    this.notConsumed,
-    this.notConsumedReason,
+    this.consumedItem,
+    this.notConsumedItem,
     super.disallowExtensions,
   }) : super(
-          objectPath: 'NutritionIntake.consumedItem',
+          objectPath: 'NutritionIntake.nutritionItem',
         );
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
-  factory NutritionIntakeConsumedItemBuilder.empty() =>
-      NutritionIntakeConsumedItemBuilder(
-        type: CodeableConceptBuilder.empty(),
-        nutritionProduct: CodeableReferenceBuilder.empty(),
-      );
+  factory NutritionIntakeNutritionItemBuilder.empty() =>
+      NutritionIntakeNutritionItemBuilder();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory NutritionIntakeConsumedItemBuilder.fromJson(
+  factory NutritionIntakeNutritionItemBuilder.fromJson(
     Map<String, dynamic> json,
   ) {
-    const objectPath = 'NutritionIntake.consumedItem';
-    return NutritionIntakeConsumedItemBuilder(
+    const objectPath = 'NutritionIntake.nutritionItem';
+    return NutritionIntakeNutritionItemBuilder(
       id: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'id',
@@ -1878,55 +1661,45 @@ class NutritionIntakeConsumedItemBuilder extends BackboneElementBuilder {
         CodeableReferenceBuilder.fromJson,
         '$objectPath.nutritionProduct',
       ),
-      schedule: JsonParser.parseObject<TimingBuilder>(
-        json,
-        'schedule',
-        TimingBuilder.fromJson,
-        '$objectPath.schedule',
-      ),
-      amount: JsonParser.parseObject<QuantityBuilder>(
-        json,
-        'amount',
-        QuantityBuilder.fromJson,
-        '$objectPath.amount',
-      ),
-      rate: JsonParser.parseObject<QuantityBuilder>(
-        json,
-        'rate',
-        QuantityBuilder.fromJson,
-        '$objectPath.rate',
-      ),
-      notConsumed: JsonParser.parsePrimitive<FhirBooleanBuilder>(
-        json,
-        'notConsumed',
-        FhirBooleanBuilder.fromJson,
-        '$objectPath.notConsumed',
-      ),
-      notConsumedReason: JsonParser.parseObject<CodeableConceptBuilder>(
-        json,
-        'notConsumedReason',
-        CodeableConceptBuilder.fromJson,
-        '$objectPath.notConsumedReason',
-      ),
+      consumedItem: (json['consumedItem'] as List<dynamic>?)
+          ?.map<NutritionIntakeConsumedItemBuilder>(
+            (v) => NutritionIntakeConsumedItemBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.consumedItem',
+              },
+            ),
+          )
+          .toList(),
+      notConsumedItem: (json['notConsumedItem'] as List<dynamic>?)
+          ?.map<NutritionIntakeNotConsumedItemBuilder>(
+            (v) => NutritionIntakeNotConsumedItemBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.notConsumedItem',
+              },
+            ),
+          )
+          .toList(),
     );
   }
 
-  /// Deserialize [NutritionIntakeConsumedItemBuilder]
+  /// Deserialize [NutritionIntakeNutritionItemBuilder]
   /// from a [String] or [YamlMap] object
-  factory NutritionIntakeConsumedItemBuilder.fromYaml(
+  factory NutritionIntakeNutritionItemBuilder.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return NutritionIntakeConsumedItemBuilder.fromJson(
+      return NutritionIntakeNutritionItemBuilder.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return NutritionIntakeConsumedItemBuilder.fromJson(
+      return NutritionIntakeNutritionItemBuilder.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'NutritionIntakeConsumedItemBuilder '
+        'NutritionIntakeNutritionItemBuilder '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -1934,16 +1707,16 @@ class NutritionIntakeConsumedItemBuilder extends BackboneElementBuilder {
   }
 
   /// Factory constructor for
-  /// [NutritionIntakeConsumedItemBuilder]
+  /// [NutritionIntakeNutritionItemBuilder]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory NutritionIntakeConsumedItemBuilder.fromJsonString(
+  factory NutritionIntakeNutritionItemBuilder.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return NutritionIntakeConsumedItemBuilder.fromJson(json);
+      return NutritionIntakeNutritionItemBuilder.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -1951,52 +1724,36 @@ class NutritionIntakeConsumedItemBuilder extends BackboneElementBuilder {
   }
 
   @override
-  String get fhirType => 'NutritionIntakeConsumedItem';
+  String get fhirType => 'NutritionIntakeNutritionItem';
 
   /// [type]
-  /// Indicates what a category of item that was consumed: e.g., food, fluid,
-  /// enteral, etc.
+  /// Indicates what a category of item that is intended to be consumed:
+  /// e.g., food (i.e. solid and/or liquid), breastmilk, infant formula,
+  /// supplements, enteral formula.
   CodeableConceptBuilder? type;
 
   /// [nutritionProduct]
-  /// Identifies the food or fluid product that was consumed. This is
-  /// potentially a link to a resource representing the details of the food
-  /// product (TBD) or a simple attribute carrying a code that identifies the
-  /// food from a known list of foods.
+  /// Identifies the food (i.e. solid and/or liquid) product that is to be
+  /// consumed. This is potentially a link to a resource representing the
+  /// details of the food product or a simple attribute carrying a code that
+  /// identifies the food from a known list of foods.
   CodeableReferenceBuilder? nutritionProduct;
 
-  /// [schedule]
-  /// Scheduled frequency of consumption.
-  TimingBuilder? schedule;
+  /// [consumedItem]
+  /// What nutrition item was consumed.
+  List<NutritionIntakeConsumedItemBuilder>? consumedItem;
 
-  /// [amount]
-  /// Quantity of the specified food.
-  QuantityBuilder? amount;
+  /// [notConsumedItem]
+  /// What nutrition item was not consumed.
+  List<NutritionIntakeNotConsumedItemBuilder>? notConsumedItem;
 
-  /// [rate]
-  /// Rate at which enteral feeding was administered.
-  QuantityBuilder? rate;
-
-  /// [notConsumed]
-  /// Indicator when a patient is in a setting where it is helpful to know if
-  /// food was not consumed, such as it was refused, held (as in tube
-  /// feedings), or otherwise not provided. If a consumption is being
-  /// recorded from an app, such as MyFitnessPal, this indicator will likely
-  /// not be used.
-  FhirBooleanBuilder? notConsumed;
-
-  /// [notConsumedReason]
-  /// Document the reason the food or fluid was not consumed, such as
-  /// refused, held, etc.
-  CodeableConceptBuilder? notConsumedReason;
-
-  /// Converts a [NutritionIntakeConsumedItemBuilder]
-  /// to [NutritionIntakeConsumedItem]
+  /// Converts a [NutritionIntakeNutritionItemBuilder]
+  /// to [NutritionIntakeNutritionItem]
   @override
-  NutritionIntakeConsumedItem build() =>
-      NutritionIntakeConsumedItem.fromJson(toJson());
+  NutritionIntakeNutritionItem build() =>
+      NutritionIntakeNutritionItem.fromJson(toJson());
 
-  /// Converts a [NutritionIntakeConsumedItemBuilder]
+  /// Converts a [NutritionIntakeNutritionItemBuilder]
   /// to a [Map<String, dynamic>]
   @override
   Map<String, dynamic> toJson() {
@@ -2032,11 +1789,8 @@ class NutritionIntakeConsumedItemBuilder extends BackboneElementBuilder {
     addField('modifierExtension', modifierExtension);
     addField('type', type);
     addField('nutritionProduct', nutritionProduct);
-    addField('schedule', schedule);
-    addField('amount', amount);
-    addField('rate', rate);
-    addField('notConsumed', notConsumed);
-    addField('notConsumedReason', notConsumedReason);
+    addField('consumedItem', consumedItem);
+    addField('notConsumedItem', notConsumedItem);
     return json;
   }
 
@@ -2049,11 +1803,8 @@ class NutritionIntakeConsumedItemBuilder extends BackboneElementBuilder {
       'modifierExtension',
       'type',
       'nutritionProduct',
-      'schedule',
-      'amount',
-      'rate',
-      'notConsumed',
-      'notConsumedReason',
+      'consumedItem',
+      'notConsumedItem',
     ];
   }
 
@@ -2086,25 +1837,13 @@ class NutritionIntakeConsumedItemBuilder extends BackboneElementBuilder {
         if (nutritionProduct != null) {
           fields.add(nutritionProduct!);
         }
-      case 'schedule':
-        if (schedule != null) {
-          fields.add(schedule!);
+      case 'consumedItem':
+        if (consumedItem != null) {
+          fields.addAll(consumedItem!);
         }
-      case 'amount':
-        if (amount != null) {
-          fields.add(amount!);
-        }
-      case 'rate':
-        if (rate != null) {
-          fields.add(rate!);
-        }
-      case 'notConsumed':
-        if (notConsumed != null) {
-          fields.add(notConsumed!);
-        }
-      case 'notConsumedReason':
-        if (notConsumedReason != null) {
-          fields.add(notConsumedReason!);
+      case 'notConsumedItem':
+        if (notConsumedItem != null) {
+          fields.addAll(notConsumedItem!);
         }
       default:
         if (checkValid) {
@@ -2203,54 +1942,34 @@ class NutritionIntakeConsumedItemBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'schedule':
+      case 'consumedItem':
         {
-          if (child is TimingBuilder) {
-            schedule = child;
+          if (child is List<NutritionIntakeConsumedItemBuilder>) {
+            // Replace or create new list
+            consumedItem = child;
+            return;
+          } else if (child is NutritionIntakeConsumedItemBuilder) {
+            // Add single element to existing list or create new list
+            consumedItem = [
+              ...(consumedItem ?? []),
+              child,
+            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'amount':
+      case 'notConsumedItem':
         {
-          if (child is QuantityBuilder) {
-            amount = child;
+          if (child is List<NutritionIntakeNotConsumedItemBuilder>) {
+            // Replace or create new list
+            notConsumedItem = child;
             return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'rate':
-        {
-          if (child is QuantityBuilder) {
-            rate = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'notConsumed':
-        {
-          if (child is FhirBooleanBuilder) {
-            notConsumed = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirBooleanBuilder.tryParse(stringValue);
-              if (converted != null) {
-                notConsumed = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'notConsumedReason':
-        {
-          if (child is CodeableConceptBuilder) {
-            notConsumedReason = child;
+          } else if (child is NutritionIntakeNotConsumedItemBuilder) {
+            // Add single element to existing list or create new list
+            notConsumedItem = [
+              ...(notConsumedItem ?? []),
+              child,
+            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -2275,22 +1994,16 @@ class NutritionIntakeConsumedItemBuilder extends BackboneElementBuilder {
         return ['CodeableConceptBuilder'];
       case 'nutritionProduct':
         return ['CodeableReferenceBuilder'];
-      case 'schedule':
-        return ['TimingBuilder'];
-      case 'amount':
-        return ['QuantityBuilder'];
-      case 'rate':
-        return ['QuantityBuilder'];
-      case 'notConsumed':
-        return ['FhirBooleanBuilder'];
-      case 'notConsumedReason':
-        return ['CodeableConceptBuilder'];
+      case 'consumedItem':
+        return ['NutritionIntakeConsumedItemBuilder'];
+      case 'notConsumedItem':
+        return ['NutritionIntakeNotConsumedItemBuilder'];
       default:
         return <String>[];
     }
   }
 
-  /// Creates a new [NutritionIntakeConsumedItemBuilder]
+  /// Creates a new [NutritionIntakeNutritionItemBuilder]
   ///  with a chosen field set to an empty object.
   @override
   void createProperty(String propertyName) {
@@ -2320,6 +2033,596 @@ class NutritionIntakeConsumedItemBuilder extends BackboneElementBuilder {
           nutritionProduct = CodeableReferenceBuilder.empty();
           return;
         }
+      case 'consumedItem':
+        {
+          consumedItem = <NutritionIntakeConsumedItemBuilder>[];
+          return;
+        }
+      case 'notConsumedItem':
+        {
+          notConsumedItem = <NutritionIntakeNotConsumedItemBuilder>[];
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  NutritionIntakeNutritionItemBuilder clone() => throw UnimplementedError();
+  @override
+  NutritionIntakeNutritionItemBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    CodeableConceptBuilder? type,
+    CodeableReferenceBuilder? nutritionProduct,
+    List<NutritionIntakeConsumedItemBuilder>? consumedItem,
+    List<NutritionIntakeNotConsumedItemBuilder>? notConsumedItem,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = NutritionIntakeNutritionItemBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      type: type ?? this.type,
+      nutritionProduct: nutritionProduct ?? this.nutritionProduct,
+      consumedItem: consumedItem ?? this.consumedItem,
+      notConsumedItem: notConsumedItem ?? this.notConsumedItem,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! NutritionIntakeNutritionItemBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      type,
+      o.type,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      nutritionProduct,
+      o.nutritionProduct,
+    )) {
+      return false;
+    }
+    if (!listEquals<NutritionIntakeConsumedItemBuilder>(
+      consumedItem,
+      o.consumedItem,
+    )) {
+      return false;
+    }
+    if (!listEquals<NutritionIntakeNotConsumedItemBuilder>(
+      notConsumedItem,
+      o.notConsumedItem,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [NutritionIntakeConsumedItemBuilder]
+/// What nutrition item was consumed.
+class NutritionIntakeConsumedItemBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [NutritionIntakeConsumedItemBuilder]
+
+  NutritionIntakeConsumedItemBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.schedule,
+    this.amount,
+    RateXNutritionIntakeConsumedItemBuilder? rateX,
+    QuantityBuilder? rateQuantity,
+    RatioBuilder? rateRatio,
+    this.totalIntake,
+    super.disallowExtensions,
+  })  : rateX = rateX ?? rateQuantity ?? rateRatio,
+        super(
+          objectPath: 'NutritionIntake.nutritionItem.consumedItem',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory NutritionIntakeConsumedItemBuilder.empty() =>
+      NutritionIntakeConsumedItemBuilder();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory NutritionIntakeConsumedItemBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'NutritionIntake.nutritionItem.consumedItem';
+    return NutritionIntakeConsumedItemBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      schedule: JsonParser.parseObject<TimingBuilder>(
+        json,
+        'schedule',
+        TimingBuilder.fromJson,
+        '$objectPath.schedule',
+      ),
+      amount: JsonParser.parseObject<QuantityBuilder>(
+        json,
+        'amount',
+        QuantityBuilder.fromJson,
+        '$objectPath.amount',
+      ),
+      rateX:
+          JsonParser.parsePolymorphic<RateXNutritionIntakeConsumedItemBuilder>(
+        json,
+        {
+          'rateQuantity': QuantityBuilder.fromJson,
+          'rateRatio': RatioBuilder.fromJson,
+        },
+        objectPath,
+      ),
+      totalIntake: (json['totalIntake'] as List<dynamic>?)
+          ?.map<NutritionIntakeTotalIntakeBuilder>(
+            (v) => NutritionIntakeTotalIntakeBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.totalIntake',
+              },
+            ),
+          )
+          .toList(),
+    );
+  }
+
+  /// Deserialize [NutritionIntakeConsumedItemBuilder]
+  /// from a [String] or [YamlMap] object
+  factory NutritionIntakeConsumedItemBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return NutritionIntakeConsumedItemBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return NutritionIntakeConsumedItemBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'NutritionIntakeConsumedItemBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [NutritionIntakeConsumedItemBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory NutritionIntakeConsumedItemBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return NutritionIntakeConsumedItemBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'NutritionIntakeConsumedItem';
+
+  /// [schedule]
+  /// Scheduled frequency of consumption.
+  TimingBuilder? schedule;
+
+  /// [amount]
+  /// Quantity of the specified food (i.e. solid and/or liquid).
+  QuantityBuilder? amount;
+
+  /// [rateX]
+  /// Rate of enteral feeding administration.
+  RateXNutritionIntakeConsumedItemBuilder? rateX;
+
+  /// Getter for [rateQuantity] as a QuantityBuilder
+  QuantityBuilder? get rateQuantity => rateX?.isAs<QuantityBuilder>();
+
+  /// Getter for [rateRatio] as a RatioBuilder
+  RatioBuilder? get rateRatio => rateX?.isAs<RatioBuilder>();
+
+  /// [totalIntake]
+  /// Nutrients and/or energy contained in the intake.
+  List<NutritionIntakeTotalIntakeBuilder>? totalIntake;
+
+  /// Converts a [NutritionIntakeConsumedItemBuilder]
+  /// to [NutritionIntakeConsumedItem]
+  @override
+  NutritionIntakeConsumedItem build() =>
+      NutritionIntakeConsumedItem.fromJson(toJson());
+
+  /// Converts a [NutritionIntakeConsumedItemBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('schedule', schedule);
+    addField('amount', amount);
+    if (rateX != null) {
+      final fhirType = rateX!.fhirType;
+      addField('rate${fhirType.capitalizeFirstLetter()}', rateX);
+    }
+
+    addField('totalIntake', totalIntake);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'schedule',
+      'amount',
+      'rateX',
+      'totalIntake',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'schedule':
+        if (schedule != null) {
+          fields.add(schedule!);
+        }
+      case 'amount':
+        if (amount != null) {
+          fields.add(amount!);
+        }
+      case 'rate':
+        if (rateX != null) {
+          fields.add(rateX!);
+        }
+      case 'rateX':
+        if (rateX != null) {
+          fields.add(rateX!);
+        }
+      case 'rateQuantity':
+        if (rateX is QuantityBuilder) {
+          fields.add(rateX!);
+        }
+      case 'rateRatio':
+        if (rateX is RatioBuilder) {
+          fields.add(rateX!);
+        }
+      case 'totalIntake':
+        if (totalIntake != null) {
+          fields.addAll(totalIntake!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'schedule':
+        {
+          if (child is TimingBuilder) {
+            schedule = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'amount':
+        {
+          if (child is QuantityBuilder) {
+            amount = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'rate':
+      case 'rateX':
+        {
+          if (child is RateXNutritionIntakeConsumedItemBuilder) {
+            rateX = child;
+            return;
+          } else {
+            if (child is QuantityBuilder) {
+              rateX = child;
+              return;
+            }
+            if (child is RatioBuilder) {
+              rateX = child;
+              return;
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'rateQuantity':
+        {
+          if (child is QuantityBuilder) {
+            rateX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'rateRatio':
+        {
+          if (child is RatioBuilder) {
+            rateX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'totalIntake':
+        {
+          if (child is List<NutritionIntakeTotalIntakeBuilder>) {
+            // Replace or create new list
+            totalIntake = child;
+            return;
+          } else if (child is NutritionIntakeTotalIntakeBuilder) {
+            // Add single element to existing list or create new list
+            totalIntake = [
+              ...(totalIntake ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'schedule':
+        return ['TimingBuilder'];
+      case 'amount':
+        return ['QuantityBuilder'];
+      case 'rate':
+      case 'rateX':
+        return [
+          'QuantityBuilder',
+          'RatioBuilder',
+        ];
+      case 'rateQuantity':
+        return ['QuantityBuilder'];
+      case 'rateRatio':
+        return ['RatioBuilder'];
+      case 'totalIntake':
+        return ['NutritionIntakeTotalIntakeBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [NutritionIntakeConsumedItemBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
       case 'schedule':
         {
           schedule = TimingBuilder.empty();
@@ -2331,18 +2634,20 @@ class NutritionIntakeConsumedItemBuilder extends BackboneElementBuilder {
           return;
         }
       case 'rate':
+      case 'rateX':
+      case 'rateQuantity':
         {
-          rate = QuantityBuilder.empty();
+          rateX = QuantityBuilder.empty();
           return;
         }
-      case 'notConsumed':
+      case 'rateRatio':
         {
-          notConsumed = FhirBooleanBuilder.empty();
+          rateX = RatioBuilder.empty();
           return;
         }
-      case 'notConsumedReason':
+      case 'totalIntake':
         {
-          notConsumedReason = CodeableConceptBuilder.empty();
+          totalIntake = <NutritionIntakeTotalIntakeBuilder>[];
           return;
         }
       default:
@@ -2357,13 +2662,12 @@ class NutritionIntakeConsumedItemBuilder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    CodeableConceptBuilder? type,
-    CodeableReferenceBuilder? nutritionProduct,
     TimingBuilder? schedule,
     QuantityBuilder? amount,
-    QuantityBuilder? rate,
-    FhirBooleanBuilder? notConsumed,
-    CodeableConceptBuilder? notConsumedReason,
+    RateXNutritionIntakeConsumedItemBuilder? rateX,
+    List<NutritionIntakeTotalIntakeBuilder>? totalIntake,
+    QuantityBuilder? rateQuantity,
+    RatioBuilder? rateRatio,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -2375,13 +2679,10 @@ class NutritionIntakeConsumedItemBuilder extends BackboneElementBuilder {
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
-      type: type ?? this.type,
-      nutritionProduct: nutritionProduct ?? this.nutritionProduct,
       schedule: schedule ?? this.schedule,
       amount: amount ?? this.amount,
-      rate: rate ?? this.rate,
-      notConsumed: notConsumed ?? this.notConsumed,
-      notConsumedReason: notConsumedReason ?? this.notConsumedReason,
+      rateX: rateX ?? rateQuantity ?? rateRatio ?? this.rateX,
+      totalIntake: totalIntake ?? this.totalIntake,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -2427,18 +2728,6 @@ class NutritionIntakeConsumedItemBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      type,
-      o.type,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      nutritionProduct,
-      o.nutritionProduct,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
       schedule,
       o.schedule,
     )) {
@@ -2451,20 +2740,14 @@ class NutritionIntakeConsumedItemBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      rate,
-      o.rate,
+      rateX,
+      o.rateX,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      notConsumed,
-      o.notConsumed,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      notConsumedReason,
-      o.notConsumedReason,
+    if (!listEquals<NutritionIntakeTotalIntakeBuilder>(
+      totalIntake,
+      o.totalIntake,
     )) {
       return false;
     }
@@ -2472,37 +2755,38 @@ class NutritionIntakeConsumedItemBuilder extends BackboneElementBuilder {
   }
 }
 
-/// [NutritionIntakeIngredientLabelBuilder]
-/// Total nutrient amounts for the whole meal, product, serving, etc.
-class NutritionIntakeIngredientLabelBuilder extends BackboneElementBuilder {
+/// [NutritionIntakeTotalIntakeBuilder]
+/// Nutrients and/or energy contained in the intake.
+class NutritionIntakeTotalIntakeBuilder extends BackboneElementBuilder {
   /// Primary constructor for
-  /// [NutritionIntakeIngredientLabelBuilder]
+  /// [NutritionIntakeTotalIntakeBuilder]
 
-  NutritionIntakeIngredientLabelBuilder({
+  NutritionIntakeTotalIntakeBuilder({
     super.id,
     super.extension_,
     super.modifierExtension,
     this.nutrient,
     this.amount,
+    this.energy,
     super.disallowExtensions,
   }) : super(
-          objectPath: 'NutritionIntake.ingredientLabel',
+          objectPath: 'NutritionIntake.nutritionItem.consumedItem.totalIntake',
         );
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
-  factory NutritionIntakeIngredientLabelBuilder.empty() =>
-      NutritionIntakeIngredientLabelBuilder(
+  factory NutritionIntakeTotalIntakeBuilder.empty() =>
+      NutritionIntakeTotalIntakeBuilder(
         nutrient: CodeableReferenceBuilder.empty(),
         amount: QuantityBuilder.empty(),
       );
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory NutritionIntakeIngredientLabelBuilder.fromJson(
+  factory NutritionIntakeTotalIntakeBuilder.fromJson(
     Map<String, dynamic> json,
   ) {
-    const objectPath = 'NutritionIntake.ingredientLabel';
-    return NutritionIntakeIngredientLabelBuilder(
+    const objectPath = 'NutritionIntake.nutritionItem.consumedItem.totalIntake';
+    return NutritionIntakeTotalIntakeBuilder(
       id: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'id',
@@ -2541,25 +2825,31 @@ class NutritionIntakeIngredientLabelBuilder extends BackboneElementBuilder {
         QuantityBuilder.fromJson,
         '$objectPath.amount',
       ),
+      energy: JsonParser.parseObject<QuantityBuilder>(
+        json,
+        'energy',
+        QuantityBuilder.fromJson,
+        '$objectPath.energy',
+      ),
     );
   }
 
-  /// Deserialize [NutritionIntakeIngredientLabelBuilder]
+  /// Deserialize [NutritionIntakeTotalIntakeBuilder]
   /// from a [String] or [YamlMap] object
-  factory NutritionIntakeIngredientLabelBuilder.fromYaml(
+  factory NutritionIntakeTotalIntakeBuilder.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return NutritionIntakeIngredientLabelBuilder.fromJson(
+      return NutritionIntakeTotalIntakeBuilder.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return NutritionIntakeIngredientLabelBuilder.fromJson(
+      return NutritionIntakeTotalIntakeBuilder.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'NutritionIntakeIngredientLabelBuilder '
+        'NutritionIntakeTotalIntakeBuilder '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -2567,16 +2857,16 @@ class NutritionIntakeIngredientLabelBuilder extends BackboneElementBuilder {
   }
 
   /// Factory constructor for
-  /// [NutritionIntakeIngredientLabelBuilder]
+  /// [NutritionIntakeTotalIntakeBuilder]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory NutritionIntakeIngredientLabelBuilder.fromJsonString(
+  factory NutritionIntakeTotalIntakeBuilder.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return NutritionIntakeIngredientLabelBuilder.fromJson(json);
+      return NutritionIntakeTotalIntakeBuilder.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -2584,10 +2874,10 @@ class NutritionIntakeIngredientLabelBuilder extends BackboneElementBuilder {
   }
 
   @override
-  String get fhirType => 'NutritionIntakeIngredientLabel';
+  String get fhirType => 'NutritionIntakeTotalIntake';
 
   /// [nutrient]
-  /// Total nutrient consumed. This could be a macronutrient (protein, fat,
+  /// Type of nutrient consumed. This could be a macronutrient (protein, fat,
   /// carbohydrate), or a vitamin and mineral.
   CodeableReferenceBuilder? nutrient;
 
@@ -2595,13 +2885,17 @@ class NutritionIntakeIngredientLabelBuilder extends BackboneElementBuilder {
   /// Total amount of nutrient consumed.
   QuantityBuilder? amount;
 
-  /// Converts a [NutritionIntakeIngredientLabelBuilder]
-  /// to [NutritionIntakeIngredientLabel]
-  @override
-  NutritionIntakeIngredientLabel build() =>
-      NutritionIntakeIngredientLabel.fromJson(toJson());
+  /// [energy]
+  /// Total energy consumed in kilocalories or kilojoules.
+  QuantityBuilder? energy;
 
-  /// Converts a [NutritionIntakeIngredientLabelBuilder]
+  /// Converts a [NutritionIntakeTotalIntakeBuilder]
+  /// to [NutritionIntakeTotalIntake]
+  @override
+  NutritionIntakeTotalIntake build() =>
+      NutritionIntakeTotalIntake.fromJson(toJson());
+
+  /// Converts a [NutritionIntakeTotalIntakeBuilder]
   /// to a [Map<String, dynamic>]
   @override
   Map<String, dynamic> toJson() {
@@ -2637,6 +2931,7 @@ class NutritionIntakeIngredientLabelBuilder extends BackboneElementBuilder {
     addField('modifierExtension', modifierExtension);
     addField('nutrient', nutrient);
     addField('amount', amount);
+    addField('energy', energy);
     return json;
   }
 
@@ -2649,6 +2944,7 @@ class NutritionIntakeIngredientLabelBuilder extends BackboneElementBuilder {
       'modifierExtension',
       'nutrient',
       'amount',
+      'energy',
     ];
   }
 
@@ -2680,6 +2976,10 @@ class NutritionIntakeIngredientLabelBuilder extends BackboneElementBuilder {
       case 'amount':
         if (amount != null) {
           fields.add(amount!);
+        }
+      case 'energy':
+        if (energy != null) {
+          fields.add(energy!);
         }
       default:
         if (checkValid) {
@@ -2778,6 +3078,14 @@ class NutritionIntakeIngredientLabelBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'energy':
+        {
+          if (child is QuantityBuilder) {
+            energy = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -2798,12 +3106,14 @@ class NutritionIntakeIngredientLabelBuilder extends BackboneElementBuilder {
         return ['CodeableReferenceBuilder'];
       case 'amount':
         return ['QuantityBuilder'];
+      case 'energy':
+        return ['QuantityBuilder'];
       default:
         return <String>[];
     }
   }
 
-  /// Creates a new [NutritionIntakeIngredientLabelBuilder]
+  /// Creates a new [NutritionIntakeTotalIntakeBuilder]
   ///  with a chosen field set to an empty object.
   @override
   void createProperty(String propertyName) {
@@ -2833,20 +3143,26 @@ class NutritionIntakeIngredientLabelBuilder extends BackboneElementBuilder {
           amount = QuantityBuilder.empty();
           return;
         }
+      case 'energy':
+        {
+          energy = QuantityBuilder.empty();
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
   }
 
   @override
-  NutritionIntakeIngredientLabelBuilder clone() => throw UnimplementedError();
+  NutritionIntakeTotalIntakeBuilder clone() => throw UnimplementedError();
   @override
-  NutritionIntakeIngredientLabelBuilder copyWith({
+  NutritionIntakeTotalIntakeBuilder copyWith({
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     CodeableReferenceBuilder? nutrient,
     QuantityBuilder? amount,
+    QuantityBuilder? energy,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -2854,12 +3170,13 @@ class NutritionIntakeIngredientLabelBuilder extends BackboneElementBuilder {
     String? objectPath,
   }) {
     final newObjectPath = this.objectPath;
-    final newResult = NutritionIntakeIngredientLabelBuilder(
+    final newResult = NutritionIntakeTotalIntakeBuilder(
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       nutrient: nutrient ?? this.nutrient,
       amount: amount ?? this.amount,
+      energy: energy ?? this.energy,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -2881,7 +3198,7 @@ class NutritionIntakeIngredientLabelBuilder extends BackboneElementBuilder {
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! NutritionIntakeIngredientLabelBuilder) {
+    if (o is! NutritionIntakeTotalIntakeBuilder) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -2916,12 +3233,504 @@ class NutritionIntakeIngredientLabelBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      energy,
+      o.energy,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [NutritionIntakeNotConsumedItemBuilder]
+/// What nutrition item was not consumed.
+class NutritionIntakeNotConsumedItemBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [NutritionIntakeNotConsumedItemBuilder]
+
+  NutritionIntakeNotConsumedItemBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.reason,
+    this.schedule,
+    this.amount,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'NutritionIntake.nutritionItem.notConsumedItem',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory NutritionIntakeNotConsumedItemBuilder.empty() =>
+      NutritionIntakeNotConsumedItemBuilder();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory NutritionIntakeNotConsumedItemBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'NutritionIntake.nutritionItem.notConsumedItem';
+    return NutritionIntakeNotConsumedItemBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      reason: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'reason',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.reason',
+      ),
+      schedule: JsonParser.parseObject<TimingBuilder>(
+        json,
+        'schedule',
+        TimingBuilder.fromJson,
+        '$objectPath.schedule',
+      ),
+      amount: JsonParser.parseObject<QuantityBuilder>(
+        json,
+        'amount',
+        QuantityBuilder.fromJson,
+        '$objectPath.amount',
+      ),
+    );
+  }
+
+  /// Deserialize [NutritionIntakeNotConsumedItemBuilder]
+  /// from a [String] or [YamlMap] object
+  factory NutritionIntakeNotConsumedItemBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return NutritionIntakeNotConsumedItemBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return NutritionIntakeNotConsumedItemBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'NutritionIntakeNotConsumedItemBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [NutritionIntakeNotConsumedItemBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory NutritionIntakeNotConsumedItemBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return NutritionIntakeNotConsumedItemBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'NutritionIntakeNotConsumedItem';
+
+  /// [reason]
+  /// Document the reason the nutrition item was not consumed, such as
+  /// refused, held, etc.
+  CodeableConceptBuilder? reason;
+
+  /// [schedule]
+  /// The intended frequency of consumption that was not followed.
+  TimingBuilder? schedule;
+
+  /// [amount]
+  /// Quantity of the specified food (i.e. solid and/or liquid) that was not
+  /// consumed.
+  QuantityBuilder? amount;
+
+  /// Converts a [NutritionIntakeNotConsumedItemBuilder]
+  /// to [NutritionIntakeNotConsumedItem]
+  @override
+  NutritionIntakeNotConsumedItem build() =>
+      NutritionIntakeNotConsumedItem.fromJson(toJson());
+
+  /// Converts a [NutritionIntakeNotConsumedItemBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('reason', reason);
+    addField('schedule', schedule);
+    addField('amount', amount);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'reason',
+      'schedule',
+      'amount',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'reason':
+        if (reason != null) {
+          fields.add(reason!);
+        }
+      case 'schedule':
+        if (schedule != null) {
+          fields.add(schedule!);
+        }
+      case 'amount':
+        if (amount != null) {
+          fields.add(amount!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'reason':
+        {
+          if (child is CodeableConceptBuilder) {
+            reason = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'schedule':
+        {
+          if (child is TimingBuilder) {
+            schedule = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'amount':
+        {
+          if (child is QuantityBuilder) {
+            amount = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'reason':
+        return ['CodeableConceptBuilder'];
+      case 'schedule':
+        return ['TimingBuilder'];
+      case 'amount':
+        return ['QuantityBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [NutritionIntakeNotConsumedItemBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'reason':
+        {
+          reason = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'schedule':
+        {
+          schedule = TimingBuilder.empty();
+          return;
+        }
+      case 'amount':
+        {
+          amount = QuantityBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  NutritionIntakeNotConsumedItemBuilder clone() => throw UnimplementedError();
+  @override
+  NutritionIntakeNotConsumedItemBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    CodeableConceptBuilder? reason,
+    TimingBuilder? schedule,
+    QuantityBuilder? amount,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = NutritionIntakeNotConsumedItemBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      reason: reason ?? this.reason,
+      schedule: schedule ?? this.schedule,
+      amount: amount ?? this.amount,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! NutritionIntakeNotConsumedItemBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reason,
+      o.reason,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      schedule,
+      o.schedule,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      amount,
+      o.amount,
+    )) {
+      return false;
+    }
     return true;
   }
 }
 
 /// [NutritionIntakePerformerBuilder]
-/// Who performed the intake and how they were involved.
+/// Who or what performed the intake and how they were involved.
 class NutritionIntakePerformerBuilder extends BackboneElementBuilder {
   /// Primary constructor for
   /// [NutritionIntakePerformerBuilder]
@@ -3034,11 +3843,11 @@ class NutritionIntakePerformerBuilder extends BackboneElementBuilder {
   String get fhirType => 'NutritionIntakePerformer';
 
   /// [function_]
-  /// Type of performer.
+  /// Type of performance.
   CodeableConceptBuilder? function_;
 
   /// [actor]
-  /// Who performed the intake.
+  /// Who or what performed the intake.
   ReferenceBuilder? actor;
 
   /// Converts a [NutritionIntakePerformerBuilder]

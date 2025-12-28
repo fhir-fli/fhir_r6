@@ -13,7 +13,8 @@ import 'package:yaml/yaml.dart';
 
 /// [PatientBuilder]
 /// Demographics and other administrative information about an individual
-/// or animal receiving care or other health-related services.
+/// or animal that is the subject of potential, past, current, or future
+/// health-related care, services, or processes.
 class PatientBuilder extends DomainResourceBuilder {
   /// Primary constructor for
   /// [PatientBuilder]
@@ -333,7 +334,9 @@ class PatientBuilder extends DomainResourceBuilder {
 
   /// [gender]
   /// Administrative Gender - the gender that the patient is considered to
-  /// have for administration and record keeping purposes.
+  /// have for administration and record keeping purposes. See the [Patient
+  /// Gender and Sex section](patient.html#gender) for additional information
+  /// about communicating patient gender and sex.
   AdministrativeGenderBuilder? gender;
 
   /// [birthDate]
@@ -341,7 +344,9 @@ class PatientBuilder extends DomainResourceBuilder {
   FhirDateBuilder? birthDate;
 
   /// [deceasedX]
-  /// Indicates if the individual is deceased or not.
+  /// Indicates the date when the individual died, or, if the date is not
+  /// known or cannot be estimated, a flag indicating the patient is known to
+  /// be deceased.
   DeceasedXPatientBuilder? deceasedX;
 
   /// Getter for [deceasedBoolean] as a FhirBooleanBuilder
@@ -362,7 +367,11 @@ class PatientBuilder extends DomainResourceBuilder {
 
   /// [multipleBirthX]
   /// Indicates whether the patient is part of a multiple (boolean) or
-  /// indicates the actual birth order (integer).
+  /// indicates the actual birth order (integer). This count is relative to
+  /// the total of live births and fetal losses, which MAY be tracked in the
+  /// `patient-multipleBirthTotal` extension. The boolean option for this
+  /// property can also be used to track that there are known to be multiple
+  /// fetuses prior to birth.
   MultipleBirthXPatientBuilder? multipleBirthX;
 
   /// Getter for [multipleBirthBoolean] as a FhirBooleanBuilder
@@ -1560,9 +1569,12 @@ class PatientContactBuilder extends BackboneElementBuilder {
     super.extension_,
     super.modifierExtension,
     this.relationship,
+    this.role,
     this.name,
+    this.additionalName,
     this.telecom,
     this.address,
+    this.additionalAddress,
     this.gender,
     this.organization,
     this.period,
@@ -1617,12 +1629,32 @@ class PatientContactBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
+      role: (json['role'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.role',
+              },
+            ),
+          )
+          .toList(),
       name: JsonParser.parseObject<HumanNameBuilder>(
         json,
         'name',
         HumanNameBuilder.fromJson,
         '$objectPath.name',
       ),
+      additionalName: (json['additionalName'] as List<dynamic>?)
+          ?.map<HumanNameBuilder>(
+            (v) => HumanNameBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.additionalName',
+              },
+            ),
+          )
+          .toList(),
       telecom: (json['telecom'] as List<dynamic>?)
           ?.map<ContactPointBuilder>(
             (v) => ContactPointBuilder.fromJson(
@@ -1639,6 +1671,16 @@ class PatientContactBuilder extends BackboneElementBuilder {
         AddressBuilder.fromJson,
         '$objectPath.address',
       ),
+      additionalAddress: (json['additionalAddress'] as List<dynamic>?)
+          ?.map<AddressBuilder>(
+            (v) => AddressBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.additionalAddress',
+              },
+            ),
+          )
+          .toList(),
       gender: JsonParser.parsePrimitive<AdministrativeGenderBuilder>(
         json,
         'gender',
@@ -1703,13 +1745,23 @@ class PatientContactBuilder extends BackboneElementBuilder {
   String get fhirType => 'PatientContact';
 
   /// [relationship]
-  /// The nature of the relationship between the patient and the contact
-  /// person.
+  /// The nature of the personal relationship between the patient and the
+  /// contact person.
   List<CodeableConceptBuilder>? relationship;
 
+  /// [role]
+  /// The nature of the functional role between the patient and the contact
+  /// person.
+  List<CodeableConceptBuilder>? role;
+
   /// [name]
-  /// A name associated with the contact person.
+  /// A name associated with the contact person. Alternate/additional names
+  /// for this contact can be found in the `additionalName` property.
   HumanNameBuilder? name;
+
+  /// [additionalName]
+  /// Additional names for the contact person.
+  List<HumanNameBuilder>? additionalName;
 
   /// [telecom]
   /// A contact detail for the person, e.g. a telephone number or an email
@@ -1717,8 +1769,13 @@ class PatientContactBuilder extends BackboneElementBuilder {
   List<ContactPointBuilder>? telecom;
 
   /// [address]
-  /// Address for the contact person.
+  /// Address for the contact person. Alternate/additional addresses for this
+  /// contact can be found in the `additionalAddress` property.
   AddressBuilder? address;
+
+  /// [additionalAddress]
+  /// Additional addresses for the contact person.
+  List<AddressBuilder>? additionalAddress;
 
   /// [gender]
   /// Administrative Gender - the gender that the contact person is
@@ -1775,9 +1832,12 @@ class PatientContactBuilder extends BackboneElementBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('relationship', relationship);
+    addField('role', role);
     addField('name', name);
+    addField('additionalName', additionalName);
     addField('telecom', telecom);
     addField('address', address);
+    addField('additionalAddress', additionalAddress);
     addField('gender', gender);
     addField('organization', organization);
     addField('period', period);
@@ -1792,9 +1852,12 @@ class PatientContactBuilder extends BackboneElementBuilder {
       'extension',
       'modifierExtension',
       'relationship',
+      'role',
       'name',
+      'additionalName',
       'telecom',
       'address',
+      'additionalAddress',
       'gender',
       'organization',
       'period',
@@ -1826,9 +1889,17 @@ class PatientContactBuilder extends BackboneElementBuilder {
         if (relationship != null) {
           fields.addAll(relationship!);
         }
+      case 'role':
+        if (role != null) {
+          fields.addAll(role!);
+        }
       case 'name':
         if (name != null) {
           fields.add(name!);
+        }
+      case 'additionalName':
+        if (additionalName != null) {
+          fields.addAll(additionalName!);
         }
       case 'telecom':
         if (telecom != null) {
@@ -1837,6 +1908,10 @@ class PatientContactBuilder extends BackboneElementBuilder {
       case 'address':
         if (address != null) {
           fields.add(address!);
+        }
+      case 'additionalAddress':
+        if (additionalAddress != null) {
+          fields.addAll(additionalAddress!);
         }
       case 'gender':
         if (gender != null) {
@@ -1947,10 +2022,42 @@ class PatientContactBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'role':
+        {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
+            role = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            role = [
+              ...(role ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'name':
         {
           if (child is HumanNameBuilder) {
             name = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'additionalName':
+        {
+          if (child is List<HumanNameBuilder>) {
+            // Replace or create new list
+            additionalName = child;
+            return;
+          } else if (child is HumanNameBuilder) {
+            // Add single element to existing list or create new list
+            additionalName = [
+              ...(additionalName ?? []),
+              child,
+            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -1975,6 +2082,22 @@ class PatientContactBuilder extends BackboneElementBuilder {
         {
           if (child is AddressBuilder) {
             address = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'additionalAddress':
+        {
+          if (child is List<AddressBuilder>) {
+            // Replace or create new list
+            additionalAddress = child;
+            return;
+          } else if (child is AddressBuilder) {
+            // Add single element to existing list or create new list
+            additionalAddress = [
+              ...(additionalAddress ?? []),
+              child,
+            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -2036,11 +2159,17 @@ class PatientContactBuilder extends BackboneElementBuilder {
         return ['FhirExtensionBuilder'];
       case 'relationship':
         return ['CodeableConceptBuilder'];
+      case 'role':
+        return ['CodeableConceptBuilder'];
       case 'name':
+        return ['HumanNameBuilder'];
+      case 'additionalName':
         return ['HumanNameBuilder'];
       case 'telecom':
         return ['ContactPointBuilder'];
       case 'address':
+        return ['AddressBuilder'];
+      case 'additionalAddress':
         return ['AddressBuilder'];
       case 'gender':
         return ['FhirCodeEnumBuilder'];
@@ -2078,9 +2207,19 @@ class PatientContactBuilder extends BackboneElementBuilder {
           relationship = <CodeableConceptBuilder>[];
           return;
         }
+      case 'role':
+        {
+          role = <CodeableConceptBuilder>[];
+          return;
+        }
       case 'name':
         {
           name = HumanNameBuilder.empty();
+          return;
+        }
+      case 'additionalName':
+        {
+          additionalName = <HumanNameBuilder>[];
           return;
         }
       case 'telecom':
@@ -2091,6 +2230,11 @@ class PatientContactBuilder extends BackboneElementBuilder {
       case 'address':
         {
           address = AddressBuilder.empty();
+          return;
+        }
+      case 'additionalAddress':
+        {
+          additionalAddress = <AddressBuilder>[];
           return;
         }
       case 'gender':
@@ -2121,9 +2265,12 @@ class PatientContactBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     List<CodeableConceptBuilder>? relationship,
+    List<CodeableConceptBuilder>? role,
     HumanNameBuilder? name,
+    List<HumanNameBuilder>? additionalName,
     List<ContactPointBuilder>? telecom,
     AddressBuilder? address,
+    List<AddressBuilder>? additionalAddress,
     AdministrativeGenderBuilder? gender,
     ReferenceBuilder? organization,
     PeriodBuilder? period,
@@ -2139,9 +2286,12 @@ class PatientContactBuilder extends BackboneElementBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       relationship: relationship ?? this.relationship,
+      role: role ?? this.role,
       name: name ?? this.name,
+      additionalName: additionalName ?? this.additionalName,
       telecom: telecom ?? this.telecom,
       address: address ?? this.address,
+      additionalAddress: additionalAddress ?? this.additionalAddress,
       gender: gender ?? this.gender,
       organization: organization ?? this.organization,
       period: period ?? this.period,
@@ -2195,9 +2345,21 @@ class PatientContactBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
+    if (!listEquals<CodeableConceptBuilder>(
+      role,
+      o.role,
+    )) {
+      return false;
+    }
     if (!equalsDeepWithNull(
       name,
       o.name,
+    )) {
+      return false;
+    }
+    if (!listEquals<HumanNameBuilder>(
+      additionalName,
+      o.additionalName,
     )) {
       return false;
     }
@@ -2210,6 +2372,12 @@ class PatientContactBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       address,
       o.address,
+    )) {
+      return false;
+    }
+    if (!listEquals<AddressBuilder>(
+      additionalAddress,
+      o.additionalAddress,
     )) {
       return false;
     }
@@ -2349,10 +2517,7 @@ class PatientCommunicationBuilder extends BackboneElementBuilder {
   String get fhirType => 'PatientCommunication';
 
   /// [language]
-  /// The ISO-639-1 alpha 2 code in lower case for the language, optionally
-  /// followed by a hyphen and the ISO-3166-1 alpha 2 code for the region in
-  /// upper case; e.g. "en" for English, or "en-US" for American English
-  /// versus "en-AU" for Australian English.
+  /// The language which may be used to communicate with the individual.
   CodeableConceptBuilder? language;
 
   /// [preferred]

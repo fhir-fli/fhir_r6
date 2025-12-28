@@ -23,7 +23,7 @@ abstract class $PersonCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<ContactPoint>? telecom,
     AdministrativeGender? gender,
     FhirDate? birthDate,
-    FhirBoolean? deceasedX,
+    DeceasedXPerson? deceasedX,
     List<Address>? address,
     CodeableConcept? maritalStatus,
     List<Attachment>? photo,
@@ -105,7 +105,7 @@ class _$PersonCopyWithImpl<T> implements $PersonCopyWith<T> {
             : birthDate as FhirDate?,
         deceasedX: identical(deceasedX, fhirSentinel)
             ? _value.deceasedX
-            : deceasedX as FhirBoolean?,
+            : deceasedX as DeceasedXPerson?,
         address: identical(address, fhirSentinel)
             ? _value.address
             : address as List<Address>?,

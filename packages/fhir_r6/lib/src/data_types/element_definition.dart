@@ -3263,7 +3263,7 @@ class ElementDefinitionSlicing extends Element {
   /// [discriminator]
   /// Designates which child elements are used to discriminate between the
   /// slices when processing an instance. If one or more discriminators are
-  /// provided, the value of the child elements in the instance data SHALL
+  /// provided, the values of the child elements in the instance data SHALL
   /// completely distinguish which slice the element in the resource matches
   /// based on the allowed values for those elements in each of the slices.
   final List<ElementDefinitionDiscriminator>? discriminator;
@@ -3502,7 +3502,7 @@ class ElementDefinitionSlicing extends Element {
 /// [ElementDefinitionDiscriminator]
 /// Designates which child elements are used to discriminate between the
 /// slices when processing an instance. If one or more discriminators are
-/// provided, the value of the child elements in the instance data SHALL
+/// provided, the values of the child elements in the instance data SHALL
 /// completely distinguish which slice the element in the resource matches
 /// based on the allowed values for those elements in each of the slices.
 class ElementDefinitionDiscriminator extends Element {
@@ -5700,7 +5700,7 @@ class ElementDefinitionBinding extends Element {
   final BindingStrength strength;
 
   /// [description]
-  /// Describes the intended use of this particular set of codes.
+  /// Free-text guidance on the codes that are appropriate for this element.
   final FhirMarkdown? description;
 
   /// [valueSet]
@@ -5939,6 +5939,7 @@ class ElementDefinitionAdditional extends Element {
   const ElementDefinitionAdditional({
     super.id,
     super.extension_,
+    this.key,
     required this.purpose,
     required this.valueSet,
     this.documentation,
@@ -5965,6 +5966,11 @@ class ElementDefinitionAdditional extends Element {
             ),
           )
           .toList(),
+      key: JsonParser.parsePrimitive<FhirId>(
+        json,
+        'key',
+        FhirId.fromJson,
+      ),
       purpose: JsonParser.parsePrimitive<AdditionalBindingPurposeVS>(
         json,
         'purpose',
@@ -6041,6 +6047,11 @@ class ElementDefinitionAdditional extends Element {
 
   @override
   String get fhirType => 'ElementDefinitionAdditional';
+
+  /// [key]
+  /// A unique identifier for the additional binding within the element that
+  /// allows additional bindings to be matched across profiles.
+  final FhirId? key;
 
   /// [purpose]
   /// The use of this additional binding.
@@ -6143,6 +6154,10 @@ class ElementDefinitionAdditional extends Element {
       extension_,
     );
     addField(
+      'key',
+      key,
+    );
+    addField(
       'purpose',
       purpose,
     );
@@ -6175,6 +6190,7 @@ class ElementDefinitionAdditional extends Element {
     return [
       'id',
       'extension',
+      'key',
       'purpose',
       'valueSet',
       'documentation',
@@ -6200,6 +6216,10 @@ class ElementDefinitionAdditional extends Element {
       case 'extension':
         if (extension_ != null) {
           fields.addAll(extension_!);
+        }
+      case 'key':
+        if (key != null) {
+          fields.add(key!);
         }
       case 'purpose':
         fields.add(purpose);
@@ -6272,6 +6292,12 @@ class ElementDefinitionAdditional extends Element {
     if (!listEquals<FhirExtension>(
       extension_,
       o.extension_,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      key,
+      o.key,
     )) {
       return false;
     }

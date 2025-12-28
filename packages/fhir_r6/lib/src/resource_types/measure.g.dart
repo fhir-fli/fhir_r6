@@ -20,13 +20,13 @@ abstract class $MeasureCopyWith<T> extends $MetadataResourceCopyWith<T> {
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXMeasure? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     FhirString? subtitle,
     PublicationStatus? status,
     FhirBoolean? experimental,
-    CodeableConcept? subjectX,
+    SubjectXMeasure? subjectX,
     FHIRTypes? basis,
     FhirDateTime? date,
     FhirString? publisher,
@@ -41,6 +41,7 @@ abstract class $MeasureCopyWith<T> extends $MetadataResourceCopyWith<T> {
     FhirDate? approvalDate,
     FhirDate? lastReviewDate,
     Period? effectivePeriod,
+    Quantity? reportingFrequency,
     List<CodeableConcept>? topic,
     List<ContactDetail>? author,
     List<ContactDetail>? editor,
@@ -51,6 +52,7 @@ abstract class $MeasureCopyWith<T> extends $MetadataResourceCopyWith<T> {
     FhirMarkdown? disclaimer,
     CodeableConcept? scoring,
     CodeableConcept? scoringUnit,
+    FhirPositiveInt? scoringPrecision,
     CodeableConcept? compositeScoring,
     List<CodeableConcept>? type,
     FhirMarkdown? riskAdjustment,
@@ -58,6 +60,7 @@ abstract class $MeasureCopyWith<T> extends $MetadataResourceCopyWith<T> {
     FhirMarkdown? rationale,
     FhirMarkdown? clinicalRecommendationStatement,
     CodeableConcept? improvementNotation,
+    FhirMarkdown? improvementNotationGuidance,
     List<MeasureTerm>? term,
     FhirMarkdown? guidance,
     List<MeasureGroup>? group,
@@ -106,6 +109,7 @@ class _$MeasureCopyWithImpl<T> implements $MeasureCopyWith<T> {
     Object? approvalDate = fhirSentinel,
     Object? lastReviewDate = fhirSentinel,
     Object? effectivePeriod = fhirSentinel,
+    Object? reportingFrequency = fhirSentinel,
     Object? topic = fhirSentinel,
     Object? author = fhirSentinel,
     Object? editor = fhirSentinel,
@@ -116,6 +120,7 @@ class _$MeasureCopyWithImpl<T> implements $MeasureCopyWith<T> {
     Object? disclaimer = fhirSentinel,
     Object? scoring = fhirSentinel,
     Object? scoringUnit = fhirSentinel,
+    Object? scoringPrecision = fhirSentinel,
     Object? compositeScoring = fhirSentinel,
     Object? type = fhirSentinel,
     Object? riskAdjustment = fhirSentinel,
@@ -123,6 +128,7 @@ class _$MeasureCopyWithImpl<T> implements $MeasureCopyWith<T> {
     Object? rationale = fhirSentinel,
     Object? clinicalRecommendationStatement = fhirSentinel,
     Object? improvementNotation = fhirSentinel,
+    Object? improvementNotationGuidance = fhirSentinel,
     Object? term = fhirSentinel,
     Object? guidance = fhirSentinel,
     Object? group = fhirSentinel,
@@ -158,7 +164,7 @@ class _$MeasureCopyWithImpl<T> implements $MeasureCopyWith<T> {
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXMeasure?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -174,7 +180,7 @@ class _$MeasureCopyWithImpl<T> implements $MeasureCopyWith<T> {
             : experimental as FhirBoolean?,
         subjectX: identical(subjectX, fhirSentinel)
             ? _value.subjectX
-            : subjectX as CodeableConcept?,
+            : subjectX as SubjectXMeasure?,
         basis:
             identical(basis, fhirSentinel) ? _value.basis : basis as FHIRTypes?,
         date:
@@ -215,6 +221,9 @@ class _$MeasureCopyWithImpl<T> implements $MeasureCopyWith<T> {
         effectivePeriod: identical(effectivePeriod, fhirSentinel)
             ? _value.effectivePeriod
             : effectivePeriod as Period?,
+        reportingFrequency: identical(reportingFrequency, fhirSentinel)
+            ? _value.reportingFrequency
+            : reportingFrequency as Quantity?,
         topic: identical(topic, fhirSentinel)
             ? _value.topic
             : topic as List<CodeableConcept>?,
@@ -245,6 +254,9 @@ class _$MeasureCopyWithImpl<T> implements $MeasureCopyWith<T> {
         scoringUnit: identical(scoringUnit, fhirSentinel)
             ? _value.scoringUnit
             : scoringUnit as CodeableConcept?,
+        scoringPrecision: identical(scoringPrecision, fhirSentinel)
+            ? _value.scoringPrecision
+            : scoringPrecision as FhirPositiveInt?,
         compositeScoring: identical(compositeScoring, fhirSentinel)
             ? _value.compositeScoring
             : compositeScoring as CodeableConcept?,
@@ -267,6 +279,10 @@ class _$MeasureCopyWithImpl<T> implements $MeasureCopyWith<T> {
         improvementNotation: identical(improvementNotation, fhirSentinel)
             ? _value.improvementNotation
             : improvementNotation as CodeableConcept?,
+        improvementNotationGuidance:
+            identical(improvementNotationGuidance, fhirSentinel)
+                ? _value.improvementNotationGuidance
+                : improvementNotationGuidance as FhirMarkdown?,
         term: identical(term, fhirSentinel)
             ? _value.term
             : term as List<MeasureTerm>?,
@@ -359,12 +375,16 @@ abstract class $MeasureGroupCopyWith<T> extends $BackboneElementCopyWith<T> {
     CodeableConcept? code,
     FhirMarkdown? description,
     List<CodeableConcept>? type,
-    CodeableConcept? subjectX,
+    SubjectXMeasureGroup? subjectX,
     FHIRTypes? basis,
     CodeableConcept? scoring,
     CodeableConcept? scoringUnit,
+    FhirPositiveInt? scoringPrecision,
+    CodeableConcept? compositeScoring,
+    List<MeasureComponent>? component,
     FhirMarkdown? rateAggregation,
     CodeableConcept? improvementNotation,
+    FhirMarkdown? improvementNotationGuidance,
     List<FhirCanonical>? library_,
     List<MeasurePopulation>? population,
     List<MeasureStratifier>? stratifier,
@@ -391,8 +411,12 @@ class _$MeasureGroupCopyWithImpl<T> implements $MeasureGroupCopyWith<T> {
     Object? basis = fhirSentinel,
     Object? scoring = fhirSentinel,
     Object? scoringUnit = fhirSentinel,
+    Object? scoringPrecision = fhirSentinel,
+    Object? compositeScoring = fhirSentinel,
+    Object? component = fhirSentinel,
     Object? rateAggregation = fhirSentinel,
     Object? improvementNotation = fhirSentinel,
+    Object? improvementNotationGuidance = fhirSentinel,
     Object? library_ = fhirSentinel,
     Object? population = fhirSentinel,
     Object? stratifier = fhirSentinel,
@@ -421,7 +445,7 @@ class _$MeasureGroupCopyWithImpl<T> implements $MeasureGroupCopyWith<T> {
             : type as List<CodeableConcept>?,
         subjectX: identical(subjectX, fhirSentinel)
             ? _value.subjectX
-            : subjectX as CodeableConcept?,
+            : subjectX as SubjectXMeasureGroup?,
         basis:
             identical(basis, fhirSentinel) ? _value.basis : basis as FHIRTypes?,
         scoring: identical(scoring, fhirSentinel)
@@ -430,12 +454,25 @@ class _$MeasureGroupCopyWithImpl<T> implements $MeasureGroupCopyWith<T> {
         scoringUnit: identical(scoringUnit, fhirSentinel)
             ? _value.scoringUnit
             : scoringUnit as CodeableConcept?,
+        scoringPrecision: identical(scoringPrecision, fhirSentinel)
+            ? _value.scoringPrecision
+            : scoringPrecision as FhirPositiveInt?,
+        compositeScoring: identical(compositeScoring, fhirSentinel)
+            ? _value.compositeScoring
+            : compositeScoring as CodeableConcept?,
+        component: identical(component, fhirSentinel)
+            ? _value.component
+            : component as List<MeasureComponent>?,
         rateAggregation: identical(rateAggregation, fhirSentinel)
             ? _value.rateAggregation
             : rateAggregation as FhirMarkdown?,
         improvementNotation: identical(improvementNotation, fhirSentinel)
             ? _value.improvementNotation
             : improvementNotation as CodeableConcept?,
+        improvementNotationGuidance:
+            identical(improvementNotationGuidance, fhirSentinel)
+                ? _value.improvementNotationGuidance
+                : improvementNotationGuidance as FhirMarkdown?,
         library_: identical(library_, fhirSentinel)
             ? _value.library_
             : library_ as List<FhirCanonical>?,
@@ -456,6 +493,71 @@ class _$MeasureGroupCopyWithImpl<T> implements $MeasureGroupCopyWith<T> {
 extension MeasureGroupCopyWithExtension on MeasureGroup {
   $MeasureGroupCopyWith<MeasureGroup> get copyWith =>
       _$MeasureGroupCopyWithImpl<MeasureGroup>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $MeasureComponentCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    FhirCanonical? measure,
+    FhirString? groupId,
+    FhirDecimal? weight,
+    bool? disallowExtensions,
+  });
+}
+
+class _$MeasureComponentCopyWithImpl<T>
+    implements $MeasureComponentCopyWith<T> {
+  final MeasureComponent _value;
+  final T Function(MeasureComponent) _then;
+
+  _$MeasureComponentCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? measure = fhirSentinel,
+    Object? groupId = fhirSentinel,
+    Object? weight = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      MeasureComponent(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        measure: identical(measure, fhirSentinel)
+            ? _value.measure
+            : measure as FhirCanonical?,
+        groupId: identical(groupId, fhirSentinel)
+            ? _value.groupId
+            : groupId as FhirString?,
+        weight: identical(weight, fhirSentinel)
+            ? _value.weight
+            : weight as FhirDecimal?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension MeasureComponentCopyWithExtension on MeasureComponent {
+  $MeasureComponentCopyWith<MeasureComponent> get copyWith =>
+      _$MeasureComponentCopyWithImpl<MeasureComponent>(
         this,
         (value) => value,
       );
@@ -558,6 +660,8 @@ abstract class $MeasureStratifierCopyWith<T>
     FhirMarkdown? description,
     FhirExpression? criteria,
     Reference? groupDefinition,
+    FhirCanonical? valueSet,
+    FhirString? unit,
     List<MeasureComponent>? component,
     bool? disallowExtensions,
   });
@@ -580,6 +684,8 @@ class _$MeasureStratifierCopyWithImpl<T>
     Object? description = fhirSentinel,
     Object? criteria = fhirSentinel,
     Object? groupDefinition = fhirSentinel,
+    Object? valueSet = fhirSentinel,
+    Object? unit = fhirSentinel,
     Object? component = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -607,6 +713,10 @@ class _$MeasureStratifierCopyWithImpl<T>
         groupDefinition: identical(groupDefinition, fhirSentinel)
             ? _value.groupDefinition
             : groupDefinition as Reference?,
+        valueSet: identical(valueSet, fhirSentinel)
+            ? _value.valueSet
+            : valueSet as FhirCanonical?,
+        unit: identical(unit, fhirSentinel) ? _value.unit : unit as FhirString?,
         component: identical(component, fhirSentinel)
             ? _value.component
             : component as List<MeasureComponent>?,
@@ -626,7 +736,7 @@ extension MeasureStratifierCopyWithExtension on MeasureStratifier {
       );
 }
 
-abstract class $MeasureComponentCopyWith<T>
+abstract class $MeasureComponent1CopyWith<T>
     extends $BackboneElementCopyWith<T> {
   @override
   T call({
@@ -638,16 +748,18 @@ abstract class $MeasureComponentCopyWith<T>
     FhirMarkdown? description,
     FhirExpression? criteria,
     Reference? groupDefinition,
+    FhirCanonical? valueSet,
+    FhirString? unit,
     bool? disallowExtensions,
   });
 }
 
-class _$MeasureComponentCopyWithImpl<T>
-    implements $MeasureComponentCopyWith<T> {
-  final MeasureComponent _value;
-  final T Function(MeasureComponent) _then;
+class _$MeasureComponent1CopyWithImpl<T>
+    implements $MeasureComponent1CopyWith<T> {
+  final MeasureComponent1 _value;
+  final T Function(MeasureComponent1) _then;
 
-  _$MeasureComponentCopyWithImpl(this._value, this._then);
+  _$MeasureComponent1CopyWithImpl(this._value, this._then);
 
   @override
   T call({
@@ -659,10 +771,12 @@ class _$MeasureComponentCopyWithImpl<T>
     Object? description = fhirSentinel,
     Object? criteria = fhirSentinel,
     Object? groupDefinition = fhirSentinel,
+    Object? valueSet = fhirSentinel,
+    Object? unit = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
-      MeasureComponent(
+      MeasureComponent1(
         id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
         extension_: identical(extension_, fhirSentinel)
             ? _value.extension_
@@ -685,6 +799,10 @@ class _$MeasureComponentCopyWithImpl<T>
         groupDefinition: identical(groupDefinition, fhirSentinel)
             ? _value.groupDefinition
             : groupDefinition as Reference?,
+        valueSet: identical(valueSet, fhirSentinel)
+            ? _value.valueSet
+            : valueSet as FhirCanonical?,
+        unit: identical(unit, fhirSentinel) ? _value.unit : unit as FhirString?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -693,9 +811,9 @@ class _$MeasureComponentCopyWithImpl<T>
   }
 }
 
-extension MeasureComponentCopyWithExtension on MeasureComponent {
-  $MeasureComponentCopyWith<MeasureComponent> get copyWith =>
-      _$MeasureComponentCopyWithImpl<MeasureComponent>(
+extension MeasureComponent1CopyWithExtension on MeasureComponent1 {
+  $MeasureComponent1CopyWith<MeasureComponent1> get copyWith =>
+      _$MeasureComponent1CopyWithImpl<MeasureComponent1>(
         this,
         (value) => value,
       );
@@ -713,6 +831,8 @@ abstract class $MeasureSupplementalDataCopyWith<T>
     List<CodeableConcept>? usage,
     FhirMarkdown? description,
     FhirExpression? criteria,
+    FhirCanonical? valueSet,
+    FhirString? unit,
     bool? disallowExtensions,
   });
 }
@@ -734,6 +854,8 @@ class _$MeasureSupplementalDataCopyWithImpl<T>
     Object? usage = fhirSentinel,
     Object? description = fhirSentinel,
     Object? criteria = fhirSentinel,
+    Object? valueSet = fhirSentinel,
+    Object? unit = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -760,6 +882,10 @@ class _$MeasureSupplementalDataCopyWithImpl<T>
         criteria: identical(criteria, fhirSentinel)
             ? _value.criteria
             : (criteria as FhirExpression?) ?? _value.criteria,
+        valueSet: identical(valueSet, fhirSentinel)
+            ? _value.valueSet
+            : valueSet as FhirCanonical?,
+        unit: identical(unit, fhirSentinel) ? _value.unit : unit as FhirString?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

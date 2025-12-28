@@ -17,6 +17,7 @@ class FhirDecimalBuilder extends FhirNumberBuilder
         ValueXInventoryItemCharacteristicBuilder,
         ValueXParametersParameterBuilder,
         AnswerXQuestionnaireEnableWhenBuilder,
+        ValueXQuestionnaireAnswerOptionBuilder,
         ValueXQuestionnaireInitialBuilder,
         ValueXQuestionnaireResponseAnswerBuilder,
         ValueXStructureMapParameterBuilder,

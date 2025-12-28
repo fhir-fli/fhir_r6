@@ -13,7 +13,7 @@ abstract class $DataRequirementCopyWith<T> extends $DataTypeCopyWith<T> {
     List<FhirExtension>? extension_,
     FHIRTypes? type,
     List<FhirCanonical>? profile,
-    CodeableConcept? subjectX,
+    SubjectXDataRequirement? subjectX,
     List<FhirString>? mustSupport,
     List<DataRequirementCodeFilter>? codeFilter,
     List<DataRequirementDateFilter>? dateFilter,
@@ -59,7 +59,7 @@ class _$DataRequirementCopyWithImpl<T> implements $DataRequirementCopyWith<T> {
             : profile as List<FhirCanonical>?,
         subjectX: identical(subjectX, fhirSentinel)
             ? _value.subjectX
-            : subjectX as CodeableConcept?,
+            : subjectX as SubjectXDataRequirement?,
         mustSupport: identical(mustSupport, fhirSentinel)
             ? _value.mustSupport
             : mustSupport as List<FhirString>?,
@@ -165,7 +165,7 @@ abstract class $DataRequirementDateFilterCopyWith<T>
     List<FhirExtension>? extension_,
     FhirString? path,
     FhirString? searchParam,
-    FhirDateTime? valueX,
+    ValueXDataRequirementDateFilter? valueX,
     bool? disallowExtensions,
   });
 }
@@ -198,7 +198,7 @@ class _$DataRequirementDateFilterCopyWithImpl<T>
             : searchParam as FhirString?,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : valueX as FhirDateTime?,
+            : valueX as ValueXDataRequirementDateFilter?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -225,7 +225,7 @@ abstract class $DataRequirementValueFilterCopyWith<T>
     FhirString? path,
     FhirString? searchParam,
     ValueFilterComparator? comparator,
-    FhirDateTime? valueX,
+    ValueXDataRequirementValueFilter? valueX,
     bool? disallowExtensions,
   });
 }
@@ -262,7 +262,7 @@ class _$DataRequirementValueFilterCopyWithImpl<T>
             : comparator as ValueFilterComparator?,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : valueX as FhirDateTime?,
+            : valueX as ValueXDataRequirementValueFilter?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

@@ -21,7 +21,7 @@ abstract class $OperationDefinitionCopyWith<T>
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXOperationDefinition? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     PublicationStatus? status,
@@ -37,6 +37,7 @@ abstract class $OperationDefinitionCopyWith<T>
     FhirMarkdown? copyright,
     FhirString? copyrightLabel,
     FhirBoolean? affectsState,
+    FhirCode? synchronicity,
     FhirCode? code,
     FhirMarkdown? comment,
     FhirCanonical? base,
@@ -88,6 +89,7 @@ class _$OperationDefinitionCopyWithImpl<T>
     Object? copyright = fhirSentinel,
     Object? copyrightLabel = fhirSentinel,
     Object? affectsState = fhirSentinel,
+    Object? synchronicity = fhirSentinel,
     Object? code = fhirSentinel,
     Object? comment = fhirSentinel,
     Object? base = fhirSentinel,
@@ -130,7 +132,7 @@ class _$OperationDefinitionCopyWithImpl<T>
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXOperationDefinition?,
         name: identical(name, fhirSentinel)
             ? _value.name
             : (name as FhirString?) ?? _value.name,
@@ -175,6 +177,9 @@ class _$OperationDefinitionCopyWithImpl<T>
         affectsState: identical(affectsState, fhirSentinel)
             ? _value.affectsState
             : affectsState as FhirBoolean?,
+        synchronicity: identical(synchronicity, fhirSentinel)
+            ? _value.synchronicity
+            : synchronicity as FhirCode?,
         code: identical(code, fhirSentinel)
             ? _value.code
             : (code as FhirCode?) ?? _value.code,
@@ -231,7 +236,7 @@ abstract class $OperationDefinitionParameterCopyWith<T>
     FhirCode? name,
     OperationParameterUse? use,
     List<OperationParameterScope>? scope,
-    FhirInteger? min,
+    FhirUnsignedInt? min,
     FhirString? max,
     FhirMarkdown? documentation,
     FHIRTypes? type,
@@ -292,7 +297,7 @@ class _$OperationDefinitionParameterCopyWithImpl<T>
             : scope as List<OperationParameterScope>?,
         min: identical(min, fhirSentinel)
             ? _value.min
-            : (min as FhirInteger?) ?? _value.min,
+            : (min as FhirUnsignedInt?) ?? _value.min,
         max: identical(max, fhirSentinel)
             ? _value.max
             : (max as FhirString?) ?? _value.max,

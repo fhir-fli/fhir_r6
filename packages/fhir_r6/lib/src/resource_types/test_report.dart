@@ -29,9 +29,12 @@ class TestReport extends DomainResource {
     this.tester,
     this.issued,
     this.participant,
+    this.parameter,
     this.setup,
     this.test,
     this.teardown,
+    this.presentedForm,
+    this.log,
   }) : super(
           resourceType: R6ResourceType.TestReport,
         );
@@ -134,6 +137,13 @@ class TestReport extends DomainResource {
             ),
           )
           .toList(),
+      parameter: (json['parameter'] as List<dynamic>?)
+          ?.map<TestReportParameter>(
+            (v) => TestReportParameter.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       setup: JsonParser.parseObject<TestReportSetup>(
         json,
         'setup',
@@ -150,6 +160,16 @@ class TestReport extends DomainResource {
         json,
         'teardown',
         TestReportTeardown.fromJson,
+      ),
+      presentedForm: JsonParser.parseObject<Attachment>(
+        json,
+        'presentedForm',
+        Attachment.fromJson,
+      ),
+      log: JsonParser.parseObject<Attachment>(
+        json,
+        'log',
+        Attachment.fromJson,
       ),
     );
   }
@@ -220,8 +240,8 @@ class TestReport extends DomainResource {
   final TestReportResult result;
 
   /// [score]
-  /// The final score (percentage of tests passed) resulting from the
-  /// execution of the TestScript.
+  /// The final score (percentage of tests passed in the range of 0 to 100)
+  /// resulting from the execution of the TestScript.
   final FhirDecimal? score;
 
   /// [tester]
@@ -237,6 +257,11 @@ class TestReport extends DomainResource {
   /// client, or a server.
   final List<TestReportParticipant>? participant;
 
+  /// [parameter]
+  /// A parameter passed in to the runner performing the test. The parameter
+  /// is expected to relate to input parameters defined by the test script.
+  final List<TestReportParameter>? parameter;
+
   /// [setup]
   /// The results of the series of required setup operations before the tests
   /// were executed.
@@ -250,6 +275,16 @@ class TestReport extends DomainResource {
   /// The results of the series of operations required to clean up after all
   /// the tests were executed (successfully or otherwise).
   final TestReportTeardown? teardown;
+
+  /// [presentedForm]
+  /// A document presentation of the test outcomes such as PDF document.
+  final Attachment? presentedForm;
+
+  /// [log]
+  /// A log of the internal execution of the tests, which might be useful for
+  /// subsequent investigations. The format is expected to be some kind of
+  /// text log, or at least comprehensible in a text editor.
+  final Attachment? log;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -383,6 +418,10 @@ class TestReport extends DomainResource {
       participant,
     );
     addField(
+      'parameter',
+      parameter,
+    );
+    addField(
       'setup',
       setup,
     );
@@ -393,6 +432,14 @@ class TestReport extends DomainResource {
     addField(
       'teardown',
       teardown,
+    );
+    addField(
+      'presentedForm',
+      presentedForm,
+    );
+    addField(
+      'log',
+      log,
     );
     return json;
   }
@@ -418,9 +465,12 @@ class TestReport extends DomainResource {
       'tester',
       'issued',
       'participant',
+      'parameter',
       'setup',
       'test',
       'teardown',
+      'presentedForm',
+      'log',
     ];
   }
 
@@ -495,6 +545,10 @@ class TestReport extends DomainResource {
         if (participant != null) {
           fields.addAll(participant!);
         }
+      case 'parameter':
+        if (parameter != null) {
+          fields.addAll(parameter!);
+        }
       case 'setup':
         if (setup != null) {
           fields.add(setup!);
@@ -506,6 +560,14 @@ class TestReport extends DomainResource {
       case 'teardown':
         if (teardown != null) {
           fields.add(teardown!);
+        }
+      case 'presentedForm':
+        if (presentedForm != null) {
+          fields.add(presentedForm!);
+        }
+      case 'log':
+        if (log != null) {
+          fields.add(log!);
         }
       default:
         if (checkValid) {
@@ -650,6 +712,12 @@ class TestReport extends DomainResource {
     )) {
       return false;
     }
+    if (!listEquals<TestReportParameter>(
+      parameter,
+      o.parameter,
+    )) {
+      return false;
+    }
     if (!equalsDeepWithNull(
       setup,
       o.setup,
@@ -665,6 +733,18 @@ class TestReport extends DomainResource {
     if (!equalsDeepWithNull(
       teardown,
       o.teardown,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      presentedForm,
+      o.presentedForm,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      log,
+      o.log,
     )) {
       return false;
     }
@@ -684,7 +764,8 @@ class TestReportParticipant extends BackboneElement {
     super.extension_,
     super.modifierExtension,
     required this.type,
-    required this.uri,
+    this.uri,
+    this.version,
     this.display,
     super.disallowExtensions,
   }) : super();
@@ -722,7 +803,12 @@ class TestReportParticipant extends BackboneElement {
         json,
         'uri',
         FhirUri.fromJson,
-      )!,
+      ),
+      version: JsonParser.parsePrimitive<FhirUri>(
+        json,
+        'version',
+        FhirUri.fromJson,
+      ),
       display: JsonParser.parsePrimitive<FhirString>(
         json,
         'display',
@@ -779,7 +865,12 @@ class TestReportParticipant extends BackboneElement {
 
   /// [uri]
   /// The uri of the participant. An absolute URL is preferred.
-  final FhirUri uri;
+  final FhirUri? uri;
+
+  /// [version]
+  /// The version of the participant, if a version is known and/or
+  /// applicable.
+  final FhirUri? version;
 
   /// [display]
   /// The display name of the participant.
@@ -868,6 +959,10 @@ class TestReportParticipant extends BackboneElement {
       uri,
     );
     addField(
+      'version',
+      version,
+    );
+    addField(
       'display',
       display,
     );
@@ -883,6 +978,7 @@ class TestReportParticipant extends BackboneElement {
       'modifierExtension',
       'type',
       'uri',
+      'version',
       'display',
     ];
   }
@@ -911,7 +1007,13 @@ class TestReportParticipant extends BackboneElement {
       case 'type':
         fields.add(type);
       case 'uri':
-        fields.add(uri);
+        if (uri != null) {
+          fields.add(uri!);
+        }
+      case 'version':
+        if (version != null) {
+          fields.add(version!);
+        }
       case 'display':
         if (display != null) {
           fields.add(display!);
@@ -988,8 +1090,317 @@ class TestReportParticipant extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
+      version,
+      o.version,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       display,
       o.display,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [TestReportParameter]
+/// A parameter passed in to the runner performing the test. The parameter
+/// is expected to relate to input parameters defined by the test script.
+class TestReportParameter extends BackboneElement {
+  /// Primary constructor for
+  /// [TestReportParameter]
+
+  const TestReportParameter({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    required this.name,
+    this.documentation,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory TestReportParameter.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return TestReportParameter(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      name: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'name',
+        FhirString.fromJson,
+      )!,
+      documentation: JsonParser.parsePrimitive<FhirMarkdown>(
+        json,
+        'documentation',
+        FhirMarkdown.fromJson,
+      ),
+    );
+  }
+
+  /// Deserialize [TestReportParameter]
+  /// from a [String] or [YamlMap] object
+  factory TestReportParameter.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return TestReportParameter.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return TestReportParameter.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'TestReportParameter '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [TestReportParameter]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory TestReportParameter.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return TestReportParameter.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'TestReportParameter';
+
+  /// [name]
+  /// The name of the parameter passed in to the test runner.
+  final FhirString name;
+
+  /// [documentation]
+  /// Documentation about the impact of the parameter, as supplied by the
+  /// test runner engine to explain the way it impacted on the tests.
+  final FhirMarkdown? documentation;
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'name',
+      name,
+    );
+    addField(
+      'documentation',
+      documentation,
+    );
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'name',
+      'documentation',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'name':
+        fields.add(name);
+      case 'documentation':
+        if (documentation != null) {
+          fields.add(documentation!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  TestReportParameter clone() => copyWith();
+
+  /// Copy function for [TestReportParameter]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $TestReportParameterCopyWith<TestReportParameter> get copyWith =>
+      _$TestReportParameterCopyWithImpl<TestReportParameter>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! TestReportParameter) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      name,
+      o.name,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      documentation,
+      o.documentation,
     )) {
       return false;
     }
@@ -2574,7 +2985,10 @@ class TestReportTest extends BackboneElement {
     super.modifierExtension,
     this.name,
     this.description,
+    this.result,
+    this.period,
     required this.action,
+    this.log,
     super.disallowExtensions,
   }) : super();
 
@@ -2612,6 +3026,16 @@ class TestReportTest extends BackboneElement {
         'description',
         FhirString.fromJson,
       ),
+      result: JsonParser.parsePrimitive<TestReportActionResult>(
+        json,
+        'result',
+        TestReportActionResult.fromJson,
+      ),
+      period: JsonParser.parseObject<Period>(
+        json,
+        'period',
+        Period.fromJson,
+      ),
       action: (json['action'] as List<dynamic>)
           .map<TestReportAction>(
             (v) => TestReportAction.fromJson(
@@ -2619,6 +3043,11 @@ class TestReportTest extends BackboneElement {
             ),
           )
           .toList(),
+      log: JsonParser.parseObject<Attachment>(
+        json,
+        'log',
+        Attachment.fromJson,
+      ),
     );
   }
 
@@ -2666,7 +3095,8 @@ class TestReportTest extends BackboneElement {
 
   /// [name]
   /// The name of this test used for tracking/logging purposes by test
-  /// engines.
+  /// engines. This name links back to the test in the test script, so it
+  /// must be directly linked (usually the same).
   final FhirString? name;
 
   /// [description]
@@ -2674,9 +3104,24 @@ class TestReportTest extends BackboneElement {
   /// reporting purposes.
   final FhirString? description;
 
+  /// [result]
+  /// The overall result of this test.
+  final TestReportActionResult? result;
+
+  /// [period]
+  /// The start and end times running the test, to allow time taken to be
+  /// tracked. Accurate to at least milliseconds).
+  final Period? period;
+
   /// [action]
   /// Action would contain either an operation or an assertion.
   final List<TestReportAction> action;
+
+  /// [log]
+  /// A log of the internal execution of the tests, which might be useful for
+  /// subsequent investigations. The format is expected to be some kind of
+  /// text log, or at least comprehensible in a text editor.
+  final Attachment? log;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -2761,8 +3206,20 @@ class TestReportTest extends BackboneElement {
       description,
     );
     addField(
+      'result',
+      result,
+    );
+    addField(
+      'period',
+      period,
+    );
+    addField(
       'action',
       action,
+    );
+    addField(
+      'log',
+      log,
     );
     return json;
   }
@@ -2776,7 +3233,10 @@ class TestReportTest extends BackboneElement {
       'modifierExtension',
       'name',
       'description',
+      'result',
+      'period',
       'action',
+      'log',
     ];
   }
 
@@ -2809,8 +3269,20 @@ class TestReportTest extends BackboneElement {
         if (description != null) {
           fields.add(description!);
         }
+      case 'result':
+        if (result != null) {
+          fields.add(result!);
+        }
+      case 'period':
+        if (period != null) {
+          fields.add(period!);
+        }
       case 'action':
         fields.addAll(action);
+      case 'log':
+        if (log != null) {
+          fields.add(log!);
+        }
       default:
         if (checkValid) {
           throw ArgumentError('Invalid name: $fieldName');
@@ -2882,9 +3354,27 @@ class TestReportTest extends BackboneElement {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      result,
+      o.result,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      period,
+      o.period,
+    )) {
+      return false;
+    }
     if (!listEquals<TestReportAction>(
       action,
       o.action,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      log,
+      o.log,
     )) {
       return false;
     }

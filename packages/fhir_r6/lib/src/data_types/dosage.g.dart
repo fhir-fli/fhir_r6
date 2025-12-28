@@ -127,8 +127,8 @@ abstract class $DosageDoseAndRateCopyWith<T> extends $ElementCopyWith<T> {
     FhirString? id,
     List<FhirExtension>? extension_,
     CodeableConcept? type,
-    Range? doseX,
-    Ratio? rateX,
+    DoseXDosageDoseAndRate? doseX,
+    RateXDosageDoseAndRate? rateX,
     bool? disallowExtensions,
   });
 }
@@ -158,8 +158,12 @@ class _$DosageDoseAndRateCopyWithImpl<T>
         type: identical(type, fhirSentinel)
             ? _value.type
             : type as CodeableConcept?,
-        doseX: identical(doseX, fhirSentinel) ? _value.doseX : doseX as Range?,
-        rateX: identical(rateX, fhirSentinel) ? _value.rateX : rateX as Ratio?,
+        doseX: identical(doseX, fhirSentinel)
+            ? _value.doseX
+            : doseX as DoseXDosageDoseAndRate?,
+        rateX: identical(rateX, fhirSentinel)
+            ? _value.rateX
+            : rateX as RateXDosageDoseAndRate?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

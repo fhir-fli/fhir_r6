@@ -2747,8 +2747,8 @@ class ConceptMapTarget extends BackboneElement {
         FhirString.fromJson,
       ),
       property: (json['property'] as List<dynamic>?)
-          ?.map<ConceptMapProperty1>(
-            (v) => ConceptMapProperty1.fromJson(
+          ?.map<ConceptMapProperty>(
+            (v) => ConceptMapProperty.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -2842,7 +2842,7 @@ class ConceptMapTarget extends BackboneElement {
 
   /// [property]
   /// A property value for this source -> target mapping.
-  final List<ConceptMapProperty1>? property;
+  final List<ConceptMapProperty>? property;
 
   /// [dependsOn]
   /// A set of additional dependencies for this mapping to hold. This mapping
@@ -3252,6 +3252,7 @@ class ConceptMapProperty1 extends BackboneElement {
   /// [valueX]
   /// The value of this property. If the type chosen for this element is
   /// 'code', then the property SHALL be defined in a ConceptMap.property
+  /// element and that ConceptMap.property element SHALL have a system
   /// element.
   final ValueXConceptMapProperty valueX;
 
@@ -3629,7 +3630,10 @@ class ConceptMapDependsOn extends BackboneElement {
   final FhirCode attribute;
 
   /// [valueX]
-  /// Data element value that the map depends on / produces.
+  /// Data element value that the map depends on / produces. If the data type
+  /// is a code, that code SHALL come from the .group.source code system for
+  /// .dependsOn.valueCode or from the .group.target code system for
+  /// .product.valueCode.
   final ValueXConceptMapDependsOn? valueX;
 
   /// Getter for [valueCode] as a FhirCode

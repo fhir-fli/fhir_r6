@@ -10,23 +10,27 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchCarePlan extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [CarePlan]
+  @override
   SearchCarePlan identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [CarePlan]
+  @override
   SearchCarePlan date(
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}date'] = value.toString();
+    parameters['date'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -37,19 +41,9 @@ class SearchCarePlan extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}category'] =
-        system != null ? '$system|$value' : '$value';
-    return this;
-  }
-
-  /// a uri search for [instantiatesUri] in the resource
-  /// [CarePlan]
-  SearchCarePlan instantiatesUri(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    parameters['${modifier != null ? '$modifier' : ''}instantiates_uri'] =
-        value.toString();
+    parameters['category'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -60,20 +54,23 @@ class SearchCarePlan extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}intent'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['intent'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [CarePlan]
+  @override
   SearchCarePlan status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

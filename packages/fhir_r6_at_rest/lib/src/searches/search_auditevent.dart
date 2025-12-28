@@ -8,25 +8,15 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 /// A class to build query parameters for RESTful requests for
 /// the [AuditEvent] resource.
 class SearchAuditEvent extends SearchResource {
-  /// a token search for [code] in the resource
-  /// [AuditEvent]
-  SearchAuditEvent code(
-    FhirString value, {
-    FhirUri? system,
-    SearchModifier? modifier,
-  }) {
-    parameters['${modifier != null ? '$modifier' : ''}code'] =
-        system != null ? '$system|$value' : '$value';
-    return this;
-  }
-
   /// a date search for [date] in the resource
   /// [AuditEvent]
+  @override
   SearchAuditEvent date(
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}date'] = value.toString();
+    parameters['date'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -37,8 +27,9 @@ class SearchAuditEvent extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}action'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['action'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -49,20 +40,23 @@ class SearchAuditEvent extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}agent_role'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['agent_role'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
-  /// a token search for [category] in the resource
+  /// a string search for [entityDesc] in the resource
   /// [AuditEvent]
-  SearchAuditEvent category(
+  SearchAuditEvent entityDesc(
     FhirString value, {
-    FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}category'] =
-        system != null ? '$system|$value' : '$value';
+    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
+      throw ArgumentError('Modifier $modifier not allowed for string type');
+    }
+    parameters['entity_desc'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -73,8 +67,9 @@ class SearchAuditEvent extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}entity_role'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['entity_role'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -85,8 +80,9 @@ class SearchAuditEvent extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}outcome'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['outcome'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -96,8 +92,8 @@ class SearchAuditEvent extends SearchResource {
     FhirUri value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}policy'] =
-        value.toString();
+    parameters['policy'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -108,8 +104,35 @@ class SearchAuditEvent extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}purpose'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['purpose'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a token search for [subtype] in the resource
+  /// [AuditEvent]
+  SearchAuditEvent subtype(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    parameters['subtype'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a token search for [type] in the resource
+  /// [AuditEvent]
+  SearchAuditEvent type(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    parameters['type'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

@@ -24,7 +24,7 @@ abstract class $CoverageEligibilityRequestCopyWith<T>
     List<EligibilityRequestPurpose>? purpose,
     Reference? patient,
     List<CoverageEligibilityRequestEvent>? event,
-    FhirDate? servicedX,
+    ServicedXCoverageEligibilityRequest? servicedX,
     FhirDateTime? created,
     Reference? enterer,
     Reference? provider,
@@ -111,7 +111,7 @@ class _$CoverageEligibilityRequestCopyWithImpl<T>
             : event as List<CoverageEligibilityRequestEvent>?,
         servicedX: identical(servicedX, fhirSentinel)
             ? _value.servicedX
-            : servicedX as FhirDate?,
+            : servicedX as ServicedXCoverageEligibilityRequest?,
         created: identical(created, fhirSentinel)
             ? _value.created
             : (created as FhirDateTime?) ?? _value.created,
@@ -159,7 +159,7 @@ abstract class $CoverageEligibilityRequestEventCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    FhirDateTime? whenX,
+    WhenXCoverageEligibilityRequestEvent? whenX,
     bool? disallowExtensions,
   });
 }
@@ -194,7 +194,7 @@ class _$CoverageEligibilityRequestEventCopyWithImpl<T>
             : (type as CodeableConcept?) ?? _value.type,
         whenX: identical(whenX, fhirSentinel)
             ? _value.whenX
-            : (whenX as FhirDateTime?) ?? _value.whenX,
+            : (whenX as WhenXCoverageEligibilityRequestEvent?) ?? _value.whenX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -233,9 +233,7 @@ class _$CoverageEligibilityRequestSupportingInfoCopyWithImpl<T>
   final T Function(CoverageEligibilityRequestSupportingInfo) _then;
 
   _$CoverageEligibilityRequestSupportingInfoCopyWithImpl(
-    this._value,
-    this._then,
-  );
+      this._value, this._then);
 
   @override
   T call({
@@ -461,7 +459,7 @@ abstract class $CoverageEligibilityRequestDiagnosisCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    CodeableConcept? diagnosisX,
+    DiagnosisXCoverageEligibilityRequestDiagnosis? diagnosisX,
     bool? disallowExtensions,
   });
 }
@@ -492,7 +490,7 @@ class _$CoverageEligibilityRequestDiagnosisCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         diagnosisX: identical(diagnosisX, fhirSentinel)
             ? _value.diagnosisX
-            : diagnosisX as CodeableConcept?,
+            : diagnosisX as DiagnosisXCoverageEligibilityRequestDiagnosis?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

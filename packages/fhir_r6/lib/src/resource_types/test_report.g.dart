@@ -26,9 +26,12 @@ abstract class $TestReportCopyWith<T> extends $DomainResourceCopyWith<T> {
     FhirString? tester,
     FhirDateTime? issued,
     List<TestReportParticipant>? participant,
+    List<TestReportParameter>? parameter,
     TestReportSetup? setup,
     List<TestReportTest>? test,
     TestReportTeardown? teardown,
+    Attachment? presentedForm,
+    Attachment? log,
     bool? disallowExtensions,
   });
 }
@@ -58,9 +61,12 @@ class _$TestReportCopyWithImpl<T> implements $TestReportCopyWith<T> {
     Object? tester = fhirSentinel,
     Object? issued = fhirSentinel,
     Object? participant = fhirSentinel,
+    Object? parameter = fhirSentinel,
     Object? setup = fhirSentinel,
     Object? test = fhirSentinel,
     Object? teardown = fhirSentinel,
+    Object? presentedForm = fhirSentinel,
+    Object? log = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -108,6 +114,9 @@ class _$TestReportCopyWithImpl<T> implements $TestReportCopyWith<T> {
         participant: identical(participant, fhirSentinel)
             ? _value.participant
             : participant as List<TestReportParticipant>?,
+        parameter: identical(parameter, fhirSentinel)
+            ? _value.parameter
+            : parameter as List<TestReportParameter>?,
         setup: identical(setup, fhirSentinel)
             ? _value.setup
             : setup as TestReportSetup?,
@@ -117,6 +126,10 @@ class _$TestReportCopyWithImpl<T> implements $TestReportCopyWith<T> {
         teardown: identical(teardown, fhirSentinel)
             ? _value.teardown
             : teardown as TestReportTeardown?,
+        presentedForm: identical(presentedForm, fhirSentinel)
+            ? _value.presentedForm
+            : presentedForm as Attachment?,
+        log: identical(log, fhirSentinel) ? _value.log : log as Attachment?,
       ),
     );
   }
@@ -139,6 +152,7 @@ abstract class $TestReportParticipantCopyWith<T>
     List<FhirExtension>? modifierExtension,
     TestReportParticipantType? type,
     FhirUri? uri,
+    FhirUri? version,
     FhirString? display,
     bool? disallowExtensions,
   });
@@ -158,6 +172,7 @@ class _$TestReportParticipantCopyWithImpl<T>
     Object? modifierExtension = fhirSentinel,
     Object? type = fhirSentinel,
     Object? uri = fhirSentinel,
+    Object? version = fhirSentinel,
     Object? display = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -173,9 +188,10 @@ class _$TestReportParticipantCopyWithImpl<T>
         type: identical(type, fhirSentinel)
             ? _value.type
             : (type as TestReportParticipantType?) ?? _value.type,
-        uri: identical(uri, fhirSentinel)
-            ? _value.uri
-            : (uri as FhirUri?) ?? _value.uri,
+        uri: identical(uri, fhirSentinel) ? _value.uri : uri as FhirUri?,
+        version: identical(version, fhirSentinel)
+            ? _value.version
+            : version as FhirUri?,
         display: identical(display, fhirSentinel)
             ? _value.display
             : display as FhirString?,
@@ -190,6 +206,66 @@ class _$TestReportParticipantCopyWithImpl<T>
 extension TestReportParticipantCopyWithExtension on TestReportParticipant {
   $TestReportParticipantCopyWith<TestReportParticipant> get copyWith =>
       _$TestReportParticipantCopyWithImpl<TestReportParticipant>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $TestReportParameterCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    FhirString? name,
+    FhirMarkdown? documentation,
+    bool? disallowExtensions,
+  });
+}
+
+class _$TestReportParameterCopyWithImpl<T>
+    implements $TestReportParameterCopyWith<T> {
+  final TestReportParameter _value;
+  final T Function(TestReportParameter) _then;
+
+  _$TestReportParameterCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? name = fhirSentinel,
+    Object? documentation = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      TestReportParameter(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        name: identical(name, fhirSentinel)
+            ? _value.name
+            : (name as FhirString?) ?? _value.name,
+        documentation: identical(documentation, fhirSentinel)
+            ? _value.documentation
+            : documentation as FhirMarkdown?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension TestReportParameterCopyWithExtension on TestReportParameter {
+  $TestReportParameterCopyWith<TestReportParameter> get copyWith =>
+      _$TestReportParameterCopyWithImpl<TestReportParameter>(
         this,
         (value) => value,
       );
@@ -450,7 +526,7 @@ abstract class $TestReportRequirementCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirUri? linkX,
+    LinkXTestReportRequirement? linkX,
     bool? disallowExtensions,
   });
 }
@@ -479,8 +555,9 @@ class _$TestReportRequirementCopyWithImpl<T>
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
-        linkX:
-            identical(linkX, fhirSentinel) ? _value.linkX : linkX as FhirUri?,
+        linkX: identical(linkX, fhirSentinel)
+            ? _value.linkX
+            : linkX as LinkXTestReportRequirement?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -505,7 +582,10 @@ abstract class $TestReportTestCopyWith<T> extends $BackboneElementCopyWith<T> {
     List<FhirExtension>? modifierExtension,
     FhirString? name,
     FhirString? description,
+    TestReportActionResult? result,
+    Period? period,
     List<TestReportAction>? action,
+    Attachment? log,
     bool? disallowExtensions,
   });
 }
@@ -523,7 +603,10 @@ class _$TestReportTestCopyWithImpl<T> implements $TestReportTestCopyWith<T> {
     Object? modifierExtension = fhirSentinel,
     Object? name = fhirSentinel,
     Object? description = fhirSentinel,
+    Object? result = fhirSentinel,
+    Object? period = fhirSentinel,
     Object? action = fhirSentinel,
+    Object? log = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -539,9 +622,15 @@ class _$TestReportTestCopyWithImpl<T> implements $TestReportTestCopyWith<T> {
         description: identical(description, fhirSentinel)
             ? _value.description
             : description as FhirString?,
+        result: identical(result, fhirSentinel)
+            ? _value.result
+            : result as TestReportActionResult?,
+        period:
+            identical(period, fhirSentinel) ? _value.period : period as Period?,
         action: identical(action, fhirSentinel)
             ? _value.action
             : (action as List<TestReportAction>?) ?? _value.action,
+        log: identical(log, fhirSentinel) ? _value.log : log as Attachment?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

@@ -23,6 +23,7 @@ class SupplyRequest extends DomainResource {
     super.modifierExtension,
     this.identifier,
     this.status,
+    required this.intent,
     this.basedOn,
     this.category,
     this.priority,
@@ -111,6 +112,11 @@ class SupplyRequest extends DomainResource {
         'status',
         SupplyRequestStatus.fromJson,
       ),
+      intent: JsonParser.parsePrimitive<RequestIntent>(
+        json,
+        'intent',
+        RequestIntent.fromJson,
+      )!,
       basedOn: (json['basedOn'] as List<dynamic>?)
           ?.map<Reference>(
             (v) => Reference.fromJson(
@@ -246,6 +252,10 @@ class SupplyRequest extends DomainResource {
   /// [status]
   /// Status of the supply request.
   final SupplyRequestStatus? status;
+
+  /// [intent]
+  /// Whether the request is a proposal, plan, or an original order.
+  final RequestIntent intent;
 
   /// [basedOn]
   /// Plan/proposal/order fulfilled by this request.
@@ -422,6 +432,10 @@ class SupplyRequest extends DomainResource {
       status,
     );
     addField(
+      'intent',
+      intent,
+    );
+    addField(
       'basedOn',
       basedOn,
     );
@@ -498,6 +512,7 @@ class SupplyRequest extends DomainResource {
       'modifierExtension',
       'identifier',
       'status',
+      'intent',
       'basedOn',
       'category',
       'priority',
@@ -564,6 +579,8 @@ class SupplyRequest extends DomainResource {
         if (status != null) {
           fields.add(status!);
         }
+      case 'intent':
+        fields.add(intent);
       case 'basedOn':
         if (basedOn != null) {
           fields.addAll(basedOn!);
@@ -726,6 +743,12 @@ class SupplyRequest extends DomainResource {
     if (!equalsDeepWithNull(
       status,
       o.status,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      intent,
+      o.intent,
     )) {
       return false;
     }

@@ -3,23 +3,32 @@ part of '../primitive_types.dart';
 
 /// Actual enum for TransportStatus
 enum TransportStatusEnum {
+  /// preparation
+  preparation,
+
   /// in-progress
   inProgress,
+
+  /// not-done
+  notDone,
+
+  /// suspended
+  suspended,
+
+  /// stopped
+  stopped,
+
+  /// on-hold
+  onHold,
 
   /// completed
   completed,
 
-  /// abandoned
-  abandoned,
-
-  /// cancelled
-  cancelled,
-
-  /// planned
-  planned,
-
   /// entered-in-error
   enteredInError,
+
+  /// unknown
+  unknown,
   ;
 
   /// Converts the enum value to a string.
@@ -29,18 +38,24 @@ enum TransportStatusEnum {
   @override
   String toString() {
     switch (this) {
+      case TransportStatusEnum.preparation:
+        return 'preparation';
       case TransportStatusEnum.inProgress:
         return 'in-progress';
+      case TransportStatusEnum.notDone:
+        return 'not-done';
+      case TransportStatusEnum.suspended:
+        return 'suspended';
+      case TransportStatusEnum.stopped:
+        return 'stopped';
+      case TransportStatusEnum.onHold:
+        return 'on-hold';
       case TransportStatusEnum.completed:
         return 'completed';
-      case TransportStatusEnum.abandoned:
-        return 'abandoned';
-      case TransportStatusEnum.cancelled:
-        return 'cancelled';
-      case TransportStatusEnum.planned:
-        return 'planned';
       case TransportStatusEnum.enteredInError:
         return 'entered-in-error';
+      case TransportStatusEnum.unknown:
+        return 'unknown';
     }
   }
 
@@ -58,18 +73,24 @@ enum TransportStatusEnum {
       return null;
     }
     switch (value) {
+      case 'preparation':
+        return TransportStatusEnum.preparation;
       case 'in-progress':
         return TransportStatusEnum.inProgress;
+      case 'not-done':
+        return TransportStatusEnum.notDone;
+      case 'suspended':
+        return TransportStatusEnum.suspended;
+      case 'stopped':
+        return TransportStatusEnum.stopped;
+      case 'on-hold':
+        return TransportStatusEnum.onHold;
       case 'completed':
         return TransportStatusEnum.completed;
-      case 'abandoned':
-        return TransportStatusEnum.abandoned;
-      case 'cancelled':
-        return TransportStatusEnum.cancelled;
-      case 'planned':
-        return TransportStatusEnum.planned;
       case 'entered-in-error':
         return TransportStatusEnum.enteredInError;
+      case 'unknown':
+        return TransportStatusEnum.unknown;
     }
     return null;
   }
@@ -144,6 +165,19 @@ class TransportStatus extends FhirCodeEnum {
   /// An actual enum that can be used for TransportStatus
   final TransportStatusEnum? valueEnum;
 
+  /// preparation
+  static const TransportStatus preparation = TransportStatus._(
+    valueString: 'preparation',
+    valueEnum: TransportStatusEnum.preparation,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/transport-status',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Preparation',
+    ),
+  );
+
   /// in_progress
   static const TransportStatus inProgress = TransportStatus._(
     valueString: 'in-progress',
@@ -151,9 +185,61 @@ class TransportStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/transport-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'In Progress',
+    ),
+  );
+
+  /// not_done
+  static const TransportStatus notDone = TransportStatus._(
+    valueString: 'not-done',
+    valueEnum: TransportStatusEnum.notDone,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/transport-status',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Not Done',
+    ),
+  );
+
+  /// suspended
+  static const TransportStatus suspended = TransportStatus._(
+    valueString: 'suspended',
+    valueEnum: TransportStatusEnum.suspended,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/transport-status',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Suspended',
+    ),
+  );
+
+  /// stopped
+  static const TransportStatus stopped = TransportStatus._(
+    valueString: 'stopped',
+    valueEnum: TransportStatusEnum.stopped,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/transport-status',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Stopped',
+    ),
+  );
+
+  /// on_hold
+  static const TransportStatus onHold = TransportStatus._(
+    valueString: 'on-hold',
+    valueEnum: TransportStatusEnum.onHold,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/transport-status',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'On Hold',
     ),
   );
 
@@ -164,48 +250,9 @@ class TransportStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/transport-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Completed',
-    ),
-  );
-
-  /// abandoned
-  static const TransportStatus abandoned = TransportStatus._(
-    valueString: 'abandoned',
-    valueEnum: TransportStatusEnum.abandoned,
-    system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/transport-status',
-    ),
-    version: FhirString._(valueString: '5.0.0'),
-    display: FhirString._(
-      valueString: 'Abandoned',
-    ),
-  );
-
-  /// cancelled
-  static const TransportStatus cancelled = TransportStatus._(
-    valueString: 'cancelled',
-    valueEnum: TransportStatusEnum.cancelled,
-    system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/transport-status',
-    ),
-    version: FhirString._(valueString: '5.0.0'),
-    display: FhirString._(
-      valueString: 'Cancelled',
-    ),
-  );
-
-  /// planned
-  static const TransportStatus planned = TransportStatus._(
-    valueString: 'planned',
-    valueEnum: TransportStatusEnum.planned,
-    system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/transport-status',
-    ),
-    version: FhirString._(valueString: '5.0.0'),
-    display: FhirString._(
-      valueString: 'Planned',
     ),
   );
 
@@ -216,20 +263,36 @@ class TransportStatus extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/transport-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Entered In Error',
     ),
   );
 
+  /// unknown
+  static const TransportStatus unknown = TransportStatus._(
+    valueString: 'unknown',
+    valueEnum: TransportStatusEnum.unknown,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/transport-status',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'Unknown',
+    ),
+  );
+
   /// List of all enum-like values
   static final List<TransportStatus> values = [
+    preparation,
     inProgress,
+    notDone,
+    suspended,
+    stopped,
+    onHold,
     completed,
-    abandoned,
-    cancelled,
-    planned,
     enteredInError,
+    unknown,
   ];
 
   /// Returns the enum value with an element attached

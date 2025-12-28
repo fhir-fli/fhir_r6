@@ -31,6 +31,7 @@ class FhirDateTime extends FhirDateTimeBase
         ValueXParametersParameter,
         OccurrenceXProcedure,
         AnswerXQuestionnaireEnableWhen,
+        ValueXQuestionnaireAnswerOption,
         ValueXQuestionnaireInitial,
         ValueXQuestionnaireResponseAnswer,
         ValueXStructureMapParameter,
@@ -46,22 +47,22 @@ class FhirDateTime extends FhirDateTimeBase
         PatternXElementDefinition,
         ValueXElementDefinitionExample,
         ValueXExtension,
-        EventXEvidenceVariableTimeFromEvent,
         MeasureScoreXMeasureReportGroup,
         MeasureScoreXMeasureReportStratum,
         TimingXTriggerDefinition,
-        OccurrenceXAdverseEvent,
         OccurrenceXChargeItem,
         OccurrenceXContractAction,
+        IdentifiedXDetectedIssue,
         OccurrenceXDeviceRequest,
         TimingXDeviceUsage,
-        OccurenceXMedicationAdministration,
+        OccurrenceXMedicationAdministration,
         EffectiveXMedicationStatement,
         EffectiveXObservation,
         TimingXRequestOrchestrationAction,
         OccurrenceXServiceRequest,
         OccurrenceXSupplyDelivery,
         OccurrenceXSupplyRequest,
+        TimeXSpecimenProcessing,
         ValueXDataRequirementDateFilter,
         ValueXDataRequirementValueFilter,
         DeceasedXPatient,
@@ -69,23 +70,23 @@ class FhirDateTime extends FhirDateTimeBase
         DeceasedXPractitioner,
         MinValueXElementDefinition,
         MaxValueXElementDefinition,
+        CauseXAdverseEvent,
+        EffectXAdverseEvent,
         OccurredXAuditEvent,
         CollectedXBiologicallyDerivedProductCollection,
         WhenXClaimEvent,
         WhenXClaimResponseEvent,
-        EffectiveXClinicalImpression,
+        EffectiveXClinicalAssessment,
         OccurrenceXCommunicationRequest,
         WhenXCoverageEligibilityRequestEvent,
         WhenXCoverageEligibilityResponseEvent,
-        IdentifiedXDetectedIssue,
         EffectiveXDiagnosticReport,
         WhenXExplanationOfBenefitEvent,
         OccurrenceXNutritionIntake,
         OccurredXProvenance,
         DateXRegulatedAuthorizationCase,
         OccurrenceXRiskAssessment,
-        CollectedXSpecimenCollection,
-        TimeXSpecimenProcessing {
+        CollectedXSpecimenCollection {
   // --------------------------------------------------------------------------
   // Private Internal Constructor
   // --------------------------------------------------------------------------
@@ -272,7 +273,7 @@ class FhirDateTime extends FhirDateTimeBase
   @override
   bool equalsDeep(FhirBase? other) =>
       other is FhirDateTime &&
-      other.valueString == valueString &&
+      (_compare(Comparator.equal, other) ?? false) &&
       ((element == null && other.element == null) ||
           (element != null && element!.equalsDeep(other.element)));
 

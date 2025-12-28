@@ -53,8 +53,8 @@ Resource resourceWithNewId(Resource resource) {
       return (resource as Claim).copyWith(id: newId);
     case R6ResourceType.ClaimResponse:
       return (resource as ClaimResponse).copyWith(id: newId);
-    case R6ResourceType.ClinicalImpression:
-      return (resource as ClinicalImpression).copyWith(id: newId);
+    case R6ResourceType.ClinicalAssessment:
+      return (resource as ClinicalAssessment).copyWith(id: newId);
     case R6ResourceType.ClinicalUseDefinition:
       return (resource as ClinicalUseDefinition).copyWith(id: newId);
     case R6ResourceType.CodeSystem:
@@ -87,6 +87,8 @@ Resource resourceWithNewId(Resource resource) {
       return (resource as DetectedIssue).copyWith(id: newId);
     case R6ResourceType.Device:
       return (resource as Device).copyWith(id: newId);
+    case R6ResourceType.DeviceAlert:
+      return (resource as DeviceAlert).copyWith(id: newId);
     case R6ResourceType.DeviceAssociation:
       return (resource as DeviceAssociation).copyWith(id: newId);
     case R6ResourceType.DeviceDefinition:
@@ -117,8 +119,6 @@ Resource resourceWithNewId(Resource resource) {
       return (resource as EventDefinition).copyWith(id: newId);
     case R6ResourceType.Evidence:
       return (resource as Evidence).copyWith(id: newId);
-    case R6ResourceType.EvidenceReport:
-      return (resource as EvidenceReport).copyWith(id: newId);
     case R6ResourceType.EvidenceVariable:
       return (resource as EvidenceVariable).copyWith(id: newId);
     case R6ResourceType.ExampleScenario:
@@ -163,6 +163,8 @@ Resource resourceWithNewId(Resource resource) {
       return (resource as Ingredient).copyWith(id: newId);
     case R6ResourceType.InsurancePlan:
       return (resource as InsurancePlan).copyWith(id: newId);
+    case R6ResourceType.InsuranceProduct:
+      return (resource as InsuranceProduct).copyWith(id: newId);
     case R6ResourceType.InventoryItem:
       return (resource as InventoryItem).copyWith(id: newId);
     case R6ResourceType.InventoryReport:
@@ -199,6 +201,8 @@ Resource resourceWithNewId(Resource resource) {
       return (resource as MessageDefinition).copyWith(id: newId);
     case R6ResourceType.MessageHeader:
       return (resource as MessageHeader).copyWith(id: newId);
+    case R6ResourceType.MolecularDefinition:
+      return (resource as MolecularDefinition).copyWith(id: newId);
     case R6ResourceType.MolecularSequence:
       return (resource as MolecularSequence).copyWith(id: newId);
     case R6ResourceType.NamingSystem:
@@ -235,6 +239,8 @@ Resource resourceWithNewId(Resource resource) {
       return (resource as Permission).copyWith(id: newId);
     case R6ResourceType.Person:
       return (resource as Person).copyWith(id: newId);
+    case R6ResourceType.PersonalRelationship:
+      return (resource as PersonalRelationship).copyWith(id: newId);
     case R6ResourceType.PlanDefinition:
       return (resource as PlanDefinition).copyWith(id: newId);
     case R6ResourceType.Practitioner:

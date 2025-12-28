@@ -32,7 +32,7 @@ abstract class $LocationCopyWith<T> extends $DomainResourceCopyWith<T> {
     Reference? managingOrganization,
     Reference? partOf,
     List<CodeableConcept>? characteristic,
-    List<Availability>? hoursOfOperation,
+    Availability? hoursOfOperation,
     List<VirtualServiceDetail>? virtualService,
     List<Reference>? endpoint,
     bool? disallowExtensions,
@@ -139,7 +139,7 @@ class _$LocationCopyWithImpl<T> implements $LocationCopyWith<T> {
             : characteristic as List<CodeableConcept>?,
         hoursOfOperation: identical(hoursOfOperation, fhirSentinel)
             ? _value.hoursOfOperation
-            : hoursOfOperation as List<Availability>?,
+            : hoursOfOperation as Availability?,
         virtualService: identical(virtualService, fhirSentinel)
             ? _value.virtualService
             : virtualService as List<VirtualServiceDetail>?,

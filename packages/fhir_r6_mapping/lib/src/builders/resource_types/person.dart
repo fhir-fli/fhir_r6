@@ -1427,10 +1427,7 @@ class PersonCommunicationBuilder extends BackboneElementBuilder {
   String get fhirType => 'PersonCommunication';
 
   /// [language]
-  /// The ISO-639-1 alpha 2 code in lower case for the language, optionally
-  /// followed by a hyphen and the ISO-3166-1 alpha 2 code for the region in
-  /// upper case; e.g. "en" for English, or "en-US" for American English
-  /// versus "en-AU" for Australian English.
+  /// The language which may be used to communicate with the individual.
   CodeableConceptBuilder? language;
 
   /// [preferred]

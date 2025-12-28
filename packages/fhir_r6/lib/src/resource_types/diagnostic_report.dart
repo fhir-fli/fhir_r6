@@ -32,11 +32,13 @@ class DiagnosticReport extends DomainResource {
     this.category,
     required this.code,
     this.subject,
+    this.relatesTo,
     this.encounter,
     EffectiveXDiagnosticReport? effectiveX,
     FhirDateTime? effectiveDateTime,
     Period? effectivePeriod,
     this.issued,
+    this.procedure,
     this.performer,
     this.resultsInterpreter,
     this.specimen,
@@ -48,7 +50,9 @@ class DiagnosticReport extends DomainResource {
     this.composition,
     this.conclusion,
     this.conclusionCode,
+    this.recomendation,
     this.presentedForm,
+    this.communication,
   })  : effectiveX = effectiveX ?? effectiveDateTime ?? effectivePeriod,
         super(
           resourceType: R6ResourceType.DiagnosticReport,
@@ -141,6 +145,13 @@ class DiagnosticReport extends DomainResource {
         'subject',
         Reference.fromJson,
       ),
+      relatesTo: (json['relatesTo'] as List<dynamic>?)
+          ?.map<RelatedArtifact>(
+            (v) => RelatedArtifact.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       encounter: JsonParser.parseObject<Reference>(
         json,
         'encounter',
@@ -158,6 +169,13 @@ class DiagnosticReport extends DomainResource {
         'issued',
         FhirInstant.fromJson,
       ),
+      procedure: (json['procedure'] as List<dynamic>?)
+          ?.map<Reference>(
+            (v) => Reference.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       performer: (json['performer'] as List<dynamic>?)
           ?.map<Reference>(
             (v) => Reference.fromJson(
@@ -225,8 +243,15 @@ class DiagnosticReport extends DomainResource {
         FhirMarkdown.fromJson,
       ),
       conclusionCode: (json['conclusionCode'] as List<dynamic>?)
-          ?.map<CodeableConcept>(
-            (v) => CodeableConcept.fromJson(
+          ?.map<CodeableReference>(
+            (v) => CodeableReference.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      recomendation: (json['recomendation'] as List<dynamic>?)
+          ?.map<CodeableReference>(
+            (v) => CodeableReference.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -234,6 +259,13 @@ class DiagnosticReport extends DomainResource {
       presentedForm: (json['presentedForm'] as List<dynamic>?)
           ?.map<Attachment>(
             (v) => Attachment.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      communication: (json['communication'] as List<dynamic>?)
+          ?.map<Reference>(
+            (v) => Reference.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -312,9 +344,14 @@ class DiagnosticReport extends DomainResource {
   /// collected from a variety of other sources.
   final Reference? subject;
 
+  /// [relatesTo]
+  /// Other DiagnosticReports that the current DiagnosticReport replaces,
+  /// amendens, extends, or otherwise relates to.
+  final List<RelatedArtifact>? relatesTo;
+
   /// [encounter]
-  /// The healthcare event (e.g. a patient and healthcare provider
-  /// interaction) which this DiagnosticReport is about.
+  /// The encounter (e.g. a patient and healthcare provider interaction) that
+  /// is associated with the DiagnosticReport.
   final Reference? encounter;
 
   /// [effectiveX]
@@ -334,6 +371,10 @@ class DiagnosticReport extends DomainResource {
   /// The date and time that this version of the report was made available to
   /// providers, typically after the report was reviewed and verified.
   final FhirInstant? issued;
+
+  /// [procedure]
+  /// The procedure(s) that are reported on in the DiagnosticReport.
+  final List<Reference>? procedure;
 
   /// [performer]
   /// The diagnostic service that is responsible for issuing the report.
@@ -394,15 +435,27 @@ class DiagnosticReport extends DomainResource {
   final FhirMarkdown? conclusion;
 
   /// [conclusionCode]
-  /// One or more codes that represent the summary conclusion
-  /// (interpretation/impression) of the diagnostic report.
-  final List<CodeableConcept>? conclusionCode;
+  /// One or more codes and/or references that represent the summary
+  /// conclusion (interpretation/impression) of the diagnostic report.
+  final List<CodeableReference>? conclusionCode;
+
+  /// [recomendation]
+  /// Proposed follow-up actions based on the findings and interpretations of
+  /// the diagnostic test for which this report is the subject.
+  final List<CodeableReference>? recomendation;
 
   /// [presentedForm]
   /// Rich text representation of the entire result as issued by the
   /// diagnostic service. Multiple formats are allowed but they SHALL be
   /// semantically equivalent.
   final List<Attachment>? presentedForm;
+
+  /// [communication]
+  /// Communications initiated during the generation of the DiagnosticReport
+  /// by members of the organization fulfilling that order. e.g. direct
+  /// communication of time critical results by the radiologist to the
+  /// referring physician.
+  final List<Reference>? communication;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -524,6 +577,10 @@ class DiagnosticReport extends DomainResource {
       subject,
     );
     addField(
+      'relatesTo',
+      relatesTo,
+    );
+    addField(
       'encounter',
       encounter,
     );
@@ -538,6 +595,10 @@ class DiagnosticReport extends DomainResource {
     addField(
       'issued',
       issued,
+    );
+    addField(
+      'procedure',
+      procedure,
     );
     addField(
       'performer',
@@ -584,8 +645,16 @@ class DiagnosticReport extends DomainResource {
       conclusionCode,
     );
     addField(
+      'recomendation',
+      recomendation,
+    );
+    addField(
       'presentedForm',
       presentedForm,
+    );
+    addField(
+      'communication',
+      communication,
     );
     return json;
   }
@@ -608,9 +677,11 @@ class DiagnosticReport extends DomainResource {
       'category',
       'code',
       'subject',
+      'relatesTo',
       'encounter',
       'effectiveX',
       'issued',
+      'procedure',
       'performer',
       'resultsInterpreter',
       'specimen',
@@ -622,7 +693,9 @@ class DiagnosticReport extends DomainResource {
       'composition',
       'conclusion',
       'conclusionCode',
+      'recomendation',
       'presentedForm',
+      'communication',
     ];
   }
 
@@ -687,6 +760,10 @@ class DiagnosticReport extends DomainResource {
         if (subject != null) {
           fields.add(subject!);
         }
+      case 'relatesTo':
+        if (relatesTo != null) {
+          fields.addAll(relatesTo!);
+        }
       case 'encounter':
         if (encounter != null) {
           fields.add(encounter!);
@@ -706,6 +783,10 @@ class DiagnosticReport extends DomainResource {
       case 'issued':
         if (issued != null) {
           fields.add(issued!);
+        }
+      case 'procedure':
+        if (procedure != null) {
+          fields.addAll(procedure!);
         }
       case 'performer':
         if (performer != null) {
@@ -751,9 +832,17 @@ class DiagnosticReport extends DomainResource {
         if (conclusionCode != null) {
           fields.addAll(conclusionCode!);
         }
+      case 'recomendation':
+        if (recomendation != null) {
+          fields.addAll(recomendation!);
+        }
       case 'presentedForm':
         if (presentedForm != null) {
           fields.addAll(presentedForm!);
+        }
+      case 'communication':
+        if (communication != null) {
+          fields.addAll(communication!);
         }
       default:
         if (checkValid) {
@@ -880,6 +969,12 @@ class DiagnosticReport extends DomainResource {
     )) {
       return false;
     }
+    if (!listEquals<RelatedArtifact>(
+      relatesTo,
+      o.relatesTo,
+    )) {
+      return false;
+    }
     if (!equalsDeepWithNull(
       encounter,
       o.encounter,
@@ -895,6 +990,12 @@ class DiagnosticReport extends DomainResource {
     if (!equalsDeepWithNull(
       issued,
       o.issued,
+    )) {
+      return false;
+    }
+    if (!listEquals<Reference>(
+      procedure,
+      o.procedure,
     )) {
       return false;
     }
@@ -958,15 +1059,27 @@ class DiagnosticReport extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!listEquals<CodeableReference>(
       conclusionCode,
       o.conclusionCode,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableReference>(
+      recomendation,
+      o.recomendation,
     )) {
       return false;
     }
     if (!listEquals<Attachment>(
       presentedForm,
       o.presentedForm,
+    )) {
+      return false;
+    }
+    if (!listEquals<Reference>(
+      communication,
+      o.communication,
     )) {
       return false;
     }

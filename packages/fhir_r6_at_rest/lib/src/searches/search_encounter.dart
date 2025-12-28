@@ -10,13 +10,15 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchEncounter extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Encounter]
+  @override
   SearchEncounter identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -27,18 +29,21 @@ class SearchEncounter extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}type'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['type'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [Encounter]
+  @override
   SearchEncounter date(
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}date'] = value.toString();
+    parameters['date'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -49,8 +54,9 @@ class SearchEncounter extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}class'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['class'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -60,8 +66,8 @@ class SearchEncounter extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}date_start'] =
-        value.toString();
+    parameters['date_start'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -72,8 +78,9 @@ class SearchEncounter extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}diagnosis_code'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['diagnosis_code'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -83,8 +90,8 @@ class SearchEncounter extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}end_date'] =
-        value.toString();
+    parameters['end_date'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -100,8 +107,20 @@ class SearchEncounter extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}length'] =
-        '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}';
+    parameters['length'] = (modifier != null
+        ? '$modifier:$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}');
+    return this;
+  }
+
+  /// a date search for [locationPeriod] in the resource
+  /// [Encounter]
+  SearchEncounter locationPeriod(
+    FhirDateTime value, {
+    SearchModifier? modifier,
+  }) {
+    parameters['location_period'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -112,8 +131,9 @@ class SearchEncounter extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}participant_type'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['participant_type'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -124,8 +144,9 @@ class SearchEncounter extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}reason_code'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['reason_code'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -136,20 +157,23 @@ class SearchEncounter extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}special_arrangement'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['special_arrangement'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [Encounter]
+  @override
   SearchEncounter status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -160,8 +184,9 @@ class SearchEncounter extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}subject_status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['subject_status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

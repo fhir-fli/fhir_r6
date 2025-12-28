@@ -197,8 +197,8 @@ class Composition extends DomainResource {
         Reference.fromJson,
       ),
       relatesTo: (json['relatesTo'] as List<dynamic>?)
-          ?.map<RelatedArtifact>(
-            (v) => RelatedArtifact.fromJson(
+          ?.map<CompositionRelatesTo>(
+            (v) => CompositionRelatesTo.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -278,7 +278,7 @@ class Composition extends DomainResource {
   final List<Identifier>? identifier;
 
   /// [version]
-  /// An explicitly assigned identifer of a variation of the content in the
+  /// An explicitly assigned identifier of a variation of the content in the
   /// Composition.
   final FhirString? version;
 
@@ -355,8 +355,8 @@ class Composition extends DomainResource {
 
   /// [relatesTo]
   /// Relationships that this composition has with other compositions or
-  /// documents that already exist.
-  final List<RelatedArtifact>? relatesTo;
+  /// documents (FHIR or non-FHIR resources) that already exist.
+  final List<CompositionRelatesTo>? relatesTo;
 
   /// [event]
   /// The clinical service, such as a colonoscopy or an appendectomy, being
@@ -867,7 +867,7 @@ class Composition extends DomainResource {
     )) {
       return false;
     }
-    if (!listEquals<RelatedArtifact>(
+    if (!listEquals<CompositionRelatesTo>(
       relatesTo,
       o.relatesTo,
     )) {
@@ -1209,6 +1209,350 @@ class CompositionAttester extends BackboneElement {
     if (!equalsDeepWithNull(
       party,
       o.party,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [CompositionRelatesTo]
+/// Relationships that this composition has with other compositions or
+/// documents (FHIR or non-FHIR resources) that already exist.
+class CompositionRelatesTo extends BackboneElement {
+  /// Primary constructor for
+  /// [CompositionRelatesTo]
+
+  const CompositionRelatesTo({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    required this.type,
+    required this.targetX,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory CompositionRelatesTo.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return CompositionRelatesTo(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      type: JsonParser.parsePrimitive<ArtifactRelationshipType>(
+        json,
+        'type',
+        ArtifactRelationshipType.fromJson,
+      )!,
+      targetX: JsonParser.parsePolymorphic<TargetXCompositionRelatesTo>(
+        json,
+        {
+          'targetUri': FhirUri.fromJson,
+          'targetAttachment': Attachment.fromJson,
+          'targetCanonical': FhirCanonical.fromJson,
+          'targetReference': Reference.fromJson,
+          'targetMarkdown': FhirMarkdown.fromJson,
+        },
+      )!,
+    );
+  }
+
+  /// Deserialize [CompositionRelatesTo]
+  /// from a [String] or [YamlMap] object
+  factory CompositionRelatesTo.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return CompositionRelatesTo.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return CompositionRelatesTo.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'CompositionRelatesTo '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [CompositionRelatesTo]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory CompositionRelatesTo.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return CompositionRelatesTo.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'CompositionRelatesTo';
+
+  /// [type]
+  /// The type of relationship to the related artifact.
+  final ArtifactRelationshipType type;
+
+  /// [targetX]
+  /// The artifact that is related to this Composition Resource.
+  final TargetXCompositionRelatesTo targetX;
+
+  /// Getter for [targetUri] as a FhirUri
+  FhirUri? get targetUri => targetX.isAs<FhirUri>();
+
+  /// Getter for [targetAttachment] as a Attachment
+  Attachment? get targetAttachment => targetX.isAs<Attachment>();
+
+  /// Getter for [targetCanonical] as a FhirCanonical
+  FhirCanonical? get targetCanonical => targetX.isAs<FhirCanonical>();
+
+  /// Getter for [targetReference] as a Reference
+  Reference? get targetReference => targetX.isAs<Reference>();
+
+  /// Getter for [targetMarkdown] as a FhirMarkdown
+  FhirMarkdown? get targetMarkdown => targetX.isAs<FhirMarkdown>();
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'type',
+      type,
+    );
+    final targetXFhirType = targetX.fhirType;
+    addField(
+      'target${targetXFhirType.capitalize()}',
+      targetX,
+    );
+
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'type',
+      'targetX',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'type':
+        fields.add(type);
+      case 'target':
+        fields.add(targetX);
+      case 'targetX':
+        fields.add(targetX);
+      case 'targetUri':
+        if (targetX is FhirUri) {
+          fields.add(targetX);
+        }
+      case 'targetAttachment':
+        if (targetX is Attachment) {
+          fields.add(targetX);
+        }
+      case 'targetCanonical':
+        if (targetX is FhirCanonical) {
+          fields.add(targetX);
+        }
+      case 'targetReference':
+        if (targetX is Reference) {
+          fields.add(targetX);
+        }
+      case 'targetMarkdown':
+        if (targetX is FhirMarkdown) {
+          fields.add(targetX);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  CompositionRelatesTo clone() => copyWith();
+
+  /// Copy function for [CompositionRelatesTo]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $CompositionRelatesToCopyWith<CompositionRelatesTo> get copyWith =>
+      _$CompositionRelatesToCopyWithImpl<CompositionRelatesTo>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! CompositionRelatesTo) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      type,
+      o.type,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      targetX,
+      o.targetX,
     )) {
       return false;
     }
@@ -1685,6 +2029,10 @@ class CompositionSection extends BackboneElement {
   /// [author]
   /// Identifies who is responsible for the information in this section, not
   /// necessarily who typed it in.
+  ///
+  /// The actual author of the section when it is not the author of the
+  /// composition. If author is not specified, the author is assumed to be
+  /// the author of the parent section or the author of the composition.
   final List<Reference>? author;
 
   /// [focus]

@@ -1340,6 +1340,7 @@ class ObservationDefinitionQualifiedValue extends BackboneElement {
     this.normalCodedValueSet,
     this.abnormalCodedValueSet,
     this.criticalCodedValueSet,
+    this.interpretation,
     super.disallowExtensions,
   }) : super();
 
@@ -1429,6 +1430,13 @@ class ObservationDefinitionQualifiedValue extends BackboneElement {
         'criticalCodedValueSet',
         FhirCanonical.fromJson,
       ),
+      interpretation: (json['interpretation'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -1528,6 +1536,11 @@ class ObservationDefinitionQualifiedValue extends BackboneElement {
   /// The set of critical coded results for qualitative observations that
   /// match the criteria of this set of qualified values.
   final FhirCanonical? criticalCodedValueSet;
+
+  /// [interpretation]
+  /// The expected coded interpretation values of an observation that matches
+  /// this qualified interval. For example, high, low, normal.
+  final List<CodeableConcept>? interpretation;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1651,6 +1664,10 @@ class ObservationDefinitionQualifiedValue extends BackboneElement {
       'criticalCodedValueSet',
       criticalCodedValueSet,
     );
+    addField(
+      'interpretation',
+      interpretation,
+    );
     return json;
   }
 
@@ -1673,6 +1690,7 @@ class ObservationDefinitionQualifiedValue extends BackboneElement {
       'normalCodedValueSet',
       'abnormalCodedValueSet',
       'criticalCodedValueSet',
+      'interpretation',
     ];
   }
 
@@ -1744,6 +1762,10 @@ class ObservationDefinitionQualifiedValue extends BackboneElement {
       case 'criticalCodedValueSet':
         if (criticalCodedValueSet != null) {
           fields.add(criticalCodedValueSet!);
+        }
+      case 'interpretation':
+        if (interpretation != null) {
+          fields.addAll(interpretation!);
         }
       default:
         if (checkValid) {
@@ -1875,6 +1897,12 @@ class ObservationDefinitionQualifiedValue extends BackboneElement {
     if (!equalsDeepWithNull(
       criticalCodedValueSet,
       o.criticalCodedValueSet,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConcept>(
+      interpretation,
+      o.interpretation,
     )) {
       return false;
     }

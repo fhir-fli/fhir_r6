@@ -71,7 +71,7 @@ void oidTest() {
       expect(
         () => FhirOid.fromJson({'value': 123}),
         throwsA(
-          isA<TypeError>(),
+          isA<ArgumentError>(),
         ),
       );
     });
@@ -121,4 +121,7 @@ void oidTest() {
       expect(fhirOid.toJsonString(), equals('{"value":"$validOid"}'));
     });
   });
+}
+void main() {
+  oidTest();
 }

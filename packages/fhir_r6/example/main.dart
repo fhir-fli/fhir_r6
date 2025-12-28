@@ -51,40 +51,16 @@ void main() {
   final boolValue = myBoolean.valueBoolean;
 
 // Example with a polymorphic field
-  final allergyIntolerance = AllergyIntolerance(
-    id: FhirString('456'),
-    patient: Reference(reference: FhirString('Patient/123')),
-    onsetX: FhirDateTime.fromString('2023-01-01T00:00:00Z'),
-    reaction: [
-      AllergyIntoleranceReaction(
-        manifestation: [
-          CodeableReference(
-            concept: CodeableConcept(
-              coding: [
-                Coding(
-                  system: FhirUri('http://snomed.info/sct'),
-                  code: FhirCode('123456'),
-                  display: FhirString('Peanut Allergy'),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ],
+  final patient2 = Patient(
+    multipleBirthX: true.toFhirBoolean,
+    name: [HumanName(family: 'LastName'.toFhirString)],
   );
 
 // Access polymorphic fields safely
-  if (allergyIntolerance.onsetAge != null) {
-    // Work with Age
-  } else if (allergyIntolerance.onsetDateTime != null) {
-    // Work with DateTime
-  } else if (allergyIntolerance.onsetPeriod != null) {
-    // Work with Period
-  } else if (allergyIntolerance.onsetRange != null) {
-    // Work with Range
-  } else if (allergyIntolerance.onsetString != null) {
-    // Work with String
+  if (patient2.multipleBirthBoolean != null) {
+    // Work with boolean
+  } else if (patient2.multipleBirthInteger != null) {
+    // Work with integer
   }
 
 // Using predefined values

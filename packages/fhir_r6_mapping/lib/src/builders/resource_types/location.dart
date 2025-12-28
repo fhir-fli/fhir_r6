@@ -220,16 +220,12 @@ class LocationBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      hoursOfOperation: (json['hoursOfOperation'] as List<dynamic>?)
-          ?.map<AvailabilityBuilder>(
-            (v) => AvailabilityBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.hoursOfOperation',
-              },
-            ),
-          )
-          .toList(),
+      hoursOfOperation: JsonParser.parseObject<AvailabilityBuilder>(
+        json,
+        'hoursOfOperation',
+        AvailabilityBuilder.fromJson,
+        '$objectPath.hoursOfOperation',
+      ),
       virtualService: (json['virtualService'] as List<dynamic>?)
           ?.map<VirtualServiceDetailBuilder>(
             (v) => VirtualServiceDetailBuilder.fromJson(
@@ -301,7 +297,7 @@ class LocationBuilder extends DomainResourceBuilder {
 
   /// [status]
   /// The status property covers the general availability of the resource,
-  /// not the current value which may be covered by the operationStatus, or
+  /// not the current value which may be covered by the operationalStatus, or
   /// by a schedule/slots if they are configured for the location.
   LocationStatusBuilder? status;
 
@@ -371,7 +367,7 @@ class LocationBuilder extends DomainResourceBuilder {
   /// [hoursOfOperation]
   /// What days/times during a week is this location usually open, and any
   /// exceptions where the location is not available.
-  List<AvailabilityBuilder>? hoursOfOperation;
+  AvailabilityBuilder? hoursOfOperation;
 
   /// [virtualService]
   /// Connection details of a virtual service (e.g. shared conference call
@@ -585,7 +581,7 @@ class LocationBuilder extends DomainResourceBuilder {
         }
       case 'hoursOfOperation':
         if (hoursOfOperation != null) {
-          fields.addAll(hoursOfOperation!);
+          fields.add(hoursOfOperation!);
         }
       case 'virtualService':
         if (virtualService != null) {
@@ -1000,16 +996,8 @@ class LocationBuilder extends DomainResourceBuilder {
         }
       case 'hoursOfOperation':
         {
-          if (child is List<AvailabilityBuilder>) {
-            // Replace or create new list
+          if (child is AvailabilityBuilder) {
             hoursOfOperation = child;
-            return;
-          } else if (child is AvailabilityBuilder) {
-            // Add single element to existing list or create new list
-            hoursOfOperation = [
-              ...(hoursOfOperation ?? []),
-              child,
-            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -1235,7 +1223,7 @@ class LocationBuilder extends DomainResourceBuilder {
         }
       case 'hoursOfOperation':
         {
-          hoursOfOperation = <AvailabilityBuilder>[];
+          hoursOfOperation = AvailabilityBuilder.empty();
           return;
         }
       case 'virtualService':
@@ -1280,7 +1268,7 @@ class LocationBuilder extends DomainResourceBuilder {
     ReferenceBuilder? managingOrganization,
     ReferenceBuilder? partOf,
     List<CodeableConceptBuilder>? characteristic,
-    List<AvailabilityBuilder>? hoursOfOperation,
+    AvailabilityBuilder? hoursOfOperation,
     List<VirtualServiceDetailBuilder>? virtualService,
     List<ReferenceBuilder>? endpoint,
     Map<String, dynamic>? userData,
@@ -1480,7 +1468,7 @@ class LocationBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<AvailabilityBuilder>(
+    if (!equalsDeepWithNull(
       hoursOfOperation,
       o.hoursOfOperation,
     )) {

@@ -38,11 +38,13 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
     this.category,
     this.code,
     this.subject,
+    this.relatesTo,
     this.encounter,
     EffectiveXDiagnosticReportBuilder? effectiveX,
     FhirDateTimeBuilder? effectiveDateTime,
     PeriodBuilder? effectivePeriod,
     this.issued,
+    this.procedure,
     this.performer,
     this.resultsInterpreter,
     this.specimen,
@@ -54,7 +56,9 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
     this.composition,
     this.conclusion,
     this.conclusionCode,
+    this.recomendation,
     this.presentedForm,
+    this.communication,
   })  : effectiveX = effectiveX ?? effectiveDateTime ?? effectivePeriod,
         super(
           objectPath: 'DiagnosticReport',
@@ -182,6 +186,16 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
         ReferenceBuilder.fromJson,
         '$objectPath.subject',
       ),
+      relatesTo: (json['relatesTo'] as List<dynamic>?)
+          ?.map<RelatedArtifactBuilder>(
+            (v) => RelatedArtifactBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.relatesTo',
+              },
+            ),
+          )
+          .toList(),
       encounter: JsonParser.parseObject<ReferenceBuilder>(
         json,
         'encounter',
@@ -203,6 +217,16 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
         FhirInstantBuilder.fromJson,
         '$objectPath.issued',
       ),
+      procedure: (json['procedure'] as List<dynamic>?)
+          ?.map<ReferenceBuilder>(
+            (v) => ReferenceBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.procedure',
+              },
+            ),
+          )
+          .toList(),
       performer: (json['performer'] as List<dynamic>?)
           ?.map<ReferenceBuilder>(
             (v) => ReferenceBuilder.fromJson(
@@ -296,11 +320,21 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
         '$objectPath.conclusion',
       ),
       conclusionCode: (json['conclusionCode'] as List<dynamic>?)
-          ?.map<CodeableConceptBuilder>(
-            (v) => CodeableConceptBuilder.fromJson(
+          ?.map<CodeableReferenceBuilder>(
+            (v) => CodeableReferenceBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
                 'objectPath': '$objectPath.conclusionCode',
+              },
+            ),
+          )
+          .toList(),
+      recomendation: (json['recomendation'] as List<dynamic>?)
+          ?.map<CodeableReferenceBuilder>(
+            (v) => CodeableReferenceBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.recomendation',
               },
             ),
           )
@@ -311,6 +345,16 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
               {
                 ...v as Map<String, dynamic>,
                 'objectPath': '$objectPath.presentedForm',
+              },
+            ),
+          )
+          .toList(),
+      communication: (json['communication'] as List<dynamic>?)
+          ?.map<ReferenceBuilder>(
+            (v) => ReferenceBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.communication',
               },
             ),
           )
@@ -389,9 +433,14 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
   /// collected from a variety of other sources.
   ReferenceBuilder? subject;
 
+  /// [relatesTo]
+  /// Other DiagnosticReports that the current DiagnosticReport replaces,
+  /// amendens, extends, or otherwise relates to.
+  List<RelatedArtifactBuilder>? relatesTo;
+
   /// [encounter]
-  /// The healthcare event (e.g. a patient and healthcare provider
-  /// interaction) which this DiagnosticReport is about.
+  /// The encounter (e.g. a patient and healthcare provider interaction) that
+  /// is associated with the DiagnosticReport.
   ReferenceBuilder? encounter;
 
   /// [effectiveX]
@@ -412,6 +461,10 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
   /// The date and time that this version of the report was made available to
   /// providers, typically after the report was reviewed and verified.
   FhirInstantBuilder? issued;
+
+  /// [procedure]
+  /// The procedure(s) that are reported on in the DiagnosticReport.
+  List<ReferenceBuilder>? procedure;
 
   /// [performer]
   /// The diagnostic service that is responsible for issuing the report.
@@ -472,15 +525,27 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
   FhirMarkdownBuilder? conclusion;
 
   /// [conclusionCode]
-  /// One or more codes that represent the summary conclusion
-  /// (interpretation/impression) of the diagnostic report.
-  List<CodeableConceptBuilder>? conclusionCode;
+  /// One or more codes and/or references that represent the summary
+  /// conclusion (interpretation/impression) of the diagnostic report.
+  List<CodeableReferenceBuilder>? conclusionCode;
+
+  /// [recomendation]
+  /// Proposed follow-up actions based on the findings and interpretations of
+  /// the diagnostic test for which this report is the subject.
+  List<CodeableReferenceBuilder>? recomendation;
 
   /// [presentedForm]
   /// Rich text representation of the entire result as issued by the
   /// diagnostic service. Multiple formats are allowed but they SHALL be
   /// semantically equivalent.
   List<AttachmentBuilder>? presentedForm;
+
+  /// [communication]
+  /// Communications initiated during the generation of the DiagnosticReport
+  /// by members of the organization fulfilling that order. e.g. direct
+  /// communication of time critical results by the radiologist to the
+  /// referring physician.
+  List<ReferenceBuilder>? communication;
 
   /// Converts a [DiagnosticReportBuilder]
   /// to [DiagnosticReport]
@@ -533,6 +598,7 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
     addField('category', category);
     addField('code', code);
     addField('subject', subject);
+    addField('relatesTo', relatesTo);
     addField('encounter', encounter);
     if (effectiveX != null) {
       final fhirType = effectiveX!.fhirType;
@@ -540,6 +606,7 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
     }
 
     addField('issued', issued);
+    addField('procedure', procedure);
     addField('performer', performer);
     addField('resultsInterpreter', resultsInterpreter);
     addField('specimen', specimen);
@@ -551,7 +618,9 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
     addField('composition', composition);
     addField('conclusion', conclusion);
     addField('conclusionCode', conclusionCode);
+    addField('recomendation', recomendation);
     addField('presentedForm', presentedForm);
+    addField('communication', communication);
     return json;
   }
 
@@ -573,9 +642,11 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
       'category',
       'code',
       'subject',
+      'relatesTo',
       'encounter',
       'effectiveX',
       'issued',
+      'procedure',
       'performer',
       'resultsInterpreter',
       'specimen',
@@ -587,7 +658,9 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
       'composition',
       'conclusion',
       'conclusionCode',
+      'recomendation',
       'presentedForm',
+      'communication',
     ];
   }
 
@@ -656,6 +729,10 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
         if (subject != null) {
           fields.add(subject!);
         }
+      case 'relatesTo':
+        if (relatesTo != null) {
+          fields.addAll(relatesTo!);
+        }
       case 'encounter':
         if (encounter != null) {
           fields.add(encounter!);
@@ -679,6 +756,10 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
       case 'issued':
         if (issued != null) {
           fields.add(issued!);
+        }
+      case 'procedure':
+        if (procedure != null) {
+          fields.addAll(procedure!);
         }
       case 'performer':
         if (performer != null) {
@@ -724,9 +805,17 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
         if (conclusionCode != null) {
           fields.addAll(conclusionCode!);
         }
+      case 'recomendation':
+        if (recomendation != null) {
+          fields.addAll(recomendation!);
+        }
       case 'presentedForm':
         if (presentedForm != null) {
           fields.addAll(presentedForm!);
+        }
+      case 'communication':
+        if (communication != null) {
+          fields.addAll(communication!);
         }
       default:
         if (checkValid) {
@@ -971,6 +1060,22 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'relatesTo':
+        {
+          if (child is List<RelatedArtifactBuilder>) {
+            // Replace or create new list
+            relatesTo = child;
+            return;
+          } else if (child is RelatedArtifactBuilder) {
+            // Add single element to existing list or create new list
+            relatesTo = [
+              ...(relatesTo ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'encounter':
         {
           if (child is ReferenceBuilder) {
@@ -1032,6 +1137,22 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
             } catch (e) {
               // Continue if conversion fails
             }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'procedure':
+        {
+          if (child is List<ReferenceBuilder>) {
+            // Replace or create new list
+            procedure = child;
+            return;
+          } else if (child is ReferenceBuilder) {
+            // Add single element to existing list or create new list
+            procedure = [
+              ...(procedure ?? []),
+              child,
+            ];
+            return;
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -1193,14 +1314,30 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
         }
       case 'conclusionCode':
         {
-          if (child is List<CodeableConceptBuilder>) {
+          if (child is List<CodeableReferenceBuilder>) {
             // Replace or create new list
             conclusionCode = child;
             return;
-          } else if (child is CodeableConceptBuilder) {
+          } else if (child is CodeableReferenceBuilder) {
             // Add single element to existing list or create new list
             conclusionCode = [
               ...(conclusionCode ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'recomendation':
+        {
+          if (child is List<CodeableReferenceBuilder>) {
+            // Replace or create new list
+            recomendation = child;
+            return;
+          } else if (child is CodeableReferenceBuilder) {
+            // Add single element to existing list or create new list
+            recomendation = [
+              ...(recomendation ?? []),
               child,
             ];
             return;
@@ -1217,6 +1354,22 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
             // Add single element to existing list or create new list
             presentedForm = [
               ...(presentedForm ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'communication':
+        {
+          if (child is List<ReferenceBuilder>) {
+            // Replace or create new list
+            communication = child;
+            return;
+          } else if (child is ReferenceBuilder) {
+            // Add single element to existing list or create new list
+            communication = [
+              ...(communication ?? []),
               child,
             ];
             return;
@@ -1261,6 +1414,8 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
         return ['CodeableConceptBuilder'];
       case 'subject':
         return ['ReferenceBuilder'];
+      case 'relatesTo':
+        return ['RelatedArtifactBuilder'];
       case 'encounter':
         return ['ReferenceBuilder'];
       case 'effective':
@@ -1275,6 +1430,8 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
         return ['PeriodBuilder'];
       case 'issued':
         return ['FhirInstantBuilder'];
+      case 'procedure':
+        return ['ReferenceBuilder'];
       case 'performer':
         return ['ReferenceBuilder'];
       case 'resultsInterpreter':
@@ -1296,9 +1453,13 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
       case 'conclusion':
         return ['FhirMarkdownBuilder'];
       case 'conclusionCode':
-        return ['CodeableConceptBuilder'];
+        return ['CodeableReferenceBuilder'];
+      case 'recomendation':
+        return ['CodeableReferenceBuilder'];
       case 'presentedForm':
         return ['AttachmentBuilder'];
+      case 'communication':
+        return ['ReferenceBuilder'];
       default:
         return <String>[];
     }
@@ -1379,6 +1540,11 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
           subject = ReferenceBuilder.empty();
           return;
         }
+      case 'relatesTo':
+        {
+          relatesTo = <RelatedArtifactBuilder>[];
+          return;
+        }
       case 'encounter':
         {
           encounter = ReferenceBuilder.empty();
@@ -1399,6 +1565,11 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
       case 'issued':
         {
           issued = FhirInstantBuilder.empty();
+          return;
+        }
+      case 'procedure':
+        {
+          procedure = <ReferenceBuilder>[];
           return;
         }
       case 'performer':
@@ -1453,12 +1624,22 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
         }
       case 'conclusionCode':
         {
-          conclusionCode = <CodeableConceptBuilder>[];
+          conclusionCode = <CodeableReferenceBuilder>[];
+          return;
+        }
+      case 'recomendation':
+        {
+          recomendation = <CodeableReferenceBuilder>[];
           return;
         }
       case 'presentedForm':
         {
           presentedForm = <AttachmentBuilder>[];
+          return;
+        }
+      case 'communication':
+        {
+          communication = <ReferenceBuilder>[];
           return;
         }
       default:
@@ -1484,9 +1665,11 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
     List<CodeableConceptBuilder>? category,
     CodeableConceptBuilder? code,
     ReferenceBuilder? subject,
+    List<RelatedArtifactBuilder>? relatesTo,
     ReferenceBuilder? encounter,
     EffectiveXDiagnosticReportBuilder? effectiveX,
     FhirInstantBuilder? issued,
+    List<ReferenceBuilder>? procedure,
     List<ReferenceBuilder>? performer,
     List<ReferenceBuilder>? resultsInterpreter,
     List<ReferenceBuilder>? specimen,
@@ -1497,8 +1680,10 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
     List<DiagnosticReportMediaBuilder>? media,
     ReferenceBuilder? composition,
     FhirMarkdownBuilder? conclusion,
-    List<CodeableConceptBuilder>? conclusionCode,
+    List<CodeableReferenceBuilder>? conclusionCode,
+    List<CodeableReferenceBuilder>? recomendation,
     List<AttachmentBuilder>? presentedForm,
+    List<ReferenceBuilder>? communication,
     FhirDateTimeBuilder? effectiveDateTime,
     PeriodBuilder? effectivePeriod,
     Map<String, dynamic>? userData,
@@ -1522,10 +1707,12 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
       category: category ?? this.category,
       code: code ?? this.code,
       subject: subject ?? this.subject,
+      relatesTo: relatesTo ?? this.relatesTo,
       encounter: encounter ?? this.encounter,
       effectiveX:
           effectiveX ?? effectiveDateTime ?? effectivePeriod ?? this.effectiveX,
       issued: issued ?? this.issued,
+      procedure: procedure ?? this.procedure,
       performer: performer ?? this.performer,
       resultsInterpreter: resultsInterpreter ?? this.resultsInterpreter,
       specimen: specimen ?? this.specimen,
@@ -1537,7 +1724,9 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
       composition: composition ?? this.composition,
       conclusion: conclusion ?? this.conclusion,
       conclusionCode: conclusionCode ?? this.conclusionCode,
+      recomendation: recomendation ?? this.recomendation,
       presentedForm: presentedForm ?? this.presentedForm,
+      communication: communication ?? this.communication,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -1648,6 +1837,12 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
+    if (!listEquals<RelatedArtifactBuilder>(
+      relatesTo,
+      o.relatesTo,
+    )) {
+      return false;
+    }
     if (!equalsDeepWithNull(
       encounter,
       o.encounter,
@@ -1663,6 +1858,12 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
     if (!equalsDeepWithNull(
       issued,
       o.issued,
+    )) {
+      return false;
+    }
+    if (!listEquals<ReferenceBuilder>(
+      procedure,
+      o.procedure,
     )) {
       return false;
     }
@@ -1726,15 +1927,27 @@ class DiagnosticReportBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConceptBuilder>(
+    if (!listEquals<CodeableReferenceBuilder>(
       conclusionCode,
       o.conclusionCode,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableReferenceBuilder>(
+      recomendation,
+      o.recomendation,
     )) {
       return false;
     }
     if (!listEquals<AttachmentBuilder>(
       presentedForm,
       o.presentedForm,
+    )) {
+      return false;
+    }
+    if (!listEquals<ReferenceBuilder>(
+      communication,
+      o.communication,
     )) {
       return false;
     }

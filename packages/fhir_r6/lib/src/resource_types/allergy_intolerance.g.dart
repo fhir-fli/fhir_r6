@@ -27,10 +27,11 @@ abstract class $AllergyIntoleranceCopyWith<T>
     CodeableConcept? code,
     Reference? patient,
     Reference? encounter,
-    FhirDateTime? onsetX,
+    OnsetXAllergyIntolerance? onsetX,
     FhirDateTime? recordedDate,
-    List<AllergyIntoleranceParticipant>? participant,
-    FhirDateTime? lastOccurrence,
+    Reference? recorder,
+    Reference? asserter,
+    FhirDateTime? lastReactionOccurrence,
     List<Annotation>? note,
     List<AllergyIntoleranceReaction>? reaction,
     bool? disallowExtensions,
@@ -65,8 +66,9 @@ class _$AllergyIntoleranceCopyWithImpl<T>
     Object? encounter = fhirSentinel,
     Object? onsetX = fhirSentinel,
     Object? recordedDate = fhirSentinel,
-    Object? participant = fhirSentinel,
-    Object? lastOccurrence = fhirSentinel,
+    Object? recorder = fhirSentinel,
+    Object? asserter = fhirSentinel,
+    Object? lastReactionOccurrence = fhirSentinel,
     Object? note = fhirSentinel,
     Object? reaction = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
@@ -120,16 +122,19 @@ class _$AllergyIntoleranceCopyWithImpl<T>
             : encounter as Reference?,
         onsetX: identical(onsetX, fhirSentinel)
             ? _value.onsetX
-            : onsetX as FhirDateTime?,
+            : onsetX as OnsetXAllergyIntolerance?,
         recordedDate: identical(recordedDate, fhirSentinel)
             ? _value.recordedDate
             : recordedDate as FhirDateTime?,
-        participant: identical(participant, fhirSentinel)
-            ? _value.participant
-            : participant as List<AllergyIntoleranceParticipant>?,
-        lastOccurrence: identical(lastOccurrence, fhirSentinel)
-            ? _value.lastOccurrence
-            : lastOccurrence as FhirDateTime?,
+        recorder: identical(recorder, fhirSentinel)
+            ? _value.recorder
+            : recorder as Reference?,
+        asserter: identical(asserter, fhirSentinel)
+            ? _value.asserter
+            : asserter as Reference?,
+        lastReactionOccurrence: identical(lastReactionOccurrence, fhirSentinel)
+            ? _value.lastReactionOccurrence
+            : lastReactionOccurrence as FhirDateTime?,
         note: identical(note, fhirSentinel)
             ? _value.note
             : note as List<Annotation>?,
@@ -147,68 +152,6 @@ extension AllergyIntoleranceCopyWithExtension on AllergyIntolerance {
         this,
         (value) => value,
       );
-}
-
-abstract class $AllergyIntoleranceParticipantCopyWith<T>
-    extends $BackboneElementCopyWith<T> {
-  @override
-  T call({
-    FhirString? id,
-    List<FhirExtension>? extension_,
-    List<FhirExtension>? modifierExtension,
-    CodeableConcept? function_,
-    Reference? actor,
-    bool? disallowExtensions,
-  });
-}
-
-class _$AllergyIntoleranceParticipantCopyWithImpl<T>
-    implements $AllergyIntoleranceParticipantCopyWith<T> {
-  final AllergyIntoleranceParticipant _value;
-  final T Function(AllergyIntoleranceParticipant) _then;
-
-  _$AllergyIntoleranceParticipantCopyWithImpl(this._value, this._then);
-
-  @override
-  T call({
-    Object? id = fhirSentinel,
-    Object? extension_ = fhirSentinel,
-    Object? modifierExtension = fhirSentinel,
-    Object? function_ = fhirSentinel,
-    Object? actor = fhirSentinel,
-    Object? disallowExtensions = fhirSentinel,
-  }) {
-    return _then(
-      AllergyIntoleranceParticipant(
-        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
-        extension_: identical(extension_, fhirSentinel)
-            ? _value.extension_
-            : extension_ as List<FhirExtension>?,
-        modifierExtension: identical(modifierExtension, fhirSentinel)
-            ? _value.modifierExtension
-            : modifierExtension as List<FhirExtension>?,
-        function_: identical(function_, fhirSentinel)
-            ? _value.function_
-            : function_ as CodeableConcept?,
-        actor: identical(actor, fhirSentinel)
-            ? _value.actor
-            : (actor as Reference?) ?? _value.actor,
-        disallowExtensions: identical(disallowExtensions, fhirSentinel)
-            ? _value.disallowExtensions
-            : disallowExtensions as bool?,
-      ),
-    );
-  }
-}
-
-extension AllergyIntoleranceParticipantCopyWithExtension
-    on AllergyIntoleranceParticipant {
-  $AllergyIntoleranceParticipantCopyWith<AllergyIntoleranceParticipant>
-      get copyWith => _$AllergyIntoleranceParticipantCopyWithImpl<
-              AllergyIntoleranceParticipant>(
-            this,
-            (value) => value,
-          );
 }
 
 abstract class $AllergyIntoleranceReactionCopyWith<T>

@@ -18,15 +18,12 @@ abstract class $TransportCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
-    FhirCanonical? instantiatesCanonical,
-    FhirUri? instantiatesUri,
+    FhirCanonical? instantiates,
     List<Reference>? basedOn,
     Identifier? groupIdentifier,
     List<Reference>? partOf,
     TransportStatus? status,
     CodeableConcept? statusReason,
-    TransportIntent? intent,
-    RequestPriority? priority,
     CodeableConcept? code,
     FhirString? description,
     Reference? focus,
@@ -70,15 +67,12 @@ class _$TransportCopyWithImpl<T> implements $TransportCopyWith<T> {
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? identifier = fhirSentinel,
-    Object? instantiatesCanonical = fhirSentinel,
-    Object? instantiatesUri = fhirSentinel,
+    Object? instantiates = fhirSentinel,
     Object? basedOn = fhirSentinel,
     Object? groupIdentifier = fhirSentinel,
     Object? partOf = fhirSentinel,
     Object? status = fhirSentinel,
     Object? statusReason = fhirSentinel,
-    Object? intent = fhirSentinel,
-    Object? priority = fhirSentinel,
     Object? code = fhirSentinel,
     Object? description = fhirSentinel,
     Object? focus = fhirSentinel,
@@ -126,12 +120,9 @@ class _$TransportCopyWithImpl<T> implements $TransportCopyWith<T> {
         identifier: identical(identifier, fhirSentinel)
             ? _value.identifier
             : identifier as List<Identifier>?,
-        instantiatesCanonical: identical(instantiatesCanonical, fhirSentinel)
-            ? _value.instantiatesCanonical
-            : instantiatesCanonical as FhirCanonical?,
-        instantiatesUri: identical(instantiatesUri, fhirSentinel)
-            ? _value.instantiatesUri
-            : instantiatesUri as FhirUri?,
+        instantiates: identical(instantiates, fhirSentinel)
+            ? _value.instantiates
+            : instantiates as FhirCanonical?,
         basedOn: identical(basedOn, fhirSentinel)
             ? _value.basedOn
             : basedOn as List<Reference>?,
@@ -147,12 +138,6 @@ class _$TransportCopyWithImpl<T> implements $TransportCopyWith<T> {
         statusReason: identical(statusReason, fhirSentinel)
             ? _value.statusReason
             : statusReason as CodeableConcept?,
-        intent: identical(intent, fhirSentinel)
-            ? _value.intent
-            : (intent as TransportIntent?) ?? _value.intent,
-        priority: identical(priority, fhirSentinel)
-            ? _value.priority
-            : priority as RequestPriority?,
         code: identical(code, fhirSentinel)
             ? _value.code
             : code as CodeableConcept?,
@@ -299,7 +284,7 @@ abstract class $TransportInputCopyWith<T> extends $BackboneElementCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    FhirBase64Binary? valueX,
+    ValueXTransportInput? valueX,
     bool? disallowExtensions,
   });
 }
@@ -333,7 +318,7 @@ class _$TransportInputCopyWithImpl<T> implements $TransportInputCopyWith<T> {
             : (type as CodeableConcept?) ?? _value.type,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as FhirBase64Binary?) ?? _value.valueX,
+            : (valueX as ValueXTransportInput?) ?? _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -357,7 +342,7 @@ abstract class $TransportOutputCopyWith<T> extends $BackboneElementCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    FhirBase64Binary? valueX,
+    ValueXTransportOutput? valueX,
     bool? disallowExtensions,
   });
 }
@@ -391,7 +376,7 @@ class _$TransportOutputCopyWithImpl<T> implements $TransportOutputCopyWith<T> {
             : (type as CodeableConcept?) ?? _value.type,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as FhirBase64Binary?) ?? _value.valueX,
+            : (valueX as ValueXTransportOutput?) ?? _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

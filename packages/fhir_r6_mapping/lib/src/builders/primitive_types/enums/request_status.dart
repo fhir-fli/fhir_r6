@@ -12,14 +12,17 @@ enum RequestStatusBuilderEnum {
   /// on-hold
   onHold,
 
-  /// revoked
-  revoked,
+  /// entered-in-error
+  enteredInError,
+
+  /// ended
+  ended,
 
   /// completed
   completed,
 
-  /// entered-in-error
-  enteredInError,
+  /// revoked
+  revoked,
 
   /// unknown
   unknown,
@@ -38,12 +41,14 @@ enum RequestStatusBuilderEnum {
         return 'active';
       case RequestStatusBuilderEnum.onHold:
         return 'on-hold';
-      case RequestStatusBuilderEnum.revoked:
-        return 'revoked';
-      case RequestStatusBuilderEnum.completed:
-        return 'completed';
       case RequestStatusBuilderEnum.enteredInError:
         return 'entered-in-error';
+      case RequestStatusBuilderEnum.ended:
+        return 'ended';
+      case RequestStatusBuilderEnum.completed:
+        return 'completed';
+      case RequestStatusBuilderEnum.revoked:
+        return 'revoked';
       case RequestStatusBuilderEnum.unknown:
         return 'unknown';
     }
@@ -73,12 +78,14 @@ enum RequestStatusBuilderEnum {
         return RequestStatusBuilderEnum.active;
       case 'on-hold':
         return RequestStatusBuilderEnum.onHold;
-      case 'revoked':
-        return RequestStatusBuilderEnum.revoked;
-      case 'completed':
-        return RequestStatusBuilderEnum.completed;
       case 'entered-in-error':
         return RequestStatusBuilderEnum.enteredInError;
+      case 'ended':
+        return RequestStatusBuilderEnum.ended;
+      case 'completed':
+        return RequestStatusBuilderEnum.completed;
+      case 'revoked':
+        return RequestStatusBuilderEnum.revoked;
       case 'unknown':
         return RequestStatusBuilderEnum.unknown;
     }
@@ -174,7 +181,7 @@ class RequestStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/request-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Draft',
     ),
@@ -187,7 +194,7 @@ class RequestStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/request-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Active',
     ),
@@ -200,35 +207,9 @@ class RequestStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/request-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'On Hold',
-    ),
-  );
-
-  /// revoked
-  static RequestStatusBuilder revoked = RequestStatusBuilder._(
-    valueString: 'revoked',
-    valueEnum: RequestStatusBuilderEnum.revoked,
-    system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
-    ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
-    display: FhirStringBuilder._(
-      valueString: 'Revoked',
-    ),
-  );
-
-  /// completed
-  static RequestStatusBuilder completed = RequestStatusBuilder._(
-    valueString: 'completed',
-    valueEnum: RequestStatusBuilderEnum.completed,
-    system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
-    ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
-    display: FhirStringBuilder._(
-      valueString: 'Completed',
     ),
   );
 
@@ -239,9 +220,48 @@ class RequestStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/request-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Entered in Error',
+    ),
+  );
+
+  /// ended
+  static RequestStatusBuilder ended = RequestStatusBuilder._(
+    valueString: 'ended',
+    valueEnum: RequestStatusBuilderEnum.ended,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'Ended',
+    ),
+  );
+
+  /// completed
+  static RequestStatusBuilder completed = RequestStatusBuilder._(
+    valueString: 'completed',
+    valueEnum: RequestStatusBuilderEnum.completed,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'Completed',
+    ),
+  );
+
+  /// revoked
+  static RequestStatusBuilder revoked = RequestStatusBuilder._(
+    valueString: 'revoked',
+    valueEnum: RequestStatusBuilderEnum.revoked,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'Revoked',
     ),
   );
 
@@ -252,7 +272,7 @@ class RequestStatusBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/request-status',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'Unknown',
     ),
@@ -269,9 +289,10 @@ class RequestStatusBuilder extends FhirCodeEnumBuilder {
     draft,
     active,
     onHold,
-    revoked,
-    completed,
     enteredInError,
+    ended,
+    completed,
+    revoked,
     unknown,
   ];
 

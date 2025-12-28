@@ -1,8 +1,8 @@
 import 'package:fhir_r6/fhir_r6.dart' show R6ResourceType;
 import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 
-/// Returns a [FhirMetaBuilder] object, creates a new one if none is passed,
-/// otherwise updates the [lastUpdated] and increases the [version] by 1
+/// Returns a [FhirMeta] object, creates a new one if none is passed, otherwise
+/// updates the [lastUpdated] and increases the [version] by 1
 FhirMetaBuilder updateFhirMetaVersion(
   FhirMetaBuilder? oldFhirMeta, [
   // ignore: avoid_positional_boolean_parameters
@@ -51,6 +51,8 @@ ResourceBuilder updateMeta(
 }) {
   final newMeta = updateFhirMetaVersion(meta ?? resource.meta, versionIdAsTime);
   switch (resource.resourceType) {
+    case R6ResourceType.Account:
+      return (resource as AccountBuilder).copyWith(meta: newMeta);
     case R6ResourceType.ActivityDefinition:
       return (resource as ActivityDefinitionBuilder).copyWith(meta: newMeta);
     case R6ResourceType.ActorDefinition:
@@ -100,8 +102,8 @@ ResourceBuilder updateMeta(
       return (resource as ClaimBuilder).copyWith(meta: newMeta);
     case R6ResourceType.ClaimResponse:
       return (resource as ClaimResponseBuilder).copyWith(meta: newMeta);
-    case R6ResourceType.ClinicalImpression:
-      return (resource as ClinicalImpressionBuilder).copyWith(meta: newMeta);
+    case R6ResourceType.ClinicalAssessment:
+      return (resource as ClinicalAssessmentBuilder).copyWith(meta: newMeta);
     case R6ResourceType.ClinicalUseDefinition:
       return (resource as ClinicalUseDefinitionBuilder).copyWith(meta: newMeta);
     case R6ResourceType.CodeSystem:
@@ -136,6 +138,8 @@ ResourceBuilder updateMeta(
       return (resource as DetectedIssueBuilder).copyWith(meta: newMeta);
     case R6ResourceType.Device:
       return (resource as DeviceBuilder).copyWith(meta: newMeta);
+    case R6ResourceType.DeviceAlert:
+      return (resource as DeviceAlertBuilder).copyWith(meta: newMeta);
     case R6ResourceType.DeviceAssociation:
       return (resource as DeviceAssociationBuilder).copyWith(meta: newMeta);
     case R6ResourceType.DeviceDefinition:
@@ -166,8 +170,6 @@ ResourceBuilder updateMeta(
       return (resource as EventDefinitionBuilder).copyWith(meta: newMeta);
     case R6ResourceType.Evidence:
       return (resource as EvidenceBuilder).copyWith(meta: newMeta);
-    case R6ResourceType.EvidenceReport:
-      return (resource as EvidenceReportBuilder).copyWith(meta: newMeta);
     case R6ResourceType.EvidenceVariable:
       return (resource as EvidenceVariableBuilder).copyWith(meta: newMeta);
     case R6ResourceType.ExampleScenario:
@@ -214,6 +216,8 @@ ResourceBuilder updateMeta(
       return (resource as IngredientBuilder).copyWith(meta: newMeta);
     case R6ResourceType.InsurancePlan:
       return (resource as InsurancePlanBuilder).copyWith(meta: newMeta);
+    case R6ResourceType.InsuranceProduct:
+      return (resource as InsuranceProductBuilder).copyWith(meta: newMeta);
     case R6ResourceType.InventoryItem:
       return (resource as InventoryItemBuilder).copyWith(meta: newMeta);
     case R6ResourceType.InventoryReport:
@@ -253,6 +257,8 @@ ResourceBuilder updateMeta(
       return (resource as MessageDefinitionBuilder).copyWith(meta: newMeta);
     case R6ResourceType.MessageHeader:
       return (resource as MessageHeaderBuilder).copyWith(meta: newMeta);
+    case R6ResourceType.MolecularDefinition:
+      return (resource as MolecularDefinitionBuilder).copyWith(meta: newMeta);
     case R6ResourceType.MolecularSequence:
       return (resource as MolecularSequenceBuilder).copyWith(meta: newMeta);
     case R6ResourceType.NamingSystem:
@@ -291,6 +297,8 @@ ResourceBuilder updateMeta(
       return (resource as PermissionBuilder).copyWith(meta: newMeta);
     case R6ResourceType.Person:
       return (resource as PersonBuilder).copyWith(meta: newMeta);
+    case R6ResourceType.PersonalRelationship:
+      return (resource as PersonalRelationshipBuilder).copyWith(meta: newMeta);
     case R6ResourceType.PlanDefinition:
       return (resource as PlanDefinitionBuilder).copyWith(meta: newMeta);
     case R6ResourceType.Practitioner:
@@ -381,7 +389,5 @@ ResourceBuilder updateMeta(
       return (resource as VerificationResultBuilder).copyWith(meta: newMeta);
     case R6ResourceType.VisionPrescription:
       return (resource as VisionPrescriptionBuilder).copyWith(meta: newMeta);
-    case R6ResourceType.Account:
-      return (resource as AccountBuilder).copyWith(meta: newMeta);
   }
 }

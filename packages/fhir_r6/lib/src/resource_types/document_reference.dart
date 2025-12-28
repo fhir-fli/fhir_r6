@@ -38,6 +38,7 @@ class DocumentReference extends DomainResource {
     this.subject,
     this.context,
     this.event,
+    this.related,
     this.bodySite,
     this.facilityType,
     this.practiceSetting,
@@ -172,6 +173,13 @@ class DocumentReference extends DomainResource {
             ),
           )
           .toList(),
+      related: (json['related'] as List<dynamic>?)
+          ?.map<Reference>(
+            (v) => Reference.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       bodySite: (json['bodySite'] as List<dynamic>?)
           ?.map<CodeableReference>(
             (v) => CodeableReference.fromJson(
@@ -194,10 +202,10 @@ class DocumentReference extends DomainResource {
         'period',
         Period.fromJson,
       ),
-      date: JsonParser.parsePrimitive<FhirInstant>(
+      date: JsonParser.parsePrimitive<FhirDateTime>(
         json,
         'date',
-        FhirInstant.fromJson,
+        FhirDateTime.fromJson,
       ),
       author: (json['author'] as List<dynamic>?)
           ?.map<Reference>(
@@ -290,12 +298,13 @@ class DocumentReference extends DomainResource {
   String get fhirType => 'DocumentReference';
 
   /// [identifier]
-  /// Other business identifiers associated with the document, including
-  /// version independent identifiers.
+  /// Business identifiers assigned to this document reference by the
+  /// performer and/or other systems. These identifiers remain constant as
+  /// the resource is updated and propagates from server to server.
   final List<Identifier>? identifier;
 
   /// [version]
-  /// An explicitly assigned identifer of a variation of the content in the
+  /// An explicitly assigned identifier of a variation of the content in the
   /// DocumentReference.
   final FhirString? version;
 
@@ -305,7 +314,7 @@ class DocumentReference extends DomainResource {
   final List<Reference>? basedOn;
 
   /// [status]
-  /// The status of this document reference.
+  /// The current state of the document reference.
   final DocumentReferenceStatus status;
 
   /// [docStatus]
@@ -337,8 +346,8 @@ class DocumentReference extends DomainResource {
   final Reference? subject;
 
   /// [context]
-  /// Describes the clinical encounter or type of care that the document
-  /// content is associated with.
+  /// The Encounter during which this document reference was created or to
+  /// which the creation of this record is tightly associated.
   final List<Reference>? context;
 
   /// [event]
@@ -348,6 +357,11 @@ class DocumentReference extends DomainResource {
   /// Report" in which the procedure being documented is necessarily a
   /// "History and Physical" act.
   final List<CodeableReference>? event;
+
+  /// [related]
+  /// Any other resource this document reference was created or to which the
+  /// creation of this record is tightly associated.
+  final List<Reference>? related;
 
   /// [bodySite]
   /// The anatomic structures included in the document.
@@ -369,7 +383,7 @@ class DocumentReference extends DomainResource {
 
   /// [date]
   /// When the document reference was created.
-  final FhirInstant? date;
+  final FhirDateTime? date;
 
   /// [author]
   /// Identifies who is responsible for adding the information to the
@@ -554,6 +568,10 @@ class DocumentReference extends DomainResource {
       event,
     );
     addField(
+      'related',
+      related,
+    );
+    addField(
       'bodySite',
       bodySite,
     );
@@ -627,6 +645,7 @@ class DocumentReference extends DomainResource {
       'subject',
       'context',
       'event',
+      'related',
       'bodySite',
       'facilityType',
       'practiceSetting',
@@ -724,6 +743,10 @@ class DocumentReference extends DomainResource {
       case 'event':
         if (event != null) {
           fields.addAll(event!);
+        }
+      case 'related':
+        if (related != null) {
+          fields.addAll(related!);
         }
       case 'bodySite':
         if (bodySite != null) {
@@ -923,6 +946,12 @@ class DocumentReference extends DomainResource {
     if (!listEquals<CodeableReference>(
       event,
       o.event,
+    )) {
+      return false;
+    }
+    if (!listEquals<Reference>(
+      related,
+      o.related,
     )) {
       return false;
     }

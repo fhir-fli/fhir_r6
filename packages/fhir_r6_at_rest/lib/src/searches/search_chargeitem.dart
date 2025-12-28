@@ -10,25 +10,29 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchChargeItem extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [ChargeItem]
+  @override
   SearchChargeItem identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [code] in the resource
   /// [ChargeItem]
+  @override
   SearchChargeItem code(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}code'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['code'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -38,8 +42,8 @@ class SearchChargeItem extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}entered_date'] =
-        value.toString();
+    parameters['entered_date'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -55,8 +59,9 @@ class SearchChargeItem extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for number type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}factor_override'] =
-        '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}';
+    parameters['factor_override'] = (modifier != null
+        ? '$modifier:$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}');
     return this;
   }
 
@@ -66,8 +71,8 @@ class SearchChargeItem extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}occurrence'] =
-        value.toString();
+    parameters['occurrence'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -78,8 +83,9 @@ class SearchChargeItem extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}performer_function'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['performer_function'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -95,8 +101,9 @@ class SearchChargeItem extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}price_override'] =
-        '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}';
+    parameters['price_override'] = (modifier != null
+        ? '$modifier:$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}');
     return this;
   }
 
@@ -112,20 +119,23 @@ class SearchChargeItem extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}quantity'] =
-        '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}';
+    parameters['quantity'] = (modifier != null
+        ? '$modifier:$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}');
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [ChargeItem]
+  @override
   SearchChargeItem status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

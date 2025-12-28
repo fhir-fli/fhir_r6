@@ -18,14 +18,12 @@ abstract class $SubstanceCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
-    FhirBoolean? instance,
     FHIRSubstanceStatus? status,
     List<CodeableConcept>? category,
     CodeableReference? code,
     FhirMarkdown? description,
     FhirDateTime? expiry,
     Quantity? quantity,
-    List<SubstanceIngredient>? ingredient,
     bool? disallowExtensions,
   });
 }
@@ -47,14 +45,12 @@ class _$SubstanceCopyWithImpl<T> implements $SubstanceCopyWith<T> {
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? identifier = fhirSentinel,
-    Object? instance = fhirSentinel,
     Object? status = fhirSentinel,
     Object? category = fhirSentinel,
     Object? code = fhirSentinel,
     Object? description = fhirSentinel,
     Object? expiry = fhirSentinel,
     Object? quantity = fhirSentinel,
-    Object? ingredient = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -80,9 +76,6 @@ class _$SubstanceCopyWithImpl<T> implements $SubstanceCopyWith<T> {
         identifier: identical(identifier, fhirSentinel)
             ? _value.identifier
             : identifier as List<Identifier>?,
-        instance: identical(instance, fhirSentinel)
-            ? _value.instance
-            : (instance as FhirBoolean?) ?? _value.instance,
         status: identical(status, fhirSentinel)
             ? _value.status
             : status as FHIRSubstanceStatus?,
@@ -101,9 +94,6 @@ class _$SubstanceCopyWithImpl<T> implements $SubstanceCopyWith<T> {
         quantity: identical(quantity, fhirSentinel)
             ? _value.quantity
             : quantity as Quantity?,
-        ingredient: identical(ingredient, fhirSentinel)
-            ? _value.ingredient
-            : ingredient as List<SubstanceIngredient>?,
       ),
     );
   }
@@ -112,66 +102,6 @@ class _$SubstanceCopyWithImpl<T> implements $SubstanceCopyWith<T> {
 extension SubstanceCopyWithExtension on Substance {
   $SubstanceCopyWith<Substance> get copyWith =>
       _$SubstanceCopyWithImpl<Substance>(
-        this,
-        (value) => value,
-      );
-}
-
-abstract class $SubstanceIngredientCopyWith<T>
-    extends $BackboneElementCopyWith<T> {
-  @override
-  T call({
-    FhirString? id,
-    List<FhirExtension>? extension_,
-    List<FhirExtension>? modifierExtension,
-    Ratio? quantity,
-    CodeableConcept? substanceX,
-    bool? disallowExtensions,
-  });
-}
-
-class _$SubstanceIngredientCopyWithImpl<T>
-    implements $SubstanceIngredientCopyWith<T> {
-  final SubstanceIngredient _value;
-  final T Function(SubstanceIngredient) _then;
-
-  _$SubstanceIngredientCopyWithImpl(this._value, this._then);
-
-  @override
-  T call({
-    Object? id = fhirSentinel,
-    Object? extension_ = fhirSentinel,
-    Object? modifierExtension = fhirSentinel,
-    Object? quantity = fhirSentinel,
-    Object? substanceX = fhirSentinel,
-    Object? disallowExtensions = fhirSentinel,
-  }) {
-    return _then(
-      SubstanceIngredient(
-        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
-        extension_: identical(extension_, fhirSentinel)
-            ? _value.extension_
-            : extension_ as List<FhirExtension>?,
-        modifierExtension: identical(modifierExtension, fhirSentinel)
-            ? _value.modifierExtension
-            : modifierExtension as List<FhirExtension>?,
-        quantity: identical(quantity, fhirSentinel)
-            ? _value.quantity
-            : quantity as Ratio?,
-        substanceX: identical(substanceX, fhirSentinel)
-            ? _value.substanceX
-            : (substanceX as CodeableConcept?) ?? _value.substanceX,
-        disallowExtensions: identical(disallowExtensions, fhirSentinel)
-            ? _value.disallowExtensions
-            : disallowExtensions as bool?,
-      ),
-    );
-  }
-}
-
-extension SubstanceIngredientCopyWithExtension on SubstanceIngredient {
-  $SubstanceIngredientCopyWith<SubstanceIngredient> get copyWith =>
-      _$SubstanceIngredientCopyWithImpl<SubstanceIngredient>(
         this,
         (value) => value,
       );

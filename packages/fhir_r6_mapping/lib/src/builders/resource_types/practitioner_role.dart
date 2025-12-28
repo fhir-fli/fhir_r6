@@ -25,7 +25,9 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
     this.period,
     this.practitioner,
     this.organization,
+    this.network,
     this.code,
+    this.display,
     this.specialty,
     this.location,
     this.healthcareService,
@@ -143,6 +145,16 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
         ReferenceBuilder.fromJson,
         '$objectPath.organization',
       ),
+      network: (json['network'] as List<dynamic>?)
+          ?.map<ReferenceBuilder>(
+            (v) => ReferenceBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.network',
+              },
+            ),
+          )
+          .toList(),
       code: (json['code'] as List<dynamic>?)
           ?.map<CodeableConceptBuilder>(
             (v) => CodeableConceptBuilder.fromJson(
@@ -153,6 +165,12 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
+      display: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'display',
+        FhirStringBuilder.fromJson,
+        '$objectPath.display',
+      ),
       specialty: (json['specialty'] as List<dynamic>?)
           ?.map<CodeableConceptBuilder>(
             (v) => CodeableConceptBuilder.fromJson(
@@ -213,16 +231,12 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      availability: (json['availability'] as List<dynamic>?)
-          ?.map<AvailabilityBuilder>(
-            (v) => AvailabilityBuilder.fromJson(
-              {
-                ...v as Map<String, dynamic>,
-                'objectPath': '$objectPath.availability',
-              },
-            ),
-          )
-          .toList(),
+      availability: JsonParser.parseObject<AvailabilityBuilder>(
+        json,
+        'availability',
+        AvailabilityBuilder.fromJson,
+        '$objectPath.availability',
+      ),
       endpoint: (json['endpoint'] as List<dynamic>?)
           ?.map<ReferenceBuilder>(
             (v) => ReferenceBuilder.fromJson(
@@ -299,13 +313,25 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
   ReferenceBuilder? practitioner;
 
   /// [organization]
-  /// The organization where the Practitioner performs the roles associated.
+  /// The organization where this role is available.
   ReferenceBuilder? organization;
+
+  /// [network]
+  /// The network in which the PractitionerRole provides the role's services
+  /// (if defined) at the indicated locations (if defined).
+  List<ReferenceBuilder>? network;
 
   /// [code]
   /// Roles which this practitioner is authorized to perform for the
   /// organization.
   List<CodeableConceptBuilder>? code;
+
+  /// [display]
+  /// A value that describes the intersection of the practitioner,
+  /// organization, and the role of the practitioner within the organization.
+  /// This is not the human name of the practitioner, though the textual
+  /// representation of that human name may be a part of this property.
+  FhirStringBuilder? display;
 
   /// [specialty]
   /// The specialty of a practitioner that describes the functional role they
@@ -341,7 +367,7 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
   /// [availability]
   /// A collection of times the practitioner is available or performing this
   /// role at the location and/or healthcareservice.
-  List<AvailabilityBuilder>? availability;
+  AvailabilityBuilder? availability;
 
   /// [endpoint]
   /// Technical endpoints providing access to services operated for the
@@ -399,7 +425,9 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
     addField('period', period);
     addField('practitioner', practitioner);
     addField('organization', organization);
+    addField('network', network);
     addField('code', code);
+    addField('display', display);
     addField('specialty', specialty);
     addField('location', location);
     addField('healthcareService', healthcareService);
@@ -428,7 +456,9 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
       'period',
       'practitioner',
       'organization',
+      'network',
       'code',
+      'display',
       'specialty',
       'location',
       'healthcareService',
@@ -501,9 +531,17 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
         if (organization != null) {
           fields.add(organization!);
         }
+      case 'network':
+        if (network != null) {
+          fields.addAll(network!);
+        }
       case 'code':
         if (code != null) {
           fields.addAll(code!);
+        }
+      case 'display':
+        if (display != null) {
+          fields.add(display!);
         }
       case 'specialty':
         if (specialty != null) {
@@ -531,7 +569,7 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
         }
       case 'availability':
         if (availability != null) {
-          fields.addAll(availability!);
+          fields.add(availability!);
         }
       case 'endpoint':
         if (endpoint != null) {
@@ -753,6 +791,22 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'network':
+        {
+          if (child is List<ReferenceBuilder>) {
+            // Replace or create new list
+            network = child;
+            return;
+          } else if (child is ReferenceBuilder) {
+            // Add single element to existing list or create new list
+            network = [
+              ...(network ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'code':
         {
           if (child is List<CodeableConceptBuilder>) {
@@ -766,6 +820,26 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
               child,
             ];
             return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'display':
+        {
+          if (child is FhirStringBuilder) {
+            display = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                display = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -867,16 +941,8 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
         }
       case 'availability':
         {
-          if (child is List<AvailabilityBuilder>) {
-            // Replace or create new list
+          if (child is AvailabilityBuilder) {
             availability = child;
-            return;
-          } else if (child is AvailabilityBuilder) {
-            // Add single element to existing list or create new list
-            availability = [
-              ...(availability ?? []),
-              child,
-            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -933,8 +999,12 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
         return ['ReferenceBuilder'];
       case 'organization':
         return ['ReferenceBuilder'];
+      case 'network':
+        return ['ReferenceBuilder'];
       case 'code':
         return ['CodeableConceptBuilder'];
+      case 'display':
+        return ['FhirStringBuilder'];
       case 'specialty':
         return ['CodeableConceptBuilder'];
       case 'location':
@@ -1026,9 +1096,19 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
           organization = ReferenceBuilder.empty();
           return;
         }
+      case 'network':
+        {
+          network = <ReferenceBuilder>[];
+          return;
+        }
       case 'code':
         {
           code = <CodeableConceptBuilder>[];
+          return;
+        }
+      case 'display':
+        {
+          display = FhirStringBuilder.empty();
           return;
         }
       case 'specialty':
@@ -1063,7 +1143,7 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
         }
       case 'availability':
         {
-          availability = <AvailabilityBuilder>[];
+          availability = AvailabilityBuilder.empty();
           return;
         }
       case 'endpoint':
@@ -1093,14 +1173,16 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
     PeriodBuilder? period,
     ReferenceBuilder? practitioner,
     ReferenceBuilder? organization,
+    List<ReferenceBuilder>? network,
     List<CodeableConceptBuilder>? code,
+    FhirStringBuilder? display,
     List<CodeableConceptBuilder>? specialty,
     List<ReferenceBuilder>? location,
     List<ReferenceBuilder>? healthcareService,
     List<ExtendedContactDetailBuilder>? contact,
     List<CodeableConceptBuilder>? characteristic,
     List<CodeableConceptBuilder>? communication,
-    List<AvailabilityBuilder>? availability,
+    AvailabilityBuilder? availability,
     List<ReferenceBuilder>? endpoint,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -1122,7 +1204,9 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
       period: period ?? this.period,
       practitioner: practitioner ?? this.practitioner,
       organization: organization ?? this.organization,
+      network: network ?? this.network,
       code: code ?? this.code,
+      display: display ?? this.display,
       specialty: specialty ?? this.specialty,
       location: location ?? this.location,
       healthcareService: healthcareService ?? this.healthcareService,
@@ -1235,9 +1319,21 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
+    if (!listEquals<ReferenceBuilder>(
+      network,
+      o.network,
+    )) {
+      return false;
+    }
     if (!listEquals<CodeableConceptBuilder>(
       code,
       o.code,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      display,
+      o.display,
     )) {
       return false;
     }
@@ -1277,7 +1373,7 @@ class PractitionerRoleBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<AvailabilityBuilder>(
+    if (!equalsDeepWithNull(
       availability,
       o.availability,
     )) {

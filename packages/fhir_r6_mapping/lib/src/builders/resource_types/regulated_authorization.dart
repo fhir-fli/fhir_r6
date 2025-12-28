@@ -10,7 +10,7 @@ import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [RegulatedAuthorizationBuilder]
-/// Regulatory approval, clearance or licencing related to a regulated
+/// Regulatory approval, clearance or licensing related to a regulated
 /// product, treatment, facility or activity that is cited in a guidance,
 /// regulation, rule or legislative act. An example is Market Authorization
 /// relating to a Medicinal Product.
@@ -312,7 +312,7 @@ class RegulatedAuthorizationBuilder extends DomainResourceBuilder {
 
   /// [validityPeriod]
   /// The time period in which the regulatory approval, clearance or
-  /// licencing is in effect. As an example, a Marketing Authorization
+  /// licensing is in effect. As an example, a Marketing Authorization
   /// includes the date of authorization and/or an expiration date.
   PeriodBuilder? validityPeriod;
 

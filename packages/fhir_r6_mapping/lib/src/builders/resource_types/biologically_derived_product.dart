@@ -117,12 +117,16 @@ class BiologicallyDerivedProductBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      productCategory: JsonParser.parseObject<CodingBuilder>(
-        json,
-        'productCategory',
-        CodingBuilder.fromJson,
-        '$objectPath.productCategory',
-      ),
+      productCategory: (json['productCategory'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.productCategory',
+              },
+            ),
+          )
+          .toList(),
       productCode: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
         'productCode',
@@ -262,8 +266,10 @@ class BiologicallyDerivedProductBuilder extends DomainResourceBuilder {
   String get fhirType => 'BiologicallyDerivedProduct';
 
   /// [productCategory]
-  /// Broad category of this product.
-  CodingBuilder? productCategory;
+  /// A category or classification of the product. Products may be assigned
+  /// multiple categories, for example a human heart valve can be categorized
+  /// as an 'MPHO' and 'tissue'.
+  List<CodeableConceptBuilder>? productCategory;
 
   /// [productCode]
   /// A codified value that systematically supports characterization and
@@ -303,7 +309,7 @@ class BiologicallyDerivedProductBuilder extends DomainResourceBuilder {
   FhirStringBuilder? division;
 
   /// [productStatus]
-  /// Whether the product is currently available.
+  /// The current status of the product.
   CodingBuilder? productStatus;
 
   /// [expirationDate]
@@ -457,7 +463,7 @@ class BiologicallyDerivedProductBuilder extends DomainResourceBuilder {
         }
       case 'productCategory':
         if (productCategory != null) {
-          fields.add(productCategory!);
+          fields.addAll(productCategory!);
         }
       case 'productCode':
         if (productCode != null) {
@@ -665,8 +671,16 @@ class BiologicallyDerivedProductBuilder extends DomainResourceBuilder {
         }
       case 'productCategory':
         {
-          if (child is CodingBuilder) {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
             productCategory = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            productCategory = [
+              ...(productCategory ?? []),
+              child,
+            ];
             return;
           }
           throw Exception('Invalid child type for $childName');
@@ -858,7 +872,7 @@ class BiologicallyDerivedProductBuilder extends DomainResourceBuilder {
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
       case 'productCategory':
-        return ['CodingBuilder'];
+        return ['CodeableConceptBuilder'];
       case 'productCode':
         return ['CodeableConceptBuilder'];
       case 'parent':
@@ -935,7 +949,7 @@ class BiologicallyDerivedProductBuilder extends DomainResourceBuilder {
         }
       case 'productCategory':
         {
-          productCategory = CodingBuilder.empty();
+          productCategory = <CodeableConceptBuilder>[];
           return;
         }
       case 'productCode':
@@ -1015,7 +1029,7 @@ class BiologicallyDerivedProductBuilder extends DomainResourceBuilder {
     List<ResourceBuilder>? contained,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    CodingBuilder? productCategory,
+    List<CodeableConceptBuilder>? productCategory,
     CodeableConceptBuilder? productCode,
     List<ReferenceBuilder>? parent,
     List<ReferenceBuilder>? request,
@@ -1132,7 +1146,7 @@ class BiologicallyDerivedProductBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<CodeableConceptBuilder>(
       productCategory,
       o.productCategory,
     )) {
@@ -1230,6 +1244,7 @@ class BiologicallyDerivedProductCollectionBuilder
     CollectedXBiologicallyDerivedProductCollectionBuilder? collectedX,
     FhirDateTimeBuilder? collectedDateTime,
     PeriodBuilder? collectedPeriod,
+    this.procedure,
     super.disallowExtensions,
   })  : collectedX = collectedX ?? collectedDateTime ?? collectedPeriod,
         super(
@@ -1293,6 +1308,12 @@ class BiologicallyDerivedProductCollectionBuilder
           'collectedPeriod': PeriodBuilder.fromJson,
         },
         objectPath,
+      ),
+      procedure: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'procedure',
+        ReferenceBuilder.fromJson,
+        '$objectPath.procedure',
       ),
     );
   }
@@ -1359,6 +1380,10 @@ class BiologicallyDerivedProductCollectionBuilder
   /// Getter for [collectedPeriod] as a PeriodBuilder
   PeriodBuilder? get collectedPeriod => collectedX?.isAs<PeriodBuilder>();
 
+  /// [procedure]
+  /// The procedure performed to collect the biologically derived product.
+  ReferenceBuilder? procedure;
+
   /// Converts a [BiologicallyDerivedProductCollectionBuilder]
   /// to [BiologicallyDerivedProductCollection]
   @override
@@ -1406,6 +1431,7 @@ class BiologicallyDerivedProductCollectionBuilder
       addField('collected${fhirType.capitalizeFirstLetter()}', collectedX);
     }
 
+    addField('procedure', procedure);
     return json;
   }
 
@@ -1419,6 +1445,7 @@ class BiologicallyDerivedProductCollectionBuilder
       'collector',
       'source',
       'collectedX',
+      'procedure',
     ];
   }
 
@@ -1466,6 +1493,10 @@ class BiologicallyDerivedProductCollectionBuilder
       case 'collectedPeriod':
         if (collectedX is PeriodBuilder) {
           fields.add(collectedX!);
+        }
+      case 'procedure':
+        if (procedure != null) {
+          fields.add(procedure!);
         }
       default:
         if (checkValid) {
@@ -1600,6 +1631,14 @@ class BiologicallyDerivedProductCollectionBuilder
             throw Exception('Invalid child type for $childName');
           }
         }
+      case 'procedure':
+        {
+          if (child is ReferenceBuilder) {
+            procedure = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -1630,6 +1669,8 @@ class BiologicallyDerivedProductCollectionBuilder
         return ['FhirDateTimeBuilder'];
       case 'collectedPeriod':
         return ['PeriodBuilder'];
+      case 'procedure':
+        return ['ReferenceBuilder'];
       default:
         return <String>[];
     }
@@ -1677,6 +1718,11 @@ class BiologicallyDerivedProductCollectionBuilder
           collectedX = PeriodBuilder.empty();
           return;
         }
+      case 'procedure':
+        {
+          procedure = ReferenceBuilder.empty();
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
@@ -1693,6 +1739,7 @@ class BiologicallyDerivedProductCollectionBuilder
     ReferenceBuilder? collector,
     ReferenceBuilder? source,
     CollectedXBiologicallyDerivedProductCollectionBuilder? collectedX,
+    ReferenceBuilder? procedure,
     FhirDateTimeBuilder? collectedDateTime,
     PeriodBuilder? collectedPeriod,
     Map<String, dynamic>? userData,
@@ -1710,6 +1757,7 @@ class BiologicallyDerivedProductCollectionBuilder
       source: source ?? this.source,
       collectedX:
           collectedX ?? collectedDateTime ?? collectedPeriod ?? this.collectedX,
+      procedure: procedure ?? this.procedure,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -1769,6 +1817,12 @@ class BiologicallyDerivedProductCollectionBuilder
     if (!equalsDeepWithNull(
       collectedX,
       o.collectedX,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      procedure,
+      o.procedure,
     )) {
       return false;
     }

@@ -8,27 +8,157 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 /// A class to build query parameters for RESTful requests for
 /// the [TestPlan] resource.
 class SearchTestPlan extends SearchResource {
+  /// a token search for [context] in the resource
+  /// [TestPlan]
+  SearchTestPlan context(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    parameters['context'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a quantity search for [contextQuantity] in the resource
+  /// [TestPlan]
+  SearchTestPlan contextQuantity(
+    FhirDecimal value, {
+    FhirString? unit,
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    if (modifier != null &&
+        !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
+      throw ArgumentError('Modifier $modifier not allowed for quantity type');
+    }
+    parameters['context_quantity'] = (modifier != null
+        ? '$modifier:$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}');
+    return this;
+  }
+
+  /// a token search for [contextType] in the resource
+  /// [TestPlan]
+  SearchTestPlan contextType(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    parameters['context_type'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a date search for [date] in the resource
+  /// [TestPlan]
+  @override
+  SearchTestPlan date(
+    FhirDateTime value, {
+    SearchModifier? modifier,
+  }) {
+    parameters['date'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a string search for [description] in the resource
+  /// [TestPlan]
+  SearchTestPlan description(
+    FhirString value, {
+    SearchModifier? modifier,
+  }) {
+    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
+      throw ArgumentError('Modifier $modifier not allowed for string type');
+    }
+    parameters['description'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
   /// a token search for [identifier] in the resource
   /// [TestPlan]
+  @override
   SearchTestPlan identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a token search for [jurisdiction] in the resource
+  /// [TestPlan]
+  SearchTestPlan jurisdiction(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    parameters['jurisdiction'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a string search for [name] in the resource
+  /// [TestPlan]
+  @override
+  SearchTestPlan name(
+    FhirString value, {
+    SearchModifier? modifier,
+  }) {
+    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
+      throw ArgumentError('Modifier $modifier not allowed for string type');
+    }
+    parameters['name'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a string search for [publisher] in the resource
+  /// [TestPlan]
+  SearchTestPlan publisher(
+    FhirString value, {
+    SearchModifier? modifier,
+  }) {
+    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
+      throw ArgumentError('Modifier $modifier not allowed for string type');
+    }
+    parameters['publisher'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [TestPlan]
+  @override
   SearchTestPlan status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a string search for [title] in the resource
+  /// [TestPlan]
+  SearchTestPlan title(
+    FhirString value, {
+    SearchModifier? modifier,
+  }) {
+    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
+      throw ArgumentError('Modifier $modifier not allowed for string type');
+    }
+    parameters['title'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -38,7 +168,67 @@ class SearchTestPlan extends SearchResource {
     FhirUri value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}url'] = value.toString();
+    parameters['url'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a token search for [version] in the resource
+  /// [TestPlan]
+  SearchTestPlan version(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    parameters['version'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a token search for [category] in the resource
+  /// [TestPlan]
+  SearchTestPlan category(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    parameters['category'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a uri search for [requirement] in the resource
+  /// [TestPlan]
+  SearchTestPlan requirement(
+    FhirUri value, {
+    SearchModifier? modifier,
+  }) {
+    parameters['requirement'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a uri search for [scopeCanonical] in the resource
+  /// [TestPlan]
+  SearchTestPlan scopeCanonical(
+    FhirUri value, {
+    SearchModifier? modifier,
+  }) {
+    parameters['scope_canonical'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a uri search for [scopeUri] in the resource
+  /// [TestPlan]
+  SearchTestPlan scopeUri(
+    FhirUri value, {
+    SearchModifier? modifier,
+  }) {
+    parameters['scope_uri'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

@@ -14,6 +14,9 @@ enum ConformanceExpectationEnum {
 
   /// SHOULD-NOT
   shouldNot,
+
+  /// SHALL-NOT
+  shallNot,
   ;
 
   /// Converts the enum value to a string.
@@ -31,6 +34,8 @@ enum ConformanceExpectationEnum {
         return 'MAY';
       case ConformanceExpectationEnum.shouldNot:
         return 'SHOULD-NOT';
+      case ConformanceExpectationEnum.shallNot:
+        return 'SHALL-NOT';
     }
   }
 
@@ -56,6 +61,8 @@ enum ConformanceExpectationEnum {
         return ConformanceExpectationEnum.mAY;
       case 'SHOULD-NOT':
         return ConformanceExpectationEnum.shouldNot;
+      case 'SHALL-NOT':
+        return ConformanceExpectationEnum.shallNot;
     }
     return null;
   }
@@ -137,7 +144,7 @@ class ConformanceExpectation extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/conformance-expectation',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'SHALL',
     ),
@@ -150,7 +157,7 @@ class ConformanceExpectation extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/conformance-expectation',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'SHOULD',
     ),
@@ -163,7 +170,7 @@ class ConformanceExpectation extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/conformance-expectation',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'MAY',
     ),
@@ -176,9 +183,22 @@ class ConformanceExpectation extends FhirCodeEnum {
     system: FhirUri._(
       valueString: 'http://hl7.org/fhir/ValueSet/conformance-expectation',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'SHOULD-NOT',
+    ),
+  );
+
+  /// SHALL_NOT
+  static const ConformanceExpectation shallNot = ConformanceExpectation._(
+    valueString: 'SHALL-NOT',
+    valueEnum: ConformanceExpectationEnum.shallNot,
+    system: FhirUri._(
+      valueString: 'http://hl7.org/fhir/ValueSet/conformance-expectation',
+    ),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
+    display: FhirString._(
+      valueString: 'SHALL-NOT',
     ),
   );
 
@@ -188,6 +208,7 @@ class ConformanceExpectation extends FhirCodeEnum {
     sHOULD,
     mAY,
     shouldNot,
+    shallNot,
   ];
 
   /// Returns the enum value with an element attached

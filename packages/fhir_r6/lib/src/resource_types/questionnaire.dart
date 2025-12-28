@@ -1053,10 +1053,10 @@ class QuestionnaireItem extends BackboneElement {
         'text',
         FhirString.fromJson,
       ),
-      type: JsonParser.parsePrimitive<QuestionnaireItemType>(
+      type: JsonParser.parsePrimitive<QuestionnaireItemTypeUsable>(
         json,
         'type',
-        QuestionnaireItemType.fromJson,
+        QuestionnaireItemTypeUsable.fromJson,
       )!,
       enableWhen: (json['enableWhen'] as List<dynamic>?)
           ?.map<QuestionnaireEnableWhen>(
@@ -1208,7 +1208,7 @@ class QuestionnaireItem extends BackboneElement {
   /// The type of questionnaire item this is - whether text for display, a
   /// grouping of other items or a particular type of data to be captured
   /// (string, integer, Coding, etc.).
-  final QuestionnaireItemType type;
+  final QuestionnaireItemTypeUsable type;
 
   /// [enableWhen]
   /// A constraint indicating that this item should only be enabled
@@ -2166,11 +2166,15 @@ class QuestionnaireAnswerOption extends BackboneElement {
       valueX: JsonParser.parsePolymorphic<ValueXQuestionnaireAnswerOption>(
         json,
         {
+          'valueDecimal': FhirDecimal.fromJson,
           'valueInteger': FhirInteger.fromJson,
           'valueDate': FhirDate.fromJson,
+          'valueDateTime': FhirDateTime.fromJson,
           'valueTime': FhirTime.fromJson,
           'valueString': FhirString.fromJson,
+          'valueUri': FhirUri.fromJson,
           'valueCoding': Coding.fromJson,
+          'valueQuantity': Quantity.fromJson,
           'valueReference': Reference.fromJson,
         },
       )!,
@@ -2228,11 +2232,17 @@ class QuestionnaireAnswerOption extends BackboneElement {
   /// A potential answer that's allowed as the answer to this question.
   final ValueXQuestionnaireAnswerOption valueX;
 
+  /// Getter for [valueDecimal] as a FhirDecimal
+  FhirDecimal? get valueDecimal => valueX.isAs<FhirDecimal>();
+
   /// Getter for [valueInteger] as a FhirInteger
   FhirInteger? get valueInteger => valueX.isAs<FhirInteger>();
 
   /// Getter for [valueDate] as a FhirDate
   FhirDate? get valueDate => valueX.isAs<FhirDate>();
+
+  /// Getter for [valueDateTime] as a FhirDateTime
+  FhirDateTime? get valueDateTime => valueX.isAs<FhirDateTime>();
 
   /// Getter for [valueTime] as a FhirTime
   FhirTime? get valueTime => valueX.isAs<FhirTime>();
@@ -2240,8 +2250,14 @@ class QuestionnaireAnswerOption extends BackboneElement {
   /// Getter for [valueString] as a FhirString
   FhirString? get valueString => valueX.isAs<FhirString>();
 
+  /// Getter for [valueUri] as a FhirUri
+  FhirUri? get valueUri => valueX.isAs<FhirUri>();
+
   /// Getter for [valueCoding] as a Coding
   Coding? get valueCoding => valueX.isAs<Coding>();
+
+  /// Getter for [valueQuantity] as a Quantity
+  Quantity? get valueQuantity => valueX.isAs<Quantity>();
 
   /// Getter for [valueReference] as a Reference
   Reference? get valueReference => valueX.isAs<Reference>();
@@ -2375,12 +2391,20 @@ class QuestionnaireAnswerOption extends BackboneElement {
         fields.add(valueX);
       case 'valueX':
         fields.add(valueX);
+      case 'valueDecimal':
+        if (valueX is FhirDecimal) {
+          fields.add(valueX);
+        }
       case 'valueInteger':
         if (valueX is FhirInteger) {
           fields.add(valueX);
         }
       case 'valueDate':
         if (valueX is FhirDate) {
+          fields.add(valueX);
+        }
+      case 'valueDateTime':
+        if (valueX is FhirDateTime) {
           fields.add(valueX);
         }
       case 'valueTime':
@@ -2391,8 +2415,16 @@ class QuestionnaireAnswerOption extends BackboneElement {
         if (valueX is FhirString) {
           fields.add(valueX);
         }
+      case 'valueUri':
+        if (valueX is FhirUri) {
+          fields.add(valueX);
+        }
       case 'valueCoding':
         if (valueX is Coding) {
+          fields.add(valueX);
+        }
+      case 'valueQuantity':
+        if (valueX is Quantity) {
           fields.add(valueX);
         }
       case 'valueReference':

@@ -20,14 +20,12 @@ class Substance extends DomainResource {
     super.extension_,
     super.modifierExtension,
     this.identifier,
-    required this.instance,
     this.status,
     this.category,
     required this.code,
     this.description,
     this.expiry,
     this.quantity,
-    this.ingredient,
   }) : super(
           resourceType: R6ResourceType.Substance,
         );
@@ -90,11 +88,6 @@ class Substance extends DomainResource {
             ),
           )
           .toList(),
-      instance: JsonParser.parsePrimitive<FhirBoolean>(
-        json,
-        'instance',
-        FhirBoolean.fromJson,
-      )!,
       status: JsonParser.parsePrimitive<FHIRSubstanceStatus>(
         json,
         'status',
@@ -127,13 +120,6 @@ class Substance extends DomainResource {
         'quantity',
         Quantity.fromJson,
       ),
-      ingredient: (json['ingredient'] as List<dynamic>?)
-          ?.map<SubstanceIngredient>(
-            (v) => SubstanceIngredient.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
     );
   }
 
@@ -180,15 +166,10 @@ class Substance extends DomainResource {
   String get fhirType => 'Substance';
 
   /// [identifier]
-  /// Unique identifier for the substance. For an instance, an identifier
-  /// associated with the package/container (usually a label affixed
-  /// directly).
+  /// Unique identifier for the substance, often an identifier associated
+  /// with the package/container of the substance instance (usually a label
+  /// affixed directly).
   final List<Identifier>? identifier;
-
-  /// [instance]
-  /// A boolean to indicate if this an instance of a substance or a kind of
-  /// one (a definition).
-  final FhirBoolean instance;
 
   /// [status]
   /// A code to indicate if the substance is actively used.
@@ -216,10 +197,6 @@ class Substance extends DomainResource {
   /// [quantity]
   /// The amount of the substance.
   final Quantity? quantity;
-
-  /// [ingredient]
-  /// A substance can be composed of other substances.
-  final List<SubstanceIngredient>? ingredient;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -321,10 +298,6 @@ class Substance extends DomainResource {
       identifier,
     );
     addField(
-      'instance',
-      instance,
-    );
-    addField(
       'status',
       status,
     );
@@ -348,10 +321,6 @@ class Substance extends DomainResource {
       'quantity',
       quantity,
     );
-    addField(
-      'ingredient',
-      ingredient,
-    );
     return json;
   }
 
@@ -368,14 +337,12 @@ class Substance extends DomainResource {
       'extension',
       'modifierExtension',
       'identifier',
-      'instance',
       'status',
       'category',
       'code',
       'description',
       'expiry',
       'quantity',
-      'ingredient',
     ];
   }
 
@@ -424,8 +391,6 @@ class Substance extends DomainResource {
         if (identifier != null) {
           fields.addAll(identifier!);
         }
-      case 'instance':
-        fields.add(instance);
       case 'status':
         if (status != null) {
           fields.add(status!);
@@ -447,10 +412,6 @@ class Substance extends DomainResource {
       case 'quantity':
         if (quantity != null) {
           fields.add(quantity!);
-        }
-      case 'ingredient':
-        if (ingredient != null) {
-          fields.addAll(ingredient!);
         }
       default:
         if (checkValid) {
@@ -548,12 +509,6 @@ class Substance extends DomainResource {
       return false;
     }
     if (!equalsDeepWithNull(
-      instance,
-      o.instance,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
       status,
       o.status,
     )) {
@@ -586,334 +541,6 @@ class Substance extends DomainResource {
     if (!equalsDeepWithNull(
       quantity,
       o.quantity,
-    )) {
-      return false;
-    }
-    if (!listEquals<SubstanceIngredient>(
-      ingredient,
-      o.ingredient,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [SubstanceIngredient]
-/// A substance can be composed of other substances.
-class SubstanceIngredient extends BackboneElement {
-  /// Primary constructor for
-  /// [SubstanceIngredient]
-
-  const SubstanceIngredient({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    this.quantity,
-    required this.substanceX,
-    super.disallowExtensions,
-  }) : super();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory SubstanceIngredient.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return SubstanceIngredient(
-      id: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'id',
-        FhirString.fromJson,
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      quantity: JsonParser.parseObject<Ratio>(
-        json,
-        'quantity',
-        Ratio.fromJson,
-      ),
-      substanceX: JsonParser.parsePolymorphic<SubstanceXSubstanceIngredient>(
-        json,
-        {
-          'substanceCodeableConcept': CodeableConcept.fromJson,
-          'substanceReference': Reference.fromJson,
-        },
-      )!,
-    );
-  }
-
-  /// Deserialize [SubstanceIngredient]
-  /// from a [String] or [YamlMap] object
-  factory SubstanceIngredient.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return SubstanceIngredient.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return SubstanceIngredient.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'SubstanceIngredient '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [SubstanceIngredient]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory SubstanceIngredient.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return SubstanceIngredient.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'SubstanceIngredient';
-
-  /// [quantity]
-  /// The amount of the ingredient in the substance - a concentration ratio.
-  final Ratio? quantity;
-
-  /// [substanceX]
-  /// Another substance that is a component of this substance.
-  final SubstanceXSubstanceIngredient substanceX;
-
-  /// Getter for [substanceCodeableConcept] as a CodeableConcept
-  CodeableConcept? get substanceCodeableConcept =>
-      substanceX.isAs<CodeableConcept>();
-
-  /// Getter for [substanceReference] as a Reference
-  Reference? get substanceReference => substanceX.isAs<Reference>();
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    bool isNonEmpty(dynamic val) {
-      if (val == null) return false;
-      if (val is List && val.isEmpty) return false;
-      if (val is Map && val.isEmpty) return false;
-      return true;
-    }
-
-    void addField(String key, dynamic field) {
-      if (field == null) return;
-      if (!(field is FhirBase? || field is List<FhirBase>?)) {
-        throw ArgumentError('"field" must be a FhirBase type');
-      }
-      if (field is PrimitiveType) {
-        final fieldMap = field.toJson();
-        final val = fieldMap['value'];
-        final ext = fieldMap['_value'];
-        final hasVal = isNonEmpty(val);
-        final hasExt = isNonEmpty(ext);
-        if (hasVal) json[key] = val;
-        if (hasExt) json['_$key'] = ext;
-      } else if (field is List<FhirBase>) {
-        if (field.isEmpty) return;
-        final isPrimitive = field.first is PrimitiveType;
-        final tempList = <dynamic>[];
-        final tempExtensions = <dynamic>[];
-        for (final e in field) {
-          final itemMap = e.toJson();
-          if (!isNonEmpty(itemMap)) {
-            continue;
-          }
-          if (isPrimitive) {
-            final v = itemMap['value'];
-            final x = itemMap['_value'];
-            tempList.add(v);
-            tempExtensions.add(x);
-          } else {
-            tempList.add(itemMap);
-          }
-        }
-        if (tempList.isEmpty) return;
-        if (isPrimitive) {
-          final hasAnyValues = tempList.any((v) => v != null);
-          if (hasAnyValues) {
-            json[key] = tempList;
-          }
-          final anyExt = tempExtensions.any(isNonEmpty);
-          if (anyExt) {
-            json['_$key'] = tempExtensions;
-          }
-        } else {
-          json[key] = tempList;
-        }
-      } else if (field is FhirBase) {
-        final subMap = field.toJson();
-        if (isNonEmpty(subMap)) {
-          json[key] = subMap;
-        }
-      }
-    }
-
-    addField(
-      'id',
-      id,
-    );
-    addField(
-      'extension',
-      extension_,
-    );
-    addField(
-      'modifierExtension',
-      modifierExtension,
-    );
-    addField(
-      'quantity',
-      quantity,
-    );
-    final substanceXFhirType = substanceX.fhirType;
-    addField(
-      'substance${substanceXFhirType.capitalize()}',
-      substanceX,
-    );
-
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'quantity',
-      'substanceX',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBase> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBase>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'quantity':
-        if (quantity != null) {
-          fields.add(quantity!);
-        }
-      case 'substance':
-        fields.add(substanceX);
-      case 'substanceX':
-        fields.add(substanceX);
-      case 'substanceCodeableConcept':
-        if (substanceX is CodeableConcept) {
-          fields.add(substanceX);
-        }
-      case 'substanceReference':
-        if (substanceX is Reference) {
-          fields.add(substanceX);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBase? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  SubstanceIngredient clone() => copyWith();
-
-  /// Copy function for [SubstanceIngredient]
-  /// Returns a copy of the current instance with the provided fields modified.
-  /// If a field is not provided, it will retain its original value.
-  /// If a null is provided, this will clearn the field, unless the
-  /// field is required, in which case it will keep its current value.
-  @override
-  $SubstanceIngredientCopyWith<SubstanceIngredient> get copyWith =>
-      _$SubstanceIngredientCopyWithImpl<SubstanceIngredient>(
-        this,
-        (value) => value,
-      );
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBase? o) {
-    if (o is! SubstanceIngredient) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      quantity,
-      o.quantity,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      substanceX,
-      o.substanceX,
     )) {
       return false;
     }

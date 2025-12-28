@@ -21,13 +21,13 @@ abstract class $EventDefinitionCopyWith<T>
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXEventDefinition? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     FhirString? subtitle,
     PublicationStatus? status,
     FhirBoolean? experimental,
-    CodeableConcept? subjectX,
+    SubjectXEventDefinition? subjectX,
     FhirDateTime? date,
     FhirString? publisher,
     List<ContactDetail>? contact,
@@ -129,7 +129,7 @@ class _$EventDefinitionCopyWithImpl<T> implements $EventDefinitionCopyWith<T> {
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXEventDefinition?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -145,7 +145,7 @@ class _$EventDefinitionCopyWithImpl<T> implements $EventDefinitionCopyWith<T> {
             : experimental as FhirBoolean?,
         subjectX: identical(subjectX, fhirSentinel)
             ? _value.subjectX
-            : subjectX as CodeableConcept?,
+            : subjectX as SubjectXEventDefinition?,
         date:
             identical(date, fhirSentinel) ? _value.date : date as FhirDateTime?,
         publisher: identical(publisher, fhirSentinel)

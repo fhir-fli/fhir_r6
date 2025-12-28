@@ -10,13 +10,15 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchRelatedPerson extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [RelatedPerson]
+  @override
   SearchRelatedPerson identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}identifier'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['identifier'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -29,8 +31,8 @@ class SearchRelatedPerson extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}address'] =
-        value.toString();
+    parameters['address'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -43,8 +45,8 @@ class SearchRelatedPerson extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}address_city'] =
-        value.toString();
+    parameters['address_city'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -57,8 +59,8 @@ class SearchRelatedPerson extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}address_country'] =
-        value.toString();
+    parameters['address_country'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -71,8 +73,8 @@ class SearchRelatedPerson extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}address_postalcode'] =
-        value.toString();
+    parameters['address_postalcode'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -85,8 +87,8 @@ class SearchRelatedPerson extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}address_state'] =
-        value.toString();
+    parameters['address_state'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -97,8 +99,9 @@ class SearchRelatedPerson extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}address_use'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['address_use'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -108,8 +111,8 @@ class SearchRelatedPerson extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}birthdate'] =
-        value.toString();
+    parameters['birthdate'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -120,8 +123,9 @@ class SearchRelatedPerson extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}email'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['email'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -132,8 +136,9 @@ class SearchRelatedPerson extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}gender'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['gender'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -144,13 +149,15 @@ class SearchRelatedPerson extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}phone'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['phone'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a string search for [phonetic] in the resource
   /// [RelatedPerson]
+  @override
   SearchRelatedPerson phonetic(
     FhirString value, {
     SearchModifier? modifier,
@@ -158,8 +165,8 @@ class SearchRelatedPerson extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}phonetic'] =
-        value.toString();
+    parameters['phonetic'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -170,8 +177,9 @@ class SearchRelatedPerson extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}telecom'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['telecom'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -182,8 +190,9 @@ class SearchRelatedPerson extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}active'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['active'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -196,8 +205,8 @@ class SearchRelatedPerson extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}family'] =
-        value.toString();
+    parameters['family'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -210,13 +219,14 @@ class SearchRelatedPerson extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}given'] =
-        value.toString();
+    parameters['given'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a string search for [name] in the resource
   /// [RelatedPerson]
+  @override
   SearchRelatedPerson name(
     FhirString value, {
     SearchModifier? modifier,
@@ -224,19 +234,35 @@ class SearchRelatedPerson extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['${modifier != null ? '$modifier' : ''}name'] = value.toString();
+    parameters['name'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [relationship] in the resource
   /// [RelatedPerson]
+  @override
   SearchRelatedPerson relationship(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}relationship'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['relationship'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
+    return this;
+  }
+
+  /// a token search for [role] in the resource
+  /// [RelatedPerson]
+  SearchRelatedPerson role(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    parameters['role'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

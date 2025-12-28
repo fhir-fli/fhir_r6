@@ -35,6 +35,7 @@ export 'ratio.dart';
 export 'ratio_range.dart';
 export 'reference.dart';
 export 'related_artifact.dart';
+export 'relative_time.dart';
 export 'sampled_data.dart';
 export 'signature.dart';
 export 'timing.dart';

@@ -25,8 +25,9 @@ abstract class $MedicationStatementCopyWith<T>
     CodeableReference? medication,
     Reference? subject,
     Reference? encounter,
-    FhirDateTime? effectiveX,
+    EffectiveXMedicationStatement? effectiveX,
     FhirDateTime? dateAsserted,
+    Reference? author,
     List<Reference>? informationSource,
     List<Reference>? derivedFrom,
     List<CodeableReference>? reason,
@@ -65,6 +66,7 @@ class _$MedicationStatementCopyWithImpl<T>
     Object? encounter = fhirSentinel,
     Object? effectiveX = fhirSentinel,
     Object? dateAsserted = fhirSentinel,
+    Object? author = fhirSentinel,
     Object? informationSource = fhirSentinel,
     Object? derivedFrom = fhirSentinel,
     Object? reason = fhirSentinel,
@@ -118,10 +120,13 @@ class _$MedicationStatementCopyWithImpl<T>
             : encounter as Reference?,
         effectiveX: identical(effectiveX, fhirSentinel)
             ? _value.effectiveX
-            : effectiveX as FhirDateTime?,
+            : effectiveX as EffectiveXMedicationStatement?,
         dateAsserted: identical(dateAsserted, fhirSentinel)
             ? _value.dateAsserted
             : dateAsserted as FhirDateTime?,
+        author: identical(author, fhirSentinel)
+            ? _value.author
+            : author as Reference?,
         informationSource: identical(informationSource, fhirSentinel)
             ? _value.informationSource
             : informationSource as List<Reference>?,

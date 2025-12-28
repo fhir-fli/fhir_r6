@@ -133,7 +133,7 @@ abstract class $CareTeamParticipantCopyWith<T>
     CodeableConcept? role,
     Reference? member,
     Reference? onBehalfOf,
-    Period? coverageX,
+    EffectiveXCareTeamParticipant? effectiveX,
     bool? disallowExtensions,
   });
 }
@@ -153,7 +153,7 @@ class _$CareTeamParticipantCopyWithImpl<T>
     Object? role = fhirSentinel,
     Object? member = fhirSentinel,
     Object? onBehalfOf = fhirSentinel,
-    Object? coverageX = fhirSentinel,
+    Object? effectiveX = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -174,9 +174,9 @@ class _$CareTeamParticipantCopyWithImpl<T>
         onBehalfOf: identical(onBehalfOf, fhirSentinel)
             ? _value.onBehalfOf
             : onBehalfOf as Reference?,
-        coverageX: identical(coverageX, fhirSentinel)
-            ? _value.coverageX
-            : coverageX as Period?,
+        effectiveX: identical(effectiveX, fhirSentinel)
+            ? _value.effectiveX
+            : effectiveX as EffectiveXCareTeamParticipant?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

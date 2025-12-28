@@ -27,15 +27,12 @@ class TransportBuilder extends DomainResourceBuilder {
     super.extension_,
     super.modifierExtension,
     this.identifier,
-    this.instantiatesCanonical,
-    this.instantiatesUri,
+    this.instantiates,
     this.basedOn,
     this.groupIdentifier,
     this.partOf,
     this.status,
     this.statusReason,
-    this.intent,
-    this.priority,
     this.code,
     this.description,
     this.focus,
@@ -66,7 +63,6 @@ class TransportBuilder extends DomainResourceBuilder {
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
   factory TransportBuilder.empty() => TransportBuilder(
-        intent: TransportIntentBuilder.values.first,
         requestedLocation: ReferenceBuilder.empty(),
         currentLocation: ReferenceBuilder.empty(),
       );
@@ -147,17 +143,11 @@ class TransportBuilder extends DomainResourceBuilder {
             ),
           )
           .toList(),
-      instantiatesCanonical: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
+      instantiates: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
         json,
-        'instantiatesCanonical',
+        'instantiates',
         FhirCanonicalBuilder.fromJson,
-        '$objectPath.instantiatesCanonical',
-      ),
-      instantiatesUri: JsonParser.parsePrimitive<FhirUriBuilder>(
-        json,
-        'instantiatesUri',
-        FhirUriBuilder.fromJson,
-        '$objectPath.instantiatesUri',
+        '$objectPath.instantiates',
       ),
       basedOn: (json['basedOn'] as List<dynamic>?)
           ?.map<ReferenceBuilder>(
@@ -196,18 +186,6 @@ class TransportBuilder extends DomainResourceBuilder {
         'statusReason',
         CodeableConceptBuilder.fromJson,
         '$objectPath.statusReason',
-      ),
-      intent: JsonParser.parsePrimitive<TransportIntentBuilder>(
-        json,
-        'intent',
-        TransportIntentBuilder.fromJson,
-        '$objectPath.intent',
-      ),
-      priority: JsonParser.parsePrimitive<RequestPriorityBuilder>(
-        json,
-        'priority',
-        RequestPriorityBuilder.fromJson,
-        '$objectPath.priority',
       ),
       code: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
@@ -415,17 +393,11 @@ class TransportBuilder extends DomainResourceBuilder {
   /// multiple disparate systems.
   List<IdentifierBuilder>? identifier;
 
-  /// [instantiatesCanonical]
+  /// [instantiates]
   /// The URL pointing to a *FHIR*-defined protocol, guideline, orderset or
   /// other definition that is adhered to in whole or in part by this
   /// Transport.
-  FhirCanonicalBuilder? instantiatesCanonical;
-
-  /// [instantiatesUri]
-  /// The URL pointing to an *externally* maintained protocol, guideline,
-  /// orderset or other definition that is adhered to in whole or in part by
-  /// this Transport.
-  FhirUriBuilder? instantiatesUri;
+  FhirCanonicalBuilder? instantiates;
 
   /// [basedOn]
   /// BasedOn refers to a higher-level authorization that triggered the
@@ -459,17 +431,6 @@ class TransportBuilder extends DomainResourceBuilder {
   /// An explanation as to why this transport is held, failed, was refused,
   /// etc.
   CodeableConceptBuilder? statusReason;
-
-  /// [intent]
-  /// Indicates the "level" of actionability associated with the Transport,
-  /// i.e. i+R[9]Cs this a proposed transport, a planned transport, an
-  /// actionable transport, etc.
-  TransportIntentBuilder? intent;
-
-  /// [priority]
-  /// Indicates how quickly the Transport should be addressed with respect to
-  /// other requests.
-  RequestPriorityBuilder? priority;
 
   /// [code]
   /// A name or code (or both) briefly describing what the transport
@@ -618,15 +579,12 @@ class TransportBuilder extends DomainResourceBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('identifier', identifier);
-    addField('instantiatesCanonical', instantiatesCanonical);
-    addField('instantiatesUri', instantiatesUri);
+    addField('instantiates', instantiates);
     addField('basedOn', basedOn);
     addField('groupIdentifier', groupIdentifier);
     addField('partOf', partOf);
     addField('status', status);
     addField('statusReason', statusReason);
-    addField('intent', intent);
-    addField('priority', priority);
     addField('code', code);
     addField('description', description);
     addField('focus', focus);
@@ -665,15 +623,12 @@ class TransportBuilder extends DomainResourceBuilder {
       'extension',
       'modifierExtension',
       'identifier',
-      'instantiatesCanonical',
-      'instantiatesUri',
+      'instantiates',
       'basedOn',
       'groupIdentifier',
       'partOf',
       'status',
       'statusReason',
-      'intent',
-      'priority',
       'code',
       'description',
       'focus',
@@ -744,13 +699,9 @@ class TransportBuilder extends DomainResourceBuilder {
         if (identifier != null) {
           fields.addAll(identifier!);
         }
-      case 'instantiatesCanonical':
-        if (instantiatesCanonical != null) {
-          fields.add(instantiatesCanonical!);
-        }
-      case 'instantiatesUri':
-        if (instantiatesUri != null) {
-          fields.add(instantiatesUri!);
+      case 'instantiates':
+        if (instantiates != null) {
+          fields.add(instantiates!);
         }
       case 'basedOn':
         if (basedOn != null) {
@@ -771,14 +722,6 @@ class TransportBuilder extends DomainResourceBuilder {
       case 'statusReason':
         if (statusReason != null) {
           fields.add(statusReason!);
-        }
-      case 'intent':
-        if (intent != null) {
-          fields.add(intent!);
-        }
-      case 'priority':
-        if (priority != null) {
-          fields.add(priority!);
         }
       case 'code':
         if (code != null) {
@@ -1040,10 +983,10 @@ class TransportBuilder extends DomainResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'instantiatesCanonical':
+      case 'instantiates':
         {
           if (child is FhirCanonicalBuilder) {
-            instantiatesCanonical = child;
+            instantiates = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
             // Try to convert from one primitive type to another
@@ -1051,27 +994,7 @@ class TransportBuilder extends DomainResourceBuilder {
               final stringValue = child.toString();
               final converted = FhirCanonicalBuilder.tryParse(stringValue);
               if (converted != null) {
-                instantiatesCanonical = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'instantiatesUri':
-        {
-          if (child is FhirUriBuilder) {
-            instantiatesUri = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirUriBuilder.tryParse(stringValue);
-              if (converted != null) {
-                instantiatesUri = converted;
+                instantiates = converted;
                 return;
               }
             } catch (e) {
@@ -1148,52 +1071,6 @@ class TransportBuilder extends DomainResourceBuilder {
           if (child is CodeableConceptBuilder) {
             statusReason = child;
             return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'intent':
-        {
-          if (child is TransportIntentBuilder) {
-            intent = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              // For enums, try to create directly from the string value
-              try {
-                final converted = TransportIntentBuilder(stringValue);
-                intent = converted;
-                return;
-              } catch (e) {
-                // Continue if enum creation fails
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
-          }
-          throw Exception('Invalid child type for $childName');
-        }
-      case 'priority':
-        {
-          if (child is RequestPriorityBuilder) {
-            priority = child;
-            return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              // For enums, try to create directly from the string value
-              try {
-                final converted = RequestPriorityBuilder(stringValue);
-                priority = converted;
-                return;
-              } catch (e) {
-                // Continue if enum creation fails
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -1497,10 +1374,8 @@ class TransportBuilder extends DomainResourceBuilder {
         return ['FhirExtensionBuilder'];
       case 'identifier':
         return ['IdentifierBuilder'];
-      case 'instantiatesCanonical':
+      case 'instantiates':
         return ['FhirCanonicalBuilder'];
-      case 'instantiatesUri':
-        return ['FhirUriBuilder'];
       case 'basedOn':
         return ['ReferenceBuilder'];
       case 'groupIdentifier':
@@ -1511,10 +1386,6 @@ class TransportBuilder extends DomainResourceBuilder {
         return ['FhirCodeEnumBuilder'];
       case 'statusReason':
         return ['CodeableConceptBuilder'];
-      case 'intent':
-        return ['FhirCodeEnumBuilder'];
-      case 'priority':
-        return ['FhirCodeEnumBuilder'];
       case 'code':
         return ['CodeableConceptBuilder'];
       case 'description':
@@ -1614,14 +1485,9 @@ class TransportBuilder extends DomainResourceBuilder {
           identifier = <IdentifierBuilder>[];
           return;
         }
-      case 'instantiatesCanonical':
+      case 'instantiates':
         {
-          instantiatesCanonical = FhirCanonicalBuilder.empty();
-          return;
-        }
-      case 'instantiatesUri':
-        {
-          instantiatesUri = FhirUriBuilder.empty();
+          instantiates = FhirCanonicalBuilder.empty();
           return;
         }
       case 'basedOn':
@@ -1647,16 +1513,6 @@ class TransportBuilder extends DomainResourceBuilder {
       case 'statusReason':
         {
           statusReason = CodeableConceptBuilder.empty();
-          return;
-        }
-      case 'intent':
-        {
-          intent = TransportIntentBuilder.empty();
-          return;
-        }
-      case 'priority':
-        {
-          priority = RequestPriorityBuilder.empty();
           return;
         }
       case 'code':
@@ -1787,15 +1643,12 @@ class TransportBuilder extends DomainResourceBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     List<IdentifierBuilder>? identifier,
-    FhirCanonicalBuilder? instantiatesCanonical,
-    FhirUriBuilder? instantiatesUri,
+    FhirCanonicalBuilder? instantiates,
     List<ReferenceBuilder>? basedOn,
     IdentifierBuilder? groupIdentifier,
     List<ReferenceBuilder>? partOf,
     TransportStatusBuilder? status,
     CodeableConceptBuilder? statusReason,
-    TransportIntentBuilder? intent,
-    RequestPriorityBuilder? priority,
     CodeableConceptBuilder? code,
     FhirStringBuilder? description,
     ReferenceBuilder? focus,
@@ -1834,16 +1687,12 @@ class TransportBuilder extends DomainResourceBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       identifier: identifier ?? this.identifier,
-      instantiatesCanonical:
-          instantiatesCanonical ?? this.instantiatesCanonical,
-      instantiatesUri: instantiatesUri ?? this.instantiatesUri,
+      instantiates: instantiates ?? this.instantiates,
       basedOn: basedOn ?? this.basedOn,
       groupIdentifier: groupIdentifier ?? this.groupIdentifier,
       partOf: partOf ?? this.partOf,
       status: status ?? this.status,
       statusReason: statusReason ?? this.statusReason,
-      intent: intent ?? this.intent,
-      priority: priority ?? this.priority,
       code: code ?? this.code,
       description: description ?? this.description,
       focus: focus ?? this.focus,
@@ -1947,14 +1796,8 @@ class TransportBuilder extends DomainResourceBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      instantiatesCanonical,
-      o.instantiatesCanonical,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      instantiatesUri,
-      o.instantiatesUri,
+      instantiates,
+      o.instantiates,
     )) {
       return false;
     }
@@ -1985,18 +1828,6 @@ class TransportBuilder extends DomainResourceBuilder {
     if (!equalsDeepWithNull(
       statusReason,
       o.statusReason,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      intent,
-      o.intent,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      priority,
-      o.priority,
     )) {
       return false;
     }

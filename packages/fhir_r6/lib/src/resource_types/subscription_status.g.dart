@@ -118,9 +118,11 @@ abstract class $SubscriptionStatusNotificationEventCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     FhirInteger64? eventNumber,
+    List<CodeableConcept>? triggerEvent,
     FhirInstant? timestamp,
     Reference? focus,
     List<Reference>? additionalContext,
+    List<SubscriptionStatusRelatedQuery>? relatedQuery,
     bool? disallowExtensions,
   });
 }
@@ -138,9 +140,11 @@ class _$SubscriptionStatusNotificationEventCopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? eventNumber = fhirSentinel,
+    Object? triggerEvent = fhirSentinel,
     Object? timestamp = fhirSentinel,
     Object? focus = fhirSentinel,
     Object? additionalContext = fhirSentinel,
+    Object? relatedQuery = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -155,6 +159,9 @@ class _$SubscriptionStatusNotificationEventCopyWithImpl<T>
         eventNumber: identical(eventNumber, fhirSentinel)
             ? _value.eventNumber
             : (eventNumber as FhirInteger64?) ?? _value.eventNumber,
+        triggerEvent: identical(triggerEvent, fhirSentinel)
+            ? _value.triggerEvent
+            : triggerEvent as List<CodeableConcept>?,
         timestamp: identical(timestamp, fhirSentinel)
             ? _value.timestamp
             : timestamp as FhirInstant?,
@@ -163,6 +170,9 @@ class _$SubscriptionStatusNotificationEventCopyWithImpl<T>
         additionalContext: identical(additionalContext, fhirSentinel)
             ? _value.additionalContext
             : additionalContext as List<Reference>?,
+        relatedQuery: identical(relatedQuery, fhirSentinel)
+            ? _value.relatedQuery
+            : relatedQuery as List<SubscriptionStatusRelatedQuery>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -177,6 +187,68 @@ extension SubscriptionStatusNotificationEventCopyWithExtension
           SubscriptionStatusNotificationEvent>
       get copyWith => _$SubscriptionStatusNotificationEventCopyWithImpl<
               SubscriptionStatusNotificationEvent>(
+            this,
+            (value) => value,
+          );
+}
+
+abstract class $SubscriptionStatusRelatedQueryCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    Coding? queryType,
+    FhirString? query,
+    bool? disallowExtensions,
+  });
+}
+
+class _$SubscriptionStatusRelatedQueryCopyWithImpl<T>
+    implements $SubscriptionStatusRelatedQueryCopyWith<T> {
+  final SubscriptionStatusRelatedQuery _value;
+  final T Function(SubscriptionStatusRelatedQuery) _then;
+
+  _$SubscriptionStatusRelatedQueryCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? queryType = fhirSentinel,
+    Object? query = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      SubscriptionStatusRelatedQuery(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        queryType: identical(queryType, fhirSentinel)
+            ? _value.queryType
+            : queryType as Coding?,
+        query: identical(query, fhirSentinel)
+            ? _value.query
+            : (query as FhirString?) ?? _value.query,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension SubscriptionStatusRelatedQueryCopyWithExtension
+    on SubscriptionStatusRelatedQuery {
+  $SubscriptionStatusRelatedQueryCopyWith<SubscriptionStatusRelatedQuery>
+      get copyWith => _$SubscriptionStatusRelatedQueryCopyWithImpl<
+              SubscriptionStatusRelatedQuery>(
             this,
             (value) => value,
           );

@@ -2062,7 +2062,7 @@ class SpecimenCollectionBuilder extends BackboneElementBuilder {
   CodeableConceptBuilder? method;
 
   /// [device]
-  /// A coded value specifying the technique that is used to perform the
+  /// A coded value specifying the device that is used to perform the
   /// procedure.
   CodeableReferenceBuilder? device;
 
@@ -2758,12 +2758,15 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
     super.modifierExtension,
     this.description,
     this.method,
+    this.performer,
+    this.device,
     this.additive,
     TimeXSpecimenProcessingBuilder? timeX,
     FhirDateTimeBuilder? timeDateTime,
     PeriodBuilder? timePeriod,
+    FhirDurationBuilder? timeDuration,
     super.disallowExtensions,
-  })  : timeX = timeX ?? timeDateTime ?? timePeriod,
+  })  : timeX = timeX ?? timeDateTime ?? timePeriod ?? timeDuration,
         super(
           objectPath: 'Specimen.processing',
         );
@@ -2816,6 +2819,18 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
         CodeableConceptBuilder.fromJson,
         '$objectPath.method',
       ),
+      performer: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'performer',
+        ReferenceBuilder.fromJson,
+        '$objectPath.performer',
+      ),
+      device: JsonParser.parseObject<ReferenceBuilder>(
+        json,
+        'device',
+        ReferenceBuilder.fromJson,
+        '$objectPath.device',
+      ),
       additive: (json['additive'] as List<dynamic>?)
           ?.map<ReferenceBuilder>(
             (v) => ReferenceBuilder.fromJson(
@@ -2831,6 +2846,7 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
         {
           'timeDateTime': FhirDateTimeBuilder.fromJson,
           'timePeriod': PeriodBuilder.fromJson,
+          'timeDuration': FhirDurationBuilder.fromJson,
         },
         objectPath,
       ),
@@ -2887,6 +2903,14 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
   /// A coded value specifying the method used to process the specimen.
   CodeableConceptBuilder? method;
 
+  /// [performer]
+  /// The performer of the processing of the specimen.
+  ReferenceBuilder? performer;
+
+  /// [device]
+  /// The device used in the processing of the specimen.
+  ReferenceBuilder? device;
+
   /// [additive]
   /// Material used in the processing step.
   List<ReferenceBuilder>? additive;
@@ -2902,6 +2926,9 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
 
   /// Getter for [timePeriod] as a PeriodBuilder
   PeriodBuilder? get timePeriod => timeX?.isAs<PeriodBuilder>();
+
+  /// Getter for [timeDuration] as a FhirDurationBuilder
+  FhirDurationBuilder? get timeDuration => timeX?.isAs<FhirDurationBuilder>();
 
   /// Converts a [SpecimenProcessingBuilder]
   /// to [SpecimenProcessing]
@@ -2944,6 +2971,8 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
     addField('modifierExtension', modifierExtension);
     addField('description', description);
     addField('method', method);
+    addField('performer', performer);
+    addField('device', device);
     addField('additive', additive);
     if (timeX != null) {
       final fhirType = timeX!.fhirType;
@@ -2962,6 +2991,8 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
       'modifierExtension',
       'description',
       'method',
+      'performer',
+      'device',
       'additive',
       'timeX',
     ];
@@ -2996,6 +3027,14 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
         if (method != null) {
           fields.add(method!);
         }
+      case 'performer':
+        if (performer != null) {
+          fields.add(performer!);
+        }
+      case 'device':
+        if (device != null) {
+          fields.add(device!);
+        }
       case 'additive':
         if (additive != null) {
           fields.addAll(additive!);
@@ -3014,6 +3053,10 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
         }
       case 'timePeriod':
         if (timeX is PeriodBuilder) {
+          fields.add(timeX!);
+        }
+      case 'timeDuration':
+        if (timeX is FhirDurationBuilder) {
           fields.add(timeX!);
         }
       default:
@@ -3125,6 +3168,22 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'performer':
+        {
+          if (child is ReferenceBuilder) {
+            performer = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'device':
+        {
+          if (child is ReferenceBuilder) {
+            device = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'additive':
         {
           if (child is List<ReferenceBuilder>) {
@@ -3156,6 +3215,10 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
               timeX = child;
               return;
             }
+            if (child is FhirDurationBuilder) {
+              timeX = child;
+              return;
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -3171,6 +3234,15 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
       case 'timePeriod':
         {
           if (child is PeriodBuilder) {
+            timeX = child;
+            return;
+          } else {
+            throw Exception('Invalid child type for $childName');
+          }
+        }
+      case 'timeDuration':
+        {
+          if (child is FhirDurationBuilder) {
             timeX = child;
             return;
           } else {
@@ -3197,6 +3269,10 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
         return ['FhirStringBuilder'];
       case 'method':
         return ['CodeableConceptBuilder'];
+      case 'performer':
+        return ['ReferenceBuilder'];
+      case 'device':
+        return ['ReferenceBuilder'];
       case 'additive':
         return ['ReferenceBuilder'];
       case 'time':
@@ -3204,11 +3280,14 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
         return [
           'FhirDateTimeBuilder',
           'PeriodBuilder',
+          'FhirDurationBuilder',
         ];
       case 'timeDateTime':
         return ['FhirDateTimeBuilder'];
       case 'timePeriod':
         return ['PeriodBuilder'];
+      case 'timeDuration':
+        return ['FhirDurationBuilder'];
       default:
         return <String>[];
     }
@@ -3244,6 +3323,16 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
           method = CodeableConceptBuilder.empty();
           return;
         }
+      case 'performer':
+        {
+          performer = ReferenceBuilder.empty();
+          return;
+        }
+      case 'device':
+        {
+          device = ReferenceBuilder.empty();
+          return;
+        }
       case 'additive':
         {
           additive = <ReferenceBuilder>[];
@@ -3261,6 +3350,11 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
           timeX = PeriodBuilder.empty();
           return;
         }
+      case 'timeDuration':
+        {
+          timeX = FhirDurationBuilder.empty();
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
@@ -3275,10 +3369,13 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? modifierExtension,
     FhirStringBuilder? description,
     CodeableConceptBuilder? method,
+    ReferenceBuilder? performer,
+    ReferenceBuilder? device,
     List<ReferenceBuilder>? additive,
     TimeXSpecimenProcessingBuilder? timeX,
     FhirDateTimeBuilder? timeDateTime,
     PeriodBuilder? timePeriod,
+    FhirDurationBuilder? timeDuration,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -3292,8 +3389,10 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
       modifierExtension: modifierExtension ?? this.modifierExtension,
       description: description ?? this.description,
       method: method ?? this.method,
+      performer: performer ?? this.performer,
+      device: device ?? this.device,
       additive: additive ?? this.additive,
-      timeX: timeX ?? timeDateTime ?? timePeriod ?? this.timeX,
+      timeX: timeX ?? timeDateTime ?? timePeriod ?? timeDuration ?? this.timeX,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -3350,6 +3449,18 @@ class SpecimenProcessingBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      performer,
+      o.performer,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      device,
+      o.device,
+    )) {
+      return false;
+    }
     if (!listEquals<ReferenceBuilder>(
       additive,
       o.additive,
@@ -3378,7 +3489,6 @@ class SpecimenContainerBuilder extends BackboneElementBuilder {
     super.extension_,
     super.modifierExtension,
     this.device,
-    this.location,
     this.specimenQuantity,
     super.disallowExtensions,
   }) : super(
@@ -3428,12 +3538,6 @@ class SpecimenContainerBuilder extends BackboneElementBuilder {
         'device',
         ReferenceBuilder.fromJson,
         '$objectPath.device',
-      ),
-      location: JsonParser.parseObject<ReferenceBuilder>(
-        json,
-        'location',
-        ReferenceBuilder.fromJson,
-        '$objectPath.location',
       ),
       specimenQuantity: JsonParser.parseObject<QuantityBuilder>(
         json,
@@ -3492,10 +3596,6 @@ class SpecimenContainerBuilder extends BackboneElementBuilder {
   /// parent device.
   ReferenceBuilder? device;
 
-  /// [location]
-  /// The location of the container holding the specimen.
-  ReferenceBuilder? location;
-
   /// [specimenQuantity]
   /// The quantity of specimen in the container; may be volume, dimensions,
   /// or other appropriate measurements, depending on the specimen type.
@@ -3541,7 +3641,6 @@ class SpecimenContainerBuilder extends BackboneElementBuilder {
     addField('extension', extension_);
     addField('modifierExtension', modifierExtension);
     addField('device', device);
-    addField('location', location);
     addField('specimenQuantity', specimenQuantity);
     return json;
   }
@@ -3554,7 +3653,6 @@ class SpecimenContainerBuilder extends BackboneElementBuilder {
       'extension',
       'modifierExtension',
       'device',
-      'location',
       'specimenQuantity',
     ];
   }
@@ -3583,10 +3681,6 @@ class SpecimenContainerBuilder extends BackboneElementBuilder {
       case 'device':
         if (device != null) {
           fields.add(device!);
-        }
-      case 'location':
-        if (location != null) {
-          fields.add(location!);
         }
       case 'specimenQuantity':
         if (specimenQuantity != null) {
@@ -3681,14 +3775,6 @@ class SpecimenContainerBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'location':
-        {
-          if (child is ReferenceBuilder) {
-            location = child;
-            return;
-          }
-          throw Exception('Invalid child type for $childName');
-        }
       case 'specimenQuantity':
         {
           if (child is QuantityBuilder) {
@@ -3714,8 +3800,6 @@ class SpecimenContainerBuilder extends BackboneElementBuilder {
       case 'modifierExtension':
         return ['FhirExtensionBuilder'];
       case 'device':
-        return ['ReferenceBuilder'];
-      case 'location':
         return ['ReferenceBuilder'];
       case 'specimenQuantity':
         return ['QuantityBuilder'];
@@ -3749,11 +3833,6 @@ class SpecimenContainerBuilder extends BackboneElementBuilder {
           device = ReferenceBuilder.empty();
           return;
         }
-      case 'location':
-        {
-          location = ReferenceBuilder.empty();
-          return;
-        }
       case 'specimenQuantity':
         {
           specimenQuantity = QuantityBuilder.empty();
@@ -3772,7 +3851,6 @@ class SpecimenContainerBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     ReferenceBuilder? device,
-    ReferenceBuilder? location,
     QuantityBuilder? specimenQuantity,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -3786,7 +3864,6 @@ class SpecimenContainerBuilder extends BackboneElementBuilder {
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
       device: device ?? this.device,
-      location: location ?? this.location,
       specimenQuantity: specimenQuantity ?? this.specimenQuantity,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
@@ -3835,12 +3912,6 @@ class SpecimenContainerBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       device,
       o.device,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      location,
-      o.location,
     )) {
       return false;
     }

@@ -22,14 +22,16 @@ abstract class $PractitionerRoleCopyWith<T> extends $DomainResourceCopyWith<T> {
     Period? period,
     Reference? practitioner,
     Reference? organization,
+    List<Reference>? network,
     List<CodeableConcept>? code,
+    FhirString? display,
     List<CodeableConcept>? specialty,
     List<Reference>? location,
     List<Reference>? healthcareService,
     List<ExtendedContactDetail>? contact,
     List<CodeableConcept>? characteristic,
     List<CodeableConcept>? communication,
-    List<Availability>? availability,
+    Availability? availability,
     List<Reference>? endpoint,
     bool? disallowExtensions,
   });
@@ -57,7 +59,9 @@ class _$PractitionerRoleCopyWithImpl<T>
     Object? period = fhirSentinel,
     Object? practitioner = fhirSentinel,
     Object? organization = fhirSentinel,
+    Object? network = fhirSentinel,
     Object? code = fhirSentinel,
+    Object? display = fhirSentinel,
     Object? specialty = fhirSentinel,
     Object? location = fhirSentinel,
     Object? healthcareService = fhirSentinel,
@@ -102,9 +106,15 @@ class _$PractitionerRoleCopyWithImpl<T>
         organization: identical(organization, fhirSentinel)
             ? _value.organization
             : organization as Reference?,
+        network: identical(network, fhirSentinel)
+            ? _value.network
+            : network as List<Reference>?,
         code: identical(code, fhirSentinel)
             ? _value.code
             : code as List<CodeableConcept>?,
+        display: identical(display, fhirSentinel)
+            ? _value.display
+            : display as FhirString?,
         specialty: identical(specialty, fhirSentinel)
             ? _value.specialty
             : specialty as List<CodeableConcept>?,
@@ -125,7 +135,7 @@ class _$PractitionerRoleCopyWithImpl<T>
             : communication as List<CodeableConcept>?,
         availability: identical(availability, fhirSentinel)
             ? _value.availability
-            : availability as List<Availability>?,
+            : availability as Availability?,
         endpoint: identical(endpoint, fhirSentinel)
             ? _value.endpoint
             : endpoint as List<Reference>?,

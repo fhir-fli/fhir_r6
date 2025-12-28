@@ -17,15 +17,29 @@ abstract class $FhirGroupCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<Resource>? contained,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
+    FhirUri? url,
     List<Identifier>? identifier,
-    FhirBoolean? active,
+    FhirString? version,
+    VersionAlgorithmXGroup? versionAlgorithmX,
+    FhirString? name,
+    FhirString? title,
+    PublicationStatus? status,
+    FhirBoolean? experimental,
+    FhirDateTime? date,
+    FhirString? publisher,
+    List<ContactDetail>? contact,
+    FhirMarkdown? description,
+    List<UsageContext>? useContext,
+    FhirMarkdown? purpose,
+    FhirMarkdown? copyright,
+    FhirString? copyrightLabel,
     GroupType? type,
     GroupMembershipBasis? membership,
     CodeableConcept? code,
-    FhirString? name,
-    FhirMarkdown? description,
     FhirUnsignedInt? quantity,
     Reference? managingEntity,
+    GroupCharacteristicCombination? combinationMethod,
+    FhirPositiveInt? combinationThreshold,
     List<GroupCharacteristic>? characteristic,
     List<GroupMember>? member,
     bool? disallowExtensions,
@@ -48,15 +62,29 @@ class _$FhirGroupCopyWithImpl<T> implements $FhirGroupCopyWith<T> {
     Object? contained = fhirSentinel,
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
+    Object? url = fhirSentinel,
     Object? identifier = fhirSentinel,
-    Object? active = fhirSentinel,
+    Object? version = fhirSentinel,
+    Object? versionAlgorithmX = fhirSentinel,
+    Object? name = fhirSentinel,
+    Object? title = fhirSentinel,
+    Object? status = fhirSentinel,
+    Object? experimental = fhirSentinel,
+    Object? date = fhirSentinel,
+    Object? publisher = fhirSentinel,
+    Object? contact = fhirSentinel,
+    Object? description = fhirSentinel,
+    Object? useContext = fhirSentinel,
+    Object? purpose = fhirSentinel,
+    Object? copyright = fhirSentinel,
+    Object? copyrightLabel = fhirSentinel,
     Object? type = fhirSentinel,
     Object? membership = fhirSentinel,
     Object? code = fhirSentinel,
-    Object? name = fhirSentinel,
-    Object? description = fhirSentinel,
     Object? quantity = fhirSentinel,
     Object? managingEntity = fhirSentinel,
+    Object? combinationMethod = fhirSentinel,
+    Object? combinationThreshold = fhirSentinel,
     Object? characteristic = fhirSentinel,
     Object? member = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
@@ -81,31 +109,68 @@ class _$FhirGroupCopyWithImpl<T> implements $FhirGroupCopyWith<T> {
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
+        url: identical(url, fhirSentinel) ? _value.url : url as FhirUri?,
         identifier: identical(identifier, fhirSentinel)
             ? _value.identifier
             : identifier as List<Identifier>?,
-        active: identical(active, fhirSentinel)
-            ? _value.active
-            : active as FhirBoolean?,
-        type: identical(type, fhirSentinel)
-            ? _value.type
-            : (type as GroupType?) ?? _value.type,
+        version: identical(version, fhirSentinel)
+            ? _value.version
+            : version as FhirString?,
+        versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
+            ? _value.versionAlgorithmX
+            : versionAlgorithmX as VersionAlgorithmXGroup?,
+        name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
+        title: identical(title, fhirSentinel)
+            ? _value.title
+            : title as FhirString?,
+        status: identical(status, fhirSentinel)
+            ? _value.status
+            : status as PublicationStatus?,
+        experimental: identical(experimental, fhirSentinel)
+            ? _value.experimental
+            : experimental as FhirBoolean?,
+        date:
+            identical(date, fhirSentinel) ? _value.date : date as FhirDateTime?,
+        publisher: identical(publisher, fhirSentinel)
+            ? _value.publisher
+            : publisher as FhirString?,
+        contact: identical(contact, fhirSentinel)
+            ? _value.contact
+            : contact as List<ContactDetail>?,
+        description: identical(description, fhirSentinel)
+            ? _value.description
+            : description as FhirMarkdown?,
+        useContext: identical(useContext, fhirSentinel)
+            ? _value.useContext
+            : useContext as List<UsageContext>?,
+        purpose: identical(purpose, fhirSentinel)
+            ? _value.purpose
+            : purpose as FhirMarkdown?,
+        copyright: identical(copyright, fhirSentinel)
+            ? _value.copyright
+            : copyright as FhirMarkdown?,
+        copyrightLabel: identical(copyrightLabel, fhirSentinel)
+            ? _value.copyrightLabel
+            : copyrightLabel as FhirString?,
+        type: identical(type, fhirSentinel) ? _value.type : type as GroupType?,
         membership: identical(membership, fhirSentinel)
             ? _value.membership
             : (membership as GroupMembershipBasis?) ?? _value.membership,
         code: identical(code, fhirSentinel)
             ? _value.code
             : code as CodeableConcept?,
-        name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
-        description: identical(description, fhirSentinel)
-            ? _value.description
-            : description as FhirMarkdown?,
         quantity: identical(quantity, fhirSentinel)
             ? _value.quantity
             : quantity as FhirUnsignedInt?,
         managingEntity: identical(managingEntity, fhirSentinel)
             ? _value.managingEntity
             : managingEntity as Reference?,
+        combinationMethod: identical(combinationMethod, fhirSentinel)
+            ? _value.combinationMethod
+            : combinationMethod as GroupCharacteristicCombination?,
+        combinationThreshold: identical(combinationThreshold, fhirSentinel)
+            ? _value.combinationThreshold
+            : combinationThreshold as FhirPositiveInt?,
         characteristic: identical(characteristic, fhirSentinel)
             ? _value.characteristic
             : characteristic as List<GroupCharacteristic>?,
@@ -133,9 +198,16 @@ abstract class $GroupCharacteristicCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? code,
-    CodeableConcept? valueX,
+    ValueXGroupCharacteristic? valueX,
     FhirBoolean? exclude,
+    FhirMarkdown? description,
+    List<CodeableConcept>? method,
+    DeterminedByXGroupCharacteristic? determinedByX,
+    CodeableConcept? offset,
+    InstancesXGroupCharacteristic? instancesX,
+    DurationXGroupCharacteristic? durationX,
     Period? period,
+    List<RelativeTime>? timing,
     bool? disallowExtensions,
   });
 }
@@ -155,7 +227,14 @@ class _$GroupCharacteristicCopyWithImpl<T>
     Object? code = fhirSentinel,
     Object? valueX = fhirSentinel,
     Object? exclude = fhirSentinel,
+    Object? description = fhirSentinel,
+    Object? method = fhirSentinel,
+    Object? determinedByX = fhirSentinel,
+    Object? offset = fhirSentinel,
+    Object? instancesX = fhirSentinel,
+    Object? durationX = fhirSentinel,
     Object? period = fhirSentinel,
+    Object? timing = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -172,12 +251,33 @@ class _$GroupCharacteristicCopyWithImpl<T>
             : (code as CodeableConcept?) ?? _value.code,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as CodeableConcept?) ?? _value.valueX,
+            : (valueX as ValueXGroupCharacteristic?) ?? _value.valueX,
         exclude: identical(exclude, fhirSentinel)
             ? _value.exclude
             : (exclude as FhirBoolean?) ?? _value.exclude,
+        description: identical(description, fhirSentinel)
+            ? _value.description
+            : description as FhirMarkdown?,
+        method: identical(method, fhirSentinel)
+            ? _value.method
+            : method as List<CodeableConcept>?,
+        determinedByX: identical(determinedByX, fhirSentinel)
+            ? _value.determinedByX
+            : determinedByX as DeterminedByXGroupCharacteristic?,
+        offset: identical(offset, fhirSentinel)
+            ? _value.offset
+            : offset as CodeableConcept?,
+        instancesX: identical(instancesX, fhirSentinel)
+            ? _value.instancesX
+            : instancesX as InstancesXGroupCharacteristic?,
+        durationX: identical(durationX, fhirSentinel)
+            ? _value.durationX
+            : durationX as DurationXGroupCharacteristic?,
         period:
             identical(period, fhirSentinel) ? _value.period : period as Period?,
+        timing: identical(timing, fhirSentinel)
+            ? _value.timing
+            : timing as List<RelativeTime>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -201,6 +301,7 @@ abstract class $GroupMemberCopyWith<T> extends $BackboneElementCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     Reference? entity,
+    List<CodeableConcept>? involvement,
     Period? period,
     FhirBoolean? inactive,
     bool? disallowExtensions,
@@ -219,6 +320,7 @@ class _$GroupMemberCopyWithImpl<T> implements $GroupMemberCopyWith<T> {
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? entity = fhirSentinel,
+    Object? involvement = fhirSentinel,
     Object? period = fhirSentinel,
     Object? inactive = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
@@ -235,6 +337,9 @@ class _$GroupMemberCopyWithImpl<T> implements $GroupMemberCopyWith<T> {
         entity: identical(entity, fhirSentinel)
             ? _value.entity
             : (entity as Reference?) ?? _value.entity,
+        involvement: identical(involvement, fhirSentinel)
+            ? _value.involvement
+            : involvement as List<CodeableConcept>?,
         period:
             identical(period, fhirSentinel) ? _value.period : period as Period?,
         inactive: identical(inactive, fhirSentinel)

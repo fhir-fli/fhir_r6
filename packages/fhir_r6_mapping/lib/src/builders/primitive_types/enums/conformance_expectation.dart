@@ -14,6 +14,9 @@ enum ConformanceExpectationBuilderEnum {
 
   /// SHOULD-NOT
   shouldNot,
+
+  /// SHALL-NOT
+  shallNot,
   ;
 
   /// Converts the enum value to a string.
@@ -31,6 +34,8 @@ enum ConformanceExpectationBuilderEnum {
         return 'MAY';
       case ConformanceExpectationBuilderEnum.shouldNot:
         return 'SHOULD-NOT';
+      case ConformanceExpectationBuilderEnum.shallNot:
+        return 'SHALL-NOT';
     }
   }
 
@@ -60,6 +65,8 @@ enum ConformanceExpectationBuilderEnum {
         return ConformanceExpectationBuilderEnum.mAY;
       case 'SHOULD-NOT':
         return ConformanceExpectationBuilderEnum.shouldNot;
+      case 'SHALL-NOT':
+        return ConformanceExpectationBuilderEnum.shallNot;
     }
     return null;
   }
@@ -153,7 +160,7 @@ class ConformanceExpectationBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/conformance-expectation',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'SHALL',
     ),
@@ -166,7 +173,7 @@ class ConformanceExpectationBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/conformance-expectation',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'SHOULD',
     ),
@@ -179,7 +186,7 @@ class ConformanceExpectationBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/conformance-expectation',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'MAY',
     ),
@@ -193,9 +200,23 @@ class ConformanceExpectationBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/conformance-expectation',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: 'SHOULD-NOT',
+    ),
+  );
+
+  /// SHALL_NOT
+  static ConformanceExpectationBuilder shallNot =
+      ConformanceExpectationBuilder._(
+    valueString: 'SHALL-NOT',
+    valueEnum: ConformanceExpectationBuilderEnum.shallNot,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/conformance-expectation',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: 'SHALL-NOT',
     ),
   );
 
@@ -212,6 +233,7 @@ class ConformanceExpectationBuilder extends FhirCodeEnumBuilder {
     sHOULD,
     mAY,
     shouldNot,
+    shallNot,
   ];
 
   /// Returns the enum value with an element attached

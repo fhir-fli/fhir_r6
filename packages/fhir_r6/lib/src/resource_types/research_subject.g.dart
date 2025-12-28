@@ -19,10 +19,11 @@ abstract class $ResearchSubjectCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
     PublicationStatus? status,
-    List<ResearchSubjectProgress>? progress,
     Period? period,
     Reference? study,
     Reference? subject,
+    List<ResearchSubjectSubjectState>? subjectState,
+    List<ResearchSubjectSubjectMilestone>? subjectMilestone,
     FhirId? assignedComparisonGroup,
     FhirId? actualComparisonGroup,
     List<Reference>? consent,
@@ -48,10 +49,11 @@ class _$ResearchSubjectCopyWithImpl<T> implements $ResearchSubjectCopyWith<T> {
     Object? modifierExtension = fhirSentinel,
     Object? identifier = fhirSentinel,
     Object? status = fhirSentinel,
-    Object? progress = fhirSentinel,
     Object? period = fhirSentinel,
     Object? study = fhirSentinel,
     Object? subject = fhirSentinel,
+    Object? subjectState = fhirSentinel,
+    Object? subjectMilestone = fhirSentinel,
     Object? assignedComparisonGroup = fhirSentinel,
     Object? actualComparisonGroup = fhirSentinel,
     Object? consent = fhirSentinel,
@@ -83,9 +85,6 @@ class _$ResearchSubjectCopyWithImpl<T> implements $ResearchSubjectCopyWith<T> {
         status: identical(status, fhirSentinel)
             ? _value.status
             : (status as PublicationStatus?) ?? _value.status,
-        progress: identical(progress, fhirSentinel)
-            ? _value.progress
-            : progress as List<ResearchSubjectProgress>?,
         period:
             identical(period, fhirSentinel) ? _value.period : period as Period?,
         study: identical(study, fhirSentinel)
@@ -94,6 +93,12 @@ class _$ResearchSubjectCopyWithImpl<T> implements $ResearchSubjectCopyWith<T> {
         subject: identical(subject, fhirSentinel)
             ? _value.subject
             : (subject as Reference?) ?? _value.subject,
+        subjectState: identical(subjectState, fhirSentinel)
+            ? _value.subjectState
+            : subjectState as List<ResearchSubjectSubjectState>?,
+        subjectMilestone: identical(subjectMilestone, fhirSentinel)
+            ? _value.subjectMilestone
+            : subjectMilestone as List<ResearchSubjectSubjectMilestone>?,
         assignedComparisonGroup:
             identical(assignedComparisonGroup, fhirSentinel)
                 ? _value.assignedComparisonGroup
@@ -117,45 +122,41 @@ extension ResearchSubjectCopyWithExtension on ResearchSubject {
       );
 }
 
-abstract class $ResearchSubjectProgressCopyWith<T>
+abstract class $ResearchSubjectSubjectStateCopyWith<T>
     extends $BackboneElementCopyWith<T> {
   @override
   T call({
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    CodeableConcept? type,
-    CodeableConcept? subjectState,
-    CodeableConcept? milestone,
-    CodeableConcept? reason,
+    CodeableConcept? code,
     FhirDateTime? startDate,
     FhirDateTime? endDate,
+    CodeableConcept? reason,
     bool? disallowExtensions,
   });
 }
 
-class _$ResearchSubjectProgressCopyWithImpl<T>
-    implements $ResearchSubjectProgressCopyWith<T> {
-  final ResearchSubjectProgress _value;
-  final T Function(ResearchSubjectProgress) _then;
+class _$ResearchSubjectSubjectStateCopyWithImpl<T>
+    implements $ResearchSubjectSubjectStateCopyWith<T> {
+  final ResearchSubjectSubjectState _value;
+  final T Function(ResearchSubjectSubjectState) _then;
 
-  _$ResearchSubjectProgressCopyWithImpl(this._value, this._then);
+  _$ResearchSubjectSubjectStateCopyWithImpl(this._value, this._then);
 
   @override
   T call({
     Object? id = fhirSentinel,
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
-    Object? type = fhirSentinel,
-    Object? subjectState = fhirSentinel,
-    Object? milestone = fhirSentinel,
-    Object? reason = fhirSentinel,
+    Object? code = fhirSentinel,
     Object? startDate = fhirSentinel,
     Object? endDate = fhirSentinel,
+    Object? reason = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
-      ResearchSubjectProgress(
+      ResearchSubjectSubjectState(
         id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
         extension_: identical(extension_, fhirSentinel)
             ? _value.extension_
@@ -163,24 +164,18 @@ class _$ResearchSubjectProgressCopyWithImpl<T>
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
-        type: identical(type, fhirSentinel)
-            ? _value.type
-            : type as CodeableConcept?,
-        subjectState: identical(subjectState, fhirSentinel)
-            ? _value.subjectState
-            : subjectState as CodeableConcept?,
-        milestone: identical(milestone, fhirSentinel)
-            ? _value.milestone
-            : milestone as CodeableConcept?,
-        reason: identical(reason, fhirSentinel)
-            ? _value.reason
-            : reason as CodeableConcept?,
+        code: identical(code, fhirSentinel)
+            ? _value.code
+            : (code as CodeableConcept?) ?? _value.code,
         startDate: identical(startDate, fhirSentinel)
             ? _value.startDate
-            : startDate as FhirDateTime?,
+            : (startDate as FhirDateTime?) ?? _value.startDate,
         endDate: identical(endDate, fhirSentinel)
             ? _value.endDate
             : endDate as FhirDateTime?,
+        reason: identical(reason, fhirSentinel)
+            ? _value.reason
+            : reason as CodeableConcept?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -189,10 +184,78 @@ class _$ResearchSubjectProgressCopyWithImpl<T>
   }
 }
 
-extension ResearchSubjectProgressCopyWithExtension on ResearchSubjectProgress {
-  $ResearchSubjectProgressCopyWith<ResearchSubjectProgress> get copyWith =>
-      _$ResearchSubjectProgressCopyWithImpl<ResearchSubjectProgress>(
-        this,
-        (value) => value,
-      );
+extension ResearchSubjectSubjectStateCopyWithExtension
+    on ResearchSubjectSubjectState {
+  $ResearchSubjectSubjectStateCopyWith<ResearchSubjectSubjectState>
+      get copyWith => _$ResearchSubjectSubjectStateCopyWithImpl<
+              ResearchSubjectSubjectState>(
+            this,
+            (value) => value,
+          );
+}
+
+abstract class $ResearchSubjectSubjectMilestoneCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    List<CodeableConcept>? milestone,
+    FhirDateTime? date,
+    CodeableConcept? reason,
+    bool? disallowExtensions,
+  });
+}
+
+class _$ResearchSubjectSubjectMilestoneCopyWithImpl<T>
+    implements $ResearchSubjectSubjectMilestoneCopyWith<T> {
+  final ResearchSubjectSubjectMilestone _value;
+  final T Function(ResearchSubjectSubjectMilestone) _then;
+
+  _$ResearchSubjectSubjectMilestoneCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? milestone = fhirSentinel,
+    Object? date = fhirSentinel,
+    Object? reason = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      ResearchSubjectSubjectMilestone(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        milestone: identical(milestone, fhirSentinel)
+            ? _value.milestone
+            : (milestone as List<CodeableConcept>?) ?? _value.milestone,
+        date:
+            identical(date, fhirSentinel) ? _value.date : date as FhirDateTime?,
+        reason: identical(reason, fhirSentinel)
+            ? _value.reason
+            : reason as CodeableConcept?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension ResearchSubjectSubjectMilestoneCopyWithExtension
+    on ResearchSubjectSubjectMilestone {
+  $ResearchSubjectSubjectMilestoneCopyWith<ResearchSubjectSubjectMilestone>
+      get copyWith => _$ResearchSubjectSubjectMilestoneCopyWithImpl<
+              ResearchSubjectSubjectMilestone>(
+            this,
+            (value) => value,
+          );
 }

@@ -21,7 +21,7 @@ abstract class $ObservationDefinitionCopyWith<T>
     FhirUri? url,
     Identifier? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXObservationDefinition? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     PublicationStatus? status,
@@ -144,7 +144,7 @@ class _$ObservationDefinitionCopyWithImpl<T>
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXObservationDefinition?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -273,6 +273,7 @@ abstract class $ObservationDefinitionQualifiedValueCopyWith<T>
     FhirCanonical? normalCodedValueSet,
     FhirCanonical? abnormalCodedValueSet,
     FhirCanonical? criticalCodedValueSet,
+    List<CodeableConcept>? interpretation,
     bool? disallowExtensions,
   });
 }
@@ -301,6 +302,7 @@ class _$ObservationDefinitionQualifiedValueCopyWithImpl<T>
     Object? normalCodedValueSet = fhirSentinel,
     Object? abnormalCodedValueSet = fhirSentinel,
     Object? criticalCodedValueSet = fhirSentinel,
+    Object? interpretation = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -344,6 +346,9 @@ class _$ObservationDefinitionQualifiedValueCopyWithImpl<T>
         criticalCodedValueSet: identical(criticalCodedValueSet, fhirSentinel)
             ? _value.criticalCodedValueSet
             : criticalCodedValueSet as FhirCanonical?,
+        interpretation: identical(interpretation, fhirSentinel)
+            ? _value.interpretation
+            : interpretation as List<CodeableConcept>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

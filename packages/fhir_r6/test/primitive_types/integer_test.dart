@@ -24,7 +24,7 @@ void integerTest() {
     test('FhirInteger fromJson with invalid input throws FormatException', () {
       expect(
         () => FhirInteger.fromJson({'value': 'invalid'}),
-        throwsA(isA<TypeError>()),
+        throwsA(isA<ArgumentError>()),
       );
     });
 
@@ -127,4 +127,7 @@ void integerTest() {
       expect(fhirInteger.toJsonString(), equals('{"value":$validInteger}'));
     });
   });
+}
+void main() {
+  integerTest();
 }

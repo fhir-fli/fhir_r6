@@ -291,7 +291,7 @@ abstract class $ClinicalUseDefinitionIndicationCopyWith<T>
     CodeableReference? diseaseStatus,
     List<CodeableReference>? comorbidity,
     CodeableReference? intendedEffect,
-    Range? durationX,
+    DurationXClinicalUseDefinitionIndication? durationX,
     List<Reference>? undesirableEffect,
     FhirExpression? applicability,
     List<ClinicalUseDefinitionOtherTherapy>? otherTherapy,
@@ -345,7 +345,7 @@ class _$ClinicalUseDefinitionIndicationCopyWithImpl<T>
             : intendedEffect as CodeableReference?,
         durationX: identical(durationX, fhirSentinel)
             ? _value.durationX
-            : durationX as Range?,
+            : durationX as DurationXClinicalUseDefinitionIndication?,
         undesirableEffect: identical(undesirableEffect, fhirSentinel)
             ? _value.undesirableEffect
             : undesirableEffect as List<Reference>?,
@@ -457,7 +457,7 @@ abstract class $ClinicalUseDefinitionInteractantCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    Reference? itemX,
+    ItemXClinicalUseDefinitionInteractant? itemX,
     bool? disallowExtensions,
   });
 }
@@ -488,7 +488,7 @@ class _$ClinicalUseDefinitionInteractantCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         itemX: identical(itemX, fhirSentinel)
             ? _value.itemX
-            : (itemX as Reference?) ?? _value.itemX,
+            : (itemX as ItemXClinicalUseDefinitionInteractant?) ?? _value.itemX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

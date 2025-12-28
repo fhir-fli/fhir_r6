@@ -20,10 +20,10 @@ abstract class $MedicationKnowledgeCopyWith<T>
     List<FhirExtension>? modifierExtension,
     List<Identifier>? identifier,
     CodeableConcept? code,
-    MedicationKnowledgeStatusCodes? status,
-    Reference? author,
-    List<CodeableConcept>? intendedJurisdiction,
-    List<FhirString>? name,
+    PublicationStatus? status,
+    ContactDetail? author,
+    List<CodeableConcept>? jurisdiction,
+    FhirString? name,
     List<MedicationKnowledgeRelatedMedicationKnowledge>?
         relatedMedicationKnowledge,
     List<Reference>? associatedMedication,
@@ -64,7 +64,7 @@ class _$MedicationKnowledgeCopyWithImpl<T>
     Object? code = fhirSentinel,
     Object? status = fhirSentinel,
     Object? author = fhirSentinel,
-    Object? intendedJurisdiction = fhirSentinel,
+    Object? jurisdiction = fhirSentinel,
     Object? name = fhirSentinel,
     Object? relatedMedicationKnowledge = fhirSentinel,
     Object? associatedMedication = fhirSentinel,
@@ -110,16 +110,14 @@ class _$MedicationKnowledgeCopyWithImpl<T>
             : code as CodeableConcept?,
         status: identical(status, fhirSentinel)
             ? _value.status
-            : status as MedicationKnowledgeStatusCodes?,
+            : status as PublicationStatus?,
         author: identical(author, fhirSentinel)
             ? _value.author
-            : author as Reference?,
-        intendedJurisdiction: identical(intendedJurisdiction, fhirSentinel)
-            ? _value.intendedJurisdiction
-            : intendedJurisdiction as List<CodeableConcept>?,
-        name: identical(name, fhirSentinel)
-            ? _value.name
-            : name as List<FhirString>?,
+            : author as ContactDetail?,
+        jurisdiction: identical(jurisdiction, fhirSentinel)
+            ? _value.jurisdiction
+            : jurisdiction as List<CodeableConcept>?,
+        name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         relatedMedicationKnowledge:
             identical(relatedMedicationKnowledge, fhirSentinel)
                 ? _value.relatedMedicationKnowledge
@@ -198,9 +196,7 @@ class _$MedicationKnowledgeRelatedMedicationKnowledgeCopyWithImpl<T>
   final T Function(MedicationKnowledgeRelatedMedicationKnowledge) _then;
 
   _$MedicationKnowledgeRelatedMedicationKnowledgeCopyWithImpl(
-    this._value,
-    this._then,
-  );
+      this._value, this._then);
 
   @override
   T call({
@@ -318,7 +314,7 @@ abstract class $MedicationKnowledgeCostCopyWith<T>
     List<Period>? effectiveDate,
     CodeableConcept? type,
     FhirString? source,
-    Money? costX,
+    CostXMedicationKnowledgeCost? costX,
     bool? disallowExtensions,
   });
 }
@@ -361,7 +357,7 @@ class _$MedicationKnowledgeCostCopyWithImpl<T>
             : source as FhirString?,
         costX: identical(costX, fhirSentinel)
             ? _value.costX
-            : (costX as Money?) ?? _value.costX,
+            : (costX as CostXMedicationKnowledgeCost?) ?? _value.costX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -646,7 +642,7 @@ abstract class $MedicationKnowledgePatientCharacteristicCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    CodeableConcept? valueX,
+    ValueXMedicationKnowledgePatientCharacteristic? valueX,
     bool? disallowExtensions,
   });
 }
@@ -657,9 +653,7 @@ class _$MedicationKnowledgePatientCharacteristicCopyWithImpl<T>
   final T Function(MedicationKnowledgePatientCharacteristic) _then;
 
   _$MedicationKnowledgePatientCharacteristicCopyWithImpl(
-    this._value,
-    this._then,
-  );
+      this._value, this._then);
 
   @override
   T call({
@@ -684,7 +678,7 @@ class _$MedicationKnowledgePatientCharacteristicCopyWithImpl<T>
             : (type as CodeableConcept?) ?? _value.type,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : valueX as CodeableConcept?,
+            : valueX as ValueXMedicationKnowledgePatientCharacteristic?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -712,7 +706,7 @@ abstract class $MedicationKnowledgeMedicineClassificationCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    FhirString? sourceX,
+    SourceXMedicationKnowledgeMedicineClassification? sourceX,
     List<CodeableConcept>? classification,
     bool? disallowExtensions,
   });
@@ -724,9 +718,7 @@ class _$MedicationKnowledgeMedicineClassificationCopyWithImpl<T>
   final T Function(MedicationKnowledgeMedicineClassification) _then;
 
   _$MedicationKnowledgeMedicineClassificationCopyWithImpl(
-    this._value,
-    this._then,
-  );
+      this._value, this._then);
 
   @override
   T call({
@@ -752,7 +744,7 @@ class _$MedicationKnowledgeMedicineClassificationCopyWithImpl<T>
             : (type as CodeableConcept?) ?? _value.type,
         sourceX: identical(sourceX, fhirSentinel)
             ? _value.sourceX
-            : sourceX as FhirString?,
+            : sourceX as SourceXMedicationKnowledgeMedicineClassification?,
         classification: identical(classification, fhirSentinel)
             ? _value.classification
             : classification as List<CodeableConcept>?,
@@ -919,7 +911,7 @@ abstract class $MedicationKnowledgeEnvironmentalSettingCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    Quantity? valueX,
+    ValueXMedicationKnowledgeEnvironmentalSetting? valueX,
     bool? disallowExtensions,
   });
 }
@@ -930,9 +922,7 @@ class _$MedicationKnowledgeEnvironmentalSettingCopyWithImpl<T>
   final T Function(MedicationKnowledgeEnvironmentalSetting) _then;
 
   _$MedicationKnowledgeEnvironmentalSettingCopyWithImpl(
-    this._value,
-    this._then,
-  );
+      this._value, this._then);
 
   @override
   T call({
@@ -957,7 +947,8 @@ class _$MedicationKnowledgeEnvironmentalSettingCopyWithImpl<T>
             : (type as CodeableConcept?) ?? _value.type,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as Quantity?) ?? _value.valueX,
+            : (valueX as ValueXMedicationKnowledgeEnvironmentalSetting?) ??
+                _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -1260,7 +1251,7 @@ abstract class $MedicationKnowledgeIngredientCopyWith<T>
     List<FhirExtension>? modifierExtension,
     CodeableReference? item,
     CodeableConcept? type,
-    Ratio? strengthX,
+    StrengthXMedicationKnowledgeIngredient? strengthX,
     bool? disallowExtensions,
   });
 }
@@ -1299,7 +1290,7 @@ class _$MedicationKnowledgeIngredientCopyWithImpl<T>
             : type as CodeableConcept?,
         strengthX: identical(strengthX, fhirSentinel)
             ? _value.strengthX
-            : strengthX as Ratio?,
+            : strengthX as StrengthXMedicationKnowledgeIngredient?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -1326,7 +1317,7 @@ abstract class $MedicationKnowledgeDrugCharacteristicCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     CodeableConcept? type,
-    CodeableConcept? valueX,
+    ValueXMedicationKnowledgeDrugCharacteristic? valueX,
     bool? disallowExtensions,
   });
 }
@@ -1361,7 +1352,7 @@ class _$MedicationKnowledgeDrugCharacteristicCopyWithImpl<T>
             : type as CodeableConcept?,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : valueX as CodeableConcept?,
+            : valueX as ValueXMedicationKnowledgeDrugCharacteristic?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

@@ -49,6 +49,7 @@ class OperationDefinitionBuilder extends CanonicalResourceBuilder {
     this.copyright,
     this.copyrightLabel,
     this.affectsState,
+    this.synchronicity,
     this.code,
     this.comment,
     this.base,
@@ -279,6 +280,12 @@ class OperationDefinitionBuilder extends CanonicalResourceBuilder {
         FhirBooleanBuilder.fromJson,
         '$objectPath.affectsState',
       ),
+      synchronicity: JsonParser.parsePrimitive<FhirCodeBuilder>(
+        json,
+        'synchronicity',
+        FhirCodeBuilder.fromJson,
+        '$objectPath.synchronicity',
+      ),
       code: JsonParser.parsePrimitive<FhirCodeBuilder>(
         json,
         'code',
@@ -455,6 +462,12 @@ class OperationDefinitionBuilder extends CanonicalResourceBuilder {
   /// audit trail entries do not count as 'affecting state'.
   FhirBooleanBuilder? affectsState;
 
+  /// [synchronicity]
+  /// Indicates that this operation must always be handled as synchronous or
+  /// asynchronous, or that the server must provide both options, and clients
+  /// can choose.
+  FhirCodeBuilder? synchronicity;
+
   /// [code]
   /// The label that is recommended to be used in the URL for this operation.
   /// In some cases, servers may need to use a different CapabilityStatement
@@ -585,6 +598,7 @@ class OperationDefinitionBuilder extends CanonicalResourceBuilder {
     addField('copyright', copyright);
     addField('copyrightLabel', copyrightLabel);
     addField('affectsState', affectsState);
+    addField('synchronicity', synchronicity);
     addField('code', code);
     addField('comment', comment);
     addField('base', base);
@@ -630,6 +644,7 @@ class OperationDefinitionBuilder extends CanonicalResourceBuilder {
       'copyright',
       'copyrightLabel',
       'affectsState',
+      'synchronicity',
       'code',
       'comment',
       'base',
@@ -772,6 +787,10 @@ class OperationDefinitionBuilder extends CanonicalResourceBuilder {
       case 'affectsState':
         if (affectsState != null) {
           fields.add(affectsState!);
+        }
+      case 'synchronicity':
+        if (synchronicity != null) {
+          fields.add(synchronicity!);
         }
       case 'code':
         if (code != null) {
@@ -1359,6 +1378,26 @@ class OperationDefinitionBuilder extends CanonicalResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'synchronicity':
+        {
+          if (child is FhirCodeBuilder) {
+            synchronicity = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirCodeBuilder.tryParse(stringValue);
+              if (converted != null) {
+                synchronicity = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'code':
         {
           if (child is FhirCodeBuilder) {
@@ -1680,6 +1719,8 @@ class OperationDefinitionBuilder extends CanonicalResourceBuilder {
         return ['FhirStringBuilder'];
       case 'affectsState':
         return ['FhirBooleanBuilder'];
+      case 'synchronicity':
+        return ['FhirCodeBuilder'];
       case 'code':
         return ['FhirCodeBuilder'];
       case 'comment':
@@ -1854,6 +1895,11 @@ class OperationDefinitionBuilder extends CanonicalResourceBuilder {
           affectsState = FhirBooleanBuilder.empty();
           return;
         }
+      case 'synchronicity':
+        {
+          synchronicity = FhirCodeBuilder.empty();
+          return;
+        }
       case 'code':
         {
           code = FhirCodeBuilder.empty();
@@ -1945,6 +1991,7 @@ class OperationDefinitionBuilder extends CanonicalResourceBuilder {
     FhirMarkdownBuilder? copyright,
     FhirStringBuilder? copyrightLabel,
     FhirBooleanBuilder? affectsState,
+    FhirCodeBuilder? synchronicity,
     FhirCodeBuilder? code,
     FhirMarkdownBuilder? comment,
     FhirCanonicalBuilder? base,
@@ -1995,6 +2042,7 @@ class OperationDefinitionBuilder extends CanonicalResourceBuilder {
       copyright: copyright ?? this.copyright,
       copyrightLabel: copyrightLabel ?? this.copyrightLabel,
       affectsState: affectsState ?? this.affectsState,
+      synchronicity: synchronicity ?? this.synchronicity,
       code: code ?? this.code,
       comment: comment ?? this.comment,
       base: base ?? this.base,
@@ -2195,6 +2243,12 @@ class OperationDefinitionBuilder extends CanonicalResourceBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
+      synchronicity,
+      o.synchronicity,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       code,
       o.code,
     )) {
@@ -2298,7 +2352,7 @@ class OperationDefinitionParameterBuilder extends BackboneElementBuilder {
       OperationDefinitionParameterBuilder(
         name: FhirCodeBuilder.empty(),
         use: OperationParameterUseBuilder.values.first,
-        min: FhirIntegerBuilder.empty(),
+        min: FhirUnsignedIntBuilder.empty(),
         max: FhirStringBuilder.empty(),
       );
 
@@ -2352,10 +2406,10 @@ class OperationDefinitionParameterBuilder extends BackboneElementBuilder {
         OperationParameterScopeBuilder.fromJson,
         '$objectPath.scope',
       ),
-      min: JsonParser.parsePrimitive<FhirIntegerBuilder>(
+      min: JsonParser.parsePrimitive<FhirUnsignedIntBuilder>(
         json,
         'min',
-        FhirIntegerBuilder.fromJson,
+        FhirUnsignedIntBuilder.fromJson,
         '$objectPath.min',
       ),
       max: JsonParser.parsePrimitive<FhirStringBuilder>(
@@ -2481,7 +2535,7 @@ class OperationDefinitionParameterBuilder extends BackboneElementBuilder {
   /// [min]
   /// The minimum number of times this parameter SHALL appear in the request
   /// or response.
-  FhirIntegerBuilder? min;
+  FhirUnsignedIntBuilder? min;
 
   /// [max]
   /// The maximum number of times this element is permitted to appear in the
@@ -2864,7 +2918,7 @@ class OperationDefinitionParameterBuilder extends BackboneElementBuilder {
         }
       case 'min':
         {
-          if (child is FhirIntegerBuilder) {
+          if (child is FhirUnsignedIntBuilder) {
             min = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
@@ -2875,7 +2929,7 @@ class OperationDefinitionParameterBuilder extends BackboneElementBuilder {
               // first parse to num then pass the number directly
               final numValue = num.tryParse(stringValue);
               if (numValue != null) {
-                final converted = FhirIntegerBuilder.tryParse(numValue);
+                final converted = FhirUnsignedIntBuilder.tryParse(numValue);
                 if (converted != null) {
                   min = converted;
                   return;
@@ -3140,7 +3194,7 @@ class OperationDefinitionParameterBuilder extends BackboneElementBuilder {
       case 'scope':
         return ['FhirCodeEnumBuilder'];
       case 'min':
-        return ['FhirIntegerBuilder'];
+        return ['FhirUnsignedIntBuilder'];
       case 'max':
         return ['FhirStringBuilder'];
       case 'documentation':
@@ -3201,7 +3255,7 @@ class OperationDefinitionParameterBuilder extends BackboneElementBuilder {
         }
       case 'min':
         {
-          min = FhirIntegerBuilder.empty();
+          min = FhirUnsignedIntBuilder.empty();
           return;
         }
       case 'max':
@@ -3264,7 +3318,7 @@ class OperationDefinitionParameterBuilder extends BackboneElementBuilder {
     FhirCodeBuilder? name,
     OperationParameterUseBuilder? use,
     List<OperationParameterScopeBuilder>? scope,
-    FhirIntegerBuilder? min,
+    FhirUnsignedIntBuilder? min,
     FhirStringBuilder? max,
     FhirMarkdownBuilder? documentation,
     FHIRTypesBuilder? type,

@@ -21,15 +21,21 @@ abstract class $EvidenceVariableCopyWith<T>
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXEvidenceVariable? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     FhirString? shortTitle,
+    FhirMarkdown? citeAs,
     PublicationStatus? status,
     FhirBoolean? experimental,
     FhirDateTime? date,
+    List<ContactDetail>? author,
     FhirString? publisher,
     List<ContactDetail>? contact,
+    List<ContactDetail>? recorder,
+    List<ContactDetail>? editor,
+    List<ContactDetail>? reviewer,
+    List<ContactDetail>? endorser,
     FhirMarkdown? description,
     List<Annotation>? note,
     List<UsageContext>? useContext,
@@ -39,15 +45,20 @@ abstract class $EvidenceVariableCopyWith<T>
     FhirDate? approvalDate,
     FhirDate? lastReviewDate,
     Period? effectivePeriod,
-    List<ContactDetail>? author,
-    List<ContactDetail>? editor,
-    List<ContactDetail>? reviewer,
-    List<ContactDetail>? endorser,
-    List<RelatedArtifact>? relatedArtifact,
+    List<EvidenceVariableRelatesTo>? relatesTo,
     FhirBoolean? actual,
-    List<EvidenceVariableCharacteristic>? characteristic,
+    CodeableReference? definition,
+    List<EvidenceVariableDefinitionModifier>? definitionModifier,
     EvidenceVariableHandling? handling,
     List<EvidenceVariableCategory>? category,
+    FhirExpression? conditional,
+    List<CodeableConcept>? classifier,
+    List<EvidenceVariableDataStorage>? dataStorage,
+    RelativeTime? timing,
+    Period? period,
+    List<EvidenceVariableConstraint>? constraint,
+    List<CodeableConcept>? missingDataMeaning,
+    List<CodeableConcept>? unacceptableDataHandling,
     List<CodeableConcept>? jurisdiction,
     bool? disallowExtensions,
   });
@@ -77,11 +88,17 @@ class _$EvidenceVariableCopyWithImpl<T>
     Object? name = fhirSentinel,
     Object? title = fhirSentinel,
     Object? shortTitle = fhirSentinel,
+    Object? citeAs = fhirSentinel,
     Object? status = fhirSentinel,
     Object? experimental = fhirSentinel,
     Object? date = fhirSentinel,
+    Object? author = fhirSentinel,
     Object? publisher = fhirSentinel,
     Object? contact = fhirSentinel,
+    Object? recorder = fhirSentinel,
+    Object? editor = fhirSentinel,
+    Object? reviewer = fhirSentinel,
+    Object? endorser = fhirSentinel,
     Object? description = fhirSentinel,
     Object? note = fhirSentinel,
     Object? useContext = fhirSentinel,
@@ -91,15 +108,20 @@ class _$EvidenceVariableCopyWithImpl<T>
     Object? approvalDate = fhirSentinel,
     Object? lastReviewDate = fhirSentinel,
     Object? effectivePeriod = fhirSentinel,
-    Object? author = fhirSentinel,
-    Object? editor = fhirSentinel,
-    Object? reviewer = fhirSentinel,
-    Object? endorser = fhirSentinel,
-    Object? relatedArtifact = fhirSentinel,
+    Object? relatesTo = fhirSentinel,
     Object? actual = fhirSentinel,
-    Object? characteristic = fhirSentinel,
+    Object? definition = fhirSentinel,
+    Object? definitionModifier = fhirSentinel,
     Object? handling = fhirSentinel,
     Object? category = fhirSentinel,
+    Object? conditional = fhirSentinel,
+    Object? classifier = fhirSentinel,
+    Object? dataStorage = fhirSentinel,
+    Object? timing = fhirSentinel,
+    Object? period = fhirSentinel,
+    Object? constraint = fhirSentinel,
+    Object? missingDataMeaning = fhirSentinel,
+    Object? unacceptableDataHandling = fhirSentinel,
     Object? jurisdiction = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
@@ -132,7 +154,7 @@ class _$EvidenceVariableCopyWithImpl<T>
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXEvidenceVariable?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -140,6 +162,9 @@ class _$EvidenceVariableCopyWithImpl<T>
         shortTitle: identical(shortTitle, fhirSentinel)
             ? _value.shortTitle
             : shortTitle as FhirString?,
+        citeAs: identical(citeAs, fhirSentinel)
+            ? _value.citeAs
+            : citeAs as FhirMarkdown?,
         status: identical(status, fhirSentinel)
             ? _value.status
             : (status as PublicationStatus?) ?? _value.status,
@@ -148,12 +173,27 @@ class _$EvidenceVariableCopyWithImpl<T>
             : experimental as FhirBoolean?,
         date:
             identical(date, fhirSentinel) ? _value.date : date as FhirDateTime?,
+        author: identical(author, fhirSentinel)
+            ? _value.author
+            : author as List<ContactDetail>?,
         publisher: identical(publisher, fhirSentinel)
             ? _value.publisher
             : publisher as FhirString?,
         contact: identical(contact, fhirSentinel)
             ? _value.contact
             : contact as List<ContactDetail>?,
+        recorder: identical(recorder, fhirSentinel)
+            ? _value.recorder
+            : recorder as List<ContactDetail>?,
+        editor: identical(editor, fhirSentinel)
+            ? _value.editor
+            : editor as List<ContactDetail>?,
+        reviewer: identical(reviewer, fhirSentinel)
+            ? _value.reviewer
+            : reviewer as List<ContactDetail>?,
+        endorser: identical(endorser, fhirSentinel)
+            ? _value.endorser
+            : endorser as List<ContactDetail>?,
         description: identical(description, fhirSentinel)
             ? _value.description
             : description as FhirMarkdown?,
@@ -181,33 +221,48 @@ class _$EvidenceVariableCopyWithImpl<T>
         effectivePeriod: identical(effectivePeriod, fhirSentinel)
             ? _value.effectivePeriod
             : effectivePeriod as Period?,
-        author: identical(author, fhirSentinel)
-            ? _value.author
-            : author as List<ContactDetail>?,
-        editor: identical(editor, fhirSentinel)
-            ? _value.editor
-            : editor as List<ContactDetail>?,
-        reviewer: identical(reviewer, fhirSentinel)
-            ? _value.reviewer
-            : reviewer as List<ContactDetail>?,
-        endorser: identical(endorser, fhirSentinel)
-            ? _value.endorser
-            : endorser as List<ContactDetail>?,
-        relatedArtifact: identical(relatedArtifact, fhirSentinel)
-            ? _value.relatedArtifact
-            : relatedArtifact as List<RelatedArtifact>?,
+        relatesTo: identical(relatesTo, fhirSentinel)
+            ? _value.relatesTo
+            : relatesTo as List<EvidenceVariableRelatesTo>?,
         actual: identical(actual, fhirSentinel)
             ? _value.actual
             : actual as FhirBoolean?,
-        characteristic: identical(characteristic, fhirSentinel)
-            ? _value.characteristic
-            : characteristic as List<EvidenceVariableCharacteristic>?,
+        definition: identical(definition, fhirSentinel)
+            ? _value.definition
+            : definition as CodeableReference?,
+        definitionModifier: identical(definitionModifier, fhirSentinel)
+            ? _value.definitionModifier
+            : definitionModifier as List<EvidenceVariableDefinitionModifier>?,
         handling: identical(handling, fhirSentinel)
             ? _value.handling
             : handling as EvidenceVariableHandling?,
         category: identical(category, fhirSentinel)
             ? _value.category
             : category as List<EvidenceVariableCategory>?,
+        conditional: identical(conditional, fhirSentinel)
+            ? _value.conditional
+            : conditional as FhirExpression?,
+        classifier: identical(classifier, fhirSentinel)
+            ? _value.classifier
+            : classifier as List<CodeableConcept>?,
+        dataStorage: identical(dataStorage, fhirSentinel)
+            ? _value.dataStorage
+            : dataStorage as List<EvidenceVariableDataStorage>?,
+        timing: identical(timing, fhirSentinel)
+            ? _value.timing
+            : timing as RelativeTime?,
+        period:
+            identical(period, fhirSentinel) ? _value.period : period as Period?,
+        constraint: identical(constraint, fhirSentinel)
+            ? _value.constraint
+            : constraint as List<EvidenceVariableConstraint>?,
+        missingDataMeaning: identical(missingDataMeaning, fhirSentinel)
+            ? _value.missingDataMeaning
+            : missingDataMeaning as List<CodeableConcept>?,
+        unacceptableDataHandling:
+            identical(unacceptableDataHandling, fhirSentinel)
+                ? _value.unacceptableDataHandling
+                : unacceptableDataHandling as List<CodeableConcept>?,
       ),
     );
   }
@@ -221,157 +276,25 @@ extension EvidenceVariableCopyWithExtension on EvidenceVariable {
       );
 }
 
-abstract class $EvidenceVariableCharacteristicCopyWith<T>
+abstract class $EvidenceVariableRelatesToCopyWith<T>
     extends $BackboneElementCopyWith<T> {
   @override
   T call({
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirId? linkId,
-    FhirMarkdown? description,
-    List<Annotation>? note,
-    FhirBoolean? exclude,
-    Reference? definitionReference,
-    FhirCanonical? definitionCanonical,
-    CodeableConcept? definitionCodeableConcept,
-    FhirExpression? definitionExpression,
-    FhirId? definitionId,
-    EvidenceVariableDefinitionByTypeAndValue? definitionByTypeAndValue,
-    EvidenceVariableDefinitionByCombination? definitionByCombination,
-    Quantity? instancesX,
-    Quantity? durationX,
-    List<EvidenceVariableTimeFromEvent>? timeFromEvent,
+    ArtifactRelationshipType? type,
+    TargetXEvidenceVariableRelatesTo? targetX,
     bool? disallowExtensions,
   });
 }
 
-class _$EvidenceVariableCharacteristicCopyWithImpl<T>
-    implements $EvidenceVariableCharacteristicCopyWith<T> {
-  final EvidenceVariableCharacteristic _value;
-  final T Function(EvidenceVariableCharacteristic) _then;
+class _$EvidenceVariableRelatesToCopyWithImpl<T>
+    implements $EvidenceVariableRelatesToCopyWith<T> {
+  final EvidenceVariableRelatesTo _value;
+  final T Function(EvidenceVariableRelatesTo) _then;
 
-  _$EvidenceVariableCharacteristicCopyWithImpl(this._value, this._then);
-
-  @override
-  T call({
-    Object? id = fhirSentinel,
-    Object? extension_ = fhirSentinel,
-    Object? modifierExtension = fhirSentinel,
-    Object? linkId = fhirSentinel,
-    Object? description = fhirSentinel,
-    Object? note = fhirSentinel,
-    Object? exclude = fhirSentinel,
-    Object? definitionReference = fhirSentinel,
-    Object? definitionCanonical = fhirSentinel,
-    Object? definitionCodeableConcept = fhirSentinel,
-    Object? definitionExpression = fhirSentinel,
-    Object? definitionId = fhirSentinel,
-    Object? definitionByTypeAndValue = fhirSentinel,
-    Object? definitionByCombination = fhirSentinel,
-    Object? instancesX = fhirSentinel,
-    Object? durationX = fhirSentinel,
-    Object? timeFromEvent = fhirSentinel,
-    Object? disallowExtensions = fhirSentinel,
-  }) {
-    return _then(
-      EvidenceVariableCharacteristic(
-        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
-        extension_: identical(extension_, fhirSentinel)
-            ? _value.extension_
-            : extension_ as List<FhirExtension>?,
-        modifierExtension: identical(modifierExtension, fhirSentinel)
-            ? _value.modifierExtension
-            : modifierExtension as List<FhirExtension>?,
-        linkId:
-            identical(linkId, fhirSentinel) ? _value.linkId : linkId as FhirId?,
-        description: identical(description, fhirSentinel)
-            ? _value.description
-            : description as FhirMarkdown?,
-        note: identical(note, fhirSentinel)
-            ? _value.note
-            : note as List<Annotation>?,
-        exclude: identical(exclude, fhirSentinel)
-            ? _value.exclude
-            : exclude as FhirBoolean?,
-        definitionReference: identical(definitionReference, fhirSentinel)
-            ? _value.definitionReference
-            : definitionReference as Reference?,
-        definitionCanonical: identical(definitionCanonical, fhirSentinel)
-            ? _value.definitionCanonical
-            : definitionCanonical as FhirCanonical?,
-        definitionCodeableConcept:
-            identical(definitionCodeableConcept, fhirSentinel)
-                ? _value.definitionCodeableConcept
-                : definitionCodeableConcept as CodeableConcept?,
-        definitionExpression: identical(definitionExpression, fhirSentinel)
-            ? _value.definitionExpression
-            : definitionExpression as FhirExpression?,
-        definitionId: identical(definitionId, fhirSentinel)
-            ? _value.definitionId
-            : definitionId as FhirId?,
-        definitionByTypeAndValue:
-            identical(definitionByTypeAndValue, fhirSentinel)
-                ? _value.definitionByTypeAndValue
-                : definitionByTypeAndValue
-                    as EvidenceVariableDefinitionByTypeAndValue?,
-        definitionByCombination:
-            identical(definitionByCombination, fhirSentinel)
-                ? _value.definitionByCombination
-                : definitionByCombination
-                    as EvidenceVariableDefinitionByCombination?,
-        instancesX: identical(instancesX, fhirSentinel)
-            ? _value.instancesX
-            : instancesX as Quantity?,
-        durationX: identical(durationX, fhirSentinel)
-            ? _value.durationX
-            : durationX as Quantity?,
-        timeFromEvent: identical(timeFromEvent, fhirSentinel)
-            ? _value.timeFromEvent
-            : timeFromEvent as List<EvidenceVariableTimeFromEvent>?,
-        disallowExtensions: identical(disallowExtensions, fhirSentinel)
-            ? _value.disallowExtensions
-            : disallowExtensions as bool?,
-      ),
-    );
-  }
-}
-
-extension EvidenceVariableCharacteristicCopyWithExtension
-    on EvidenceVariableCharacteristic {
-  $EvidenceVariableCharacteristicCopyWith<EvidenceVariableCharacteristic>
-      get copyWith => _$EvidenceVariableCharacteristicCopyWithImpl<
-              EvidenceVariableCharacteristic>(
-            this,
-            (value) => value,
-          );
-}
-
-abstract class $EvidenceVariableDefinitionByTypeAndValueCopyWith<T>
-    extends $BackboneElementCopyWith<T> {
-  @override
-  T call({
-    FhirString? id,
-    List<FhirExtension>? extension_,
-    List<FhirExtension>? modifierExtension,
-    CodeableConcept? type,
-    List<CodeableConcept>? method,
-    Reference? device,
-    CodeableConcept? valueX,
-    CodeableConcept? offset,
-    bool? disallowExtensions,
-  });
-}
-
-class _$EvidenceVariableDefinitionByTypeAndValueCopyWithImpl<T>
-    implements $EvidenceVariableDefinitionByTypeAndValueCopyWith<T> {
-  final EvidenceVariableDefinitionByTypeAndValue _value;
-  final T Function(EvidenceVariableDefinitionByTypeAndValue) _then;
-
-  _$EvidenceVariableDefinitionByTypeAndValueCopyWithImpl(
-    this._value,
-    this._then,
-  );
+  _$EvidenceVariableRelatesToCopyWithImpl(this._value, this._then);
 
   @override
   T call({
@@ -379,14 +302,11 @@ class _$EvidenceVariableDefinitionByTypeAndValueCopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? type = fhirSentinel,
-    Object? method = fhirSentinel,
-    Object? device = fhirSentinel,
-    Object? valueX = fhirSentinel,
-    Object? offset = fhirSentinel,
+    Object? targetX = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
-      EvidenceVariableDefinitionByTypeAndValue(
+      EvidenceVariableRelatesTo(
         id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
         extension_: identical(extension_, fhirSentinel)
             ? _value.extension_
@@ -396,19 +316,10 @@ class _$EvidenceVariableDefinitionByTypeAndValueCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         type: identical(type, fhirSentinel)
             ? _value.type
-            : (type as CodeableConcept?) ?? _value.type,
-        method: identical(method, fhirSentinel)
-            ? _value.method
-            : method as List<CodeableConcept>?,
-        device: identical(device, fhirSentinel)
-            ? _value.device
-            : device as Reference?,
-        valueX: identical(valueX, fhirSentinel)
-            ? _value.valueX
-            : (valueX as CodeableConcept?) ?? _value.valueX,
-        offset: identical(offset, fhirSentinel)
-            ? _value.offset
-            : offset as CodeableConcept?,
+            : (type as ArtifactRelationshipType?) ?? _value.type,
+        targetX: identical(targetX, fhirSentinel)
+            ? _value.targetX
+            : (targetX as TargetXEvidenceVariableRelatesTo?) ?? _value.targetX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -417,40 +328,34 @@ class _$EvidenceVariableDefinitionByTypeAndValueCopyWithImpl<T>
   }
 }
 
-extension EvidenceVariableDefinitionByTypeAndValueCopyWithExtension
-    on EvidenceVariableDefinitionByTypeAndValue {
-  $EvidenceVariableDefinitionByTypeAndValueCopyWith<
-          EvidenceVariableDefinitionByTypeAndValue>
-      get copyWith => _$EvidenceVariableDefinitionByTypeAndValueCopyWithImpl<
-              EvidenceVariableDefinitionByTypeAndValue>(
-            this,
-            (value) => value,
-          );
+extension EvidenceVariableRelatesToCopyWithExtension
+    on EvidenceVariableRelatesTo {
+  $EvidenceVariableRelatesToCopyWith<EvidenceVariableRelatesTo> get copyWith =>
+      _$EvidenceVariableRelatesToCopyWithImpl<EvidenceVariableRelatesTo>(
+        this,
+        (value) => value,
+      );
 }
 
-abstract class $EvidenceVariableDefinitionByCombinationCopyWith<T>
+abstract class $EvidenceVariableDefinitionModifierCopyWith<T>
     extends $BackboneElementCopyWith<T> {
   @override
   T call({
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    CharacteristicCombination? code,
-    FhirPositiveInt? threshold,
-    List<EvidenceVariableCharacteristic>? characteristic,
+    CodeableConcept? code,
+    ValueXEvidenceVariableDefinitionModifier? valueX,
     bool? disallowExtensions,
   });
 }
 
-class _$EvidenceVariableDefinitionByCombinationCopyWithImpl<T>
-    implements $EvidenceVariableDefinitionByCombinationCopyWith<T> {
-  final EvidenceVariableDefinitionByCombination _value;
-  final T Function(EvidenceVariableDefinitionByCombination) _then;
+class _$EvidenceVariableDefinitionModifierCopyWithImpl<T>
+    implements $EvidenceVariableDefinitionModifierCopyWith<T> {
+  final EvidenceVariableDefinitionModifier _value;
+  final T Function(EvidenceVariableDefinitionModifier) _then;
 
-  _$EvidenceVariableDefinitionByCombinationCopyWithImpl(
-    this._value,
-    this._then,
-  );
+  _$EvidenceVariableDefinitionModifierCopyWithImpl(this._value, this._then);
 
   @override
   T call({
@@ -458,12 +363,11 @@ class _$EvidenceVariableDefinitionByCombinationCopyWithImpl<T>
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
     Object? code = fhirSentinel,
-    Object? threshold = fhirSentinel,
-    Object? characteristic = fhirSentinel,
+    Object? valueX = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
-      EvidenceVariableDefinitionByCombination(
+      EvidenceVariableDefinitionModifier(
         id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
         extension_: identical(extension_, fhirSentinel)
             ? _value.extension_
@@ -473,14 +377,11 @@ class _$EvidenceVariableDefinitionByCombinationCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         code: identical(code, fhirSentinel)
             ? _value.code
-            : (code as CharacteristicCombination?) ?? _value.code,
-        threshold: identical(threshold, fhirSentinel)
-            ? _value.threshold
-            : threshold as FhirPositiveInt?,
-        characteristic: identical(characteristic, fhirSentinel)
-            ? _value.characteristic
-            : (characteristic as List<EvidenceVariableCharacteristic>?) ??
-                _value.characteristic,
+            : (code as CodeableConcept?) ?? _value.code,
+        valueX: identical(valueX, fhirSentinel)
+            ? _value.valueX
+            : (valueX as ValueXEvidenceVariableDefinitionModifier?) ??
+                _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -489,87 +390,12 @@ class _$EvidenceVariableDefinitionByCombinationCopyWithImpl<T>
   }
 }
 
-extension EvidenceVariableDefinitionByCombinationCopyWithExtension
-    on EvidenceVariableDefinitionByCombination {
-  $EvidenceVariableDefinitionByCombinationCopyWith<
-          EvidenceVariableDefinitionByCombination>
-      get copyWith => _$EvidenceVariableDefinitionByCombinationCopyWithImpl<
-              EvidenceVariableDefinitionByCombination>(
-            this,
-            (value) => value,
-          );
-}
-
-abstract class $EvidenceVariableTimeFromEventCopyWith<T>
-    extends $BackboneElementCopyWith<T> {
-  @override
-  T call({
-    FhirString? id,
-    List<FhirExtension>? extension_,
-    List<FhirExtension>? modifierExtension,
-    FhirMarkdown? description,
-    List<Annotation>? note,
-    CodeableConcept? eventX,
-    Quantity? quantity,
-    Range? range,
-    bool? disallowExtensions,
-  });
-}
-
-class _$EvidenceVariableTimeFromEventCopyWithImpl<T>
-    implements $EvidenceVariableTimeFromEventCopyWith<T> {
-  final EvidenceVariableTimeFromEvent _value;
-  final T Function(EvidenceVariableTimeFromEvent) _then;
-
-  _$EvidenceVariableTimeFromEventCopyWithImpl(this._value, this._then);
-
-  @override
-  T call({
-    Object? id = fhirSentinel,
-    Object? extension_ = fhirSentinel,
-    Object? modifierExtension = fhirSentinel,
-    Object? description = fhirSentinel,
-    Object? note = fhirSentinel,
-    Object? eventX = fhirSentinel,
-    Object? quantity = fhirSentinel,
-    Object? range = fhirSentinel,
-    Object? disallowExtensions = fhirSentinel,
-  }) {
-    return _then(
-      EvidenceVariableTimeFromEvent(
-        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
-        extension_: identical(extension_, fhirSentinel)
-            ? _value.extension_
-            : extension_ as List<FhirExtension>?,
-        modifierExtension: identical(modifierExtension, fhirSentinel)
-            ? _value.modifierExtension
-            : modifierExtension as List<FhirExtension>?,
-        description: identical(description, fhirSentinel)
-            ? _value.description
-            : description as FhirMarkdown?,
-        note: identical(note, fhirSentinel)
-            ? _value.note
-            : note as List<Annotation>?,
-        eventX: identical(eventX, fhirSentinel)
-            ? _value.eventX
-            : eventX as CodeableConcept?,
-        quantity: identical(quantity, fhirSentinel)
-            ? _value.quantity
-            : quantity as Quantity?,
-        range: identical(range, fhirSentinel) ? _value.range : range as Range?,
-        disallowExtensions: identical(disallowExtensions, fhirSentinel)
-            ? _value.disallowExtensions
-            : disallowExtensions as bool?,
-      ),
-    );
-  }
-}
-
-extension EvidenceVariableTimeFromEventCopyWithExtension
-    on EvidenceVariableTimeFromEvent {
-  $EvidenceVariableTimeFromEventCopyWith<EvidenceVariableTimeFromEvent>
-      get copyWith => _$EvidenceVariableTimeFromEventCopyWithImpl<
-              EvidenceVariableTimeFromEvent>(
+extension EvidenceVariableDefinitionModifierCopyWithExtension
+    on EvidenceVariableDefinitionModifier {
+  $EvidenceVariableDefinitionModifierCopyWith<
+          EvidenceVariableDefinitionModifier>
+      get copyWith => _$EvidenceVariableDefinitionModifierCopyWithImpl<
+              EvidenceVariableDefinitionModifier>(
             this,
             (value) => value,
           );
@@ -583,7 +409,7 @@ abstract class $EvidenceVariableCategoryCopyWith<T>
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     FhirString? name,
-    CodeableConcept? valueX,
+    ValueXEvidenceVariableCategory? valueX,
     bool? disallowExtensions,
   });
 }
@@ -616,7 +442,7 @@ class _$EvidenceVariableCategoryCopyWithImpl<T>
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : valueX as CodeableConcept?,
+            : valueX as ValueXEvidenceVariableCategory?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -632,4 +458,186 @@ extension EvidenceVariableCategoryCopyWithExtension
         this,
         (value) => value,
       );
+}
+
+abstract class $EvidenceVariableDataStorageCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    CodeableConcept? datatype,
+    FhirString? path,
+    FhirString? delimiter,
+    List<EvidenceVariableDataStorage>? component,
+    bool? disallowExtensions,
+  });
+}
+
+class _$EvidenceVariableDataStorageCopyWithImpl<T>
+    implements $EvidenceVariableDataStorageCopyWith<T> {
+  final EvidenceVariableDataStorage _value;
+  final T Function(EvidenceVariableDataStorage) _then;
+
+  _$EvidenceVariableDataStorageCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? datatype = fhirSentinel,
+    Object? path = fhirSentinel,
+    Object? delimiter = fhirSentinel,
+    Object? component = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      EvidenceVariableDataStorage(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        datatype: identical(datatype, fhirSentinel)
+            ? _value.datatype
+            : datatype as CodeableConcept?,
+        path: identical(path, fhirSentinel) ? _value.path : path as FhirString?,
+        delimiter: identical(delimiter, fhirSentinel)
+            ? _value.delimiter
+            : delimiter as FhirString?,
+        component: identical(component, fhirSentinel)
+            ? _value.component
+            : component as List<EvidenceVariableDataStorage>?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension EvidenceVariableDataStorageCopyWithExtension
+    on EvidenceVariableDataStorage {
+  $EvidenceVariableDataStorageCopyWith<EvidenceVariableDataStorage>
+      get copyWith => _$EvidenceVariableDataStorageCopyWithImpl<
+              EvidenceVariableDataStorage>(
+            this,
+            (value) => value,
+          );
+}
+
+abstract class $EvidenceVariableConstraintCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    CodeableConcept? conditional,
+    Quantity? minimumQuantity,
+    Quantity? maximumQuantity,
+    FhirDateTime? earliestDateTime,
+    FhirDateTime? latestDateTime,
+    FhirUnsignedInt? minimumStringLength,
+    FhirPositiveInt? maximumStringLength,
+    CodeableConcept? code,
+    FhirExpression? expression,
+    Reference? expectedValueSet,
+    Reference? expectedUnitsValueSet,
+    FhirBoolean? anyValueAllowed,
+    bool? disallowExtensions,
+  });
+}
+
+class _$EvidenceVariableConstraintCopyWithImpl<T>
+    implements $EvidenceVariableConstraintCopyWith<T> {
+  final EvidenceVariableConstraint _value;
+  final T Function(EvidenceVariableConstraint) _then;
+
+  _$EvidenceVariableConstraintCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? conditional = fhirSentinel,
+    Object? minimumQuantity = fhirSentinel,
+    Object? maximumQuantity = fhirSentinel,
+    Object? earliestDateTime = fhirSentinel,
+    Object? latestDateTime = fhirSentinel,
+    Object? minimumStringLength = fhirSentinel,
+    Object? maximumStringLength = fhirSentinel,
+    Object? code = fhirSentinel,
+    Object? expression = fhirSentinel,
+    Object? expectedValueSet = fhirSentinel,
+    Object? expectedUnitsValueSet = fhirSentinel,
+    Object? anyValueAllowed = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      EvidenceVariableConstraint(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        conditional: identical(conditional, fhirSentinel)
+            ? _value.conditional
+            : conditional as CodeableConcept?,
+        minimumQuantity: identical(minimumQuantity, fhirSentinel)
+            ? _value.minimumQuantity
+            : minimumQuantity as Quantity?,
+        maximumQuantity: identical(maximumQuantity, fhirSentinel)
+            ? _value.maximumQuantity
+            : maximumQuantity as Quantity?,
+        earliestDateTime: identical(earliestDateTime, fhirSentinel)
+            ? _value.earliestDateTime
+            : earliestDateTime as FhirDateTime?,
+        latestDateTime: identical(latestDateTime, fhirSentinel)
+            ? _value.latestDateTime
+            : latestDateTime as FhirDateTime?,
+        minimumStringLength: identical(minimumStringLength, fhirSentinel)
+            ? _value.minimumStringLength
+            : minimumStringLength as FhirUnsignedInt?,
+        maximumStringLength: identical(maximumStringLength, fhirSentinel)
+            ? _value.maximumStringLength
+            : maximumStringLength as FhirPositiveInt?,
+        code: identical(code, fhirSentinel)
+            ? _value.code
+            : code as CodeableConcept?,
+        expression: identical(expression, fhirSentinel)
+            ? _value.expression
+            : expression as FhirExpression?,
+        expectedValueSet: identical(expectedValueSet, fhirSentinel)
+            ? _value.expectedValueSet
+            : expectedValueSet as Reference?,
+        expectedUnitsValueSet: identical(expectedUnitsValueSet, fhirSentinel)
+            ? _value.expectedUnitsValueSet
+            : expectedUnitsValueSet as Reference?,
+        anyValueAllowed: identical(anyValueAllowed, fhirSentinel)
+            ? _value.anyValueAllowed
+            : anyValueAllowed as FhirBoolean?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension EvidenceVariableConstraintCopyWithExtension
+    on EvidenceVariableConstraint {
+  $EvidenceVariableConstraintCopyWith<EvidenceVariableConstraint>
+      get copyWith =>
+          _$EvidenceVariableConstraintCopyWithImpl<EvidenceVariableConstraint>(
+            this,
+            (value) => value,
+          );
 }

@@ -2618,6 +2618,7 @@ class ObservationDefinitionQualifiedValueBuilder
     this.normalCodedValueSet,
     this.abnormalCodedValueSet,
     this.criticalCodedValueSet,
+    this.interpretation,
     super.disallowExtensions,
   }) : super(
           objectPath: 'ObservationDefinition.qualifiedValue',
@@ -2736,6 +2737,16 @@ class ObservationDefinitionQualifiedValueBuilder
         FhirCanonicalBuilder.fromJson,
         '$objectPath.criticalCodedValueSet',
       ),
+      interpretation: (json['interpretation'] as List<dynamic>?)
+          ?.map<CodeableConceptBuilder>(
+            (v) => CodeableConceptBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.interpretation',
+              },
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -2836,6 +2847,11 @@ class ObservationDefinitionQualifiedValueBuilder
   /// match the criteria of this set of qualified values.
   FhirCanonicalBuilder? criticalCodedValueSet;
 
+  /// [interpretation]
+  /// The expected coded interpretation values of an observation that matches
+  /// this qualified interval. For example, high, low, normal.
+  List<CodeableConceptBuilder>? interpretation;
+
   /// Converts a [ObservationDefinitionQualifiedValueBuilder]
   /// to [ObservationDefinitionQualifiedValue]
   @override
@@ -2888,6 +2904,7 @@ class ObservationDefinitionQualifiedValueBuilder
     addField('normalCodedValueSet', normalCodedValueSet);
     addField('abnormalCodedValueSet', abnormalCodedValueSet);
     addField('criticalCodedValueSet', criticalCodedValueSet);
+    addField('interpretation', interpretation);
     return json;
   }
 
@@ -2910,6 +2927,7 @@ class ObservationDefinitionQualifiedValueBuilder
       'normalCodedValueSet',
       'abnormalCodedValueSet',
       'criticalCodedValueSet',
+      'interpretation',
     ];
   }
 
@@ -2981,6 +2999,10 @@ class ObservationDefinitionQualifiedValueBuilder
       case 'criticalCodedValueSet':
         if (criticalCodedValueSet != null) {
           fields.add(criticalCodedValueSet!);
+        }
+      case 'interpretation':
+        if (interpretation != null) {
+          fields.addAll(interpretation!);
         }
       default:
         if (checkValid) {
@@ -3257,6 +3279,22 @@ class ObservationDefinitionQualifiedValueBuilder
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'interpretation':
+        {
+          if (child is List<CodeableConceptBuilder>) {
+            // Replace or create new list
+            interpretation = child;
+            return;
+          } else if (child is CodeableConceptBuilder) {
+            // Add single element to existing list or create new list
+            interpretation = [
+              ...(interpretation ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -3297,6 +3335,8 @@ class ObservationDefinitionQualifiedValueBuilder
         return ['FhirCanonicalBuilder'];
       case 'criticalCodedValueSet':
         return ['FhirCanonicalBuilder'];
+      case 'interpretation':
+        return ['CodeableConceptBuilder'];
       default:
         return <String>[];
     }
@@ -3382,6 +3422,11 @@ class ObservationDefinitionQualifiedValueBuilder
           criticalCodedValueSet = FhirCanonicalBuilder.empty();
           return;
         }
+      case 'interpretation':
+        {
+          interpretation = <CodeableConceptBuilder>[];
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
@@ -3407,6 +3452,7 @@ class ObservationDefinitionQualifiedValueBuilder
     FhirCanonicalBuilder? normalCodedValueSet,
     FhirCanonicalBuilder? abnormalCodedValueSet,
     FhirCanonicalBuilder? criticalCodedValueSet,
+    List<CodeableConceptBuilder>? interpretation,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -3432,6 +3478,7 @@ class ObservationDefinitionQualifiedValueBuilder
           abnormalCodedValueSet ?? this.abnormalCodedValueSet,
       criticalCodedValueSet:
           criticalCodedValueSet ?? this.criticalCodedValueSet,
+      interpretation: interpretation ?? this.interpretation,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -3545,6 +3592,12 @@ class ObservationDefinitionQualifiedValueBuilder
     if (!equalsDeepWithNull(
       criticalCodedValueSet,
       o.criticalCodedValueSet,
+    )) {
+      return false;
+    }
+    if (!listEquals<CodeableConceptBuilder>(
+      interpretation,
+      o.interpretation,
     )) {
       return false;
     }

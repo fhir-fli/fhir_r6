@@ -228,7 +228,7 @@ abstract class $PaymentReconciliationAllocationCopyWith<T>
     Identifier? identifier,
     Identifier? predecessor,
     Reference? target,
-    FhirString? targetItemX,
+    TargetItemXPaymentReconciliationAllocation? targetItemX,
     Reference? encounter,
     Reference? account,
     CodeableConcept? type,
@@ -289,7 +289,7 @@ class _$PaymentReconciliationAllocationCopyWithImpl<T>
             : target as Reference?,
         targetItemX: identical(targetItemX, fhirSentinel)
             ? _value.targetItemX
-            : targetItemX as FhirString?,
+            : targetItemX as TargetItemXPaymentReconciliationAllocation?,
         encounter: identical(encounter, fhirSentinel)
             ? _value.encounter
             : encounter as Reference?,

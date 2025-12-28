@@ -18,11 +18,12 @@ abstract class $ProvenanceCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
     List<Reference>? target,
-    Period? occurredX,
+    OccurredXProvenance? occurredX,
     FhirInstant? recorded,
     List<FhirUri>? policy,
     Reference? location,
     List<CodeableReference>? authorization,
+    FhirMarkdown? why,
     CodeableConcept? activity,
     List<Reference>? basedOn,
     Reference? patient,
@@ -56,6 +57,7 @@ class _$ProvenanceCopyWithImpl<T> implements $ProvenanceCopyWith<T> {
     Object? policy = fhirSentinel,
     Object? location = fhirSentinel,
     Object? authorization = fhirSentinel,
+    Object? why = fhirSentinel,
     Object? activity = fhirSentinel,
     Object? basedOn = fhirSentinel,
     Object? patient = fhirSentinel,
@@ -90,7 +92,7 @@ class _$ProvenanceCopyWithImpl<T> implements $ProvenanceCopyWith<T> {
             : (target as List<Reference>?) ?? _value.target,
         occurredX: identical(occurredX, fhirSentinel)
             ? _value.occurredX
-            : occurredX as Period?,
+            : occurredX as OccurredXProvenance?,
         recorded: identical(recorded, fhirSentinel)
             ? _value.recorded
             : recorded as FhirInstant?,
@@ -103,6 +105,7 @@ class _$ProvenanceCopyWithImpl<T> implements $ProvenanceCopyWith<T> {
         authorization: identical(authorization, fhirSentinel)
             ? _value.authorization
             : authorization as List<CodeableReference>?,
+        why: identical(why, fhirSentinel) ? _value.why : why as FhirMarkdown?,
         activity: identical(activity, fhirSentinel)
             ? _value.activity
             : activity as CodeableConcept?,

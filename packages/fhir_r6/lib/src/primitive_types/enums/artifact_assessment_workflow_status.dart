@@ -187,7 +187,7 @@ class ArtifactAssessmentWorkflowStatus extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Submitted',
     ),
@@ -202,7 +202,7 @@ class ArtifactAssessmentWorkflowStatus extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Triaged',
     ),
@@ -217,7 +217,7 @@ class ArtifactAssessmentWorkflowStatus extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Waiting for Input',
     ),
@@ -232,7 +232,7 @@ class ArtifactAssessmentWorkflowStatus extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Resolved - No Change',
     ),
@@ -247,7 +247,7 @@ class ArtifactAssessmentWorkflowStatus extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Resolved - Change Required',
     ),
@@ -262,7 +262,7 @@ class ArtifactAssessmentWorkflowStatus extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Deferred',
     ),
@@ -277,7 +277,7 @@ class ArtifactAssessmentWorkflowStatus extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Duplicate',
     ),
@@ -292,7 +292,7 @@ class ArtifactAssessmentWorkflowStatus extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Applied',
     ),
@@ -307,7 +307,7 @@ class ArtifactAssessmentWorkflowStatus extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Published',
     ),
@@ -322,7 +322,7 @@ class ArtifactAssessmentWorkflowStatus extends FhirCodeEnum {
       valueString:
           'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
     ),
-    version: FhirString._(valueString: '5.0.0'),
+    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: 'Entered in Error',
     ),

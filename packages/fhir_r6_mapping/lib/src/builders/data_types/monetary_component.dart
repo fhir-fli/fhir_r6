@@ -5,7 +5,9 @@ import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:yaml/yaml.dart';
 
 /// [MonetaryComponentBuilder]
-/// Availability data for an {item}.
+/// Financial line items use this datatype to commonly categorize the
+/// value, and other factors that may effect how the value should be
+/// interpreted.
 class MonetaryComponentBuilder extends DataTypeBuilder {
   /// Primary constructor for
   /// [MonetaryComponentBuilder]
@@ -119,20 +121,23 @@ class MonetaryComponentBuilder extends DataTypeBuilder {
   String get fhirType => 'MonetaryComponent';
 
   /// [type]
-  /// base | surcharge | deduction | discount | tax | informational.
+  /// The type of monetary component, what the value is to be used for and
+  /// how that should be applied in its context. e.g. A surchange would
+  /// increase the cost, a deduction would reduce the cost.
   PriceComponentTypeBuilder? type;
 
   /// [code]
-  /// Codes may be used to differentiate between kinds of taxes, surcharges,
-  /// discounts etc.
+  /// A codable breakdown of the type of monetary component. e.g. State Tax,
+  /// Federal Tax, VIP-Discount.
   CodeableConceptBuilder? code;
 
   /// [factor]
-  /// Factor used for calculating this component.
+  /// The factor that has been applied to the base price (in another monetary
+  /// component value) when performing calculations.
   FhirDecimalBuilder? factor;
 
   /// [amount]
-  /// Explicit value amount to be used.
+  /// The explicit value amount of the component (based on type/code).
   MoneyBuilder? amount;
 
   /// Converts a [MonetaryComponentBuilder]

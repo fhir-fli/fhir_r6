@@ -11,6 +11,9 @@ part 'expression.g.dart';
 /// is used.
 class FhirExpression extends DataType
     implements
+        ValueXEvidenceVariableDefinitionModifier,
+        ValueXGroupCharacteristic,
+        DeterminedByXGroupCharacteristic,
         ValueXParametersParameter,
         ValueXTaskInput,
         ValueXTaskOutput,

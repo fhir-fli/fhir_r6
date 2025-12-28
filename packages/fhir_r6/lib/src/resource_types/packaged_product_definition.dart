@@ -1,5 +1,3 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'dart:convert';
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:yaml/yaml.dart';
@@ -228,8 +226,8 @@ class PackagedProductDefinition extends DomainResource {
   String get fhirType => 'PackagedProductDefinition';
 
   /// [identifier]
-  /// A unique identifier for this package as whole - not the the content of
-  /// the package. Unique instance identifiers assigned to a package by
+  /// A unique identifier for this package as whole - not the content of the
+  /// package. Unique instance identifiers assigned to a package by
   /// manufacturers, regulators, drug catalogue custodians or other
   /// organizations.
   final List<Identifier>? identifier;

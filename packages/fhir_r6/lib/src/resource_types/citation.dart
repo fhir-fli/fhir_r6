@@ -34,6 +34,7 @@ class Citation extends MetadataResource {
     required super.status,
     super.experimental,
     super.date,
+    super.author,
     super.publisher,
     super.contact,
     super.description,
@@ -45,7 +46,7 @@ class Citation extends MetadataResource {
     super.approvalDate,
     super.lastReviewDate,
     super.effectivePeriod,
-    super.author,
+    this.recorder,
     super.editor,
     super.reviewer,
     super.endorser,
@@ -54,7 +55,7 @@ class Citation extends MetadataResource {
     this.note,
     this.currentState,
     this.statusDate,
-    super.relatedArtifact,
+    this.relatesTo,
     this.citedArtifact,
   })  : versionAlgorithmX = versionAlgorithmX ??
             versionAlgorithmString ??
@@ -163,6 +164,13 @@ class Citation extends MetadataResource {
         'date',
         FhirDateTime.fromJson,
       ),
+      author: (json['author'] as List<dynamic>?)
+          ?.map<ContactDetail>(
+            (v) => ContactDetail.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       publisher: JsonParser.parsePrimitive<FhirString>(
         json,
         'publisher',
@@ -224,7 +232,7 @@ class Citation extends MetadataResource {
         'effectivePeriod',
         Period.fromJson,
       ),
-      author: (json['author'] as List<dynamic>?)
+      recorder: (json['recorder'] as List<dynamic>?)
           ?.map<ContactDetail>(
             (v) => ContactDetail.fromJson(
               {...v as Map<String, dynamic>},
@@ -287,9 +295,9 @@ class Citation extends MetadataResource {
             ),
           )
           .toList(),
-      relatedArtifact: (json['relatedArtifact'] as List<dynamic>?)
-          ?.map<RelatedArtifact>(
-            (v) => RelatedArtifact.fromJson(
+      relatesTo: (json['relatesTo'] as List<dynamic>?)
+          ?.map<CitationRelatesTo>(
+            (v) => CitationRelatesTo.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -389,6 +397,10 @@ class Citation extends MetadataResource {
   /// 'Some rights reserved').
   final FhirString? copyrightLabel;
 
+  /// [recorder]
+  /// Who entered the data for the citation record.
+  final List<ContactDetail>? recorder;
+
   /// [summary]
   /// A human-readable display of key concepts to represent the citation.
   final List<CitationSummary>? summary;
@@ -409,6 +421,11 @@ class Citation extends MetadataResource {
   /// The state or status of the citation record paired with an effective
   /// date or period for that state.
   final List<CitationStatusDate>? statusDate;
+
+  /// [relatesTo]
+  /// Relationships that this Citation has with other FHIR or non-FHIR
+  /// resources that already exist.
+  final List<CitationRelatesTo>? relatesTo;
 
   /// [citedArtifact]
   /// The article or artifact being described.
@@ -550,6 +567,10 @@ class Citation extends MetadataResource {
       date,
     );
     addField(
+      'author',
+      author,
+    );
+    addField(
       'publisher',
       publisher,
     );
@@ -594,8 +615,8 @@ class Citation extends MetadataResource {
       effectivePeriod,
     );
     addField(
-      'author',
-      author,
+      'recorder',
+      recorder,
     );
     addField(
       'editor',
@@ -630,8 +651,8 @@ class Citation extends MetadataResource {
       statusDate,
     );
     addField(
-      'relatedArtifact',
-      relatedArtifact,
+      'relatesTo',
+      relatesTo,
     );
     addField(
       'citedArtifact',
@@ -661,6 +682,7 @@ class Citation extends MetadataResource {
       'status',
       'experimental',
       'date',
+      'author',
       'publisher',
       'contact',
       'description',
@@ -672,7 +694,7 @@ class Citation extends MetadataResource {
       'approvalDate',
       'lastReviewDate',
       'effectivePeriod',
-      'author',
+      'recorder',
       'editor',
       'reviewer',
       'endorser',
@@ -681,7 +703,7 @@ class Citation extends MetadataResource {
       'note',
       'currentState',
       'statusDate',
-      'relatedArtifact',
+      'relatesTo',
       'citedArtifact',
     ];
   }
@@ -771,6 +793,10 @@ class Citation extends MetadataResource {
         if (date != null) {
           fields.add(date!);
         }
+      case 'author':
+        if (author != null) {
+          fields.addAll(author!);
+        }
       case 'publisher':
         if (publisher != null) {
           fields.add(publisher!);
@@ -815,9 +841,9 @@ class Citation extends MetadataResource {
         if (effectivePeriod != null) {
           fields.add(effectivePeriod!);
         }
-      case 'author':
-        if (author != null) {
-          fields.addAll(author!);
+      case 'recorder':
+        if (recorder != null) {
+          fields.addAll(recorder!);
         }
       case 'editor':
         if (editor != null) {
@@ -851,9 +877,9 @@ class Citation extends MetadataResource {
         if (statusDate != null) {
           fields.addAll(statusDate!);
         }
-      case 'relatedArtifact':
-        if (relatedArtifact != null) {
-          fields.addAll(relatedArtifact!);
+      case 'relatesTo':
+        if (relatesTo != null) {
+          fields.addAll(relatesTo!);
         }
       case 'citedArtifact':
         if (citedArtifact != null) {
@@ -1001,6 +1027,12 @@ class Citation extends MetadataResource {
     )) {
       return false;
     }
+    if (!listEquals<ContactDetail>(
+      author,
+      o.author,
+    )) {
+      return false;
+    }
     if (!equalsDeepWithNull(
       publisher,
       o.publisher,
@@ -1068,8 +1100,8 @@ class Citation extends MetadataResource {
       return false;
     }
     if (!listEquals<ContactDetail>(
-      author,
-      o.author,
+      recorder,
+      o.recorder,
     )) {
       return false;
     }
@@ -1121,9 +1153,9 @@ class Citation extends MetadataResource {
     )) {
       return false;
     }
-    if (!listEquals<RelatedArtifact>(
-      relatedArtifact,
-      o.relatedArtifact,
+    if (!listEquals<CitationRelatesTo>(
+      relatesTo,
+      o.relatesTo,
     )) {
       return false;
     }
@@ -2070,6 +2102,350 @@ class CitationStatusDate extends BackboneElement {
   }
 }
 
+/// [CitationRelatesTo]
+/// Relationships that this Citation has with other FHIR or non-FHIR
+/// resources that already exist.
+class CitationRelatesTo extends BackboneElement {
+  /// Primary constructor for
+  /// [CitationRelatesTo]
+
+  const CitationRelatesTo({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    required this.type,
+    required this.targetX,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory CitationRelatesTo.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return CitationRelatesTo(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      type: JsonParser.parsePrimitive<ArtifactRelationshipType>(
+        json,
+        'type',
+        ArtifactRelationshipType.fromJson,
+      )!,
+      targetX: JsonParser.parsePolymorphic<TargetXCitationRelatesTo>(
+        json,
+        {
+          'targetUri': FhirUri.fromJson,
+          'targetAttachment': Attachment.fromJson,
+          'targetCanonical': FhirCanonical.fromJson,
+          'targetReference': Reference.fromJson,
+          'targetMarkdown': FhirMarkdown.fromJson,
+        },
+      )!,
+    );
+  }
+
+  /// Deserialize [CitationRelatesTo]
+  /// from a [String] or [YamlMap] object
+  factory CitationRelatesTo.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return CitationRelatesTo.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return CitationRelatesTo.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'CitationRelatesTo '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [CitationRelatesTo]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory CitationRelatesTo.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return CitationRelatesTo.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'CitationRelatesTo';
+
+  /// [type]
+  /// The type of relationship to the related artifact.
+  final ArtifactRelationshipType type;
+
+  /// [targetX]
+  /// The artifact that is related to this Citation Resource.
+  final TargetXCitationRelatesTo targetX;
+
+  /// Getter for [targetUri] as a FhirUri
+  FhirUri? get targetUri => targetX.isAs<FhirUri>();
+
+  /// Getter for [targetAttachment] as a Attachment
+  Attachment? get targetAttachment => targetX.isAs<Attachment>();
+
+  /// Getter for [targetCanonical] as a FhirCanonical
+  FhirCanonical? get targetCanonical => targetX.isAs<FhirCanonical>();
+
+  /// Getter for [targetReference] as a Reference
+  Reference? get targetReference => targetX.isAs<Reference>();
+
+  /// Getter for [targetMarkdown] as a FhirMarkdown
+  FhirMarkdown? get targetMarkdown => targetX.isAs<FhirMarkdown>();
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'type',
+      type,
+    );
+    final targetXFhirType = targetX.fhirType;
+    addField(
+      'target${targetXFhirType.capitalize()}',
+      targetX,
+    );
+
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'type',
+      'targetX',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'type':
+        fields.add(type);
+      case 'target':
+        fields.add(targetX);
+      case 'targetX':
+        fields.add(targetX);
+      case 'targetUri':
+        if (targetX is FhirUri) {
+          fields.add(targetX);
+        }
+      case 'targetAttachment':
+        if (targetX is Attachment) {
+          fields.add(targetX);
+        }
+      case 'targetCanonical':
+        if (targetX is FhirCanonical) {
+          fields.add(targetX);
+        }
+      case 'targetReference':
+        if (targetX is Reference) {
+          fields.add(targetX);
+        }
+      case 'targetMarkdown':
+        if (targetX is FhirMarkdown) {
+          fields.add(targetX);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  CitationRelatesTo clone() => copyWith();
+
+  /// Copy function for [CitationRelatesTo]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $CitationRelatesToCopyWith<CitationRelatesTo> get copyWith =>
+      _$CitationRelatesToCopyWithImpl<CitationRelatesTo>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! CitationRelatesTo) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      type,
+      o.type,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      targetX,
+      o.targetX,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
 /// [CitationCitedArtifact]
 /// The article or artifact being described.
 class CitationCitedArtifact extends BackboneElement {
@@ -2089,6 +2465,7 @@ class CitationCitedArtifact extends BackboneElement {
     this.title,
     this.abstract_,
     this.part_,
+    this.baseCitation,
     this.relatesTo,
     this.publicationForm,
     this.webLocation,
@@ -2141,10 +2518,10 @@ class CitationCitedArtifact extends BackboneElement {
         'dateAccessed',
         FhirDateTime.fromJson,
       ),
-      version: JsonParser.parseObject<CitationVersion>(
+      version: JsonParser.parsePrimitive<FhirString>(
         json,
         'version',
-        CitationVersion.fromJson,
+        FhirString.fromJson,
       ),
       currentState: (json['currentState'] as List<dynamic>?)
           ?.map<CodeableConcept>(
@@ -2178,6 +2555,11 @@ class CitationCitedArtifact extends BackboneElement {
         json,
         'part',
         CitationPart.fromJson,
+      ),
+      baseCitation: JsonParser.parseObject<Reference>(
+        json,
+        'baseCitation',
+        Reference.fromJson,
       ),
       relatesTo: (json['relatesTo'] as List<dynamic>?)
           ?.map<CitationRelatesTo>(
@@ -2281,7 +2663,7 @@ class CitationCitedArtifact extends BackboneElement {
 
   /// [version]
   /// The defined version of the cited artifact.
-  final CitationVersion? version;
+  final FhirString? version;
 
   /// [currentState]
   /// The status of the cited artifact.
@@ -2305,13 +2687,19 @@ class CitationCitedArtifact extends BackboneElement {
   /// The component of the article or artifact.
   final CitationPart? part_;
 
+  /// [baseCitation]
+  /// Citation for the primary version and complete form of the cited
+  /// artifact.
+  final Reference? baseCitation;
+
   /// [relatesTo]
   /// The artifact related to the cited artifact.
   final List<CitationRelatesTo>? relatesTo;
 
   /// [publicationForm]
-  /// If multiple, used to represent alternative forms of the article that
-  /// are not separate citations.
+  /// Where, when and how the artifact was published. If multiple, used to
+  /// represent alternative forms of the article that are not separate
+  /// citations.
   final List<CitationPublicationForm>? publicationForm;
 
   /// [webLocation]
@@ -2442,6 +2830,10 @@ class CitationCitedArtifact extends BackboneElement {
       part_,
     );
     addField(
+      'baseCitation',
+      baseCitation,
+    );
+    addField(
       'relatesTo',
       relatesTo,
     );
@@ -2484,6 +2876,7 @@ class CitationCitedArtifact extends BackboneElement {
       'title',
       'abstract',
       'part',
+      'baseCitation',
       'relatesTo',
       'publicationForm',
       'webLocation',
@@ -2549,6 +2942,10 @@ class CitationCitedArtifact extends BackboneElement {
       case 'part':
         if (part_ != null) {
           fields.add(part_!);
+        }
+      case 'baseCitation':
+        if (baseCitation != null) {
+          fields.add(baseCitation!);
         }
       case 'relatesTo':
         if (relatesTo != null) {
@@ -2687,6 +3084,12 @@ class CitationCitedArtifact extends BackboneElement {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      baseCitation,
+      o.baseCitation,
+    )) {
+      return false;
+    }
     if (!listEquals<CitationRelatesTo>(
       relatesTo,
       o.relatesTo,
@@ -2720,307 +3123,6 @@ class CitationCitedArtifact extends BackboneElement {
     if (!listEquals<Annotation>(
       note,
       o.note,
-    )) {
-      return false;
-    }
-    return true;
-  }
-}
-
-/// [CitationVersion]
-/// The defined version of the cited artifact.
-class CitationVersion extends BackboneElement {
-  /// Primary constructor for
-  /// [CitationVersion]
-
-  const CitationVersion({
-    super.id,
-    super.extension_,
-    super.modifierExtension,
-    required this.value,
-    this.baseCitation,
-    super.disallowExtensions,
-  }) : super();
-
-  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory CitationVersion.fromJson(
-    Map<String, dynamic> json,
-  ) {
-    return CitationVersion(
-      id: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'id',
-        FhirString.fromJson,
-      ),
-      extension_: (json['extension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
-          ?.map<FhirExtension>(
-            (v) => FhirExtension.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
-      value: JsonParser.parsePrimitive<FhirString>(
-        json,
-        'value',
-        FhirString.fromJson,
-      )!,
-      baseCitation: JsonParser.parseObject<Reference>(
-        json,
-        'baseCitation',
-        Reference.fromJson,
-      ),
-    );
-  }
-
-  /// Deserialize [CitationVersion]
-  /// from a [String] or [YamlMap] object
-  factory CitationVersion.fromYaml(
-    dynamic yaml,
-  ) {
-    if (yaml is String) {
-      return CitationVersion.fromJson(
-        yamlToJson(yaml),
-      );
-    } else if (yaml is YamlMap) {
-      return CitationVersion.fromJson(
-        yamlMapToJson(yaml),
-      );
-    } else {
-      throw ArgumentError(
-        'CitationVersion '
-        'cannot be constructed from the provided input. '
-        'It must be a YAML string or YAML map.',
-      );
-    }
-  }
-
-  /// Factory constructor for
-  /// [CitationVersion]
-  /// that takes in a [String]
-  /// Convenience method to avoid the json Encoding/Decoding normally required
-  /// to get data from a [String]
-  factory CitationVersion.fromJsonString(
-    String source,
-  ) {
-    final dynamic json = jsonDecode(source);
-    if (json is Map<String, dynamic>) {
-      return CitationVersion.fromJson(json);
-    } else {
-      throw FormatException('FormatException: You passed $json '
-          'This does not properly decode to a Map<String, dynamic>.');
-    }
-  }
-
-  @override
-  String get fhirType => 'CitationVersion';
-
-  /// [value]
-  /// The version number or other version identifier.
-  final FhirString value;
-
-  /// [baseCitation]
-  /// Citation for the main version of the cited artifact.
-  final Reference? baseCitation;
-  @override
-  Map<String, dynamic> toJson() {
-    final json = <String, dynamic>{};
-    bool isNonEmpty(dynamic val) {
-      if (val == null) return false;
-      if (val is List && val.isEmpty) return false;
-      if (val is Map && val.isEmpty) return false;
-      return true;
-    }
-
-    void addField(String key, dynamic field) {
-      if (field == null) return;
-      if (!(field is FhirBase? || field is List<FhirBase>?)) {
-        throw ArgumentError('"field" must be a FhirBase type');
-      }
-      if (field is PrimitiveType) {
-        final fieldMap = field.toJson();
-        final val = fieldMap['value'];
-        final ext = fieldMap['_value'];
-        final hasVal = isNonEmpty(val);
-        final hasExt = isNonEmpty(ext);
-        if (hasVal) json[key] = val;
-        if (hasExt) json['_$key'] = ext;
-      } else if (field is List<FhirBase>) {
-        if (field.isEmpty) return;
-        final isPrimitive = field.first is PrimitiveType;
-        final tempList = <dynamic>[];
-        final tempExtensions = <dynamic>[];
-        for (final e in field) {
-          final itemMap = e.toJson();
-          if (!isNonEmpty(itemMap)) {
-            continue;
-          }
-          if (isPrimitive) {
-            final v = itemMap['value'];
-            final x = itemMap['_value'];
-            tempList.add(v);
-            tempExtensions.add(x);
-          } else {
-            tempList.add(itemMap);
-          }
-        }
-        if (tempList.isEmpty) return;
-        if (isPrimitive) {
-          final hasAnyValues = tempList.any((v) => v != null);
-          if (hasAnyValues) {
-            json[key] = tempList;
-          }
-          final anyExt = tempExtensions.any(isNonEmpty);
-          if (anyExt) {
-            json['_$key'] = tempExtensions;
-          }
-        } else {
-          json[key] = tempList;
-        }
-      } else if (field is FhirBase) {
-        final subMap = field.toJson();
-        if (isNonEmpty(subMap)) {
-          json[key] = subMap;
-        }
-      }
-    }
-
-    addField(
-      'id',
-      id,
-    );
-    addField(
-      'extension',
-      extension_,
-    );
-    addField(
-      'modifierExtension',
-      modifierExtension,
-    );
-    addField(
-      'value',
-      value,
-    );
-    addField(
-      'baseCitation',
-      baseCitation,
-    );
-    return json;
-  }
-
-  /// Lists the JSON keys for the object.
-  @override
-  List<String> listChildrenNames() {
-    return [
-      'id',
-      'extension',
-      'modifierExtension',
-      'value',
-      'baseCitation',
-    ];
-  }
-
-  /// Retrieves all matching child fields by name.
-  ///Optionally validates the name.
-  @override
-  List<FhirBase> getChildrenByName(
-    String fieldName, [
-    bool checkValid = false,
-  ]) {
-    final fields = <FhirBase>[];
-    switch (fieldName) {
-      case 'id':
-        if (id != null) {
-          fields.add(id!);
-        }
-      case 'extension':
-        if (extension_ != null) {
-          fields.addAll(extension_!);
-        }
-      case 'modifierExtension':
-        if (modifierExtension != null) {
-          fields.addAll(modifierExtension!);
-        }
-      case 'value':
-        fields.add(value);
-      case 'baseCitation':
-        if (baseCitation != null) {
-          fields.add(baseCitation!);
-        }
-      default:
-        if (checkValid) {
-          throw ArgumentError('Invalid name: $fieldName');
-        }
-    }
-    return fields;
-  }
-
-  /// Retrieves a single field value by its name.
-  @override
-  FhirBase? getChildByName(String name) {
-    final values = getChildrenByName(name);
-    if (values.length > 1) {
-      throw StateError('Too many values for $name found');
-    }
-    return values.isNotEmpty ? values.first : null;
-  }
-
-  @override
-  CitationVersion clone() => copyWith();
-
-  /// Copy function for [CitationVersion]
-  /// Returns a copy of the current instance with the provided fields modified.
-  /// If a field is not provided, it will retain its original value.
-  /// If a null is provided, this will clearn the field, unless the
-  /// field is required, in which case it will keep its current value.
-  @override
-  $CitationVersionCopyWith<CitationVersion> get copyWith =>
-      _$CitationVersionCopyWithImpl<CitationVersion>(
-        this,
-        (value) => value,
-      );
-
-  /// Performs a deep comparison between two instances.
-  @override
-  bool equalsDeep(FhirBase? o) {
-    if (o is! CitationVersion) {
-      return false;
-    }
-    if (identical(this, o)) return true;
-    if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
-      id,
-      o.id,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      extension_,
-      o.extension_,
-    )) {
-      return false;
-    }
-    if (!listEquals<FhirExtension>(
-      modifierExtension,
-      o.modifierExtension,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      value,
-      o.value,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      baseCitation,
-      o.baseCitation,
     )) {
       return false;
     }
@@ -3400,10 +3502,10 @@ class CitationTitle extends BackboneElement {
             ),
           )
           .toList(),
-      language: JsonParser.parseObject<CodeableConcept>(
+      language: JsonParser.parsePrimitive<AllLanguages>(
         json,
         'language',
-        CodeableConcept.fromJson,
+        AllLanguages.fromJson,
       ),
       text: JsonParser.parsePrimitive<FhirMarkdown>(
         json,
@@ -3461,7 +3563,7 @@ class CitationTitle extends BackboneElement {
 
   /// [language]
   /// Used to express the specific language of the title.
-  final CodeableConcept? language;
+  final AllLanguages? language;
 
   /// [text]
   /// The title of the article or artifact.
@@ -3723,15 +3825,17 @@ class CitationAbstract extends BackboneElement {
             ),
           )
           .toList(),
-      type: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'type',
-        CodeableConcept.fromJson,
-      ),
-      language: JsonParser.parseObject<CodeableConcept>(
+      type: (json['type'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      language: JsonParser.parsePrimitive<AllLanguages>(
         json,
         'language',
-        CodeableConcept.fromJson,
+        AllLanguages.fromJson,
       ),
       text: JsonParser.parsePrimitive<FhirMarkdown>(
         json,
@@ -3790,11 +3894,11 @@ class CitationAbstract extends BackboneElement {
 
   /// [type]
   /// Used to express the reason for or classification of the abstract.
-  final CodeableConcept? type;
+  final List<CodeableConcept>? type;
 
   /// [language]
   /// Used to express the specific language of the abstract.
-  final CodeableConcept? language;
+  final AllLanguages? language;
 
   /// [text]
   /// Abstract content.
@@ -3934,7 +4038,7 @@ class CitationAbstract extends BackboneElement {
         }
       case 'type':
         if (type != null) {
-          fields.add(type!);
+          fields.addAll(type!);
         }
       case 'language':
         if (language != null) {
@@ -4005,7 +4109,7 @@ class CitationAbstract extends BackboneElement {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<CodeableConcept>(
       type,
       o.type,
     )) {
@@ -4045,7 +4149,6 @@ class CitationPart extends BackboneElement {
     super.modifierExtension,
     this.type,
     this.value,
-    this.baseCitation,
     super.disallowExtensions,
   }) : super();
 
@@ -4082,11 +4185,6 @@ class CitationPart extends BackboneElement {
         json,
         'value',
         FhirString.fromJson,
-      ),
-      baseCitation: JsonParser.parseObject<Reference>(
-        json,
-        'baseCitation',
-        Reference.fromJson,
       ),
     );
   }
@@ -4140,10 +4238,6 @@ class CitationPart extends BackboneElement {
   /// [value]
   /// The specification of the component.
   final FhirString? value;
-
-  /// [baseCitation]
-  /// The citation for the full article or artifact.
-  final Reference? baseCitation;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -4227,10 +4321,6 @@ class CitationPart extends BackboneElement {
       'value',
       value,
     );
-    addField(
-      'baseCitation',
-      baseCitation,
-    );
     return json;
   }
 
@@ -4243,7 +4333,6 @@ class CitationPart extends BackboneElement {
       'modifierExtension',
       'type',
       'value',
-      'baseCitation',
     ];
   }
 
@@ -4275,10 +4364,6 @@ class CitationPart extends BackboneElement {
       case 'value':
         if (value != null) {
           fields.add(value!);
-        }
-      case 'baseCitation':
-        if (baseCitation != null) {
-          fields.add(baseCitation!);
         }
       default:
         if (checkValid) {
@@ -4351,23 +4436,17 @@ class CitationPart extends BackboneElement {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
-      baseCitation,
-      o.baseCitation,
-    )) {
-      return false;
-    }
     return true;
   }
 }
 
-/// [CitationRelatesTo]
+/// [CitationRelatesTo1]
 /// The artifact related to the cited artifact.
-class CitationRelatesTo extends BackboneElement {
+class CitationRelatesTo1 extends BackboneElement {
   /// Primary constructor for
-  /// [CitationRelatesTo]
+  /// [CitationRelatesTo1]
 
-  const CitationRelatesTo({
+  const CitationRelatesTo1({
     super.id,
     super.extension_,
     super.modifierExtension,
@@ -4376,17 +4455,24 @@ class CitationRelatesTo extends BackboneElement {
     this.label,
     this.display,
     this.citation,
-    this.document,
-    this.resource,
-    this.resourceReference,
+    TargetXCitationRelatesTo1? targetX,
+    FhirUri? targetUri,
+    Attachment? targetAttachment,
+    FhirCanonical? targetCanonical,
+    Reference? targetReference,
     super.disallowExtensions,
-  }) : super();
+  })  : targetX = targetX ??
+            targetUri ??
+            targetAttachment ??
+            targetCanonical ??
+            targetReference,
+        super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory CitationRelatesTo.fromJson(
+  factory CitationRelatesTo1.fromJson(
     Map<String, dynamic> json,
   ) {
-    return CitationRelatesTo(
+    return CitationRelatesTo1(
       id: JsonParser.parsePrimitive<FhirString>(
         json,
         'id',
@@ -4406,10 +4492,10 @@ class CitationRelatesTo extends BackboneElement {
             ),
           )
           .toList(),
-      type: JsonParser.parsePrimitive<RelatedArtifactTypeExpanded>(
+      type: JsonParser.parsePrimitive<ArtifactRelationshipType>(
         json,
         'type',
-        RelatedArtifactTypeExpanded.fromJson,
+        ArtifactRelationshipType.fromJson,
       )!,
       classifier: (json['classifier'] as List<dynamic>?)
           ?.map<CodeableConcept>(
@@ -4433,40 +4519,34 @@ class CitationRelatesTo extends BackboneElement {
         'citation',
         FhirMarkdown.fromJson,
       ),
-      document: JsonParser.parseObject<Attachment>(
+      targetX: JsonParser.parsePolymorphic<TargetXCitationRelatesTo1>(
         json,
-        'document',
-        Attachment.fromJson,
-      ),
-      resource: JsonParser.parsePrimitive<FhirCanonical>(
-        json,
-        'resource',
-        FhirCanonical.fromJson,
-      ),
-      resourceReference: JsonParser.parseObject<Reference>(
-        json,
-        'resourceReference',
-        Reference.fromJson,
+        {
+          'targetUri': FhirUri.fromJson,
+          'targetAttachment': Attachment.fromJson,
+          'targetCanonical': FhirCanonical.fromJson,
+          'targetReference': Reference.fromJson,
+        },
       ),
     );
   }
 
-  /// Deserialize [CitationRelatesTo]
+  /// Deserialize [CitationRelatesTo1]
   /// from a [String] or [YamlMap] object
-  factory CitationRelatesTo.fromYaml(
+  factory CitationRelatesTo1.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return CitationRelatesTo.fromJson(
+      return CitationRelatesTo1.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return CitationRelatesTo.fromJson(
+      return CitationRelatesTo1.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'CitationRelatesTo '
+        'CitationRelatesTo1 '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -4474,16 +4554,16 @@ class CitationRelatesTo extends BackboneElement {
   }
 
   /// Factory constructor for
-  /// [CitationRelatesTo]
+  /// [CitationRelatesTo1]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory CitationRelatesTo.fromJsonString(
+  factory CitationRelatesTo1.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return CitationRelatesTo.fromJson(json);
+      return CitationRelatesTo1.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -4491,11 +4571,11 @@ class CitationRelatesTo extends BackboneElement {
   }
 
   @override
-  String get fhirType => 'CitationRelatesTo';
+  String get fhirType => 'CitationRelatesTo1';
 
   /// [type]
   /// The type of relationship to the related artifact.
-  final RelatedArtifactTypeExpanded type;
+  final ArtifactRelationshipType type;
 
   /// [classifier]
   /// Provides additional classifiers of the related artifact.
@@ -4516,21 +4596,22 @@ class CitationRelatesTo extends BackboneElement {
   /// formatted according to an accepted citation format.
   final FhirMarkdown? citation;
 
-  /// [document]
-  /// The document being referenced, represented as an attachment. Do not use
-  /// this element if using the resource element to provide the canonical to
-  /// the related artifact.
-  final Attachment? document;
+  /// [targetX]
+  /// The artifact that is related to this Citation Resource's cited
+  /// artifact.
+  final TargetXCitationRelatesTo1? targetX;
 
-  /// [resource]
-  /// The related artifact, such as a library, value set, profile, or other
-  /// knowledge resource.
-  final FhirCanonical? resource;
+  /// Getter for [targetUri] as a FhirUri
+  FhirUri? get targetUri => targetX?.isAs<FhirUri>();
 
-  /// [resourceReference]
-  /// The related artifact, if the artifact is not a canonical resource, or a
-  /// resource reference to a canonical resource.
-  final Reference? resourceReference;
+  /// Getter for [targetAttachment] as a Attachment
+  Attachment? get targetAttachment => targetX?.isAs<Attachment>();
+
+  /// Getter for [targetCanonical] as a FhirCanonical
+  FhirCanonical? get targetCanonical => targetX?.isAs<FhirCanonical>();
+
+  /// Getter for [targetReference] as a Reference
+  Reference? get targetReference => targetX?.isAs<Reference>();
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -4626,18 +4707,14 @@ class CitationRelatesTo extends BackboneElement {
       'citation',
       citation,
     );
-    addField(
-      'document',
-      document,
-    );
-    addField(
-      'resource',
-      resource,
-    );
-    addField(
-      'resourceReference',
-      resourceReference,
-    );
+    if (targetX != null) {
+      final fhirType = targetX!.fhirType;
+      addField(
+        'target${fhirType.capitalize()}',
+        targetX,
+      );
+    }
+
     return json;
   }
 
@@ -4653,9 +4730,7 @@ class CitationRelatesTo extends BackboneElement {
       'label',
       'display',
       'citation',
-      'document',
-      'resource',
-      'resourceReference',
+      'targetX',
     ];
   }
 
@@ -4698,17 +4773,25 @@ class CitationRelatesTo extends BackboneElement {
         if (citation != null) {
           fields.add(citation!);
         }
-      case 'document':
-        if (document != null) {
-          fields.add(document!);
+      case 'target':
+        fields.add(targetX!);
+      case 'targetX':
+        fields.add(targetX!);
+      case 'targetUri':
+        if (targetX is FhirUri) {
+          fields.add(targetX!);
         }
-      case 'resource':
-        if (resource != null) {
-          fields.add(resource!);
+      case 'targetAttachment':
+        if (targetX is Attachment) {
+          fields.add(targetX!);
         }
-      case 'resourceReference':
-        if (resourceReference != null) {
-          fields.add(resourceReference!);
+      case 'targetCanonical':
+        if (targetX is FhirCanonical) {
+          fields.add(targetX!);
+        }
+      case 'targetReference':
+        if (targetX is Reference) {
+          fields.add(targetX!);
         }
       default:
         if (checkValid) {
@@ -4729,16 +4812,16 @@ class CitationRelatesTo extends BackboneElement {
   }
 
   @override
-  CitationRelatesTo clone() => copyWith();
+  CitationRelatesTo1 clone() => copyWith();
 
-  /// Copy function for [CitationRelatesTo]
+  /// Copy function for [CitationRelatesTo1]
   /// Returns a copy of the current instance with the provided fields modified.
   /// If a field is not provided, it will retain its original value.
   /// If a null is provided, this will clearn the field, unless the
   /// field is required, in which case it will keep its current value.
   @override
-  $CitationRelatesToCopyWith<CitationRelatesTo> get copyWith =>
-      _$CitationRelatesToCopyWithImpl<CitationRelatesTo>(
+  $CitationRelatesTo1CopyWith<CitationRelatesTo1> get copyWith =>
+      _$CitationRelatesTo1CopyWithImpl<CitationRelatesTo1>(
         this,
         (value) => value,
       );
@@ -4746,7 +4829,7 @@ class CitationRelatesTo extends BackboneElement {
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBase? o) {
-    if (o is! CitationRelatesTo) {
+    if (o is! CitationRelatesTo1) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -4800,20 +4883,8 @@ class CitationRelatesTo extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
-      document,
-      o.document,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      resource,
-      o.resource,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      resourceReference,
-      o.resourceReference,
+      targetX,
+      o.targetX,
     )) {
       return false;
     }
@@ -4822,8 +4893,9 @@ class CitationRelatesTo extends BackboneElement {
 }
 
 /// [CitationPublicationForm]
-/// If multiple, used to represent alternative forms of the article that
-/// are not separate citations.
+/// Where, when and how the artifact was published. If multiple, used to
+/// represent alternative forms of the article that are not separate
+/// citations.
 class CitationPublicationForm extends BackboneElement {
   /// Primary constructor for
   /// [CitationPublicationForm]
@@ -4914,13 +4986,11 @@ class CitationPublicationForm extends BackboneElement {
         'lastRevisionDate',
         FhirDateTime.fromJson,
       ),
-      language: (json['language'] as List<dynamic>?)
-          ?.map<CodeableConcept>(
-            (v) => CodeableConcept.fromJson(
-              {...v as Map<String, dynamic>},
-            ),
-          )
-          .toList(),
+      language: JsonParser.parsePrimitiveList<AllLanguages>(
+        json,
+        'language',
+        AllLanguages.fromJson,
+      ),
       accessionNumber: JsonParser.parsePrimitive<FhirString>(
         json,
         'accessionNumber',
@@ -5034,7 +5104,8 @@ class CitationPublicationForm extends BackboneElement {
   final FhirString? publicationDateText;
 
   /// [publicationDateSeason]
-  /// Spring, Summer, Fall/Autumn, Winter.
+  /// Season in which the cited artifact was published, e.g. Spring, Summer,
+  /// Fall/Autumn, Winter.
   final FhirString? publicationDateSeason;
 
   /// [lastRevisionDate]
@@ -5044,7 +5115,7 @@ class CitationPublicationForm extends BackboneElement {
   /// [language]
   /// The language or languages in which this form of the article is
   /// published.
-  final List<CodeableConcept>? language;
+  final List<AllLanguages>? language;
 
   /// [accessionNumber]
   /// Entry number or identifier for inclusion in a database.
@@ -5421,7 +5492,7 @@ class CitationPublicationForm extends BackboneElement {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!listEquals<AllLanguages>(
       language,
       o.language,
     )) {
@@ -6539,8 +6610,8 @@ class CitationContributorship extends BackboneElement {
           )
           .toList(),
       summary: (json['summary'] as List<dynamic>?)
-          ?.map<CitationSummary1>(
-            (v) => CitationSummary1.fromJson(
+          ?.map<CitationSummary>(
+            (v) => CitationSummary.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -6591,7 +6662,7 @@ class CitationContributorship extends BackboneElement {
   String get fhirType => 'CitationContributorship';
 
   /// [complete]
-  /// Indicates if the list includes all authors and/or contributors.
+  /// Indication whether all authors are included in the entry content.
   final FhirBoolean? complete;
 
   /// [entry]
@@ -6602,7 +6673,7 @@ class CitationContributorship extends BackboneElement {
   /// [summary]
   /// Used to record a display of the author/contributor list without
   /// separate data element for each list member.
-  final List<CitationSummary1>? summary;
+  final List<CitationSummary>? summary;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -6810,7 +6881,7 @@ class CitationContributorship extends BackboneElement {
     )) {
       return false;
     }
-    if (!listEquals<CitationSummary1>(
+    if (!listEquals<CitationSummary>(
       summary,
       o.summary,
     )) {
@@ -6970,8 +7041,8 @@ class CitationEntry extends BackboneElement {
   final List<Reference>? affiliation;
 
   /// [contributionType]
-  /// This element identifies the specific nature of an individual’s
-  /// contribution with respect to the cited work.
+  /// The specific nature of an individual’s contribution with respect to the
+  /// cited work.
   final List<CodeableConcept>? contributionType;
 
   /// [role]
@@ -7630,11 +7701,13 @@ class CitationSummary1 extends BackboneElement {
         'type',
         CodeableConcept.fromJson,
       ),
-      style: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'style',
-        CodeableConcept.fromJson,
-      ),
+      style: (json['style'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       source: JsonParser.parseObject<CodeableConcept>(
         json,
         'source',
@@ -7698,7 +7771,7 @@ class CitationSummary1 extends BackboneElement {
   /// [style]
   /// The format for the display string, such as author last name with first
   /// letter capitalized followed by forename initials.
-  final CodeableConcept? style;
+  final List<CodeableConcept>? style;
 
   /// [source]
   /// Used to code the producer or rule for creating the display string.
@@ -7843,7 +7916,7 @@ class CitationSummary1 extends BackboneElement {
         }
       case 'style':
         if (style != null) {
-          fields.add(style!);
+          fields.addAll(style!);
         }
       case 'source':
         if (source != null) {
@@ -7916,7 +7989,7 @@ class CitationSummary1 extends BackboneElement {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<CodeableConcept>(
       style,
       o.style,
     )) {

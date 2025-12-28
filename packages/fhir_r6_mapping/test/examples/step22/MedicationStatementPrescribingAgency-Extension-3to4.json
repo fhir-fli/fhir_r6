@@ -1,8 +1,8 @@
 {
     "resourceType": "StructureMap",
-    "id": "R3toR4conversionforCareConnectMedicationStatementLastPrescribingAgencyextension",
+    "id": "R3toR6conversionforCareConnectMedicationStatementLastPrescribingAgencyextension",
     "url": "http://fhir.nhs.uk/StructureMap/MedicationStatementPrescribingAgency-Extension-3to4",
-    "name": "R3 to R4 conversion for CareConnect MedicationStatementLastPrescribingAgency extension",
+    "name": "R3 to R6 conversion for CareConnect MedicationStatementLastPrescribingAgency extension",
     "status": "draft",
     "structure": [
         {

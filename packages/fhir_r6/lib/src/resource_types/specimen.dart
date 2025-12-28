@@ -1279,7 +1279,7 @@ class SpecimenCollection extends BackboneElement {
   final CodeableConcept? method;
 
   /// [device]
-  /// A coded value specifying the technique that is used to perform the
+  /// A coded value specifying the device that is used to perform the
   /// procedure.
   final CodeableReference? device;
 
@@ -1649,12 +1649,15 @@ class SpecimenProcessing extends BackboneElement {
     super.modifierExtension,
     this.description,
     this.method,
+    this.performer,
+    this.device,
     this.additive,
     TimeXSpecimenProcessing? timeX,
     FhirDateTime? timeDateTime,
     Period? timePeriod,
+    FhirDuration? timeDuration,
     super.disallowExtensions,
-  })  : timeX = timeX ?? timeDateTime ?? timePeriod,
+  })  : timeX = timeX ?? timeDateTime ?? timePeriod ?? timeDuration,
         super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
@@ -1691,6 +1694,16 @@ class SpecimenProcessing extends BackboneElement {
         'method',
         CodeableConcept.fromJson,
       ),
+      performer: JsonParser.parseObject<Reference>(
+        json,
+        'performer',
+        Reference.fromJson,
+      ),
+      device: JsonParser.parseObject<Reference>(
+        json,
+        'device',
+        Reference.fromJson,
+      ),
       additive: (json['additive'] as List<dynamic>?)
           ?.map<Reference>(
             (v) => Reference.fromJson(
@@ -1703,6 +1716,7 @@ class SpecimenProcessing extends BackboneElement {
         {
           'timeDateTime': FhirDateTime.fromJson,
           'timePeriod': Period.fromJson,
+          'timeDuration': FhirDuration.fromJson,
         },
       ),
     );
@@ -1758,6 +1772,14 @@ class SpecimenProcessing extends BackboneElement {
   /// A coded value specifying the method used to process the specimen.
   final CodeableConcept? method;
 
+  /// [performer]
+  /// The performer of the processing of the specimen.
+  final Reference? performer;
+
+  /// [device]
+  /// The device used in the processing of the specimen.
+  final Reference? device;
+
   /// [additive]
   /// Material used in the processing step.
   final List<Reference>? additive;
@@ -1773,6 +1795,9 @@ class SpecimenProcessing extends BackboneElement {
 
   /// Getter for [timePeriod] as a Period
   Period? get timePeriod => timeX?.isAs<Period>();
+
+  /// Getter for [timeDuration] as a FhirDuration
+  FhirDuration? get timeDuration => timeX?.isAs<FhirDuration>();
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1857,6 +1882,14 @@ class SpecimenProcessing extends BackboneElement {
       method,
     );
     addField(
+      'performer',
+      performer,
+    );
+    addField(
+      'device',
+      device,
+    );
+    addField(
       'additive',
       additive,
     );
@@ -1880,6 +1913,8 @@ class SpecimenProcessing extends BackboneElement {
       'modifierExtension',
       'description',
       'method',
+      'performer',
+      'device',
       'additive',
       'timeX',
     ];
@@ -1914,6 +1949,14 @@ class SpecimenProcessing extends BackboneElement {
         if (method != null) {
           fields.add(method!);
         }
+      case 'performer':
+        if (performer != null) {
+          fields.add(performer!);
+        }
+      case 'device':
+        if (device != null) {
+          fields.add(device!);
+        }
       case 'additive':
         if (additive != null) {
           fields.addAll(additive!);
@@ -1928,6 +1971,10 @@ class SpecimenProcessing extends BackboneElement {
         }
       case 'timePeriod':
         if (timeX is Period) {
+          fields.add(timeX!);
+        }
+      case 'timeDuration':
+        if (timeX is FhirDuration) {
           fields.add(timeX!);
         }
       default:
@@ -2001,6 +2048,18 @@ class SpecimenProcessing extends BackboneElement {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      performer,
+      o.performer,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      device,
+      o.device,
+    )) {
+      return false;
+    }
     if (!listEquals<Reference>(
       additive,
       o.additive,
@@ -2029,7 +2088,6 @@ class SpecimenContainer extends BackboneElement {
     super.extension_,
     super.modifierExtension,
     required this.device,
-    this.location,
     this.specimenQuantity,
     super.disallowExtensions,
   }) : super();
@@ -2063,11 +2121,6 @@ class SpecimenContainer extends BackboneElement {
         'device',
         Reference.fromJson,
       )!,
-      location: JsonParser.parseObject<Reference>(
-        json,
-        'location',
-        Reference.fromJson,
-      ),
       specimenQuantity: JsonParser.parseObject<Quantity>(
         json,
         'specimenQuantity',
@@ -2123,10 +2176,6 @@ class SpecimenContainer extends BackboneElement {
   /// container is in a holder then the referenced device will point to a
   /// parent device.
   final Reference device;
-
-  /// [location]
-  /// The location of the container holding the specimen.
-  final Reference? location;
 
   /// [specimenQuantity]
   /// The quantity of specimen in the container; may be volume, dimensions,
@@ -2212,10 +2261,6 @@ class SpecimenContainer extends BackboneElement {
       device,
     );
     addField(
-      'location',
-      location,
-    );
-    addField(
       'specimenQuantity',
       specimenQuantity,
     );
@@ -2230,7 +2275,6 @@ class SpecimenContainer extends BackboneElement {
       'extension',
       'modifierExtension',
       'device',
-      'location',
       'specimenQuantity',
     ];
   }
@@ -2258,10 +2302,6 @@ class SpecimenContainer extends BackboneElement {
         }
       case 'device':
         fields.add(device);
-      case 'location':
-        if (location != null) {
-          fields.add(location!);
-        }
       case 'specimenQuantity':
         if (specimenQuantity != null) {
           fields.add(specimenQuantity!);
@@ -2328,12 +2368,6 @@ class SpecimenContainer extends BackboneElement {
     if (!equalsDeepWithNull(
       device,
       o.device,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      location,
-      o.location,
     )) {
       return false;
     }

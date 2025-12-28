@@ -168,7 +168,8 @@ class ImmunizationRecommendation extends DomainResource {
   final FhirDateTime date;
 
   /// [authority]
-  /// Indicates the authority who published the protocol (e.g. ACIP).
+  /// Indicates the authority who published the schedule (e.g. ACIP, WHO,
+  /// NITAG).
   final Reference? authority;
 
   /// [recommendation]
@@ -592,15 +593,15 @@ class ImmunizationRecommendationRecommendation extends BackboneElement {
         'series',
         FhirString.fromJson,
       ),
-      doseNumber: JsonParser.parsePrimitive<FhirString>(
+      doseNumber: JsonParser.parseObject<CodeableConcept>(
         json,
         'doseNumber',
-        FhirString.fromJson,
+        CodeableConcept.fromJson,
       ),
-      seriesDoses: JsonParser.parsePrimitive<FhirString>(
+      seriesDoses: JsonParser.parseObject<CodeableConcept>(
         json,
         'seriesDoses',
-        FhirString.fromJson,
+        CodeableConcept.fromJson,
       ),
       supportingImmunization: (json['supportingImmunization'] as List<dynamic>?)
           ?.map<Reference>(
@@ -694,20 +695,21 @@ class ImmunizationRecommendationRecommendation extends BackboneElement {
   final FhirMarkdown? description;
 
   /// [series]
-  /// One possible path to achieve presumed immunity against a disease -
-  /// within the context of an authority.
+  /// The name of the vaccination series within the context of the authority
+  /// which defines the series. A series is one possible path to achieve
+  /// presumed immunity against a disease.
   final FhirString? series;
 
   /// [doseNumber]
   /// Nominal position of the recommended dose in a series as determined by
   /// the evaluation and forecasting process (e.g. dose 2 is the next
   /// recommended dose).
-  final FhirString? doseNumber;
+  final CodeableConcept? doseNumber;
 
   /// [seriesDoses]
   /// The recommended number of doses to achieve immunity as determined by
   /// the evaluation and forecasting process.
-  final FhirString? seriesDoses;
+  final CodeableConcept? seriesDoses;
 
   /// [supportingImmunization]
   /// Immunization event history and/or evaluation that supports the status

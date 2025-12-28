@@ -20,7 +20,7 @@ abstract class $QuestionnaireCopyWith<T> extends $MetadataResourceCopyWith<T> {
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXQuestionnaire? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     List<FhirCanonical>? derivedFrom,
@@ -116,7 +116,7 @@ class _$QuestionnaireCopyWithImpl<T> implements $QuestionnaireCopyWith<T> {
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXQuestionnaire?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -198,7 +198,7 @@ abstract class $QuestionnaireItemCopyWith<T>
     List<Coding>? code,
     FhirString? prefix,
     FhirString? text,
-    QuestionnaireItemType? type,
+    QuestionnaireItemTypeUsable? type,
     List<QuestionnaireEnableWhen>? enableWhen,
     EnableWhenBehavior? enableBehavior,
     QuestionnaireItemDisabledDisplay? disabledDisplay,
@@ -270,7 +270,7 @@ class _$QuestionnaireItemCopyWithImpl<T>
         text: identical(text, fhirSentinel) ? _value.text : text as FhirString?,
         type: identical(type, fhirSentinel)
             ? _value.type
-            : (type as QuestionnaireItemType?) ?? _value.type,
+            : (type as QuestionnaireItemTypeUsable?) ?? _value.type,
         enableWhen: identical(enableWhen, fhirSentinel)
             ? _value.enableWhen
             : enableWhen as List<QuestionnaireEnableWhen>?,
@@ -332,7 +332,7 @@ abstract class $QuestionnaireEnableWhenCopyWith<T>
     List<FhirExtension>? modifierExtension,
     FhirString? question,
     QuestionnaireItemOperator? operator_,
-    FhirBoolean? answerX,
+    AnswerXQuestionnaireEnableWhen? answerX,
     bool? disallowExtensions,
   });
 }
@@ -371,7 +371,7 @@ class _$QuestionnaireEnableWhenCopyWithImpl<T>
             : (operator_ as QuestionnaireItemOperator?) ?? _value.operator_,
         answerX: identical(answerX, fhirSentinel)
             ? _value.answerX
-            : (answerX as FhirBoolean?) ?? _value.answerX,
+            : (answerX as AnswerXQuestionnaireEnableWhen?) ?? _value.answerX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -395,7 +395,7 @@ abstract class $QuestionnaireAnswerOptionCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirInteger? valueX,
+    ValueXQuestionnaireAnswerOption? valueX,
     FhirBoolean? initialSelected,
     bool? disallowExtensions,
   });
@@ -428,7 +428,7 @@ class _$QuestionnaireAnswerOptionCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as FhirInteger?) ?? _value.valueX,
+            : (valueX as ValueXQuestionnaireAnswerOption?) ?? _value.valueX,
         initialSelected: identical(initialSelected, fhirSentinel)
             ? _value.initialSelected
             : initialSelected as FhirBoolean?,
@@ -456,7 +456,7 @@ abstract class $QuestionnaireInitialCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirBoolean? valueX,
+    ValueXQuestionnaireInitial? valueX,
     bool? disallowExtensions,
   });
 }
@@ -487,7 +487,7 @@ class _$QuestionnaireInitialCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         valueX: identical(valueX, fhirSentinel)
             ? _value.valueX
-            : (valueX as FhirBoolean?) ?? _value.valueX,
+            : (valueX as ValueXQuestionnaireInitial?) ?? _value.valueX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

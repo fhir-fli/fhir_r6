@@ -160,11 +160,12 @@ abstract class $SubscriptionFilterByCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirUri? resourceType,
+    FhirUri? resource,
     FhirString? filterParameter,
     SearchComparator? comparator,
     SearchModifierCode? modifier,
     FhirString? value,
+    List<CodeableConcept>? event,
     bool? disallowExtensions,
   });
 }
@@ -181,11 +182,12 @@ class _$SubscriptionFilterByCopyWithImpl<T>
     Object? id = fhirSentinel,
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
-    Object? resourceType = fhirSentinel,
+    Object? resource = fhirSentinel,
     Object? filterParameter = fhirSentinel,
     Object? comparator = fhirSentinel,
     Object? modifier = fhirSentinel,
     Object? value = fhirSentinel,
+    Object? event = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -197,9 +199,9 @@ class _$SubscriptionFilterByCopyWithImpl<T>
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
-        resourceType: identical(resourceType, fhirSentinel)
-            ? _value.resourceType
-            : resourceType as FhirUri?,
+        resource: identical(resource, fhirSentinel)
+            ? _value.resource
+            : resource as FhirUri?,
         filterParameter: identical(filterParameter, fhirSentinel)
             ? _value.filterParameter
             : (filterParameter as FhirString?) ?? _value.filterParameter,
@@ -212,6 +214,9 @@ class _$SubscriptionFilterByCopyWithImpl<T>
         value: identical(value, fhirSentinel)
             ? _value.value
             : (value as FhirString?) ?? _value.value,
+        event: identical(event, fhirSentinel)
+            ? _value.event
+            : event as List<CodeableConcept>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

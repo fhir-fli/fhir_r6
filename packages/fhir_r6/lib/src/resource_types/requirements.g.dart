@@ -20,7 +20,7 @@ abstract class $RequirementsCopyWith<T> extends $CanonicalResourceCopyWith<T> {
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXRequirements? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     PublicationStatus? status,
@@ -35,8 +35,9 @@ abstract class $RequirementsCopyWith<T> extends $CanonicalResourceCopyWith<T> {
     FhirMarkdown? copyright,
     FhirString? copyrightLabel,
     List<FhirCanonical>? derivedFrom,
+    List<RequirementsImports>? imports,
     List<FhirUrl>? reference,
-    List<FhirCanonical>? actor,
+    List<RequirementsActor>? actor,
     List<RequirementsStatement>? statement,
     bool? disallowExtensions,
   });
@@ -76,6 +77,7 @@ class _$RequirementsCopyWithImpl<T> implements $RequirementsCopyWith<T> {
     Object? copyright = fhirSentinel,
     Object? copyrightLabel = fhirSentinel,
     Object? derivedFrom = fhirSentinel,
+    Object? imports = fhirSentinel,
     Object? reference = fhirSentinel,
     Object? actor = fhirSentinel,
     Object? statement = fhirSentinel,
@@ -110,7 +112,7 @@ class _$RequirementsCopyWithImpl<T> implements $RequirementsCopyWith<T> {
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXRequirements?,
         name: identical(name, fhirSentinel) ? _value.name : name as FhirString?,
         title: identical(title, fhirSentinel)
             ? _value.title
@@ -150,12 +152,15 @@ class _$RequirementsCopyWithImpl<T> implements $RequirementsCopyWith<T> {
         derivedFrom: identical(derivedFrom, fhirSentinel)
             ? _value.derivedFrom
             : derivedFrom as List<FhirCanonical>?,
+        imports: identical(imports, fhirSentinel)
+            ? _value.imports
+            : imports as List<RequirementsImports>?,
         reference: identical(reference, fhirSentinel)
             ? _value.reference
             : reference as List<FhirUrl>?,
         actor: identical(actor, fhirSentinel)
             ? _value.actor
-            : actor as List<FhirCanonical>?,
+            : actor as List<RequirementsActor>?,
         statement: identical(statement, fhirSentinel)
             ? _value.statement
             : statement as List<RequirementsStatement>?,
@@ -167,6 +172,122 @@ class _$RequirementsCopyWithImpl<T> implements $RequirementsCopyWith<T> {
 extension RequirementsCopyWithExtension on Requirements {
   $RequirementsCopyWith<Requirements> get copyWith =>
       _$RequirementsCopyWithImpl<Requirements>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $RequirementsImportsCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    FhirCanonical? reference,
+    List<FhirId>? key,
+    bool? disallowExtensions,
+  });
+}
+
+class _$RequirementsImportsCopyWithImpl<T>
+    implements $RequirementsImportsCopyWith<T> {
+  final RequirementsImports _value;
+  final T Function(RequirementsImports) _then;
+
+  _$RequirementsImportsCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? reference = fhirSentinel,
+    Object? key = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      RequirementsImports(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        reference: identical(reference, fhirSentinel)
+            ? _value.reference
+            : (reference as FhirCanonical?) ?? _value.reference,
+        key: identical(key, fhirSentinel) ? _value.key : key as List<FhirId>?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension RequirementsImportsCopyWithExtension on RequirementsImports {
+  $RequirementsImportsCopyWith<RequirementsImports> get copyWith =>
+      _$RequirementsImportsCopyWithImpl<RequirementsImports>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $RequirementsActorCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    FhirCanonical? reference,
+    FhirId? key,
+    bool? disallowExtensions,
+  });
+}
+
+class _$RequirementsActorCopyWithImpl<T>
+    implements $RequirementsActorCopyWith<T> {
+  final RequirementsActor _value;
+  final T Function(RequirementsActor) _then;
+
+  _$RequirementsActorCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? reference = fhirSentinel,
+    Object? key = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      RequirementsActor(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        reference: identical(reference, fhirSentinel)
+            ? _value.reference
+            : (reference as FhirCanonical?) ?? _value.reference,
+        key: identical(key, fhirSentinel) ? _value.key : key as FhirId?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension RequirementsActorCopyWithExtension on RequirementsActor {
+  $RequirementsActorCopyWith<RequirementsActor> get copyWith =>
+      _$RequirementsActorCopyWithImpl<RequirementsActor>(
         this,
         (value) => value,
       );
@@ -184,11 +305,12 @@ abstract class $RequirementsStatementCopyWith<T>
     List<ConformanceExpectation>? conformance,
     FhirBoolean? conditionality,
     FhirMarkdown? requirement,
-    FhirString? derivedFrom,
-    FhirString? parent,
+    RequirementsDerivedFrom? derivedFrom,
+    RequirementsPartOf? partOf,
     List<FhirUrl>? satisfiedBy,
     List<FhirUrl>? reference,
     List<Reference>? source,
+    List<FhirId>? actor,
     bool? disallowExtensions,
   });
 }
@@ -211,10 +333,11 @@ class _$RequirementsStatementCopyWithImpl<T>
     Object? conditionality = fhirSentinel,
     Object? requirement = fhirSentinel,
     Object? derivedFrom = fhirSentinel,
-    Object? parent = fhirSentinel,
+    Object? partOf = fhirSentinel,
     Object? satisfiedBy = fhirSentinel,
     Object? reference = fhirSentinel,
     Object? source = fhirSentinel,
+    Object? actor = fhirSentinel,
     Object? disallowExtensions = fhirSentinel,
   }) {
     return _then(
@@ -243,10 +366,10 @@ class _$RequirementsStatementCopyWithImpl<T>
             : (requirement as FhirMarkdown?) ?? _value.requirement,
         derivedFrom: identical(derivedFrom, fhirSentinel)
             ? _value.derivedFrom
-            : derivedFrom as FhirString?,
-        parent: identical(parent, fhirSentinel)
-            ? _value.parent
-            : parent as FhirString?,
+            : derivedFrom as RequirementsDerivedFrom?,
+        partOf: identical(partOf, fhirSentinel)
+            ? _value.partOf
+            : partOf as RequirementsPartOf?,
         satisfiedBy: identical(satisfiedBy, fhirSentinel)
             ? _value.satisfiedBy
             : satisfiedBy as List<FhirUrl>?,
@@ -256,6 +379,9 @@ class _$RequirementsStatementCopyWithImpl<T>
         source: identical(source, fhirSentinel)
             ? _value.source
             : source as List<Reference>?,
+        actor: identical(actor, fhirSentinel)
+            ? _value.actor
+            : actor as List<FhirId>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -267,6 +393,126 @@ class _$RequirementsStatementCopyWithImpl<T>
 extension RequirementsStatementCopyWithExtension on RequirementsStatement {
   $RequirementsStatementCopyWith<RequirementsStatement> get copyWith =>
       _$RequirementsStatementCopyWithImpl<RequirementsStatement>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $RequirementsDerivedFromCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    FhirCanonical? reference,
+    FhirId? key,
+    bool? disallowExtensions,
+  });
+}
+
+class _$RequirementsDerivedFromCopyWithImpl<T>
+    implements $RequirementsDerivedFromCopyWith<T> {
+  final RequirementsDerivedFrom _value;
+  final T Function(RequirementsDerivedFrom) _then;
+
+  _$RequirementsDerivedFromCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? reference = fhirSentinel,
+    Object? key = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      RequirementsDerivedFrom(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        reference: identical(reference, fhirSentinel)
+            ? _value.reference
+            : reference as FhirCanonical?,
+        key: identical(key, fhirSentinel)
+            ? _value.key
+            : (key as FhirId?) ?? _value.key,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension RequirementsDerivedFromCopyWithExtension on RequirementsDerivedFrom {
+  $RequirementsDerivedFromCopyWith<RequirementsDerivedFrom> get copyWith =>
+      _$RequirementsDerivedFromCopyWithImpl<RequirementsDerivedFrom>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $RequirementsPartOfCopyWith<T>
+    extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    FhirCanonical? reference,
+    FhirId? key,
+    bool? disallowExtensions,
+  });
+}
+
+class _$RequirementsPartOfCopyWithImpl<T>
+    implements $RequirementsPartOfCopyWith<T> {
+  final RequirementsPartOf _value;
+  final T Function(RequirementsPartOf) _then;
+
+  _$RequirementsPartOfCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? reference = fhirSentinel,
+    Object? key = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      RequirementsPartOf(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        reference: identical(reference, fhirSentinel)
+            ? _value.reference
+            : reference as FhirCanonical?,
+        key: identical(key, fhirSentinel)
+            ? _value.key
+            : (key as FhirId?) ?? _value.key,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension RequirementsPartOfCopyWithExtension on RequirementsPartOf {
+  $RequirementsPartOfCopyWith<RequirementsPartOf> get copyWith =>
+      _$RequirementsPartOfCopyWithImpl<RequirementsPartOf>(
         this,
         (value) => value,
       );

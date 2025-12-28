@@ -21,7 +21,7 @@ abstract class $ImplementationGuideCopyWith<T>
     FhirUri? url,
     List<Identifier>? identifier,
     FhirString? version,
-    FhirString? versionAlgorithmX,
+    VersionAlgorithmXImplementationGuide? versionAlgorithmX,
     FhirString? name,
     FhirString? title,
     PublicationStatus? status,
@@ -120,7 +120,7 @@ class _$ImplementationGuideCopyWithImpl<T>
             : version as FhirString?,
         versionAlgorithmX: identical(versionAlgorithmX, fhirSentinel)
             ? _value.versionAlgorithmX
-            : versionAlgorithmX as FhirString?,
+            : versionAlgorithmX as VersionAlgorithmXImplementationGuide?,
         name: identical(name, fhirSentinel)
             ? _value.name
             : (name as FhirString?) ?? _value.name,
@@ -557,7 +557,7 @@ abstract class $ImplementationGuidePageCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    FhirUrl? sourceX,
+    SourceXImplementationGuidePage? sourceX,
     FhirUrl? name,
     FhirString? title,
     GuidePageGeneration? generation,
@@ -596,7 +596,7 @@ class _$ImplementationGuidePageCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         sourceX: identical(sourceX, fhirSentinel)
             ? _value.sourceX
-            : sourceX as FhirUrl?,
+            : sourceX as SourceXImplementationGuidePage?,
         name: identical(name, fhirSentinel)
             ? _value.name
             : (name as FhirUrl?) ?? _value.name,

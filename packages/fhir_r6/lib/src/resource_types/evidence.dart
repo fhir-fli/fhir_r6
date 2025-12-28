@@ -31,17 +31,16 @@ class Evidence extends MetadataResource {
     Coding? versionAlgorithmCoding,
     this.name,
     this.title,
-    CiteAsXEvidence? citeAsX,
-    Reference? citeAsReference,
-    FhirMarkdown? citeAsMarkdown,
+    this.citeAs,
     required super.status,
     super.experimental,
     super.date,
     super.approvalDate,
     super.lastReviewDate,
+    super.author,
     super.publisher,
     super.contact,
-    super.author,
+    this.recorder,
     super.editor,
     super.reviewer,
     super.endorser,
@@ -49,11 +48,11 @@ class Evidence extends MetadataResource {
     this.purpose,
     this.copyright,
     this.copyrightLabel,
-    super.relatedArtifact,
+    this.relatesTo,
     super.description,
     this.assertion,
     this.note,
-    required this.variableDefinition,
+    this.variableDefinition,
     this.synthesisType,
     this.studyDesign,
     this.statistic,
@@ -61,7 +60,6 @@ class Evidence extends MetadataResource {
   })  : versionAlgorithmX = versionAlgorithmX ??
             versionAlgorithmString ??
             versionAlgorithmCoding,
-        citeAsX = citeAsX ?? citeAsReference ?? citeAsMarkdown,
         super(
           resourceType: R6ResourceType.Evidence,
         );
@@ -151,12 +149,10 @@ class Evidence extends MetadataResource {
         'title',
         FhirString.fromJson,
       ),
-      citeAsX: JsonParser.parsePolymorphic<CiteAsXEvidence>(
+      citeAs: JsonParser.parsePrimitive<FhirMarkdown>(
         json,
-        {
-          'citeAsReference': Reference.fromJson,
-          'citeAsMarkdown': FhirMarkdown.fromJson,
-        },
+        'citeAs',
+        FhirMarkdown.fromJson,
       ),
       status: JsonParser.parsePrimitive<PublicationStatus>(
         json,
@@ -183,6 +179,13 @@ class Evidence extends MetadataResource {
         'lastReviewDate',
         FhirDate.fromJson,
       ),
+      author: (json['author'] as List<dynamic>?)
+          ?.map<ContactDetail>(
+            (v) => ContactDetail.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       publisher: JsonParser.parsePrimitive<FhirString>(
         json,
         'publisher',
@@ -195,7 +198,7 @@ class Evidence extends MetadataResource {
             ),
           )
           .toList(),
-      author: (json['author'] as List<dynamic>?)
+      recorder: (json['recorder'] as List<dynamic>?)
           ?.map<ContactDetail>(
             (v) => ContactDetail.fromJson(
               {...v as Map<String, dynamic>},
@@ -245,9 +248,9 @@ class Evidence extends MetadataResource {
         'copyrightLabel',
         FhirString.fromJson,
       ),
-      relatedArtifact: (json['relatedArtifact'] as List<dynamic>?)
-          ?.map<RelatedArtifact>(
-            (v) => RelatedArtifact.fromJson(
+      relatesTo: (json['relatesTo'] as List<dynamic>?)
+          ?.map<EvidenceRelatesTo>(
+            (v) => EvidenceRelatesTo.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -269,18 +272,20 @@ class Evidence extends MetadataResource {
             ),
           )
           .toList(),
-      variableDefinition: (json['variableDefinition'] as List<dynamic>)
-          .map<EvidenceVariableDefinition>(
+      variableDefinition: (json['variableDefinition'] as List<dynamic>?)
+          ?.map<EvidenceVariableDefinition>(
             (v) => EvidenceVariableDefinition.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
           .toList(),
-      synthesisType: JsonParser.parseObject<CodeableConcept>(
-        json,
-        'synthesisType',
-        CodeableConcept.fromJson,
-      ),
+      synthesisType: (json['synthesisType'] as List<dynamic>?)
+          ?.map<CodeableConcept>(
+            (v) => CodeableConcept.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
       studyDesign: (json['studyDesign'] as List<dynamic>?)
           ?.map<CodeableConcept>(
             (v) => CodeableConcept.fromJson(
@@ -375,15 +380,13 @@ class Evidence extends MetadataResource {
   /// A short, descriptive, user-friendly title for the summary.
   final FhirString? title;
 
-  /// [citeAsX]
-  /// Citation Resource or display of suggested citation for this evidence.
-  final CiteAsXEvidence? citeAsX;
+  /// [citeAs]
+  /// Display of the suggested method of how to cite this Evidence.
+  final FhirMarkdown? citeAs;
 
-  /// Getter for [citeAsReference] as a Reference
-  Reference? get citeAsReference => citeAsX?.isAs<Reference>();
-
-  /// Getter for [citeAsMarkdown] as a FhirMarkdown
-  FhirMarkdown? get citeAsMarkdown => citeAsX?.isAs<FhirMarkdown>();
+  /// [recorder]
+  /// Who entered the data for the evidence.
+  final List<ContactDetail>? recorder;
 
   /// [purpose]
   /// Explanation of why this Evidence is needed and why it has been designed
@@ -392,19 +395,26 @@ class Evidence extends MetadataResource {
 
   /// [copyright]
   /// A copyright statement relating to the Evidence and/or its contents.
-  /// Copyright statements are generally legal restrictions on the use and
-  /// publishing of the Evidence.
+  /// Copyright statements are legal notices of intellectual property
+  /// ownership and may include restrictions on the use and publishing of the
+  /// Evidence.
   final FhirMarkdown? copyright;
 
   /// [copyrightLabel]
   /// A short string (<50 characters), suitable for inclusion in a page
   /// footer that identifies the copyright holder, effective period, and
-  /// optionally whether rights are resctricted. (e.g. 'All rights reserved',
+  /// optionally whether rights are restricted. (e.g. 'All rights reserved',
   /// 'Some rights reserved').
   final FhirString? copyrightLabel;
 
+  /// [relatesTo]
+  /// Relationships that this Evidence has with other FHIR or non-FHIR
+  /// resources that already exist.
+  final List<EvidenceRelatesTo>? relatesTo;
+
   /// [assertion]
-  /// Declarative description of the Evidence.
+  /// Declarative description of the Evidence, such as conclusion or bottom
+  /// line statement.
   final FhirMarkdown? assertion;
 
   /// [note]
@@ -412,12 +422,15 @@ class Evidence extends MetadataResource {
   final List<Annotation>? note;
 
   /// [variableDefinition]
-  /// Evidence variable such as population, exposure, or outcome.
-  final List<EvidenceVariableDefinition> variableDefinition;
+  /// Description, classification, and definition of a single variable. The
+  /// collection of variables defines what the evidence is about.
+  final List<EvidenceVariableDefinition>? variableDefinition;
 
   /// [synthesisType]
-  /// The method to combine studies.
-  final CodeableConcept? synthesisType;
+  /// The design of the synthesis (combination of studies) that produced this
+  /// evidence. The design is described with any number of synthesis
+  /// characteristics, such as type of meta-analysis.
+  final List<CodeableConcept>? synthesisType;
 
   /// [studyDesign]
   /// The design of the study that produced this evidence. The design is
@@ -556,14 +569,10 @@ class Evidence extends MetadataResource {
       'title',
       title,
     );
-    if (citeAsX != null) {
-      final fhirType = citeAsX!.fhirType;
-      addField(
-        'citeAs${fhirType.capitalize()}',
-        citeAsX,
-      );
-    }
-
+    addField(
+      'citeAs',
+      citeAs,
+    );
     addField(
       'status',
       status,
@@ -585,6 +594,10 @@ class Evidence extends MetadataResource {
       lastReviewDate,
     );
     addField(
+      'author',
+      author,
+    );
+    addField(
       'publisher',
       publisher,
     );
@@ -593,8 +606,8 @@ class Evidence extends MetadataResource {
       contact,
     );
     addField(
-      'author',
-      author,
+      'recorder',
+      recorder,
     );
     addField(
       'editor',
@@ -625,8 +638,8 @@ class Evidence extends MetadataResource {
       copyrightLabel,
     );
     addField(
-      'relatedArtifact',
-      relatedArtifact,
+      'relatesTo',
+      relatesTo,
     );
     addField(
       'description',
@@ -681,15 +694,16 @@ class Evidence extends MetadataResource {
       'versionAlgorithmX',
       'name',
       'title',
-      'citeAsX',
+      'citeAs',
       'status',
       'experimental',
       'date',
       'approvalDate',
       'lastReviewDate',
+      'author',
       'publisher',
       'contact',
-      'author',
+      'recorder',
       'editor',
       'reviewer',
       'endorser',
@@ -697,7 +711,7 @@ class Evidence extends MetadataResource {
       'purpose',
       'copyright',
       'copyrightLabel',
-      'relatedArtifact',
+      'relatesTo',
       'description',
       'assertion',
       'note',
@@ -783,16 +797,8 @@ class Evidence extends MetadataResource {
           fields.add(title!);
         }
       case 'citeAs':
-        fields.add(citeAsX!);
-      case 'citeAsX':
-        fields.add(citeAsX!);
-      case 'citeAsReference':
-        if (citeAsX is Reference) {
-          fields.add(citeAsX!);
-        }
-      case 'citeAsMarkdown':
-        if (citeAsX is FhirMarkdown) {
-          fields.add(citeAsX!);
+        if (citeAs != null) {
+          fields.add(citeAs!);
         }
       case 'status':
         if (status != null) {
@@ -814,6 +820,10 @@ class Evidence extends MetadataResource {
         if (lastReviewDate != null) {
           fields.add(lastReviewDate!);
         }
+      case 'author':
+        if (author != null) {
+          fields.addAll(author!);
+        }
       case 'publisher':
         if (publisher != null) {
           fields.add(publisher!);
@@ -822,9 +832,9 @@ class Evidence extends MetadataResource {
         if (contact != null) {
           fields.addAll(contact!);
         }
-      case 'author':
-        if (author != null) {
-          fields.addAll(author!);
+      case 'recorder':
+        if (recorder != null) {
+          fields.addAll(recorder!);
         }
       case 'editor':
         if (editor != null) {
@@ -854,9 +864,9 @@ class Evidence extends MetadataResource {
         if (copyrightLabel != null) {
           fields.add(copyrightLabel!);
         }
-      case 'relatedArtifact':
-        if (relatedArtifact != null) {
-          fields.addAll(relatedArtifact!);
+      case 'relatesTo':
+        if (relatesTo != null) {
+          fields.addAll(relatesTo!);
         }
       case 'description':
         if (description != null) {
@@ -871,10 +881,12 @@ class Evidence extends MetadataResource {
           fields.addAll(note!);
         }
       case 'variableDefinition':
-        fields.addAll(variableDefinition);
+        if (variableDefinition != null) {
+          fields.addAll(variableDefinition!);
+        }
       case 'synthesisType':
         if (synthesisType != null) {
-          fields.add(synthesisType!);
+          fields.addAll(synthesisType!);
         }
       case 'studyDesign':
         if (studyDesign != null) {
@@ -1013,8 +1025,8 @@ class Evidence extends MetadataResource {
       return false;
     }
     if (!equalsDeepWithNull(
-      citeAsX,
-      o.citeAsX,
+      citeAs,
+      o.citeAs,
     )) {
       return false;
     }
@@ -1048,6 +1060,12 @@ class Evidence extends MetadataResource {
     )) {
       return false;
     }
+    if (!listEquals<ContactDetail>(
+      author,
+      o.author,
+    )) {
+      return false;
+    }
     if (!equalsDeepWithNull(
       publisher,
       o.publisher,
@@ -1061,8 +1079,8 @@ class Evidence extends MetadataResource {
       return false;
     }
     if (!listEquals<ContactDetail>(
-      author,
-      o.author,
+      recorder,
+      o.recorder,
     )) {
       return false;
     }
@@ -1108,9 +1126,9 @@ class Evidence extends MetadataResource {
     )) {
       return false;
     }
-    if (!listEquals<RelatedArtifact>(
-      relatedArtifact,
-      o.relatedArtifact,
+    if (!listEquals<EvidenceRelatesTo>(
+      relatesTo,
+      o.relatesTo,
     )) {
       return false;
     }
@@ -1138,7 +1156,7 @@ class Evidence extends MetadataResource {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<CodeableConcept>(
       synthesisType,
       o.synthesisType,
     )) {
@@ -1166,8 +1184,353 @@ class Evidence extends MetadataResource {
   }
 }
 
+/// [EvidenceRelatesTo]
+/// Relationships that this Evidence has with other FHIR or non-FHIR
+/// resources that already exist.
+class EvidenceRelatesTo extends BackboneElement {
+  /// Primary constructor for
+  /// [EvidenceRelatesTo]
+
+  const EvidenceRelatesTo({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    required this.type,
+    required this.targetX,
+    super.disallowExtensions,
+  }) : super();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory EvidenceRelatesTo.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    return EvidenceRelatesTo(
+      id: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'id',
+        FhirString.fromJson,
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtension>(
+            (v) => FhirExtension.fromJson(
+              {...v as Map<String, dynamic>},
+            ),
+          )
+          .toList(),
+      type: JsonParser.parsePrimitive<ArtifactRelationshipType>(
+        json,
+        'type',
+        ArtifactRelationshipType.fromJson,
+      )!,
+      targetX: JsonParser.parsePolymorphic<TargetXEvidenceRelatesTo>(
+        json,
+        {
+          'targetUri': FhirUri.fromJson,
+          'targetAttachment': Attachment.fromJson,
+          'targetCanonical': FhirCanonical.fromJson,
+          'targetReference': Reference.fromJson,
+          'targetMarkdown': FhirMarkdown.fromJson,
+        },
+      )!,
+    );
+  }
+
+  /// Deserialize [EvidenceRelatesTo]
+  /// from a [String] or [YamlMap] object
+  factory EvidenceRelatesTo.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return EvidenceRelatesTo.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return EvidenceRelatesTo.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'EvidenceRelatesTo '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [EvidenceRelatesTo]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory EvidenceRelatesTo.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return EvidenceRelatesTo.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'EvidenceRelatesTo';
+
+  /// [type]
+  /// The type of relationship to the related artifact.
+  final ArtifactRelationshipType type;
+
+  /// [targetX]
+  /// The artifact that is related to this Evidence Resource.
+  final TargetXEvidenceRelatesTo targetX;
+
+  /// Getter for [targetUri] as a FhirUri
+  FhirUri? get targetUri => targetX.isAs<FhirUri>();
+
+  /// Getter for [targetAttachment] as a Attachment
+  Attachment? get targetAttachment => targetX.isAs<Attachment>();
+
+  /// Getter for [targetCanonical] as a FhirCanonical
+  FhirCanonical? get targetCanonical => targetX.isAs<FhirCanonical>();
+
+  /// Getter for [targetReference] as a Reference
+  Reference? get targetReference => targetX.isAs<Reference>();
+
+  /// Getter for [targetMarkdown] as a FhirMarkdown
+  FhirMarkdown? get targetMarkdown => targetX.isAs<FhirMarkdown>();
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    bool isNonEmpty(dynamic val) {
+      if (val == null) return false;
+      if (val is List && val.isEmpty) return false;
+      if (val is Map && val.isEmpty) return false;
+      return true;
+    }
+
+    void addField(String key, dynamic field) {
+      if (field == null) return;
+      if (!(field is FhirBase? || field is List<FhirBase>?)) {
+        throw ArgumentError('"field" must be a FhirBase type');
+      }
+      if (field is PrimitiveType) {
+        final fieldMap = field.toJson();
+        final val = fieldMap['value'];
+        final ext = fieldMap['_value'];
+        final hasVal = isNonEmpty(val);
+        final hasExt = isNonEmpty(ext);
+        if (hasVal) json[key] = val;
+        if (hasExt) json['_$key'] = ext;
+      } else if (field is List<FhirBase>) {
+        if (field.isEmpty) return;
+        final isPrimitive = field.first is PrimitiveType;
+        final tempList = <dynamic>[];
+        final tempExtensions = <dynamic>[];
+        for (final e in field) {
+          final itemMap = e.toJson();
+          if (!isNonEmpty(itemMap)) {
+            continue;
+          }
+          if (isPrimitive) {
+            final v = itemMap['value'];
+            final x = itemMap['_value'];
+            tempList.add(v);
+            tempExtensions.add(x);
+          } else {
+            tempList.add(itemMap);
+          }
+        }
+        if (tempList.isEmpty) return;
+        if (isPrimitive) {
+          final hasAnyValues = tempList.any((v) => v != null);
+          if (hasAnyValues) {
+            json[key] = tempList;
+          }
+          final anyExt = tempExtensions.any(isNonEmpty);
+          if (anyExt) {
+            json['_$key'] = tempExtensions;
+          }
+        } else {
+          json[key] = tempList;
+        }
+      } else if (field is FhirBase) {
+        final subMap = field.toJson();
+        if (isNonEmpty(subMap)) {
+          json[key] = subMap;
+        }
+      }
+    }
+
+    addField(
+      'id',
+      id,
+    );
+    addField(
+      'extension',
+      extension_,
+    );
+    addField(
+      'modifierExtension',
+      modifierExtension,
+    );
+    addField(
+      'type',
+      type,
+    );
+    final targetXFhirType = targetX.fhirType;
+    addField(
+      'target${targetXFhirType.capitalize()}',
+      targetX,
+    );
+
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'type',
+      'targetX',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBase> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBase>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'type':
+        fields.add(type);
+      case 'target':
+        fields.add(targetX);
+      case 'targetX':
+        fields.add(targetX);
+      case 'targetUri':
+        if (targetX is FhirUri) {
+          fields.add(targetX);
+        }
+      case 'targetAttachment':
+        if (targetX is Attachment) {
+          fields.add(targetX);
+        }
+      case 'targetCanonical':
+        if (targetX is FhirCanonical) {
+          fields.add(targetX);
+        }
+      case 'targetReference':
+        if (targetX is Reference) {
+          fields.add(targetX);
+        }
+      case 'targetMarkdown':
+        if (targetX is FhirMarkdown) {
+          fields.add(targetX);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBase? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  EvidenceRelatesTo clone() => copyWith();
+
+  /// Copy function for [EvidenceRelatesTo]
+  /// Returns a copy of the current instance with the provided fields modified.
+  /// If a field is not provided, it will retain its original value.
+  /// If a null is provided, this will clearn the field, unless the
+  /// field is required, in which case it will keep its current value.
+  @override
+  $EvidenceRelatesToCopyWith<EvidenceRelatesTo> get copyWith =>
+      _$EvidenceRelatesToCopyWithImpl<EvidenceRelatesTo>(
+        this,
+        (value) => value,
+      );
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBase? o) {
+    if (o is! EvidenceRelatesTo) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtension>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      type,
+      o.type,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      targetX,
+      o.targetX,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
 /// [EvidenceVariableDefinition]
-/// Evidence variable such as population, exposure, or outcome.
+/// Description, classification, and definition of a single variable. The
+/// collection of variables defines what the evidence is about.
 class EvidenceVariableDefinition extends BackboneElement {
   /// Primary constructor for
   /// [EvidenceVariableDefinition]
@@ -1179,6 +1542,8 @@ class EvidenceVariableDefinition extends BackboneElement {
     this.description,
     this.note,
     required this.variableRole,
+    this.roleSubtype,
+    this.comparatorCategory,
     this.observed,
     this.intended,
     this.directnessMatch,
@@ -1221,11 +1586,21 @@ class EvidenceVariableDefinition extends BackboneElement {
             ),
           )
           .toList(),
-      variableRole: JsonParser.parseObject<CodeableConcept>(
+      variableRole: JsonParser.parsePrimitive<EvidenceVariableRole>(
         json,
         'variableRole',
-        CodeableConcept.fromJson,
+        EvidenceVariableRole.fromJson,
       )!,
+      roleSubtype: JsonParser.parseObject<CodeableConcept>(
+        json,
+        'roleSubtype',
+        CodeableConcept.fromJson,
+      ),
+      comparatorCategory: JsonParser.parsePrimitive<FhirString>(
+        json,
+        'comparatorCategory',
+        FhirString.fromJson,
+      ),
       observed: JsonParser.parseObject<Reference>(
         json,
         'observed',
@@ -1295,16 +1670,28 @@ class EvidenceVariableDefinition extends BackboneElement {
   final List<Annotation>? note;
 
   /// [variableRole]
-  /// population | subpopulation | exposure | referenceExposure |
-  /// measuredVariable | confounder.
-  final CodeableConcept variableRole;
+  /// Classification of the role of the variable.
+  final EvidenceVariableRole variableRole;
+
+  /// [roleSubtype]
+  /// Sub-classification of the role of the variable.
+  final CodeableConcept? roleSubtype;
+
+  /// [comparatorCategory]
+  /// The reference value used for comparison.
+  final FhirString? comparatorCategory;
 
   /// [observed]
-  /// Definition of the actual variable related to the statistic(s).
+  /// Definition of the actual variable related to the statistic(s), i.e.,
+  /// the population being the actual study sample or the measured variable
+  /// (exposure, outcome, or covariate) being the actual observation that
+  /// occurred or will occur in the study.
   final Reference? observed;
 
   /// [intended]
-  /// Definition of the intended variable related to the Evidence.
+  /// Definition of the intended variable related to the Evidence, i.e., the
+  /// population, exposure, or outcome for which the statistical finding is
+  /// being interpreted.
   final Reference? intended;
 
   /// [directnessMatch]
@@ -1399,6 +1786,14 @@ class EvidenceVariableDefinition extends BackboneElement {
       variableRole,
     );
     addField(
+      'roleSubtype',
+      roleSubtype,
+    );
+    addField(
+      'comparatorCategory',
+      comparatorCategory,
+    );
+    addField(
       'observed',
       observed,
     );
@@ -1423,6 +1818,8 @@ class EvidenceVariableDefinition extends BackboneElement {
       'description',
       'note',
       'variableRole',
+      'roleSubtype',
+      'comparatorCategory',
       'observed',
       'intended',
       'directnessMatch',
@@ -1460,6 +1857,14 @@ class EvidenceVariableDefinition extends BackboneElement {
         }
       case 'variableRole':
         fields.add(variableRole);
+      case 'roleSubtype':
+        if (roleSubtype != null) {
+          fields.add(roleSubtype!);
+        }
+      case 'comparatorCategory':
+        if (comparatorCategory != null) {
+          fields.add(comparatorCategory!);
+        }
       case 'observed':
         if (observed != null) {
           fields.add(observed!);
@@ -1547,6 +1952,18 @@ class EvidenceVariableDefinition extends BackboneElement {
     if (!equalsDeepWithNull(
       variableRole,
       o.variableRole,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      roleSubtype,
+      o.roleSubtype,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      comparatorCategory,
+      o.comparatorCategory,
     )) {
       return false;
     }
@@ -1721,7 +2138,7 @@ class EvidenceStatistic extends BackboneElement {
   String get fhirType => 'EvidenceStatistic';
 
   /// [description]
-  /// A description of the content value of the statistic.
+  /// A natural language summary of the statistic.
   final FhirMarkdown? description;
 
   /// [note]
@@ -1729,12 +2146,16 @@ class EvidenceStatistic extends BackboneElement {
   final List<Annotation>? note;
 
   /// [statisticType]
-  /// Type of statistic, e.g., relative risk.
+  /// Type of statistic, e.g., relative risk. The statistic type is a
+  /// classification that formally defines the relationship between the
+  /// variables (noted in Evidence.variableDefinition) and the value
+  /// specification (noted in Evidence.statistic.quantity).
   final CodeableConcept? statisticType;
 
   /// [category]
-  /// When the measured variable is handled categorically, the category
-  /// element is used to define which category the statistic is reporting.
+  /// When the measured variable (outcome) is handled categorically, the
+  /// category element is used to define which category the statistic is
+  /// reporting.
   final CodeableConcept? category;
 
   /// [quantity]
@@ -1753,7 +2174,7 @@ class EvidenceStatistic extends BackboneElement {
   final FhirUnsignedInt? numberAffected;
 
   /// [sampleSize]
-  /// Number of samples in the statistic.
+  /// Count of participants in the study sample.
   final EvidenceSampleSize? sampleSize;
 
   /// [attributeEstimate]
@@ -2087,7 +2508,7 @@ class EvidenceStatistic extends BackboneElement {
 }
 
 /// [EvidenceSampleSize]
-/// Number of samples in the statistic.
+/// Count of participants in the study sample.
 class EvidenceSampleSize extends BackboneElement {
   /// Primary constructor for
   /// [EvidenceSampleSize]
@@ -2201,7 +2622,8 @@ class EvidenceSampleSize extends BackboneElement {
   String get fhirType => 'EvidenceSampleSize';
 
   /// [description]
-  /// Human-readable summary of population sample size.
+  /// Human-readable summary of study sample size. A human-readable string to
+  /// clarify or explain concepts about the sample size.
   final FhirMarkdown? description;
 
   /// [note]
@@ -2209,12 +2631,12 @@ class EvidenceSampleSize extends BackboneElement {
   final List<Annotation>? note;
 
   /// [numberOfStudies]
-  /// Number of participants in the population.
+  /// Count of studies or samples combined to become the total sample for the
+  /// statistic.
   final FhirUnsignedInt? numberOfStudies;
 
   /// [numberOfParticipants]
-  /// A human-readable string to clarify or explain concepts about the sample
-  /// size.
+  /// Count of members in the total sample for the statistic.
   final FhirUnsignedInt? numberOfParticipants;
 
   /// [knownDataCount]
@@ -2610,16 +3032,16 @@ class EvidenceAttributeEstimate extends BackboneElement {
 
   /// [quantity]
   /// The singular quantity of the attribute estimate, for attribute
-  /// estimates represented as single values; also used to report unit of
+  /// estimates represented as single values, which may include a unit of
   /// measure.
   final Quantity? quantity;
 
   /// [level]
-  /// Use 95 for a 95% confidence interval.
+  /// Use 0.95 for a 95% confidence interval.
   final FhirDecimal? level;
 
   /// [range]
-  /// Lower bound of confidence interval.
+  /// Lower and upper bound values of the attribute estimate.
   final Range? range;
 
   /// [attributeEstimate]
@@ -2914,11 +3336,17 @@ class EvidenceModelCharacteristic extends BackboneElement {
     super.extension_,
     super.modifierExtension,
     required this.code,
-    this.value,
+    ValueXEvidenceModelCharacteristic? valueX,
+    Quantity? valueQuantity,
+    Range? valueRange,
+    CodeableConcept? valueCodeableConcept,
+    this.intended,
+    this.applied,
     this.variable,
-    this.attributeEstimate,
+    this.attribute,
     super.disallowExtensions,
-  }) : super();
+  })  : valueX = valueX ?? valueQuantity ?? valueRange ?? valueCodeableConcept,
+        super();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
   factory EvidenceModelCharacteristic.fromJson(
@@ -2949,10 +3377,23 @@ class EvidenceModelCharacteristic extends BackboneElement {
         'code',
         CodeableConcept.fromJson,
       )!,
-      value: JsonParser.parseObject<Quantity>(
+      valueX: JsonParser.parsePolymorphic<ValueXEvidenceModelCharacteristic>(
         json,
-        'value',
-        Quantity.fromJson,
+        {
+          'valueQuantity': Quantity.fromJson,
+          'valueRange': Range.fromJson,
+          'valueCodeableConcept': CodeableConcept.fromJson,
+        },
+      ),
+      intended: JsonParser.parsePrimitive<FhirBoolean>(
+        json,
+        'intended',
+        FhirBoolean.fromJson,
+      ),
+      applied: JsonParser.parsePrimitive<FhirBoolean>(
+        json,
+        'applied',
+        FhirBoolean.fromJson,
       ),
       variable: (json['variable'] as List<dynamic>?)
           ?.map<EvidenceModelCharacteristicVariable>(
@@ -2961,7 +3402,7 @@ class EvidenceModelCharacteristic extends BackboneElement {
             ),
           )
           .toList(),
-      attributeEstimate: (json['attributeEstimate'] as List<dynamic>?)
+      attribute: (json['attribute'] as List<dynamic>?)
           ?.map<EvidenceAttributeEstimate>(
             (v) => EvidenceAttributeEstimate.fromJson(
               {...v as Map<String, dynamic>},
@@ -3017,18 +3458,36 @@ class EvidenceModelCharacteristic extends BackboneElement {
   /// Description of a component of the method to generate the statistic.
   final CodeableConcept code;
 
-  /// [value]
-  /// Further specification of the quantified value of the component of the
-  /// method to generate the statistic.
-  final Quantity? value;
+  /// [valueX]
+  /// Further specification of the value of the component of the method to
+  /// generate the statistic.
+  final ValueXEvidenceModelCharacteristic? valueX;
+
+  /// Getter for [valueQuantity] as a Quantity
+  Quantity? get valueQuantity => valueX?.isAs<Quantity>();
+
+  /// Getter for [valueRange] as a Range
+  Range? get valueRange => valueX?.isAs<Range>();
+
+  /// Getter for [valueCodeableConcept] as a CodeableConcept
+  CodeableConcept? get valueCodeableConcept => valueX?.isAs<CodeableConcept>();
+
+  /// [intended]
+  /// The plan for analysis.
+  final FhirBoolean? intended;
+
+  /// [applied]
+  /// This model characteristic is part of the analysis that was applied,
+  /// whether or not the analysis followed the plan.
+  final FhirBoolean? applied;
 
   /// [variable]
   /// A variable adjusted for in the adjusted analysis.
   final List<EvidenceModelCharacteristicVariable>? variable;
 
-  /// [attributeEstimate]
-  /// An attribute of the statistic used as a model characteristic.
-  final List<EvidenceAttributeEstimate>? attributeEstimate;
+  /// [attribute]
+  /// An attribute of the model characteristic.
+  final List<EvidenceAttributeEstimate>? attribute;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -3108,17 +3567,29 @@ class EvidenceModelCharacteristic extends BackboneElement {
       'code',
       code,
     );
+    if (valueX != null) {
+      final fhirType = valueX!.fhirType;
+      addField(
+        'value${fhirType.capitalize()}',
+        valueX,
+      );
+    }
+
     addField(
-      'value',
-      value,
+      'intended',
+      intended,
+    );
+    addField(
+      'applied',
+      applied,
     );
     addField(
       'variable',
       variable,
     );
     addField(
-      'attributeEstimate',
-      attributeEstimate,
+      'attribute',
+      attribute,
     );
     return json;
   }
@@ -3131,9 +3602,11 @@ class EvidenceModelCharacteristic extends BackboneElement {
       'extension',
       'modifierExtension',
       'code',
-      'value',
+      'valueX',
+      'intended',
+      'applied',
       'variable',
-      'attributeEstimate',
+      'attribute',
     ];
   }
 
@@ -3161,16 +3634,36 @@ class EvidenceModelCharacteristic extends BackboneElement {
       case 'code':
         fields.add(code);
       case 'value':
-        if (value != null) {
-          fields.add(value!);
+        fields.add(valueX!);
+      case 'valueX':
+        fields.add(valueX!);
+      case 'valueQuantity':
+        if (valueX is Quantity) {
+          fields.add(valueX!);
+        }
+      case 'valueRange':
+        if (valueX is Range) {
+          fields.add(valueX!);
+        }
+      case 'valueCodeableConcept':
+        if (valueX is CodeableConcept) {
+          fields.add(valueX!);
+        }
+      case 'intended':
+        if (intended != null) {
+          fields.add(intended!);
+        }
+      case 'applied':
+        if (applied != null) {
+          fields.add(applied!);
         }
       case 'variable':
         if (variable != null) {
           fields.addAll(variable!);
         }
-      case 'attributeEstimate':
-        if (attributeEstimate != null) {
-          fields.addAll(attributeEstimate!);
+      case 'attribute':
+        if (attribute != null) {
+          fields.addAll(attribute!);
         }
       default:
         if (checkValid) {
@@ -3239,8 +3732,20 @@ class EvidenceModelCharacteristic extends BackboneElement {
       return false;
     }
     if (!equalsDeepWithNull(
-      value,
-      o.value,
+      valueX,
+      o.valueX,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      intended,
+      o.intended,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      applied,
+      o.applied,
     )) {
       return false;
     }
@@ -3251,8 +3756,8 @@ class EvidenceModelCharacteristic extends BackboneElement {
       return false;
     }
     if (!listEquals<EvidenceAttributeEstimate>(
-      attributeEstimate,
-      o.attributeEstimate,
+      attribute,
+      o.attribute,
     )) {
       return false;
     }
@@ -3379,7 +3884,7 @@ class EvidenceModelCharacteristicVariable extends BackboneElement {
   String get fhirType => 'EvidenceModelCharacteristicVariable';
 
   /// [variableDefinition]
-  /// Description of the variable.
+  /// Description and definition of the variable.
   final Reference variableDefinition;
 
   /// [handling]
@@ -3387,15 +3892,18 @@ class EvidenceModelCharacteristicVariable extends BackboneElement {
   final EvidenceVariableHandling? handling;
 
   /// [valueCategory]
-  /// Description for grouping of ordinal or polychotomous variables.
+  /// Qualitative label used for grouping values of a dichotomous, ordinal,
+  /// or polychotomous variable.
   final List<CodeableConcept>? valueCategory;
 
   /// [valueQuantity]
-  /// Discrete value for grouping of ordinal or polychotomous variables.
+  /// Quantitative label used for grouping values of a dichotomous, ordinal,
+  /// or polychotomous variable.
   final List<Quantity>? valueQuantity;
 
   /// [valueRange]
-  /// Range of values for grouping of ordinal or polychotomous variables.
+  /// Range of quantitative labels used for grouping values of a dichotomous,
+  /// ordinal, or polychotomous variable.
   final List<Range>? valueRange;
   @override
   Map<String, dynamic> toJson() {
@@ -3710,7 +4218,7 @@ class EvidenceCertainty extends BackboneElement {
         'rating',
         CodeableConcept.fromJson,
       ),
-      rater: JsonParser.parsePrimitive<FhirString>(
+      rater: JsonParser.parsePrimitiveList<FhirString>(
         json,
         'rater',
         FhirString.fromJson,
@@ -3785,7 +4293,7 @@ class EvidenceCertainty extends BackboneElement {
 
   /// [rater]
   /// Individual or group who did the rating.
-  final FhirString? rater;
+  final List<FhirString>? rater;
 
   /// [subcomponent]
   /// A domain or subdomain of certainty.
@@ -3947,7 +4455,7 @@ class EvidenceCertainty extends BackboneElement {
         }
       case 'rater':
         if (rater != null) {
-          fields.add(rater!);
+          fields.addAll(rater!);
         }
       case 'subcomponent':
         if (subcomponent != null) {
@@ -4036,7 +4544,7 @@ class EvidenceCertainty extends BackboneElement {
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!listEquals<FhirString>(
       rater,
       o.rater,
     )) {

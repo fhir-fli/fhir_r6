@@ -17,6 +17,7 @@ abstract class $PermissionCopyWith<T> extends $DomainResourceCopyWith<T> {
     List<Resource>? contained,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
+    List<Identifier>? identifier,
     PermissionStatus? status,
     Reference? asserter,
     List<FhirDateTime>? date,
@@ -44,6 +45,7 @@ class _$PermissionCopyWithImpl<T> implements $PermissionCopyWith<T> {
     Object? contained = fhirSentinel,
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
+    Object? identifier = fhirSentinel,
     Object? status = fhirSentinel,
     Object? asserter = fhirSentinel,
     Object? date = fhirSentinel,
@@ -73,6 +75,9 @@ class _$PermissionCopyWithImpl<T> implements $PermissionCopyWith<T> {
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
+        identifier: identical(identifier, fhirSentinel)
+            ? _value.identifier
+            : identifier as List<Identifier>?,
         status: identical(status, fhirSentinel)
             ? _value.status
             : (status as PermissionStatus?) ?? _value.status,
@@ -173,10 +178,11 @@ abstract class $PermissionRuleCopyWith<T> extends $BackboneElementCopyWith<T> {
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
+    Reference? import_,
     ConsentProvisionType? type,
     List<PermissionData>? data,
     List<PermissionActivity>? activity,
-    List<CodeableConcept>? limit,
+    List<PermissionLimit>? limit,
     bool? disallowExtensions,
   });
 }
@@ -192,6 +198,7 @@ class _$PermissionRuleCopyWithImpl<T> implements $PermissionRuleCopyWith<T> {
     Object? id = fhirSentinel,
     Object? extension_ = fhirSentinel,
     Object? modifierExtension = fhirSentinel,
+    Object? import_ = fhirSentinel,
     Object? type = fhirSentinel,
     Object? data = fhirSentinel,
     Object? activity = fhirSentinel,
@@ -207,6 +214,9 @@ class _$PermissionRuleCopyWithImpl<T> implements $PermissionRuleCopyWith<T> {
         modifierExtension: identical(modifierExtension, fhirSentinel)
             ? _value.modifierExtension
             : modifierExtension as List<FhirExtension>?,
+        import_: identical(import_, fhirSentinel)
+            ? _value.import_
+            : import_ as Reference?,
         type: identical(type, fhirSentinel)
             ? _value.type
             : type as ConsentProvisionType?,
@@ -218,7 +228,7 @@ class _$PermissionRuleCopyWithImpl<T> implements $PermissionRuleCopyWith<T> {
             : activity as List<PermissionActivity>?,
         limit: identical(limit, fhirSentinel)
             ? _value.limit
-            : limit as List<CodeableConcept>?,
+            : limit as List<PermissionLimit>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
@@ -243,7 +253,7 @@ abstract class $PermissionDataCopyWith<T> extends $BackboneElementCopyWith<T> {
     List<FhirExtension>? modifierExtension,
     List<PermissionResource>? resource,
     List<Coding>? security,
-    List<Period>? period,
+    Period? period,
     FhirExpression? expression,
     bool? disallowExtensions,
   });
@@ -281,9 +291,8 @@ class _$PermissionDataCopyWithImpl<T> implements $PermissionDataCopyWith<T> {
         security: identical(security, fhirSentinel)
             ? _value.security
             : security as List<Coding>?,
-        period: identical(period, fhirSentinel)
-            ? _value.period
-            : period as List<Period>?,
+        period:
+            identical(period, fhirSentinel) ? _value.period : period as Period?,
         expression: identical(expression, fhirSentinel)
             ? _value.expression
             : expression as FhirExpression?,
@@ -370,7 +379,7 @@ abstract class $PermissionActivityCopyWith<T>
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    List<Reference>? actor,
+    List<PermissionActor>? actor,
     List<CodeableConcept>? action,
     List<CodeableConcept>? purpose,
     bool? disallowExtensions,
@@ -405,7 +414,7 @@ class _$PermissionActivityCopyWithImpl<T>
             : modifierExtension as List<FhirExtension>?,
         actor: identical(actor, fhirSentinel)
             ? _value.actor
-            : actor as List<Reference>?,
+            : actor as List<PermissionActor>?,
         action: identical(action, fhirSentinel)
             ? _value.action
             : action as List<CodeableConcept>?,
@@ -423,6 +432,125 @@ class _$PermissionActivityCopyWithImpl<T>
 extension PermissionActivityCopyWithExtension on PermissionActivity {
   $PermissionActivityCopyWith<PermissionActivity> get copyWith =>
       _$PermissionActivityCopyWithImpl<PermissionActivity>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $PermissionActorCopyWith<T> extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    CodeableConcept? role,
+    Reference? reference,
+    bool? disallowExtensions,
+  });
+}
+
+class _$PermissionActorCopyWithImpl<T> implements $PermissionActorCopyWith<T> {
+  final PermissionActor _value;
+  final T Function(PermissionActor) _then;
+
+  _$PermissionActorCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? role = fhirSentinel,
+    Object? reference = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      PermissionActor(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        role: identical(role, fhirSentinel)
+            ? _value.role
+            : role as CodeableConcept?,
+        reference: identical(reference, fhirSentinel)
+            ? _value.reference
+            : reference as Reference?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension PermissionActorCopyWithExtension on PermissionActor {
+  $PermissionActorCopyWith<PermissionActor> get copyWith =>
+      _$PermissionActorCopyWithImpl<PermissionActor>(
+        this,
+        (value) => value,
+      );
+}
+
+abstract class $PermissionLimitCopyWith<T> extends $BackboneElementCopyWith<T> {
+  @override
+  T call({
+    FhirString? id,
+    List<FhirExtension>? extension_,
+    List<FhirExtension>? modifierExtension,
+    List<CodeableConcept>? control,
+    List<Coding>? tag,
+    List<FhirString>? element,
+    bool? disallowExtensions,
+  });
+}
+
+class _$PermissionLimitCopyWithImpl<T> implements $PermissionLimitCopyWith<T> {
+  final PermissionLimit _value;
+  final T Function(PermissionLimit) _then;
+
+  _$PermissionLimitCopyWithImpl(this._value, this._then);
+
+  @override
+  T call({
+    Object? id = fhirSentinel,
+    Object? extension_ = fhirSentinel,
+    Object? modifierExtension = fhirSentinel,
+    Object? control = fhirSentinel,
+    Object? tag = fhirSentinel,
+    Object? element = fhirSentinel,
+    Object? disallowExtensions = fhirSentinel,
+  }) {
+    return _then(
+      PermissionLimit(
+        id: identical(id, fhirSentinel) ? _value.id : id as FhirString?,
+        extension_: identical(extension_, fhirSentinel)
+            ? _value.extension_
+            : extension_ as List<FhirExtension>?,
+        modifierExtension: identical(modifierExtension, fhirSentinel)
+            ? _value.modifierExtension
+            : modifierExtension as List<FhirExtension>?,
+        control: identical(control, fhirSentinel)
+            ? _value.control
+            : control as List<CodeableConcept>?,
+        tag: identical(tag, fhirSentinel) ? _value.tag : tag as List<Coding>?,
+        element: identical(element, fhirSentinel)
+            ? _value.element
+            : element as List<FhirString>?,
+        disallowExtensions: identical(disallowExtensions, fhirSentinel)
+            ? _value.disallowExtensions
+            : disallowExtensions as bool?,
+      ),
+    );
+  }
+}
+
+extension PermissionLimitCopyWithExtension on PermissionLimit {
+  $PermissionLimitCopyWith<PermissionLimit> get copyWith =>
+      _$PermissionLimitCopyWithImpl<PermissionLimit>(
         this,
         (value) => value,
       );

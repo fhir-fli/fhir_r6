@@ -15,8 +15,9 @@ class SearchVerificationResult extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}attestation_method'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['attestation_method'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -26,8 +27,8 @@ class SearchVerificationResult extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}primarysource_date'] =
-        value.toString();
+    parameters['primarysource_date'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -38,20 +39,23 @@ class SearchVerificationResult extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}primarysource_type'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['primarysource_type'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [VerificationResult]
+  @override
   SearchVerificationResult status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status'] =
-        system != null ? '$system|$value' : '$value';
+    parameters['status'] = system != null
+        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 
@@ -61,8 +65,8 @@ class SearchVerificationResult extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['${modifier != null ? '$modifier' : ''}status_date'] =
-        value.toString();
+    parameters['status_date'] =
+        (modifier != null ? '$modifier:$value' : value.toString());
     return this;
   }
 }

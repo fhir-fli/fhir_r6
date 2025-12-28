@@ -173,6 +173,21 @@ enum FHIRVersionBuilderEnum {
 
   /// 5.0.0-draft-final
   value500DraftFinal,
+
+  /// 6.0
+  value60,
+
+  /// 6.0.0
+  value600,
+
+  /// 6.0.0-ballo1
+  value600Ballo1,
+
+  /// 6.0.0-ballot2
+  value600Ballot2,
+
+  /// 6.0.0-ballot3
+  value600Ballot3,
   ;
 
   /// Converts the enum value to a string.
@@ -296,6 +311,16 @@ enum FHIRVersionBuilderEnum {
         return '5.0.0-snapshot3';
       case FHIRVersionBuilderEnum.value500DraftFinal:
         return '5.0.0-draft-final';
+      case FHIRVersionBuilderEnum.value60:
+        return '6.0';
+      case FHIRVersionBuilderEnum.value600:
+        return '6.0.0';
+      case FHIRVersionBuilderEnum.value600Ballo1:
+        return '6.0.0-ballo1';
+      case FHIRVersionBuilderEnum.value600Ballot2:
+        return '6.0.0-ballot2';
+      case FHIRVersionBuilderEnum.value600Ballot3:
+        return '6.0.0-ballot3';
     }
   }
 
@@ -431,6 +456,16 @@ enum FHIRVersionBuilderEnum {
         return FHIRVersionBuilderEnum.value500Snapshot3;
       case '5.0.0-draft-final':
         return FHIRVersionBuilderEnum.value500DraftFinal;
+      case '6.0':
+        return FHIRVersionBuilderEnum.value60;
+      case '6.0.0':
+        return FHIRVersionBuilderEnum.value600;
+      case '6.0.0-ballo1':
+        return FHIRVersionBuilderEnum.value600Ballo1;
+      case '6.0.0-ballot2':
+        return FHIRVersionBuilderEnum.value600Ballot2;
+      case '6.0.0-ballot3':
+        return FHIRVersionBuilderEnum.value600Ballot3;
     }
     return null;
   }
@@ -523,7 +558,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '0.01',
     ),
@@ -536,7 +571,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '0.05',
     ),
@@ -549,7 +584,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '0.06',
     ),
@@ -562,7 +597,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '0.11',
     ),
@@ -575,7 +610,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '0.0',
     ),
@@ -588,7 +623,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '0.0.80',
     ),
@@ -601,7 +636,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '0.0.81',
     ),
@@ -614,7 +649,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '0.0.82',
     ),
@@ -627,7 +662,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '0.4',
     ),
@@ -640,7 +675,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '0.4.0',
     ),
@@ -653,7 +688,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '0.5',
     ),
@@ -666,7 +701,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '0.5.0',
     ),
@@ -679,7 +714,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '1.0',
     ),
@@ -692,7 +727,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '1.0.0',
     ),
@@ -705,7 +740,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '1.0.1',
     ),
@@ -718,7 +753,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '1.0.2',
     ),
@@ -731,7 +766,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '1.1',
     ),
@@ -744,7 +779,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '1.1.0',
     ),
@@ -757,7 +792,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '1.4',
     ),
@@ -770,7 +805,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '1.4.0',
     ),
@@ -783,7 +818,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '1.6',
     ),
@@ -796,7 +831,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '1.6.0',
     ),
@@ -809,7 +844,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '1.8',
     ),
@@ -822,7 +857,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '1.8.0',
     ),
@@ -835,7 +870,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '3.0',
     ),
@@ -848,7 +883,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '3.0.0',
     ),
@@ -861,7 +896,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '3.0.1',
     ),
@@ -874,7 +909,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '3.0.2',
     ),
@@ -887,7 +922,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '3.3',
     ),
@@ -900,7 +935,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '3.3.0',
     ),
@@ -913,7 +948,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '3.5',
     ),
@@ -926,7 +961,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '3.5.0',
     ),
@@ -939,7 +974,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '4.0',
     ),
@@ -952,7 +987,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '4.0.0',
     ),
@@ -965,7 +1000,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '4.0.1',
     ),
@@ -978,7 +1013,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '4.1',
     ),
@@ -991,7 +1026,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '4.1.0',
     ),
@@ -1004,7 +1039,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '4.2',
     ),
@@ -1017,7 +1052,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '4.2.0',
     ),
@@ -1030,7 +1065,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '4.3',
     ),
@@ -1043,7 +1078,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '4.3.0',
     ),
@@ -1056,7 +1091,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '4.3.0-cibuild',
     ),
@@ -1069,7 +1104,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '4.3.0-snapshot1',
     ),
@@ -1082,7 +1117,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '4.4',
     ),
@@ -1095,7 +1130,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '4.4.0',
     ),
@@ -1108,7 +1143,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '4.5',
     ),
@@ -1121,7 +1156,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '4.5.0',
     ),
@@ -1134,7 +1169,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '4.6',
     ),
@@ -1147,7 +1182,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '4.6.0',
     ),
@@ -1160,7 +1195,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '5.0',
     ),
@@ -1173,7 +1208,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '5.0.0',
     ),
@@ -1186,7 +1221,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '5.0.0-cibuild',
     ),
@@ -1199,7 +1234,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '5.0.0-snapshot1',
     ),
@@ -1212,7 +1247,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '5.0.0-snapshot2',
     ),
@@ -1225,7 +1260,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '5.0.0-ballot',
     ),
@@ -1238,7 +1273,7 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '5.0.0-snapshot3',
     ),
@@ -1251,9 +1286,74 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     system: FhirUriBuilder._(
       valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
     ),
-    version: FhirStringBuilder._(valueString: '5.0.0'),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '5.0.0-draft-final',
+    ),
+  );
+
+  /// value6_0
+  static FHIRVersionBuilder value60 = FHIRVersionBuilder._(
+    valueString: '6.0',
+    valueEnum: FHIRVersionBuilderEnum.value60,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: '6.0',
+    ),
+  );
+
+  /// value6_0_0
+  static FHIRVersionBuilder value600 = FHIRVersionBuilder._(
+    valueString: '6.0.0',
+    valueEnum: FHIRVersionBuilderEnum.value600,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: '6.0.0',
+    ),
+  );
+
+  /// value6_0_0_ballo1
+  static FHIRVersionBuilder value600Ballo1 = FHIRVersionBuilder._(
+    valueString: '6.0.0-ballo1',
+    valueEnum: FHIRVersionBuilderEnum.value600Ballo1,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: '6.0.0-ballot1',
+    ),
+  );
+
+  /// value6_0_0_ballot2
+  static FHIRVersionBuilder value600Ballot2 = FHIRVersionBuilder._(
+    valueString: '6.0.0-ballot2',
+    valueEnum: FHIRVersionBuilderEnum.value600Ballot2,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: '6.0.0-ballot2',
+    ),
+  );
+
+  /// value6_0_0_ballot3
+  static FHIRVersionBuilder value600Ballot3 = FHIRVersionBuilder._(
+    valueString: '6.0.0-ballot3',
+    valueEnum: FHIRVersionBuilderEnum.value600Ballot3,
+    system: FhirUriBuilder._(
+      valueString: 'http://hl7.org/fhir/ValueSet/FHIR-version',
+    ),
+    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
+    display: FhirStringBuilder._(
+      valueString: '6.0.0-ballot3',
     ),
   );
 
@@ -1322,6 +1422,11 @@ class FHIRVersionBuilder extends FhirCodeEnumBuilder {
     value500Ballot,
     value500Snapshot3,
     value500DraftFinal,
+    value60,
+    value600,
+    value600Ballo1,
+    value600Ballot2,
+    value600Ballot3,
   ];
 
   /// Returns the enum value with an element attached

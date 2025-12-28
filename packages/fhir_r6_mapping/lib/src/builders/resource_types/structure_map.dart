@@ -4824,10 +4824,10 @@ class StructureMapSourceBuilder extends BackboneElementBuilder {
         FhirIdBuilder.fromJson,
         '$objectPath.context',
       ),
-      min: JsonParser.parsePrimitive<FhirIntegerBuilder>(
+      min: JsonParser.parsePrimitive<FhirUnsignedIntBuilder>(
         json,
         'min',
-        FhirIntegerBuilder.fromJson,
+        FhirUnsignedIntBuilder.fromJson,
         '$objectPath.min',
       ),
       max: JsonParser.parsePrimitive<FhirStringBuilder>(
@@ -4936,7 +4936,7 @@ class StructureMapSourceBuilder extends BackboneElementBuilder {
   /// [min]
   /// Specified minimum cardinality for the element. This is optional; if
   /// present, it acts an implicit check on the input content.
-  FhirIntegerBuilder? min;
+  FhirUnsignedIntBuilder? min;
 
   /// [max]
   /// Specified maximum cardinality for the element - a number or a "*". This
@@ -5221,7 +5221,7 @@ class StructureMapSourceBuilder extends BackboneElementBuilder {
         }
       case 'min':
         {
-          if (child is FhirIntegerBuilder) {
+          if (child is FhirUnsignedIntBuilder) {
             min = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
@@ -5232,7 +5232,7 @@ class StructureMapSourceBuilder extends BackboneElementBuilder {
               // first parse to num then pass the number directly
               final numValue = num.tryParse(stringValue);
               if (numValue != null) {
-                final converted = FhirIntegerBuilder.tryParse(numValue);
+                final converted = FhirUnsignedIntBuilder.tryParse(numValue);
                 if (converted != null) {
                   min = converted;
                   return;
@@ -5447,7 +5447,7 @@ class StructureMapSourceBuilder extends BackboneElementBuilder {
       case 'context':
         return ['FhirIdBuilder'];
       case 'min':
-        return ['FhirIntegerBuilder'];
+        return ['FhirUnsignedIntBuilder'];
       case 'max':
         return ['FhirStringBuilder'];
       case 'type':
@@ -5498,7 +5498,7 @@ class StructureMapSourceBuilder extends BackboneElementBuilder {
         }
       case 'min':
         {
-          min = FhirIntegerBuilder.empty();
+          min = FhirUnsignedIntBuilder.empty();
           return;
         }
       case 'max':
@@ -5559,7 +5559,7 @@ class StructureMapSourceBuilder extends BackboneElementBuilder {
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
     FhirIdBuilder? context,
-    FhirIntegerBuilder? min,
+    FhirUnsignedIntBuilder? min,
     FhirStringBuilder? max,
     FhirStringBuilder? type,
     FhirStringBuilder? defaultValue,

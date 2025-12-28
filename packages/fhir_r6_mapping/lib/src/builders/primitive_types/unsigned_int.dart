@@ -34,6 +34,7 @@ class FhirUnsignedIntBuilder extends FhirNumberBuilder
         PatternXElementDefinitionBuilder,
         ValueXElementDefinitionExampleBuilder,
         ValueXExtensionBuilder,
+        InstancesXGroupCharacteristicBuilder,
         MinValueXElementDefinitionBuilder,
         MaxValueXElementDefinitionBuilder,
         UsedXExplanationOfBenefitFinancialBuilder {

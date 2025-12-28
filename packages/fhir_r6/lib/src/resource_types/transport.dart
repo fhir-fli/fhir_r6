@@ -20,15 +20,12 @@ class Transport extends DomainResource {
     super.extension_,
     super.modifierExtension,
     this.identifier,
-    this.instantiatesCanonical,
-    this.instantiatesUri,
+    this.instantiates,
     this.basedOn,
     this.groupIdentifier,
     this.partOf,
     this.status,
     this.statusReason,
-    required this.intent,
-    this.priority,
     this.code,
     this.description,
     this.focus,
@@ -113,15 +110,10 @@ class Transport extends DomainResource {
             ),
           )
           .toList(),
-      instantiatesCanonical: JsonParser.parsePrimitive<FhirCanonical>(
+      instantiates: JsonParser.parsePrimitive<FhirCanonical>(
         json,
-        'instantiatesCanonical',
+        'instantiates',
         FhirCanonical.fromJson,
-      ),
-      instantiatesUri: JsonParser.parsePrimitive<FhirUri>(
-        json,
-        'instantiatesUri',
-        FhirUri.fromJson,
       ),
       basedOn: (json['basedOn'] as List<dynamic>?)
           ?.map<Reference>(
@@ -151,16 +143,6 @@ class Transport extends DomainResource {
         json,
         'statusReason',
         CodeableConcept.fromJson,
-      ),
-      intent: JsonParser.parsePrimitive<TransportIntent>(
-        json,
-        'intent',
-        TransportIntent.fromJson,
-      )!,
-      priority: JsonParser.parsePrimitive<RequestPriority>(
-        json,
-        'priority',
-        RequestPriority.fromJson,
       ),
       code: JsonParser.parseObject<CodeableConcept>(
         json,
@@ -334,17 +316,11 @@ class Transport extends DomainResource {
   /// multiple disparate systems.
   final List<Identifier>? identifier;
 
-  /// [instantiatesCanonical]
+  /// [instantiates]
   /// The URL pointing to a *FHIR*-defined protocol, guideline, orderset or
   /// other definition that is adhered to in whole or in part by this
   /// Transport.
-  final FhirCanonical? instantiatesCanonical;
-
-  /// [instantiatesUri]
-  /// The URL pointing to an *externally* maintained protocol, guideline,
-  /// orderset or other definition that is adhered to in whole or in part by
-  /// this Transport.
-  final FhirUri? instantiatesUri;
+  final FhirCanonical? instantiates;
 
   /// [basedOn]
   /// BasedOn refers to a higher-level authorization that triggered the
@@ -378,17 +354,6 @@ class Transport extends DomainResource {
   /// An explanation as to why this transport is held, failed, was refused,
   /// etc.
   final CodeableConcept? statusReason;
-
-  /// [intent]
-  /// Indicates the "level" of actionability associated with the Transport,
-  /// i.e. i+R[9]Cs this a proposed transport, a planned transport, an
-  /// actionable transport, etc.
-  final TransportIntent intent;
-
-  /// [priority]
-  /// Indicates how quickly the Transport should be addressed with respect to
-  /// other requests.
-  final RequestPriority? priority;
 
   /// [code]
   /// A name or code (or both) briefly describing what the transport
@@ -591,12 +556,8 @@ class Transport extends DomainResource {
       identifier,
     );
     addField(
-      'instantiatesCanonical',
-      instantiatesCanonical,
-    );
-    addField(
-      'instantiatesUri',
-      instantiatesUri,
+      'instantiates',
+      instantiates,
     );
     addField(
       'basedOn',
@@ -617,14 +578,6 @@ class Transport extends DomainResource {
     addField(
       'statusReason',
       statusReason,
-    );
-    addField(
-      'intent',
-      intent,
-    );
-    addField(
-      'priority',
-      priority,
     );
     addField(
       'code',
@@ -730,15 +683,12 @@ class Transport extends DomainResource {
       'extension',
       'modifierExtension',
       'identifier',
-      'instantiatesCanonical',
-      'instantiatesUri',
+      'instantiates',
       'basedOn',
       'groupIdentifier',
       'partOf',
       'status',
       'statusReason',
-      'intent',
-      'priority',
       'code',
       'description',
       'focus',
@@ -809,13 +759,9 @@ class Transport extends DomainResource {
         if (identifier != null) {
           fields.addAll(identifier!);
         }
-      case 'instantiatesCanonical':
-        if (instantiatesCanonical != null) {
-          fields.add(instantiatesCanonical!);
-        }
-      case 'instantiatesUri':
-        if (instantiatesUri != null) {
-          fields.add(instantiatesUri!);
+      case 'instantiates':
+        if (instantiates != null) {
+          fields.add(instantiates!);
         }
       case 'basedOn':
         if (basedOn != null) {
@@ -836,12 +782,6 @@ class Transport extends DomainResource {
       case 'statusReason':
         if (statusReason != null) {
           fields.add(statusReason!);
-        }
-      case 'intent':
-        fields.add(intent);
-      case 'priority':
-        if (priority != null) {
-          fields.add(priority!);
         }
       case 'code':
         if (code != null) {
@@ -1023,14 +963,8 @@ class Transport extends DomainResource {
       return false;
     }
     if (!equalsDeepWithNull(
-      instantiatesCanonical,
-      o.instantiatesCanonical,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      instantiatesUri,
-      o.instantiatesUri,
+      instantiates,
+      o.instantiates,
     )) {
       return false;
     }
@@ -1061,18 +995,6 @@ class Transport extends DomainResource {
     if (!equalsDeepWithNull(
       statusReason,
       o.statusReason,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      intent,
-      o.intent,
-    )) {
-      return false;
-    }
-    if (!equalsDeepWithNull(
-      priority,
-      o.priority,
     )) {
       return false;
     }

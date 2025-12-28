@@ -115,10 +115,10 @@ class BiologicallyDerivedProductDispense extends DomainResource {
           )
           .toList(),
       status:
-          JsonParser.parsePrimitive<BiologicallyDerivedProductDispenseCodes>(
+          JsonParser.parsePrimitive<BiologicallyDerivedProductDispenseStatus>(
         json,
         'status',
-        BiologicallyDerivedProductDispenseCodes.fromJson,
+        BiologicallyDerivedProductDispenseStatus.fromJson,
       )!,
       originRelationshipType: JsonParser.parseObject<CodeableConcept>(
         json,
@@ -246,7 +246,7 @@ class BiologicallyDerivedProductDispense extends DomainResource {
 
   /// [status]
   /// A code specifying the state of the dispense event.
-  final BiologicallyDerivedProductDispenseCodes status;
+  final BiologicallyDerivedProductDispenseStatus status;
 
   /// [originRelationshipType]
   /// Indicates the relationship between the donor of the biologically

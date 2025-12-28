@@ -36,15 +36,23 @@ class FhirCanonicalBuilder extends FhirUriBuilder
         SubjectXPlanDefinitionBuilder,
         SubjectXPlanDefinitionActionBuilder,
         ArtifactXArtifactAssessmentBuilder,
+        TargetXArtifactAssessmentRelatesToBuilder,
+        TargetXCitationRelatesToBuilder,
+        TargetXCitationRelatesTo1Builder,
+        TargetXCompositionRelatesToBuilder,
+        TargetXEvidenceRelatesToBuilder,
+        TargetXEvidenceVariableRelatesToBuilder,
         InstantiatesXObservationBuilder,
         ActorXRequestOrchestrationParticipantBuilder,
+        TargetXResearchStudyRelatesToBuilder,
         SourceScopeXConceptMapBuilder,
         TargetScopeXConceptMapBuilder,
         StructureProfileXExampleScenarioInstanceBuilder,
         DefinitionXPlanDefinitionActionBuilder,
         DefinitionXRequestOrchestrationActionBuilder,
-        LinkXTestReportRequirementBuilder,
-        LinkXTestScriptRequirementBuilder {
+        ArtifactXTestPlanScopeBuilder,
+        ArtifactXTestPlanTestCaseScopeBuilder,
+        LinkXTestReportRequirementBuilder {
   // --------------------------------------------------------------------------
   // Private Internal Constructor
   // --------------------------------------------------------------------------

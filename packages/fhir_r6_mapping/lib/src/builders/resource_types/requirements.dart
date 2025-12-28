@@ -3,6 +3,10 @@ import 'package:fhir_r6/fhir_r6.dart'
     show
         R6ResourceType,
         Requirements,
+        RequirementsActor,
+        RequirementsDerivedFrom,
+        RequirementsImports,
+        RequirementsPartOf,
         RequirementsStatement,
         yamlMapToJson,
         yamlToJson;
@@ -46,6 +50,7 @@ class RequirementsBuilder extends CanonicalResourceBuilder {
     this.copyright,
     this.copyrightLabel,
     this.derivedFrom,
+    this.imports,
     this.reference,
     this.actor,
     this.statement,
@@ -256,18 +261,32 @@ class RequirementsBuilder extends CanonicalResourceBuilder {
         FhirCanonicalBuilder.fromJson,
         '$objectPath.derivedFrom',
       ),
+      imports: (json['imports'] as List<dynamic>?)
+          ?.map<RequirementsImportsBuilder>(
+            (v) => RequirementsImportsBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.imports',
+              },
+            ),
+          )
+          .toList(),
       reference: JsonParser.parsePrimitiveList<FhirUrlBuilder>(
         json,
         'reference',
         FhirUrlBuilder.fromJson,
         '$objectPath.reference',
       ),
-      actor: JsonParser.parsePrimitiveList<FhirCanonicalBuilder>(
-        json,
-        'actor',
-        FhirCanonicalBuilder.fromJson,
-        '$objectPath.actor',
-      ),
+      actor: (json['actor'] as List<dynamic>?)
+          ?.map<RequirementsActorBuilder>(
+            (v) => RequirementsActorBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.actor',
+              },
+            ),
+          )
+          .toList(),
       statement: (json['statement'] as List<dynamic>?)
           ?.map<RequirementsStatementBuilder>(
             (v) => RequirementsStatementBuilder.fromJson(
@@ -375,15 +394,22 @@ class RequirementsBuilder extends CanonicalResourceBuilder {
   /// updates.
   List<FhirCanonicalBuilder>? derivedFrom;
 
+  /// [imports]
+  /// Points to requirements defined elsewhere that have the same force as if
+  /// they were defined in this instance.
+  List<RequirementsImportsBuilder>? imports;
+
   /// [reference]
   /// A reference to another artifact that created this set of requirements.
-  /// This could be a Profile, etc., or external regulation, or business
-  /// requirements expressed elsewhere.
+  /// This could be a profile, etc., or external regulation, or business
+  /// requirements expressed elsewhere. This URI is intended to point to a
+  /// specific web page for an artifact, not a canonical URL. If pointing to
+  /// HL7 specifications, it is best to point to the version-specific URL.
   List<FhirUrlBuilder>? reference;
 
   /// [actor]
   /// An actor these requirements are in regard to.
-  List<FhirCanonicalBuilder>? actor;
+  List<RequirementsActorBuilder>? actor;
 
   /// [statement]
   /// The actual statement of requirement, in markdown format.
@@ -459,6 +485,7 @@ class RequirementsBuilder extends CanonicalResourceBuilder {
     addField('copyright', copyright);
     addField('copyrightLabel', copyrightLabel);
     addField('derivedFrom', derivedFrom);
+    addField('imports', imports);
     addField('reference', reference);
     addField('actor', actor);
     addField('statement', statement);
@@ -495,6 +522,7 @@ class RequirementsBuilder extends CanonicalResourceBuilder {
       'copyright',
       'copyrightLabel',
       'derivedFrom',
+      'imports',
       'reference',
       'actor',
       'statement',
@@ -625,6 +653,10 @@ class RequirementsBuilder extends CanonicalResourceBuilder {
       case 'derivedFrom':
         if (derivedFrom != null) {
           fields.addAll(derivedFrom!);
+        }
+      case 'imports':
+        if (imports != null) {
+          fields.addAll(imports!);
         }
       case 'reference':
         if (reference != null) {
@@ -1186,6 +1218,22 @@ class RequirementsBuilder extends CanonicalResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'imports':
+        {
+          if (child is List<RequirementsImportsBuilder>) {
+            // Replace or create new list
+            imports = child;
+            return;
+          } else if (child is RequirementsImportsBuilder) {
+            // Add single element to existing list or create new list
+            imports = [
+              ...(imports ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'reference':
         {
           if (child is List<FhirUrlBuilder>) {
@@ -1237,50 +1285,17 @@ class RequirementsBuilder extends CanonicalResourceBuilder {
         }
       case 'actor':
         {
-          if (child is List<FhirCanonicalBuilder>) {
+          if (child is List<RequirementsActorBuilder>) {
             // Replace or create new list
             actor = child;
             return;
-          } else if (child is FhirCanonicalBuilder) {
+          } else if (child is RequirementsActorBuilder) {
             // Add single element to existing list or create new list
             actor = [
               ...(actor ?? []),
               child,
             ];
             return;
-          } else if (child is List<PrimitiveTypeBuilder>) {
-            // Try to convert list of primitive types
-            final convertedList = <FhirCanonicalBuilder>[];
-            for (final element in child) {
-              try {
-                final stringValue = element.toString();
-                final converted = FhirCanonicalBuilder.tryParse(stringValue);
-                if (converted != null) {
-                  convertedList.add(converted);
-                }
-              } catch (e) {
-                // Continue if conversion fails
-              }
-            }
-            if (convertedList.isNotEmpty) {
-              actor = convertedList;
-              return;
-            }
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert a single primitive
-            try {
-              final stringValue = child.toString();
-              final converted = FhirCanonicalBuilder.tryParse(stringValue);
-              if (converted != null) {
-                actor = [
-                  ...(actor ?? []),
-                  converted,
-                ];
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -1370,10 +1385,12 @@ class RequirementsBuilder extends CanonicalResourceBuilder {
         return ['FhirStringBuilder'];
       case 'derivedFrom':
         return ['FhirCanonicalBuilder'];
+      case 'imports':
+        return ['RequirementsImportsBuilder'];
       case 'reference':
         return ['FhirUrlBuilder'];
       case 'actor':
-        return ['FhirCanonicalBuilder'];
+        return ['RequirementsActorBuilder'];
       case 'statement':
         return ['RequirementsStatementBuilder'];
       default:
@@ -1523,6 +1540,11 @@ class RequirementsBuilder extends CanonicalResourceBuilder {
           derivedFrom = <FhirCanonicalBuilder>[];
           return;
         }
+      case 'imports':
+        {
+          imports = <RequirementsImportsBuilder>[];
+          return;
+        }
       case 'reference':
         {
           reference = <FhirUrlBuilder>[];
@@ -1530,7 +1552,7 @@ class RequirementsBuilder extends CanonicalResourceBuilder {
         }
       case 'actor':
         {
-          actor = <FhirCanonicalBuilder>[];
+          actor = <RequirementsActorBuilder>[];
           return;
         }
       case 'statement':
@@ -1573,8 +1595,9 @@ class RequirementsBuilder extends CanonicalResourceBuilder {
     FhirMarkdownBuilder? copyright,
     FhirStringBuilder? copyrightLabel,
     List<FhirCanonicalBuilder>? derivedFrom,
+    List<RequirementsImportsBuilder>? imports,
     List<FhirUrlBuilder>? reference,
-    List<FhirCanonicalBuilder>? actor,
+    List<RequirementsActorBuilder>? actor,
     List<RequirementsStatementBuilder>? statement,
     FhirStringBuilder? versionAlgorithmString,
     CodingBuilder? versionAlgorithmCoding,
@@ -1614,6 +1637,7 @@ class RequirementsBuilder extends CanonicalResourceBuilder {
       copyright: copyright ?? this.copyright,
       copyrightLabel: copyrightLabel ?? this.copyrightLabel,
       derivedFrom: derivedFrom ?? this.derivedFrom,
+      imports: imports ?? this.imports,
       reference: reference ?? this.reference,
       actor: actor ?? this.actor,
       statement: statement ?? this.statement,
@@ -1799,13 +1823,19 @@ class RequirementsBuilder extends CanonicalResourceBuilder {
     )) {
       return false;
     }
+    if (!listEquals<RequirementsImportsBuilder>(
+      imports,
+      o.imports,
+    )) {
+      return false;
+    }
     if (!listEquals<FhirUrlBuilder>(
       reference,
       o.reference,
     )) {
       return false;
     }
-    if (!listEquals<FhirCanonicalBuilder>(
+    if (!listEquals<RequirementsActorBuilder>(
       actor,
       o.actor,
     )) {
@@ -1814,6 +1844,973 @@ class RequirementsBuilder extends CanonicalResourceBuilder {
     if (!listEquals<RequirementsStatementBuilder>(
       statement,
       o.statement,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [RequirementsImportsBuilder]
+/// Points to requirements defined elsewhere that have the same force as if
+/// they were defined in this instance.
+class RequirementsImportsBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [RequirementsImportsBuilder]
+
+  RequirementsImportsBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.reference,
+    this.key,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'Requirements.imports',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory RequirementsImportsBuilder.empty() => RequirementsImportsBuilder(
+        reference: FhirCanonicalBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory RequirementsImportsBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'Requirements.imports';
+    return RequirementsImportsBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      reference: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
+        json,
+        'reference',
+        FhirCanonicalBuilder.fromJson,
+        '$objectPath.reference',
+      ),
+      key: JsonParser.parsePrimitiveList<FhirIdBuilder>(
+        json,
+        'key',
+        FhirIdBuilder.fromJson,
+        '$objectPath.key',
+      ),
+    );
+  }
+
+  /// Deserialize [RequirementsImportsBuilder]
+  /// from a [String] or [YamlMap] object
+  factory RequirementsImportsBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return RequirementsImportsBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return RequirementsImportsBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'RequirementsImportsBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [RequirementsImportsBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory RequirementsImportsBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return RequirementsImportsBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'RequirementsImports';
+
+  /// [reference]
+  /// The canonical for the Requirements resource to import statements from.
+  FhirCanonicalBuilder? reference;
+
+  /// [key]
+  /// The key of a statement to treat as part of the set of requirements
+  /// defined in this instance.
+  List<FhirIdBuilder>? key;
+
+  /// Converts a [RequirementsImportsBuilder]
+  /// to [RequirementsImports]
+  @override
+  RequirementsImports build() => RequirementsImports.fromJson(toJson());
+
+  /// Converts a [RequirementsImportsBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('reference', reference);
+    addField('key', key);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'reference',
+      'key',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'reference':
+        if (reference != null) {
+          fields.add(reference!);
+        }
+      case 'key':
+        if (key != null) {
+          fields.addAll(key!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'reference':
+        {
+          if (child is FhirCanonicalBuilder) {
+            reference = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirCanonicalBuilder.tryParse(stringValue);
+              if (converted != null) {
+                reference = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'key':
+        {
+          if (child is List<FhirIdBuilder>) {
+            // Replace or create new list
+            key = child;
+            return;
+          } else if (child is FhirIdBuilder) {
+            // Add single element to existing list or create new list
+            key = [
+              ...(key ?? []),
+              child,
+            ];
+            return;
+          } else if (child is List<PrimitiveTypeBuilder>) {
+            // Try to convert list of primitive types
+            final convertedList = <FhirIdBuilder>[];
+            for (final element in child) {
+              try {
+                final stringValue = element.toString();
+                final converted = FhirIdBuilder.tryParse(stringValue);
+                if (converted != null) {
+                  convertedList.add(converted);
+                }
+              } catch (e) {
+                // Continue if conversion fails
+              }
+            }
+            if (convertedList.isNotEmpty) {
+              key = convertedList;
+              return;
+            }
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert a single primitive
+            try {
+              final stringValue = child.toString();
+              final converted = FhirIdBuilder.tryParse(stringValue);
+              if (converted != null) {
+                key = [
+                  ...(key ?? []),
+                  converted,
+                ];
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'reference':
+        return ['FhirCanonicalBuilder'];
+      case 'key':
+        return ['FhirIdBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [RequirementsImportsBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'reference':
+        {
+          reference = FhirCanonicalBuilder.empty();
+          return;
+        }
+      case 'key':
+        {
+          key = <FhirIdBuilder>[];
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  RequirementsImportsBuilder clone() => throw UnimplementedError();
+  @override
+  RequirementsImportsBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    FhirCanonicalBuilder? reference,
+    List<FhirIdBuilder>? key,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = RequirementsImportsBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      reference: reference ?? this.reference,
+      key: key ?? this.key,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! RequirementsImportsBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reference,
+      o.reference,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirIdBuilder>(
+      key,
+      o.key,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [RequirementsActorBuilder]
+/// An actor these requirements are in regard to.
+class RequirementsActorBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [RequirementsActorBuilder]
+
+  RequirementsActorBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.reference,
+    this.key,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'Requirements.actor',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory RequirementsActorBuilder.empty() => RequirementsActorBuilder(
+        reference: FhirCanonicalBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory RequirementsActorBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'Requirements.actor';
+    return RequirementsActorBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      reference: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
+        json,
+        'reference',
+        FhirCanonicalBuilder.fromJson,
+        '$objectPath.reference',
+      ),
+      key: JsonParser.parsePrimitive<FhirIdBuilder>(
+        json,
+        'key',
+        FhirIdBuilder.fromJson,
+        '$objectPath.key',
+      ),
+    );
+  }
+
+  /// Deserialize [RequirementsActorBuilder]
+  /// from a [String] or [YamlMap] object
+  factory RequirementsActorBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return RequirementsActorBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return RequirementsActorBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'RequirementsActorBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [RequirementsActorBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory RequirementsActorBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return RequirementsActorBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'RequirementsActor';
+
+  /// [reference]
+  /// The canonical for an actor relevant to some of the requirements.
+  FhirCanonicalBuilder? reference;
+
+  /// [key]
+  /// A unique string used to reference the actor from specific requirements.
+  FhirIdBuilder? key;
+
+  /// Converts a [RequirementsActorBuilder]
+  /// to [RequirementsActor]
+  @override
+  RequirementsActor build() => RequirementsActor.fromJson(toJson());
+
+  /// Converts a [RequirementsActorBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('reference', reference);
+    addField('key', key);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'reference',
+      'key',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'reference':
+        if (reference != null) {
+          fields.add(reference!);
+        }
+      case 'key':
+        if (key != null) {
+          fields.add(key!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'reference':
+        {
+          if (child is FhirCanonicalBuilder) {
+            reference = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirCanonicalBuilder.tryParse(stringValue);
+              if (converted != null) {
+                reference = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'key':
+        {
+          if (child is FhirIdBuilder) {
+            key = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirIdBuilder.tryParse(stringValue);
+              if (converted != null) {
+                key = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'reference':
+        return ['FhirCanonicalBuilder'];
+      case 'key':
+        return ['FhirIdBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [RequirementsActorBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'reference':
+        {
+          reference = FhirCanonicalBuilder.empty();
+          return;
+        }
+      case 'key':
+        {
+          key = FhirIdBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  RequirementsActorBuilder clone() => throw UnimplementedError();
+  @override
+  RequirementsActorBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    FhirCanonicalBuilder? reference,
+    FhirIdBuilder? key,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = RequirementsActorBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      reference: reference ?? this.reference,
+      key: key ?? this.key,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! RequirementsActorBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reference,
+      o.reference,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      key,
+      o.key,
     )) {
       return false;
     }
@@ -1837,10 +2834,11 @@ class RequirementsStatementBuilder extends BackboneElementBuilder {
     this.conditionality,
     this.requirement,
     this.derivedFrom,
-    this.parent,
+    this.partOf,
     this.satisfiedBy,
     this.reference,
     this.source,
+    this.actor,
     super.disallowExtensions,
   }) : super(
           objectPath: 'Requirements.statement',
@@ -1915,17 +2913,17 @@ class RequirementsStatementBuilder extends BackboneElementBuilder {
         FhirMarkdownBuilder.fromJson,
         '$objectPath.requirement',
       ),
-      derivedFrom: JsonParser.parsePrimitive<FhirStringBuilder>(
+      derivedFrom: JsonParser.parseObject<RequirementsDerivedFromBuilder>(
         json,
         'derivedFrom',
-        FhirStringBuilder.fromJson,
+        RequirementsDerivedFromBuilder.fromJson,
         '$objectPath.derivedFrom',
       ),
-      parent: JsonParser.parsePrimitive<FhirStringBuilder>(
+      partOf: JsonParser.parseObject<RequirementsPartOfBuilder>(
         json,
-        'parent',
-        FhirStringBuilder.fromJson,
-        '$objectPath.parent',
+        'partOf',
+        RequirementsPartOfBuilder.fromJson,
+        '$objectPath.partOf',
       ),
       satisfiedBy: JsonParser.parsePrimitiveList<FhirUrlBuilder>(
         json,
@@ -1949,6 +2947,12 @@ class RequirementsStatementBuilder extends BackboneElementBuilder {
             ),
           )
           .toList(),
+      actor: JsonParser.parsePrimitiveList<FhirIdBuilder>(
+        json,
+        'actor',
+        FhirIdBuilder.fromJson,
+        '$objectPath.actor',
+      ),
     );
   }
 
@@ -2018,31 +3022,41 @@ class RequirementsStatementBuilder extends BackboneElementBuilder {
   FhirMarkdownBuilder? requirement;
 
   /// [derivedFrom]
-  /// Another statement on one of the requirements that this requirement
-  /// clarifies or restricts.
-  FhirStringBuilder? derivedFrom;
+  /// Indicates that this statement is refining, tightening, or establishing
+  /// more context for the referenced requirement/statement.
+  RequirementsDerivedFromBuilder? derivedFrom;
 
-  /// [parent]
-  /// A larger requirement that this requirement helps to refine and enable.
-  FhirStringBuilder? parent;
+  /// [partOf]
+  /// Identifies a higher-level requirement or statement which this
+  /// referencing statement is a logical sub-requirement of. I.e. This
+  /// statement is a necessary step to achieving the referenced
+  /// requirement/statement.
+  RequirementsPartOfBuilder? partOf;
 
   /// [satisfiedBy]
   /// A reference to another artifact that satisfies this requirement. This
-  /// could be a Profile, extension, or an element in one of those, or a
+  /// could be a profile, extension, or an element in one of those, or a
   /// CapabilityStatement, OperationDefinition, SearchParameter,
   /// CodeSystem(/code), ValueSet, Libary etc.
   List<FhirUrlBuilder>? satisfiedBy;
 
   /// [reference]
   /// A reference to another artifact that created this requirement. This
-  /// could be a Profile, etc., or external regulation, or business
-  /// requirements expressed elsewhere.
+  /// could be a profile, etc., or external regulation, or business
+  /// requirements expressed elsewhere. This URI is intended to point to a
+  /// specific web page for an artifact, not a canonical URL. If pointing to
+  /// HL7 specifications, it is best to point to the version-specific URL.
   List<FhirUrlBuilder>? reference;
 
   /// [source]
   /// Who asked for this statement to be a requirement. By default, it's
   /// assumed that the publisher knows who it is if it matters.
   List<ReferenceBuilder>? source;
+
+  /// [actor]
+  /// A reference to the key of an actor listed in Requirements.actor that is
+  /// relevant to this requirement statement.
+  List<FhirIdBuilder>? actor;
 
   /// Converts a [RequirementsStatementBuilder]
   /// to [RequirementsStatement]
@@ -2089,10 +3103,11 @@ class RequirementsStatementBuilder extends BackboneElementBuilder {
     addField('conditionality', conditionality);
     addField('requirement', requirement);
     addField('derivedFrom', derivedFrom);
-    addField('parent', parent);
+    addField('partOf', partOf);
     addField('satisfiedBy', satisfiedBy);
     addField('reference', reference);
     addField('source', source);
+    addField('actor', actor);
     return json;
   }
 
@@ -2109,10 +3124,11 @@ class RequirementsStatementBuilder extends BackboneElementBuilder {
       'conditionality',
       'requirement',
       'derivedFrom',
-      'parent',
+      'partOf',
       'satisfiedBy',
       'reference',
       'source',
+      'actor',
     ];
   }
 
@@ -2161,9 +3177,9 @@ class RequirementsStatementBuilder extends BackboneElementBuilder {
         if (derivedFrom != null) {
           fields.add(derivedFrom!);
         }
-      case 'parent':
-        if (parent != null) {
-          fields.add(parent!);
+      case 'partOf':
+        if (partOf != null) {
+          fields.add(partOf!);
         }
       case 'satisfiedBy':
         if (satisfiedBy != null) {
@@ -2176,6 +3192,10 @@ class RequirementsStatementBuilder extends BackboneElementBuilder {
       case 'source':
         if (source != null) {
           fields.addAll(source!);
+        }
+      case 'actor':
+        if (actor != null) {
+          fields.addAll(actor!);
         }
       default:
         if (checkValid) {
@@ -2395,41 +3415,17 @@ class RequirementsStatementBuilder extends BackboneElementBuilder {
         }
       case 'derivedFrom':
         {
-          if (child is FhirStringBuilder) {
+          if (child is RequirementsDerivedFromBuilder) {
             derivedFrom = child;
             return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                derivedFrom = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
-      case 'parent':
+      case 'partOf':
         {
-          if (child is FhirStringBuilder) {
-            parent = child;
+          if (child is RequirementsPartOfBuilder) {
+            partOf = child;
             return;
-          } else if (child is PrimitiveTypeBuilder) {
-            // Try to convert from one primitive type to another
-            try {
-              final stringValue = child.toString();
-              final converted = FhirStringBuilder.tryParse(stringValue);
-              if (converted != null) {
-                parent = converted;
-                return;
-              }
-            } catch (e) {
-              // Continue if conversion fails
-            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -2547,6 +3543,55 @@ class RequirementsStatementBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'actor':
+        {
+          if (child is List<FhirIdBuilder>) {
+            // Replace or create new list
+            actor = child;
+            return;
+          } else if (child is FhirIdBuilder) {
+            // Add single element to existing list or create new list
+            actor = [
+              ...(actor ?? []),
+              child,
+            ];
+            return;
+          } else if (child is List<PrimitiveTypeBuilder>) {
+            // Try to convert list of primitive types
+            final convertedList = <FhirIdBuilder>[];
+            for (final element in child) {
+              try {
+                final stringValue = element.toString();
+                final converted = FhirIdBuilder.tryParse(stringValue);
+                if (converted != null) {
+                  convertedList.add(converted);
+                }
+              } catch (e) {
+                // Continue if conversion fails
+              }
+            }
+            if (convertedList.isNotEmpty) {
+              actor = convertedList;
+              return;
+            }
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert a single primitive
+            try {
+              final stringValue = child.toString();
+              final converted = FhirIdBuilder.tryParse(stringValue);
+              if (converted != null) {
+                actor = [
+                  ...(actor ?? []),
+                  converted,
+                ];
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -2574,15 +3619,17 @@ class RequirementsStatementBuilder extends BackboneElementBuilder {
       case 'requirement':
         return ['FhirMarkdownBuilder'];
       case 'derivedFrom':
-        return ['FhirStringBuilder'];
-      case 'parent':
-        return ['FhirStringBuilder'];
+        return ['RequirementsDerivedFromBuilder'];
+      case 'partOf':
+        return ['RequirementsPartOfBuilder'];
       case 'satisfiedBy':
         return ['FhirUrlBuilder'];
       case 'reference':
         return ['FhirUrlBuilder'];
       case 'source':
         return ['ReferenceBuilder'];
+      case 'actor':
+        return ['FhirIdBuilder'];
       default:
         return <String>[];
     }
@@ -2635,12 +3682,12 @@ class RequirementsStatementBuilder extends BackboneElementBuilder {
         }
       case 'derivedFrom':
         {
-          derivedFrom = FhirStringBuilder.empty();
+          derivedFrom = RequirementsDerivedFromBuilder.empty();
           return;
         }
-      case 'parent':
+      case 'partOf':
         {
-          parent = FhirStringBuilder.empty();
+          partOf = RequirementsPartOfBuilder.empty();
           return;
         }
       case 'satisfiedBy':
@@ -2656,6 +3703,11 @@ class RequirementsStatementBuilder extends BackboneElementBuilder {
       case 'source':
         {
           source = <ReferenceBuilder>[];
+          return;
+        }
+      case 'actor':
+        {
+          actor = <FhirIdBuilder>[];
           return;
         }
       default:
@@ -2675,11 +3727,12 @@ class RequirementsStatementBuilder extends BackboneElementBuilder {
     List<ConformanceExpectationBuilder>? conformance,
     FhirBooleanBuilder? conditionality,
     FhirMarkdownBuilder? requirement,
-    FhirStringBuilder? derivedFrom,
-    FhirStringBuilder? parent,
+    RequirementsDerivedFromBuilder? derivedFrom,
+    RequirementsPartOfBuilder? partOf,
     List<FhirUrlBuilder>? satisfiedBy,
     List<FhirUrlBuilder>? reference,
     List<ReferenceBuilder>? source,
+    List<FhirIdBuilder>? actor,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -2697,10 +3750,11 @@ class RequirementsStatementBuilder extends BackboneElementBuilder {
       conditionality: conditionality ?? this.conditionality,
       requirement: requirement ?? this.requirement,
       derivedFrom: derivedFrom ?? this.derivedFrom,
-      parent: parent ?? this.parent,
+      partOf: partOf ?? this.partOf,
       satisfiedBy: satisfiedBy ?? this.satisfiedBy,
       reference: reference ?? this.reference,
       source: source ?? this.source,
+      actor: actor ?? this.actor,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -2782,8 +3836,8 @@ class RequirementsStatementBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
-      parent,
-      o.parent,
+      partOf,
+      o.partOf,
     )) {
       return false;
     }
@@ -2802,6 +3856,956 @@ class RequirementsStatementBuilder extends BackboneElementBuilder {
     if (!listEquals<ReferenceBuilder>(
       source,
       o.source,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirIdBuilder>(
+      actor,
+      o.actor,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [RequirementsDerivedFromBuilder]
+/// Indicates that this statement is refining, tightening, or establishing
+/// more context for the referenced requirement/statement.
+class RequirementsDerivedFromBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [RequirementsDerivedFromBuilder]
+
+  RequirementsDerivedFromBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.reference,
+    this.key,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'Requirements.statement.derivedFrom',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory RequirementsDerivedFromBuilder.empty() =>
+      RequirementsDerivedFromBuilder(
+        key: FhirIdBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory RequirementsDerivedFromBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'Requirements.statement.derivedFrom';
+    return RequirementsDerivedFromBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      reference: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
+        json,
+        'reference',
+        FhirCanonicalBuilder.fromJson,
+        '$objectPath.reference',
+      ),
+      key: JsonParser.parsePrimitive<FhirIdBuilder>(
+        json,
+        'key',
+        FhirIdBuilder.fromJson,
+        '$objectPath.key',
+      ),
+    );
+  }
+
+  /// Deserialize [RequirementsDerivedFromBuilder]
+  /// from a [String] or [YamlMap] object
+  factory RequirementsDerivedFromBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return RequirementsDerivedFromBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return RequirementsDerivedFromBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'RequirementsDerivedFromBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [RequirementsDerivedFromBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory RequirementsDerivedFromBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return RequirementsDerivedFromBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'RequirementsDerivedFrom';
+
+  /// [reference]
+  /// The canonical of the Requirements instance this statement is
+  /// derivedFrom.
+  FhirCanonicalBuilder? reference;
+
+  /// [key]
+  /// The key, either within this resource or the specified Requirements
+  /// resource this statement is derivedFrom.
+  FhirIdBuilder? key;
+
+  /// Converts a [RequirementsDerivedFromBuilder]
+  /// to [RequirementsDerivedFrom]
+  @override
+  RequirementsDerivedFrom build() => RequirementsDerivedFrom.fromJson(toJson());
+
+  /// Converts a [RequirementsDerivedFromBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('reference', reference);
+    addField('key', key);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'reference',
+      'key',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'reference':
+        if (reference != null) {
+          fields.add(reference!);
+        }
+      case 'key':
+        if (key != null) {
+          fields.add(key!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'reference':
+        {
+          if (child is FhirCanonicalBuilder) {
+            reference = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirCanonicalBuilder.tryParse(stringValue);
+              if (converted != null) {
+                reference = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'key':
+        {
+          if (child is FhirIdBuilder) {
+            key = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirIdBuilder.tryParse(stringValue);
+              if (converted != null) {
+                key = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'reference':
+        return ['FhirCanonicalBuilder'];
+      case 'key':
+        return ['FhirIdBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [RequirementsDerivedFromBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'reference':
+        {
+          reference = FhirCanonicalBuilder.empty();
+          return;
+        }
+      case 'key':
+        {
+          key = FhirIdBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  RequirementsDerivedFromBuilder clone() => throw UnimplementedError();
+  @override
+  RequirementsDerivedFromBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    FhirCanonicalBuilder? reference,
+    FhirIdBuilder? key,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = RequirementsDerivedFromBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      reference: reference ?? this.reference,
+      key: key ?? this.key,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! RequirementsDerivedFromBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reference,
+      o.reference,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      key,
+      o.key,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [RequirementsPartOfBuilder]
+/// Identifies a higher-level requirement or statement which this
+/// referencing statement is a logical sub-requirement of. I.e. This
+/// statement is a necessary step to achieving the referenced
+/// requirement/statement.
+class RequirementsPartOfBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [RequirementsPartOfBuilder]
+
+  RequirementsPartOfBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.reference,
+    this.key,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'Requirements.statement.partOf',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory RequirementsPartOfBuilder.empty() => RequirementsPartOfBuilder(
+        key: FhirIdBuilder.empty(),
+      );
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory RequirementsPartOfBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'Requirements.statement.partOf';
+    return RequirementsPartOfBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      reference: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
+        json,
+        'reference',
+        FhirCanonicalBuilder.fromJson,
+        '$objectPath.reference',
+      ),
+      key: JsonParser.parsePrimitive<FhirIdBuilder>(
+        json,
+        'key',
+        FhirIdBuilder.fromJson,
+        '$objectPath.key',
+      ),
+    );
+  }
+
+  /// Deserialize [RequirementsPartOfBuilder]
+  /// from a [String] or [YamlMap] object
+  factory RequirementsPartOfBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return RequirementsPartOfBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return RequirementsPartOfBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'RequirementsPartOfBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [RequirementsPartOfBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory RequirementsPartOfBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return RequirementsPartOfBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'RequirementsPartOf';
+
+  /// [reference]
+  /// The canonical of the Requirements instance this statement is a part of.
+  FhirCanonicalBuilder? reference;
+
+  /// [key]
+  /// The key, either within this resource or the specified Requirements
+  /// resource this statement is a part of.
+  FhirIdBuilder? key;
+
+  /// Converts a [RequirementsPartOfBuilder]
+  /// to [RequirementsPartOf]
+  @override
+  RequirementsPartOf build() => RequirementsPartOf.fromJson(toJson());
+
+  /// Converts a [RequirementsPartOfBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('reference', reference);
+    addField('key', key);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'reference',
+      'key',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'reference':
+        if (reference != null) {
+          fields.add(reference!);
+        }
+      case 'key':
+        if (key != null) {
+          fields.add(key!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'reference':
+        {
+          if (child is FhirCanonicalBuilder) {
+            reference = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirCanonicalBuilder.tryParse(stringValue);
+              if (converted != null) {
+                reference = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'key':
+        {
+          if (child is FhirIdBuilder) {
+            key = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirIdBuilder.tryParse(stringValue);
+              if (converted != null) {
+                key = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'reference':
+        return ['FhirCanonicalBuilder'];
+      case 'key':
+        return ['FhirIdBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [RequirementsPartOfBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'reference':
+        {
+          reference = FhirCanonicalBuilder.empty();
+          return;
+        }
+      case 'key':
+        {
+          key = FhirIdBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  RequirementsPartOfBuilder clone() => throw UnimplementedError();
+  @override
+  RequirementsPartOfBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    FhirCanonicalBuilder? reference,
+    FhirIdBuilder? key,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = RequirementsPartOfBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      reference: reference ?? this.reference,
+      key: key ?? this.key,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! RequirementsPartOfBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      reference,
+      o.reference,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      key,
+      o.key,
     )) {
       return false;
     }

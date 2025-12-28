@@ -52,7 +52,7 @@ class BiologicallyDerivedProductDispenseBuilder extends DomainResourceBuilder {
   /// For Builder classes, no fields are required
   factory BiologicallyDerivedProductDispenseBuilder.empty() =>
       BiologicallyDerivedProductDispenseBuilder(
-        status: BiologicallyDerivedProductDispenseCodesBuilder.values.first,
+        status: BiologicallyDerivedProductDispenseStatusBuilder.values.first,
         product: ReferenceBuilder.empty(),
         patient: ReferenceBuilder.empty(),
       );
@@ -154,10 +154,10 @@ class BiologicallyDerivedProductDispenseBuilder extends DomainResourceBuilder {
           )
           .toList(),
       status: JsonParser.parsePrimitive<
-          BiologicallyDerivedProductDispenseCodesBuilder>(
+          BiologicallyDerivedProductDispenseStatusBuilder>(
         json,
         'status',
-        BiologicallyDerivedProductDispenseCodesBuilder.fromJson,
+        BiologicallyDerivedProductDispenseStatusBuilder.fromJson,
         '$objectPath.status',
       ),
       originRelationshipType: JsonParser.parseObject<CodeableConceptBuilder>(
@@ -302,7 +302,7 @@ class BiologicallyDerivedProductDispenseBuilder extends DomainResourceBuilder {
 
   /// [status]
   /// A code specifying the state of the dispense event.
-  BiologicallyDerivedProductDispenseCodesBuilder? status;
+  BiologicallyDerivedProductDispenseStatusBuilder? status;
 
   /// [originRelationshipType]
   /// Indicates the relationship between the donor of the biologically
@@ -765,7 +765,7 @@ class BiologicallyDerivedProductDispenseBuilder extends DomainResourceBuilder {
         }
       case 'status':
         {
-          if (child is BiologicallyDerivedProductDispenseCodesBuilder) {
+          if (child is BiologicallyDerivedProductDispenseStatusBuilder) {
             status = child;
             return;
           } else if (child is PrimitiveTypeBuilder) {
@@ -775,7 +775,9 @@ class BiologicallyDerivedProductDispenseBuilder extends DomainResourceBuilder {
               // For enums, try to create directly from the string value
               try {
                 final converted =
-                    BiologicallyDerivedProductDispenseCodesBuilder(stringValue);
+                    BiologicallyDerivedProductDispenseStatusBuilder(
+                  stringValue,
+                );
                 status = converted;
                 return;
               } catch (e) {
@@ -1062,7 +1064,7 @@ class BiologicallyDerivedProductDispenseBuilder extends DomainResourceBuilder {
         }
       case 'status':
         {
-          status = BiologicallyDerivedProductDispenseCodesBuilder.empty();
+          status = BiologicallyDerivedProductDispenseStatusBuilder.empty();
           return;
         }
       case 'originRelationshipType':
@@ -1146,7 +1148,7 @@ class BiologicallyDerivedProductDispenseBuilder extends DomainResourceBuilder {
     List<IdentifierBuilder>? identifier,
     List<ReferenceBuilder>? basedOn,
     List<ReferenceBuilder>? partOf,
-    BiologicallyDerivedProductDispenseCodesBuilder? status,
+    BiologicallyDerivedProductDispenseStatusBuilder? status,
     CodeableConceptBuilder? originRelationshipType,
     ReferenceBuilder? product,
     ReferenceBuilder? patient,

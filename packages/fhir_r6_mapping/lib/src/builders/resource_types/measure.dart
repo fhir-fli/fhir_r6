@@ -3,6 +3,7 @@ import 'package:fhir_r6/fhir_r6.dart'
     show
         Measure,
         MeasureComponent,
+        MeasureComponent1,
         MeasureGroup,
         MeasurePopulation,
         MeasureStratifier,
@@ -57,6 +58,7 @@ class MeasureBuilder extends MetadataResourceBuilder {
     super.approvalDate,
     super.lastReviewDate,
     super.effectivePeriod,
+    this.reportingFrequency,
     super.topic,
     super.author,
     super.editor,
@@ -67,6 +69,7 @@ class MeasureBuilder extends MetadataResourceBuilder {
     this.disclaimer,
     this.scoring,
     this.scoringUnit,
+    this.scoringPrecision,
     this.compositeScoring,
     this.type,
     this.riskAdjustment,
@@ -74,6 +77,7 @@ class MeasureBuilder extends MetadataResourceBuilder {
     this.rationale,
     this.clinicalRecommendationStatement,
     this.improvementNotation,
+    this.improvementNotationGuidance,
     this.term,
     this.guidance,
     this.group,
@@ -324,6 +328,12 @@ class MeasureBuilder extends MetadataResourceBuilder {
         PeriodBuilder.fromJson,
         '$objectPath.effectivePeriod',
       ),
+      reportingFrequency: JsonParser.parseObject<QuantityBuilder>(
+        json,
+        'reportingFrequency',
+        QuantityBuilder.fromJson,
+        '$objectPath.reportingFrequency',
+      ),
       topic: (json['topic'] as List<dynamic>?)
           ?.map<CodeableConceptBuilder>(
             (v) => CodeableConceptBuilder.fromJson(
@@ -408,6 +418,12 @@ class MeasureBuilder extends MetadataResourceBuilder {
         CodeableConceptBuilder.fromJson,
         '$objectPath.scoringUnit',
       ),
+      scoringPrecision: JsonParser.parsePrimitive<FhirPositiveIntBuilder>(
+        json,
+        'scoringPrecision',
+        FhirPositiveIntBuilder.fromJson,
+        '$objectPath.scoringPrecision',
+      ),
       compositeScoring: JsonParser.parseObject<CodeableConceptBuilder>(
         json,
         'compositeScoring',
@@ -454,6 +470,13 @@ class MeasureBuilder extends MetadataResourceBuilder {
         'improvementNotation',
         CodeableConceptBuilder.fromJson,
         '$objectPath.improvementNotation',
+      ),
+      improvementNotationGuidance:
+          JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+        json,
+        'improvementNotationGuidance',
+        FhirMarkdownBuilder.fromJson,
+        '$objectPath.improvementNotationGuidance',
       ),
       term: (json['term'] as List<dynamic>?)
           ?.map<MeasureTermBuilder>(
@@ -613,6 +636,11 @@ class MeasureBuilder extends MetadataResourceBuilder {
   /// 'Some rights reserved').
   FhirStringBuilder? copyrightLabel;
 
+  /// [reportingFrequency]
+  /// The frequency that this measure should be reported, usually specified
+  /// by the program it is being submitted to.
+  QuantityBuilder? reportingFrequency;
+
   /// [library_]
   /// A reference to a Library resource containing the formal logic used by
   /// the measure.
@@ -624,26 +652,37 @@ class MeasureBuilder extends MetadataResourceBuilder {
   FhirMarkdownBuilder? disclaimer;
 
   /// [scoring]
-  /// Indicates how the calculation is performed for the measure, including
-  /// proportion, ratio, continuous-variable, and cohort. The value set is
-  /// extensible, allowing additional measure scoring types to be
-  /// represented.
+  /// Deprecated, use group.scoring. Indicates how the calculation is
+  /// performed for the measure, including proportion, ratio,
+  /// continuous-variable, and cohort. The value set is extensible, allowing
+  /// additional measure scoring types to be represented.
   CodeableConceptBuilder? scoring;
 
   /// [scoringUnit]
-  /// Defines the expected units of measure for the measure score. This
-  /// element SHOULD be specified as a UCUM unit.
+  /// Deprecated, use group.scoringUnit. Defines the expected units of
+  /// measure for the measure score. This element SHOULD be specified as a
+  /// UCUM unit.
   CodeableConceptBuilder? scoringUnit;
 
+  /// [scoringPrecision]
+  /// Deprecated, use group.scoringPrecision) When the score is a decimal
+  /// value this should be used to specify the expected minimum number of
+  /// digits after the decimal point to use for the precision of the value.
+  /// When a scoringUnit is also specified, this value is the expected
+  /// minimum number of digits after the decimal point when the score is
+  /// expressed in the units specified.
+  FhirPositiveIntBuilder? scoringPrecision;
+
   /// [compositeScoring]
-  /// If this is a composite measure, the scoring method used to combine the
-  /// component measures to determine the composite score.
+  /// Deprecated, use group.compositeScoring. If this is a composite measure,
+  /// the scoring method used to combine the component measures to determine
+  /// the composite score.
   CodeableConceptBuilder? compositeScoring;
 
   /// [type]
-  /// Indicates whether the measure is used to examine a process, an outcome
-  /// over time, a patient-reported outcome, or a structure measure such as
-  /// utilization.
+  /// Deprecated, use group.type. Indicates whether the measure is used to
+  /// examine a process, an outcome over time, a patient-reported outcome, or
+  /// a structure measure such as utilization.
   List<CodeableConceptBuilder>? type;
 
   /// [riskAdjustment]
@@ -658,9 +697,9 @@ class MeasureBuilder extends MetadataResourceBuilder {
   FhirMarkdownBuilder? rateAggregation;
 
   /// [rationale]
-  /// Provides a succinct statement of the need for the measure. Usually
-  /// includes statements pertaining to importance criterion: impact, gap in
-  /// care, and evidence.
+  /// Provides a detailed justification of the need for the measure including
+  /// statements pertaining to importance criterion: impact, gap in care, and
+  /// evidence.
   FhirMarkdownBuilder? rationale;
 
   /// [clinicalRecommendationStatement]
@@ -669,10 +708,16 @@ class MeasureBuilder extends MetadataResourceBuilder {
   FhirMarkdownBuilder? clinicalRecommendationStatement;
 
   /// [improvementNotation]
-  /// Information on whether an increase or decrease in score is the
-  /// preferred result (e.g., a higher score indicates better quality OR a
-  /// lower score indicates better quality OR quality is within a range).
+  /// Deprecated, use group.improvementNotation. Information on whether an
+  /// increase or decrease in score is the preferred result (e.g., a higher
+  /// score indicates better quality OR a lower score indicates better
+  /// quality OR quality is within a range).
   CodeableConceptBuilder? improvementNotation;
+
+  /// [improvementNotationGuidance]
+  /// Deprecated, use group.improvementNotationGuidance. Narrative text to
+  /// explain the improvement notation and how to interpret it.
+  FhirMarkdownBuilder? improvementNotationGuidance;
 
   /// [term]
   /// Provides a description of an individual term used within the measure.
@@ -773,6 +818,7 @@ class MeasureBuilder extends MetadataResourceBuilder {
     addField('approvalDate', approvalDate);
     addField('lastReviewDate', lastReviewDate);
     addField('effectivePeriod', effectivePeriod);
+    addField('reportingFrequency', reportingFrequency);
     addField('topic', topic);
     addField('author', author);
     addField('editor', editor);
@@ -783,6 +829,7 @@ class MeasureBuilder extends MetadataResourceBuilder {
     addField('disclaimer', disclaimer);
     addField('scoring', scoring);
     addField('scoringUnit', scoringUnit);
+    addField('scoringPrecision', scoringPrecision);
     addField('compositeScoring', compositeScoring);
     addField('type', type);
     addField('riskAdjustment', riskAdjustment);
@@ -793,6 +840,7 @@ class MeasureBuilder extends MetadataResourceBuilder {
       clinicalRecommendationStatement,
     );
     addField('improvementNotation', improvementNotation);
+    addField('improvementNotationGuidance', improvementNotationGuidance);
     addField('term', term);
     addField('guidance', guidance);
     addField('group', group);
@@ -836,6 +884,7 @@ class MeasureBuilder extends MetadataResourceBuilder {
       'approvalDate',
       'lastReviewDate',
       'effectivePeriod',
+      'reportingFrequency',
       'topic',
       'author',
       'editor',
@@ -846,6 +895,7 @@ class MeasureBuilder extends MetadataResourceBuilder {
       'disclaimer',
       'scoring',
       'scoringUnit',
+      'scoringPrecision',
       'compositeScoring',
       'type',
       'riskAdjustment',
@@ -853,6 +903,7 @@ class MeasureBuilder extends MetadataResourceBuilder {
       'rationale',
       'clinicalRecommendationStatement',
       'improvementNotation',
+      'improvementNotationGuidance',
       'term',
       'guidance',
       'group',
@@ -1021,6 +1072,10 @@ class MeasureBuilder extends MetadataResourceBuilder {
         if (effectivePeriod != null) {
           fields.add(effectivePeriod!);
         }
+      case 'reportingFrequency':
+        if (reportingFrequency != null) {
+          fields.add(reportingFrequency!);
+        }
       case 'topic':
         if (topic != null) {
           fields.addAll(topic!);
@@ -1061,6 +1116,10 @@ class MeasureBuilder extends MetadataResourceBuilder {
         if (scoringUnit != null) {
           fields.add(scoringUnit!);
         }
+      case 'scoringPrecision':
+        if (scoringPrecision != null) {
+          fields.add(scoringPrecision!);
+        }
       case 'compositeScoring':
         if (compositeScoring != null) {
           fields.add(compositeScoring!);
@@ -1088,6 +1147,10 @@ class MeasureBuilder extends MetadataResourceBuilder {
       case 'improvementNotation':
         if (improvementNotation != null) {
           fields.add(improvementNotation!);
+        }
+      case 'improvementNotationGuidance':
+        if (improvementNotationGuidance != null) {
+          fields.add(improvementNotationGuidance!);
         }
       case 'term':
         if (term != null) {
@@ -1751,6 +1814,14 @@ class MeasureBuilder extends MetadataResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'reportingFrequency':
+        {
+          if (child is QuantityBuilder) {
+            reportingFrequency = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'topic':
         {
           if (child is List<CodeableConceptBuilder>) {
@@ -1932,6 +2003,31 @@ class MeasureBuilder extends MetadataResourceBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'scoringPrecision':
+        {
+          if (child is FhirPositiveIntBuilder) {
+            scoringPrecision = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For number types,
+              // first parse to num then pass the number directly
+              final numValue = num.tryParse(stringValue);
+              if (numValue != null) {
+                final converted = FhirPositiveIntBuilder.tryParse(numValue);
+                if (converted != null) {
+                  scoringPrecision = converted;
+                  return;
+                }
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'compositeScoring':
         {
           if (child is CodeableConceptBuilder) {
@@ -2041,6 +2137,26 @@ class MeasureBuilder extends MetadataResourceBuilder {
           if (child is CodeableConceptBuilder) {
             improvementNotation = child;
             return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'improvementNotationGuidance':
+        {
+          if (child is FhirMarkdownBuilder) {
+            improvementNotationGuidance = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                improvementNotationGuidance = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -2202,6 +2318,8 @@ class MeasureBuilder extends MetadataResourceBuilder {
         return ['FhirDateBuilder'];
       case 'effectivePeriod':
         return ['PeriodBuilder'];
+      case 'reportingFrequency':
+        return ['QuantityBuilder'];
       case 'topic':
         return ['CodeableConceptBuilder'];
       case 'author':
@@ -2222,6 +2340,8 @@ class MeasureBuilder extends MetadataResourceBuilder {
         return ['CodeableConceptBuilder'];
       case 'scoringUnit':
         return ['CodeableConceptBuilder'];
+      case 'scoringPrecision':
+        return ['FhirPositiveIntBuilder'];
       case 'compositeScoring':
         return ['CodeableConceptBuilder'];
       case 'type':
@@ -2236,6 +2356,8 @@ class MeasureBuilder extends MetadataResourceBuilder {
         return ['FhirMarkdownBuilder'];
       case 'improvementNotation':
         return ['CodeableConceptBuilder'];
+      case 'improvementNotationGuidance':
+        return ['FhirMarkdownBuilder'];
       case 'term':
         return ['MeasureTermBuilder'];
       case 'guidance':
@@ -2428,6 +2550,11 @@ class MeasureBuilder extends MetadataResourceBuilder {
           effectivePeriod = PeriodBuilder.empty();
           return;
         }
+      case 'reportingFrequency':
+        {
+          reportingFrequency = QuantityBuilder.empty();
+          return;
+        }
       case 'topic':
         {
           topic = <CodeableConceptBuilder>[];
@@ -2478,6 +2605,11 @@ class MeasureBuilder extends MetadataResourceBuilder {
           scoringUnit = CodeableConceptBuilder.empty();
           return;
         }
+      case 'scoringPrecision':
+        {
+          scoringPrecision = FhirPositiveIntBuilder.empty();
+          return;
+        }
       case 'compositeScoring':
         {
           compositeScoring = CodeableConceptBuilder.empty();
@@ -2511,6 +2643,11 @@ class MeasureBuilder extends MetadataResourceBuilder {
       case 'improvementNotation':
         {
           improvementNotation = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'improvementNotationGuidance':
+        {
+          improvementNotationGuidance = FhirMarkdownBuilder.empty();
           return;
         }
       case 'term':
@@ -2574,6 +2711,7 @@ class MeasureBuilder extends MetadataResourceBuilder {
     FhirDateBuilder? approvalDate,
     FhirDateBuilder? lastReviewDate,
     PeriodBuilder? effectivePeriod,
+    QuantityBuilder? reportingFrequency,
     List<CodeableConceptBuilder>? topic,
     List<ContactDetailBuilder>? author,
     List<ContactDetailBuilder>? editor,
@@ -2584,6 +2722,7 @@ class MeasureBuilder extends MetadataResourceBuilder {
     FhirMarkdownBuilder? disclaimer,
     CodeableConceptBuilder? scoring,
     CodeableConceptBuilder? scoringUnit,
+    FhirPositiveIntBuilder? scoringPrecision,
     CodeableConceptBuilder? compositeScoring,
     List<CodeableConceptBuilder>? type,
     FhirMarkdownBuilder? riskAdjustment,
@@ -2591,6 +2730,7 @@ class MeasureBuilder extends MetadataResourceBuilder {
     FhirMarkdownBuilder? rationale,
     FhirMarkdownBuilder? clinicalRecommendationStatement,
     CodeableConceptBuilder? improvementNotation,
+    FhirMarkdownBuilder? improvementNotationGuidance,
     List<MeasureTermBuilder>? term,
     FhirMarkdownBuilder? guidance,
     List<MeasureGroupBuilder>? group,
@@ -2644,6 +2784,7 @@ class MeasureBuilder extends MetadataResourceBuilder {
       approvalDate: approvalDate ?? this.approvalDate,
       lastReviewDate: lastReviewDate ?? this.lastReviewDate,
       effectivePeriod: effectivePeriod ?? this.effectivePeriod,
+      reportingFrequency: reportingFrequency ?? this.reportingFrequency,
       topic: topic ?? this.topic,
       author: author ?? this.author,
       editor: editor ?? this.editor,
@@ -2654,6 +2795,7 @@ class MeasureBuilder extends MetadataResourceBuilder {
       disclaimer: disclaimer ?? this.disclaimer,
       scoring: scoring ?? this.scoring,
       scoringUnit: scoringUnit ?? this.scoringUnit,
+      scoringPrecision: scoringPrecision ?? this.scoringPrecision,
       compositeScoring: compositeScoring ?? this.compositeScoring,
       type: type ?? this.type,
       riskAdjustment: riskAdjustment ?? this.riskAdjustment,
@@ -2662,6 +2804,8 @@ class MeasureBuilder extends MetadataResourceBuilder {
       clinicalRecommendationStatement: clinicalRecommendationStatement ??
           this.clinicalRecommendationStatement,
       improvementNotation: improvementNotation ?? this.improvementNotation,
+      improvementNotationGuidance:
+          improvementNotationGuidance ?? this.improvementNotationGuidance,
       term: term ?? this.term,
       guidance: guidance ?? this.guidance,
       group: group ?? this.group,
@@ -2884,6 +3028,12 @@ class MeasureBuilder extends MetadataResourceBuilder {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      reportingFrequency,
+      o.reportingFrequency,
+    )) {
+      return false;
+    }
     if (!listEquals<CodeableConceptBuilder>(
       topic,
       o.topic,
@@ -2945,6 +3095,12 @@ class MeasureBuilder extends MetadataResourceBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
+      scoringPrecision,
+      o.scoringPrecision,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       compositeScoring,
       o.compositeScoring,
     )) {
@@ -2983,6 +3139,12 @@ class MeasureBuilder extends MetadataResourceBuilder {
     if (!equalsDeepWithNull(
       improvementNotation,
       o.improvementNotation,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      improvementNotationGuidance,
+      o.improvementNotationGuidance,
     )) {
       return false;
     }
@@ -3488,8 +3650,12 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
     this.basis,
     this.scoring,
     this.scoringUnit,
+    this.scoringPrecision,
+    this.compositeScoring,
+    this.component,
     this.rateAggregation,
     this.improvementNotation,
+    this.improvementNotationGuidance,
     this.library_,
     this.population,
     this.stratifier,
@@ -3589,6 +3755,28 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
         CodeableConceptBuilder.fromJson,
         '$objectPath.scoringUnit',
       ),
+      scoringPrecision: JsonParser.parsePrimitive<FhirPositiveIntBuilder>(
+        json,
+        'scoringPrecision',
+        FhirPositiveIntBuilder.fromJson,
+        '$objectPath.scoringPrecision',
+      ),
+      compositeScoring: JsonParser.parseObject<CodeableConceptBuilder>(
+        json,
+        'compositeScoring',
+        CodeableConceptBuilder.fromJson,
+        '$objectPath.compositeScoring',
+      ),
+      component: (json['component'] as List<dynamic>?)
+          ?.map<MeasureComponentBuilder>(
+            (v) => MeasureComponentBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.component',
+              },
+            ),
+          )
+          .toList(),
       rateAggregation: JsonParser.parsePrimitive<FhirMarkdownBuilder>(
         json,
         'rateAggregation',
@@ -3600,6 +3788,13 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
         'improvementNotation',
         CodeableConceptBuilder.fromJson,
         '$objectPath.improvementNotation',
+      ),
+      improvementNotationGuidance:
+          JsonParser.parsePrimitive<FhirMarkdownBuilder>(
+        json,
+        'improvementNotationGuidance',
+        FhirMarkdownBuilder.fromJson,
+        '$objectPath.improvementNotationGuidance',
       ),
       library_: JsonParser.parsePrimitiveList<FhirCanonicalBuilder>(
         json,
@@ -3695,8 +3890,7 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
 
   /// [subjectX]
   /// The intended subjects for the measure. If this element is not provided,
-  /// a Patient subject is assumed, but the subject of the measure can be
-  /// anything.
+  /// the root subject is used to determine the group.
   SubjectXMeasureGroupBuilder? subjectX;
 
   /// Getter for [subjectCodeableConcept] as a CodeableConceptBuilder
@@ -3730,6 +3924,23 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
   /// element SHOULD be specified as a UCUM unit.
   CodeableConceptBuilder? scoringUnit;
 
+  /// [scoringPrecision]
+  /// When the score is a decimal value this should be used to specify the
+  /// expected minimum number of digits after the decimal point to use for
+  /// the precision of the value. When a scoringUnit is also specified, this
+  /// value is the expected minimum number of digits after the decimal point
+  /// when the score is expressed in the units specified.
+  FhirPositiveIntBuilder? scoringPrecision;
+
+  /// [compositeScoring]
+  /// If this is a composite measure, the scoring method used to combine the
+  /// component measures to determine the composite score.
+  CodeableConceptBuilder? compositeScoring;
+
+  /// [component]
+  /// If this is a composite measure, a component of the composite.
+  List<MeasureComponentBuilder>? component;
+
   /// [rateAggregation]
   /// Describes how to combine the information calculated, based on logic in
   /// each of several populations, into one summarized result.
@@ -3739,7 +3950,14 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
   /// Information on whether an increase or decrease in score is the
   /// preferred result (e.g., a higher score indicates better quality OR a
   /// lower score indicates better quality OR quality is within a range).
+  /// Exercise caution when using any values besides increase or decrease for
+  /// improvementNotation.
   CodeableConceptBuilder? improvementNotation;
+
+  /// [improvementNotationGuidance]
+  /// Narrative text to explain the improvement notation and how to interpret
+  /// it.
+  FhirMarkdownBuilder? improvementNotationGuidance;
 
   /// [library_]
   /// A reference to a Library resource containing the formal logic used by
@@ -3807,8 +4025,12 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
     addField('basis', basis);
     addField('scoring', scoring);
     addField('scoringUnit', scoringUnit);
+    addField('scoringPrecision', scoringPrecision);
+    addField('compositeScoring', compositeScoring);
+    addField('component', component);
     addField('rateAggregation', rateAggregation);
     addField('improvementNotation', improvementNotation);
+    addField('improvementNotationGuidance', improvementNotationGuidance);
     addField('library', library_);
     addField('population', population);
     addField('stratifier', stratifier);
@@ -3830,8 +4052,12 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
       'basis',
       'scoring',
       'scoringUnit',
+      'scoringPrecision',
+      'compositeScoring',
+      'component',
       'rateAggregation',
       'improvementNotation',
+      'improvementNotationGuidance',
       'library',
       'population',
       'stratifier',
@@ -3903,6 +4129,18 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
         if (scoringUnit != null) {
           fields.add(scoringUnit!);
         }
+      case 'scoringPrecision':
+        if (scoringPrecision != null) {
+          fields.add(scoringPrecision!);
+        }
+      case 'compositeScoring':
+        if (compositeScoring != null) {
+          fields.add(compositeScoring!);
+        }
+      case 'component':
+        if (component != null) {
+          fields.addAll(component!);
+        }
       case 'rateAggregation':
         if (rateAggregation != null) {
           fields.add(rateAggregation!);
@@ -3910,6 +4148,10 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
       case 'improvementNotation':
         if (improvementNotation != null) {
           fields.add(improvementNotation!);
+        }
+      case 'improvementNotationGuidance':
+        if (improvementNotationGuidance != null) {
+          fields.add(improvementNotationGuidance!);
         }
       case 'library':
         if (library_ != null) {
@@ -4143,6 +4385,55 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'scoringPrecision':
+        {
+          if (child is FhirPositiveIntBuilder) {
+            scoringPrecision = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For number types,
+              // first parse to num then pass the number directly
+              final numValue = num.tryParse(stringValue);
+              if (numValue != null) {
+                final converted = FhirPositiveIntBuilder.tryParse(numValue);
+                if (converted != null) {
+                  scoringPrecision = converted;
+                  return;
+                }
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'compositeScoring':
+        {
+          if (child is CodeableConceptBuilder) {
+            compositeScoring = child;
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'component':
+        {
+          if (child is List<MeasureComponentBuilder>) {
+            // Replace or create new list
+            component = child;
+            return;
+          } else if (child is MeasureComponentBuilder) {
+            // Add single element to existing list or create new list
+            component = [
+              ...(component ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'rateAggregation':
         {
           if (child is FhirMarkdownBuilder) {
@@ -4168,6 +4459,26 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
           if (child is CodeableConceptBuilder) {
             improvementNotation = child;
             return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'improvementNotationGuidance':
+        {
+          if (child is FhirMarkdownBuilder) {
+            improvementNotationGuidance = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirMarkdownBuilder.tryParse(stringValue);
+              if (converted != null) {
+                improvementNotationGuidance = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
           }
           throw Exception('Invalid child type for $childName');
         }
@@ -4292,10 +4603,18 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
         return ['CodeableConceptBuilder'];
       case 'scoringUnit':
         return ['CodeableConceptBuilder'];
+      case 'scoringPrecision':
+        return ['FhirPositiveIntBuilder'];
+      case 'compositeScoring':
+        return ['CodeableConceptBuilder'];
+      case 'component':
+        return ['MeasureComponentBuilder'];
       case 'rateAggregation':
         return ['FhirMarkdownBuilder'];
       case 'improvementNotation':
         return ['CodeableConceptBuilder'];
+      case 'improvementNotationGuidance':
+        return ['FhirMarkdownBuilder'];
       case 'library':
         return ['FhirCanonicalBuilder'];
       case 'population':
@@ -4374,6 +4693,21 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
           scoringUnit = CodeableConceptBuilder.empty();
           return;
         }
+      case 'scoringPrecision':
+        {
+          scoringPrecision = FhirPositiveIntBuilder.empty();
+          return;
+        }
+      case 'compositeScoring':
+        {
+          compositeScoring = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'component':
+        {
+          component = <MeasureComponentBuilder>[];
+          return;
+        }
       case 'rateAggregation':
         {
           rateAggregation = FhirMarkdownBuilder.empty();
@@ -4382,6 +4716,11 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
       case 'improvementNotation':
         {
           improvementNotation = CodeableConceptBuilder.empty();
+          return;
+        }
+      case 'improvementNotationGuidance':
+        {
+          improvementNotationGuidance = FhirMarkdownBuilder.empty();
           return;
         }
       case 'library':
@@ -4419,8 +4758,12 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
     FHIRTypesBuilder? basis,
     CodeableConceptBuilder? scoring,
     CodeableConceptBuilder? scoringUnit,
+    FhirPositiveIntBuilder? scoringPrecision,
+    CodeableConceptBuilder? compositeScoring,
+    List<MeasureComponentBuilder>? component,
     FhirMarkdownBuilder? rateAggregation,
     CodeableConceptBuilder? improvementNotation,
+    FhirMarkdownBuilder? improvementNotationGuidance,
     List<FhirCanonicalBuilder>? library_,
     List<MeasurePopulationBuilder>? population,
     List<MeasureStratifierBuilder>? stratifier,
@@ -4448,8 +4791,13 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
       basis: basis ?? this.basis,
       scoring: scoring ?? this.scoring,
       scoringUnit: scoringUnit ?? this.scoringUnit,
+      scoringPrecision: scoringPrecision ?? this.scoringPrecision,
+      compositeScoring: compositeScoring ?? this.compositeScoring,
+      component: component ?? this.component,
       rateAggregation: rateAggregation ?? this.rateAggregation,
       improvementNotation: improvementNotation ?? this.improvementNotation,
+      improvementNotationGuidance:
+          improvementNotationGuidance ?? this.improvementNotationGuidance,
       library_: library_ ?? this.library_,
       population: population ?? this.population,
       stratifier: stratifier ?? this.stratifier,
@@ -4546,6 +4894,24 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
       return false;
     }
     if (!equalsDeepWithNull(
+      scoringPrecision,
+      o.scoringPrecision,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      compositeScoring,
+      o.compositeScoring,
+    )) {
+      return false;
+    }
+    if (!listEquals<MeasureComponentBuilder>(
+      component,
+      o.component,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
       rateAggregation,
       o.rateAggregation,
     )) {
@@ -4554,6 +4920,12 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       improvementNotation,
       o.improvementNotation,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      improvementNotationGuidance,
+      o.improvementNotationGuidance,
     )) {
       return false;
     }
@@ -4572,6 +4944,531 @@ class MeasureGroupBuilder extends BackboneElementBuilder {
     if (!listEquals<MeasureStratifierBuilder>(
       stratifier,
       o.stratifier,
+    )) {
+      return false;
+    }
+    return true;
+  }
+}
+
+/// [MeasureComponentBuilder]
+/// If this is a composite measure, a component of the composite.
+class MeasureComponentBuilder extends BackboneElementBuilder {
+  /// Primary constructor for
+  /// [MeasureComponentBuilder]
+
+  MeasureComponentBuilder({
+    super.id,
+    super.extension_,
+    super.modifierExtension,
+    this.measure,
+    this.groupId,
+    this.weight,
+    super.disallowExtensions,
+  }) : super(
+          objectPath: 'Measure.group.component',
+        );
+
+  /// An empty constructor for partial usage.
+  /// For Builder classes, no fields are required
+  factory MeasureComponentBuilder.empty() => MeasureComponentBuilder();
+
+  /// Factory constructor that accepts [Map<String, dynamic>] as an argument
+  factory MeasureComponentBuilder.fromJson(
+    Map<String, dynamic> json,
+  ) {
+    const objectPath = 'Measure.group.component';
+    return MeasureComponentBuilder(
+      id: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'id',
+        FhirStringBuilder.fromJson,
+        '$objectPath.id',
+      ),
+      extension_: (json['extension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.extension',
+              },
+            ),
+          )
+          .toList(),
+      modifierExtension: (json['modifierExtension'] as List<dynamic>?)
+          ?.map<FhirExtensionBuilder>(
+            (v) => FhirExtensionBuilder.fromJson(
+              {
+                ...v as Map<String, dynamic>,
+                'objectPath': '$objectPath.modifierExtension',
+              },
+            ),
+          )
+          .toList(),
+      measure: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
+        json,
+        'measure',
+        FhirCanonicalBuilder.fromJson,
+        '$objectPath.measure',
+      ),
+      groupId: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'groupId',
+        FhirStringBuilder.fromJson,
+        '$objectPath.groupId',
+      ),
+      weight: JsonParser.parsePrimitive<FhirDecimalBuilder>(
+        json,
+        'weight',
+        FhirDecimalBuilder.fromJson,
+        '$objectPath.weight',
+      ),
+    );
+  }
+
+  /// Deserialize [MeasureComponentBuilder]
+  /// from a [String] or [YamlMap] object
+  factory MeasureComponentBuilder.fromYaml(
+    dynamic yaml,
+  ) {
+    if (yaml is String) {
+      return MeasureComponentBuilder.fromJson(
+        yamlToJson(yaml),
+      );
+    } else if (yaml is YamlMap) {
+      return MeasureComponentBuilder.fromJson(
+        yamlMapToJson(yaml),
+      );
+    } else {
+      throw ArgumentError(
+        'MeasureComponentBuilder '
+        'cannot be constructed from the provided input. '
+        'It must be a YAML string or YAML map.',
+      );
+    }
+  }
+
+  /// Factory constructor for
+  /// [MeasureComponentBuilder]
+  /// that takes in a [String]
+  /// Convenience method to avoid the json Encoding/Decoding normally required
+  /// to get data from a [String]
+  factory MeasureComponentBuilder.fromJsonString(
+    String source,
+  ) {
+    final dynamic json = jsonDecode(source);
+    if (json is Map<String, dynamic>) {
+      return MeasureComponentBuilder.fromJson(json);
+    } else {
+      throw FormatException('FormatException: You passed $json '
+          'This does not properly decode to a Map<String, dynamic>.');
+    }
+  }
+
+  @override
+  String get fhirType => 'MeasureComponent';
+
+  /// [measure]
+  /// The measure that contains the definition of the component calculation.
+  FhirCanonicalBuilder? measure;
+
+  /// [groupId]
+  /// Specifies the id of a particular group within the measure referenced by
+  /// the related artifact resource.
+  FhirStringBuilder? groupId;
+
+  /// [weight]
+  /// What is the weight of the contribution of this measure to the overall
+  /// score.
+  FhirDecimalBuilder? weight;
+
+  /// Converts a [MeasureComponentBuilder]
+  /// to [MeasureComponent]
+  @override
+  MeasureComponent build() => MeasureComponent.fromJson(toJson());
+
+  /// Converts a [MeasureComponentBuilder]
+  /// to a [Map<String, dynamic>]
+  @override
+  Map<String, dynamic> toJson() {
+    final json = <String, dynamic>{};
+    void addField(String key, dynamic field) {
+      if (!(field is FhirBaseBuilder? || field is List<FhirBaseBuilder>?)) {
+        throw ArgumentError('"field" must be a FhirBaseBuilder type');
+      }
+      if (field == null) return;
+      if (field is PrimitiveTypeBuilder) {
+        json[key] = field.toJson()['value'];
+        if (field.toJson()['_value'] != null) {
+          json['_$key'] = field.toJson()['_value'];
+        }
+      } else if (field is List<FhirBaseBuilder>) {
+        if (field.isEmpty) return;
+        if (field.first is PrimitiveTypeBuilder) {
+          final fieldJson = field.map((e) => e.toJson()).toList();
+          json[key] = fieldJson.map((e) => e['value']).toList();
+          if (fieldJson.any((e) => e['_value'] != null)) {
+            json['_$key'] = fieldJson.map((e) => e['_value']).toList();
+          }
+        } else {
+          json[key] = field.map((e) => e.toJson()).toList();
+        }
+      } else if (field is FhirBaseBuilder) {
+        json[key] = field.toJson();
+      }
+    }
+
+    addField('id', id);
+    addField('extension', extension_);
+    addField('modifierExtension', modifierExtension);
+    addField('measure', measure);
+    addField('groupId', groupId);
+    addField('weight', weight);
+    return json;
+  }
+
+  /// Lists the JSON keys for the object.
+  @override
+  List<String> listChildrenNames() {
+    return [
+      'id',
+      'extension',
+      'modifierExtension',
+      'measure',
+      'groupId',
+      'weight',
+    ];
+  }
+
+  /// Retrieves all matching child fields by name.
+  ///Optionally validates the name.
+  @override
+  List<FhirBaseBuilder> getChildrenByName(
+    String fieldName, [
+    bool checkValid = false,
+  ]) {
+    final fields = <FhirBaseBuilder>[];
+    switch (fieldName) {
+      case 'id':
+        if (id != null) {
+          fields.add(id!);
+        }
+      case 'extension':
+        if (extension_ != null) {
+          fields.addAll(extension_!);
+        }
+      case 'modifierExtension':
+        if (modifierExtension != null) {
+          fields.addAll(modifierExtension!);
+        }
+      case 'measure':
+        if (measure != null) {
+          fields.add(measure!);
+        }
+      case 'groupId':
+        if (groupId != null) {
+          fields.add(groupId!);
+        }
+      case 'weight':
+        if (weight != null) {
+          fields.add(weight!);
+        }
+      default:
+        if (checkValid) {
+          throw ArgumentError('Invalid name: $fieldName');
+        }
+    }
+    return fields;
+  }
+
+  /// Retrieves a single field value by its name.
+  @override
+  FhirBaseBuilder? getChildByName(String name) {
+    final values = getChildrenByName(name);
+    if (values.length > 1) {
+      throw StateError('Too many values for $name found');
+    }
+    return values.isNotEmpty ? values.first : null;
+  }
+
+  @override
+  void setChildByName(String childName, dynamic child) {
+    // child must be null, or a (List of) FhirBaseBuilder(s).
+    if (child == null) {
+      return; // In builders, setting to null is allowed
+    }
+    if (child is! FhirBaseBuilder && child is! List<FhirBaseBuilder>) {
+      throw Exception('Cannot set child value for $childName');
+    }
+
+    switch (childName) {
+      case 'id':
+        {
+          if (child is FhirStringBuilder) {
+            id = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                id = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'extension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            extension_ = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            extension_ = [
+              ...(extension_ ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'modifierExtension':
+        {
+          if (child is List<FhirExtensionBuilder>) {
+            // Replace or create new list
+            modifierExtension = child;
+            return;
+          } else if (child is FhirExtensionBuilder) {
+            // Add single element to existing list or create new list
+            modifierExtension = [
+              ...(modifierExtension ?? []),
+              child,
+            ];
+            return;
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'measure':
+        {
+          if (child is FhirCanonicalBuilder) {
+            measure = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirCanonicalBuilder.tryParse(stringValue);
+              if (converted != null) {
+                measure = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'groupId':
+        {
+          if (child is FhirStringBuilder) {
+            groupId = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                groupId = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'weight':
+        {
+          if (child is FhirDecimalBuilder) {
+            weight = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              // For number types,
+              // first parse to num then pass the number directly
+              final numValue = num.tryParse(stringValue);
+              if (numValue != null) {
+                final converted = FhirDecimalBuilder.tryParse(numValue);
+                if (converted != null) {
+                  weight = converted;
+                  return;
+                }
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      default:
+        throw Exception('Cannot set child value for $childName');
+    }
+  }
+
+  /// Return the possible Dart types for the field named [fieldName].
+  /// For polymorphic fields, multiple types are possible.
+  @override
+  List<String> typeByElementName(String fieldName) {
+    switch (fieldName) {
+      case 'id':
+        return ['FhirStringBuilder'];
+      case 'extension':
+        return ['FhirExtensionBuilder'];
+      case 'modifierExtension':
+        return ['FhirExtensionBuilder'];
+      case 'measure':
+        return ['FhirCanonicalBuilder'];
+      case 'groupId':
+        return ['FhirStringBuilder'];
+      case 'weight':
+        return ['FhirDecimalBuilder'];
+      default:
+        return <String>[];
+    }
+  }
+
+  /// Creates a new [MeasureComponentBuilder]
+  ///  with a chosen field set to an empty object.
+  @override
+  void createProperty(String propertyName) {
+    switch (propertyName) {
+      case 'id':
+        {
+          id = FhirStringBuilder.empty();
+          return;
+        }
+      case 'extension':
+        {
+          extension_ = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'modifierExtension':
+        {
+          modifierExtension = <FhirExtensionBuilder>[];
+          return;
+        }
+      case 'measure':
+        {
+          measure = FhirCanonicalBuilder.empty();
+          return;
+        }
+      case 'groupId':
+        {
+          groupId = FhirStringBuilder.empty();
+          return;
+        }
+      case 'weight':
+        {
+          weight = FhirDecimalBuilder.empty();
+          return;
+        }
+      default:
+        throw ArgumentError('No matching property: $propertyName');
+    }
+  }
+
+  @override
+  MeasureComponentBuilder clone() => throw UnimplementedError();
+  @override
+  MeasureComponentBuilder copyWith({
+    FhirStringBuilder? id,
+    List<FhirExtensionBuilder>? extension_,
+    List<FhirExtensionBuilder>? modifierExtension,
+    FhirCanonicalBuilder? measure,
+    FhirStringBuilder? groupId,
+    FhirDecimalBuilder? weight,
+    Map<String, dynamic>? userData,
+    List<String>? formatCommentsPre,
+    List<String>? formatCommentsPost,
+    List<dynamic>? annotations,
+    String? objectPath,
+  }) {
+    final newObjectPath = this.objectPath;
+    final newResult = MeasureComponentBuilder(
+      id: id ?? this.id,
+      extension_: extension_ ?? this.extension_,
+      modifierExtension: modifierExtension ?? this.modifierExtension,
+      measure: measure ?? this.measure,
+      groupId: groupId ?? this.groupId,
+      weight: weight ?? this.weight,
+    )..objectPath = newObjectPath;
+    // Copy user data and annotations
+    if (userData != null) {
+      newResult.userData = userData;
+    }
+    if (formatCommentsPre != null) {
+      newResult.formatCommentsPre = formatCommentsPre;
+    }
+    if (formatCommentsPost != null) {
+      newResult.formatCommentsPost = formatCommentsPost;
+    }
+    if (annotations != null) {
+      newResult.annotations = annotations;
+    }
+
+    return newResult;
+  }
+
+  /// Performs a deep comparison between two instances.
+  @override
+  bool equalsDeep(FhirBaseBuilder? o) {
+    if (o is! MeasureComponentBuilder) {
+      return false;
+    }
+    if (identical(this, o)) return true;
+    if (runtimeType != o.runtimeType) return false;
+    if (!equalsDeepWithNull(
+      id,
+      o.id,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      extension_,
+      o.extension_,
+    )) {
+      return false;
+    }
+    if (!listEquals<FhirExtensionBuilder>(
+      modifierExtension,
+      o.modifierExtension,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      measure,
+      o.measure,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      groupId,
+      o.groupId,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      weight,
+      o.weight,
     )) {
       return false;
     }
@@ -5288,6 +6185,8 @@ class MeasureStratifierBuilder extends BackboneElementBuilder {
     this.description,
     this.criteria,
     this.groupDefinition,
+    this.valueSet,
+    this.unit,
     this.component,
     super.disallowExtensions,
   }) : super(
@@ -5359,6 +6258,18 @@ class MeasureStratifierBuilder extends BackboneElementBuilder {
         'groupDefinition',
         ReferenceBuilder.fromJson,
         '$objectPath.groupDefinition',
+      ),
+      valueSet: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
+        json,
+        'valueSet',
+        FhirCanonicalBuilder.fromJson,
+        '$objectPath.valueSet',
+      ),
+      unit: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'unit',
+        FhirStringBuilder.fromJson,
+        '$objectPath.unit',
       ),
       component: (json['component'] as List<dynamic>?)
           ?.map<MeasureComponentBuilder>(
@@ -5442,6 +6353,21 @@ class MeasureStratifierBuilder extends BackboneElementBuilder {
   /// characteristics.
   ReferenceBuilder? groupDefinition;
 
+  /// [valueSet]
+  /// A value set defining the set of possible values for stratum in this
+  /// stratifier. If criteria and valueSet are both present, they SHALL be
+  /// consistent (i.e. criteria expressions SHALL produce stratum values that
+  /// are codes in the value set referenced by this element). Note that this
+  /// MAY be strictly at the code level (e.g. an Age Range code that is just
+  /// the string value `01Y--05Y` with the system ignored).
+  FhirCanonicalBuilder? valueSet;
+
+  /// [unit]
+  /// Indicates what units, if any, stratifier values are expected to be
+  /// expressed in. This element SHOULD be specified in UCUM units or
+  /// calendar units.
+  FhirStringBuilder? unit;
+
   /// [component]
   /// A component of the stratifier criteria for the measure report,
   /// specified as either the name of a valid CQL expression defined within a
@@ -5492,6 +6418,8 @@ class MeasureStratifierBuilder extends BackboneElementBuilder {
     addField('description', description);
     addField('criteria', criteria);
     addField('groupDefinition', groupDefinition);
+    addField('valueSet', valueSet);
+    addField('unit', unit);
     addField('component', component);
     return json;
   }
@@ -5508,6 +6436,8 @@ class MeasureStratifierBuilder extends BackboneElementBuilder {
       'description',
       'criteria',
       'groupDefinition',
+      'valueSet',
+      'unit',
       'component',
     ];
   }
@@ -5552,6 +6482,14 @@ class MeasureStratifierBuilder extends BackboneElementBuilder {
       case 'groupDefinition':
         if (groupDefinition != null) {
           fields.add(groupDefinition!);
+        }
+      case 'valueSet':
+        if (valueSet != null) {
+          fields.add(valueSet!);
+        }
+      case 'unit':
+        if (unit != null) {
+          fields.add(unit!);
         }
       case 'component':
         if (component != null) {
@@ -5702,6 +6640,46 @@ class MeasureStratifierBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'valueSet':
+        {
+          if (child is FhirCanonicalBuilder) {
+            valueSet = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirCanonicalBuilder.tryParse(stringValue);
+              if (converted != null) {
+                valueSet = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'unit':
+        {
+          if (child is FhirStringBuilder) {
+            unit = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                unit = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       case 'component':
         {
           if (child is List<MeasureComponentBuilder>) {
@@ -5744,6 +6722,10 @@ class MeasureStratifierBuilder extends BackboneElementBuilder {
         return ['FhirExpressionBuilder'];
       case 'groupDefinition':
         return ['ReferenceBuilder'];
+      case 'valueSet':
+        return ['FhirCanonicalBuilder'];
+      case 'unit':
+        return ['FhirStringBuilder'];
       case 'component':
         return ['MeasureComponentBuilder'];
       default:
@@ -5796,6 +6778,16 @@ class MeasureStratifierBuilder extends BackboneElementBuilder {
           groupDefinition = ReferenceBuilder.empty();
           return;
         }
+      case 'valueSet':
+        {
+          valueSet = FhirCanonicalBuilder.empty();
+          return;
+        }
+      case 'unit':
+        {
+          unit = FhirStringBuilder.empty();
+          return;
+        }
       case 'component':
         {
           component = <MeasureComponentBuilder>[];
@@ -5818,6 +6810,8 @@ class MeasureStratifierBuilder extends BackboneElementBuilder {
     FhirMarkdownBuilder? description,
     FhirExpressionBuilder? criteria,
     ReferenceBuilder? groupDefinition,
+    FhirCanonicalBuilder? valueSet,
+    FhirStringBuilder? unit,
     List<MeasureComponentBuilder>? component,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
@@ -5835,6 +6829,8 @@ class MeasureStratifierBuilder extends BackboneElementBuilder {
       description: description ?? this.description,
       criteria: criteria ?? this.criteria,
       groupDefinition: groupDefinition ?? this.groupDefinition,
+      valueSet: valueSet ?? this.valueSet,
+      unit: unit ?? this.unit,
       component: component ?? this.component,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
@@ -5910,6 +6906,18 @@ class MeasureStratifierBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      valueSet,
+      o.valueSet,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      unit,
+      o.unit,
+    )) {
+      return false;
+    }
     if (!listEquals<MeasureComponentBuilder>(
       component,
       o.component,
@@ -5920,15 +6928,15 @@ class MeasureStratifierBuilder extends BackboneElementBuilder {
   }
 }
 
-/// [MeasureComponentBuilder]
+/// [MeasureComponent1Builder]
 /// A component of the stratifier criteria for the measure report,
 /// specified as either the name of a valid CQL expression defined within a
 /// referenced library or a valid FHIR Resource Path.
-class MeasureComponentBuilder extends BackboneElementBuilder {
+class MeasureComponent1Builder extends BackboneElementBuilder {
   /// Primary constructor for
-  /// [MeasureComponentBuilder]
+  /// [MeasureComponent1Builder]
 
-  MeasureComponentBuilder({
+  MeasureComponent1Builder({
     super.id,
     super.extension_,
     super.modifierExtension,
@@ -5937,6 +6945,8 @@ class MeasureComponentBuilder extends BackboneElementBuilder {
     this.description,
     this.criteria,
     this.groupDefinition,
+    this.valueSet,
+    this.unit,
     super.disallowExtensions,
   }) : super(
           objectPath: 'Measure.group.stratifier.component',
@@ -5944,14 +6954,14 @@ class MeasureComponentBuilder extends BackboneElementBuilder {
 
   /// An empty constructor for partial usage.
   /// For Builder classes, no fields are required
-  factory MeasureComponentBuilder.empty() => MeasureComponentBuilder();
+  factory MeasureComponent1Builder.empty() => MeasureComponent1Builder();
 
   /// Factory constructor that accepts [Map<String, dynamic>] as an argument
-  factory MeasureComponentBuilder.fromJson(
+  factory MeasureComponent1Builder.fromJson(
     Map<String, dynamic> json,
   ) {
     const objectPath = 'Measure.group.stratifier.component';
-    return MeasureComponentBuilder(
+    return MeasureComponent1Builder(
       id: JsonParser.parsePrimitive<FhirStringBuilder>(
         json,
         'id',
@@ -6008,25 +7018,37 @@ class MeasureComponentBuilder extends BackboneElementBuilder {
         ReferenceBuilder.fromJson,
         '$objectPath.groupDefinition',
       ),
+      valueSet: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
+        json,
+        'valueSet',
+        FhirCanonicalBuilder.fromJson,
+        '$objectPath.valueSet',
+      ),
+      unit: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'unit',
+        FhirStringBuilder.fromJson,
+        '$objectPath.unit',
+      ),
     );
   }
 
-  /// Deserialize [MeasureComponentBuilder]
+  /// Deserialize [MeasureComponent1Builder]
   /// from a [String] or [YamlMap] object
-  factory MeasureComponentBuilder.fromYaml(
+  factory MeasureComponent1Builder.fromYaml(
     dynamic yaml,
   ) {
     if (yaml is String) {
-      return MeasureComponentBuilder.fromJson(
+      return MeasureComponent1Builder.fromJson(
         yamlToJson(yaml),
       );
     } else if (yaml is YamlMap) {
-      return MeasureComponentBuilder.fromJson(
+      return MeasureComponent1Builder.fromJson(
         yamlMapToJson(yaml),
       );
     } else {
       throw ArgumentError(
-        'MeasureComponentBuilder '
+        'MeasureComponent1Builder '
         'cannot be constructed from the provided input. '
         'It must be a YAML string or YAML map.',
       );
@@ -6034,16 +7056,16 @@ class MeasureComponentBuilder extends BackboneElementBuilder {
   }
 
   /// Factory constructor for
-  /// [MeasureComponentBuilder]
+  /// [MeasureComponent1Builder]
   /// that takes in a [String]
   /// Convenience method to avoid the json Encoding/Decoding normally required
   /// to get data from a [String]
-  factory MeasureComponentBuilder.fromJsonString(
+  factory MeasureComponent1Builder.fromJsonString(
     String source,
   ) {
     final dynamic json = jsonDecode(source);
     if (json is Map<String, dynamic>) {
-      return MeasureComponentBuilder.fromJson(json);
+      return MeasureComponent1Builder.fromJson(json);
     } else {
       throw FormatException('FormatException: You passed $json '
           'This does not properly decode to a Map<String, dynamic>.');
@@ -6051,7 +7073,7 @@ class MeasureComponentBuilder extends BackboneElementBuilder {
   }
 
   @override
-  String get fhirType => 'MeasureComponent';
+  String get fhirType => 'MeasureComponent1';
 
   /// [linkId]
   /// An identifier that is unique within the Measure allowing linkage to the
@@ -6081,12 +7103,27 @@ class MeasureComponentBuilder extends BackboneElementBuilder {
   /// characteristics.
   ReferenceBuilder? groupDefinition;
 
-  /// Converts a [MeasureComponentBuilder]
-  /// to [MeasureComponent]
-  @override
-  MeasureComponent build() => MeasureComponent.fromJson(toJson());
+  /// [valueSet]
+  /// A value set defining the set of possible values for stratum in this
+  /// stratifier. If criteria and valueSet are both present, they SHALL be
+  /// consistent (i.e. criteria expressions SHALL produce stratum values that
+  /// are codes in the value set referenced by this element). Note that this
+  /// MAY be strictly at the code level (e.g. an Age Range code that is just
+  /// the string value `01Y--05Y` with the system ignored).
+  FhirCanonicalBuilder? valueSet;
 
-  /// Converts a [MeasureComponentBuilder]
+  /// [unit]
+  /// Indicates what units, if any, stratifier values are expected to be
+  /// expressed in. This element SHOULD be specified in UCUM units or
+  /// calendar units.
+  FhirStringBuilder? unit;
+
+  /// Converts a [MeasureComponent1Builder]
+  /// to [MeasureComponent1]
+  @override
+  MeasureComponent1 build() => MeasureComponent1.fromJson(toJson());
+
+  /// Converts a [MeasureComponent1Builder]
   /// to a [Map<String, dynamic>]
   @override
   Map<String, dynamic> toJson() {
@@ -6125,6 +7162,8 @@ class MeasureComponentBuilder extends BackboneElementBuilder {
     addField('description', description);
     addField('criteria', criteria);
     addField('groupDefinition', groupDefinition);
+    addField('valueSet', valueSet);
+    addField('unit', unit);
     return json;
   }
 
@@ -6140,6 +7179,8 @@ class MeasureComponentBuilder extends BackboneElementBuilder {
       'description',
       'criteria',
       'groupDefinition',
+      'valueSet',
+      'unit',
     ];
   }
 
@@ -6183,6 +7224,14 @@ class MeasureComponentBuilder extends BackboneElementBuilder {
       case 'groupDefinition':
         if (groupDefinition != null) {
           fields.add(groupDefinition!);
+        }
+      case 'valueSet':
+        if (valueSet != null) {
+          fields.add(valueSet!);
+        }
+      case 'unit':
+        if (unit != null) {
+          fields.add(unit!);
         }
       default:
         if (checkValid) {
@@ -6329,6 +7378,46 @@ class MeasureComponentBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'valueSet':
+        {
+          if (child is FhirCanonicalBuilder) {
+            valueSet = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirCanonicalBuilder.tryParse(stringValue);
+              if (converted != null) {
+                valueSet = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'unit':
+        {
+          if (child is FhirStringBuilder) {
+            unit = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                unit = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -6355,12 +7444,16 @@ class MeasureComponentBuilder extends BackboneElementBuilder {
         return ['FhirExpressionBuilder'];
       case 'groupDefinition':
         return ['ReferenceBuilder'];
+      case 'valueSet':
+        return ['FhirCanonicalBuilder'];
+      case 'unit':
+        return ['FhirStringBuilder'];
       default:
         return <String>[];
     }
   }
 
-  /// Creates a new [MeasureComponentBuilder]
+  /// Creates a new [MeasureComponent1Builder]
   ///  with a chosen field set to an empty object.
   @override
   void createProperty(String propertyName) {
@@ -6405,15 +7498,25 @@ class MeasureComponentBuilder extends BackboneElementBuilder {
           groupDefinition = ReferenceBuilder.empty();
           return;
         }
+      case 'valueSet':
+        {
+          valueSet = FhirCanonicalBuilder.empty();
+          return;
+        }
+      case 'unit':
+        {
+          unit = FhirStringBuilder.empty();
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
   }
 
   @override
-  MeasureComponentBuilder clone() => throw UnimplementedError();
+  MeasureComponent1Builder clone() => throw UnimplementedError();
   @override
-  MeasureComponentBuilder copyWith({
+  MeasureComponent1Builder copyWith({
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
@@ -6422,6 +7525,8 @@ class MeasureComponentBuilder extends BackboneElementBuilder {
     FhirMarkdownBuilder? description,
     FhirExpressionBuilder? criteria,
     ReferenceBuilder? groupDefinition,
+    FhirCanonicalBuilder? valueSet,
+    FhirStringBuilder? unit,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -6429,7 +7534,7 @@ class MeasureComponentBuilder extends BackboneElementBuilder {
     String? objectPath,
   }) {
     final newObjectPath = this.objectPath;
-    final newResult = MeasureComponentBuilder(
+    final newResult = MeasureComponent1Builder(
       id: id ?? this.id,
       extension_: extension_ ?? this.extension_,
       modifierExtension: modifierExtension ?? this.modifierExtension,
@@ -6438,6 +7543,8 @@ class MeasureComponentBuilder extends BackboneElementBuilder {
       description: description ?? this.description,
       criteria: criteria ?? this.criteria,
       groupDefinition: groupDefinition ?? this.groupDefinition,
+      valueSet: valueSet ?? this.valueSet,
+      unit: unit ?? this.unit,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -6459,7 +7566,7 @@ class MeasureComponentBuilder extends BackboneElementBuilder {
   /// Performs a deep comparison between two instances.
   @override
   bool equalsDeep(FhirBaseBuilder? o) {
-    if (o is! MeasureComponentBuilder) {
+    if (o is! MeasureComponent1Builder) {
       return false;
     }
     if (identical(this, o)) return true;
@@ -6512,6 +7619,18 @@ class MeasureComponentBuilder extends BackboneElementBuilder {
     )) {
       return false;
     }
+    if (!equalsDeepWithNull(
+      valueSet,
+      o.valueSet,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      unit,
+      o.unit,
+    )) {
+      return false;
+    }
     return true;
   }
 }
@@ -6533,6 +7652,8 @@ class MeasureSupplementalDataBuilder extends BackboneElementBuilder {
     this.usage,
     this.description,
     this.criteria,
+    this.valueSet,
+    this.unit,
     super.disallowExtensions,
   }) : super(
           objectPath: 'Measure.supplementalData',
@@ -6611,6 +7732,18 @@ class MeasureSupplementalDataBuilder extends BackboneElementBuilder {
         FhirExpressionBuilder.fromJson,
         '$objectPath.criteria',
       ),
+      valueSet: JsonParser.parsePrimitive<FhirCanonicalBuilder>(
+        json,
+        'valueSet',
+        FhirCanonicalBuilder.fromJson,
+        '$objectPath.valueSet',
+      ),
+      unit: JsonParser.parsePrimitive<FhirStringBuilder>(
+        json,
+        'unit',
+        FhirStringBuilder.fromJson,
+        '$objectPath.unit',
+      ),
     );
   }
 
@@ -6688,6 +7821,22 @@ class MeasureSupplementalDataBuilder extends BackboneElementBuilder {
   /// be returned for this element.
   FhirExpressionBuilder? criteria;
 
+  /// [valueSet]
+  /// A value set defining the set of possible values for supplemental data
+  /// in this element. If criteria and valueSet are both present, they SHALL
+  /// be consistent (i.e. criteria expressions SHALL produce supplemental
+  /// data values that are codes in the value set referenced by this
+  /// element). Note that this MAY be strictly at the code level (e.g. an Age
+  /// Range code that is just the string value `01Y--05Y` with the system
+  /// ignored).
+  FhirCanonicalBuilder? valueSet;
+
+  /// [unit]
+  /// Indicates what units, if any, supplemental data values are expected to
+  /// be expressed in. This element SHOULD be specified in UCUM units or
+  /// calendar units.
+  FhirStringBuilder? unit;
+
   /// Converts a [MeasureSupplementalDataBuilder]
   /// to [MeasureSupplementalData]
   @override
@@ -6732,6 +7881,8 @@ class MeasureSupplementalDataBuilder extends BackboneElementBuilder {
     addField('usage', usage);
     addField('description', description);
     addField('criteria', criteria);
+    addField('valueSet', valueSet);
+    addField('unit', unit);
     return json;
   }
 
@@ -6747,6 +7898,8 @@ class MeasureSupplementalDataBuilder extends BackboneElementBuilder {
       'usage',
       'description',
       'criteria',
+      'valueSet',
+      'unit',
     ];
   }
 
@@ -6790,6 +7943,14 @@ class MeasureSupplementalDataBuilder extends BackboneElementBuilder {
       case 'criteria':
         if (criteria != null) {
           fields.add(criteria!);
+        }
+      case 'valueSet':
+        if (valueSet != null) {
+          fields.add(valueSet!);
+        }
+      case 'unit':
+        if (unit != null) {
+          fields.add(unit!);
         }
       default:
         if (checkValid) {
@@ -6944,6 +8105,46 @@ class MeasureSupplementalDataBuilder extends BackboneElementBuilder {
           }
           throw Exception('Invalid child type for $childName');
         }
+      case 'valueSet':
+        {
+          if (child is FhirCanonicalBuilder) {
+            valueSet = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirCanonicalBuilder.tryParse(stringValue);
+              if (converted != null) {
+                valueSet = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
+      case 'unit':
+        {
+          if (child is FhirStringBuilder) {
+            unit = child;
+            return;
+          } else if (child is PrimitiveTypeBuilder) {
+            // Try to convert from one primitive type to another
+            try {
+              final stringValue = child.toString();
+              final converted = FhirStringBuilder.tryParse(stringValue);
+              if (converted != null) {
+                unit = converted;
+                return;
+              }
+            } catch (e) {
+              // Continue if conversion fails
+            }
+          }
+          throw Exception('Invalid child type for $childName');
+        }
       default:
         throw Exception('Cannot set child value for $childName');
     }
@@ -6970,6 +8171,10 @@ class MeasureSupplementalDataBuilder extends BackboneElementBuilder {
         return ['FhirMarkdownBuilder'];
       case 'criteria':
         return ['FhirExpressionBuilder'];
+      case 'valueSet':
+        return ['FhirCanonicalBuilder'];
+      case 'unit':
+        return ['FhirStringBuilder'];
       default:
         return <String>[];
     }
@@ -7020,6 +8225,16 @@ class MeasureSupplementalDataBuilder extends BackboneElementBuilder {
           criteria = FhirExpressionBuilder.empty();
           return;
         }
+      case 'valueSet':
+        {
+          valueSet = FhirCanonicalBuilder.empty();
+          return;
+        }
+      case 'unit':
+        {
+          unit = FhirStringBuilder.empty();
+          return;
+        }
       default:
         throw ArgumentError('No matching property: $propertyName');
     }
@@ -7037,6 +8252,8 @@ class MeasureSupplementalDataBuilder extends BackboneElementBuilder {
     List<CodeableConceptBuilder>? usage,
     FhirMarkdownBuilder? description,
     FhirExpressionBuilder? criteria,
+    FhirCanonicalBuilder? valueSet,
+    FhirStringBuilder? unit,
     Map<String, dynamic>? userData,
     List<String>? formatCommentsPre,
     List<String>? formatCommentsPost,
@@ -7053,6 +8270,8 @@ class MeasureSupplementalDataBuilder extends BackboneElementBuilder {
       usage: usage ?? this.usage,
       description: description ?? this.description,
       criteria: criteria ?? this.criteria,
+      valueSet: valueSet ?? this.valueSet,
+      unit: unit ?? this.unit,
     )..objectPath = newObjectPath;
     // Copy user data and annotations
     if (userData != null) {
@@ -7124,6 +8343,18 @@ class MeasureSupplementalDataBuilder extends BackboneElementBuilder {
     if (!equalsDeepWithNull(
       criteria,
       o.criteria,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      valueSet,
+      o.valueSet,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      unit,
+      o.unit,
     )) {
       return false;
     }

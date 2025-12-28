@@ -281,8 +281,8 @@ class ChargeItemBuilder extends DomainResourceBuilder {
         '$objectPath.enteredDate',
       ),
       reason: (json['reason'] as List<dynamic>?)
-          ?.map<CodeableConceptBuilder>(
-            (v) => CodeableConceptBuilder.fromJson(
+          ?.map<CodeableReferenceBuilder>(
+            (v) => CodeableReferenceBuilder.fromJson(
               {
                 ...v as Map<String, dynamic>,
                 'objectPath': '$objectPath.reason',
@@ -484,7 +484,7 @@ class ChargeItemBuilder extends DomainResourceBuilder {
 
   /// [reason]
   /// Describes why the event occurred in coded or textual form.
-  List<CodeableConceptBuilder>? reason;
+  List<CodeableReferenceBuilder>? reason;
 
   /// [service]
   /// Indicated the rendered service that caused this charge.
@@ -1288,11 +1288,11 @@ class ChargeItemBuilder extends DomainResourceBuilder {
         }
       case 'reason':
         {
-          if (child is List<CodeableConceptBuilder>) {
+          if (child is List<CodeableReferenceBuilder>) {
             // Replace or create new list
             reason = child;
             return;
-          } else if (child is CodeableConceptBuilder) {
+          } else if (child is CodeableReferenceBuilder) {
             // Add single element to existing list or create new list
             reason = [
               ...(reason ?? []),
@@ -1460,7 +1460,7 @@ class ChargeItemBuilder extends DomainResourceBuilder {
       case 'enteredDate':
         return ['FhirDateTimeBuilder'];
       case 'reason':
-        return ['CodeableConceptBuilder'];
+        return ['CodeableReferenceBuilder'];
       case 'service':
         return ['CodeableReferenceBuilder'];
       case 'product':
@@ -1635,7 +1635,7 @@ class ChargeItemBuilder extends DomainResourceBuilder {
         }
       case 'reason':
         {
-          reason = <CodeableConceptBuilder>[];
+          reason = <CodeableReferenceBuilder>[];
           return;
         }
       case 'service':
@@ -1700,7 +1700,7 @@ class ChargeItemBuilder extends DomainResourceBuilder {
     CodeableConceptBuilder? overrideReason,
     ReferenceBuilder? enterer,
     FhirDateTimeBuilder? enteredDate,
-    List<CodeableConceptBuilder>? reason,
+    List<CodeableReferenceBuilder>? reason,
     List<CodeableReferenceBuilder>? service,
     List<CodeableReferenceBuilder>? product,
     List<ReferenceBuilder>? account,
@@ -1951,7 +1951,7 @@ class ChargeItemBuilder extends DomainResourceBuilder {
     )) {
       return false;
     }
-    if (!listEquals<CodeableConceptBuilder>(
+    if (!listEquals<CodeableReferenceBuilder>(
       reason,
       o.reason,
     )) {

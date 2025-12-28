@@ -5,7 +5,12 @@ import 'package:yaml/yaml.dart';
 part 'example_scenario.g.dart';
 
 /// [ExampleScenario]
-/// Example of workflow instance.
+/// A computable description of the actors, interactions between those
+/// actors that would occur, and concrete examples of the data that would
+/// be exchanged in a specific hypothetical exchange, typically used to
+/// help demonstrate the interoperability expectations of a specification.
+/// This resource is used to illustrate a specific time-based exchange, not
+/// to define in general terms how exchanges can/should occur.
 class ExampleScenario extends CanonicalResource {
   /// Primary constructor for
   /// [ExampleScenario]
@@ -280,7 +285,9 @@ class ExampleScenario extends CanonicalResource {
   Coding? get versionAlgorithmCoding => versionAlgorithmX?.isAs<Coding>();
 
   /// [name]
-  /// Temporarily retained for tooling purposes.
+  /// A natural language name identifying the ExampleScenario. This name
+  /// should be usable as an identifier for the resource by machine
+  /// processing applications such as code generation.
   final FhirString? name;
 
   /// [title]
@@ -891,9 +898,10 @@ class ExampleScenarioActor extends BackboneElement {
     super.extension_,
     super.modifierExtension,
     required this.key,
-    required this.type,
+    this.type,
     required this.title,
     this.description,
+    this.definition,
     super.disallowExtensions,
   }) : super();
 
@@ -926,11 +934,11 @@ class ExampleScenarioActor extends BackboneElement {
         'key',
         FhirString.fromJson,
       )!,
-      type: JsonParser.parsePrimitive<ExampleScenarioActorType>(
+      type: JsonParser.parsePrimitive<ActorDefinitionActorType>(
         json,
         'type',
-        ExampleScenarioActorType.fromJson,
-      )!,
+        ActorDefinitionActorType.fromJson,
+      ),
       title: JsonParser.parsePrimitive<FhirString>(
         json,
         'title',
@@ -940,6 +948,11 @@ class ExampleScenarioActor extends BackboneElement {
         json,
         'description',
         FhirMarkdown.fromJson,
+      ),
+      definition: JsonParser.parsePrimitive<FhirCanonical>(
+        json,
+        'definition',
+        FhirCanonical.fromJson,
       ),
     );
   }
@@ -993,7 +1006,7 @@ class ExampleScenarioActor extends BackboneElement {
 
   /// [type]
   /// The category of actor - person or system.
-  final ExampleScenarioActorType type;
+  final ActorDefinitionActorType? type;
 
   /// [title]
   /// The human-readable name for the actor used when rendering the scenario.
@@ -1002,6 +1015,10 @@ class ExampleScenarioActor extends BackboneElement {
   /// [description]
   /// An explanation of who/what the actor is and its role in the scenario.
   final FhirMarkdown? description;
+
+  /// [definition]
+  /// The formal definition of the actor in the scenario.
+  final FhirCanonical? definition;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -1093,6 +1110,10 @@ class ExampleScenarioActor extends BackboneElement {
       'description',
       description,
     );
+    addField(
+      'definition',
+      definition,
+    );
     return json;
   }
 
@@ -1107,6 +1128,7 @@ class ExampleScenarioActor extends BackboneElement {
       'type',
       'title',
       'description',
+      'definition',
     ];
   }
 
@@ -1134,12 +1156,18 @@ class ExampleScenarioActor extends BackboneElement {
       case 'key':
         fields.add(key);
       case 'type':
-        fields.add(type);
+        if (type != null) {
+          fields.add(type!);
+        }
       case 'title':
         fields.add(title);
       case 'description':
         if (description != null) {
           fields.add(description!);
+        }
+      case 'definition':
+        if (definition != null) {
+          fields.add(definition!);
         }
       default:
         if (checkValid) {
@@ -1221,6 +1249,12 @@ class ExampleScenarioActor extends BackboneElement {
     if (!equalsDeepWithNull(
       description,
       o.description,
+    )) {
+      return false;
+    }
+    if (!equalsDeepWithNull(
+      definition,
+      o.definition,
     )) {
       return false;
     }

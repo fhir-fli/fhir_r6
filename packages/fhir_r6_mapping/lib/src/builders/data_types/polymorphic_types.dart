@@ -1,5 +1,3 @@
-// ignore_for_file: flutter_style_todos
-
 import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 
 /// Polymorphic types for FHIR data types.
@@ -43,41 +41,14 @@ abstract class VersionAlgorithmXActorDefinitionBuilder extends DataTypeBuilder
 abstract class ValueXAdministrableProductDefinitionPropertyBuilder
     extends DataTypeBuilder implements PolymorphicTypeBuilder {}
 
-/// The date (and perhaps time) when the adverse event occurred.
-abstract class OccurrenceXAdverseEventBuilder extends DataTypeBuilder
+/// The date (and perhaps time) when the cause of the AdverseEvent
+/// occurred.
+abstract class CauseXAdverseEventBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
-/// Identifies the actual instance of what caused the adverse event. May be
-/// a substance, medication, medication administration, medication
-/// statement or a device.
-abstract class InstanceXAdverseEventSuspectEntityBuilder extends DataTypeBuilder
-    implements PolymorphicTypeBuilder {}
-
-/// The item that is suspected to have increased the probability or
-/// severity of the adverse event.
-abstract class ItemXAdverseEventContributingFactorBuilder
-    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
-
-/// The action that contributed to avoiding the adverse event.
-abstract class ItemXAdverseEventPreventiveActionBuilder extends DataTypeBuilder
-    implements PolymorphicTypeBuilder {}
-
-/// The ameliorating action taken after the adverse event occured in order
-/// to reduce the extent of harm.
-abstract class ItemXAdverseEventMitigatingActionBuilder extends DataTypeBuilder
-    implements PolymorphicTypeBuilder {}
-
-/// Relevant past history for the subject. In a clinical care context, an
-/// example being a patient had an adverse event following a pencillin
-/// administration and the patient had a previously documented penicillin
-/// allergy. In a clinical trials context, an example is a bunion or rash
-/// that was present prior to the study. Additionally, the supporting item
-/// can be a document that is relevant to this instance of the adverse
-/// event that is not part of the subject's medical history. For example, a
-/// clinical note, staff list, or material safety data sheet (MSDS).
-/// Supporting information is not a contributing factor, preventive action,
-/// or mitigating action.
-abstract class ItemXAdverseEventSupportingInfoBuilder extends DataTypeBuilder
+/// The date (and perhaps time) when the effect of the AdverseEvent
+/// occurred.
+abstract class EffectXAdverseEventBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// Estimated or actual date, date-time, or age when allergy or intolerance
@@ -85,14 +56,13 @@ abstract class ItemXAdverseEventSupportingInfoBuilder extends DataTypeBuilder
 abstract class OnsetXAllergyIntoleranceBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
-/// Display of or reference to the bibliographic citation of the comment,
-/// classifier, or rating.
-abstract class CiteAsXArtifactAssessmentBuilder extends DataTypeBuilder
-    implements PolymorphicTypeBuilder {}
-
 /// A reference to a resource, canonical resource, or non-FHIR resource
 /// which the comment or assessment is about.
 abstract class ArtifactXArtifactAssessmentBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
+
+/// The artifact that is related to this ArtifactAssessment Resource.
+abstract class TargetXArtifactAssessmentRelatesToBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// The time or period during which the activity occurred.
@@ -123,7 +93,7 @@ abstract class VersionAlgorithmXCapabilityStatementBuilder
     extends DataTypeBuilder implements PolymorphicTypeBuilder {}
 
 /// When the member is generally available within this care team.
-abstract class CoverageXCareTeamParticipantBuilder extends DataTypeBuilder
+abstract class EffectiveXCareTeamParticipantBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// Date/time(s) or duration when the charged service was applied.
@@ -138,6 +108,15 @@ abstract class VersionAlgorithmXChargeItemDefinitionBuilder
 /// Indicates the mechanism used to compare versions to determine which is
 /// more current.
 abstract class VersionAlgorithmXCitationBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
+
+/// The artifact that is related to this Citation Resource.
+abstract class TargetXCitationRelatesToBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
+
+/// The artifact that is related to this Citation Resource's cited
+/// artifact.
+abstract class TargetXCitationRelatesTo1Builder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// A date or period in the past or future indicating when the event
@@ -193,7 +172,7 @@ abstract class LocationXClaimResponseAddItemBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// The point in time or period over which the subject was assessed.
-abstract class EffectiveXClinicalImpressionBuilder extends DataTypeBuilder
+abstract class EffectiveXClinicalAssessmentBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// Timing or duration information, that may be associated with use with
@@ -226,8 +205,8 @@ abstract class ContentXCommunicationPayloadBuilder extends DataTypeBuilder
 abstract class OccurrenceXCommunicationRequestBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
-/// The communicated content (or for multi-part communications, one portion
-/// of the communication).
+/// The content (or for multi-part communications, one portion of the
+/// communication) to be communicated.
 abstract class ContentXCommunicationRequestPayloadBuilder
     extends DataTypeBuilder implements PolymorphicTypeBuilder {}
 
@@ -235,6 +214,10 @@ abstract class ContentXCommunicationRequestPayloadBuilder
 /// more current.
 abstract class VersionAlgorithmXCompartmentDefinitionBuilder
     extends DataTypeBuilder implements PolymorphicTypeBuilder {}
+
+/// The artifact that is related to this Composition Resource.
+abstract class TargetXCompositionRelatesToBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
 
 /// Indicates the mechanism used to compare versions to determine which
 /// ConceptMap is more current.
@@ -257,16 +240,20 @@ abstract class TargetScopeXConceptMapBuilder extends DataTypeBuilder
 
 /// The value of this property. If the type chosen for this element is
 /// 'code', then the property SHALL be defined in a ConceptMap.property
+/// element and that ConceptMap.property element SHALL have a system
 /// element.
 abstract class ValueXConceptMapPropertyBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
-/// Data element value that the map depends on / produces.
+/// Data element value that the map depends on / produces. If the data type
+/// is a code, that code SHALL come from the .group.source code system for
+/// .dependsOn.valueCode or from the .group.target code system for
+/// .product.valueCode.
 abstract class ValueXConceptMapDependsOnBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
-/// Estimated or actual date or date-time the condition began, in the
-/// opinion of the clinician.
+/// Estimated or actual date or date-time the condition, situation, or
+/// concern began, in the opinion of the clinician.
 abstract class OnsetXConditionBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
@@ -370,13 +357,19 @@ abstract class AllowedXCoverageEligibilityResponseBenefitBuilder
 abstract class UsedXCoverageEligibilityResponseBenefitBuilder
     extends DataTypeBuilder implements PolymorphicTypeBuilder {}
 
-/// The date or period when the detected issue was initially identified.
+/// The date, period or timing when the detected issue did occur or is
+/// occurring.
 abstract class IdentifiedXDetectedIssueBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// The value of the property specified by the associated property.type
 /// code.
 abstract class ValueXDevicePropertyBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
+
+/// Indicates the mechanism used to compare versions to determine which is
+/// more current.
+abstract class VersionAlgorithmXDeviceDefinitionBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// The value of the property specified by the associated property.type
@@ -425,16 +418,13 @@ abstract class SubjectXEventDefinitionBuilder extends DataTypeBuilder
 abstract class VersionAlgorithmXEvidenceBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
-/// Citation Resource or display of suggested citation for this evidence.
-abstract class CiteAsXEvidenceBuilder extends DataTypeBuilder
+/// The artifact that is related to this Evidence Resource.
+abstract class TargetXEvidenceRelatesToBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
-/// Citation Resource or display of suggested citation for this report.
-abstract class CiteAsXEvidenceReportBuilder extends DataTypeBuilder
-    implements PolymorphicTypeBuilder {}
-
-/// Characteristic value.
-abstract class ValueXEvidenceReportCharacteristicBuilder extends DataTypeBuilder
+/// Further specification of the value of the component of the method to
+/// generate the statistic.
+abstract class ValueXEvidenceModelCharacteristicBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// Indicates the mechanism used to compare versions to determine which is
@@ -442,20 +432,12 @@ abstract class ValueXEvidenceReportCharacteristicBuilder extends DataTypeBuilder
 abstract class VersionAlgorithmXEvidenceVariableBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
-/// Number of occurrences meeting the characteristic.
-abstract class InstancesXEvidenceVariableCharacteristicBuilder
-    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
+/// The artifact that is related to this EvidenceVariable Resource.
+abstract class TargetXEvidenceVariableRelatesToBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
 
-/// Length of time in which the characteristic is met.
-abstract class DurationXEvidenceVariableCharacteristicBuilder
-    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
-
-/// Defines the characteristic when paired with characteristic.type.
-abstract class ValueXEvidenceVariableDefinitionByTypeAndValueBuilder
-    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
-
-/// The event used as a base point (reference point) in time.
-abstract class EventXEvidenceVariableTimeFromEventBuilder
+/// Specification of the definition attribute.
+abstract class ValueXEvidenceVariableDefinitionModifierBuilder
     extends DataTypeBuilder implements PolymorphicTypeBuilder {}
 
 /// Definition of the grouping.
@@ -567,7 +549,9 @@ abstract class StartXGoalBuilder extends DataTypeBuilder
 /// values of the range can be specified. When a low value is missing, it
 /// indicates that the goal is achieved at any focus value at or below the
 /// high value. Similarly, if the high value is missing, it indicates that
-/// the goal is achieved at any focus value at or above the low value.
+/// the goal is achieved at any focus value at or above the low value. A
+/// CodeableConcept target value could be Positive, Negative, Abnormal,
+/// Normal, Present, Absent, Yes, No.
 abstract class DetailXGoalTargetBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
@@ -581,14 +565,37 @@ abstract class DueXGoalTargetBuilder extends DataTypeBuilder
 abstract class VersionAlgorithmXGraphDefinitionBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
+/// Indicates the mechanism used to compare versions to determine which is
+/// more current.
+abstract class VersionAlgorithmXGroupBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
+
 /// The value of the trait that holds (or does not hold - see 'exclude')
 /// for members of the group.
 abstract class ValueXGroupCharacteristicBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
+/// Defines the characteristic (without using type and value) by either a
+/// Reference or an Expression.
+abstract class DeterminedByXGroupCharacteristicBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
+
+/// Number of occurrences meeting the characteristic.
+abstract class InstancesXGroupCharacteristicBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
+
+/// Length of time in which the characteristic is met.
+abstract class DurationXGroupCharacteristicBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
+
 /// An identifier, CodeableConcept or canonical reference to the guidance
 /// that was requested.
 abstract class ModuleXGuidanceResponseBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
+
+/// Sometimes an eligibility code requires additional data to calculate the
+/// eligibility rules.
+abstract class ValueXHealthcareServiceEligibilityBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// Date vaccine administered or was to be administered.
@@ -666,8 +673,7 @@ abstract class SubjectXMeasureBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// The intended subjects for the measure. If this element is not provided,
-/// a Patient subject is assumed, but the subject of the measure can be
-/// anything.
+/// the root subject is used to determine the group.
 abstract class SubjectXMeasureGroupBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
@@ -705,8 +711,8 @@ abstract class StrengthXMedicationIngredientBuilder extends DataTypeBuilder
 /// administration took place (or did not take place). For many
 /// administrations, such as swallowing a tablet the use of dateTime is
 /// more appropriate.
-abstract class OccurenceXMedicationAdministrationBuilder extends DataTypeBuilder
-    implements PolymorphicTypeBuilder {}
+abstract class OccurrenceXMedicationAdministrationBuilder
+    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
 
 /// Identifies the speed with which the medication was or will be
 /// introduced into the patient. Typically, the rate for an infusion e.g.
@@ -772,8 +778,8 @@ abstract class EventXMessageDefinitionBuilder extends DataTypeBuilder
 
 /// Code that identifies the event this message represents and connects it
 /// with its definition. Events defined as part of the FHIR specification
-/// are defined by the implementation. Alternatively a canonical uri to the
-/// EventDefinition.
+/// are defined by the implementation. Alternatively a uri , canonical uri
+/// to the EventDefinition or SubscriptionTopic.
 abstract class EventXMessageHeaderBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
@@ -785,8 +791,82 @@ abstract class EndpointXMessageHeaderDestinationBuilder extends DataTypeBuilder
 abstract class EndpointXMessageHeaderSourceBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
-/// The reference sequence that represents the starting sequence.
-abstract class SequenceXMolecularSequenceStartingSequenceBuilder
+/// The start location of the interval expressed as a precise coordinate
+/// (Quantity) or expressed as a range (Range) that is defined by low
+/// (range start) and high (range end). Open-ended ranges, where one end is
+/// unbounded, may be supported.
+abstract class StartXMolecularDefinitionLocationSequenceLocationCoordinateIntervalBuilder
+    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
+
+/// The end location of the interval expressed as a precise coordinate
+/// (Quantity) or as a range (Range) that is defined by low (range start)
+/// and high (range end). Open-ended ranges, where one end is unbounded,
+/// may be supported..
+abstract class EndXMolecularDefinitionLocationSequenceLocationCoordinateIntervalBuilder
+    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
+
+/// The description of this genome assembly.
+abstract class DescriptionXMolecularDefinitionGenomeAssemblyBuilder
+    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
+
+/// The arm of this start interval.
+abstract class ArmXMolecularDefinitionStartCytobandBuilder
+    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
+
+/// The region of this start interval.
+abstract class RegionXMolecularDefinitionStartCytobandBuilder
+    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
+
+/// The band of this start interval.
+abstract class BandXMolecularDefinitionStartCytobandBuilder
+    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
+
+/// The sub-band of this start interval.
+abstract class SubBandXMolecularDefinitionStartCytobandBuilder
+    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
+
+/// The arm of this end interval.
+abstract class ArmXMolecularDefinitionEndCytobandBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
+
+/// The region of this end interval.
+abstract class RegionXMolecularDefinitionEndCytobandBuilder
+    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
+
+/// The band of this end interval.
+abstract class BandXMolecularDefinitionEndCytobandBuilder
+    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
+
+/// The sub-band of this end interval.
+abstract class SubBandXMolecularDefinitionEndCytobandBuilder
+    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
+
+/// The start location of the interval expressed as a precise coordinate
+/// (Quantity) or expressed as a range (Range) that is defined by low
+/// (range start) and high (range end). Open-ended ranges, where one end is
+/// unbounded, may be supported.
+abstract class StartXMolecularDefinitionRepresentationExtractedCoordinateIntervalBuilder
+    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
+
+/// The end location of the interval expressed as a precise coordinate
+/// (Quantity) or as a range (Range) that is defined by low (range start)
+/// and high (range end). Open-ended ranges, where one end is unbounded,
+/// may be supported..
+abstract class EndXMolecularDefinitionRepresentationExtractedCoordinateIntervalBuilder
+    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
+
+/// The start location of the interval expressed as a precise coordinate
+/// (Quantity) or expressed as a range (Range) that is defined by low
+/// (range start) and high (range end). Open-ended ranges, where one end is
+/// unbounded, may be supported.
+abstract class StartXMolecularDefinitionRepresentationRelativeEditCoordinateIntervalBuilder
+    extends DataTypeBuilder implements PolymorphicTypeBuilder {}
+
+/// The end location of the interval expressed as a precise coordinate
+/// (Quantity) or as a range (Range) that is defined by low (range start)
+/// and high (range end). Open-ended ranges, where one end is unbounded,
+/// may be supported..
+abstract class EndXMolecularDefinitionRepresentationRelativeEditCoordinateIntervalBuilder
     extends DataTypeBuilder implements PolymorphicTypeBuilder {}
 
 /// Indicates the mechanism used to compare versions to determine which
@@ -795,19 +875,33 @@ abstract class VersionAlgorithmXNamingSystemBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// The interval of time during which it is being asserted that the patient
-/// is/was consuming the food or fluid.
+/// is/was consuming the food (i.e. solid and/or liquid).
 abstract class OccurrenceXNutritionIntakeBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
-/// The person or organization that provided the information about the
-/// consumption of this food or fluid. Note: Use derivedFrom when a
-/// NutritionIntake is derived from other resources.
+/// Indicates if this record was captured as a secondary 'reported' record
+/// rather than as an original primary source-of-truth. It may also
+/// indicate the source that provided the information about the
+/// consumption.
 abstract class ReportedXNutritionIntakeBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
-/// The rate of administration of formula via a feeding pump, e.g. 60 mL
-/// per hour, according to the specified schedule.
+/// Rate of enteral feeding administration.
+abstract class RateXNutritionIntakeConsumedItemBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
+
+/// The rate of administration of formula feeding via a feeding pump, e.g.
+/// 60 mL per hour, according to the specified schedule.
 abstract class RateXNutritionOrderAdministrationBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
+
+/// The amount of nutrient expressed in one or more units, either X per
+/// pack / per serving / per dose or X amount.
+abstract class AmountXNutritionProductNutrientBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
+
+/// The amount of ingredient that is in the product.
+abstract class AmountXNutritionProductIngredientBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// The actual characteristic value corresponding to the type.
@@ -856,12 +950,18 @@ abstract class ValueXPackagedProductDefinitionPropertyBuilder
 abstract class ValueXParametersParameterBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
-/// Indicates if the individual is deceased or not.
+/// Indicates the date when the individual died, or, if the date is not
+/// known or cannot be estimated, a flag indicating the patient is known to
+/// be deceased.
 abstract class DeceasedXPatientBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// Indicates whether the patient is part of a multiple (boolean) or
-/// indicates the actual birth order (integer).
+/// indicates the actual birth order (integer). This count is relative to
+/// the total of live births and fetal losses, which MAY be tracked in the
+/// `patient-multipleBirthTotal` extension. The boolean option for this
+/// property can also be used to track that there are known to be multiple
+/// fetuses prior to birth.
 abstract class MultipleBirthXPatientBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
@@ -1011,6 +1111,10 @@ abstract class ActorXRequestOrchestrationParticipantBuilder
 abstract class VersionAlgorithmXRequirementsBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
+/// The artifact that is related to this ResearchStudy Resource.
+abstract class TargetXResearchStudyRelatesToBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
+
 /// The date (and possibly time) the risk assessment was performed.
 abstract class OccurrenceXRiskAssessmentBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
@@ -1029,19 +1133,12 @@ abstract class WhenXRiskAssessmentPredictionBuilder extends DataTypeBuilder
 abstract class VersionAlgorithmXSearchParameterBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
-/// An amount of service being requested which can be a quantity ( for
-/// example $1,500 home modification), a ratio ( for example, 20 half day
-/// visits per month), or a range (2.0 to 1.8 Gy per fraction).
+/// An amount of service being requested.
 abstract class QuantityXServiceRequestBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// The date/time at which the requested service should occur.
 abstract class OccurrenceXServiceRequestBuilder extends DataTypeBuilder
-    implements PolymorphicTypeBuilder {}
-
-/// If a CodeableConcept is present, it indicates the pre-condition for
-/// performing the service. For example "pain", "on flare-up", etc.
-abstract class AsNeededXServiceRequestBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// Indicates a value for the order detail.
@@ -1106,10 +1203,6 @@ abstract class ValueXStructureMapParameterBuilder extends DataTypeBuilder
 abstract class VersionAlgorithmXSubscriptionTopicBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
-/// Another substance that is a component of this substance.
-abstract class SubstanceXSubstanceIngredientBuilder extends DataTypeBuilder
-    implements PolymorphicTypeBuilder {}
-
 /// Quantitative value for this moiety.
 abstract class AmountXSubstanceDefinitionMoietyBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
@@ -1170,8 +1263,20 @@ abstract class VersionAlgorithmXTerminologyCapabilitiesBuilder
 abstract class VersionAlgorithmXTestPlanBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
-/// The actual content of the cases - references to TestScripts or
-/// externally defined content.
+/// The specific conformance artifact, or narrative criteria, or an
+/// external reference being tested. The canonical reference can be
+/// version-specific.
+abstract class ArtifactXTestPlanScopeBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
+
+/// The specific conformance artifact, or narrative criteria, or an
+/// external reference covered by the case. The canonical reference can be
+/// version-specific.
+abstract class ArtifactXTestPlanTestCaseScopeBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
+
+/// The actual content of the script, references to test resource
+/// (TestScript) or externally defined content.
 abstract class SourceXTestPlanScriptBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
@@ -1188,11 +1293,6 @@ abstract class LinkXTestReportRequirementBuilder extends DataTypeBuilder
 /// Indicates the mechanism used to compare versions to determine which is
 /// more current.
 abstract class VersionAlgorithmXTestScriptBuilder extends DataTypeBuilder
-    implements PolymorphicTypeBuilder {}
-
-/// Link or reference providing traceability to the testing requirement for
-/// this test.
-abstract class LinkXTestScriptRequirementBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// The value of the input parameter as a basic type.
@@ -1318,6 +1418,12 @@ abstract class ValueXExtensionBuilder extends DataTypeBuilder
 /// resulting terminology The symbol and the symbol identifier shall be
 /// used.
 abstract class PeriodXProductShelfLifeBuilder extends DataTypeBuilder
+    implements PolymorphicTypeBuilder {}
+
+/// An offset or offset range before (negative values) or after (positive
+/// values) the event. Range is limited to time-valued quantities
+/// (Durations).
+abstract class OffsetXRelativeTimeBuilder extends DataTypeBuilder
     implements PolymorphicTypeBuilder {}
 
 /// Either a duration for the length of the timing schedule, a range of
