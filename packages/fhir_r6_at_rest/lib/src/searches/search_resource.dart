@@ -172,17 +172,6 @@ class SearchResource extends RestfulParameters {
 
   /// a token search for [identifier] in the resource
   /// [Resource]
-  SearchResource identifier(
-    FhirString value, {
-    FhirUri? system,
-    SearchModifier? modifier,
-  }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('identifier', paramValue);
-    return this;
-  }
 
   /// a date search for [indication] in the resource
   /// [Resource]
@@ -254,17 +243,6 @@ class SearchResource extends RestfulParameters {
 
   /// a token search for [status] in the resource
   /// [Resource]
-  SearchResource status(
-    FhirString value, {
-    FhirUri? system,
-    SearchModifier? modifier,
-  }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('status', paramValue);
-    return this;
-  }
 
   /// a date search for [timing] in the resource
   /// [Resource]
@@ -383,17 +361,6 @@ class SearchResource extends RestfulParameters {
 
   /// a token search for [identifier] in the resource
   /// [Resource]
-  SearchResource identifier(
-    FhirString value, {
-    FhirUri? system,
-    SearchModifier? modifier,
-  }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('identifier', paramValue);
-    return this;
-  }
 
   /// a string search for [name] in the resource
   /// [Resource]
@@ -427,45 +394,12 @@ class SearchResource extends RestfulParameters {
 
   /// a token search for [status] in the resource
   /// [Resource]
-  SearchResource status(
-    FhirString value, {
-    FhirUri? system,
-    SearchModifier? modifier,
-  }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('status', paramValue);
-    return this;
-  }
 
   /// a token search for [resourceType] in the resource
   /// [Resource]
-  SearchResource resourceType(
-    FhirString value, {
-    FhirUri? system,
-    SearchModifier? modifier,
-  }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('type', paramValue);
-    return this;
-  }
 
   /// a token search for [identifier] in the resource
   /// [Resource]
-  SearchResource identifier(
-    FhirString value, {
-    FhirUri? system,
-    SearchModifier? modifier,
-  }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('identifier', paramValue);
-    return this;
-  }
 
   /// a token search for [moleculetype] in the resource
   /// [Resource]
@@ -497,17 +431,6 @@ class SearchResource extends RestfulParameters {
 
   /// a token search for [resourceType] in the resource
   /// [Resource]
-  SearchResource resourceType(
-    FhirString value, {
-    FhirUri? system,
-    SearchModifier? modifier,
-  }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('type', paramValue);
-    return this;
-  }
 
   /// a token search for [relationship] in the resource
   /// [Resource]
