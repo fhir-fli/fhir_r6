@@ -16,9 +16,10 @@ class SearchDocumentReference extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['identifier'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('identifier', paramValue);
     return this;
   }
 
@@ -29,9 +30,10 @@ class SearchDocumentReference extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['type'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('type', paramValue);
     return this;
   }
 
@@ -42,8 +44,9 @@ class SearchDocumentReference extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['date'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('date', paramValue);
     return this;
   }
 
@@ -54,9 +57,10 @@ class SearchDocumentReference extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['bodysite'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('bodysite', paramValue);
     return this;
   }
 
@@ -67,9 +71,10 @@ class SearchDocumentReference extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['category'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('category', paramValue);
     return this;
   }
 
@@ -80,9 +85,10 @@ class SearchDocumentReference extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['contenttype'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('contenttype', paramValue);
     return this;
   }
 
@@ -92,8 +98,9 @@ class SearchDocumentReference extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['creation'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('creation', paramValue);
     return this;
   }
 
@@ -106,8 +113,9 @@ class SearchDocumentReference extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['description'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('description', paramValue);
     return this;
   }
 
@@ -118,9 +126,10 @@ class SearchDocumentReference extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['doc_status'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('doc_status', paramValue);
     return this;
   }
 
@@ -131,9 +140,10 @@ class SearchDocumentReference extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['event_code'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('event_code', paramValue);
     return this;
   }
 
@@ -144,9 +154,10 @@ class SearchDocumentReference extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['facility'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('facility', paramValue);
     return this;
   }
 
@@ -156,8 +167,9 @@ class SearchDocumentReference extends SearchResource {
     FhirUri value, {
     SearchModifier? modifier,
   }) {
-    parameters['format_canonical'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('format_canonical', paramValue);
     return this;
   }
 
@@ -168,9 +180,10 @@ class SearchDocumentReference extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['format_code'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('format_code', paramValue);
     return this;
   }
 
@@ -180,8 +193,9 @@ class SearchDocumentReference extends SearchResource {
     FhirUri value, {
     SearchModifier? modifier,
   }) {
-    parameters['format_uri'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('format_uri', paramValue);
     return this;
   }
 
@@ -193,9 +207,10 @@ class SearchDocumentReference extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['language'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('language', paramValue);
     return this;
   }
 
@@ -205,8 +220,9 @@ class SearchDocumentReference extends SearchResource {
     FhirUri value, {
     SearchModifier? modifier,
   }) {
-    parameters['location'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('location', paramValue);
     return this;
   }
 
@@ -217,9 +233,10 @@ class SearchDocumentReference extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['modality'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('modality', paramValue);
     return this;
   }
 
@@ -229,8 +246,9 @@ class SearchDocumentReference extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['period'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('period', paramValue);
     return this;
   }
 
@@ -241,9 +259,10 @@ class SearchDocumentReference extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['relation'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('relation', paramValue);
     return this;
   }
 
@@ -254,9 +273,10 @@ class SearchDocumentReference extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['security_label'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('security_label', paramValue);
     return this;
   }
 
@@ -267,9 +287,10 @@ class SearchDocumentReference extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['setting'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('setting', paramValue);
     return this;
   }
 
@@ -281,9 +302,10 @@ class SearchDocumentReference extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['status'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('status', paramValue);
     return this;
   }
 
@@ -296,8 +318,9 @@ class SearchDocumentReference extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['version'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('version', paramValue);
     return this;
   }
 }

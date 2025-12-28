@@ -16,9 +16,10 @@ class SearchServiceRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['identifier'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('identifier', paramValue);
     return this;
   }
 
@@ -28,8 +29,9 @@ class SearchServiceRequest extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['authored'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('authored', paramValue);
     return this;
   }
 
@@ -40,9 +42,10 @@ class SearchServiceRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['body_site'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('body_site', paramValue);
     return this;
   }
 
@@ -53,9 +56,10 @@ class SearchServiceRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['category'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('category', paramValue);
     return this;
   }
 
@@ -66,9 +70,10 @@ class SearchServiceRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['code_concept'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('code_concept', paramValue);
     return this;
   }
 
@@ -79,9 +84,10 @@ class SearchServiceRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['group_or_identifier'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('group_or_identifier', paramValue);
     return this;
   }
 
@@ -91,8 +97,9 @@ class SearchServiceRequest extends SearchResource {
     FhirUri value, {
     SearchModifier? modifier,
   }) {
-    parameters['instantiates_uri'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('instantiates_uri', paramValue);
     return this;
   }
 
@@ -103,9 +110,10 @@ class SearchServiceRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['intent'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('intent', paramValue);
     return this;
   }
 
@@ -116,9 +124,10 @@ class SearchServiceRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['location_code'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('location_code', paramValue);
     return this;
   }
 
@@ -128,8 +137,9 @@ class SearchServiceRequest extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['occurrence'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('occurrence', paramValue);
     return this;
   }
 
@@ -140,9 +150,10 @@ class SearchServiceRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['performer_type'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('performer_type', paramValue);
     return this;
   }
 
@@ -154,9 +165,10 @@ class SearchServiceRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['priority'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('priority', paramValue);
     return this;
   }
 
@@ -167,9 +179,10 @@ class SearchServiceRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['requisition'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('requisition', paramValue);
     return this;
   }
 
@@ -181,9 +194,10 @@ class SearchServiceRequest extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['status'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('status', paramValue);
     return this;
   }
 }

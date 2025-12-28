@@ -16,9 +16,10 @@ class SearchDeviceDefinition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['identifier'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('identifier', paramValue);
     return this;
   }
 
@@ -31,8 +32,9 @@ class SearchDeviceDefinition extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['publisher'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('publisher', paramValue);
     return this;
   }
 
@@ -42,8 +44,9 @@ class SearchDeviceDefinition extends SearchResource {
     FhirUri value, {
     SearchModifier? modifier,
   }) {
-    parameters['url'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('url', paramValue);
     return this;
   }
 
@@ -54,9 +57,10 @@ class SearchDeviceDefinition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['version'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('version', paramValue);
     return this;
   }
 
@@ -69,8 +73,9 @@ class SearchDeviceDefinition extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['device_name'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('device_name', paramValue);
     return this;
   }
 
@@ -81,9 +86,10 @@ class SearchDeviceDefinition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['model_number'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('model_number', paramValue);
     return this;
   }
 
@@ -96,8 +102,9 @@ class SearchDeviceDefinition extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['part_number'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('part_number', paramValue);
     return this;
   }
 
@@ -108,9 +115,10 @@ class SearchDeviceDefinition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['specification'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('specification', paramValue);
     return this;
   }
 
@@ -121,9 +129,10 @@ class SearchDeviceDefinition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['type'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('type', paramValue);
     return this;
   }
 }

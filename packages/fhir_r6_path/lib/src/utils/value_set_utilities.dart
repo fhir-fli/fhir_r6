@@ -1,7 +1,3 @@
-// ignore_for_file: avoid_positional_boolean_parameters
-// ignore_for_file: avoid_equals_and_hash_code_on_mutable_classes,
-// ignore_for_file: constant_identifier_names
-
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:fhir_r6_path/fhir_r6_path.dart';
 

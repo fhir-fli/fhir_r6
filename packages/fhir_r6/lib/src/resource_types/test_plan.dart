@@ -2133,7 +2133,7 @@ class TestPlanScope1 extends BackboneElement {
             ),
           )
           .toList(),
-      artifactX: JsonParser.parsePolymorphic<ArtifactXTestPlanTestCaseScope>(
+      artifactX: JsonParser.parsePolymorphic<ArtifactXTestPlanScope>(
         json,
         {
           'artifactCanonical': FhirCanonical.fromJson,
@@ -2190,7 +2190,7 @@ class TestPlanScope1 extends BackboneElement {
   /// The specific conformance artifact, or narrative criteria, or an
   /// external reference covered by the case. The canonical reference can be
   /// version-specific.
-  final ArtifactXTestPlanTestCaseScope artifactX;
+  final ArtifactXTestPlanScope artifactX;
 
   /// Getter for [artifactCanonical] as a FhirCanonical
   FhirCanonical? get artifactCanonical => artifactX.isAs<FhirCanonical>();

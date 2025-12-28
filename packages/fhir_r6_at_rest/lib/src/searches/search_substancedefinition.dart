@@ -15,9 +15,10 @@ class SearchSubstanceDefinition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['classification'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('classification', paramValue);
     return this;
   }
 
@@ -29,9 +30,10 @@ class SearchSubstanceDefinition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['code'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('code', paramValue);
     return this;
   }
 
@@ -42,9 +44,10 @@ class SearchSubstanceDefinition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['domain'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('domain', paramValue);
     return this;
   }
 
@@ -56,9 +59,10 @@ class SearchSubstanceDefinition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['identifier'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('identifier', paramValue);
     return this;
   }
 
@@ -72,8 +76,9 @@ class SearchSubstanceDefinition extends SearchResource {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['name'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('name', paramValue);
     return this;
   }
 }

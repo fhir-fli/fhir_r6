@@ -1,5 +1,3 @@
-// ignore_for_file: one_member_abstracts
-
 import 'dart:convert';
 
 import 'package:fhir_r6/fhir_r6.dart';

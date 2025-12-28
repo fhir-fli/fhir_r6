@@ -16,9 +16,10 @@ class SearchCommunication extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['identifier'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('identifier', paramValue);
     return this;
   }
 
@@ -29,9 +30,10 @@ class SearchCommunication extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['category'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('category', paramValue);
     return this;
   }
 
@@ -42,9 +44,10 @@ class SearchCommunication extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['medium'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('medium', paramValue);
     return this;
   }
 
@@ -55,9 +58,10 @@ class SearchCommunication extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['reason_code'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('reason_code', paramValue);
     return this;
   }
 
@@ -67,8 +71,9 @@ class SearchCommunication extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['received'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('received', paramValue);
     return this;
   }
 
@@ -78,8 +83,9 @@ class SearchCommunication extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['sent'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('sent', paramValue);
     return this;
   }
 
@@ -91,9 +97,10 @@ class SearchCommunication extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['status'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('status', paramValue);
     return this;
   }
 
@@ -104,9 +111,10 @@ class SearchCommunication extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['topic'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('topic', paramValue);
     return this;
   }
 }

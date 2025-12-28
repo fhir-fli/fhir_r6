@@ -15,9 +15,10 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['_id'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('_id', paramValue);
     return this;
   }
 
@@ -28,9 +29,10 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['_language'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('_language', paramValue);
     return this;
   }
 
@@ -40,8 +42,9 @@ class SearchResource extends RestfulParameters {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['_lastUpdated'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('_lastUpdated', paramValue);
     return this;
   }
 
@@ -52,9 +55,10 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['_security'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('_security', paramValue);
     return this;
   }
 
@@ -64,8 +68,9 @@ class SearchResource extends RestfulParameters {
     FhirUri value, {
     SearchModifier? modifier,
   }) {
-    parameters['_source'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('_source', paramValue);
     return this;
   }
 
@@ -76,9 +81,10 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['_tag'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('_tag', paramValue);
     return this;
   }
 
@@ -88,8 +94,9 @@ class SearchResource extends RestfulParameters {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['date'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('date', paramValue);
     return this;
   }
 
@@ -100,9 +107,10 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['finding_code'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('finding_code', paramValue);
     return this;
   }
 
@@ -113,9 +121,10 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['identifier'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('identifier', paramValue);
     return this;
   }
 
@@ -126,9 +135,10 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['status'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('status', paramValue);
     return this;
   }
 
@@ -139,9 +149,10 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['annunciator_concept'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('annunciator_concept', paramValue);
     return this;
   }
 
@@ -152,9 +163,24 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['code'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('code', paramValue);
+    return this;
+  }
+
+  /// a token search for [identifier] in the resource
+  /// [Resource]
+  SearchResource identifier(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('identifier', paramValue);
     return this;
   }
 
@@ -164,8 +190,9 @@ class SearchResource extends RestfulParameters {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['indication'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('indication', paramValue);
     return this;
   }
 
@@ -176,9 +203,10 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['manifestation'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('manifestation', paramValue);
     return this;
   }
 
@@ -189,9 +217,10 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['presence'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('presence', paramValue);
     return this;
   }
 
@@ -202,9 +231,10 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['priority'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('priority', paramValue);
     return this;
   }
 
@@ -215,9 +245,24 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['signal_presence'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('signal_presence', paramValue);
+    return this;
+  }
+
+  /// a token search for [status] in the resource
+  /// [Resource]
+  SearchResource status(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('status', paramValue);
     return this;
   }
 
@@ -227,8 +272,9 @@ class SearchResource extends RestfulParameters {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['timing'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('timing', paramValue);
     return this;
   }
 
@@ -239,9 +285,10 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['type'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('type', paramValue);
     return this;
   }
 
@@ -254,8 +301,9 @@ class SearchResource extends RestfulParameters {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['contact_address'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('contact_address', paramValue);
     return this;
   }
 
@@ -268,8 +316,9 @@ class SearchResource extends RestfulParameters {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['contact_address_city'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('contact_address_city', paramValue);
     return this;
   }
 
@@ -282,8 +331,9 @@ class SearchResource extends RestfulParameters {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['contact_address_country'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('contact_address_country', paramValue);
     return this;
   }
 
@@ -296,8 +346,9 @@ class SearchResource extends RestfulParameters {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['contact_address_postalcode'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('contact_address_postalcode', paramValue);
     return this;
   }
 
@@ -310,8 +361,9 @@ class SearchResource extends RestfulParameters {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['contact_address_state'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('contact_address_state', paramValue);
     return this;
   }
 
@@ -322,9 +374,24 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['contact_address_use'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('contact_address_use', paramValue);
+    return this;
+  }
+
+  /// a token search for [identifier] in the resource
+  /// [Resource]
+  SearchResource identifier(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('identifier', paramValue);
     return this;
   }
 
@@ -337,8 +404,9 @@ class SearchResource extends RestfulParameters {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['name'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('name', paramValue);
     return this;
   }
 
@@ -351,8 +419,51 @@ class SearchResource extends RestfulParameters {
     if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for string type');
     }
-    parameters['phonetic'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('phonetic', paramValue);
+    return this;
+  }
+
+  /// a token search for [status] in the resource
+  /// [Resource]
+  SearchResource status(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a token search for [resourceType] in the resource
+  /// [Resource]
+  SearchResource resourceType(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('type', paramValue);
+    return this;
+  }
+
+  /// a token search for [identifier] in the resource
+  /// [Resource]
+  SearchResource identifier(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('identifier', paramValue);
     return this;
   }
 
@@ -363,9 +474,10 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['moleculetype'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('moleculetype', paramValue);
     return this;
   }
 
@@ -376,9 +488,24 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['topology'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('topology', paramValue);
+    return this;
+  }
+
+  /// a token search for [resourceType] in the resource
+  /// [Resource]
+  SearchResource resourceType(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('type', paramValue);
     return this;
   }
 
@@ -389,9 +516,10 @@ class SearchResource extends RestfulParameters {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['relationship'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('relationship', paramValue);
     return this;
   }
 }

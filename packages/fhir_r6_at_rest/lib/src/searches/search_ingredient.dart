@@ -15,9 +15,10 @@ class SearchIngredient extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['function'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('function', paramValue);
     return this;
   }
 
@@ -29,9 +30,10 @@ class SearchIngredient extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['identifier'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('identifier', paramValue);
     return this;
   }
 
@@ -42,9 +44,10 @@ class SearchIngredient extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['role'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('role', paramValue);
     return this;
   }
 
@@ -56,9 +59,10 @@ class SearchIngredient extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['status'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('status', paramValue);
     return this;
   }
 
@@ -74,9 +78,10 @@ class SearchIngredient extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    parameters['strength_concentration_denominator'] = (modifier != null
-        ? '$modifier:$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
+    final paramValue = (modifier != null
+        ? '$modifier$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
         : '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}');
+    addParameterValue('strength_concentration_denominator', paramValue);
     return this;
   }
 
@@ -92,9 +97,10 @@ class SearchIngredient extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    parameters['strength_concentration_numerator'] = (modifier != null
-        ? '$modifier:$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
+    final paramValue = (modifier != null
+        ? '$modifier$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
         : '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}');
+    addParameterValue('strength_concentration_numerator', paramValue);
     return this;
   }
 
@@ -110,9 +116,10 @@ class SearchIngredient extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    parameters['strength_concentration_quantity'] = (modifier != null
-        ? '$modifier:$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
+    final paramValue = (modifier != null
+        ? '$modifier$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
         : '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}');
+    addParameterValue('strength_concentration_quantity', paramValue);
     return this;
   }
 
@@ -128,9 +135,10 @@ class SearchIngredient extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    parameters['strength_presentation_denominator'] = (modifier != null
-        ? '$modifier:$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
+    final paramValue = (modifier != null
+        ? '$modifier$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
         : '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}');
+    addParameterValue('strength_presentation_denominator', paramValue);
     return this;
   }
 
@@ -146,9 +154,10 @@ class SearchIngredient extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    parameters['strength_presentation_numerator'] = (modifier != null
-        ? '$modifier:$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
+    final paramValue = (modifier != null
+        ? '$modifier$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
         : '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}');
+    addParameterValue('strength_presentation_numerator', paramValue);
     return this;
   }
 
@@ -164,9 +173,10 @@ class SearchIngredient extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    parameters['strength_presentation_quantity'] = (modifier != null
-        ? '$modifier:$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
+    final paramValue = (modifier != null
+        ? '$modifier$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
         : '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}');
+    addParameterValue('strength_presentation_quantity', paramValue);
     return this;
   }
 
@@ -177,9 +187,10 @@ class SearchIngredient extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['substance_code'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('substance_code', paramValue);
     return this;
   }
 }

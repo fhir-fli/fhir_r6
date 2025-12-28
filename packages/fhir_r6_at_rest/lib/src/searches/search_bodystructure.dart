@@ -16,9 +16,10 @@ class SearchBodyStructure extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['identifier'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('identifier', paramValue);
     return this;
   }
 
@@ -29,9 +30,10 @@ class SearchBodyStructure extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['excluded_structure'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('excluded_structure', paramValue);
     return this;
   }
 
@@ -42,9 +44,10 @@ class SearchBodyStructure extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['included_structure'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('included_structure', paramValue);
     return this;
   }
 
@@ -55,9 +58,10 @@ class SearchBodyStructure extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['morphology'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('morphology', paramValue);
     return this;
   }
 }

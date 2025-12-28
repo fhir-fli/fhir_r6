@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, constant_identifier_names, non_constant_identifier_names, lines_longer_than_80_chars
+// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
 
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:fhir_r6_path/fhir_r6_path.dart';

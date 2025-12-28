@@ -1,6 +1,3 @@
-// ignore_for_file: prefer_single_quotes, always_specify_types,
-// ignore_for_file: avoid_escaping_inner_quotes
-
 import 'package:collection/collection.dart' show DeepCollectionEquality;
 import 'package:fhir_r6/fhir_r6.dart' show QuestionnaireResponse;
 import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';

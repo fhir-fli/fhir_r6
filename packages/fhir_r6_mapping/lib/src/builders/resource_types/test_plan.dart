@@ -3729,7 +3729,7 @@ class TestPlanScope1Builder extends BackboneElementBuilder {
     super.id,
     super.extension_,
     super.modifierExtension,
-    ArtifactXTestPlanTestCaseScopeBuilder? artifactX,
+    ArtifactXTestPlanScopeBuilder? artifactX,
     FhirCanonicalBuilder? artifactCanonical,
     FhirMarkdownBuilder? artifactMarkdown,
     FhirUriBuilder? artifactUri,
@@ -3778,8 +3778,7 @@ class TestPlanScope1Builder extends BackboneElementBuilder {
             ),
           )
           .toList(),
-      artifactX:
-          JsonParser.parsePolymorphic<ArtifactXTestPlanTestCaseScopeBuilder>(
+      artifactX: JsonParser.parsePolymorphic<ArtifactXTestPlanScopeBuilder>(
         json,
         {
           'artifactCanonical': FhirCanonicalBuilder.fromJson,
@@ -3837,7 +3836,7 @@ class TestPlanScope1Builder extends BackboneElementBuilder {
   /// The specific conformance artifact, or narrative criteria, or an
   /// external reference covered by the case. The canonical reference can be
   /// version-specific.
-  ArtifactXTestPlanTestCaseScopeBuilder? artifactX;
+  ArtifactXTestPlanScopeBuilder? artifactX;
 
   /// Getter for [artifactCanonical] as a FhirCanonicalBuilder
   FhirCanonicalBuilder? get artifactCanonical =>
@@ -4033,7 +4032,7 @@ class TestPlanScope1Builder extends BackboneElementBuilder {
       case 'artifact':
       case 'artifactX':
         {
-          if (child is ArtifactXTestPlanTestCaseScopeBuilder) {
+          if (child is ArtifactXTestPlanScopeBuilder) {
             artifactX = child;
             return;
           } else {
@@ -4162,7 +4161,7 @@ class TestPlanScope1Builder extends BackboneElementBuilder {
     FhirStringBuilder? id,
     List<FhirExtensionBuilder>? extension_,
     List<FhirExtensionBuilder>? modifierExtension,
-    ArtifactXTestPlanTestCaseScopeBuilder? artifactX,
+    ArtifactXTestPlanScopeBuilder? artifactX,
     FhirCanonicalBuilder? artifactCanonical,
     FhirMarkdownBuilder? artifactMarkdown,
     FhirUriBuilder? artifactUri,

@@ -1,7 +1,5 @@
 // This file is auto-generated. Do not edit directly.
 
-// ignore_for_file: avoid_returning_this
-
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 
@@ -15,8 +13,9 @@ class SearchArtifactAssessment extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['date'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('date', paramValue);
     return this;
   }
 
@@ -28,9 +27,10 @@ class SearchArtifactAssessment extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['identifier'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('identifier', paramValue);
     return this;
   }
 }

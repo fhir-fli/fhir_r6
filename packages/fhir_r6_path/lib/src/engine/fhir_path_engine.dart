@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, avoid_positional_boolean_parameters
-// ignore_for_file: avoid_print
 
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:fhir_r6_path/fhir_r6_path.dart';

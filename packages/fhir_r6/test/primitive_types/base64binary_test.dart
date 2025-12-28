@@ -83,7 +83,6 @@ void base64BinaryTest() {
     test('Equality with String', () {
       const validBase64String = 'dGVzdA==';
       final base64Binary = FhirBase64Binary(validBase64String);
-      // ignore: unrelated_type_equality_checks
       expect(base64Binary.valueString == validBase64String, isTrue);
     });
 
@@ -213,7 +212,6 @@ void base64BinaryTest() {
       final original = FhirBase64Binary('SGVsbG8gV29ybGQ=');
       expect(original.valueString, isNotNull);
 
-      // ignore: avoid_redundant_argument_values
       final cleared = original.copyWith(
         newValue: null,
         element: const Element(),
@@ -246,6 +244,7 @@ void base64BinaryTest() {
     });
   });
 }
+
 void main() {
   base64BinaryTest();
 }

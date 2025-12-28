@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_single_quotes, require_trailing_commas, lines_longer_than_80_chars, avoid_escaping_inner_quotes
+// ignore_for_file: prefer_single_quotes, require_trailing_commas, lines_longer_than_80_chars
 
 import 'package:fhir_r6/fhir_r6.dart';
 

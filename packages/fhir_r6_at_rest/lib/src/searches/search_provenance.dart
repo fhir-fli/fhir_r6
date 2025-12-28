@@ -15,9 +15,10 @@ class SearchProvenance extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['activity'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('activity', paramValue);
     return this;
   }
 
@@ -28,9 +29,10 @@ class SearchProvenance extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['agent_role'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('agent_role', paramValue);
     return this;
   }
 
@@ -41,9 +43,10 @@ class SearchProvenance extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['agent_type'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('agent_type', paramValue);
     return this;
   }
 
@@ -53,8 +56,9 @@ class SearchProvenance extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['recorded'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('recorded', paramValue);
     return this;
   }
 
@@ -65,9 +69,10 @@ class SearchProvenance extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    parameters['signature_type'] = system != null
-        ? (modifier != null ? '$modifier:$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('signature_type', paramValue);
     return this;
   }
 
@@ -77,8 +82,9 @@ class SearchProvenance extends SearchResource {
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
-    parameters['when'] =
-        (modifier != null ? '$modifier:$value' : value.toString());
+    final paramValue =
+        (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('when', paramValue);
     return this;
   }
 }

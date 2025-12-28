@@ -400,7 +400,7 @@ abstract class $TestPlanScope1CopyWith<T> extends $BackboneElementCopyWith<T> {
     FhirString? id,
     List<FhirExtension>? extension_,
     List<FhirExtension>? modifierExtension,
-    ArtifactXTestPlanTestCaseScope? artifactX,
+    ArtifactXTestPlanScope? artifactX,
     bool? disallowExtensions,
   });
 }
@@ -430,8 +430,7 @@ class _$TestPlanScope1CopyWithImpl<T> implements $TestPlanScope1CopyWith<T> {
             : modifierExtension as List<FhirExtension>?,
         artifactX: identical(artifactX, fhirSentinel)
             ? _value.artifactX
-            : (artifactX as ArtifactXTestPlanTestCaseScope?) ??
-                _value.artifactX,
+            : (artifactX as ArtifactXTestPlanScope?) ?? _value.artifactX,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

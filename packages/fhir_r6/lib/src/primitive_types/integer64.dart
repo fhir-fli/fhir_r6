@@ -150,7 +150,6 @@ class FhirInteger64 extends PrimitiveType
     final elemJson = json['_value'] as Map<String, dynamic>?;
     final parsedElement = elemJson == null ? null : Element.fromJson(elemJson);
     return FhirInteger64(
-      // ignore: lines_longer_than_80_chars
       rawValue != null
           ? (rawValue is num ? rawValue.toString() : rawValue)
           : null,
