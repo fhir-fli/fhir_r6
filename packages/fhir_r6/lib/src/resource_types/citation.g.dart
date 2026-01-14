@@ -1267,7 +1267,7 @@ abstract class $CitationContributorshipCopyWith<T>
     List<FhirExtension>? modifierExtension,
     FhirBoolean? complete,
     List<CitationEntry>? entry,
-    List<CitationSummary>? summary,
+    List<CitationSummary1>? summary,
     bool? disallowExtensions,
   });
 }
@@ -1306,7 +1306,7 @@ class _$CitationContributorshipCopyWithImpl<T>
             : entry as List<CitationEntry>?,
         summary: identical(summary, fhirSentinel)
             ? _value.summary
-            : summary as List<CitationSummary>?,
+            : summary as List<CitationSummary1>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,
