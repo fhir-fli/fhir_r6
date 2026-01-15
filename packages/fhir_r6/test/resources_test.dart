@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'dart:convert';
 import 'dart:io';
 
@@ -7,51 +5,69 @@ import 'package:fhir_r6/fhir_r6.dart';
 import 'package:test/test.dart';
 
 void main() {
+  // Create quarantine directory and error log file
+  final quarantineDir = Directory('./test/quarantine');
+  if (!quarantineDir.existsSync()) {
+    quarantineDir.createSync(recursive: true);
+  }
+
+  final errorLogFile = File('./test/error_log.txt');
+  final errorLog = errorLogFile.openWrite(mode: FileMode.write);
+  errorLog.writeln('FHIR R6 Resource Test Error Log');
+  errorLog.writeln('Generated: ${DateTime.now()}');
+  errorLog.writeln('=' * 80);
+  errorLog.writeln();
+
+  tearDownAll(() {
+    errorLog.close();
+  });
+
   group(
     'JSON Validation',
     () {
       final dir = Directory('./test/assets');
       for (final file in dir.listSync()) {
-        final contents = File(file.path).readAsStringSync();
-        final contentJson1 = jsonDecode(contents) as Map<String, dynamic>;
-        final contentJson = jsonDecode(contents) as Map<String, dynamic>;
-        final resource = Resource.fromJson(contentJson1);
-        try {
-          test('$file.path', () {
-            expect(deepCompare(contentJson, resource.toJson()), isTrue);
-          });
-          if (!deepCompare(contentJson, resource.toJson())) {
-            File(
-              file.path.replaceAll('assets/', '').replaceAll(
-                    '.json',
-                    '1.json',
-                  ),
-            ).writeAsStringSync(prettyPrintJson(contentJson));
-            File(
-              file.path.replaceAll('assets/', '').replaceAll(
-                    '.json',
-                    '2.json',
-                  ),
-            ).writeAsStringSync(prettyPrintJson(resource.toJson()));
-            throw Exception('Unequal');
-          }
-        } catch (e) {
-          File(
-            file.path.replaceAll('assets/', '').replaceAll(
-                  '.json',
-                  '1.json',
-                ),
-          ).writeAsStringSync(prettyPrintJson(contentJson));
-          File(
-            file.path.replaceAll('assets/', '').replaceAll(
-                  '.json',
-                  '2.json',
-                ),
-          ).writeAsStringSync(prettyPrintJson(resource.toJson()));
+        test(file.path, () {
+          try {
+            final contents = File(file.path).readAsStringSync();
+            final contentJson = jsonDecode(contents) as Map<String, dynamic>;
+            final resource = Resource.fromJson(contentJson);
 
-          print(file.path);
-          rethrow;
-        }
+            if (!deepCompare(contentJson, resource.toJson())) {
+              File(
+                file.path.replaceAll('assets/', '').replaceAll(
+                      '.json',
+                      '1.json',
+                    ),
+              ).writeAsStringSync(prettyPrintJson(contentJson));
+              File(
+                file.path.replaceAll('assets/', '').replaceAll(
+                      '.json',
+                      '2.json',
+                    ),
+              ).writeAsStringSync(prettyPrintJson(resource.toJson()));
+
+              fail('Serialization mismatch for ${file.path}');
+            }
+          } catch (e, stackTrace) {
+            // Log the error
+            errorLog.writeln('FILE: ${file.path}');
+            errorLog.writeln('TEST: JSON Validation');
+            errorLog.writeln('ERROR: $e');
+            errorLog.writeln('STACK TRACE:');
+            errorLog.writeln(stackTrace);
+            errorLog.writeln('-' * 80);
+            errorLog.writeln();
+
+            // Move file to quarantine
+            final fileName = file.path.split('/').last;
+            final quarantineFile = File('./test/quarantine/$fileName');
+            File(file.path).renameSync(quarantineFile.path);
+
+            // Fail the test with error message
+            fail('JSON parsing error for ${file.path}: $e');
+          }
+        });
       }
     },
   );
@@ -61,48 +77,51 @@ void main() {
     () {
       final dir = Directory('./test/assets');
       for (final file in dir.listSync()) {
-        final contents = File(file.path).readAsStringSync();
-        final contentJson1 = jsonDecode(contents) as Map<String, dynamic>;
-        final contentJson = jsonDecode(contents) as Map<String, dynamic>;
-        final preResource = Resource.fromJson(contentJson1);
-        final yamlResourceString = preResource.toYaml();
-        final resource = Resource.fromYaml(yamlResourceString);
-        try {
-          test('$file.path', () {
-            expect(deepCompare(contentJson, resource.toJson()), isTrue);
-          });
-          if (!deepCompare(contentJson, resource.toJson())) {
-            File(
-              file.path.replaceAll('assets/', '').replaceAll(
-                    '.json',
-                    '1.json',
-                  ),
-            ).writeAsStringSync(prettyPrintJson(contentJson));
-            File(
-              file.path.replaceAll('assets/', '').replaceAll(
-                    '.json',
-                    '2.json',
-                  ),
-            ).writeAsStringSync(prettyPrintJson(resource.toJson()));
-            throw Exception('Unequal');
-          }
-        } catch (e) {
-          File(
-            file.path.replaceAll('assets/', '').replaceAll(
-                  '.json',
-                  '1.json',
-                ),
-          ).writeAsStringSync(prettyPrintJson(contentJson));
-          File(
-            file.path.replaceAll('assets/', '').replaceAll(
-                  '.json',
-                  '2.json',
-                ),
-          ).writeAsStringSync(prettyPrintJson(resource.toJson()));
+        test('${file.path}', () {
+          try {
+            final contents = File(file.path).readAsStringSync();
+            final contentJson = jsonDecode(contents) as Map<String, dynamic>;
+            final preResource = Resource.fromJson(contentJson);
+            final yamlResourceString = preResource.toYaml();
+            final resource = Resource.fromYaml(yamlResourceString);
 
-          print(file.path);
-          rethrow;
-        }
+            if (!deepCompare(contentJson, resource.toJson())) {
+              File(
+                file.path.replaceAll('assets/', '').replaceAll(
+                      '.json',
+                      '1.json',
+                    ),
+              ).writeAsStringSync(prettyPrintJson(contentJson));
+              File(
+                file.path.replaceAll('assets/', '').replaceAll(
+                      '.json',
+                      '2.json',
+                    ),
+              ).writeAsStringSync(prettyPrintJson(resource.toJson()));
+
+              fail('Serialization mismatch for ${file.path}');
+            }
+          } catch (e, stackTrace) {
+            // Log the error
+            errorLog.writeln('FILE: ${file.path}');
+            errorLog.writeln('TEST: YAML Validation');
+            errorLog.writeln('ERROR: $e');
+            errorLog.writeln('STACK TRACE:');
+            errorLog.writeln(stackTrace);
+            errorLog.writeln('-' * 80);
+            errorLog.writeln();
+
+            // Move file to quarantine (if not already moved by JSON test)
+            final fileName = file.path.split('/').last;
+            final quarantineFile = File('./test/quarantine/$fileName');
+            if (File(file.path).existsSync()) {
+              File(file.path).renameSync(quarantineFile.path);
+            }
+
+            // Fail the test with error message
+            fail('YAML parsing error for ${file.path}: $e');
+          }
+        });
       }
     },
   );

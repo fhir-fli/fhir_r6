@@ -3515,8 +3515,8 @@ class MeasureStratifier extends BackboneElement {
         FhirString.fromJson,
       ),
       component: (json['component'] as List<dynamic>?)
-          ?.map<MeasureComponent>(
-            (v) => MeasureComponent.fromJson(
+          ?.map<MeasureComponent1>(
+            (v) => MeasureComponent1.fromJson(
               {...v as Map<String, dynamic>},
             ),
           )
@@ -3612,7 +3612,7 @@ class MeasureStratifier extends BackboneElement {
   /// A component of the stratifier criteria for the measure report,
   /// specified as either the name of a valid CQL expression defined within a
   /// referenced library or a valid FHIR Resource Path.
-  final List<MeasureComponent>? component;
+  final List<MeasureComponent1>? component;
   @override
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -3895,7 +3895,7 @@ class MeasureStratifier extends BackboneElement {
     )) {
       return false;
     }
-    if (!listEquals<MeasureComponent>(
+    if (!listEquals<MeasureComponent1>(
       component,
       o.component,
     )) {

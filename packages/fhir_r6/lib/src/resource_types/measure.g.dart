@@ -662,7 +662,7 @@ abstract class $MeasureStratifierCopyWith<T>
     Reference? groupDefinition,
     FhirCanonical? valueSet,
     FhirString? unit,
-    List<MeasureComponent>? component,
+    List<MeasureComponent1>? component,
     bool? disallowExtensions,
   });
 }
@@ -719,7 +719,7 @@ class _$MeasureStratifierCopyWithImpl<T>
         unit: identical(unit, fhirSentinel) ? _value.unit : unit as FhirString?,
         component: identical(component, fhirSentinel)
             ? _value.component
-            : component as List<MeasureComponent>?,
+            : component as List<MeasureComponent1>?,
         disallowExtensions: identical(disallowExtensions, fhirSentinel)
             ? _value.disallowExtensions
             : disallowExtensions as bool?,

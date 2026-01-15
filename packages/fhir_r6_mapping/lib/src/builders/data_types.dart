@@ -28,7 +28,6 @@ export 'data_types/narrative.dart';
 export 'data_types/parameter_definition.dart';
 export 'data_types/period.dart';
 export 'data_types/polymorphic_types.dart';
-export 'data_types/polymorphic_types.json';
 export 'data_types/product_shelf_life.dart';
 export 'data_types/quantity.dart';
 export 'data_types/range.dart';
