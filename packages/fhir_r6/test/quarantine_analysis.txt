@@ -1,0 +1,59 @@
+FHIR R6 Quarantine Analysis
+Generated: 2026-01-17 23:38:37.404444
+================================================================================
+
+PARSE_ERROR (35 files):
+  - MolecularSequence_11.json
+  - MolecularSequence_3.json
+  - sequence-example-TPMT-one.json
+  - molecularsequence-focus-example.json
+  - Citation_0.json
+  - coord-0base-example.json
+  - MolecularSequence_6.json
+  - permission-example-bundle-residual.json
+  - MolecularSequence_5.json
+  - MolecularSequence_7.json
+  - MolecularSequence_8.json
+  - clinicalimpression-example.json
+  - sequence-example-TPMT-two.json
+  - Permission_3.json
+  - diagnosticreport-example-f202-bloodculture.json
+  - citation-example-for-parachute-rct.json
+  - citation-example-research-doi.json
+  - sequence-example-pgx-1.json
+  - TestPlan_0.json
+  - diagnosticreport-example-f201-brainct.json
+  - Citation_1.json
+  - ClinicalImpression_0.json
+  - diagnosticreport-example-dxa.json
+  - EvidenceReport_0.json
+  - sequence-example-pgx-2.json
+  - MolecularSequence_2.json
+  - TestScript_6.json
+  - sequence-complex-variant.json
+  - coord-1base-example.json
+  - testplan-example.json
+  - testscript-example-readcommon.json
+  - sequence-genetics-example-breastcancer.json
+  - evidencereport-example.json
+  - servicerequest-example-glucose.json
+  - MolecularSequence_1.json
+
+SERIALIZATION_MISMATCH (12 files):
+  - sequence-example-ordinal.json
+  - EvidenceVariable_12.json
+  - evidencevariable-example-eligibility-criteria-diabetes-surgery.json
+  - MolecularSequence_10.json
+  - sequence-example-fusion.json
+  - evidencevariable-example-Stroke-Thrombolysis-Trialists-2014-2016-IPD-MA-Cohort.json
+  - MolecularSequence_9.json
+  - MolecularSequence_4.json
+  - evidencevariable-example-Wardlaw2014Analysis1.16.3EvidenceSet.json
+  - EvidenceVariable_11.json
+  - evidencevariable-example-eligibility-criteria-ada-rec-bariatric.json
+  - evidencevariable-example-eligibility-criteria-adults-with-obesity.json
+
+MISSING_REQUIRED (0 files):
+
+OTHER_ERROR (0 files):
+

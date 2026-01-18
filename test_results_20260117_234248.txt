@@ -1,0 +1,20 @@
+FHIR R6 Test Results - Sat Jan 17 11:42:48 PM EST 2026
+=================================
+
+fhir_r4: SKIPPED (No test directory)
+fhir_r4_at_rest: SKIPPED (No test directory)
+fhir_r4_auth: SKIPPED (No test directory)
+fhir_r4_bulk: SKIPPED (No test directory)
+fhir_r4_cql: SKIPPED (No test directory)
+fhir_r4_db: SKIPPED (No test directory)
+fhir_r4_mapping: SKIPPED (No test directory)
+fhir_r4_path: SKIPPED (No test directory)
+fhir_r4_validation: SKIPPED (No test directory)
+
+=================================
+SUMMARY
+=================================
+Total Packages: 9
+Passed: 0
+Failed: 0
+Skipped: 9
