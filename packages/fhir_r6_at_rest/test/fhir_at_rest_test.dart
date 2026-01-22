@@ -886,7 +886,7 @@ void main() {
 
       expect(
         request.buildUri().toString(),
-        'http://hapi.fhir.org/baseR6/Patient?eqaddress=123%20Main%20St&_format=json',
+        'http://hapi.fhir.org/baseR6/Patient?address=eq123%20Main%20St&_format=json',
       );
 
       expect(

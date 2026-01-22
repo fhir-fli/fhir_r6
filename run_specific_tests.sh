@@ -10,12 +10,12 @@ echo "=========================================="
 echo ""
 
 PACKAGES=(
-  "packages/fhir_r6"
-  # "packages/fhir_r6_at_rest"
-  # "packages/fhir_r6_db"
+  # "packages/fhir_r6"
+  "packages/fhir_r6_at_rest"
+  "packages/fhir_r6_db"
   # "packages/fhir_r6_mapping"
   # "packages/fhir_r6_path"
-  # "packages/fhir_r6_bulk"
+  "packages/fhir_r6_bulk"
   # "packages/fhir_r6_validation"
 )
 
