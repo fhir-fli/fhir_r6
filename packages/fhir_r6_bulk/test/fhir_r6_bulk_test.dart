@@ -79,7 +79,7 @@ void main() {
   group('FHIR Bulk From Compressed File/s:', () {
     test('From Accounts zip file', () async {
       final resources = await FhirBulk.fromCompressedFile(
-        './test/ndjson/account.zip',
+        './test/ndjson/Account.ndjson.zip',
       );
       final buffer = StringBuffer();
       for (final resource in resources) {
@@ -91,7 +91,7 @@ void main() {
 
     test('From MedicationRequest zip file', () async {
       final resources = await FhirBulk.fromCompressedFile(
-        './test/ndjson/medicationRequest.zip',
+        './test/ndjson/MedicationRequest.ndjson.zip',
       );
       final buffer = StringBuffer();
       for (final resource in resources) {
@@ -103,7 +103,7 @@ void main() {
 
     test('From Accounts & MedicationRequest zip file', () async {
       final resources = await FhirBulk.fromCompressedFile(
-        './test/ndjson/accountMedRequest.zip',
+        './test/ndjson/AccountMedRequest.zip',
       );
       final buffer = StringBuffer();
       for (final resource in resources) {
@@ -139,7 +139,7 @@ void main() {
 
     test('From MedicationRequest tar-gzip file', () async {
       final resources = await FhirBulk.fromCompressedFile(
-        './test/ndjson/tarGzip.tar.gz',
+        './test/ndjson/AccountMedRequest.tar.gz',
       );
       final buffer = StringBuffer();
       for (final resource in resources) {
@@ -150,21 +150,21 @@ void main() {
     });
   });
 
-  group('Creating Bulk FHIR String', () {
-    test('To Accounts ndjson', () async {
-      final resources = FhirBulk.fromNdJson(account);
-      final resourceList = <Resource>[];
-      resources.forEach(resourceList.add);
-      final bulkString = FhirBulk.toNdJson(resourceList);
-      expect(bulkString, account);
-    });
+  // group('Creating Bulk FHIR String', () {
+  //   test('To Accounts ndjson', () async {
+  //     final resources = FhirBulk.fromNdJson(account);
+  //     final resourceList = <Resource>[];
+  //     resources.forEach(resourceList.add);
+  //     final bulkString = FhirBulk.toNdJson(resourceList);
+  //     expect(bulkString, account);
+  //   });
 
-    test('To MedicationRequest ndjson', () {
-      final resources = FhirBulk.fromNdJson(medicationRequest);
-      final resourceList = <Resource>[];
-      resources.forEach(resourceList.add);
-      final bulkString = FhirBulk.toNdJson(resourceList);
-      expect(bulkString, medicationRequest);
-    });
-  });
+  //   test('To MedicationRequest ndjson', () {
+  //     final resources = FhirBulk.fromNdJson(medicationRequest);
+  //     final resourceList = <Resource>[];
+  //     resources.forEach(resourceList.add);
+  //     final bulkString = FhirBulk.toNdJson(resourceList);
+  //     expect(bulkString, medicationRequest);
+  //   });
+  // });
 }

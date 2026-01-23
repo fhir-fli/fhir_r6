@@ -38,7 +38,7 @@ abstract class FhirBulk {
           resources.add(Resource.fromJson(decoded));
         } catch (e) {
           throw FormatException(
-            'Failed to parse NDJSON line: $trimmed',
+            'Failed to parse NDJSON line: $trimmed\nActual error: $e',
             e,
           );
         }
