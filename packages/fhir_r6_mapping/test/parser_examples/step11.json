@@ -19,7 +19,6 @@
   "group": [
     {
       "name": "tutorial",
-      "typeMode": "none",
       "input": [
         {
           "name": "src",
@@ -45,7 +44,6 @@
           "target": [
             {
               "context": "tgt",
-              "contextType": "variable",
               "element": "e",
               "variable": "t_e"
             }
@@ -61,7 +59,6 @@
               "target": [
                 {
                   "context": "t_e",
-                  "contextType": "variable",
                   "element": "f",
                   "transform": "copy",
                   "parameter": [
@@ -72,7 +69,6 @@
                 },
                 {
                   "context": "t_e",
-                  "contextType": "variable",
                   "element": "g",
                   "transform": "copy",
                   "parameter": [
@@ -97,7 +93,6 @@
           "target": [
             {
               "context": "tgt",
-              "contextType": "variable",
               "element": "e",
               "variable": "t_e",
               "listMode": [
@@ -116,7 +111,6 @@
               "target": [
                 {
                   "context": "t_e",
-                  "contextType": "variable",
                   "element": "f",
                   "transform": "copy",
                   "parameter": [
@@ -127,7 +121,6 @@
                 },
                 {
                   "context": "t_e",
-                  "contextType": "variable",
                   "element": "g",
                   "transform": "copy",
                   "parameter": [

@@ -21,7 +21,6 @@
   "group": [
     {
       "name": "tutorial",
-      "typeMode": "none",
       "input": [
         {
           "name": "src",
@@ -47,7 +46,6 @@
           "target": [
             {
               "context": "tgt",
-              "contextType": "variable",
               "element": "a",
               "variable": "vvv",
               "transform": "create"

@@ -1,94 +1,90 @@
 {
-    "resourceType": "StructureMap",
-    "id": "R3toR6conversionforCareConnectAllergyIntolerance_encounter-associatedEncounterextension",
-    "url": "http://fhir.nhs.uk/StructureMap/AllergyIntoleranceEncounter-associatedEncounter-Extension-3to4",
-    "name": "R3 to R6 conversion for CareConnect AllergyIntolerance_encounter-associatedEncounter extension",
-    "status": "draft",
-    "structure": [
+  "resourceType": "StructureMap",
+  "id": "R3toR5conversionforCareConnectAllergyIntolerance_encounter-associatedEncounterextension",
+  "url": "http://fhir.nhs.uk/StructureMap/AllergyIntoleranceEncounter-associatedEncounter-Extension-3to4",
+  "name": "R3 to R5 conversion for CareConnect AllergyIntolerance_encounter-associatedEncounter extension",
+  "status": "draft",
+  "structure": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance",
+      "mode": "source",
+      "alias": "AllergyIntolerance"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance",
+      "mode": "target",
+      "alias": "AllergyIntolerance"
+    }
+  ],
+  "group": [
+    {
+      "name": "AllergyIntolerance",
+      "input": [
         {
-            "url": "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance",
-            "mode": "source",
-            "alias": "AllergyIntolerance"
+          "name": "src",
+          "type": "AllergyIntolerance",
+          "mode": "source"
         },
         {
-            "url": "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance",
-            "mode": "target",
-            "alias": "AllergyIntolerance"
+          "name": "tgt",
+          "type": "AllergyIntolerance",
+          "mode": "target"
         }
-    ],
-    "group": [
+      ],
+      "rule": [
         {
-            "name": "AllergyIntolerance",
-            "typeMode": "none",
-            "input": [
+          "name": "extension",
+          "source": [
+            {
+              "context": "src",
+              "element": "extension",
+              "variable": "ext",
+              "condition": "$this.url = 'http://hl7.org/fhir/StructureDefinition/encounter-associatedEncounter'"
+            }
+          ],
+          "target": [
+            {
+              "context": "tgt",
+              "element": "encounter",
+              "variable": "vt"
+            }
+          ],
+          "rule": [
+            {
+              "name": "valueReference",
+              "source": [
                 {
-                    "name": "src",
-                    "type": "AllergyIntolerance",
-                    "mode": "source"
+                  "context": "ext",
+                  "type": "Reference",
+                  "element": "value",
+                  "variable": "vs"
+                }
+              ],
+              "target": [
+                {
+                  "variable": "vt1",
+                  "transform": "copy",
+                  "parameter": [
+                    {
+                      "valueId": "vt"
+                    }
+                  ]
                 },
                 {
-                    "name": "tgt",
-                    "type": "AllergyIntolerance",
-                    "mode": "target"
+                  "context": "tgt",
+                  "element": "encounter",
+                  "transform": "copy",
+                  "parameter": [
+                    {
+                      "valueId": "vs"
+                    }
+                  ]
                 }
-            ],
-            "rule": [
-                {
-                    "name": "extension",
-                    "source": [
-                        {
-                            "context": "src",
-                            "element": "extension",
-                            "variable": "ext",
-                            "condition": "$this.url = 'http://hl7.org/fhir/StructureDefinition/encounter-associatedEncounter'"
-                        }
-                    ],
-                    "target": [
-                        {
-                            "context": "tgt",
-                            "contextType": "variable",
-                            "element": "encounter",
-                            "variable": "vt"
-                        }
-                    ],
-                    "rule": [
-                        {
-                            "name": "valueReference",
-                            "source": [
-                                {
-                                    "context": "ext",
-                                    "type": "Reference",
-                                    "element": "value",
-                                    "variable": "vs"
-                                }
-                            ],
-                            "target": [
-                                {
-                                    "contextType": "variable",
-                                    "variable": "vt1",
-                                    "transform": "copy",
-                                    "parameter": [
-                                        {
-                                            "valueId": "vt"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "context": "tgt",
-                                    "contextType": "variable",
-                                    "element": "encounter",
-                                    "transform": "copy",
-                                    "parameter": [
-                                        {
-                                            "valueId": "vs"
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
+              ]
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }

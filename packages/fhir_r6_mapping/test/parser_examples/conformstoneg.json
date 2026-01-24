@@ -1,61 +1,59 @@
 {
-    "resourceType": "StructureMap",
-    "id": "conformstonge",
-    "url": "http://ahdis.ch/matchbox/fml/conformstoneg",
-    "name": "conformstonge",
-    "status": "draft",
-    "structure": [
+  "resourceType": "StructureMap",
+  "id": "conformstonge",
+  "url": "http://ahdis.ch/matchbox/fml/conformstoneg",
+  "name": "conformstonge",
+  "status": "draft",
+  "structure": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/Patient",
+      "mode": "source",
+      "alias": "Patient"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/Patient",
+      "mode": "target",
+      "alias": "Patient"
+    }
+  ],
+  "group": [
+    {
+      "name": "ConformsTo",
+      "input": [
         {
-            "url": "http://hl7.org/fhir/StructureDefinition/Patient",
-            "mode": "source",
-            "alias": "Patient"
+          "name": "src",
+          "type": "Patient",
+          "mode": "source"
         },
         {
-            "url": "http://hl7.org/fhir/StructureDefinition/Patient",
-            "mode": "target",
-            "alias": "Patient"
+          "name": "tgt",
+          "type": "Patient",
+          "mode": "target"
         }
-    ],
-    "group": [
+      ],
+      "rule": [
         {
-            "name": "ConformsTo",
-            "typeMode": "none",
-            "input": [
+          "name": "conformsTo",
+          "source": [
+            {
+              "context": "src",
+              "condition": "$this.conformsTo('http://hl7.org/fhir/StructureDefinition/Practitioner')"
+            }
+          ],
+          "target": [
+            {
+              "context": "tgt",
+              "element": "gender",
+              "transform": "copy",
+              "parameter": [
                 {
-                    "name": "src",
-                    "type": "Patient",
-                    "mode": "source"
-                },
-                {
-                    "name": "tgt",
-                    "type": "Patient",
-                    "mode": "target"
+                  "valueString": "male"
                 }
-            ],
-            "rule": [
-                {
-                    "name": "conformsTo",
-                    "source": [
-                        {
-                            "context": "src",
-                            "condition": "$this.conformsTo('http://hl7.org/fhir/StructureDefinition/Practitioner')"
-                        }
-                    ],
-                    "target": [
-                        {
-                            "context": "tgt",
-                            "contextType": "variable",
-                            "element": "gender",
-                            "transform": "copy",
-                            "parameter": [
-                                {
-                                    "valueString": "male"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
+              ]
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }

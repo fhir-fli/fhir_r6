@@ -1,4 +1,4 @@
-map "http://fhir.nhs.uk/StructureMap/MedicationRequestStatusReason-Extension-3to4" = "R3 to R6 conversion for CareConnect MedicationRequest StatusReason extension"
+map "http://fhir.nhs.uk/StructureMap/MedicationRequestStatusReason-Extension-3to4" = "R3 to R5 conversion for CareConnect MedicationRequest StatusReason extension"
 uses "http://hl7.org/fhir/StructureDefinition/MedicationRequest" alias MedicationRequest as source
 uses "http://hl7.org/fhir/StructureDefinition/MedicationRequest" alias MedicationRequest as target
 

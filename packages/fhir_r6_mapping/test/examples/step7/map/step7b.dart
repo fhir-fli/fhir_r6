@@ -45,7 +45,10 @@ final structureMapStep7b = StructureMap.fromJson({
           "dependent": [
             {
               "name": "ab_content",
-              "variable": ["s_aa", "t_aa"],
+              "parameter": [
+                {"valueId": "s_aa"},
+                {"valueId": "t_aa"},
+              ],
             }
           ],
         }

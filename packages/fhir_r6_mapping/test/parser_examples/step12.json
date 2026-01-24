@@ -19,7 +19,6 @@
   "group": [
     {
       "name": "tutorial",
-      "typeMode": "none",
       "input": [
         {
           "name": "src",
@@ -55,7 +54,6 @@
               "target": [
                 {
                   "context": "tgt",
-                  "contextType": "variable",
                   "element": "az1",
                   "variable": "t_az1"
                 }
@@ -73,7 +71,6 @@
                   "target": [
                     {
                       "context": "t_az1",
-                      "contextType": "variable",
                       "element": "az2",
                       "transform": "copy",
                       "parameter": [
@@ -95,7 +92,6 @@
                   "target": [
                     {
                       "context": "t_az1",
-                      "contextType": "variable",
                       "element": "az3",
                       "transform": "copy",
                       "parameter": [

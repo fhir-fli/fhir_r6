@@ -16,7 +16,7 @@
               "target": [
                 {
                   "code": "nach-da",
-                  "equivalence": "equivalent"
+                  "relationship": "equivalent"
                 }
               ]
             },
@@ -25,7 +25,7 @@
               "target": [
                 {
                   "code": "test",
-                  "equivalence": "equivalent"
+                  "relationship": "equivalent"
                 }
               ]
             }
@@ -52,7 +52,6 @@
   "group": [
     {
       "name": "tutorial",
-      "typeMode": "none",
       "input": [
         {
           "name": "src",
@@ -78,7 +77,6 @@
           "target": [
             {
               "context": "tgt",
-              "contextType": "variable",
               "element": "d",
               "transform": "translate",
               "parameter": [

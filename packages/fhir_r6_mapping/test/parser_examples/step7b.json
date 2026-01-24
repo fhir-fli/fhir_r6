@@ -19,7 +19,6 @@
   "group": [
     {
       "name": "tutorial",
-      "typeMode": "none",
       "input": [
         {
           "name": "src",
@@ -45,7 +44,6 @@
           "target": [
             {
               "context": "tgt",
-              "contextType": "variable",
               "element": "aa",
               "variable": "t_aa"
             }
@@ -53,9 +51,13 @@
           "dependent": [
             {
               "name": "ab_content",
-              "variable": [
-                "s_aa",
-                "t_aa"
+              "parameter": [
+                {
+                  "valueId": "s_aa"
+                },
+                {
+                  "valueId": "t_aa"
+                }
               ]
             }
           ]
@@ -64,7 +66,6 @@
     },
     {
       "name": "ab_content",
-      "typeMode": "none",
       "input": [
         {
           "name": "src",
@@ -88,7 +89,6 @@
           "target": [
             {
               "context": "tgt",
-              "contextType": "variable",
               "element": "ab",
               "transform": "copy",
               "parameter": [

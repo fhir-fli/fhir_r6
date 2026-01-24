@@ -1,8 +1,8 @@
 {
     "resourceType": "StructureMap",
-    "id": "R3toR6conversionforSTU3Extension-coding-sctdescidinAllergyIntolerance.code",
+    "id": "R3toR5conversionforSTU3Extension-coding-sctdescidinAllergyIntolerance.code",
     "url": "http://fhir.nhs.uk/StructureMap/AllergyIntoleranceExtension-coding-sctdescid-3to4",
-    "name": "R3 to R6 conversion for STU3 Extension-coding-sctdescid in AllergyIntolerance.code",
+    "name": "R3 to R5 conversion for STU3 Extension-coding-sctdescid in AllergyIntolerance.code",
     "status": "draft",
     "structure": [
         {

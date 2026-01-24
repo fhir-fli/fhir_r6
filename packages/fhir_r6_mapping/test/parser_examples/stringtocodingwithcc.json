@@ -1,114 +1,114 @@
 {
-    "resourceType": "StructureMap",
-    "id": "stringtocodingwithcc",
-    "url": "http://ahdis.ch/matchbox/fml/stringtocodingwithcc",
-    "name": "stringtocodingwithcc",
-    "status": "draft",
-    "structure": [
+  "resourceType": "StructureMap",
+  "id": "stringtocodingwithcc",
+  "url": "http://ahdis.ch/matchbox/fml/stringtocodingwithcc",
+  "name": "stringtocodingwithcc",
+  "status": "draft",
+  "structure": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
+      "mode": "source",
+      "alias": "QuestionnaireResponse"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/ExplanationOfBenefit",
+      "mode": "target",
+      "alias": "ExplanationOfBenefit"
+    }
+  ],
+  "group": [
+    {
+      "name": "stringtocoding",
+      "input": [
         {
-            "url": "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
-            "mode": "source",
-            "alias": "QuestionnaireResponse"
+          "name": "src",
+          "type": "QuestionnaireResponse",
+          "mode": "source"
         },
         {
-            "url": "http://hl7.org/fhir/StructureDefinition/ExplanationOfBenefit",
-            "mode": "target",
-            "alias": "ExplanationOfBenefit"
+          "name": "tgt",
+          "type": "ExplanationOfBenefit",
+          "mode": "target"
         }
-    ],
-    "group": [
+      ],
+      "rule": [
         {
-            "name": "stringtocoding",
-            "typeMode": "none",
-            "input": [
+          "name": "item",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item"
+            }
+          ],
+          "target": [
+            {
+              "variable": "eob",
+              "transform": "copy",
+              "parameter": [
                 {
-                    "name": "src",
-                    "type": "QuestionnaireResponse",
-                    "mode": "source"
+                  "valueId": "tgt"
+                }
+              ]
+            }
+          ],
+          "dependent": [
+            {
+              "name": "item",
+              "parameter": [
+                {
+                  "valueId": "item"
                 },
                 {
-                    "name": "tgt",
-                    "type": "ExplanationOfBenefit",
-                    "mode": "target"
+                  "valueId": "eob"
                 }
-            ],
-            "rule": [
-                {
-                    "name": "item",
-                    "source": [
-                        {
-                            "context": "src",
-                            "element": "item",
-                            "variable": "item"
-                        }
-                    ],
-                    "target": [
-                        {
-                            "contextType": "variable",
-                            "variable": "eob",
-                            "transform": "copy",
-                            "parameter": [
-                                {
-                                    "valueId": "tgt"
-                                }
-                            ]
-                        }
-                    ],
-                    "dependent": [
-                        {
-                            "name": "item",
-                            "variable": [
-                                "item",
-                                "eob"
-                            ]
-                        }
-                    ]
-                }
-            ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "item",
+      "input": [
+        {
+          "name": "src",
+          "mode": "source"
         },
         {
-            "name": "item",
-            "typeMode": "none",
-            "input": [
+          "name": "tgt",
+          "type": "ExplanationOfBenefit",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "code2coding",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "linkId in ('patient.claim-type')"
+            }
+          ],
+          "target": [
+            {
+              "context": "tgt",
+              "element": "type",
+              "transform": "cc",
+              "parameter": [
                 {
-                    "name": "src",
-                    "mode": "source"
+                  "valueString": "http://terminology.hl7.org/CodeSystem/communication-category"
                 },
                 {
-                    "name": "tgt",
-                    "type": "ExplanationOfBenefit",
-                    "mode": "target"
+                  "valueString": "notification"
                 }
-            ],
-            "rule": [
-                {
-                    "name": "code2coding",
-                    "source": [
-                        {
-                            "context": "src",
-                            "element": "item",
-                            "variable": "item",
-                            "condition": "linkId in ('patient.claim-type')"
-                        }
-                    ],
-                    "target": [
-                        {
-                            "context": "tgt",
-                            "contextType": "variable",
-                            "element": "type",
-                            "transform": "cc",
-                            "parameter": [
-                                {
-                                    "valueString": "http://terminology.hl7.org/CodeSystem/communication-category"
-                                },
-                                {
-                                    "valueString": "notification"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
+              ]
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }

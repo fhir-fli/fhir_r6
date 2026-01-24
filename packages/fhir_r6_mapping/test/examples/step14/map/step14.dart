@@ -145,7 +145,12 @@ final structureMapStep14 = StructureMap.fromJson({
           "dependent": [
             {
               "name": "TransformObservation",
-              "variable": ["src", "answerItem3", "observation3", "entry"],
+              "parameter": [
+                {"valueId": "src"},
+                {"valueId": "answerItem3"},
+                {"valueId": "observation3"},
+                {"valueId": "entry"},
+              ],
             }
           ],
         },
@@ -181,7 +186,12 @@ final structureMapStep14 = StructureMap.fromJson({
           "dependent": [
             {
               "name": "TransformCondition",
-              "variable": ["src", "bundle", "condition", "entry"],
+              "parameter": [
+                {"valueId": "src"},
+                {"valueId": "bundle"},
+                {"valueId": "condition"},
+                {"valueId": "entry"},
+              ],
             }
           ],
         }
@@ -270,7 +280,10 @@ final structureMapStep14 = StructureMap.fromJson({
           "dependent": [
             {
               "name": "SetObservationFullUrl",
-              "variable": ["observation", "entry"],
+              "parameter": [
+                {"valueId": "observation"},
+                {"valueId": "entry"},
+              ],
             }
           ],
         },
@@ -646,7 +659,10 @@ final structureMapStep14 = StructureMap.fromJson({
           "dependent": [
             {
               "name": "SetConditionFullUrl",
-              "variable": ["condition", "entry"],
+              "parameter": [
+                {"valueId": "condition"},
+                {"valueId": "entry"},
+              ],
             }
           ],
         },
@@ -1050,15 +1066,9 @@ final structureMapStep14 = StructureMap.fromJson({
               "contextType": "variable",
               "element": "evidence",
               "variable": "evidence",
-            },
-            {
-              "context": "evidence",
-              "contextType": "variable",
-              "element": "detail",
-              "variable": "detailReference",
               "transform": "create",
               "parameter": [
-                {"valueString": "Reference"},
+                {"valueString": "CodeableReference"},
               ],
             }
           ],
@@ -1075,7 +1085,17 @@ final structureMapStep14 = StructureMap.fromJson({
               ],
               "target": [
                 {
-                  "context": "detailReference",
+                  "context": "evidence",
+                  "contextType": "variable",
+                  "element": "reference",
+                  "variable": "evidenceRef",
+                  "transform": "create",
+                  "parameter": [
+                    {"valueString": "Reference"},
+                  ],
+                },
+                {
+                  "context": "evidenceRef",
                   "contextType": "variable",
                   "element": "reference",
                   "transform": "reference",

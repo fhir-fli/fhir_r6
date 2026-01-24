@@ -19,7 +19,6 @@
   "group": [
     {
       "name": "tutorial",
-      "typeMode": "none",
       "input": [
         {
           "name": "src",
@@ -45,7 +44,6 @@
           "target": [
             {
               "context": "tgt",
-              "contextType": "variable",
               "element": "aa",
               "variable": "t_aa"
             }
@@ -63,7 +61,6 @@
               "target": [
                 {
                   "context": "t_aa",
-                  "contextType": "variable",
                   "element": "ab",
                   "transform": "copy",
                   "parameter": [

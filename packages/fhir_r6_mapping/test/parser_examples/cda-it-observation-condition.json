@@ -1,72 +1,70 @@
 {
-    "resourceType": "StructureMap",
-    "id": "TestObservationConditionCoding",
-    "url": "http://salute.gov.it/ig/cda-fhir-maps/StructureMap/TestObservationConditionCoding",
-    "name": "TestObservationConditionCoding",
-    "status": "draft",
-    "structure": [
+  "resourceType": "StructureMap",
+  "id": "TestObservationConditionCoding",
+  "url": "http://salute.gov.it/ig/cda-fhir-maps/StructureMap/TestObservationConditionCoding",
+  "name": "TestObservationConditionCoding",
+  "status": "draft",
+  "structure": [
+    {
+      "url": "http://hl7.org/cda/stds/core/StructureDefinition/Observation",
+      "mode": "source",
+      "alias": "CdaObservation"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/Condition",
+      "mode": "target",
+      "alias": "FhirObservation"
+    },
+    {
+      "url": "http://hl7.org/cda/stds/core/StructureDefinition/CD",
+      "mode": "source",
+      "alias": "ST"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/CodeableConcept",
+      "mode": "target",
+      "alias": "CodeableConcept"
+    }
+  ],
+  "import": [
+    "http://salute.gov.it/ig/cda-fhir-maps/StructureMap/CdaToFhirDataTypes",
+    "http://salute.gov.it/ig/cda-fhir-maps/StructureMap/FULLHEADER"
+  ],
+  "group": [
+    {
+      "name": "CdaToFHIR",
+      "input": [
         {
-            "url": "http://hl7.org/cda/stds/core/StructureDefinition/Observation",
-            "mode": "source",
-            "alias": "CdaObservation"
+          "name": "cda",
+          "type": "CdaObservation",
+          "mode": "source"
         },
         {
-            "url": "http://hl7.org/fhir/StructureDefinition/Condition",
-            "mode": "target",
-            "alias": "FhirObservation"
-        },
-        {
-            "url": "http://hl7.org/cda/stds/core/StructureDefinition/CD",
-            "mode": "source",
-            "alias": "ST"
-        },
-        {
-            "url": "http://hl7.org/fhir/StructureDefinition/CodeableConcept",
-            "mode": "target",
-            "alias": "CodeableConcept"
+          "name": "condition",
+          "type": "Condition",
+          "mode": "target"
         }
-    ],
-    "import": [
-        "http://salute.gov.it/ig/cda-fhir-maps/StructureMap/CdaToFhirDataTypes",
-        "http://salute.gov.it/ig/cda-fhir-maps/StructureMap/FULLHEADER"
-    ],
-    "group": [
+      ],
+      "rule": [
         {
-            "name": "CdaToFHIR",
-            "typeMode": "none",
-            "input": [
-                {
-                    "name": "cda",
-                    "type": "CdaObservation",
-                    "mode": "source"
-                },
-                {
-                    "name": "condition",
-                    "type": "Condition",
-                    "mode": "target"
-                }
-            ],
-            "rule": [
-                {
-                    "name": "implicit-coding-for-CE-Type",
-                    "source": [
-                        {
-                            "context": "cda",
-                            "element": "value",
-                            "variable": "vvv"
-                        }
-                    ],
-                    "target": [
-                        {
-                            "context": "condition",
-                            "contextType": "variable",
-                            "element": "code",
-                            "variable": "vvv",
-                            "transform": "create"
-                        }
-                    ]
-                }
-            ]
+          "name": "implicitcodingforCEType",
+          "source": [
+            {
+              "context": "cda",
+              "element": "value",
+              "variable": "vvv"
+            }
+          ],
+          "target": [
+            {
+              "context": "condition",
+              "element": "code",
+              "variable": "vvv",
+              "transform": "create"
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }

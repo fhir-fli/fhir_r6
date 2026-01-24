@@ -1,110 +1,105 @@
 {
-    "resourceType": "StructureMap",
-    "id": "R3toR6conversionforCareConnectAllergyIntoleranceAllergyIntoleranceEndextension",
-    "url": "http://fhir.nhs.uk/StructureMap/AllergyIntoleranceAllergyIntoleranceEnd-Extension-3to4",
-    "name": "R3 to R6 conversion for CareConnect AllergyIntolerance AllergyIntoleranceEnd extension",
-    "status": "draft",
-    "structure": [
+  "resourceType": "StructureMap",
+  "id": "R3toR5conversionforCareConnectAllergyIntoleranceAllergyIntoleranceEndextension",
+  "url": "http://fhir.nhs.uk/StructureMap/AllergyIntoleranceAllergyIntoleranceEnd-Extension-3to4",
+  "name": "R3 to R5 conversion for CareConnect AllergyIntolerance AllergyIntoleranceEnd extension",
+  "status": "draft",
+  "structure": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance",
+      "mode": "source",
+      "alias": "AllergyIntolerance"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance",
+      "mode": "target",
+      "alias": "AllergyIntolerance"
+    }
+  ],
+  "group": [
+    {
+      "name": "AllergyIntolerance",
+      "input": [
         {
-            "url": "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance",
-            "mode": "source",
-            "alias": "AllergyIntolerance"
+          "name": "src",
+          "type": "AllergyIntolerance",
+          "mode": "source"
         },
         {
-            "url": "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance",
-            "mode": "target",
-            "alias": "AllergyIntolerance"
+          "name": "tgt",
+          "type": "AllergyIntolerance",
+          "mode": "target"
         }
-    ],
-    "group": [
+      ],
+      "rule": [
         {
-            "name": "AllergyIntolerance",
-            "typeMode": "none",
-            "input": [
+          "name": "extension",
+          "source": [
+            {
+              "context": "src",
+              "element": "extension",
+              "variable": "ext",
+              "condition": "$this.url = 'https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-AllergyIntoleranceEnd-1'"
+            }
+          ],
+          "target": [
+            {
+              "context": "tgt",
+              "element": "extension",
+              "variable": "tgtext",
+              "transform": "create",
+              "parameter": [
                 {
-                    "name": "src",
-                    "type": "AllergyIntolerance",
-                    "mode": "source"
+                  "valueString": "Extension"
+                }
+              ]
+            },
+            {
+              "context": "tgtext",
+              "element": "url",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueString": "https://fhir.hl7.org.uk/StructureDefinition/Extension-UKCore-AllergyIntoleranceEnd"
+                }
+              ]
+            }
+          ],
+          "rule": [
+            {
+              "name": "extension",
+              "source": [
+                {
+                  "context": "ext",
+                  "element": "extension",
+                  "variable": "vs"
+                }
+              ],
+              "target": [
+                {
+                  "variable": "vt",
+                  "transform": "copy",
+                  "parameter": [
+                    {
+                      "valueId": "tgtext"
+                    }
+                  ]
                 },
                 {
-                    "name": "tgt",
-                    "type": "AllergyIntolerance",
-                    "mode": "target"
+                  "context": "vt",
+                  "element": "extension",
+                  "transform": "copy",
+                  "parameter": [
+                    {
+                      "valueId": "vs"
+                    }
+                  ]
                 }
-            ],
-            "rule": [
-                {
-                    "name": "extension",
-                    "source": [
-                        {
-                            "context": "src",
-                            "element": "extension",
-                            "variable": "ext",
-                            "condition": "$this.url = 'https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-AllergyIntoleranceEnd-1'"
-                        }
-                    ],
-                    "target": [
-                        {
-                            "context": "tgt",
-                            "contextType": "variable",
-                            "element": "extension",
-                            "variable": "tgtext",
-                            "transform": "create",
-                            "parameter": [
-                                {
-                                    "valueString": "Extension"
-                                }
-                            ]
-                        },
-                        {
-                            "context": "tgtext",
-                            "contextType": "variable",
-                            "element": "url",
-                            "transform": "copy",
-                            "parameter": [
-                                {
-                                    "valueString": "https://fhir.hl7.org.uk/StructureDefinition/Extension-UKCore-AllergyIntoleranceEnd"
-                                }
-                            ]
-                        }
-                    ],
-                    "rule": [
-                        {
-                            "name": "extension",
-                            "source": [
-                                {
-                                    "context": "ext",
-                                    "element": "extension",
-                                    "variable": "vs"
-                                }
-                            ],
-                            "target": [
-                                {
-                                    "contextType": "variable",
-                                    "variable": "vt",
-                                    "transform": "copy",
-                                    "parameter": [
-                                        {
-                                            "valueId": "tgtext"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "context": "vt",
-                                    "contextType": "variable",
-                                    "element": "extension",
-                                    "transform": "copy",
-                                    "parameter": [
-                                        {
-                                            "valueId": "vs"
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
+              ]
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }

@@ -364,7 +364,9 @@ class FhirMapEngine {
     final MappingVariables v = MappingVariables();
     for (int i = 0; i < (rg.target!.input?.length ?? 0); i++) {
       final input = rg.target!.input?[i];
-      final varVal = dependent.parameter?[i].valueString?.valueString;
+      final param = dependent.parameter?[i];
+      final varVal =
+          param?.valueId?.valueString ?? param?.valueString?.valueString;
       final mode = input?.mode == StructureMapInputModeBuilder.source
           ? MappingVariableMode.INPUT
           : MappingVariableMode.OUTPUT;

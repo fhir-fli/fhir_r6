@@ -18,13 +18,13 @@ final structureMapStep8 = StructureMap.fromJson({
             {
               "code": "vonhier",
               "target": [
-                {"code": "nach-da", "equivalence": "equivalent"},
+                {"code": "nach-da", "relationship": "equivalent"},
               ],
             },
             {
               "code": "test",
               "target": [
-                {"code": "test", "equivalence": "equivalent"},
+                {"code": "test", "relationship": "equivalent"},
               ],
             }
           ],

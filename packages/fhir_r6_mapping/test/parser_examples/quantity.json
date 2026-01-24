@@ -1,142 +1,142 @@
 {
-    "resourceType": "StructureMap",
-    "id": "qty",
-    "url": "http://ahdis.ch/matchbox/fml/qty",
-    "name": "qty",
-    "status": "draft",
-    "structure": [
+  "resourceType": "StructureMap",
+  "id": "qty",
+  "url": "http://ahdis.ch/matchbox/fml/qty",
+  "name": "qty",
+  "status": "draft",
+  "structure": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
+      "mode": "source",
+      "alias": "QuestionnaireResponse"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/Observation",
+      "mode": "target",
+      "alias": "Observation"
+    }
+  ],
+  "group": [
+    {
+      "name": "stringtocoding",
+      "input": [
         {
-            "url": "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
-            "mode": "source",
-            "alias": "QuestionnaireResponse"
+          "name": "src",
+          "type": "QuestionnaireResponse",
+          "mode": "source"
         },
         {
-            "url": "http://hl7.org/fhir/StructureDefinition/Observation",
-            "mode": "target",
-            "alias": "Observation"
+          "name": "tgt",
+          "type": "Observation",
+          "mode": "target"
         }
-    ],
-    "group": [
+      ],
+      "rule": [
         {
-            "name": "stringtocoding",
-            "typeMode": "none",
-            "input": [
+          "name": "item",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item"
+            }
+          ],
+          "target": [
+            {
+              "variable": "obs",
+              "transform": "copy",
+              "parameter": [
                 {
-                    "name": "src",
-                    "type": "QuestionnaireResponse",
-                    "mode": "source"
+                  "valueId": "tgt"
+                }
+              ]
+            }
+          ],
+          "dependent": [
+            {
+              "name": "ExtractBloodPressure",
+              "parameter": [
+                {
+                  "valueId": "item"
                 },
                 {
-                    "name": "tgt",
-                    "type": "Observation",
-                    "mode": "target"
+                  "valueId": "obs"
                 }
-            ],
-            "rule": [
-                {
-                    "name": "item",
-                    "source": [
-                        {
-                            "context": "src",
-                            "element": "item",
-                            "variable": "item"
-                        }
-                    ],
-                    "target": [
-                        {
-                            "contextType": "variable",
-                            "variable": "obs",
-                            "transform": "copy",
-                            "parameter": [
-                                {
-                                    "valueId": "tgt"
-                                }
-                            ]
-                        }
-                    ],
-                    "dependent": [
-                        {
-                            "name": "ExtractBloodPressure",
-                            "variable": [
-                                "item",
-                                "obs"
-                            ]
-                        }
-                    ]
-                }
-            ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ExtractBloodPressure",
+      "input": [
+        {
+          "name": "src",
+          "mode": "source"
         },
         {
-            "name": "ExtractBloodPressure",
-            "typeMode": "none",
-            "input": [
-                {
-                    "name": "src",
-                    "mode": "source"
-                },
-                {
-                    "name": "tgt",
-                    "type": "Observation",
-                    "mode": "target"
-                }
-            ],
-            "rule": [
-                {
-                    "name": "item",
-                    "source": [
-                        {
-                            "context": "src",
-                            "element": "item",
-                            "variable": "systolic_bp",
-                            "condition": "(linkId = 'systolic-bp_1.2')"
-                        }
-                    ],
-                    "rule": [
-                        {
-                            "name": "qty",
-                            "source": [
-                                {
-                                    "context": "systolic_bp",
-                                    "element": "answer",
-                                    "variable": "ans"
-                                }
-                            ],
-                            "rule": [
-                                {
-                                    "name": "qty",
-                                    "source": [
-                                        {
-                                            "context": "ans",
-                                            "element": "value",
-                                            "variable": "value"
-                                        }
-                                    ],
-                                    "target": [
-                                        {
-                                            "context": "tgt",
-                                            "contextType": "variable",
-                                            "element": "value",
-                                            "transform": "qty",
-                                            "parameter": [
-                                                {
-                                                    "valueId": "value"
-                                                },
-                                                {
-                                                    "valueString": "kg"
-                                                },
-                                                {
-                                                    "valueString": "http://unit.org"
-                                                }
-                                            ]
-                                        }
-                                    ],
-                                    "documentation": "ans.value as value -> tgt.value = create('Quantity') as qty,  qty.value = value \"qty\";"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
+          "name": "tgt",
+          "type": "Observation",
+          "mode": "target"
         }
-    ]
+      ],
+      "rule": [
+        {
+          "name": "item",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "systolic_bp",
+              "condition": "(linkId = 'systolic-bp_1.2')"
+            }
+          ],
+          "rule": [
+            {
+              "name": "qty",
+              "source": [
+                {
+                  "context": "systolic_bp",
+                  "element": "answer",
+                  "variable": "ans"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "qty",
+                  "source": [
+                    {
+                      "context": "ans",
+                      "element": "value",
+                      "variable": "value"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "tgt",
+                      "element": "value",
+                      "transform": "qty",
+                      "parameter": [
+                        {
+                          "valueId": "value"
+                        },
+                        {
+                          "valueString": "kg"
+                        },
+                        {
+                          "valueString": "http://unit.org"
+                        }
+                      ]
+                    }
+                  ],
+                  "documentation": "ans.value as value -> tgt.value = create('Quantity') as qty,  qty.value = value \"qty\";"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

@@ -147,12 +147,10 @@ final Map<String, Object> resultStep14Source14 = {
         "onsetPeriod": {"start": "2020-09-10T21:56:54.671Z"},
         "evidence": [
           {
-            "detail": [
-              {
-                "reference":
-                    "Observation/SDOHCC-ObservationResponseHungerVitalSignQuestion3Example"
-              }
-            ]
+            "reference": {
+              "reference":
+                  "Observation/SDOHCC-ObservationResponseHungerVitalSignQuestion3Example"
+            }
           }
         ]
       },

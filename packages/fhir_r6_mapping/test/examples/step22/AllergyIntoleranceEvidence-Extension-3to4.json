@@ -1,8 +1,8 @@
 {
     "resourceType": "StructureMap",
-    "id": "R3toR6conversionforCareConnectAllergyIntoleranceEvidenceextension",
+    "id": "R3toR5conversionforCareConnectAllergyIntoleranceEvidenceextension",
     "url": "http://fhir.nhs.uk/StructureMap/AllergyIntoleranceEvidence-Extension-3to4",
-    "name": "R3 to R6 conversion for CareConnect AllergyIntolerance Evidence extension",
+    "name": "R3 to R5 conversion for CareConnect AllergyIntolerance Evidence extension",
     "status": "draft",
     "structure": [
         {

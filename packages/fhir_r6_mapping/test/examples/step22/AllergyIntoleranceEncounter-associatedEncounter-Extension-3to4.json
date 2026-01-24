@@ -1,8 +1,8 @@
 {
     "resourceType": "StructureMap",
-    "id": "R3toR6conversionforCareConnectAllergyIntoleranceencounter-associatedEncounterextension",
+    "id": "R3toR5conversionforCareConnectAllergyIntoleranceencounter-associatedEncounterextension",
     "url": "http://fhir.nhs.uk/StructureMap/AllergyIntoleranceEncounter-associatedEncounter-Extension-3to4",
-    "name": "R3 to R6 conversion for CareConnect AllergyIntolerance_encounter-associatedEncounter extension",
+    "name": "R3 to R5 conversion for CareConnect AllergyIntolerance_encounter-associatedEncounter extension",
     "status": "draft",
     "structure": [
         {
