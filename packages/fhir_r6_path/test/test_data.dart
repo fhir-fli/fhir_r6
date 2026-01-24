@@ -492,6 +492,7 @@ final patient5 = Resource.fromJson(
 final questionnaireResponse1 = QuestionnaireResponse.fromJson({
   'resourceType': 'QuestionnaireResponse',
   'status': 'completed',
+  'questionnaire': 'Questionnaire/preschool',
   'item': [
     {'linkId': '/psc/preschool'},
     {
