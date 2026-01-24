@@ -1,5 +1,15 @@
 # fhir_r6
 
+## [0.4.4]
+
+* **fhir_r6**: Fixed getChildrenByName null checks for polymorphic fields, added id to xhtml _allowedAttributes
+* **fhir_r6_at_rest**: Updated dependencies
+* **fhir_r6_path**: Updated dependencies
+* **fhir_r6_mapping**: Updated dependencies
+* **fhir_r6_db**: Added id to xhtml _allowedAttributes
+* **fhir_r6_bulk**: Updated dependencies
+* **fhir_r6_validation**: Updated dependencies
+
 ## [0.3.0-1]
 
 * Lots and Lots of changes.

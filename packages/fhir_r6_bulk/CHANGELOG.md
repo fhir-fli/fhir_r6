@@ -1,5 +1,9 @@
 # fhir_r6_bulk
 
+## [0.4.2]
+
+* Updated dependencies
+
 ## [0.4.1]
 
 * Updated dependencies

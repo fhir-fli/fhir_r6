@@ -1,5 +1,9 @@
 # fhir_r6_path
 
+## [0.4.5]
+
+* Updated dependencies
+
 ## [0.4.4]
 
 * Updated dependencies
