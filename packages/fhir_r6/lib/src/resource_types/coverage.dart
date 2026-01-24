@@ -1865,9 +1865,13 @@ class CoverageCostToBeneficiary extends BackboneElement {
           fields.add(term!);
         }
       case 'value':
-        fields.add(valueX!);
+        if (valueX != null) {
+          fields.add(valueX!);
+        }
       case 'valueX':
-        fields.add(valueX!);
+        if (valueX != null) {
+          fields.add(valueX!);
+        }
       case 'valueQuantity':
         if (valueX is Quantity) {
           fields.add(valueX!);

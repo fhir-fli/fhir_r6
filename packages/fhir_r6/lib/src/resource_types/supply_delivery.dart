@@ -523,9 +523,13 @@ class SupplyDelivery extends DomainResource {
           fields.addAll(suppliedItem!);
         }
       case 'occurrence':
-        fields.add(occurrenceX!);
+        if (occurrenceX != null) {
+          fields.add(occurrenceX!);
+        }
       case 'occurrenceX':
-        fields.add(occurrenceX!);
+        if (occurrenceX != null) {
+          fields.add(occurrenceX!);
+        }
       case 'occurrenceDateTime':
         if (occurrenceX is FhirDateTime) {
           fields.add(occurrenceX!);
@@ -980,9 +984,13 @@ class SupplyDeliverySuppliedItem extends BackboneElement {
           fields.add(condition!);
         }
       case 'item':
-        fields.add(itemX!);
+        if (itemX != null) {
+          fields.add(itemX!);
+        }
       case 'itemX':
-        fields.add(itemX!);
+        if (itemX != null) {
+          fields.add(itemX!);
+        }
       case 'itemCodeableConcept':
         if (itemX is CodeableConcept) {
           fields.add(itemX!);

@@ -536,9 +536,13 @@ class AuditEvent extends DomainResource {
           fields.add(severity!);
         }
       case 'occurred':
-        fields.add(occurredX!);
+        if (occurredX != null) {
+          fields.add(occurredX!);
+        }
       case 'occurredX':
-        fields.add(occurredX!);
+        if (occurredX != null) {
+          fields.add(occurredX!);
+        }
       case 'occurredPeriod':
         if (occurredX is Period) {
           fields.add(occurredX!);
@@ -1425,9 +1429,13 @@ class AuditEventAgent extends BackboneElement {
           fields.addAll(policy!);
         }
       case 'network':
-        fields.add(networkX!);
+        if (networkX != null) {
+          fields.add(networkX!);
+        }
       case 'networkX':
-        fields.add(networkX!);
+        if (networkX != null) {
+          fields.add(networkX!);
+        }
       case 'networkReference':
         if (networkX is Reference) {
           fields.add(networkX!);

@@ -776,9 +776,13 @@ class ConceptMap extends MetadataResource {
           fields.add(version!);
         }
       case 'versionAlgorithm':
-        fields.add(versionAlgorithmX!);
+        if (versionAlgorithmX != null) {
+          fields.add(versionAlgorithmX!);
+        }
       case 'versionAlgorithmX':
-        fields.add(versionAlgorithmX!);
+        if (versionAlgorithmX != null) {
+          fields.add(versionAlgorithmX!);
+        }
       case 'versionAlgorithmString':
         if (versionAlgorithmX is FhirString) {
           fields.add(versionAlgorithmX!);
@@ -884,9 +888,13 @@ class ConceptMap extends MetadataResource {
           fields.addAll(additionalAttribute!);
         }
       case 'sourceScope':
-        fields.add(sourceScopeX!);
+        if (sourceScopeX != null) {
+          fields.add(sourceScopeX!);
+        }
       case 'sourceScopeX':
-        fields.add(sourceScopeX!);
+        if (sourceScopeX != null) {
+          fields.add(sourceScopeX!);
+        }
       case 'sourceScopeUri':
         if (sourceScopeX is FhirUri) {
           fields.add(sourceScopeX!);
@@ -896,9 +904,13 @@ class ConceptMap extends MetadataResource {
           fields.add(sourceScopeX!);
         }
       case 'targetScope':
-        fields.add(targetScopeX!);
+        if (targetScopeX != null) {
+          fields.add(targetScopeX!);
+        }
       case 'targetScopeX':
-        fields.add(targetScopeX!);
+        if (targetScopeX != null) {
+          fields.add(targetScopeX!);
+        }
       case 'targetScopeUri':
         if (targetScopeX is FhirUri) {
           fields.add(targetScopeX!);
@@ -3786,9 +3798,13 @@ class ConceptMapDependsOn extends BackboneElement {
       case 'attribute':
         fields.add(attribute);
       case 'value':
-        fields.add(valueX!);
+        if (valueX != null) {
+          fields.add(valueX!);
+        }
       case 'valueX':
-        fields.add(valueX!);
+        if (valueX != null) {
+          fields.add(valueX!);
+        }
       case 'valueCode':
         if (valueX is FhirCode) {
           fields.add(valueX!);

@@ -958,9 +958,13 @@ class ServiceRequest extends DomainResource {
           fields.addAll(orderDetail!);
         }
       case 'quantity':
-        fields.add(quantityX!);
+        if (quantityX != null) {
+          fields.add(quantityX!);
+        }
       case 'quantityX':
-        fields.add(quantityX!);
+        if (quantityX != null) {
+          fields.add(quantityX!);
+        }
       case 'quantityQuantity':
         if (quantityX is Quantity) {
           fields.add(quantityX!);
@@ -984,9 +988,13 @@ class ServiceRequest extends DomainResource {
           fields.add(encounter!);
         }
       case 'occurrence':
-        fields.add(occurrenceX!);
+        if (occurrenceX != null) {
+          fields.add(occurrenceX!);
+        }
       case 'occurrenceX':
-        fields.add(occurrenceX!);
+        if (occurrenceX != null) {
+          fields.add(occurrenceX!);
+        }
       case 'occurrenceDateTime':
         if (occurrenceX is FhirDateTime) {
           fields.add(occurrenceX!);
@@ -2252,9 +2260,13 @@ class ServiceRequestPatientInstruction extends BackboneElement {
           fields.addAll(modifierExtension!);
         }
       case 'instruction':
-        fields.add(instructionX!);
+        if (instructionX != null) {
+          fields.add(instructionX!);
+        }
       case 'instructionX':
-        fields.add(instructionX!);
+        if (instructionX != null) {
+          fields.add(instructionX!);
+        }
       case 'instructionMarkdown':
         if (instructionX is FhirMarkdown) {
           fields.add(instructionX!);

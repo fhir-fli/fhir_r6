@@ -8391,6 +8391,7 @@ class MolecularDefinitionCoordinateInterval1Builder
           }
           throw Exception('Invalid child type for $childName');
         }
+
       case 'startQuantity':
         {
           if (child is QuantityBuilder) {
@@ -8428,6 +8429,7 @@ class MolecularDefinitionCoordinateInterval1Builder
           }
           throw Exception('Invalid child type for $childName');
         }
+
       case 'endQuantity':
         {
           if (child is QuantityBuilder) {
@@ -11911,6 +11913,7 @@ class MolecularDefinitionCoordinateInterval2Builder
           }
           throw Exception('Invalid child type for $childName');
         }
+
       case 'startQuantity':
         {
           if (child is QuantityBuilder) {
@@ -11948,6 +11951,7 @@ class MolecularDefinitionCoordinateInterval2Builder
           }
           throw Exception('Invalid child type for $childName');
         }
+
       case 'endQuantity':
         {
           if (child is QuantityBuilder) {

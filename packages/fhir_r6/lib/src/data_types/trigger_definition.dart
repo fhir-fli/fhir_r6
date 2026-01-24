@@ -347,9 +347,13 @@ class TriggerDefinition extends DataType
           fields.add(subscriptionTopic!);
         }
       case 'timing':
-        fields.add(timingX!);
+        if (timingX != null) {
+          fields.add(timingX!);
+        }
       case 'timingX':
-        fields.add(timingX!);
+        if (timingX != null) {
+          fields.add(timingX!);
+        }
       case 'timingTiming':
         if (timingX is Timing) {
           fields.add(timingX!);

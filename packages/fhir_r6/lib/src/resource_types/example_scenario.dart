@@ -598,9 +598,13 @@ class ExampleScenario extends CanonicalResource {
           fields.add(version!);
         }
       case 'versionAlgorithm':
-        fields.add(versionAlgorithmX!);
+        if (versionAlgorithmX != null) {
+          fields.add(versionAlgorithmX!);
+        }
       case 'versionAlgorithmX':
-        fields.add(versionAlgorithmX!);
+        if (versionAlgorithmX != null) {
+          fields.add(versionAlgorithmX!);
+        }
       case 'versionAlgorithmString':
         if (versionAlgorithmX is FhirString) {
           fields.add(versionAlgorithmX!);
@@ -1625,9 +1629,13 @@ class ExampleScenarioInstance extends BackboneElement {
           fields.add(structureVersion!);
         }
       case 'structureProfile':
-        fields.add(structureProfileX!);
+        if (structureProfileX != null) {
+          fields.add(structureProfileX!);
+        }
       case 'structureProfileX':
-        fields.add(structureProfileX!);
+        if (structureProfileX != null) {
+          fields.add(structureProfileX!);
+        }
       case 'structureProfileCanonical':
         if (structureProfileX is FhirCanonical) {
           fields.add(structureProfileX!);

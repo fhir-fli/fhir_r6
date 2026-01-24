@@ -850,9 +850,13 @@ class PlanDefinition extends MetadataResource {
           fields.add(version!);
         }
       case 'versionAlgorithm':
-        fields.add(versionAlgorithmX!);
+        if (versionAlgorithmX != null) {
+          fields.add(versionAlgorithmX!);
+        }
       case 'versionAlgorithmX':
-        fields.add(versionAlgorithmX!);
+        if (versionAlgorithmX != null) {
+          fields.add(versionAlgorithmX!);
+        }
       case 'versionAlgorithmString':
         if (versionAlgorithmX is FhirString) {
           fields.add(versionAlgorithmX!);
@@ -886,9 +890,13 @@ class PlanDefinition extends MetadataResource {
           fields.add(experimental!);
         }
       case 'subject':
-        fields.add(subjectX!);
+        if (subjectX != null) {
+          fields.add(subjectX!);
+        }
       case 'subjectX':
-        fields.add(subjectX!);
+        if (subjectX != null) {
+          fields.add(subjectX!);
+        }
       case 'subjectCodeableConcept':
         if (subjectX is CodeableConcept) {
           fields.add(subjectX!);
@@ -994,9 +1002,13 @@ class PlanDefinition extends MetadataResource {
           fields.addAll(action!);
         }
       case 'asNeeded':
-        fields.add(asNeededX!);
+        if (asNeededX != null) {
+          fields.add(asNeededX!);
+        }
       case 'asNeededX':
-        fields.add(asNeededX!);
+        if (asNeededX != null) {
+          fields.add(asNeededX!);
+        }
       case 'asNeededBoolean':
         if (asNeededX is FhirBoolean) {
           fields.add(asNeededX!);
@@ -2047,9 +2059,13 @@ class PlanDefinitionTarget extends BackboneElement {
           fields.add(measure!);
         }
       case 'detail':
-        fields.add(detailX!);
+        if (detailX != null) {
+          fields.add(detailX!);
+        }
       case 'detailX':
-        fields.add(detailX!);
+        if (detailX != null) {
+          fields.add(detailX!);
+        }
       case 'detailQuantity':
         if (detailX is Quantity) {
           fields.add(detailX!);
@@ -3648,9 +3664,13 @@ class PlanDefinitionAction extends BackboneElement {
           fields.addAll(goalId!);
         }
       case 'subject':
-        fields.add(subjectX!);
+        if (subjectX != null) {
+          fields.add(subjectX!);
+        }
       case 'subjectX':
-        fields.add(subjectX!);
+        if (subjectX != null) {
+          fields.add(subjectX!);
+        }
       case 'subjectCodeableConcept':
         if (subjectX is CodeableConcept) {
           fields.add(subjectX!);
@@ -3684,9 +3704,13 @@ class PlanDefinitionAction extends BackboneElement {
           fields.addAll(relatedAction!);
         }
       case 'timing':
-        fields.add(timingX!);
+        if (timingX != null) {
+          fields.add(timingX!);
+        }
       case 'timingX':
-        fields.add(timingX!);
+        if (timingX != null) {
+          fields.add(timingX!);
+        }
       case 'timingAge':
         if (timingX is Age) {
           fields.add(timingX!);
@@ -3736,9 +3760,13 @@ class PlanDefinitionAction extends BackboneElement {
           fields.add(cardinalityBehavior!);
         }
       case 'definition':
-        fields.add(definitionX!);
+        if (definitionX != null) {
+          fields.add(definitionX!);
+        }
       case 'definitionX':
-        fields.add(definitionX!);
+        if (definitionX != null) {
+          fields.add(definitionX!);
+        }
       case 'definitionCanonical':
         if (definitionX is FhirCanonical) {
           fields.add(definitionX!);
@@ -5239,9 +5267,13 @@ class PlanDefinitionRelatedAction extends BackboneElement {
           fields.add(endRelationship!);
         }
       case 'offset':
-        fields.add(offsetX!);
+        if (offsetX != null) {
+          fields.add(offsetX!);
+        }
       case 'offsetX':
-        fields.add(offsetX!);
+        if (offsetX != null) {
+          fields.add(offsetX!);
+        }
       case 'offsetDuration':
         if (offsetX is FhirDuration) {
           fields.add(offsetX!);

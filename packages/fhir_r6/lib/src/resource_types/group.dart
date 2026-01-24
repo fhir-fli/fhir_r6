@@ -759,9 +759,13 @@ class FhirGroup extends DomainResource {
           fields.add(version!);
         }
       case 'versionAlgorithm':
-        fields.add(versionAlgorithmX!);
+        if (versionAlgorithmX != null) {
+          fields.add(versionAlgorithmX!);
+        }
       case 'versionAlgorithmX':
-        fields.add(versionAlgorithmX!);
+        if (versionAlgorithmX != null) {
+          fields.add(versionAlgorithmX!);
+        }
       case 'versionAlgorithmString':
         if (versionAlgorithmX is FhirString) {
           fields.add(versionAlgorithmX!);
@@ -1584,9 +1588,13 @@ class GroupCharacteristic extends BackboneElement {
           fields.addAll(method!);
         }
       case 'determinedBy':
-        fields.add(determinedByX!);
+        if (determinedByX != null) {
+          fields.add(determinedByX!);
+        }
       case 'determinedByX':
-        fields.add(determinedByX!);
+        if (determinedByX != null) {
+          fields.add(determinedByX!);
+        }
       case 'determinedByReference':
         if (determinedByX is Reference) {
           fields.add(determinedByX!);
@@ -1600,9 +1608,13 @@ class GroupCharacteristic extends BackboneElement {
           fields.add(offset!);
         }
       case 'instances':
-        fields.add(instancesX!);
+        if (instancesX != null) {
+          fields.add(instancesX!);
+        }
       case 'instancesX':
-        fields.add(instancesX!);
+        if (instancesX != null) {
+          fields.add(instancesX!);
+        }
       case 'instancesUnsignedInt':
         if (instancesX is FhirUnsignedInt) {
           fields.add(instancesX!);
@@ -1612,9 +1624,13 @@ class GroupCharacteristic extends BackboneElement {
           fields.add(instancesX!);
         }
       case 'duration':
-        fields.add(durationX!);
+        if (durationX != null) {
+          fields.add(durationX!);
+        }
       case 'durationX':
-        fields.add(durationX!);
+        if (durationX != null) {
+          fields.add(durationX!);
+        }
       case 'durationDuration':
         if (durationX is FhirDuration) {
           fields.add(durationX!);

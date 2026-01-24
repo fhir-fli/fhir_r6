@@ -173,60 +173,62 @@ void main() {
     // a local HAPI instance where you enabled $export.
 
     test(
-        'Real-world POST-based Group Export (point to a real Bulk Data server)',
-        () async {
-      // For example, the ephemeral SMART Bulk Data server URL:
-      final baseUrl = Uri.parse(
-        'https://bulk-data.smarthealthit.org/eyJlcnIiOiIiLCJwYWdlIjoxMDAwMCwidGx0IjoxNSwibSI6MSwiZGVsIjowLCJzZWN1cmUiOjB9/fhir',
-      );
+      'Real-world POST-based Group Export (point to a real Bulk Data server)',
+      () async {
+        // For example, the ephemeral SMART Bulk Data server URL:
+        final baseUrl = Uri.parse(
+          'https://bulk-data.smarthealthit.org/eyJlcnIiOiIiLCJwYWdlIjoxMDAwMCwidGx0IjoxNSwibSI6MSwiZGVsIjowLCJzZWN1cmUiOjB9/fhir',
+        );
 
-      // If the server needs auth (JWT), you'd get a token here, e.g.:
-      // final token = await getSmartBulkDataToken(...);
-      // final headers = {
-      //   'Authorization': 'Bearer $token',
-      //   'content-type': 'application/fhir+json',
-      // };
-      // If no auth needed, do minimal headers:
-      final headers = {
-        'content-type': 'application/fhir+json',
-        'accept': 'application/fhir+json',
-      };
+        // If the server needs auth (JWT), you'd get a token here, e.g.:
+        // final token = await getSmartBulkDataToken(...);
+        // final headers = {
+        //   'Authorization': 'Bearer $token',
+        //   'content-type': 'application/fhir+json',
+        // };
+        // If no auth needed, do minimal headers:
+        final headers = {
+          'content-type': 'application/fhir+json',
+          'accept': 'application/fhir+json',
+        };
 
-      final req = BulkRequestGroup(
-        base: baseUrl,
-        id: FhirId('HarvardPilgrimHealthCare'),
-        headers: headers,
-        useHttpPost: true, // do POST
-        // Optionally specify resource types
-        types: [
-          WhichResource(R6ResourceType.AllergyIntolerance),
-          WhichResource(R6ResourceType.Device),
-          WhichResource(R6ResourceType.ImagingStudy),
-          WhichResource(R6ResourceType.Patient),
-          WhichResource(R6ResourceType.DocumentReference),
-          WhichResource(R6ResourceType.Immunization),
-        ],
-      );
+        final req = BulkRequestGroup(
+          base: baseUrl,
+          id: FhirId('HarvardPilgrimHealthCare'),
+          headers: headers,
+          useHttpPost: true, // do POST
+          // Optionally specify resource types
+          types: [
+            WhichResource(R6ResourceType.AllergyIntolerance),
+            WhichResource(R6ResourceType.Device),
+            WhichResource(R6ResourceType.ImagingStudy),
+            WhichResource(R6ResourceType.Patient),
+            WhichResource(R6ResourceType.DocumentReference),
+            WhichResource(R6ResourceType.Immunization),
+          ],
+        );
 
-      final resources = await req.request();
-      print('Got ${resources.length} resources from real server '
-          '(or OperationOutcome).');
-      for (final r in resources) {
-        if (r is OperationOutcome) {
-          print('OperationOutcome: ${r.issue.first.diagnostics?.valueString}');
-        } else {
-          print(
-            'Resource: ${r?.resourceType}, id=${(r as DomainResource?)?.id}',
-          );
+        final resources = await req.request();
+        print('Got ${resources.length} resources from real server '
+            '(or OperationOutcome).');
+        for (final r in resources) {
+          if (r is OperationOutcome) {
+            print(
+                'OperationOutcome: ${r.issue.first.diagnostics?.valueString}');
+          } else {
+            print(
+              'Resource: ${r?.resourceType}, id=${(r as DomainResource?)?.id}',
+            );
+          }
         }
-      }
 
-      // Just check that it's a list of Resource?
-      //(including possibly OperationOutcomes)
-      expect(resources, isA<List<Resource?>>());
-    },
-        skip: 'External SMART server returns ImagingStudy resources with '
-            'sopClass as Coding object instead of FhirOid string, '
-            'incompatible with FHIR R6 spec');
+        // Just check that it's a list of Resource?
+        //(including possibly OperationOutcomes)
+        expect(resources, isA<List<Resource?>>());
+      },
+      skip: 'External SMART server returns ImagingStudy resources with '
+          'sopClass as Coding object instead of FhirOid string, '
+          'incompatible with FHIR R6 spec',
+    );
   });
 }

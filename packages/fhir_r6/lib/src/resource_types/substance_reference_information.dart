@@ -1490,9 +1490,13 @@ class SubstanceReferenceInformationTarget extends BackboneElement {
           fields.add(organismType!);
         }
       case 'amount':
-        fields.add(amountX!);
+        if (amountX != null) {
+          fields.add(amountX!);
+        }
       case 'amountX':
-        fields.add(amountX!);
+        if (amountX != null) {
+          fields.add(amountX!);
+        }
       case 'amountQuantity':
         if (amountX is Quantity) {
           fields.add(amountX!);

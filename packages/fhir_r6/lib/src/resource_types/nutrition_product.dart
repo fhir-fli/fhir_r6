@@ -904,9 +904,13 @@ class NutritionProductNutrient extends BackboneElement {
       case 'item':
         fields.add(item);
       case 'amount':
-        fields.add(amountX!);
+        if (amountX != null) {
+          fields.add(amountX!);
+        }
       case 'amountX':
-        fields.add(amountX!);
+        if (amountX != null) {
+          fields.add(amountX!);
+        }
       case 'amountRatio':
         if (amountX is Ratio) {
           fields.add(amountX!);
@@ -1244,9 +1248,13 @@ class NutritionProductIngredient extends BackboneElement {
       case 'item':
         fields.add(item);
       case 'amount':
-        fields.add(amountX!);
+        if (amountX != null) {
+          fields.add(amountX!);
+        }
       case 'amountX':
-        fields.add(amountX!);
+        if (amountX != null) {
+          fields.add(amountX!);
+        }
       case 'amountRatio':
         if (amountX is Ratio) {
           fields.add(amountX!);

@@ -562,9 +562,13 @@ class CoverageEligibilityResponse extends DomainResource {
           fields.addAll(event!);
         }
       case 'serviced':
-        fields.add(servicedX!);
+        if (servicedX != null) {
+          fields.add(servicedX!);
+        }
       case 'servicedX':
-        fields.add(servicedX!);
+        if (servicedX != null) {
+          fields.add(servicedX!);
+        }
       case 'servicedDate':
         if (servicedX is FhirDate) {
           fields.add(servicedX!);
@@ -2382,9 +2386,13 @@ class CoverageEligibilityResponseBenefit extends BackboneElement {
       case 'type':
         fields.add(type);
       case 'allowed':
-        fields.add(allowedX!);
+        if (allowedX != null) {
+          fields.add(allowedX!);
+        }
       case 'allowedX':
-        fields.add(allowedX!);
+        if (allowedX != null) {
+          fields.add(allowedX!);
+        }
       case 'allowedUnsignedInt':
         if (allowedX is FhirUnsignedInt) {
           fields.add(allowedX!);
@@ -2398,9 +2406,13 @@ class CoverageEligibilityResponseBenefit extends BackboneElement {
           fields.add(allowedX!);
         }
       case 'used':
-        fields.add(usedX!);
+        if (usedX != null) {
+          fields.add(usedX!);
+        }
       case 'usedX':
-        fields.add(usedX!);
+        if (usedX != null) {
+          fields.add(usedX!);
+        }
       case 'usedUnsignedInt':
         if (usedX is FhirUnsignedInt) {
           fields.add(usedX!);

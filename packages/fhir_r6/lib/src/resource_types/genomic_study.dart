@@ -1753,9 +1753,13 @@ class GenomicStudyInput extends BackboneElement {
           fields.add(type!);
         }
       case 'generatedBy':
-        fields.add(generatedByX!);
+        if (generatedByX != null) {
+          fields.add(generatedByX!);
+        }
       case 'generatedByX':
-        fields.add(generatedByX!);
+        if (generatedByX != null) {
+          fields.add(generatedByX!);
+        }
       case 'generatedByIdentifier':
         if (generatedByX is Identifier) {
           fields.add(generatedByX!);

@@ -12,15 +12,13 @@ void main() {
   }
 
   final errorLogFile = File('./test/error_log.txt');
-  final errorLog = errorLogFile.openWrite(mode: FileMode.write);
+  final errorLog = errorLogFile.openWrite();
   errorLog.writeln('FHIR R6 Resource Test Error Log');
   errorLog.writeln('Generated: ${DateTime.now()}');
   errorLog.writeln('=' * 80);
   errorLog.writeln();
 
-  tearDownAll(() {
-    errorLog.close();
-  });
+  tearDownAll(errorLog.close);
 
   group(
     'JSON Validation',
@@ -77,7 +75,7 @@ void main() {
     () {
       final dir = Directory('./test/assets');
       for (final file in dir.listSync()) {
-        test('${file.path}', () {
+        test(file.path, () {
           try {
             final contents = File(file.path).readAsStringSync();
             final contentJson = jsonDecode(contents) as Map<String, dynamic>;

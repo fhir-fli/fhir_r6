@@ -4118,9 +4118,13 @@ class ClaimResponseAddItem extends BackboneElement {
           fields.addAll(programCode!);
         }
       case 'serviced':
-        fields.add(servicedX!);
+        if (servicedX != null) {
+          fields.add(servicedX!);
+        }
       case 'servicedX':
-        fields.add(servicedX!);
+        if (servicedX != null) {
+          fields.add(servicedX!);
+        }
       case 'servicedDate':
         if (servicedX is FhirDate) {
           fields.add(servicedX!);
@@ -4130,9 +4134,13 @@ class ClaimResponseAddItem extends BackboneElement {
           fields.add(servicedX!);
         }
       case 'location':
-        fields.add(locationX!);
+        if (locationX != null) {
+          fields.add(locationX!);
+        }
       case 'locationX':
-        fields.add(locationX!);
+        if (locationX != null) {
+          fields.add(locationX!);
+        }
       case 'locationCodeableConcept':
         if (locationX is CodeableConcept) {
           fields.add(locationX!);

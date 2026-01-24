@@ -767,9 +767,13 @@ class AdverseEvent extends DomainResource {
           fields.add(encounter!);
         }
       case 'cause':
-        fields.add(causeX!);
+        if (causeX != null) {
+          fields.add(causeX!);
+        }
       case 'causeX':
-        fields.add(causeX!);
+        if (causeX != null) {
+          fields.add(causeX!);
+        }
       case 'causeDateTime':
         if (causeX is FhirDateTime) {
           fields.add(causeX!);
@@ -779,9 +783,13 @@ class AdverseEvent extends DomainResource {
           fields.add(causeX!);
         }
       case 'effect':
-        fields.add(effectX!);
+        if (effectX != null) {
+          fields.add(effectX!);
+        }
       case 'effectX':
-        fields.add(effectX!);
+        if (effectX != null) {
+          fields.add(effectX!);
+        }
       case 'effectDateTime':
         if (effectX is FhirDateTime) {
           fields.add(effectX!);

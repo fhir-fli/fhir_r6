@@ -1614,9 +1614,13 @@ class MedicationAdministrationDosage extends BackboneElement {
           fields.add(dose!);
         }
       case 'rate':
-        fields.add(rateX!);
+        if (rateX != null) {
+          fields.add(rateX!);
+        }
       case 'rateX':
-        fields.add(rateX!);
+        if (rateX != null) {
+          fields.add(rateX!);
+        }
       case 'rateRatio':
         if (rateX is Ratio) {
           fields.add(rateX!);

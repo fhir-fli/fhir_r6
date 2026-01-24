@@ -342,9 +342,13 @@ class RelativeTime extends DataType
           fields.add(contextCode!);
         }
       case 'offset':
-        fields.add(offsetX!);
+        if (offsetX != null) {
+          fields.add(offsetX!);
+        }
       case 'offsetX':
-        fields.add(offsetX!);
+        if (offsetX != null) {
+          fields.add(offsetX!);
+        }
       case 'offsetDuration':
         if (offsetX is FhirDuration) {
           fields.add(offsetX!);

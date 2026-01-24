@@ -3431,9 +3431,13 @@ class MedicationKnowledgePatientCharacteristic extends BackboneElement {
       case 'type':
         fields.add(type);
       case 'value':
-        fields.add(valueX!);
+        if (valueX != null) {
+          fields.add(valueX!);
+        }
       case 'valueX':
-        fields.add(valueX!);
+        if (valueX != null) {
+          fields.add(valueX!);
+        }
       case 'valueCodeableConcept':
         if (valueX is CodeableConcept) {
           fields.add(valueX!);
@@ -3783,9 +3787,13 @@ class MedicationKnowledgeMedicineClassification extends BackboneElement {
       case 'type':
         fields.add(type);
       case 'source':
-        fields.add(sourceX!);
+        if (sourceX != null) {
+          fields.add(sourceX!);
+        }
       case 'sourceX':
-        fields.add(sourceX!);
+        if (sourceX != null) {
+          fields.add(sourceX!);
+        }
       case 'sourceString':
         if (sourceX is FhirString) {
           fields.add(sourceX!);
@@ -6511,9 +6519,13 @@ class MedicationKnowledgeIngredient extends BackboneElement {
           fields.add(type!);
         }
       case 'strength':
-        fields.add(strengthX!);
+        if (strengthX != null) {
+          fields.add(strengthX!);
+        }
       case 'strengthX':
-        fields.add(strengthX!);
+        if (strengthX != null) {
+          fields.add(strengthX!);
+        }
       case 'strengthRatio':
         if (strengthX is Ratio) {
           fields.add(strengthX!);
@@ -6871,9 +6883,13 @@ class MedicationKnowledgeDrugCharacteristic extends BackboneElement {
           fields.add(type!);
         }
       case 'value':
-        fields.add(valueX!);
+        if (valueX != null) {
+          fields.add(valueX!);
+        }
       case 'valueX':
-        fields.add(valueX!);
+        if (valueX != null) {
+          fields.add(valueX!);
+        }
       case 'valueCodeableConcept':
         if (valueX is CodeableConcept) {
           fields.add(valueX!);

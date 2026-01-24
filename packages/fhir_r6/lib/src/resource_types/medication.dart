@@ -888,9 +888,13 @@ class MedicationIngredient extends BackboneElement {
           fields.add(isActive!);
         }
       case 'strength':
-        fields.add(strengthX!);
+        if (strengthX != null) {
+          fields.add(strengthX!);
+        }
       case 'strengthX':
-        fields.add(strengthX!);
+        if (strengthX != null) {
+          fields.add(strengthX!);
+        }
       case 'strengthRatio':
         if (strengthX is Ratio) {
           fields.add(strengthX!);

@@ -293,9 +293,13 @@ class VirtualServiceDetail extends DataType {
           fields.add(channelType!);
         }
       case 'address':
-        fields.add(addressX!);
+        if (addressX != null) {
+          fields.add(addressX!);
+        }
       case 'addressX':
-        fields.add(addressX!);
+        if (addressX != null) {
+          fields.add(addressX!);
+        }
       case 'addressUrl':
         if (addressX is FhirUrl) {
           fields.add(addressX!);

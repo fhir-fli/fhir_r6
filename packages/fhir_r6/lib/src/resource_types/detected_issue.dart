@@ -599,9 +599,13 @@ class DetectedIssue extends DomainResource {
           fields.add(encounter!);
         }
       case 'identified':
-        fields.add(identifiedX!);
+        if (identifiedX != null) {
+          fields.add(identifiedX!);
+        }
       case 'identifiedX':
-        fields.add(identifiedX!);
+        if (identifiedX != null) {
+          fields.add(identifiedX!);
+        }
       case 'identifiedDateTime':
         if (identifiedX is FhirDateTime) {
           fields.add(identifiedX!);

@@ -273,9 +273,13 @@ class ProductShelfLife extends BackboneType {
           fields.add(type!);
         }
       case 'period':
-        fields.add(periodX!);
+        if (periodX != null) {
+          fields.add(periodX!);
+        }
       case 'periodX':
-        fields.add(periodX!);
+        if (periodX != null) {
+          fields.add(periodX!);
+        }
       case 'periodDuration':
         if (periodX is FhirDuration) {
           fields.add(periodX!);

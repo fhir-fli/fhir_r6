@@ -996,9 +996,13 @@ class BiologicallyDerivedProductCollection extends BackboneElement {
           fields.add(source!);
         }
       case 'collected':
-        fields.add(collectedX!);
+        if (collectedX != null) {
+          fields.add(collectedX!);
+        }
       case 'collectedX':
-        fields.add(collectedX!);
+        if (collectedX != null) {
+          fields.add(collectedX!);
+        }
       case 'collectedDateTime':
         if (collectedX is FhirDateTime) {
           fields.add(collectedX!);

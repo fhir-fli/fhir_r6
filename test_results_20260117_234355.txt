@@ -1,6 +1,0 @@
-FHIR R6 Test Results - Sat Jan 17 11:43:55 PM EST 2026
-=========================================
-
-fhir_r6: PASSED
-
-Summary: 1 passed, 0 failed

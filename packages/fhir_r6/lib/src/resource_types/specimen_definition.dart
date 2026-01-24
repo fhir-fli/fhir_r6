@@ -715,9 +715,13 @@ class SpecimenDefinition extends MetadataResource {
           fields.add(version!);
         }
       case 'versionAlgorithm':
-        fields.add(versionAlgorithmX!);
+        if (versionAlgorithmX != null) {
+          fields.add(versionAlgorithmX!);
+        }
       case 'versionAlgorithmX':
-        fields.add(versionAlgorithmX!);
+        if (versionAlgorithmX != null) {
+          fields.add(versionAlgorithmX!);
+        }
       case 'versionAlgorithmString':
         if (versionAlgorithmX is FhirString) {
           fields.add(versionAlgorithmX!);
@@ -751,9 +755,13 @@ class SpecimenDefinition extends MetadataResource {
           fields.add(experimental!);
         }
       case 'subject':
-        fields.add(subjectX!);
+        if (subjectX != null) {
+          fields.add(subjectX!);
+        }
       case 'subjectX':
-        fields.add(subjectX!);
+        if (subjectX != null) {
+          fields.add(subjectX!);
+        }
       case 'subjectCodeableConcept':
         if (subjectX is CodeableConcept) {
           fields.add(subjectX!);
@@ -1957,9 +1965,13 @@ class SpecimenDefinitionContainer extends BackboneElement {
           fields.add(capacity!);
         }
       case 'minimumVolume':
-        fields.add(minimumVolumeX!);
+        if (minimumVolumeX != null) {
+          fields.add(minimumVolumeX!);
+        }
       case 'minimumVolumeX':
-        fields.add(minimumVolumeX!);
+        if (minimumVolumeX != null) {
+          fields.add(minimumVolumeX!);
+        }
       case 'minimumVolumeQuantity':
         if (minimumVolumeX is Quantity) {
           fields.add(minimumVolumeX!);

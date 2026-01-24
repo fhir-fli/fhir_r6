@@ -526,9 +526,13 @@ class Person extends DomainResource {
           fields.add(birthDate!);
         }
       case 'deceased':
-        fields.add(deceasedX!);
+        if (deceasedX != null) {
+          fields.add(deceasedX!);
+        }
       case 'deceasedX':
-        fields.add(deceasedX!);
+        if (deceasedX != null) {
+          fields.add(deceasedX!);
+        }
       case 'deceasedBoolean':
         if (deceasedX is FhirBoolean) {
           fields.add(deceasedX!);

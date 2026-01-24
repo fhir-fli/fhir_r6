@@ -3354,9 +3354,13 @@ class ExplanationOfBenefitSupportingInfo extends BackboneElement {
           fields.add(code!);
         }
       case 'timing':
-        fields.add(timingX!);
+        if (timingX != null) {
+          fields.add(timingX!);
+        }
       case 'timingX':
-        fields.add(timingX!);
+        if (timingX != null) {
+          fields.add(timingX!);
+        }
       case 'timingDate':
         if (timingX is FhirDate) {
           fields.add(timingX!);
@@ -3366,9 +3370,13 @@ class ExplanationOfBenefitSupportingInfo extends BackboneElement {
           fields.add(timingX!);
         }
       case 'value':
-        fields.add(valueX!);
+        if (valueX != null) {
+          fields.add(valueX!);
+        }
       case 'valueX':
-        fields.add(valueX!);
+        if (valueX != null) {
+          fields.add(valueX!);
+        }
       case 'valueBoolean':
         if (valueX is FhirBoolean) {
           fields.add(valueX!);
@@ -4873,9 +4881,13 @@ class ExplanationOfBenefitAccident extends BackboneElement {
           fields.add(type!);
         }
       case 'location':
-        fields.add(locationX!);
+        if (locationX != null) {
+          fields.add(locationX!);
+        }
       case 'locationX':
-        fields.add(locationX!);
+        if (locationX != null) {
+          fields.add(locationX!);
+        }
       case 'locationAddress':
         if (locationX is Address) {
           fields.add(locationX!);
@@ -5713,9 +5725,13 @@ class ExplanationOfBenefitItem extends BackboneElement {
           fields.addAll(programCode!);
         }
       case 'serviced':
-        fields.add(servicedX!);
+        if (servicedX != null) {
+          fields.add(servicedX!);
+        }
       case 'servicedX':
-        fields.add(servicedX!);
+        if (servicedX != null) {
+          fields.add(servicedX!);
+        }
       case 'servicedDate':
         if (servicedX is FhirDate) {
           fields.add(servicedX!);
@@ -5725,9 +5741,13 @@ class ExplanationOfBenefitItem extends BackboneElement {
           fields.add(servicedX!);
         }
       case 'location':
-        fields.add(locationX!);
+        if (locationX != null) {
+          fields.add(locationX!);
+        }
       case 'locationX':
-        fields.add(locationX!);
+        if (locationX != null) {
+          fields.add(locationX!);
+        }
       case 'locationCodeableConcept':
         if (locationX is CodeableConcept) {
           fields.add(locationX!);
@@ -9231,9 +9251,13 @@ class ExplanationOfBenefitAddItem extends BackboneElement {
           fields.addAll(programCode!);
         }
       case 'serviced':
-        fields.add(servicedX!);
+        if (servicedX != null) {
+          fields.add(servicedX!);
+        }
       case 'servicedX':
-        fields.add(servicedX!);
+        if (servicedX != null) {
+          fields.add(servicedX!);
+        }
       case 'servicedDate':
         if (servicedX is FhirDate) {
           fields.add(servicedX!);
@@ -9243,9 +9267,13 @@ class ExplanationOfBenefitAddItem extends BackboneElement {
           fields.add(servicedX!);
         }
       case 'location':
-        fields.add(locationX!);
+        if (locationX != null) {
+          fields.add(locationX!);
+        }
       case 'locationX':
-        fields.add(locationX!);
+        if (locationX != null) {
+          fields.add(locationX!);
+        }
       case 'locationCodeableConcept':
         if (locationX is CodeableConcept) {
           fields.add(locationX!);
@@ -12910,9 +12938,13 @@ class ExplanationOfBenefitFinancial extends BackboneElement {
       case 'type':
         fields.add(type);
       case 'allowed':
-        fields.add(allowedX!);
+        if (allowedX != null) {
+          fields.add(allowedX!);
+        }
       case 'allowedX':
-        fields.add(allowedX!);
+        if (allowedX != null) {
+          fields.add(allowedX!);
+        }
       case 'allowedUnsignedInt':
         if (allowedX is FhirUnsignedInt) {
           fields.add(allowedX!);
@@ -12926,9 +12958,13 @@ class ExplanationOfBenefitFinancial extends BackboneElement {
           fields.add(allowedX!);
         }
       case 'used':
-        fields.add(usedX!);
+        if (usedX != null) {
+          fields.add(usedX!);
+        }
       case 'usedX':
-        fields.add(usedX!);
+        if (usedX != null) {
+          fields.add(usedX!);
+        }
       case 'usedUnsignedInt':
         if (usedX is FhirUnsignedInt) {
           fields.add(usedX!);

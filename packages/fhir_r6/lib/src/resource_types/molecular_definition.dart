@@ -1515,9 +1515,13 @@ class MolecularDefinitionCoordinateInterval extends BackboneElement {
           fields.add(coordinateSystem!);
         }
       case 'start':
-        fields.add(startX!);
+        if (startX != null) {
+          fields.add(startX!);
+        }
       case 'startX':
-        fields.add(startX!);
+        if (startX != null) {
+          fields.add(startX!);
+        }
       case 'startQuantity':
         if (startX is Quantity) {
           fields.add(startX!);
@@ -1527,9 +1531,13 @@ class MolecularDefinitionCoordinateInterval extends BackboneElement {
           fields.add(startX!);
         }
       case 'end':
-        fields.add(endX!);
+        if (endX != null) {
+          fields.add(endX!);
+        }
       case 'endX':
-        fields.add(endX!);
+        if (endX != null) {
+          fields.add(endX!);
+        }
       case 'endQuantity':
         if (endX is Quantity) {
           fields.add(endX!);
@@ -2541,9 +2549,13 @@ class MolecularDefinitionGenomeAssembly extends BackboneElement {
           fields.add(accession!);
         }
       case 'description':
-        fields.add(descriptionX!);
+        if (descriptionX != null) {
+          fields.add(descriptionX!);
+        }
       case 'descriptionX':
-        fields.add(descriptionX!);
+        if (descriptionX != null) {
+          fields.add(descriptionX!);
+        }
       case 'descriptionMarkdown':
         if (descriptionX is FhirMarkdown) {
           fields.add(descriptionX!);
@@ -3281,9 +3293,13 @@ class MolecularDefinitionStartCytoband extends BackboneElement {
           fields.addAll(modifierExtension!);
         }
       case 'arm':
-        fields.add(armX!);
+        if (armX != null) {
+          fields.add(armX!);
+        }
       case 'armX':
-        fields.add(armX!);
+        if (armX != null) {
+          fields.add(armX!);
+        }
       case 'armCode':
         if (armX is FhirCode) {
           fields.add(armX!);
@@ -3293,9 +3309,13 @@ class MolecularDefinitionStartCytoband extends BackboneElement {
           fields.add(armX!);
         }
       case 'region':
-        fields.add(regionX!);
+        if (regionX != null) {
+          fields.add(regionX!);
+        }
       case 'regionX':
-        fields.add(regionX!);
+        if (regionX != null) {
+          fields.add(regionX!);
+        }
       case 'regionCode':
         if (regionX is FhirCode) {
           fields.add(regionX!);
@@ -3305,9 +3325,13 @@ class MolecularDefinitionStartCytoband extends BackboneElement {
           fields.add(regionX!);
         }
       case 'band':
-        fields.add(bandX!);
+        if (bandX != null) {
+          fields.add(bandX!);
+        }
       case 'bandX':
-        fields.add(bandX!);
+        if (bandX != null) {
+          fields.add(bandX!);
+        }
       case 'bandCode':
         if (bandX is FhirCode) {
           fields.add(bandX!);
@@ -3317,9 +3341,13 @@ class MolecularDefinitionStartCytoband extends BackboneElement {
           fields.add(bandX!);
         }
       case 'subBand':
-        fields.add(subBandX!);
+        if (subBandX != null) {
+          fields.add(subBandX!);
+        }
       case 'subBandX':
-        fields.add(subBandX!);
+        if (subBandX != null) {
+          fields.add(subBandX!);
+        }
       case 'subBandCode':
         if (subBandX is FhirCode) {
           fields.add(subBandX!);
@@ -3729,9 +3757,13 @@ class MolecularDefinitionEndCytoband extends BackboneElement {
           fields.addAll(modifierExtension!);
         }
       case 'arm':
-        fields.add(armX!);
+        if (armX != null) {
+          fields.add(armX!);
+        }
       case 'armX':
-        fields.add(armX!);
+        if (armX != null) {
+          fields.add(armX!);
+        }
       case 'armCode':
         if (armX is FhirCode) {
           fields.add(armX!);
@@ -3741,9 +3773,13 @@ class MolecularDefinitionEndCytoband extends BackboneElement {
           fields.add(armX!);
         }
       case 'region':
-        fields.add(regionX!);
+        if (regionX != null) {
+          fields.add(regionX!);
+        }
       case 'regionX':
-        fields.add(regionX!);
+        if (regionX != null) {
+          fields.add(regionX!);
+        }
       case 'regionCode':
         if (regionX is FhirCode) {
           fields.add(regionX!);
@@ -3753,9 +3789,13 @@ class MolecularDefinitionEndCytoband extends BackboneElement {
           fields.add(regionX!);
         }
       case 'band':
-        fields.add(bandX!);
+        if (bandX != null) {
+          fields.add(bandX!);
+        }
       case 'bandX':
-        fields.add(bandX!);
+        if (bandX != null) {
+          fields.add(bandX!);
+        }
       case 'bandCode':
         if (bandX is FhirCode) {
           fields.add(bandX!);
@@ -3765,9 +3805,13 @@ class MolecularDefinitionEndCytoband extends BackboneElement {
           fields.add(bandX!);
         }
       case 'subBand':
-        fields.add(subBandX!);
+        if (subBandX != null) {
+          fields.add(subBandX!);
+        }
       case 'subBandX':
-        fields.add(subBandX!);
+        if (subBandX != null) {
+          fields.add(subBandX!);
+        }
       case 'subBandCode':
         if (subBandX is FhirCode) {
           fields.add(subBandX!);
@@ -5264,9 +5308,13 @@ class MolecularDefinitionCoordinateInterval1 extends BackboneElement {
           fields.add(coordinateSystem!);
         }
       case 'start':
-        fields.add(startX!);
+        if (startX != null) {
+          fields.add(startX!);
+        }
       case 'startX':
-        fields.add(startX!);
+        if (startX != null) {
+          fields.add(startX!);
+        }
       case 'startQuantity':
         if (startX is Quantity) {
           fields.add(startX!);
@@ -5276,9 +5324,13 @@ class MolecularDefinitionCoordinateInterval1 extends BackboneElement {
           fields.add(startX!);
         }
       case 'end':
-        fields.add(endX!);
+        if (endX != null) {
+          fields.add(endX!);
+        }
       case 'endX':
-        fields.add(endX!);
+        if (endX != null) {
+          fields.add(endX!);
+        }
       case 'endQuantity':
         if (endX is Quantity) {
           fields.add(endX!);
@@ -7550,9 +7602,13 @@ class MolecularDefinitionCoordinateInterval2 extends BackboneElement {
           fields.add(coordinateSystem!);
         }
       case 'start':
-        fields.add(startX!);
+        if (startX != null) {
+          fields.add(startX!);
+        }
       case 'startX':
-        fields.add(startX!);
+        if (startX != null) {
+          fields.add(startX!);
+        }
       case 'startQuantity':
         if (startX is Quantity) {
           fields.add(startX!);
@@ -7562,9 +7618,13 @@ class MolecularDefinitionCoordinateInterval2 extends BackboneElement {
           fields.add(startX!);
         }
       case 'end':
-        fields.add(endX!);
+        if (endX != null) {
+          fields.add(endX!);
+        }
       case 'endX':
-        fields.add(endX!);
+        if (endX != null) {
+          fields.add(endX!);
+        }
       case 'endQuantity':
         if (endX is Quantity) {
           fields.add(endX!);

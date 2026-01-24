@@ -1599,9 +1599,13 @@ class RequestOrchestrationAction extends BackboneElement {
           fields.addAll(relatedAction!);
         }
       case 'timing':
-        fields.add(timingX!);
+        if (timingX != null) {
+          fields.add(timingX!);
+        }
       case 'timingX':
-        fields.add(timingX!);
+        if (timingX != null) {
+          fields.add(timingX!);
+        }
       case 'timingDateTime':
         if (timingX is FhirDateTime) {
           fields.add(timingX!);
@@ -1663,9 +1667,13 @@ class RequestOrchestrationAction extends BackboneElement {
           fields.add(resource!);
         }
       case 'definition':
-        fields.add(definitionX!);
+        if (definitionX != null) {
+          fields.add(definitionX!);
+        }
       case 'definitionX':
-        fields.add(definitionX!);
+        if (definitionX != null) {
+          fields.add(definitionX!);
+        }
       case 'definitionCanonical':
         if (definitionX is FhirCanonical) {
           fields.add(definitionX!);
@@ -3158,9 +3166,13 @@ class RequestOrchestrationRelatedAction extends BackboneElement {
           fields.add(endRelationship!);
         }
       case 'offset':
-        fields.add(offsetX!);
+        if (offsetX != null) {
+          fields.add(offsetX!);
+        }
       case 'offsetX':
-        fields.add(offsetX!);
+        if (offsetX != null) {
+          fields.add(offsetX!);
+        }
       case 'offsetDuration':
         if (offsetX is FhirDuration) {
           fields.add(offsetX!);
@@ -3576,9 +3588,13 @@ class RequestOrchestrationParticipant extends BackboneElement {
           fields.add(function_!);
         }
       case 'actor':
-        fields.add(actorX!);
+        if (actorX != null) {
+          fields.add(actorX!);
+        }
       case 'actorX':
-        fields.add(actorX!);
+        if (actorX != null) {
+          fields.add(actorX!);
+        }
       case 'actorCanonical':
         if (actorX is FhirCanonical) {
           fields.add(actorX!);

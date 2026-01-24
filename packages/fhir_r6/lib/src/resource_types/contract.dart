@@ -971,9 +971,13 @@ class Contract extends DomainResource {
           fields.add(scope!);
         }
       case 'topic':
-        fields.add(topicX!);
+        if (topicX != null) {
+          fields.add(topicX!);
+        }
       case 'topicX':
-        fields.add(topicX!);
+        if (topicX != null) {
+          fields.add(topicX!);
+        }
       case 'topicCodeableConcept':
         if (topicX is CodeableConcept) {
           fields.add(topicX!);
@@ -1023,9 +1027,13 @@ class Contract extends DomainResource {
           fields.addAll(rule!);
         }
       case 'legallyBinding':
-        fields.add(legallyBindingX!);
+        if (legallyBindingX != null) {
+          fields.add(legallyBindingX!);
+        }
       case 'legallyBindingX':
-        fields.add(legallyBindingX!);
+        if (legallyBindingX != null) {
+          fields.add(legallyBindingX!);
+        }
       case 'legallyBindingAttachment':
         if (legallyBindingX is Attachment) {
           fields.add(legallyBindingX!);
@@ -2149,9 +2157,13 @@ class ContractTerm extends BackboneElement {
           fields.add(applies!);
         }
       case 'topic':
-        fields.add(topicX!);
+        if (topicX != null) {
+          fields.add(topicX!);
+        }
       case 'topicX':
-        fields.add(topicX!);
+        if (topicX != null) {
+          fields.add(topicX!);
+        }
       case 'topicCodeableConcept':
         if (topicX is CodeableConcept) {
           fields.add(topicX!);
@@ -5298,9 +5310,13 @@ class ContractValuedItem extends BackboneElement {
           fields.addAll(modifierExtension!);
         }
       case 'entity':
-        fields.add(entityX!);
+        if (entityX != null) {
+          fields.add(entityX!);
+        }
       case 'entityX':
-        fields.add(entityX!);
+        if (entityX != null) {
+          fields.add(entityX!);
+        }
       case 'entityCodeableConcept':
         if (entityX is CodeableConcept) {
           fields.add(entityX!);
@@ -6063,9 +6079,13 @@ class ContractAction extends BackboneElement {
           fields.addAll(contextLinkId!);
         }
       case 'occurrence':
-        fields.add(occurrenceX!);
+        if (occurrenceX != null) {
+          fields.add(occurrenceX!);
+        }
       case 'occurrenceX':
-        fields.add(occurrenceX!);
+        if (occurrenceX != null) {
+          fields.add(occurrenceX!);
+        }
       case 'occurrenceDateTime':
         if (occurrenceX is FhirDateTime) {
           fields.add(occurrenceX!);

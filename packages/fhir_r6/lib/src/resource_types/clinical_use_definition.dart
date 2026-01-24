@@ -1763,9 +1763,13 @@ class ClinicalUseDefinitionIndication extends BackboneElement {
           fields.add(intendedEffect!);
         }
       case 'duration':
-        fields.add(durationX!);
+        if (durationX != null) {
+          fields.add(durationX!);
+        }
       case 'durationX':
-        fields.add(durationX!);
+        if (durationX != null) {
+          fields.add(durationX!);
+        }
       case 'durationRange':
         if (durationX is Range) {
           fields.add(durationX!);

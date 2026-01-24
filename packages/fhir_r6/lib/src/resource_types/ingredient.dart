@@ -1650,9 +1650,13 @@ class IngredientStrength extends BackboneElement {
           fields.addAll(modifierExtension!);
         }
       case 'presentation':
-        fields.add(presentationX!);
+        if (presentationX != null) {
+          fields.add(presentationX!);
+        }
       case 'presentationX':
-        fields.add(presentationX!);
+        if (presentationX != null) {
+          fields.add(presentationX!);
+        }
       case 'presentationRatio':
         if (presentationX is Ratio) {
           fields.add(presentationX!);
@@ -1674,9 +1678,13 @@ class IngredientStrength extends BackboneElement {
           fields.add(textPresentation!);
         }
       case 'concentration':
-        fields.add(concentrationX!);
+        if (concentrationX != null) {
+          fields.add(concentrationX!);
+        }
       case 'concentrationX':
-        fields.add(concentrationX!);
+        if (concentrationX != null) {
+          fields.add(concentrationX!);
+        }
       case 'concentrationRatio':
         if (concentrationX is Ratio) {
           fields.add(concentrationX!);

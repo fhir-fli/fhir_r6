@@ -948,9 +948,13 @@ class CareTeamParticipant extends BackboneElement {
           fields.add(onBehalfOf!);
         }
       case 'effective':
-        fields.add(effectiveX!);
+        if (effectiveX != null) {
+          fields.add(effectiveX!);
+        }
       case 'effectiveX':
-        fields.add(effectiveX!);
+        if (effectiveX != null) {
+          fields.add(effectiveX!);
+        }
       case 'effectivePeriod':
         if (effectiveX is Period) {
           fields.add(effectiveX!);

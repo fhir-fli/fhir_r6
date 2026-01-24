@@ -1535,9 +1535,13 @@ class PaymentReconciliationAllocation extends BackboneElement {
           fields.add(target!);
         }
       case 'targetItem':
-        fields.add(targetItemX!);
+        if (targetItemX != null) {
+          fields.add(targetItemX!);
+        }
       case 'targetItemX':
-        fields.add(targetItemX!);
+        if (targetItemX != null) {
+          fields.add(targetItemX!);
+        }
       case 'targetItemString':
         if (targetItemX is FhirString) {
           fields.add(targetItemX!);

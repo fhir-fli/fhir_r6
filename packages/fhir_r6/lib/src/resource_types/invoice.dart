@@ -612,9 +612,13 @@ class Invoice extends DomainResource {
           fields.add(creation!);
         }
       case 'period':
-        fields.add(periodX!);
+        if (periodX != null) {
+          fields.add(periodX!);
+        }
       case 'periodX':
-        fields.add(periodX!);
+        if (periodX != null) {
+          fields.add(periodX!);
+        }
       case 'periodDate':
         if (periodX is FhirDate) {
           fields.add(periodX!);
@@ -1456,9 +1460,13 @@ class InvoiceLineItem extends BackboneElement {
           fields.add(sequence!);
         }
       case 'serviced':
-        fields.add(servicedX!);
+        if (servicedX != null) {
+          fields.add(servicedX!);
+        }
       case 'servicedX':
-        fields.add(servicedX!);
+        if (servicedX != null) {
+          fields.add(servicedX!);
+        }
       case 'servicedDate':
         if (servicedX is FhirDate) {
           fields.add(servicedX!);

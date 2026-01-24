@@ -762,9 +762,13 @@ class Citation extends MetadataResource {
           fields.add(version!);
         }
       case 'versionAlgorithm':
-        fields.add(versionAlgorithmX!);
+        if (versionAlgorithmX != null) {
+          fields.add(versionAlgorithmX!);
+        }
       case 'versionAlgorithmX':
-        fields.add(versionAlgorithmX!);
+        if (versionAlgorithmX != null) {
+          fields.add(versionAlgorithmX!);
+        }
       case 'versionAlgorithmString':
         if (versionAlgorithmX is FhirString) {
           fields.add(versionAlgorithmX!);
@@ -4774,9 +4778,13 @@ class CitationRelatesTo1 extends BackboneElement {
           fields.add(citation!);
         }
       case 'target':
-        fields.add(targetX!);
+        if (targetX != null) {
+          fields.add(targetX!);
+        }
       case 'targetX':
-        fields.add(targetX!);
+        if (targetX != null) {
+          fields.add(targetX!);
+        }
       case 'targetUri':
         if (targetX is FhirUri) {
           fields.add(targetX!);

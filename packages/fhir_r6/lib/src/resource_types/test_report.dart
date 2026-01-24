@@ -2893,9 +2893,13 @@ class TestReportRequirement extends BackboneElement {
           fields.addAll(modifierExtension!);
         }
       case 'link':
-        fields.add(linkX!);
+        if (linkX != null) {
+          fields.add(linkX!);
+        }
       case 'linkX':
-        fields.add(linkX!);
+        if (linkX != null) {
+          fields.add(linkX!);
+        }
       case 'linkUri':
         if (linkX is FhirUri) {
           fields.add(linkX!);
