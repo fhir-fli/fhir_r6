@@ -15,8 +15,8 @@ PACKAGES=(
   # "packages/fhir_r6_db"
   # "packages/fhir_r6_bulk"
   # "packages/fhir_r6_path"
-  "packages/fhir_r6_mapping"
-  # "packages/fhir_r6_validation"
+  # "packages/fhir_r6_mapping"
+  "packages/fhir_r6_validation"
 )
 
 RESULTS_FILE="test_results_$(date +%Y%m%d_%H%M%S).txt"

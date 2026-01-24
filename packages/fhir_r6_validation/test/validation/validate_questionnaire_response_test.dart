@@ -37,8 +37,8 @@ void main() {
     });
 
     test(
-        'reports error when QuestionnaireResponse has no questionnaire '
-        'reference', () async {
+        'reports error when Questionnaire cannot be retrieved from cache',
+        () async {
       final questionnaire = Questionnaire(
         id: 'example'.toFhirString,
         status: PublicationStatus.active,
@@ -55,10 +55,11 @@ void main() {
         questionnaire: questionnaire.path.toFhirCanonical,
         id: 'example'.toFhirString,
         status: QuestionnaireResponseStatus.completed,
-        // No questionnaire reference
+        // Questionnaire reference exists but not added to cache
       );
 
       final resourceCache = CanonicalResourceCache();
+      // Note: questionnaire is not added to resourceCache
 
       final results = await validateQuestionnaireResponse(
         questionnaireResponse: questionnaireResponse,
@@ -68,7 +69,7 @@ void main() {
       expect(results.hasErrors, isTrue);
       expect(
         results.results.any(
-          (r) => r.diagnostics.contains('does not reference a Questionnaire'),
+          (r) => r.diagnostics.contains('Failed to retrieve Questionnaire'),
         ),
         isTrue,
       );
