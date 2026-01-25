@@ -1,1 +1,0 @@
-{"resourceType":"ResearchSubject","id":"example-crossover-placebo-to-drug","identifier":[{"value":"ecsr45"}],"status":"active","period":{"start":"2022-06-10"},"study":{"reference":"example-ctgov-study-record"},"subject":{"reference":"cfsb1676546565857"},"assignedComparisonGroup":"placebo","actualComparisonGroup":"ap303"}

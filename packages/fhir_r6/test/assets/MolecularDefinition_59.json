@@ -1,1 +1,0 @@
-{"resourceType":"MolecularDefinition","id":"example-sequence-cyp2c19-accession","moleculeType":{"coding":[{"system":"http://hl7.org/fhir/sequence-type","code":"dna","display":"DNA Sequence"}]},"representation":[{"resolvable":{"reference":"DocumentReference/example-genomicFile-cyp2c19-accession"}}]}

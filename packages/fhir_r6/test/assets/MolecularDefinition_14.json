@@ -1,1 +1,0 @@
-{"resourceType":"MolecularDefinition","id":"example-sequence-t","moleculeType":{"coding":[{"system":"http://hl7.org/fhir/sequence-type","code":"dna","display":"DNA Sequence"}]},"representation":[{"literal":{"value":"T"}}]}

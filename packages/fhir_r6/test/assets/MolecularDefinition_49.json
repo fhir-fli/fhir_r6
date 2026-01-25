@@ -1,1 +1,0 @@
-{"resourceType":"MolecularDefinition","id":"example-sequence-fmr1-cgg-20x-repeat","moleculeType":{"coding":[{"system":"http://hl7.org/fhir/sequence-type","code":"dna","display":"DNA Sequence"}]},"representation":[{"repeated":{"sequenceMotif":{"reference":"MolecularDefinition/example-sequence-cgg","type":"MolecularDefinition","display":"CGG"},"copyCount":20}}]}

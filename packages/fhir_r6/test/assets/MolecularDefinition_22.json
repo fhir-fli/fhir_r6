@@ -1,1 +1,0 @@
-{"resourceType":"MolecularDefinition","id":"example-replacement-sequence","moleculeType":{"coding":[{"system":"http://hl7.org/fhir/sequence-type","code":"dna","display":"DNA Sequence"}]},"representation":[{"literal":{"value":"ATGAA"}}]}

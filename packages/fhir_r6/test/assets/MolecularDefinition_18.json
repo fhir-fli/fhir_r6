@@ -1,1 +1,0 @@
-{"resourceType":"MolecularDefinition","id":"example-genotype1","moleculeType":{"coding":[{"system":"http://hl7.org/fhir/sequence-type","code":"dna","display":"DNA Sequence"}]}}
