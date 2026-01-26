@@ -1,10 +1,6 @@
 # fhir_r6_path
 
-## [0.4.5]
-
-* Updated dependencies
-
-## [0.4.4]
+## [0.4.0]
 
 * Updated dependencies
 * Fixed parser support for negative numbers at start of expressions (e.g., `-3 != 3`)
@@ -12,24 +8,11 @@
 * Removed unused variables (operandOperation, operandOpNext) from execute function
 * Fixed compilation error by commenting out export for non-existent value_set_expansion_extensions.dart file
 * Refactored and broke FhirPathEngine into multiple files for ease of maintenance
-
-## [0.4.3]
-
 * Naming consistency: ResourceCache, CanonicalResourceCache, OnlineResourceCache
-
-## [0.4.2]
-
 * Simplified CanonicalResourceManager
 * Added OnlineResourceManager
-
-
-## [0.4.1]
-
 * Updated engine to work better with mapping
 * Updated Lexer to work better with mapping
-
-## [0.4.0]
-
 * just update to use the most recent fhir_r6 package
 * also changed to universal_io so no issues using with web
 * added example
