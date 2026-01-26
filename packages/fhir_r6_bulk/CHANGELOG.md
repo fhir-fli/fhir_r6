@@ -1,10 +1,6 @@
 # fhir_r6_bulk
 
-## [0.4.2]
-
-* Updated dependencies
-
-## [0.4.1]
+## [0.4.0]
 
 * Updated dependencies
 * Fixed toNdJson() trailing newline bug
@@ -14,9 +10,6 @@
 * Fixed HTTP client cleanup
 * Fixed content-type header handling
 * Improved null safety checks
-
-## [0.4.0]
-
 * just update to use the most recent fhir_r6 package
 
 ## [0.3.0]
