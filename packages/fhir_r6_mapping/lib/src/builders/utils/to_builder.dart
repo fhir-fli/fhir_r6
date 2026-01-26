@@ -4213,11 +4213,6 @@ extension BuilderFhirBase on FhirBase {
         return VisionPrescriptionPrismBuilder.fromJson(
           toJson(),
         );
-      case 'administrableproductdefinitionrouteofadministration':
-        return AdministrableProductDefinitionRouteOfAdministrationBuilder
-            .fromJson(
-          toJson(),
-        );
       case 'administrable_product_definition_route_of_administration':
         return AdministrableProductDefinitionRouteOfAdministrationBuilder
             .fromJson(
