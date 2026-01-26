@@ -1,17 +1,10 @@
 # fhir_r6_at_rest
 
-## [0.4.2]
-
-* Updated dependencies
-
-## [0.4.1]
+## [0.4.0]
 
 * Updated dependencies
 * Added to Readme
 * Fixed a small management around some edge cases in parse requests
-
-## [0.4.0]
-
 * just update to use the most recent fhir_r6 package
 
 ## [0.3.0]
