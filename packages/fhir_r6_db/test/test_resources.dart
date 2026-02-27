@@ -20,6 +20,14 @@ final testCondition1 = Condition.fromJson({
       "value": "25103777-2-A4102",
     }
   ],
+  "clinicalStatus": {
+    "coding": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
+        "code": "active",
+      }
+    ],
+  },
   "category": [
     {
       "coding": [
@@ -41,14 +49,6 @@ final testCondition1 = Condition.fromJson({
   },
   "subject": {"reference": "Patient/1cf9e585-806c-513b-80af-4ca565a28231"},
   "encounter": {"reference": "Encounter/a604549e-5294-536d-b3c0-41f1652cd5af"},
-  "clinicalStatus": {
-    "coding": [
-      {
-        "system": "http://terminology.hl7.org/CodeSystem/condition-clinical",
-        "code": "active",
-      },
-    ],
-  },
 });
 final testConceptMap1 = ConceptMap.fromJson({
   "resourceType": "ConceptMap",
@@ -75,8 +75,8 @@ final testConceptMap1 = ConceptMap.fromJson({
     }
   ],
   "description": "Canonical Mapping for \"The status of the episode of care.\"",
-  "sourceCanonical": "http://hl7.org/fhir/ValueSet/episode-of-care-status",
-  "targetCanonical": "http://hl7.org/fhir/ValueSet/resource-status",
+  "sourceScopeCanonical": "http://hl7.org/fhir/ValueSet/episode-of-care-status",
+  "targetScopeCanonical": "http://hl7.org/fhir/ValueSet/resource-status",
   "group": [
     {
       "source": "http://hl7.org/fhir/episode-of-care-status",
@@ -85,71 +85,43 @@ final testConceptMap1 = ConceptMap.fromJson({
         {
           "code": "entered-in-error",
           "target": [
-            {
-              "code": "error",
-              "equivalence": "equivalent",
-              "relationship": "source-is-narrower-than-target",
-            },
+            {"code": "error", "relationship": "equivalent"},
           ],
         },
         {
           "code": "planned",
           "target": [
-            {
-              "code": "planned",
-              "equivalence": "equivalent",
-              "relationship": "source-is-narrower-than-target",
-            },
+            {"code": "planned", "relationship": "equivalent"},
           ],
         },
         {
           "code": "waitlist",
           "target": [
-            {
-              "code": "draft",
-              "equivalence": "equivalent",
-              "relationship": "source-is-narrower-than-target",
-            },
+            {"code": "draft", "relationship": "equivalent"},
           ],
         },
         {
           "code": "active",
           "target": [
-            {
-              "code": "active",
-              "equivalence": "equivalent",
-              "relationship": "source-is-narrower-than-target",
-            },
+            {"code": "active", "relationship": "equivalent"},
           ],
         },
         {
           "code": "onhold",
           "target": [
-            {
-              "code": "suspended",
-              "equivalence": "equivalent",
-              "relationship": "source-is-narrower-than-target",
-            },
+            {"code": "suspended", "relationship": "equivalent"},
           ],
         },
         {
           "code": "finished",
           "target": [
-            {
-              "code": "complete",
-              "equivalence": "equivalent",
-              "relationship": "source-is-narrower-than-target",
-            },
+            {"code": "complete", "relationship": "equivalent"},
           ],
         },
         {
           "code": "cancelled",
           "target": [
-            {
-              "code": "abandoned",
-              "equivalence": "equivalent",
-              "relationship": "source-is-narrower-than-target",
-            }
+            {"code": "abandoned", "relationship": "equivalent"},
           ],
         }
       ],
