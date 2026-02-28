@@ -1,0 +1,29 @@
+name: fhir_r6_cql
+description: Attempt to Support the CQL Library in Dart.
+version: 0.0.0-dev1
+homepage: https://www.fhirfli.dev/
+repository: https://github.com/fhir-fli/cql
+
+environment:
+  sdk: ">=3.2.0 <4.0.0"
+
+dependencies:
+  antlr4: ^4.13.2
+  collection: ^1.19.1
+  fhir_r6: ^0.4.3
+  # fhir_r6:
+  #   path: ../fhir_r6
+  fhir_r6_path: ^0.4.0
+  # fhir_r6_path:
+  #   path: ../fhir_r6_path
+  http: ^1.6.0
+  path: ^1.9.1
+  ucum: ^0.8.0
+  uuid: ^4.5.3
+  xml: ^6.6.1
+  xml2json: ^6.2.7
+
+  json_annotation: 4.11.0
+dev_dependencies:
+  lints: ^5.1.1
+  test: ^1.29.0
