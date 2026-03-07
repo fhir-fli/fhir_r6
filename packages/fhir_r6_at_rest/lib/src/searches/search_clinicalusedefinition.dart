@@ -50,6 +50,7 @@ class SearchClinicalUseDefinition extends SearchResource {
     addParameterValue('identifier', paramValue);
     return this;
   }
+
   /// [ClinicalUseDefinition]
   SearchClinicalUseDefinition interaction(
     FhirString value, {

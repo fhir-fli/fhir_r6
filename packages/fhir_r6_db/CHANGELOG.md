@@ -1,5 +1,12 @@
 # fhir_r6_db
 
+## [0.5.0]
+
+* Unified versioning across all fhir_r6 packages
+* Updated dependencies
+* Migrated from Hive to SQLite/Drift
+* Added SQLCipher encryption support via sqlite3mc
+
 ## [0.4.0]
 
 * Added id to xhtml _allowedAttributes
