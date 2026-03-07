@@ -1,5 +1,10 @@
 # fhir_r6
 
+## [0.5.0]
+
+* Unified versioning across all fhir_r6 packages
+* Updated dependencies
+
 ## [0.4.4]
 
 * Fixed getChildrenByName null checks for polymorphic fields

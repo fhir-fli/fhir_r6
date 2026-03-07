@@ -1,5 +1,11 @@
 # fhir_r6_at_rest
 
+## [0.5.0]
+
+* Unified versioning across all fhir_r6 packages
+* Updated dependencies
+* Fixed repeated query parameters (_include, _revinclude)
+
 ## [0.4.0]
 
 * Updated dependencies

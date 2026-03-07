@@ -1,5 +1,11 @@
 # fhir_r6_cds_hooks
 
+## [0.5.0]
+
+* Unified versioning across all fhir_r6 packages
+* Updated dependencies
+* Initial publication to pub.dev
+
 ## [0.1.0]
 
 * Initial release
