@@ -11,7 +11,7 @@ import 'package:fhir_r6_cql/fhir_r6_cql.dart';
 /// value using a constant offset such as UTC.
 /// Signature:
 ///
-/// minimum<T>() T
+/// `minimum<T>`() T
 /// Description:
 ///
 /// The minimum operator returns the minimum representable value for the given

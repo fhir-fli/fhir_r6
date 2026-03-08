@@ -8,8 +8,8 @@ import 'package:fhir_r6_cql/fhir_r6_cql.dart';
 /// list are ignored.
 /// Signature:
 ///
-/// Combine(source List<String>) String
-/// Combine(source List<String>, separator String) String
+/// Combine(source `List<String>`) String
+/// Combine(source `List<String>`, separator String) String
 /// Description:
 ///
 /// The Combine operator combines a list of strings, optionally separating each

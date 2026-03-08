@@ -12,7 +12,7 @@ import 'package:fhir_r6_cql/fhir_r6_cql.dart';
 /// If the source is null, the result is null.
 /// Signature:
 ///
-/// maximum<T>() T
+/// `maximum<T>`() T
 /// Description:
 ///
 /// The maximum operator returns the maximum representable value for the given type.

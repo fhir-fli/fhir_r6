@@ -10,7 +10,7 @@ import 'package:fhir_r6_cql/fhir_r6_cql.dart';
 /// If the result of the operation cannot be represented, the result is null.
 /// Signature:
 ///
-/// successor of<T>(argument T) T
+/// successor `of<T>`(argument T) T
 /// Description:
 ///
 /// The successor operator returns the successor of the argument. For example,
