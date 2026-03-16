@@ -1,0 +1,70 @@
+{
+  "resourceType": "ImagingSelection",
+  "id": "example-multiframe-image-selection",
+  "identifier": [
+    {
+      "system": "urn:dicom:uid",
+      "value": "urn:oid:1.2.840.113747.20080222.307765875869300980245024554221747.2.1"
+    }
+  ],
+  "status": "available",
+  "code": {
+    "text": "Key Frames"
+  },
+  "subject": {
+    "type": "Patient",
+    "identifier": {
+      "system": "https://fhirhospital.org",
+      "value": "MNSOIISABIDCHRCY"
+    }
+  },
+  "basedOn": [
+    {
+      "reference": "Appointment/2docs"
+    }
+  ],
+  "derivedFrom": {
+    "type": "ImagingStudy",
+    "identifier": {
+      "system": "urn:dicom:uid",
+      "value": "urn:oid:1.2.840.113747.20080222.307765875889350980245024554221747"
+    }
+  },
+  "studyUid": "1.2.840.113747.20080222.307765875869300489345024554221747",
+  "seriesUid": "1.2.840.113747.20080222.307765875869300489245024554221747.1",
+  "frameOfReferenceUid": "1.2.840.113747.20080222.307765875869350980245024554221747.0",
+  "bodySite": [
+    {
+      "concept": {
+        "coding": [
+          {
+            "system": "http://snomed.info/sct",
+            "code": "67734004",
+            "display": "Upper Trunk Structure"
+          }
+        ]
+      }
+    }
+  ],
+  "instance": [
+    {
+      "uid": "1.2.840.113747.20080222.307765875869300489355024554221747.1.0",
+      "sopClass": "urn:oid:1.2.840.10008.5.1.4.1.1.2.1",
+      "subset": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ]
+    }
+  ],
+  "meta": {
+    "tag": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+        "code": "HTEST",
+        "display": "test health data"
+      }
+    ]
+  }
+}

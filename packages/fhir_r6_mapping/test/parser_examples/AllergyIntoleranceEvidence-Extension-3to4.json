@@ -1,0 +1,108 @@
+{
+  "resourceType": "StructureMap",
+  "id": "R3toR5conversionforCareConnectAllergyIntoleranceEvidenceextension",
+  "url": "http://fhir.nhs.uk/StructureMap/AllergyIntoleranceEvidence-Extension-3to4",
+  "name": "R3 to R5 conversion for CareConnect AllergyIntolerance Evidence extension",
+  "status": "draft",
+  "structure": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance",
+      "mode": "source",
+      "alias": "AllergyIntolerance"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/AllergyIntolerance",
+      "mode": "target",
+      "alias": "AllergyIntolerance"
+    }
+  ],
+  "group": [
+    {
+      "name": "AllergyIntolerance",
+      "input": [
+        {
+          "name": "src",
+          "type": "AllergyIntolerance",
+          "mode": "source"
+        },
+        {
+          "name": "tgt",
+          "type": "AllergyIntolerance",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "extension",
+          "source": [
+            {
+              "context": "src",
+              "element": "extension",
+              "variable": "ext",
+              "condition": "$this.url = 'https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-Evidence-1'"
+            }
+          ],
+          "target": [
+            {
+              "context": "tgt",
+              "element": "extension",
+              "variable": "tgtext",
+              "transform": "create",
+              "parameter": [
+                {
+                  "valueString": "Extension"
+                }
+              ]
+            },
+            {
+              "context": "tgtext",
+              "element": "url",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueString": "https://fhir.hl7.org.uk/StructureDefinition/Extension-UKCore-Evidence"
+                }
+              ]
+            }
+          ],
+          "rule": [
+            {
+              "name": "valueReference",
+              "source": [
+                {
+                  "context": "ext",
+                  "type": "Reference",
+                  "element": "value",
+                  "variable": "vs"
+                }
+              ],
+              "target": [
+                {
+                  "context": "tgtext",
+                  "element": "value",
+                  "variable": "vt",
+                  "transform": "create",
+                  "parameter": [
+                    {
+                      "valueString": "Reference"
+                    }
+                  ]
+                },
+                {
+                  "context": "tgtext",
+                  "element": "value",
+                  "transform": "copy",
+                  "parameter": [
+                    {
+                      "valueId": "vs"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4115 @@
+{
+  "resourceType": "StructureMap",
+  "id": "RadOrderQrToBundle",
+  "url": "http://fhir.ch/ig/ch-rad-order/StructureMap/RadOrderQrToBundle",
+  "name": "RadOrderQrToBundle",
+  "status": "draft",
+  "structure": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
+      "mode": "source",
+      "alias": "QuestionnaireResponse"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/Bundle",
+      "mode": "target",
+      "alias": "Bundle"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/Patient",
+      "mode": "target",
+      "alias": "Patient"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/Organization",
+      "mode": "target",
+      "alias": "Organization"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/Practitioner",
+      "mode": "target",
+      "alias": "Practitioner"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/PractitionerRole",
+      "mode": "target",
+      "alias": "PractitionerRole"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/ServiceRequest",
+      "mode": "target",
+      "alias": "ServiceRequest"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/BackboneElement",
+      "mode": "target",
+      "alias": "BackboneElement"
+    }
+  ],
+  "import": [
+    "http://fhir.ch/ig/ch-orf/StructureMap/OrfQrToBundle"
+  ],
+  "group": [
+    {
+      "name": "RadOrderQrToBundle",
+      "input": [
+        {
+          "name": "qr",
+          "type": "QuestionnaireResponse",
+          "mode": "source"
+        },
+        {
+          "name": "bundle",
+          "type": "Bundle",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "documentIdentifier",
+          "source": [
+            {
+              "context": "qr"
+            }
+          ],
+          "target": [
+            {
+              "context": "bundle",
+              "element": "identifier",
+              "variable": "documentIdentifier"
+            },
+            {
+              "context": "documentIdentifier",
+              "element": "system",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueString": "urn:ietf:rfc:3986"
+                }
+              ]
+            },
+            {
+              "variable": "uuidDoc",
+              "transform": "uuid"
+            },
+            {
+              "context": "documentIdentifier",
+              "element": "value",
+              "transform": "evaluate",
+              "parameter": [
+                {
+                  "valueString": "'urn:uuid:' + uuidDoc"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "orfbundle",
+          "source": [
+            {
+              "context": "qr",
+              "variable": "qrcp"
+            }
+          ],
+          "target": [
+            {
+              "context": "bundle",
+              "element": "entry",
+              "variable": "e"
+            },
+            {
+              "context": "e",
+              "element": "resource",
+              "variable": "composition",
+              "transform": "create",
+              "parameter": [
+                {
+                  "valueString": "Composition"
+                }
+              ]
+            },
+            {
+              "context": "composition",
+              "element": "id",
+              "variable": "uuid",
+              "transform": "uuid"
+            },
+            {
+              "context": "e",
+              "element": "fullUrl",
+              "transform": "evaluate",
+              "parameter": [
+                {
+                  "valueString": "'urn:uuid:' + uuid"
+                }
+              ]
+            },
+            {
+              "context": "bundle",
+              "element": "entry",
+              "variable": "e2"
+            },
+            {
+              "context": "bundle",
+              "element": "timestamp",
+              "variable": "timestamp",
+              "transform": "evaluate",
+              "parameter": [
+                {
+                  "valueString": "now()"
+                }
+              ]
+            },
+            {
+              "context": "composition",
+              "element": "date",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueId": "timestamp"
+                }
+              ]
+            },
+            {
+              "context": "e2",
+              "element": "resource",
+              "variable": "patient",
+              "transform": "create",
+              "parameter": [
+                {
+                  "valueString": "Patient"
+                }
+              ]
+            },
+            {
+              "context": "patient",
+              "element": "id",
+              "variable": "uuid2",
+              "transform": "uuid"
+            },
+            {
+              "context": "e2",
+              "element": "fullUrl",
+              "transform": "evaluate",
+              "parameter": [
+                {
+                  "valueString": "'urn:uuid:' + uuid2"
+                }
+              ]
+            },
+            {
+              "context": "bundle",
+              "element": "entry",
+              "variable": "e4"
+            },
+            {
+              "context": "e4",
+              "element": "resource",
+              "variable": "questionnaireresp",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueId": "qrcp"
+                }
+              ]
+            },
+            {
+              "context": "questionnaireresp",
+              "element": "id",
+              "variable": "uuid4",
+              "transform": "uuid"
+            },
+            {
+              "context": "e4",
+              "element": "fullUrl",
+              "transform": "evaluate",
+              "parameter": [
+                {
+                  "valueString": "'urn:uuid:' + uuid4"
+                }
+              ]
+            },
+            {
+              "context": "bundle",
+              "element": "entry",
+              "variable": "e5"
+            },
+            {
+              "context": "e5",
+              "element": "resource",
+              "variable": "servicerequest",
+              "transform": "create",
+              "parameter": [
+                {
+                  "valueString": "ServiceRequest"
+                }
+              ]
+            },
+            {
+              "context": "servicerequest",
+              "element": "id",
+              "variable": "uuid5",
+              "transform": "uuid"
+            },
+            {
+              "context": "e5",
+              "element": "fullUrl",
+              "transform": "evaluate",
+              "parameter": [
+                {
+                  "valueString": "'urn:uuid:' + uuid5"
+                }
+              ]
+            }
+          ],
+          "rule": [
+            {
+              "name": "orfbundle",
+              "source": [
+                {
+                  "context": "qr",
+                  "element": "questionnaire",
+                  "variable": "can"
+                }
+              ],
+              "target": [
+                {
+                  "context": "bundle",
+                  "element": "entry",
+                  "variable": "e6"
+                },
+                {
+                  "context": "e6",
+                  "element": "resource",
+                  "variable": "q",
+                  "transform": "evaluate",
+                  "parameter": [
+                    {
+                      "valueString": "can.resolve()"
+                    }
+                  ]
+                },
+                {
+                  "context": "q",
+                  "element": "id",
+                  "variable": "uuid6",
+                  "transform": "uuid"
+                },
+                {
+                  "context": "e6",
+                  "element": "fullUrl",
+                  "transform": "append",
+                  "parameter": [
+                    {
+                      "valueString": "urn:uuid:"
+                    },
+                    {
+                      "valueId": "uuid6"
+                    }
+                  ]
+                }
+              ],
+              "dependent": [
+                {
+                  "name": "QrToBundle",
+                  "parameter": [
+                    {
+                      "valueId": "qr"
+                    },
+                    {
+                      "valueId": "q"
+                    },
+                    {
+                      "valueId": "patient"
+                    },
+                    {
+                      "valueId": "questionnaireresp"
+                    },
+                    {
+                      "valueId": "servicerequest"
+                    },
+                    {
+                      "valueId": "composition"
+                    },
+                    {
+                      "valueId": "bundle"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "servicerequest",
+              "source": [
+                {
+                  "context": "qr"
+                }
+              ],
+              "dependent": [
+                {
+                  "name": "RadOrderQrToServiceRequest",
+                  "parameter": [
+                    {
+                      "valueId": "qr"
+                    },
+                    {
+                      "valueId": "patient"
+                    },
+                    {
+                      "valueId": "bundle"
+                    },
+                    {
+                      "valueId": "composition"
+                    },
+                    {
+                      "valueId": "servicerequest"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "RadOrderQrToServiceRequest",
+      "input": [
+        {
+          "name": "qr",
+          "type": "QuestionnaireResponse",
+          "mode": "source"
+        },
+        {
+          "name": "patient",
+          "type": "Patient",
+          "mode": "target"
+        },
+        {
+          "name": "bundle",
+          "type": "Bundle",
+          "mode": "target"
+        },
+        {
+          "name": "composition",
+          "type": "Composition",
+          "mode": "target"
+        },
+        {
+          "name": "serviceRequest",
+          "type": "ServiceRequest",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "requestedService",
+          "source": [
+            {
+              "context": "qr",
+              "element": "item",
+              "variable": "grp",
+              "condition": "linkId = 'requestedService'"
+            }
+          ],
+          "dependent": [
+            {
+              "name": "RequestedServiceItems",
+              "parameter": [
+                {
+                  "valueId": "grp"
+                },
+                {
+                  "valueId": "serviceRequest"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "reason",
+          "source": [
+            {
+              "context": "qr",
+              "element": "item",
+              "variable": "grp",
+              "condition": "linkId = 'reason'"
+            }
+          ],
+          "dependent": [
+            {
+              "name": "ReasonServiceItems",
+              "parameter": [
+                {
+                  "valueId": "grp"
+                },
+                {
+                  "valueId": "serviceRequest"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "imagingService",
+          "source": [
+            {
+              "context": "qr",
+              "element": "item",
+              "variable": "grp",
+              "condition": "linkId = 'imagingService'"
+            }
+          ],
+          "dependent": [
+            {
+              "name": "ImagingServiceItems",
+              "parameter": [
+                {
+                  "valueId": "grp"
+                },
+                {
+                  "valueId": "serviceRequest"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "orderDetail",
+          "source": [
+            {
+              "context": "qr",
+              "element": "item",
+              "variable": "grp",
+              "condition": "linkId = 'orderDetail'"
+            }
+          ],
+          "dependent": [
+            {
+              "name": "OrderDetailServiceItems",
+              "parameter": [
+                {
+                  "valueId": "grp"
+                },
+                {
+                  "valueId": "serviceRequest"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "desiredRadiologist",
+          "source": [
+            {
+              "context": "qr",
+              "element": "item",
+              "variable": "grp",
+              "condition": "linkId = 'desiredRadiologist'"
+            }
+          ],
+          "dependent": [
+            {
+              "name": "DesiredRadiologistServiceItems",
+              "parameter": [
+                {
+                  "valueId": "grp"
+                },
+                {
+                  "valueId": "bundle"
+                },
+                {
+                  "valueId": "serviceRequest"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "diagnosisList",
+          "source": [
+            {
+              "context": "qr",
+              "element": "item",
+              "variable": "grp",
+              "condition": "linkId = 'diagnosisList'"
+            }
+          ],
+          "dependent": [
+            {
+              "name": "DiagnosisListServiceItems",
+              "parameter": [
+                {
+                  "valueId": "grp"
+                },
+                {
+                  "valueId": "patient"
+                },
+                {
+                  "valueId": "bundle"
+                },
+                {
+                  "valueId": "serviceRequest"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Caveat",
+          "source": [
+            {
+              "context": "qr",
+              "element": "item",
+              "variable": "grp",
+              "condition": "linkId = 'caveat'"
+            }
+          ],
+          "dependent": [
+            {
+              "name": "CaveatServiceItems",
+              "parameter": [
+                {
+                  "valueId": "grp"
+                },
+                {
+                  "valueId": "patient"
+                },
+                {
+                  "valueId": "bundle"
+                },
+                {
+                  "valueId": "serviceRequest"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "previousResults",
+          "source": [
+            {
+              "context": "qr",
+              "element": "item",
+              "variable": "grp",
+              "condition": "linkId = 'previousResults'"
+            }
+          ],
+          "dependent": [
+            {
+              "name": "PreviousImagingStudyResults",
+              "parameter": [
+                {
+                  "valueId": "grp"
+                },
+                {
+                  "valueId": "bundle"
+                },
+                {
+                  "valueId": "serviceRequest"
+                },
+                {
+                  "valueId": "patient"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "RequestedServiceItems",
+      "input": [
+        {
+          "name": "src",
+          "type": "BackboneElement",
+          "mode": "source"
+        },
+        {
+          "name": "serviceRequest",
+          "type": "ServiceRequest",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'requestedService.service') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueCoding",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "requestedService.service",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "Coding",
+                      "element": "value",
+                      "variable": "coding"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "serviceRequest",
+                      "element": "category",
+                      "variable": "cc"
+                    },
+                    {
+                      "context": "cc",
+                      "element": "coding",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueId": "coding"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ReasonServiceItems",
+      "input": [
+        {
+          "name": "src",
+          "type": "BackboneElement",
+          "mode": "source"
+        },
+        {
+          "name": "serviceRequest",
+          "type": "ServiceRequest",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'reason.question') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueString",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "reason.question",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "string",
+                      "element": "value",
+                      "variable": "value"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "serviceRequest",
+                      "element": "reasonCode",
+                      "variable": "reasonCode"
+                    },
+                    {
+                      "context": "reasonCode",
+                      "element": "text",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueId": "value"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ImagingServiceItems",
+      "input": [
+        {
+          "name": "src",
+          "type": "BackboneElement",
+          "mode": "source"
+        },
+        {
+          "name": "serviceRequest",
+          "type": "ServiceRequest",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'imagingService.type') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueCoding",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "requestedService.service",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "Coding",
+                      "element": "value",
+                      "variable": "coding"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "serviceRequest",
+                      "element": "code",
+                      "variable": "code"
+                    },
+                    {
+                      "context": "code",
+                      "element": "coding",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueId": "coding"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "OrderDetailServiceItems",
+      "input": [
+        {
+          "name": "src",
+          "type": "BackboneElement",
+          "mode": "source"
+        },
+        {
+          "name": "serviceRequest",
+          "type": "ServiceRequest",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'orderDetail.imagingRegion') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueCoding",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "orderDetail.imagingRegion",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "Coding",
+                      "element": "value",
+                      "variable": "coding"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "serviceRequest",
+                      "element": "orderDetail",
+                      "variable": "cc"
+                    },
+                    {
+                      "context": "cc",
+                      "element": "extension",
+                      "variable": "ext"
+                    },
+                    {
+                      "context": "ext",
+                      "element": "url",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://fhir.ch/ig/ch-rad-order/StructureDefinition/ch-rad-order-order-detail-type"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "ext",
+                      "element": "value",
+                      "variable": "coding",
+                      "transform": "create",
+                      "parameter": [
+                        {
+                          "valueString": "Coding"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://fhir.ch/ig/ch-rad-order/CodeSystem/ch-rad-order-order-detail-type"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "imagingRegion"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "cc",
+                      "element": "coding",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueId": "coding"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'orderDetail.imagingFocus') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueCoding",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "orderDetail.imagingFocus",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "Coding",
+                      "element": "value",
+                      "variable": "coding"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "serviceRequest",
+                      "element": "bodySite",
+                      "variable": "cc"
+                    },
+                    {
+                      "context": "cc",
+                      "element": "coding",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueId": "coding"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'orderDetail.laterality') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueCoding",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "orderDetail.laterality",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "Coding",
+                      "element": "value",
+                      "variable": "coding"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "serviceRequest",
+                      "element": "orderDetail",
+                      "variable": "cc"
+                    },
+                    {
+                      "context": "cc",
+                      "element": "extension",
+                      "variable": "ext"
+                    },
+                    {
+                      "context": "ext",
+                      "element": "url",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://fhir.ch/ig/ch-rad-order/StructureDefinition/ch-rad-order-order-detail-type"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "ext",
+                      "element": "value",
+                      "variable": "coding",
+                      "transform": "create",
+                      "parameter": [
+                        {
+                          "valueString": "Coding"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://fhir.ch/ig/ch-rad-order/CodeSystem/ch-rad-order-order-detail-type"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "laterality"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "cc",
+                      "element": "coding",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueId": "coding"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'orderDetail.viewType') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueCoding",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "orderDetail.viewType",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "Coding",
+                      "element": "value",
+                      "variable": "coding"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "serviceRequest",
+                      "element": "orderDetail",
+                      "variable": "cc"
+                    },
+                    {
+                      "context": "cc",
+                      "element": "extension",
+                      "variable": "ext"
+                    },
+                    {
+                      "context": "ext",
+                      "element": "url",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://fhir.ch/ig/ch-rad-order/StructureDefinition/ch-rad-order-order-detail-type"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "ext",
+                      "element": "value",
+                      "variable": "coding",
+                      "transform": "create",
+                      "parameter": [
+                        {
+                          "valueString": "Coding"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://fhir.ch/ig/ch-rad-order/CodeSystem/ch-rad-order-order-detail-type"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "viewType"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "cc",
+                      "element": "coding",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueId": "coding"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'orderDetail.maneuverType') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueCoding",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "orderDetail.maneuverType",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "Coding",
+                      "element": "value",
+                      "variable": "coding"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "serviceRequest",
+                      "element": "orderDetail",
+                      "variable": "cc"
+                    },
+                    {
+                      "context": "cc",
+                      "element": "extension",
+                      "variable": "ext"
+                    },
+                    {
+                      "context": "ext",
+                      "element": "url",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://fhir.ch/ig/ch-rad-order/StructureDefinition/ch-rad-order-order-detail-type"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "ext",
+                      "element": "value",
+                      "variable": "coding",
+                      "transform": "create",
+                      "parameter": [
+                        {
+                          "valueString": "Coding"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://fhir.ch/ig/ch-rad-order/CodeSystem/ch-rad-order-order-detail-type"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "maneuverType"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "cc",
+                      "element": "coding",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueId": "coding"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'orderDetail.guidanceForAction') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueCoding",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "orderDetail.guidanceForAction",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "Coding",
+                      "element": "value",
+                      "variable": "coding"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "serviceRequest",
+                      "element": "orderDetail",
+                      "variable": "cc"
+                    },
+                    {
+                      "context": "cc",
+                      "element": "extension",
+                      "variable": "ext"
+                    },
+                    {
+                      "context": "ext",
+                      "element": "url",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://fhir.ch/ig/ch-rad-order/StructureDefinition/ch-rad-order-order-detail-type"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "ext",
+                      "element": "value",
+                      "variable": "coding",
+                      "transform": "create",
+                      "parameter": [
+                        {
+                          "valueString": "Coding"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://fhir.ch/ig/ch-rad-order/CodeSystem/ch-rad-order-order-detail-type"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "guidanceForAction"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "cc",
+                      "element": "coding",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueId": "coding"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DesiredRadiologistServiceItems",
+      "input": [
+        {
+          "name": "src",
+          "type": "BackboneElement",
+          "mode": "source"
+        },
+        {
+          "name": "bundle",
+          "type": "Bundle",
+          "mode": "target"
+        },
+        {
+          "name": "serviceRequest",
+          "type": "ServiceRequest",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "serviceRequest.performer",
+          "source": [
+            {
+              "context": "src"
+            }
+          ],
+          "target": [
+            {
+              "context": "bundle",
+              "element": "entry",
+              "variable": "e"
+            },
+            {
+              "context": "e",
+              "element": "resource",
+              "variable": "practitioner",
+              "transform": "create",
+              "parameter": [
+                {
+                  "valueString": "Practitioner"
+                }
+              ]
+            },
+            {
+              "context": "practitioner",
+              "element": "id",
+              "variable": "uuid",
+              "transform": "uuid"
+            },
+            {
+              "context": "serviceRequest",
+              "element": "performer",
+              "variable": "performer"
+            },
+            {
+              "context": "performer",
+              "element": "reference",
+              "transform": "evaluate",
+              "parameter": [
+                {
+                  "valueString": "'urn:uuid:' + uuid"
+                }
+              ]
+            },
+            {
+              "context": "e",
+              "element": "fullUrl",
+              "transform": "evaluate",
+              "parameter": [
+                {
+                  "valueString": "'urn:uuid:' + uuid"
+                }
+              ]
+            }
+          ],
+          "rule": [
+            {
+              "name": "item",
+              "source": [
+                {
+                  "context": "src",
+                  "element": "item",
+                  "variable": "item",
+                  "condition": "((linkId.value = 'desiredRadiologist.familyName') and answer.exists())"
+                }
+              ],
+              "target": [
+                {
+                  "context": "practitioner",
+                  "element": "name",
+                  "variable": "name",
+                  "listMode": [
+                    "share"
+                  ],
+                  "listRuleId": "name"
+                },
+                {
+                  "context": "name",
+                  "element": "family",
+                  "transform": "evaluate",
+                  "parameter": [
+                    {
+                      "valueString": "item.answer.value"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "item",
+              "source": [
+                {
+                  "context": "src",
+                  "element": "item",
+                  "variable": "item",
+                  "condition": "((linkId.value = 'desiredRadiologist.givenName') and answer.exists())"
+                }
+              ],
+              "target": [
+                {
+                  "context": "practitioner",
+                  "element": "name",
+                  "variable": "name",
+                  "listMode": [
+                    "share"
+                  ],
+                  "listRuleId": "name"
+                },
+                {
+                  "context": "name",
+                  "element": "given",
+                  "transform": "evaluate",
+                  "parameter": [
+                    {
+                      "valueString": "item.answer.value"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "DiagnosisListServiceItems",
+      "input": [
+        {
+          "name": "src",
+          "type": "BackboneElement",
+          "mode": "source"
+        },
+        {
+          "name": "patient",
+          "type": "Patient",
+          "mode": "target"
+        },
+        {
+          "name": "bundle",
+          "type": "Bundle",
+          "mode": "target"
+        },
+        {
+          "name": "serviceRequest",
+          "type": "ServiceRequest",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'diagnosisList.secondaryDiagnosis') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueString",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "diagnosisList.secondaryDiagnosis",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "string",
+                      "element": "value",
+                      "variable": "value"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "bundle",
+                      "element": "entry",
+                      "variable": "e"
+                    },
+                    {
+                      "context": "e",
+                      "element": "resource",
+                      "variable": "condition",
+                      "transform": "create",
+                      "parameter": [
+                        {
+                          "valueString": "Condition"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "id",
+                      "variable": "uuid",
+                      "transform": "uuid"
+                    },
+                    {
+                      "context": "e",
+                      "element": "fullUrl",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "serviceRequest",
+                      "element": "supportingInfo",
+                      "variable": "supportingInfo"
+                    },
+                    {
+                      "context": "supportingInfo",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "category",
+                      "variable": "category"
+                    },
+                    {
+                      "context": "category",
+                      "element": "coding",
+                      "variable": "coding"
+                    },
+                    {
+                      "context": "coding",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "problem-list-item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://terminology.hl7.org/CodeSystem/condition-category"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Problem List Item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "code",
+                      "variable": "code"
+                    },
+                    {
+                      "context": "code",
+                      "element": "text",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueId": "value"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "subject",
+                      "variable": "subject"
+                    },
+                    {
+                      "context": "subject",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + patient.id"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "CaveatServiceItems",
+      "input": [
+        {
+          "name": "src",
+          "type": "BackboneElement",
+          "mode": "source"
+        },
+        {
+          "name": "patient",
+          "type": "Patient",
+          "mode": "target"
+        },
+        {
+          "name": "bundle",
+          "type": "Bundle",
+          "mode": "target"
+        },
+        {
+          "name": "serviceRequest",
+          "type": "ServiceRequest",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'caveat.bloodCoagulation') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueString",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "caveat.bloodCoagulation",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "boolean",
+                      "element": "value",
+                      "variable": "value",
+                      "condition": "answer.valueBoolean"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "bundle",
+                      "element": "entry",
+                      "variable": "e"
+                    },
+                    {
+                      "context": "e",
+                      "element": "resource",
+                      "variable": "condition",
+                      "transform": "create",
+                      "parameter": [
+                        {
+                          "valueString": "Condition"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "id",
+                      "variable": "uuid",
+                      "transform": "uuid"
+                    },
+                    {
+                      "context": "e",
+                      "element": "fullUrl",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "serviceRequest",
+                      "element": "supportingInfo",
+                      "variable": "supportingInfo"
+                    },
+                    {
+                      "context": "supportingInfo",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "category",
+                      "variable": "category"
+                    },
+                    {
+                      "context": "category",
+                      "element": "coding",
+                      "variable": "coding"
+                    },
+                    {
+                      "context": "coding",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "problem-list-item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://terminology.hl7.org/CodeSystem/condition-category"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Problem List Item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "code",
+                      "variable": "code"
+                    },
+                    {
+                      "context": "code",
+                      "element": "coding",
+                      "variable": "coding2"
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "64779008"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://snomed.info/sct"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Blood coagulation disorder (disorder)"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "subject",
+                      "variable": "subject"
+                    },
+                    {
+                      "context": "subject",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + patient.id"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'caveat.renalInsufficiency') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueString",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "caveat.renalInsufficiency",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "boolean",
+                      "element": "value",
+                      "variable": "value",
+                      "condition": "answer.valueBoolean"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "bundle",
+                      "element": "entry",
+                      "variable": "e"
+                    },
+                    {
+                      "context": "e",
+                      "element": "resource",
+                      "variable": "condition",
+                      "transform": "create",
+                      "parameter": [
+                        {
+                          "valueString": "Condition"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "id",
+                      "variable": "uuid",
+                      "transform": "uuid"
+                    },
+                    {
+                      "context": "e",
+                      "element": "fullUrl",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "serviceRequest",
+                      "element": "supportingInfo",
+                      "variable": "supportingInfo"
+                    },
+                    {
+                      "context": "supportingInfo",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "category",
+                      "variable": "category"
+                    },
+                    {
+                      "context": "category",
+                      "element": "coding",
+                      "variable": "coding"
+                    },
+                    {
+                      "context": "coding",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "problem-list-item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://terminology.hl7.org/CodeSystem/condition-category"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Problem List Item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "code",
+                      "variable": "code"
+                    },
+                    {
+                      "context": "code",
+                      "element": "coding",
+                      "variable": "coding2"
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "723188008"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://snomed.info/sct"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Renal insufficiency (disorder)"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "subject",
+                      "variable": "subject"
+                    },
+                    {
+                      "context": "subject",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + patient.id"
+                        }
+                      ]
+                    }
+                  ],
+                  "rule": [
+                    {
+                      "name": "RenalInsufficiencyCreatinineServiceItems",
+                      "source": [
+                        {
+                          "context": "answer",
+                          "element": "item",
+                          "variable": "item2",
+                          "condition": "(linkId.value = 'caveat.renalInsufficiency.creatinine')"
+                        }
+                      ],
+                      "dependent": [
+                        {
+                          "name": "RenalInsufficiencyCreatinineServiceItems",
+                          "parameter": [
+                            {
+                              "valueId": "item2"
+                            },
+                            {
+                              "valueId": "patient"
+                            },
+                            {
+                              "valueId": "bundle"
+                            },
+                            {
+                              "valueId": "serviceRequest"
+                            },
+                            {
+                              "valueId": "condition"
+                            }
+                          ]
+                        }
+                      ],
+                      "documentation": "FIXME TODO answer.item as item2 where (linkId.value = 'caveat.renalInsufficiency.creatinineClearance') then RenalInsufficiencyCreatinineServiceItems(item2, patient, bundle, serviceRequest, condition) \"RenalInsufficiencyCreatinineServiceItems\";"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'caveat.claustrophobia') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueString",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "caveat.claustrophobia",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "boolean",
+                      "element": "value",
+                      "variable": "value",
+                      "condition": "answer.valueBoolean"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "bundle",
+                      "element": "entry",
+                      "variable": "e"
+                    },
+                    {
+                      "context": "e",
+                      "element": "resource",
+                      "variable": "condition",
+                      "transform": "create",
+                      "parameter": [
+                        {
+                          "valueString": "Condition"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "id",
+                      "variable": "uuid",
+                      "transform": "uuid"
+                    },
+                    {
+                      "context": "e",
+                      "element": "fullUrl",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "serviceRequest",
+                      "element": "supportingInfo",
+                      "variable": "supportingInfo"
+                    },
+                    {
+                      "context": "supportingInfo",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "category",
+                      "variable": "category"
+                    },
+                    {
+                      "context": "category",
+                      "element": "coding",
+                      "variable": "coding"
+                    },
+                    {
+                      "context": "coding",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "problem-list-item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://terminology.hl7.org/CodeSystem/condition-category"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Problem List Item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "code",
+                      "variable": "code"
+                    },
+                    {
+                      "context": "code",
+                      "element": "coding",
+                      "variable": "coding2"
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "19887002"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://snomed.info/sct"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Claustrophobia (finding)"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "subject",
+                      "variable": "subject"
+                    },
+                    {
+                      "context": "subject",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + patient.id"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'caveat.bodyPiercing') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueString",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "caveat.bodyPiercing",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "boolean",
+                      "element": "value",
+                      "variable": "value",
+                      "condition": "answer.valueBoolean"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "bundle",
+                      "element": "entry",
+                      "variable": "e"
+                    },
+                    {
+                      "context": "e",
+                      "element": "resource",
+                      "variable": "condition",
+                      "transform": "create",
+                      "parameter": [
+                        {
+                          "valueString": "Condition"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "id",
+                      "variable": "uuid",
+                      "transform": "uuid"
+                    },
+                    {
+                      "context": "e",
+                      "element": "fullUrl",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "serviceRequest",
+                      "element": "supportingInfo",
+                      "variable": "supportingInfo"
+                    },
+                    {
+                      "context": "supportingInfo",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "category",
+                      "variable": "category"
+                    },
+                    {
+                      "context": "category",
+                      "element": "coding",
+                      "variable": "coding"
+                    },
+                    {
+                      "context": "coding",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "problem-list-item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://terminology.hl7.org/CodeSystem/condition-category"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Problem List Item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "code",
+                      "variable": "code"
+                    },
+                    {
+                      "context": "code",
+                      "element": "coding",
+                      "variable": "coding2"
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "879862001"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://snomed.info/sct"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Body piercing (finding)"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "subject",
+                      "variable": "subject"
+                    },
+                    {
+                      "context": "subject",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + patient.id"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'caveat.device') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueString",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "caveat.device",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "string",
+                      "element": "value",
+                      "variable": "value"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "bundle",
+                      "element": "entry",
+                      "variable": "e"
+                    },
+                    {
+                      "context": "e",
+                      "element": "resource",
+                      "variable": "condition",
+                      "transform": "create",
+                      "parameter": [
+                        {
+                          "valueString": "Condition"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "id",
+                      "variable": "uuid",
+                      "transform": "uuid"
+                    },
+                    {
+                      "context": "e",
+                      "element": "fullUrl",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "serviceRequest",
+                      "element": "supportingInfo",
+                      "variable": "supportingInfo"
+                    },
+                    {
+                      "context": "supportingInfo",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "category",
+                      "variable": "category"
+                    },
+                    {
+                      "context": "category",
+                      "element": "coding",
+                      "variable": "coding"
+                    },
+                    {
+                      "context": "coding",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "problem-list-item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://terminology.hl7.org/CodeSystem/condition-category"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Problem List Item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "code",
+                      "variable": "code"
+                    },
+                    {
+                      "context": "code",
+                      "element": "coding",
+                      "variable": "coding2"
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "397578001"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://snomed.info/sct"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Device in situ (finding)"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "subject",
+                      "variable": "subject"
+                    },
+                    {
+                      "context": "subject",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + patient.id"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "note",
+                      "variable": "note"
+                    },
+                    {
+                      "context": "note",
+                      "element": "text",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueId": "value"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'caveat.hyperthyroidism') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueString",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "caveat.hyperthyroidism",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "boolean",
+                      "element": "value",
+                      "variable": "value",
+                      "condition": "answer.valueBoolean"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "bundle",
+                      "element": "entry",
+                      "variable": "e"
+                    },
+                    {
+                      "context": "e",
+                      "element": "resource",
+                      "variable": "condition",
+                      "transform": "create",
+                      "parameter": [
+                        {
+                          "valueString": "Condition"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "id",
+                      "variable": "uuid",
+                      "transform": "uuid"
+                    },
+                    {
+                      "context": "e",
+                      "element": "fullUrl",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "serviceRequest",
+                      "element": "supportingInfo",
+                      "variable": "supportingInfo"
+                    },
+                    {
+                      "context": "supportingInfo",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "category",
+                      "variable": "category"
+                    },
+                    {
+                      "context": "category",
+                      "element": "coding",
+                      "variable": "coding"
+                    },
+                    {
+                      "context": "coding",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "problem-list-item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://terminology.hl7.org/CodeSystem/condition-category"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Problem List Item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "code",
+                      "variable": "code"
+                    },
+                    {
+                      "context": "code",
+                      "element": "coding",
+                      "variable": "coding2"
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "34486009"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://snomed.info/sct"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Hyperthyroidism (disorder)"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "subject",
+                      "variable": "subject"
+                    },
+                    {
+                      "context": "subject",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + patient.id"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'caveat.diabetes') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueString",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "caveat.diabetes",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "boolean",
+                      "element": "value",
+                      "variable": "value",
+                      "condition": "answer.valueBoolean"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "bundle",
+                      "element": "entry",
+                      "variable": "e"
+                    },
+                    {
+                      "context": "e",
+                      "element": "resource",
+                      "variable": "condition",
+                      "transform": "create",
+                      "parameter": [
+                        {
+                          "valueString": "Condition"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "id",
+                      "variable": "uuid",
+                      "transform": "uuid"
+                    },
+                    {
+                      "context": "e",
+                      "element": "fullUrl",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "serviceRequest",
+                      "element": "supportingInfo",
+                      "variable": "supportingInfo"
+                    },
+                    {
+                      "context": "supportingInfo",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "category",
+                      "variable": "category"
+                    },
+                    {
+                      "context": "category",
+                      "element": "coding",
+                      "variable": "coding"
+                    },
+                    {
+                      "context": "coding",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "problem-list-item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://terminology.hl7.org/CodeSystem/condition-category"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Problem List Item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "code",
+                      "variable": "code"
+                    },
+                    {
+                      "context": "code",
+                      "element": "coding",
+                      "variable": "coding2"
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "73211009"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://snomed.info/sct"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Diabetes mellitus (disorder)"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "subject",
+                      "variable": "subject"
+                    },
+                    {
+                      "context": "subject",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + patient.id"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'caveat.gravida') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueString",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "caveat.gravida",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "boolean",
+                      "element": "value",
+                      "variable": "value",
+                      "condition": "answer.valueBoolean"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "bundle",
+                      "element": "entry",
+                      "variable": "e"
+                    },
+                    {
+                      "context": "e",
+                      "element": "resource",
+                      "variable": "condition",
+                      "transform": "create",
+                      "parameter": [
+                        {
+                          "valueString": "Condition"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "id",
+                      "variable": "uuid",
+                      "transform": "uuid"
+                    },
+                    {
+                      "context": "e",
+                      "element": "fullUrl",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "serviceRequest",
+                      "element": "supportingInfo",
+                      "variable": "supportingInfo"
+                    },
+                    {
+                      "context": "supportingInfo",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "category",
+                      "variable": "category"
+                    },
+                    {
+                      "context": "category",
+                      "element": "coding",
+                      "variable": "coding"
+                    },
+                    {
+                      "context": "coding",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "problem-list-item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://terminology.hl7.org/CodeSystem/condition-category"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Problem List Item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "code",
+                      "variable": "code"
+                    },
+                    {
+                      "context": "code",
+                      "element": "coding",
+                      "variable": "coding2"
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "366321006"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://snomed.info/sct"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Finding of gravida (finding)"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "subject",
+                      "variable": "subject"
+                    },
+                    {
+                      "context": "subject",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + patient.id"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'caveat.contrastMediaAllergy') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueString",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "caveat.contrastMediaAllergy",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "boolean",
+                      "element": "value",
+                      "variable": "value",
+                      "condition": "answer.valueBoolean"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "bundle",
+                      "element": "entry",
+                      "variable": "e"
+                    },
+                    {
+                      "context": "e",
+                      "element": "resource",
+                      "variable": "condition",
+                      "transform": "create",
+                      "parameter": [
+                        {
+                          "valueString": "Condition"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "id",
+                      "variable": "uuid",
+                      "transform": "uuid"
+                    },
+                    {
+                      "context": "e",
+                      "element": "fullUrl",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "serviceRequest",
+                      "element": "supportingInfo",
+                      "variable": "supportingInfo"
+                    },
+                    {
+                      "context": "supportingInfo",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "category",
+                      "variable": "category"
+                    },
+                    {
+                      "context": "category",
+                      "element": "coding",
+                      "variable": "coding"
+                    },
+                    {
+                      "context": "coding",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "problem-list-item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://terminology.hl7.org/CodeSystem/condition-category"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Problem List Item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "code",
+                      "variable": "code"
+                    },
+                    {
+                      "context": "code",
+                      "element": "coding",
+                      "variable": "coding2"
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "293637006"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://snomed.info/sct"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Allergy to contrast media (finding)"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "subject",
+                      "variable": "subject"
+                    },
+                    {
+                      "context": "subject",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + patient.id"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "item.answer",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "((linkId.value = 'caveat.drugPrescription') and answer.exists())"
+            }
+          ],
+          "rule": [
+            {
+              "name": "answer.valueString",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "answer",
+                  "variable": "answer"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "caveat.drugPrescription",
+                  "source": [
+                    {
+                      "context": "answer",
+                      "type": "string",
+                      "element": "value",
+                      "variable": "value"
+                    }
+                  ],
+                  "target": [
+                    {
+                      "context": "bundle",
+                      "element": "entry",
+                      "variable": "e"
+                    },
+                    {
+                      "context": "e",
+                      "element": "resource",
+                      "variable": "condition",
+                      "transform": "create",
+                      "parameter": [
+                        {
+                          "valueString": "Condition"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "id",
+                      "variable": "uuid",
+                      "transform": "uuid"
+                    },
+                    {
+                      "context": "e",
+                      "element": "fullUrl",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "serviceRequest",
+                      "element": "supportingInfo",
+                      "variable": "supportingInfo"
+                    },
+                    {
+                      "context": "supportingInfo",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + uuid"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "category",
+                      "variable": "category"
+                    },
+                    {
+                      "context": "category",
+                      "element": "coding",
+                      "variable": "coding"
+                    },
+                    {
+                      "context": "coding",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "problem-list-item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://terminology.hl7.org/CodeSystem/condition-category"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Problem List Item"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "code",
+                      "variable": "code"
+                    },
+                    {
+                      "context": "code",
+                      "element": "coding",
+                      "variable": "coding2"
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "code",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "182817000"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "system",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "http://snomed.info/sct"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "coding2",
+                      "element": "display",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueString": "Drug prescription (situation)"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "subject",
+                      "variable": "subject"
+                    },
+                    {
+                      "context": "subject",
+                      "element": "reference",
+                      "transform": "evaluate",
+                      "parameter": [
+                        {
+                          "valueString": "'urn:uuid:' + patient.id"
+                        }
+                      ]
+                    },
+                    {
+                      "context": "condition",
+                      "element": "note",
+                      "variable": "note"
+                    },
+                    {
+                      "context": "note",
+                      "element": "text",
+                      "transform": "copy",
+                      "parameter": [
+                        {
+                          "valueId": "value"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "RenalInsufficiencyCreatinineServiceItems",
+      "input": [
+        {
+          "name": "src",
+          "type": "BackboneElement",
+          "mode": "source"
+        },
+        {
+          "name": "patient",
+          "type": "Patient",
+          "mode": "target"
+        },
+        {
+          "name": "bundle",
+          "type": "Bundle",
+          "mode": "target"
+        },
+        {
+          "name": "serviceRequest",
+          "type": "ServiceRequest",
+          "mode": "target"
+        },
+        {
+          "name": "condition",
+          "type": "Condition",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "observation",
+          "source": [
+            {
+              "context": "src"
+            }
+          ],
+          "target": [
+            {
+              "context": "bundle",
+              "element": "entry",
+              "variable": "e"
+            },
+            {
+              "context": "e",
+              "element": "resource",
+              "variable": "observation",
+              "transform": "create",
+              "parameter": [
+                {
+                  "valueString": "Observation"
+                }
+              ]
+            },
+            {
+              "context": "observation",
+              "element": "id",
+              "variable": "uuid",
+              "transform": "uuid"
+            },
+            {
+              "context": "e",
+              "element": "fullUrl",
+              "transform": "evaluate",
+              "parameter": [
+                {
+                  "valueString": "'urn:uuid:' + uuid"
+                }
+              ]
+            },
+            {
+              "context": "observation",
+              "element": "status",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueString": "final"
+                }
+              ]
+            },
+            {
+              "context": "observation",
+              "element": "code",
+              "variable": "code"
+            },
+            {
+              "context": "code",
+              "element": "coding",
+              "variable": "coding2"
+            },
+            {
+              "context": "coding2",
+              "element": "code",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueString": "723188008"
+                }
+              ]
+            },
+            {
+              "context": "coding2",
+              "element": "system",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueString": "http://snomed.info/sct"
+                }
+              ]
+            },
+            {
+              "context": "coding2",
+              "element": "display",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueString": "Renal insufficiency (disorder)"
+                }
+              ]
+            },
+            {
+              "context": "condition",
+              "element": "evidence",
+              "variable": "evidence"
+            },
+            {
+              "context": "evidence",
+              "element": "detail",
+              "variable": "detail"
+            },
+            {
+              "context": "detail",
+              "element": "reference",
+              "transform": "evaluate",
+              "parameter": [
+                {
+                  "valueString": "'urn:uuid:' + uuid"
+                }
+              ]
+            },
+            {
+              "context": "observation",
+              "element": "subject",
+              "variable": "subject"
+            },
+            {
+              "context": "subject",
+              "element": "reference",
+              "transform": "evaluate",
+              "parameter": [
+                {
+                  "valueString": "'urn:uuid:' + patient.id"
+                }
+              ]
+            }
+          ],
+          "rule": [
+            {
+              "name": "caveat.renalInsufficiency.creatinine.quantity",
+              "source": [
+                {
+                  "context": "src",
+                  "element": "item",
+                  "variable": "item",
+                  "condition": "((linkId.value = 'caveat.renalInsufficiency.creatinine.quantity') and answer.exists())"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "item.answer",
+                  "source": [
+                    {
+                      "context": "item",
+                      "element": "answer",
+                      "variable": "answer"
+                    }
+                  ],
+                  "rule": [
+                    {
+                      "name": "valueQuantity",
+                      "source": [
+                        {
+                          "context": "answer",
+                          "type": "Quantity",
+                          "element": "value",
+                          "variable": "value"
+                        }
+                      ],
+                      "target": [
+                        {
+                          "context": "observation",
+                          "element": "value",
+                          "transform": "copy",
+                          "parameter": [
+                            {
+                              "valueId": "value"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "caveat.renalInsufficiency.creatinine.dateTime",
+              "source": [
+                {
+                  "context": "src",
+                  "element": "item",
+                  "variable": "item",
+                  "condition": "((linkId.value = 'caveat.renalInsufficiency.creatinine.dateTime') and answer.exists())"
+                }
+              ],
+              "rule": [
+                {
+                  "name": "item.answer",
+                  "source": [
+                    {
+                      "context": "item",
+                      "element": "answer",
+                      "variable": "answer"
+                    }
+                  ],
+                  "rule": [
+                    {
+                      "name": "valueDateTime",
+                      "source": [
+                        {
+                          "context": "answer",
+                          "type": "dateTime",
+                          "element": "value",
+                          "variable": "value"
+                        }
+                      ],
+                      "target": [
+                        {
+                          "context": "observation",
+                          "element": "effective",
+                          "transform": "copy",
+                          "parameter": [
+                            {
+                              "valueId": "value"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "PreviousImagingStudyResults",
+      "input": [
+        {
+          "name": "grp",
+          "type": "BackboneElement",
+          "mode": "source"
+        },
+        {
+          "name": "bundle",
+          "type": "Bundle",
+          "mode": "target"
+        },
+        {
+          "name": "serviceRequest",
+          "type": "ServiceRequest",
+          "mode": "target"
+        },
+        {
+          "name": "patient",
+          "type": "Patient",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "imagingStudy",
+          "source": [
+            {
+              "context": "grp",
+              "element": "item",
+              "variable": "item",
+              "condition": "(linkId.value = 'previousResults.imagingStudy')"
+            }
+          ],
+          "target": [
+            {
+              "context": "bundle",
+              "element": "entry",
+              "variable": "e"
+            },
+            {
+              "context": "e",
+              "element": "resource",
+              "variable": "imagingStudy",
+              "transform": "create",
+              "parameter": [
+                {
+                  "valueString": "ImagingStudy"
+                }
+              ]
+            },
+            {
+              "context": "imagingStudy",
+              "element": "id",
+              "variable": "uuid",
+              "transform": "uuid"
+            },
+            {
+              "context": "imagingStudy",
+              "element": "status",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueString": "available"
+                }
+              ]
+            },
+            {
+              "context": "e",
+              "element": "fullUrl",
+              "transform": "append",
+              "parameter": [
+                {
+                  "valueString": "urn:uuid:"
+                },
+                {
+                  "valueId": "uuid"
+                }
+              ]
+            },
+            {
+              "context": "serviceRequest",
+              "element": "subject",
+              "variable": "subject"
+            },
+            {
+              "context": "subject",
+              "element": "reference",
+              "transform": "evaluate",
+              "parameter": [
+                {
+                  "valueString": "'urn:uuid:' + patient.id"
+                }
+              ]
+            },
+            {
+              "context": "serviceRequest",
+              "element": "supportingInfo",
+              "variable": "supportingInfo"
+            },
+            {
+              "context": "supportingInfo",
+              "element": "reference",
+              "transform": "evaluate",
+              "parameter": [
+                {
+                  "valueString": "'urn:uuid:' + uuid"
+                }
+              ]
+            }
+          ],
+          "rule": [
+            {
+              "name": "uid",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "item",
+                  "variable": "dictomitem",
+                  "condition": "((linkId.value = 'previousResults.imagingStudy.uid') and answer.exists())"
+                }
+              ],
+              "target": [
+                {
+                  "context": "imagingStudy",
+                  "element": "identifier",
+                  "variable": "uid"
+                },
+                {
+                  "context": "uid",
+                  "element": "system",
+                  "transform": "copy",
+                  "parameter": [
+                    {
+                      "valueString": "urn:dicom:uid"
+                    }
+                  ]
+                },
+                {
+                  "context": "uid",
+                  "element": "use",
+                  "transform": "copy",
+                  "parameter": [
+                    {
+                      "valueString": "official"
+                    }
+                  ]
+                },
+                {
+                  "context": "uid",
+                  "element": "value",
+                  "transform": "evaluate",
+                  "parameter": [
+                    {
+                      "valueString": "'urn:oid:' + dictomitem.answer.value"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "acsn",
+              "source": [
+                {
+                  "context": "item",
+                  "element": "item",
+                  "variable": "dictomitem",
+                  "condition": "((linkId.value = 'previousResults.imagingStudy.acsn') and answer.exists())"
+                }
+              ],
+              "target": [
+                {
+                  "context": "imagingStudy",
+                  "element": "identifier",
+                  "variable": "acsn"
+                },
+                {
+                  "context": "acsn",
+                  "element": "type",
+                  "variable": "type"
+                },
+                {
+                  "context": "type",
+                  "element": "coding",
+                  "variable": "coding"
+                },
+                {
+                  "context": "coding",
+                  "element": "system",
+                  "transform": "copy",
+                  "parameter": [
+                    {
+                      "valueString": "http://terminology.hl7.org/CodeSystem/v2-0203"
+                    }
+                  ]
+                },
+                {
+                  "context": "coding",
+                  "element": "code",
+                  "transform": "copy",
+                  "parameter": [
+                    {
+                      "valueString": "ACSN"
+                    }
+                  ]
+                },
+                {
+                  "context": "acsn",
+                  "element": "use",
+                  "transform": "copy",
+                  "parameter": [
+                    {
+                      "valueString": "usual"
+                    }
+                  ]
+                },
+                {
+                  "context": "acsn",
+                  "element": "value",
+                  "transform": "evaluate",
+                  "parameter": [
+                    {
+                      "valueString": "'urn:oid:' + dictomitem.answer.value"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

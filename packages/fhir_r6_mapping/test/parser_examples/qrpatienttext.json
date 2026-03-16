@@ -1,0 +1,116 @@
+{
+  "resourceType": "StructureMap",
+  "id": "qr2patnametext",
+  "url": "http://ahdis.ch/matchbox/fml/qr2patnametext",
+  "name": "qr2patnametext",
+  "status": "draft",
+  "structure": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse",
+      "mode": "source",
+      "alias": "QuestionnaireResponse"
+    },
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/Patient",
+      "mode": "target",
+      "alias": "Patient"
+    }
+  ],
+  "group": [
+    {
+      "name": "QuestionnaireResponse",
+      "input": [
+        {
+          "name": "src",
+          "type": "QuestionnaireResponse",
+          "mode": "source"
+        },
+        {
+          "name": "tgt",
+          "type": "Patient",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "item",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item"
+            }
+          ],
+          "target": [
+            {
+              "variable": "patient",
+              "transform": "copy",
+              "parameter": [
+                {
+                  "valueId": "tgt"
+                }
+              ]
+            }
+          ],
+          "dependent": [
+            {
+              "name": "item",
+              "parameter": [
+                {
+                  "valueId": "item"
+                },
+                {
+                  "valueId": "patient"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "item",
+      "input": [
+        {
+          "name": "src",
+          "mode": "source"
+        },
+        {
+          "name": "tgt",
+          "type": "Patient",
+          "mode": "target"
+        }
+      ],
+      "rule": [
+        {
+          "name": "item",
+          "source": [
+            {
+              "context": "src",
+              "element": "item",
+              "variable": "item",
+              "condition": "linkId.value in ('patient.name.text')"
+            }
+          ],
+          "target": [
+            {
+              "context": "tgt",
+              "element": "name",
+              "variable": "name"
+            },
+            {
+              "context": "name",
+              "element": "text",
+              "transform": "evaluate",
+              "parameter": [
+                {
+                  "valueString": "item.answer.valueString"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

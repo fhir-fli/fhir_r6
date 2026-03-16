@@ -1,0 +1,1 @@
+{"resourceType":"MolecularDefinition","id":"example-sequence-ggc","moleculeType":{"coding":[{"system":"http://hl7.org/fhir/sequence-type","code":"dna","display":"DNA Sequence"}]},"representation":[{"literal":{"value":"ggc"}}]}

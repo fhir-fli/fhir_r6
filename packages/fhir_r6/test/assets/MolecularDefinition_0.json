@@ -1,0 +1,1 @@
+{"resourceType":"MolecularDefinition","id":"example-sequence-msh2","moleculeType":{"coding":[{"system":"http://hl7.org/fhir/sequence-type","code":"dna","display":"DNA Sequence"}]},"representation":[{"resolvable":{"reference":"DocumentReference/example-genomicFile-nm0002513"}}]}

@@ -1,0 +1,1 @@
+{"resourceType":"DeviceUsage","id":"example","identifier":[{"system":"http:goodhealth.org/identifiers","value":"51ebb7a9-4e3a-4360-9a05-0cc2d869086f"}],"status":"active","patient":{"reference":"Patient/example"},"device":{"concept":{"text":"ACME defribillator"}},"reason":[{"reference":{"reference":"Condition/example","display":"PHx of Appendectomy (surgery)"}}]}
