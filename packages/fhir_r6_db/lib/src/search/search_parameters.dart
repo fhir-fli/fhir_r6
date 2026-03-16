@@ -53,6 +53,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Account.guarantor.party',
             i,
+            searchName: 'guarantor',
           ),
         );
         i++;
@@ -70,6 +71,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Account.guarantor.account',
             i,
+            searchName: 'guarantor-account',
           ),
         );
         i++;
@@ -86,6 +88,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Account.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -101,6 +104,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Account.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -116,6 +120,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Account.owner',
             i,
+            searchName: 'owner',
           ),
         );
         i++;
@@ -134,6 +139,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Account.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -149,6 +155,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Account.servicePeriod',
             i,
+            searchName: 'period',
           ),
         );
         i++;
@@ -164,6 +171,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Account.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -179,6 +187,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Account.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -194,6 +203,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Account.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -214,6 +224,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "ActivityDefinition.relatedArtifact.where(type='composed-of').resource",
             i,
+            searchName: 'composed-of',
           ),
         );
         i++;
@@ -231,6 +242,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActivityDefinition.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -246,6 +258,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActivityDefinition.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -264,6 +277,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "ActivityDefinition.relatedArtifact.where(type='depends-on').resource",
             i,
+            searchName: 'depends-on',
           ),
         );
         i++;
@@ -280,6 +294,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActivityDefinition.library',
             i,
+            searchName: 'depends-on',
           ),
         );
         i++;
@@ -298,6 +313,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "ActivityDefinition.relatedArtifact.where(type='derived-from').resource",
             i,
+            searchName: 'derived-from',
           ),
         );
         i++;
@@ -314,6 +330,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActivityDefinition.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -330,6 +347,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActivityDefinition.effectivePeriod',
             i,
+            searchName: 'effective',
           ),
         );
         i++;
@@ -346,6 +364,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActivityDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -362,6 +381,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActivityDefinition.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -377,6 +397,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActivityDefinition.kind',
             i,
+            searchName: 'kind',
           ),
         );
         i++;
@@ -392,6 +413,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActivityDefinition.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -410,6 +432,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "ActivityDefinition.relatedArtifact.where(type='predecessor').resource",
             i,
+            searchName: 'predecessor',
           ),
         );
         i++;
@@ -425,6 +448,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActivityDefinition.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -440,6 +464,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActivityDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -488,6 +513,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "ActivityDefinition.relatedArtifact.where(type='successor').resource",
             i,
+            searchName: 'successor',
           ),
         );
         i++;
@@ -503,6 +529,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActivityDefinition.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -519,6 +546,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActivityDefinition.topic',
             i,
+            searchName: 'topic',
           ),
         );
         i++;
@@ -534,6 +562,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActivityDefinition.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -549,6 +578,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActivityDefinition.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -565,6 +595,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActivityDefinition.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -584,6 +615,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActorDefinition.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -599,6 +631,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActorDefinition.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -615,6 +648,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActorDefinition.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -631,6 +665,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActorDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -647,6 +682,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActorDefinition.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -662,6 +698,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActorDefinition.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -677,6 +714,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActorDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -692,6 +730,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActorDefinition.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -707,6 +746,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActorDefinition.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -722,6 +762,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActorDefinition.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -738,6 +779,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActorDefinition.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -753,6 +795,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ActorDefinition.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -770,6 +813,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdministrableProductDefinition.device',
             i,
+            searchName: 'device',
           ),
         );
         i++;
@@ -786,6 +830,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdministrableProductDefinition.administrableDoseForm',
             i,
+            searchName: 'dose-form',
           ),
         );
         i++;
@@ -801,6 +846,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdministrableProductDefinition.formOf',
             i,
+            searchName: 'form-of',
           ),
         );
         i++;
@@ -817,6 +863,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdministrableProductDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -833,6 +880,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdministrableProductDefinition.ingredient',
             i,
+            searchName: 'ingredient',
           ),
         );
         i++;
@@ -849,6 +897,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdministrableProductDefinition.producedFrom',
             i,
+            searchName: 'manufactured-item',
           ),
         );
         i++;
@@ -866,6 +915,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdministrableProductDefinition.routeOfAdministration.code',
             i,
+            searchName: 'route',
           ),
         );
         i++;
@@ -881,6 +931,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdministrableProductDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -901,6 +952,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdministrableProductDefinition.routeOfAdministration.targetSpecies.code',
             i,
+            searchName: 'target-species',
           ),
         );
         i++;
@@ -919,6 +971,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -938,6 +991,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -954,6 +1008,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.actuality',
             i,
+            searchName: 'actuality',
           ),
         );
         i++;
@@ -970,6 +1025,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -986,6 +1042,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.cause.ofType(dateTime)',
             i,
+            searchName: 'cause',
           ),
         );
         i++;
@@ -1001,6 +1058,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.cause.ofType(Period)',
             i,
+            searchName: 'cause',
           ),
         );
         i++;
@@ -1016,6 +1074,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -1032,6 +1091,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.effect.ofType(dateTime)',
             i,
+            searchName: 'effect',
           ),
         );
         i++;
@@ -1047,6 +1107,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.effect.ofType(Period)',
             i,
+            searchName: 'effect',
           ),
         );
         i++;
@@ -1062,6 +1123,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.location',
             i,
+            searchName: 'location',
           ),
         );
         i++;
@@ -1077,6 +1139,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.recorder',
             i,
+            searchName: 'recorder',
           ),
         );
         i++;
@@ -1094,6 +1157,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.resultingEffect.concept',
             i,
+            searchName: 'resultingeffect-code',
           ),
         );
         i++;
@@ -1111,6 +1175,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.resultingEffect.reference',
             i,
+            searchName: 'resultingeffect-reference',
           ),
         );
         i++;
@@ -1127,6 +1192,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.seriousness',
             i,
+            searchName: 'seriousness',
           ),
         );
         i++;
@@ -1142,6 +1208,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -1157,6 +1224,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.study',
             i,
+            searchName: 'study',
           ),
         );
         i++;
@@ -1172,6 +1240,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -1190,6 +1259,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AdverseEvent.suspectEntity.instance.reference',
             i,
+            searchName: 'substance',
           ),
         );
         i++;
@@ -1208,6 +1278,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AllergyIntolerance.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -1223,6 +1294,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AllergyIntolerance.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -1238,6 +1310,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AllergyIntolerance.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -1253,6 +1326,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AllergyIntolerance.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -1270,6 +1344,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AllergyIntolerance.reaction.substance',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -1285,6 +1360,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AllergyIntolerance.asserter',
             i,
+            searchName: 'asserter',
           ),
         );
         i++;
@@ -1301,6 +1377,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AllergyIntolerance.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -1317,6 +1394,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AllergyIntolerance.clinicalStatus',
             i,
+            searchName: 'clinical-status',
           ),
         );
         i++;
@@ -1333,6 +1411,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AllergyIntolerance.criticality',
             i,
+            searchName: 'criticality',
           ),
         );
         i++;
@@ -1349,6 +1428,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AllergyIntolerance.recordedDate',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -1365,6 +1445,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AllergyIntolerance.lastReactionOccurrence',
             i,
+            searchName: 'last-reaction-date',
           ),
         );
         i++;
@@ -1383,6 +1464,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AllergyIntolerance.reaction.manifestation.concept',
             i,
+            searchName: 'manifestation-code',
           ),
         );
         i++;
@@ -1401,6 +1483,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AllergyIntolerance.reaction.manifestation.reference',
             i,
+            searchName: 'manifestation-reference',
           ),
         );
         i++;
@@ -1418,6 +1501,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AllergyIntolerance.reaction.exposureRoute',
             i,
+            searchName: 'route',
           ),
         );
         i++;
@@ -1435,6 +1519,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AllergyIntolerance.reaction.severity',
             i,
+            searchName: 'severity',
           ),
         );
         i++;
@@ -1451,6 +1536,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AllergyIntolerance.verificationStatus',
             i,
+            searchName: 'verification-status',
           ),
         );
         i++;
@@ -1469,6 +1555,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -1489,6 +1576,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.participant.actor.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -1508,6 +1596,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -1525,6 +1614,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.participant.actor',
             i,
+            searchName: 'actor',
           ),
         );
         i++;
@@ -1541,6 +1631,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.appointmentType',
             i,
+            searchName: 'appointment-type',
           ),
         );
         i++;
@@ -1556,6 +1647,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -1576,6 +1668,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.participant.actor.where(resolve() is Group)',
             i,
+            searchName: 'group',
           ),
         );
         i++;
@@ -1595,6 +1688,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.subject.where(resolve() is Group)',
             i,
+            searchName: 'group',
           ),
         );
         i++;
@@ -1625,6 +1719,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.participant.actor.where(resolve() is Location)',
             i,
+            searchName: 'location',
           ),
         );
         i++;
@@ -1641,6 +1736,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.occurrenceChanged',
             i,
+            searchName: 'occurrence-changed',
           ),
         );
         i++;
@@ -1657,6 +1753,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.originatingAppointment',
             i,
+            searchName: 'originating-appointment',
           ),
         );
         i++;
@@ -1674,6 +1771,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.participant.status',
             i,
+            searchName: 'part-status',
           ),
         );
         i++;
@@ -1694,6 +1792,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.participant.actor.where(resolve() is Practitioner)',
             i,
+            searchName: 'practitioner',
           ),
         );
         i++;
@@ -1710,6 +1809,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.previousAppointment',
             i,
+            searchName: 'previous-appointment',
           ),
         );
         i++;
@@ -1727,6 +1827,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.reason.concept',
             i,
+            searchName: 'reason-code',
           ),
         );
         i++;
@@ -1744,6 +1845,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.reason.reference',
             i,
+            searchName: 'reason-reference',
           ),
         );
         i++;
@@ -1760,6 +1862,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.serviceCategory',
             i,
+            searchName: 'service-category',
           ),
         );
         i++;
@@ -1777,6 +1880,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.serviceType.concept',
             i,
+            searchName: 'service-type',
           ),
         );
         i++;
@@ -1794,6 +1898,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.serviceType.reference',
             i,
+            searchName: 'service-type-reference',
           ),
         );
         i++;
@@ -1809,6 +1914,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.slot',
             i,
+            searchName: 'slot',
           ),
         );
         i++;
@@ -1825,6 +1931,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.specialty',
             i,
+            searchName: 'specialty',
           ),
         );
         i++;
@@ -1840,6 +1947,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -1855,6 +1963,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -1871,6 +1980,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Appointment.supportingInformation',
             i,
+            searchName: 'supporting-info',
           ),
         );
         i++;
@@ -1889,6 +1999,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AppointmentResponse.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -1908,6 +2019,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AppointmentResponse.actor.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -1923,6 +2035,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AppointmentResponse.actor',
             i,
+            searchName: 'actor',
           ),
         );
         i++;
@@ -1938,6 +2051,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AppointmentResponse.appointment',
             i,
+            searchName: 'appointment',
           ),
         );
         i++;
@@ -1957,6 +2071,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AppointmentResponse.actor.where(resolve() is Group)',
             i,
+            searchName: 'group',
           ),
         );
         i++;
@@ -1976,6 +2091,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AppointmentResponse.actor.where(resolve() is Location)',
             i,
+            searchName: 'location',
           ),
         );
         i++;
@@ -1992,6 +2108,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AppointmentResponse.participantStatus',
             i,
+            searchName: 'part-status',
           ),
         );
         i++;
@@ -2011,6 +2128,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AppointmentResponse.actor.where(resolve() is Practitioner)',
             i,
+            searchName: 'practitioner',
           ),
         );
         i++;
@@ -2028,6 +2146,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ArtifactAssessment.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -2044,6 +2163,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ArtifactAssessment.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -2061,6 +2181,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AuditEvent.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -2076,6 +2197,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AuditEvent.recorded',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -2091,6 +2213,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AuditEvent.action',
             i,
+            searchName: 'action',
           ),
         );
         i++;
@@ -2108,6 +2231,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AuditEvent.agent.who',
             i,
+            searchName: 'agent',
           ),
         );
         i++;
@@ -2125,6 +2249,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AuditEvent.agent.role',
             i,
+            searchName: 'agent-role',
           ),
         );
         i++;
@@ -2140,6 +2265,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AuditEvent.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -2155,6 +2281,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AuditEvent.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -2172,6 +2299,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AuditEvent.entity.what',
             i,
+            searchName: 'entity',
           ),
         );
         i++;
@@ -2189,6 +2317,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AuditEvent.entity.description',
             i,
+            searchName: 'entity-desc',
           ),
         );
         i++;
@@ -2206,6 +2335,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AuditEvent.entity.role',
             i,
+            searchName: 'entity-role',
           ),
         );
         i++;
@@ -2221,6 +2351,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AuditEvent.outcome.code',
             i,
+            searchName: 'outcome',
           ),
         );
         i++;
@@ -2238,6 +2369,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AuditEvent.agent.policy',
             i,
+            searchName: 'policy',
           ),
         );
         i++;
@@ -2254,6 +2386,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AuditEvent.authorization',
             i,
+            searchName: 'purpose',
           ),
         );
         i++;
@@ -2271,6 +2404,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AuditEvent.agent.authorization',
             i,
+            searchName: 'purpose',
           ),
         );
         i++;
@@ -2287,6 +2421,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AuditEvent.source.observer',
             i,
+            searchName: 'source',
           ),
         );
         i++;
@@ -2303,6 +2438,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AuditEvent.subtype',
             i,
+            searchName: 'subtype',
           ),
         );
         i++;
@@ -2318,6 +2454,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'AuditEvent.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -2336,6 +2473,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Basic.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -2355,6 +2493,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Basic.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -2370,6 +2509,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Basic.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -2385,6 +2525,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Basic.author',
             i,
+            searchName: 'author',
           ),
         );
         i++;
@@ -2400,6 +2541,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Basic.created',
             i,
+            searchName: 'created',
           ),
         );
         i++;
@@ -2415,6 +2557,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Basic.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -2433,6 +2576,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'BiologicallyDerivedProduct.biologicalSourceEvent',
             i,
+            searchName: 'biological-source-event',
           ),
         );
         i++;
@@ -2449,6 +2593,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'BiologicallyDerivedProduct.productCode',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -2465,6 +2610,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'BiologicallyDerivedProduct.collection.collector',
             i,
+            searchName: 'collector',
           ),
         );
         i++;
@@ -2481,6 +2627,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'BiologicallyDerivedProduct.identifier',
             i,
+            searchName: 'serial-number',
           ),
         );
         i++;
@@ -2497,6 +2644,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'BiologicallyDerivedProduct.productCategory',
             i,
+            searchName: 'product-category',
           ),
         );
         i++;
@@ -2512,6 +2660,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'BiologicallyDerivedProduct.productStatus',
             i,
+            searchName: 'product-status',
           ),
         );
         i++;
@@ -2527,6 +2676,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'BiologicallyDerivedProduct.request',
             i,
+            searchName: 'request',
           ),
         );
         i++;
@@ -2545,6 +2695,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'BiologicallyDerivedProductDispense.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -2560,6 +2711,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'BiologicallyDerivedProductDispense.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -2577,6 +2729,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'BiologicallyDerivedProductDispense.performer.actor',
             i,
+            searchName: 'performer',
           ),
         );
         i++;
@@ -2592,6 +2745,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'BiologicallyDerivedProductDispense.product',
             i,
+            searchName: 'product',
           ),
         );
         i++;
@@ -2607,6 +2761,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'BiologicallyDerivedProductDispense.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -2625,6 +2780,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'BodyStructure.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -2640,6 +2796,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'BodyStructure.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -2657,6 +2814,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'BodyStructure.excludedStructure.structure',
             i,
+            searchName: 'excluded_structure',
           ),
         );
         i++;
@@ -2674,6 +2832,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'BodyStructure.includedStructure.structure',
             i,
+            searchName: 'included_structure',
           ),
         );
         i++;
@@ -2690,6 +2849,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'BodyStructure.morphology',
             i,
+            searchName: 'morphology',
           ),
         );
         i++;
@@ -2718,6 +2878,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Bundle.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -2744,6 +2905,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Bundle.timestamp',
             i,
+            searchName: 'timestamp',
           ),
         );
         i++;
@@ -2759,6 +2921,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Bundle.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -2778,6 +2941,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -2793,6 +2957,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -2809,6 +2974,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -2825,6 +2991,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -2841,6 +3008,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -2856,6 +3024,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -2871,6 +3040,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -2886,6 +3056,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -2901,6 +3072,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -2916,6 +3088,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -2931,6 +3104,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -2947,6 +3121,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -2963,6 +3138,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.fhirVersion',
             i,
+            searchName: 'fhirversion',
           ),
         );
         i++;
@@ -2978,6 +3154,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.format',
             i,
+            searchName: 'format',
           ),
         );
         i++;
@@ -2994,6 +3171,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.implementationGuide',
             i,
+            searchName: 'guide',
           ),
         );
         i++;
@@ -3011,6 +3189,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.rest.mode',
             i,
+            searchName: 'mode',
           ),
         );
         i++;
@@ -3030,6 +3209,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.rest.resource.type',
             i,
+            searchName: 'resource',
           ),
         );
         i++;
@@ -3049,6 +3229,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.rest.resource.profile',
             i,
+            searchName: 'resource-profile',
           ),
         );
         i++;
@@ -3067,6 +3248,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.rest.security.service',
             i,
+            searchName: 'security-service',
           ),
         );
         i++;
@@ -3083,6 +3265,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.software.name',
             i,
+            searchName: 'software',
           ),
         );
         i++;
@@ -3102,6 +3285,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CapabilityStatement.rest.resource.supportedProfile',
             i,
+            searchName: 'supported-profile',
           ),
         );
         i++;
@@ -3120,6 +3304,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CarePlan.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -3139,6 +3324,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CarePlan.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -3154,6 +3340,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CarePlan.period',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -3169,6 +3356,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CarePlan.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -3186,6 +3374,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CarePlan.activity.plannedActivityReference',
             i,
+            searchName: 'activity-reference',
           ),
         );
         i++;
@@ -3201,6 +3390,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CarePlan.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -3216,6 +3406,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CarePlan.careTeam',
             i,
+            searchName: 'care-team',
           ),
         );
         i++;
@@ -3232,6 +3423,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CarePlan.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -3249,6 +3441,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CarePlan.addresses.reference',
             i,
+            searchName: 'condition',
           ),
         );
         i++;
@@ -3264,6 +3457,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CarePlan.custodian',
             i,
+            searchName: 'custodian',
           ),
         );
         i++;
@@ -3279,6 +3473,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CarePlan.goal',
             i,
+            searchName: 'goal',
           ),
         );
         i++;
@@ -3294,6 +3489,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CarePlan.intent',
             i,
+            searchName: 'intent',
           ),
         );
         i++;
@@ -3309,6 +3505,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CarePlan.partOf',
             i,
+            searchName: 'part-of',
           ),
         );
         i++;
@@ -3324,6 +3521,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CarePlan.replaces',
             i,
+            searchName: 'replaces',
           ),
         );
         i++;
@@ -3339,6 +3537,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CarePlan.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -3354,6 +3553,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CarePlan.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -3372,6 +3572,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CareTeam.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -3391,6 +3592,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CareTeam.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -3407,6 +3609,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CareTeam.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -3422,6 +3625,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CareTeam.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -3449,6 +3653,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CareTeam.participant.member',
             i,
+            searchName: 'participant',
           ),
         );
         i++;
@@ -3464,6 +3669,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CareTeam.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -3479,6 +3685,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CareTeam.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -3497,6 +3704,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -3516,6 +3724,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -3531,6 +3740,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -3546,6 +3756,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -3561,6 +3772,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.account',
             i,
+            searchName: 'account',
           ),
         );
         i++;
@@ -3577,6 +3789,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.enteredDate',
             i,
+            searchName: 'entered-date',
           ),
         );
         i++;
@@ -3592,6 +3805,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.enterer',
             i,
+            searchName: 'enterer',
           ),
         );
         i++;
@@ -3608,6 +3822,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.totalPriceComponent.factor',
             i,
+            searchName: 'factor-override',
           ),
         );
         i++;
@@ -3624,6 +3839,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.occurrence.ofType(dateTime)',
             i,
+            searchName: 'occurrence',
           ),
         );
         i++;
@@ -3640,6 +3856,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.occurrence.ofType(Period)',
             i,
+            searchName: 'occurrence',
           ),
         );
         i++;
@@ -3656,6 +3873,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.occurrence.ofType(Timing)',
             i,
+            searchName: 'occurrence',
           ),
         );
         i++;
@@ -3673,6 +3891,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.performer.actor',
             i,
+            searchName: 'performer-actor',
           ),
         );
         i++;
@@ -3690,6 +3909,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.performer.function',
             i,
+            searchName: 'performer-function',
           ),
         );
         i++;
@@ -3706,6 +3926,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.performingOrganization',
             i,
+            searchName: 'performing-organization',
           ),
         );
         i++;
@@ -3722,6 +3943,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.totalPriceComponent.amount',
             i,
+            searchName: 'price-override',
           ),
         );
         i++;
@@ -3737,6 +3959,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.quantity',
             i,
+            searchName: 'quantity',
           ),
         );
         i++;
@@ -3753,6 +3976,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.requestingOrganization',
             i,
+            searchName: 'requesting-organization',
           ),
         );
         i++;
@@ -3770,6 +3994,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.service.reference',
             i,
+            searchName: 'service',
           ),
         );
         i++;
@@ -3785,6 +4010,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -3800,6 +4026,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItem.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -3819,6 +4046,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItemDefinition.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -3834,6 +4062,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItemDefinition.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -3850,6 +4079,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItemDefinition.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -3867,6 +4097,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItemDefinition.applicability.effectivePeriod',
             i,
+            searchName: 'effective',
           ),
         );
         i++;
@@ -3883,6 +4114,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItemDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -3899,6 +4131,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItemDefinition.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -3914,6 +4147,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItemDefinition.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -3929,6 +4163,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItemDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -3944,6 +4179,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItemDefinition.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -3959,6 +4195,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItemDefinition.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -3974,6 +4211,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItemDefinition.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -3990,6 +4228,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItemDefinition.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -4005,6 +4244,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ChargeItemDefinition.account',
             i,
+            searchName: 'account',
           ),
         );
         i++;
@@ -4024,6 +4264,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Citation.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -4039,6 +4280,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Citation.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -4055,6 +4297,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Citation.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -4071,6 +4314,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Citation.effectivePeriod',
             i,
+            searchName: 'effective',
           ),
         );
         i++;
@@ -4087,6 +4331,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Citation.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -4103,6 +4348,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Citation.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -4118,6 +4364,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Citation.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -4133,6 +4380,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Citation.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -4148,6 +4396,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Citation.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -4163,6 +4412,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Citation.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -4178,6 +4428,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Citation.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -4193,6 +4444,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Citation.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -4209,6 +4461,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Citation.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -4225,6 +4478,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Citation.classification',
             i,
+            searchName: 'classification',
           ),
         );
         i++;
@@ -4243,6 +4497,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Claim.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -4258,6 +4513,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Claim.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -4275,6 +4531,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Claim.item.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -4292,6 +4549,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Claim.careTeam.provider',
             i,
+            searchName: 'care-team',
           ),
         );
         i++;
@@ -4307,6 +4565,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Claim.created',
             i,
+            searchName: 'created',
           ),
         );
         i++;
@@ -4325,6 +4584,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Claim.item.detail.udi',
             i,
+            searchName: 'detail-udi',
           ),
         );
         i++;
@@ -4340,6 +4600,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Claim.enterer',
             i,
+            searchName: 'enterer',
           ),
         );
         i++;
@@ -4355,6 +4616,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Claim.facility',
             i,
+            searchName: 'facility',
           ),
         );
         i++;
@@ -4370,6 +4632,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Claim.insurer',
             i,
+            searchName: 'insurer',
           ),
         );
         i++;
@@ -4387,6 +4650,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Claim.item.udi',
             i,
+            searchName: 'item-udi',
           ),
         );
         i++;
@@ -4403,6 +4667,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Claim.payee.party',
             i,
+            searchName: 'payee',
           ),
         );
         i++;
@@ -4419,6 +4684,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Claim.priority',
             i,
+            searchName: 'priority',
           ),
         );
         i++;
@@ -4436,6 +4702,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Claim.procedure.udi',
             i,
+            searchName: 'procedure-udi',
           ),
         );
         i++;
@@ -4451,6 +4718,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Claim.provider',
             i,
+            searchName: 'provider',
           ),
         );
         i++;
@@ -4466,6 +4734,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Claim.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -4485,6 +4754,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Claim.item.detail.subDetail.udi',
             i,
+            searchName: 'subdetail-udi',
           ),
         );
         i++;
@@ -4500,6 +4770,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Claim.use',
             i,
+            searchName: 'use',
           ),
         );
         i++;
@@ -4518,6 +4789,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClaimResponse.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -4533,6 +4805,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClaimResponse.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -4548,6 +4821,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClaimResponse.created',
             i,
+            searchName: 'created',
           ),
         );
         i++;
@@ -4564,6 +4838,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClaimResponse.disposition',
             i,
+            searchName: 'disposition',
           ),
         );
         i++;
@@ -4579,6 +4854,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClaimResponse.insurer',
             i,
+            searchName: 'insurer',
           ),
         );
         i++;
@@ -4594,6 +4870,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClaimResponse.outcome',
             i,
+            searchName: 'outcome',
           ),
         );
         i++;
@@ -4610,6 +4887,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClaimResponse.payment.date',
             i,
+            searchName: 'payment-date',
           ),
         );
         i++;
@@ -4625,6 +4903,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClaimResponse.request',
             i,
+            searchName: 'request',
           ),
         );
         i++;
@@ -4640,6 +4919,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClaimResponse.requestor',
             i,
+            searchName: 'requestor',
           ),
         );
         i++;
@@ -4655,6 +4935,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClaimResponse.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -4670,6 +4951,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClaimResponse.use',
             i,
+            searchName: 'use',
           ),
         );
         i++;
@@ -4687,6 +4969,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalAssessment.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -4702,6 +4985,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalAssessment.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -4720,6 +5004,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalAssessment.finding.item.concept',
             i,
+            searchName: 'finding-code',
           ),
         );
         i++;
@@ -4738,6 +5023,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalAssessment.finding.item.reference',
             i,
+            searchName: 'finding-ref',
           ),
         );
         i++;
@@ -4754,6 +5040,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalAssessment.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -4773,6 +5060,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalAssessment.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -4788,6 +5076,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalAssessment.performer',
             i,
+            searchName: 'performer',
           ),
         );
         i++;
@@ -4803,6 +5092,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalAssessment.previous',
             i,
+            searchName: 'previous',
           ),
         );
         i++;
@@ -4818,6 +5108,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalAssessment.problem',
             i,
+            searchName: 'problem',
           ),
         );
         i++;
@@ -4833,6 +5124,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalAssessment.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -4848,6 +5140,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalAssessment.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -4864,6 +5157,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalAssessment.supportingInfo',
             i,
+            searchName: 'supporting-info',
           ),
         );
         i++;
@@ -4883,6 +5177,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalUseDefinition.contraindication.diseaseSymptomProcedure.concept',
             i,
+            searchName: 'contraindication',
           ),
         );
         i++;
@@ -4900,6 +5195,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalUseDefinition.contraindication.diseaseSymptomProcedure.reference',
             i,
+            searchName: 'contraindication-reference',
           ),
         );
         i++;
@@ -4917,6 +5213,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalUseDefinition.undesirableEffect.symptomConditionEffect.concept',
             i,
+            searchName: 'effect',
           ),
         );
         i++;
@@ -4934,6 +5231,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalUseDefinition.undesirableEffect.symptomConditionEffect.reference',
             i,
+            searchName: 'effect-reference',
           ),
         );
         i++;
@@ -4950,6 +5248,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalUseDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -4966,6 +5265,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalUseDefinition.indication.diseaseSymptomProcedure.concept',
             i,
+            searchName: 'indication',
           ),
         );
         i++;
@@ -4983,6 +5283,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalUseDefinition.indication.diseaseSymptomProcedure.reference',
             i,
+            searchName: 'indication-reference',
           ),
         );
         i++;
@@ -4999,6 +5300,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalUseDefinition.interaction.type',
             i,
+            searchName: 'interaction',
           ),
         );
         i++;
@@ -5018,6 +5320,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalUseDefinition.subject.where(resolve() is MedicinalProductDefinition)',
             i,
+            searchName: 'product',
           ),
         );
         i++;
@@ -5034,6 +5337,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalUseDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -5049,6 +5353,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalUseDefinition.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -5064,6 +5369,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ClinicalUseDefinition.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -5083,6 +5389,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -5098,6 +5405,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -5116,6 +5424,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "CodeSystem.relatedArtifact.where(type='derived-from').resource",
             i,
+            searchName: 'derived-from',
           ),
         );
         i++;
@@ -5132,6 +5441,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -5148,6 +5458,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.effectivePeriod',
             i,
+            searchName: 'effective',
           ),
         );
         i++;
@@ -5164,6 +5475,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -5180,6 +5492,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -5195,6 +5508,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -5213,6 +5527,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "CodeSystem.relatedArtifact.where(type='predecessor').resource",
             i,
+            searchName: 'predecessor',
           ),
         );
         i++;
@@ -5228,6 +5543,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -5243,6 +5559,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -5258,6 +5575,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -5274,6 +5592,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.topic',
             i,
+            searchName: 'topic',
           ),
         );
         i++;
@@ -5289,6 +5608,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.url',
             i,
+            searchName: 'system',
           ),
         );
         i++;
@@ -5304,6 +5624,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -5320,6 +5641,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -5337,6 +5659,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.concept.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -5352,6 +5675,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.content',
             i,
+            searchName: 'content-mode',
           ),
         );
         i++;
@@ -5370,6 +5694,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.concept.designation.language',
             i,
+            searchName: 'language',
           ),
         );
         i++;
@@ -5386,6 +5711,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CodeSystem.supplements',
             i,
+            searchName: 'supplements',
           ),
         );
         i++;
@@ -5404,6 +5730,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Communication.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -5423,6 +5750,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Communication.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -5438,6 +5766,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Communication.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -5453,6 +5782,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Communication.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -5469,6 +5799,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Communication.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -5485,6 +5816,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Communication.inResponseTo',
             i,
+            searchName: 'in-response-to',
           ),
         );
         i++;
@@ -5501,6 +5833,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Communication.medium',
             i,
+            searchName: 'medium',
           ),
         );
         i++;
@@ -5516,6 +5849,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Communication.partOf',
             i,
+            searchName: 'part-of',
           ),
         );
         i++;
@@ -5533,6 +5867,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Communication.reason.concept',
             i,
+            searchName: 'reason-code',
           ),
         );
         i++;
@@ -5550,6 +5885,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Communication.reason.reference',
             i,
+            searchName: 'reason-reference',
           ),
         );
         i++;
@@ -5566,6 +5902,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Communication.received',
             i,
+            searchName: 'received',
           ),
         );
         i++;
@@ -5581,6 +5918,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Communication.recipient',
             i,
+            searchName: 'recipient',
           ),
         );
         i++;
@@ -5596,6 +5934,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Communication.sender',
             i,
+            searchName: 'sender',
           ),
         );
         i++;
@@ -5611,6 +5950,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Communication.sent',
             i,
+            searchName: 'sent',
           ),
         );
         i++;
@@ -5626,6 +5966,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Communication.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -5641,6 +5982,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Communication.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -5657,6 +5999,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Communication.topic',
             i,
+            searchName: 'topic',
           ),
         );
         i++;
@@ -5675,6 +6018,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -5694,6 +6038,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -5709,6 +6054,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -5724,6 +6070,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.about',
             i,
+            searchName: 'about',
           ),
         );
         i++;
@@ -5740,6 +6087,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.authoredOn',
             i,
+            searchName: 'authored',
           ),
         );
         i++;
@@ -5755,6 +6103,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -5771,6 +6120,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -5787,6 +6137,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.groupIdentifier',
             i,
+            searchName: 'group-identifier',
           ),
         );
         i++;
@@ -5803,6 +6154,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.informationProvider',
             i,
+            searchName: 'information-provider',
           ),
         );
         i++;
@@ -5819,6 +6171,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.medium',
             i,
+            searchName: 'medium',
           ),
         );
         i++;
@@ -5835,6 +6188,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.occurrence.ofType(dateTime)',
             i,
+            searchName: 'occurrence',
           ),
         );
         i++;
@@ -5851,6 +6205,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.occurrence.ofType(Period)',
             i,
+            searchName: 'occurrence',
           ),
         );
         i++;
@@ -5867,6 +6222,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.priority',
             i,
+            searchName: 'priority',
           ),
         );
         i++;
@@ -5882,6 +6238,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.recipient',
             i,
+            searchName: 'recipient',
           ),
         );
         i++;
@@ -5897,6 +6254,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.replaces',
             i,
+            searchName: 'replaces',
           ),
         );
         i++;
@@ -5912,6 +6270,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.requester',
             i,
+            searchName: 'requester',
           ),
         );
         i++;
@@ -5927,6 +6286,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -5942,6 +6302,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CommunicationRequest.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -5961,6 +6322,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CompartmentDefinition.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -5976,6 +6338,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CompartmentDefinition.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -5992,6 +6355,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CompartmentDefinition.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -6007,6 +6371,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CompartmentDefinition.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -6022,6 +6387,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CompartmentDefinition.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -6037,6 +6403,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CompartmentDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -6052,6 +6419,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CompartmentDefinition.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -6067,6 +6435,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CompartmentDefinition.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -6083,6 +6452,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CompartmentDefinition.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -6098,6 +6468,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CompartmentDefinition.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -6115,6 +6486,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CompartmentDefinition.resource.code',
             i,
+            searchName: 'resource',
           ),
         );
         i++;
@@ -6133,6 +6505,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -6151,6 +6524,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -6166,6 +6540,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -6181,6 +6556,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -6196,6 +6572,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -6213,6 +6590,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.attester.party',
             i,
+            searchName: 'attester',
           ),
         );
         i++;
@@ -6228,6 +6606,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.author',
             i,
+            searchName: 'author',
           ),
         );
         i++;
@@ -6244,6 +6623,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -6261,6 +6641,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.section.entry',
             i,
+            searchName: 'entry',
           ),
         );
         i++;
@@ -6279,6 +6660,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.event.detail.concept',
             i,
+            searchName: 'event-code',
           ),
         );
         i++;
@@ -6297,6 +6679,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.event.detail.reference',
             i,
+            searchName: 'event-reference',
           ),
         );
         i++;
@@ -6314,6 +6697,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.event.period',
             i,
+            searchName: 'period',
           ),
         );
         i++;
@@ -6331,6 +6715,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.section.code',
             i,
+            searchName: 'section',
           ),
         );
         i++;
@@ -6348,6 +6733,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.section.text',
             i,
+            searchName: 'section-text',
           ),
         );
         i++;
@@ -6366,6 +6752,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.section.section.text',
             i,
+            searchName: 'section-text',
           ),
         );
         i++;
@@ -6381,6 +6768,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -6396,6 +6784,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -6411,6 +6800,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -6426,6 +6816,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -6441,6 +6832,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -6457,6 +6849,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Composition.section',
             i,
+            searchName: 'section-code-text',
           ),
         );
         i++;
@@ -6476,6 +6869,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -6491,6 +6885,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -6509,6 +6904,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "ConceptMap.relatedArtifact.where(type='derived-from').resource",
             i,
+            searchName: 'derived-from',
           ),
         );
         i++;
@@ -6525,6 +6921,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -6541,6 +6938,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.effectivePeriod',
             i,
+            searchName: 'effective',
           ),
         );
         i++;
@@ -6557,6 +6955,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -6573,6 +6972,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -6588,6 +6988,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -6606,6 +7007,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "ConceptMap.relatedArtifact.where(type='predecessor').resource",
             i,
+            searchName: 'predecessor',
           ),
         );
         i++;
@@ -6621,6 +7023,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -6636,6 +7039,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -6651,6 +7055,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -6667,6 +7072,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.topic',
             i,
+            searchName: 'topic',
           ),
         );
         i++;
@@ -6682,6 +7088,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -6697,6 +7104,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -6713,6 +7121,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -6730,6 +7139,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.property.uri',
             i,
+            searchName: 'mapping-property',
           ),
         );
         i++;
@@ -6748,6 +7158,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.group.unmapped.otherMap',
             i,
+            searchName: 'other-map',
           ),
         );
         i++;
@@ -6766,6 +7177,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.group.element.code',
             i,
+            searchName: 'source-code',
           ),
         );
         i++;
@@ -6783,6 +7195,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.group.source',
             i,
+            searchName: 'source-group-system',
           ),
         );
         i++;
@@ -6802,6 +7215,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.group.element.target.code',
             i,
+            searchName: 'target-code',
           ),
         );
         i++;
@@ -6819,6 +7233,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConceptMap.group.target',
             i,
+            searchName: 'target-group-system',
           ),
         );
         i++;
@@ -6837,6 +7252,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -6856,6 +7272,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -6871,6 +7288,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -6886,6 +7304,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -6901,6 +7320,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.abatement.ofType(Age)',
             i,
+            searchName: 'abatement-age',
           ),
         );
         i++;
@@ -6916,6 +7336,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.abatement.ofType(Range)',
             i,
+            searchName: 'abatement-age',
           ),
         );
         i++;
@@ -6932,6 +7353,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.abatement.ofType(dateTime)',
             i,
+            searchName: 'abatement-date',
           ),
         );
         i++;
@@ -6948,6 +7370,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.abatement.ofType(Period)',
             i,
+            searchName: 'abatement-date',
           ),
         );
         i++;
@@ -6964,6 +7387,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.abatement.ofType(string)',
             i,
+            searchName: 'abatement-string',
           ),
         );
         i++;
@@ -6979,6 +7403,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.asserter',
             i,
+            searchName: 'asserter',
           ),
         );
         i++;
@@ -6995,6 +7420,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.bodySite',
             i,
+            searchName: 'body-site',
           ),
         );
         i++;
@@ -7011,6 +7437,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -7027,6 +7454,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.clinicalStatus',
             i,
+            searchName: 'clinical-status',
           ),
         );
         i++;
@@ -7044,6 +7472,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.evidence.concept',
             i,
+            searchName: 'evidence',
           ),
         );
         i++;
@@ -7061,6 +7490,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.evidence.reference',
             i,
+            searchName: 'evidence-detail',
           ),
         );
         i++;
@@ -7076,6 +7506,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.onset.ofType(Age)',
             i,
+            searchName: 'onset-age',
           ),
         );
         i++;
@@ -7091,6 +7522,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.onset.ofType(Range)',
             i,
+            searchName: 'onset-age',
           ),
         );
         i++;
@@ -7107,6 +7539,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.onset.ofType(dateTime)',
             i,
+            searchName: 'onset-date',
           ),
         );
         i++;
@@ -7122,6 +7555,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.onset.ofType(Period)',
             i,
+            searchName: 'onset-date',
           ),
         );
         i++;
@@ -7138,6 +7572,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.onset.ofType(string)',
             i,
+            searchName: 'onset-info',
           ),
         );
         i++;
@@ -7154,6 +7589,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.recordedDate',
             i,
+            searchName: 'recorded-date',
           ),
         );
         i++;
@@ -7170,6 +7606,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.severity',
             i,
+            searchName: 'severity',
           ),
         );
         i++;
@@ -7187,6 +7624,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.stage.summary',
             i,
+            searchName: 'stage',
           ),
         );
         i++;
@@ -7202,6 +7640,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -7218,6 +7657,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Condition.verificationStatus',
             i,
+            searchName: 'verification-status',
           ),
         );
         i++;
@@ -7237,6 +7677,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConditionDefinition.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -7252,6 +7693,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConditionDefinition.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -7268,6 +7710,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConditionDefinition.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -7284,6 +7727,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConditionDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -7300,6 +7744,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConditionDefinition.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -7315,6 +7760,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConditionDefinition.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -7330,6 +7776,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConditionDefinition.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -7345,6 +7792,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConditionDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -7360,6 +7808,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConditionDefinition.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -7375,6 +7824,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConditionDefinition.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -7390,6 +7840,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConditionDefinition.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -7406,6 +7857,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ConditionDefinition.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -7424,6 +7876,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -7443,6 +7896,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -7458,6 +7912,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -7475,6 +7930,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.provision.code',
             i,
+            searchName: 'action',
           ),
         );
         i++;
@@ -7493,6 +7949,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.provision.actor.reference',
             i,
+            searchName: 'actor',
           ),
         );
         i++;
@@ -7509,6 +7966,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -7524,6 +7982,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.controller',
             i,
+            searchName: 'controller',
           ),
         );
         i++;
@@ -7542,6 +8001,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.provision.data.reference',
             i,
+            searchName: 'data',
           ),
         );
         i++;
@@ -7557,6 +8017,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.grantee',
             i,
+            searchName: 'grantee',
           ),
         );
         i++;
@@ -7572,6 +8033,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.manager',
             i,
+            searchName: 'manager',
           ),
         );
         i++;
@@ -7589,6 +8051,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.provision.period',
             i,
+            searchName: 'period',
           ),
         );
         i++;
@@ -7606,6 +8069,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.provision.purpose',
             i,
+            searchName: 'purpose',
           ),
         );
         i++;
@@ -7623,6 +8087,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.provision.securityLabel',
             i,
+            searchName: 'security-label',
           ),
         );
         i++;
@@ -7639,6 +8104,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.sourceReference',
             i,
+            searchName: 'source-reference',
           ),
         );
         i++;
@@ -7654,6 +8120,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -7669,6 +8136,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -7686,6 +8154,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.verification.verified',
             i,
+            searchName: 'verified',
           ),
         );
         i++;
@@ -7703,6 +8172,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Consent.verification.verificationDate',
             i,
+            searchName: 'verified-date',
           ),
         );
         i++;
@@ -7721,6 +8191,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Contract.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -7739,6 +8210,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Contract.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -7754,6 +8226,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Contract.authority',
             i,
+            searchName: 'authority',
           ),
         );
         i++;
@@ -7769,6 +8242,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Contract.domain',
             i,
+            searchName: 'domain',
           ),
         );
         i++;
@@ -7785,6 +8259,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Contract.instantiatesUri',
             i,
+            searchName: 'instantiates',
           ),
         );
         i++;
@@ -7800,6 +8275,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Contract.issued',
             i,
+            searchName: 'issued',
           ),
         );
         i++;
@@ -7817,6 +8293,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Contract.signer.party',
             i,
+            searchName: 'signer',
           ),
         );
         i++;
@@ -7832,6 +8309,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Contract.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -7847,6 +8325,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Contract.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -7862,6 +8341,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Contract.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -7880,6 +8360,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Coverage.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -7895,6 +8376,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Coverage.beneficiary',
             i,
+            searchName: 'beneficiary',
           ),
         );
         i++;
@@ -7910,6 +8392,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Coverage.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -7927,6 +8410,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Coverage.class.type',
             i,
+            searchName: 'class-type',
           ),
         );
         i++;
@@ -7944,6 +8428,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Coverage.class.value',
             i,
+            searchName: 'class-value',
           ),
         );
         i++;
@@ -7959,6 +8444,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Coverage.dependent',
             i,
+            searchName: 'dependent',
           ),
         );
         i++;
@@ -7974,6 +8460,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Coverage.insurer',
             i,
+            searchName: 'insurer',
           ),
         );
         i++;
@@ -7991,6 +8478,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Coverage.paymentBy.party',
             i,
+            searchName: 'paymentby-party',
           ),
         );
         i++;
@@ -8007,6 +8495,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Coverage.policyHolder',
             i,
+            searchName: 'policy-holder',
           ),
         );
         i++;
@@ -8022,6 +8511,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Coverage.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -8037,6 +8527,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Coverage.subscriber',
             i,
+            searchName: 'subscriber',
           ),
         );
         i++;
@@ -8053,6 +8544,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Coverage.subscriberId',
             i,
+            searchName: 'subscriberid',
           ),
         );
         i++;
@@ -8071,6 +8563,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CoverageEligibilityRequest.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -8086,6 +8579,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CoverageEligibilityRequest.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -8101,6 +8595,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CoverageEligibilityRequest.created',
             i,
+            searchName: 'created',
           ),
         );
         i++;
@@ -8116,6 +8611,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CoverageEligibilityRequest.enterer',
             i,
+            searchName: 'enterer',
           ),
         );
         i++;
@@ -8131,6 +8627,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CoverageEligibilityRequest.facility',
             i,
+            searchName: 'facility',
           ),
         );
         i++;
@@ -8146,6 +8643,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CoverageEligibilityRequest.provider',
             i,
+            searchName: 'provider',
           ),
         );
         i++;
@@ -8161,6 +8659,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CoverageEligibilityRequest.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -8179,6 +8678,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CoverageEligibilityResponse.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -8194,6 +8694,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CoverageEligibilityResponse.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -8209,6 +8710,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CoverageEligibilityResponse.created',
             i,
+            searchName: 'created',
           ),
         );
         i++;
@@ -8225,6 +8727,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CoverageEligibilityResponse.disposition',
             i,
+            searchName: 'disposition',
           ),
         );
         i++;
@@ -8240,6 +8743,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CoverageEligibilityResponse.insurer',
             i,
+            searchName: 'insurer',
           ),
         );
         i++;
@@ -8255,6 +8759,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CoverageEligibilityResponse.outcome',
             i,
+            searchName: 'outcome',
           ),
         );
         i++;
@@ -8270,6 +8775,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CoverageEligibilityResponse.request',
             i,
+            searchName: 'request',
           ),
         );
         i++;
@@ -8285,6 +8791,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CoverageEligibilityResponse.requestor',
             i,
+            searchName: 'requestor',
           ),
         );
         i++;
@@ -8300,6 +8807,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'CoverageEligibilityResponse.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -8318,6 +8826,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DetectedIssue.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -8337,6 +8846,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DetectedIssue.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -8352,6 +8862,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DetectedIssue.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -8367,6 +8878,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DetectedIssue.author',
             i,
+            searchName: 'author',
           ),
         );
         i++;
@@ -8383,6 +8895,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DetectedIssue.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -8399,6 +8912,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DetectedIssue.identified.ofType(dateTime)',
             i,
+            searchName: 'identified',
           ),
         );
         i++;
@@ -8415,6 +8929,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DetectedIssue.identified.ofType(Period)',
             i,
+            searchName: 'identified',
           ),
         );
         i++;
@@ -8430,6 +8945,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DetectedIssue.implicated',
             i,
+            searchName: 'implicated',
           ),
         );
         i++;
@@ -8445,6 +8961,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DetectedIssue.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -8460,6 +8977,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DetectedIssue.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -8478,6 +8996,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.biologicalSourceEvent',
             i,
+            searchName: 'biological-source-event',
           ),
         );
         i++;
@@ -8493,6 +9012,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -8508,6 +9028,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.definition',
             i,
+            searchName: 'definition',
           ),
         );
         i++;
@@ -8525,6 +9046,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.name.value',
             i,
+            searchName: 'device-name',
           ),
         );
         i++;
@@ -8543,6 +9065,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.type.coding.display',
             i,
+            searchName: 'device-name',
           ),
         );
         i++;
@@ -8560,6 +9083,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.type.text',
             i,
+            searchName: 'device-name',
           ),
         );
         i++;
@@ -8576,6 +9100,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.expirationDate',
             i,
+            searchName: 'expiration-date',
           ),
         );
         i++;
@@ -8592,6 +9117,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -8607,6 +9133,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.location',
             i,
+            searchName: 'location',
           ),
         );
         i++;
@@ -8622,6 +9149,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.lotNumber',
             i,
+            searchName: 'lot-number',
           ),
         );
         i++;
@@ -8638,6 +9166,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.manufactureDate',
             i,
+            searchName: 'manufacture-date',
           ),
         );
         i++;
@@ -8654,6 +9183,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.manufacturer',
             i,
+            searchName: 'manufacturer',
           ),
         );
         i++;
@@ -8670,6 +9200,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.modelNumber',
             i,
+            searchName: 'model',
           ),
         );
         i++;
@@ -8685,6 +9216,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.parent',
             i,
+            searchName: 'parent',
           ),
         );
         i++;
@@ -8701,6 +9233,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.serialNumber',
             i,
+            searchName: 'serial-number',
           ),
         );
         i++;
@@ -8728,6 +9261,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.conformsTo.specification',
             i,
+            searchName: 'specification',
           ),
         );
         i++;
@@ -8743,6 +9277,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -8760,6 +9295,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.udiCarrier.carrierHRF',
             i,
+            searchName: 'udi-carrier-hrf',
           ),
         );
         i++;
@@ -8777,6 +9313,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.udiCarrier.deviceIdentifier',
             i,
+            searchName: 'udi-di',
           ),
         );
         i++;
@@ -8794,6 +9331,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.deviceVersion.value',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -8809,6 +9347,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device',
             i,
+            searchName: 'code-value-concept',
           ),
         );
         i++;
@@ -8825,6 +9364,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.conformsTo',
             i,
+            searchName: 'specification-version',
           ),
         );
         i++;
@@ -8841,6 +9381,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Device.deviceVersion',
             i,
+            searchName: 'version-type',
           ),
         );
         i++;
@@ -8861,6 +9402,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAlert.signal.annunciator.concept',
             i,
+            searchName: 'annunciator-concept',
           ),
         );
         i++;
@@ -8879,6 +9421,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAlert.signal.annunciator.reference',
             i,
+            searchName: 'annunciator-device',
           ),
         );
         i++;
@@ -8895,6 +9438,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAlert.condition.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -8911,6 +9455,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAlert.derivedFrom',
             i,
+            searchName: 'derived-from',
           ),
         );
         i++;
@@ -8927,6 +9472,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAlert.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -8944,6 +9490,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAlert.signal.indication',
             i,
+            searchName: 'indication',
           ),
         );
         i++;
@@ -8961,6 +9508,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAlert.signal.manifestation',
             i,
+            searchName: 'manifestation',
           ),
         );
         i++;
@@ -8980,6 +9528,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAlert.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -8996,6 +9545,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAlert.condition.presence',
             i,
+            searchName: 'presence',
           ),
         );
         i++;
@@ -9012,6 +9562,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAlert.priority',
             i,
+            searchName: 'priority',
           ),
         );
         i++;
@@ -9029,6 +9580,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAlert.signal.presence',
             i,
+            searchName: 'signal-presence',
           ),
         );
         i++;
@@ -9044,6 +9596,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAlert.source',
             i,
+            searchName: 'source',
           ),
         );
         i++;
@@ -9059,6 +9612,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAlert.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -9074,6 +9628,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAlert.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -9090,6 +9645,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAlert.condition.timing',
             i,
+            searchName: 'timing',
           ),
         );
         i++;
@@ -9105,6 +9661,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAlert.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -9122,6 +9679,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAssociation.period',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -9137,6 +9695,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAssociation.device',
             i,
+            searchName: 'device',
           ),
         );
         i++;
@@ -9153,6 +9712,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAssociation.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -9170,6 +9730,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAssociation.operation.operator',
             i,
+            searchName: 'operator',
           ),
         );
         i++;
@@ -9186,6 +9747,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAssociation.relationship',
             i,
+            searchName: 'relationship',
           ),
         );
         i++;
@@ -9202,6 +9764,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAssociation.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -9217,6 +9780,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceAssociation.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -9235,6 +9799,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -9251,6 +9816,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDefinition.udiDeviceIdentifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -9268,6 +9834,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDefinition.contact.name',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -9283,6 +9850,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDefinition.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -9298,6 +9866,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDefinition.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -9315,6 +9884,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDefinition.deviceVersion.value',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -9332,6 +9902,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDefinition.deviceName.name',
             i,
+            searchName: 'device-name',
           ),
         );
         i++;
@@ -9351,6 +9922,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDefinition.classification.type.coding.display',
             i,
+            searchName: 'device-name',
           ),
         );
         i++;
@@ -9369,6 +9941,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDefinition.classification.type.text',
             i,
+            searchName: 'device-name',
           ),
         );
         i++;
@@ -9386,6 +9959,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDefinition.hasPart.reference',
             i,
+            searchName: 'has-part',
           ),
         );
         i++;
@@ -9402,6 +9976,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDefinition.manufacturer',
             i,
+            searchName: 'manufacturer',
           ),
         );
         i++;
@@ -9418,6 +9993,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDefinition.modelNumber',
             i,
+            searchName: 'model-number',
           ),
         );
         i++;
@@ -9434,6 +10010,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDefinition.partNumber',
             i,
+            searchName: 'part-number',
           ),
         );
         i++;
@@ -9451,6 +10028,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDefinition.conformsTo.specification',
             i,
+            searchName: 'specification',
           ),
         );
         i++;
@@ -9468,6 +10046,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDefinition.conformsTo.category',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -9484,6 +10063,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDefinition.conformsTo',
             i,
+            searchName: 'specification-version',
           ),
         );
         i++;
@@ -9500,6 +10080,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDefinition.deviceVersion',
             i,
+            searchName: 'version-type',
           ),
         );
         i++;
@@ -9518,6 +10099,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDispense.device.concept',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -9534,6 +10116,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDispense.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -9553,6 +10136,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDispense.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -9568,6 +10152,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDispense.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -9583,6 +10168,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceDispense.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -9601,6 +10187,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceMetric.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -9616,6 +10203,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceMetric.device',
             i,
+            searchName: 'device',
           ),
         );
         i++;
@@ -9632,6 +10220,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceMetric.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -9647,6 +10236,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceMetric.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -9665,6 +10255,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -9684,6 +10275,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -9700,6 +10292,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.code.concept',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -9715,6 +10308,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -9731,6 +10325,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.authoredOn',
             i,
+            searchName: 'authored-on',
           ),
         );
         i++;
@@ -9746,6 +10341,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -9762,6 +10358,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.code.reference',
             i,
+            searchName: 'device',
           ),
         );
         i++;
@@ -9778,6 +10375,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.groupIdentifier',
             i,
+            searchName: 'group-identifier',
           ),
         );
         i++;
@@ -9794,6 +10392,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.instantiatesCanonical',
             i,
+            searchName: 'instantiates-canonical',
           ),
         );
         i++;
@@ -9810,6 +10409,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.instantiatesUri',
             i,
+            searchName: 'instantiates-uri',
           ),
         );
         i++;
@@ -9825,6 +10425,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.insurance',
             i,
+            searchName: 'insurance',
           ),
         );
         i++;
@@ -9840,6 +10441,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.intent',
             i,
+            searchName: 'intent',
           ),
         );
         i++;
@@ -9856,6 +10458,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.performer.reference',
             i,
+            searchName: 'performer',
           ),
         );
         i++;
@@ -9872,6 +10475,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.performer.concept',
             i,
+            searchName: 'performer-code',
           ),
         );
         i++;
@@ -9887,6 +10491,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.replaces',
             i,
+            searchName: 'prior-request',
           ),
         );
         i++;
@@ -9902,6 +10507,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.requester',
             i,
+            searchName: 'requester',
           ),
         );
         i++;
@@ -9917,6 +10523,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -9932,6 +10539,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceRequest.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -9950,6 +10558,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceUsage.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -9965,6 +10574,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceUsage.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -9981,6 +10591,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceUsage.device.concept',
             i,
+            searchName: 'device',
           ),
         );
         i++;
@@ -9996,6 +10607,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DeviceUsage.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -10014,6 +10626,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -10033,6 +10646,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -10048,6 +10662,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -10064,6 +10679,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.effective.ofType(dateTime)',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -10080,6 +10696,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.effective.ofType(Period)',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -10095,6 +10712,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -10110,6 +10728,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -10126,6 +10745,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -10143,6 +10763,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.conclusionCode.concept',
             i,
+            searchName: 'conclusioncode-code',
           ),
         );
         i++;
@@ -10160,6 +10781,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.conclusionCode.reference',
             i,
+            searchName: 'conclusioncode-reference',
           ),
         );
         i++;
@@ -10175,6 +10797,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.issued',
             i,
+            searchName: 'issued',
           ),
         );
         i++;
@@ -10192,6 +10815,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.media.link',
             i,
+            searchName: 'media',
           ),
         );
         i++;
@@ -10207,6 +10831,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.performer',
             i,
+            searchName: 'performer',
           ),
         );
         i++;
@@ -10222,6 +10847,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.procedure',
             i,
+            searchName: 'procedure',
           ),
         );
         i++;
@@ -10237,6 +10863,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.result',
             i,
+            searchName: 'result',
           ),
         );
         i++;
@@ -10253,6 +10880,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.resultsInterpreter',
             i,
+            searchName: 'results-interpreter',
           ),
         );
         i++;
@@ -10268,6 +10896,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.specimen',
             i,
+            searchName: 'specimen',
           ),
         );
         i++;
@@ -10283,6 +10912,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -10298,6 +10928,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.study',
             i,
+            searchName: 'study',
           ),
         );
         i++;
@@ -10313,6 +10944,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DiagnosticReport.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -10331,6 +10963,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -10350,6 +10983,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -10365,6 +10999,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -10380,6 +11015,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -10397,6 +11033,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.attester.party',
             i,
+            searchName: 'attester',
           ),
         );
         i++;
@@ -10412,6 +11049,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.author',
             i,
+            searchName: 'author',
           ),
         );
         i++;
@@ -10427,6 +11065,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -10444,6 +11083,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.bodySite.concept',
             i,
+            searchName: 'bodysite',
           ),
         );
         i++;
@@ -10461,6 +11101,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.bodySite.reference',
             i,
+            searchName: 'bodysite-reference',
           ),
         );
         i++;
@@ -10477,6 +11118,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -10495,6 +11137,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.content.attachment.contentType',
             i,
+            searchName: 'contenttype',
           ),
         );
         i++;
@@ -10510,6 +11153,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.context',
             i,
+            searchName: 'context',
           ),
         );
         i++;
@@ -10528,6 +11172,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.content.attachment.creation',
             i,
+            searchName: 'creation',
           ),
         );
         i++;
@@ -10543,6 +11188,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.custodian',
             i,
+            searchName: 'custodian',
           ),
         );
         i++;
@@ -10559,6 +11205,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -10575,6 +11222,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.docStatus',
             i,
+            searchName: 'doc-status',
           ),
         );
         i++;
@@ -10592,6 +11240,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.event.concept',
             i,
+            searchName: 'event-code',
           ),
         );
         i++;
@@ -10609,6 +11258,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.event.reference',
             i,
+            searchName: 'event-reference',
           ),
         );
         i++;
@@ -10625,6 +11275,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.facilityType',
             i,
+            searchName: 'facility',
           ),
         );
         i++;
@@ -10643,6 +11294,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.content.attachment.language',
             i,
+            searchName: 'language',
           ),
         );
         i++;
@@ -10661,6 +11313,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.content.attachment.url',
             i,
+            searchName: 'location',
           ),
         );
         i++;
@@ -10677,6 +11330,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.modality',
             i,
+            searchName: 'modality',
           ),
         );
         i++;
@@ -10692,6 +11346,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.period',
             i,
+            searchName: 'period',
           ),
         );
         i++;
@@ -10707,6 +11362,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.related',
             i,
+            searchName: 'related',
           ),
         );
         i++;
@@ -10724,6 +11380,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.relatesTo.target',
             i,
+            searchName: 'relatesto',
           ),
         );
         i++;
@@ -10741,6 +11398,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.relatesTo.code',
             i,
+            searchName: 'relation',
           ),
         );
         i++;
@@ -10757,6 +11415,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.securityLabel',
             i,
+            searchName: 'security-label',
           ),
         );
         i++;
@@ -10773,6 +11432,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.practiceSetting',
             i,
+            searchName: 'setting',
           ),
         );
         i++;
@@ -10788,6 +11448,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -10803,6 +11464,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -10818,6 +11480,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -10834,6 +11497,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'DocumentReference.relatesTo',
             i,
+            searchName: 'relationship',
           ),
         );
         i++;
@@ -10852,6 +11516,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -10871,6 +11536,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -10886,6 +11552,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -10901,6 +11568,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.actualPeriod',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -10916,6 +11584,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.account',
             i,
+            searchName: 'account',
           ),
         );
         i++;
@@ -10932,6 +11601,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.appointment',
             i,
+            searchName: 'appointment',
           ),
         );
         i++;
@@ -10947,6 +11617,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -10962,6 +11633,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.careTeam',
             i,
+            searchName: 'careteam',
           ),
         );
         i++;
@@ -10978,6 +11650,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.class',
             i,
+            searchName: 'class',
           ),
         );
         i++;
@@ -10994,6 +11667,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.actualPeriod.start',
             i,
+            searchName: 'date-start',
           ),
         );
         i++;
@@ -11012,6 +11686,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.diagnosis.condition.concept',
             i,
+            searchName: 'diagnosis-code',
           ),
         );
         i++;
@@ -11030,6 +11705,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.diagnosis.condition.reference',
             i,
+            searchName: 'diagnosis-reference',
           ),
         );
         i++;
@@ -11046,6 +11722,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.actualPeriod.end',
             i,
+            searchName: 'end-date',
           ),
         );
         i++;
@@ -11062,6 +11739,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.episodeOfCare',
             i,
+            searchName: 'episode-of-care',
           ),
         );
         i++;
@@ -11077,6 +11755,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.length',
             i,
+            searchName: 'length',
           ),
         );
         i++;
@@ -11094,6 +11773,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.location.location',
             i,
+            searchName: 'location',
           ),
         );
         i++;
@@ -11111,6 +11791,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.location.period',
             i,
+            searchName: 'location-period',
           ),
         );
         i++;
@@ -11126,6 +11807,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.partOf',
             i,
+            searchName: 'part-of',
           ),
         );
         i++;
@@ -11143,6 +11825,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.participant.actor',
             i,
+            searchName: 'participant',
           ),
         );
         i++;
@@ -11160,6 +11843,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.participant.type',
             i,
+            searchName: 'participant-type',
           ),
         );
         i++;
@@ -11180,6 +11864,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.participant.actor.where(resolve() is Practitioner)',
             i,
+            searchName: 'practitioner',
           ),
         );
         i++;
@@ -11198,6 +11883,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.reason.value.concept',
             i,
+            searchName: 'reason-code',
           ),
         );
         i++;
@@ -11216,6 +11902,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.reason.value.reference',
             i,
+            searchName: 'reason-reference',
           ),
         );
         i++;
@@ -11232,6 +11919,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.serviceProvider',
             i,
+            searchName: 'service-provider',
           ),
         );
         i++;
@@ -11248,6 +11936,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.specialArrangement',
             i,
+            searchName: 'special-arrangement',
           ),
         );
         i++;
@@ -11263,6 +11952,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -11278,6 +11968,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -11294,6 +11985,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.subjectStatus',
             i,
+            searchName: 'subject-status',
           ),
         );
         i++;
@@ -11310,6 +12002,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Encounter.location',
             i,
+            searchName: 'location-value-period',
           ),
         );
         i++;
@@ -11327,6 +12020,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EncounterHistory.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -11343,6 +12037,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EncounterHistory.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -11362,6 +12057,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EncounterHistory.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -11377,6 +12073,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EncounterHistory.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -11392,6 +12089,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EncounterHistory.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -11410,6 +12108,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Endpoint.connectionType',
             i,
+            searchName: 'connection-type',
           ),
         );
         i++;
@@ -11426,6 +12125,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Endpoint.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -11441,6 +12141,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Endpoint.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -11457,6 +12158,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Endpoint.managingOrganization',
             i,
+            searchName: 'organization',
           ),
         );
         i++;
@@ -11474,6 +12176,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Endpoint.payload.type',
             i,
+            searchName: 'payload-type',
           ),
         );
         i++;
@@ -11489,6 +12192,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Endpoint.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -11507,6 +12211,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EnrollmentRequest.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -11522,6 +12227,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EnrollmentRequest.candidate',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -11537,6 +12243,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EnrollmentRequest.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -11555,6 +12262,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EnrollmentResponse.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -11570,6 +12278,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EnrollmentResponse.request',
             i,
+            searchName: 'request',
           ),
         );
         i++;
@@ -11585,6 +12294,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EnrollmentResponse.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -11603,6 +12313,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EpisodeOfCare.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -11622,6 +12333,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EpisodeOfCare.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -11637,6 +12349,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EpisodeOfCare.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -11652,6 +12365,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EpisodeOfCare.period',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -11671,6 +12385,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EpisodeOfCare.careManager.where(resolve() is Practitioner)',
             i,
+            searchName: 'care-manager',
           ),
         );
         i++;
@@ -11689,6 +12404,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EpisodeOfCare.diagnosis.condition.concept',
             i,
+            searchName: 'diagnosis-code',
           ),
         );
         i++;
@@ -11707,6 +12423,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EpisodeOfCare.diagnosis.condition.reference',
             i,
+            searchName: 'diagnosis-reference',
           ),
         );
         i++;
@@ -11723,6 +12440,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EpisodeOfCare.referralRequest',
             i,
+            searchName: 'incoming-referral',
           ),
         );
         i++;
@@ -11739,6 +12457,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EpisodeOfCare.managingOrganization',
             i,
+            searchName: 'organization',
           ),
         );
         i++;
@@ -11757,6 +12476,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EpisodeOfCare.reason.value.concept',
             i,
+            searchName: 'reason-code',
           ),
         );
         i++;
@@ -11775,6 +12495,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EpisodeOfCare.reason.value.reference',
             i,
+            searchName: 'reason-reference',
           ),
         );
         i++;
@@ -11790,6 +12511,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EpisodeOfCare.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -11805,6 +12527,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EpisodeOfCare.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -11825,6 +12548,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "EventDefinition.relatedArtifact.where(type='composed-of').resource",
             i,
+            searchName: 'composed-of',
           ),
         );
         i++;
@@ -11842,6 +12566,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EventDefinition.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -11857,6 +12582,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EventDefinition.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -11875,6 +12601,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "EventDefinition.relatedArtifact.where(type='depends-on').resource",
             i,
+            searchName: 'depends-on',
           ),
         );
         i++;
@@ -11893,6 +12620,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "EventDefinition.relatedArtifact.where(type='derived-from').resource",
             i,
+            searchName: 'derived-from',
           ),
         );
         i++;
@@ -11909,6 +12637,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EventDefinition.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -11925,6 +12654,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EventDefinition.effectivePeriod',
             i,
+            searchName: 'effective',
           ),
         );
         i++;
@@ -11941,6 +12671,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EventDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -11957,6 +12688,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EventDefinition.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -11972,6 +12704,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EventDefinition.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -11990,6 +12723,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "EventDefinition.relatedArtifact.where(type='predecessor').resource",
             i,
+            searchName: 'predecessor',
           ),
         );
         i++;
@@ -12005,6 +12739,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EventDefinition.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -12020,6 +12755,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EventDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -12038,6 +12774,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "EventDefinition.relatedArtifact.where(type='successor').resource",
             i,
+            searchName: 'successor',
           ),
         );
         i++;
@@ -12053,6 +12790,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EventDefinition.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -12069,6 +12807,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EventDefinition.topic',
             i,
+            searchName: 'topic',
           ),
         );
         i++;
@@ -12084,6 +12823,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EventDefinition.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -12099,6 +12839,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EventDefinition.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -12115,6 +12856,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EventDefinition.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -12134,6 +12876,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Evidence.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -12149,6 +12892,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Evidence.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -12165,6 +12909,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Evidence.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -12181,6 +12926,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Evidence.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -12196,6 +12942,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Evidence.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -12211,6 +12958,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Evidence.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -12226,6 +12974,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Evidence.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -12241,6 +12990,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Evidence.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -12256,6 +13006,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Evidence.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -12272,6 +13023,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Evidence.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -12291,6 +13043,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EvidenceVariable.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -12306,6 +13059,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EvidenceVariable.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -12322,6 +13076,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EvidenceVariable.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -12338,6 +13093,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EvidenceVariable.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -12353,6 +13109,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EvidenceVariable.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -12368,6 +13125,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EvidenceVariable.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -12383,6 +13141,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EvidenceVariable.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -12398,6 +13157,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EvidenceVariable.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -12413,6 +13173,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EvidenceVariable.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -12428,6 +13189,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EvidenceVariable.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -12444,6 +13206,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'EvidenceVariable.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -12463,6 +13226,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExampleScenario.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -12478,6 +13242,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExampleScenario.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -12494,6 +13259,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExampleScenario.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -12510,6 +13276,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExampleScenario.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -12525,6 +13292,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExampleScenario.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -12540,6 +13308,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExampleScenario.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -12555,6 +13324,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExampleScenario.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -12570,6 +13340,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExampleScenario.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -12585,6 +13356,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExampleScenario.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -12601,6 +13373,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExampleScenario.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -12619,6 +13392,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExplanationOfBenefit.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -12634,6 +13408,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExplanationOfBenefit.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -12651,6 +13426,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExplanationOfBenefit.item.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -12668,6 +13444,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExplanationOfBenefit.careTeam.provider',
             i,
+            searchName: 'care-team',
           ),
         );
         i++;
@@ -12683,6 +13460,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExplanationOfBenefit.claim',
             i,
+            searchName: 'claim',
           ),
         );
         i++;
@@ -12700,6 +13478,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExplanationOfBenefit.insurance.coverage',
             i,
+            searchName: 'coverage',
           ),
         );
         i++;
@@ -12715,6 +13494,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExplanationOfBenefit.created',
             i,
+            searchName: 'created',
           ),
         );
         i++;
@@ -12733,6 +13513,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExplanationOfBenefit.item.detail.udi',
             i,
+            searchName: 'detail-udi',
           ),
         );
         i++;
@@ -12749,6 +13530,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExplanationOfBenefit.disposition',
             i,
+            searchName: 'disposition',
           ),
         );
         i++;
@@ -12764,6 +13546,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExplanationOfBenefit.enterer',
             i,
+            searchName: 'enterer',
           ),
         );
         i++;
@@ -12779,6 +13562,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExplanationOfBenefit.facility',
             i,
+            searchName: 'facility',
           ),
         );
         i++;
@@ -12796,6 +13580,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExplanationOfBenefit.item.udi',
             i,
+            searchName: 'item-udi',
           ),
         );
         i++;
@@ -12812,6 +13597,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExplanationOfBenefit.payee.party',
             i,
+            searchName: 'payee',
           ),
         );
         i++;
@@ -12829,6 +13615,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExplanationOfBenefit.procedure.udi',
             i,
+            searchName: 'procedure-udi',
           ),
         );
         i++;
@@ -12844,6 +13631,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExplanationOfBenefit.provider',
             i,
+            searchName: 'provider',
           ),
         );
         i++;
@@ -12859,6 +13647,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExplanationOfBenefit.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -12879,6 +13668,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ExplanationOfBenefit.item.detail.subDetail.udi',
             i,
+            searchName: 'subdetail-udi',
           ),
         );
         i++;
@@ -12897,6 +13687,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'FamilyMemberHistory.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -12912,6 +13703,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'FamilyMemberHistory.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -12929,6 +13721,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'FamilyMemberHistory.condition.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -12944,6 +13737,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'FamilyMemberHistory.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -12960,6 +13754,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'FamilyMemberHistory.relationship',
             i,
+            searchName: 'relationship',
           ),
         );
         i++;
@@ -12975,6 +13770,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'FamilyMemberHistory.sex',
             i,
+            searchName: 'sex',
           ),
         );
         i++;
@@ -12990,6 +13786,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'FamilyMemberHistory.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -13008,6 +13805,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Flag.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -13027,6 +13825,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Flag.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -13042,6 +13841,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Flag.period',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -13057,6 +13857,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Flag.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -13072,6 +13873,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Flag.author',
             i,
+            searchName: 'author',
           ),
         );
         i++;
@@ -13088,6 +13890,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Flag.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -13103,6 +13906,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Flag.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -13118,6 +13922,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Flag.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -13135,6 +13940,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'FormularyItem.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -13151,6 +13957,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'FormularyItem.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -13170,6 +13977,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GenomicStudy.analysis.focus',
             i,
+            searchName: 'focus',
           ),
         );
         i++;
@@ -13186,6 +13994,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GenomicStudy.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -13205,6 +14014,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GenomicStudy.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -13220,6 +14030,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GenomicStudy.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -13235,6 +14046,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GenomicStudy.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -13253,6 +14065,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Goal.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -13272,6 +14085,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Goal.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -13288,6 +14102,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Goal.achievementStatus',
             i,
+            searchName: 'achievement-status',
           ),
         );
         i++;
@@ -13303,6 +14118,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Goal.addresses',
             i,
+            searchName: 'addresses',
           ),
         );
         i++;
@@ -13319,6 +14135,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Goal.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -13335,6 +14152,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Goal.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -13351,6 +14169,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Goal.lifecycleStatus',
             i,
+            searchName: 'lifecycle-status',
           ),
         );
         i++;
@@ -13366,6 +14185,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Goal.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -13383,6 +14203,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Goal.target.measure',
             i,
+            searchName: 'target-measure',
           ),
         );
         i++;
@@ -13402,6 +14223,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GraphDefinition.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -13417,6 +14239,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GraphDefinition.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -13433,6 +14256,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GraphDefinition.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -13449,6 +14273,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GraphDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -13465,6 +14290,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GraphDefinition.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -13480,6 +14306,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GraphDefinition.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -13495,6 +14322,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GraphDefinition.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -13510,6 +14338,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GraphDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -13525,6 +14354,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GraphDefinition.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -13540,6 +14370,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GraphDefinition.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -13556,6 +14387,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GraphDefinition.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -13571,6 +14403,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GraphDefinition.start',
             i,
+            searchName: 'start',
           ),
         );
         i++;
@@ -13589,6 +14422,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Group.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -13604,6 +14438,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Group.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -13619,6 +14454,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Group.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -13634,6 +14470,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Group.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -13651,6 +14488,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Group.characteristic.code',
             i,
+            searchName: 'characteristic',
           ),
         );
         i++;
@@ -13666,6 +14504,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Group.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -13683,6 +14522,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Group.characteristic.exclude',
             i,
+            searchName: 'exclude',
           ),
         );
         i++;
@@ -13699,6 +14539,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Group.managingEntity',
             i,
+            searchName: 'managing-entity',
           ),
         );
         i++;
@@ -13716,6 +14557,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Group.member.entity',
             i,
+            searchName: 'member',
           ),
         );
         i++;
@@ -13732,6 +14574,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Group.membership',
             i,
+            searchName: 'membership',
           ),
         );
         i++;
@@ -13747,6 +14590,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Group.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -13763,6 +14607,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Group.characteristic',
             i,
+            searchName: 'characteristic-value',
           ),
         );
         i++;
@@ -13781,6 +14626,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GuidanceResponse.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -13800,6 +14646,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GuidanceResponse.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -13816,6 +14663,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GuidanceResponse.requestIdentifier',
             i,
+            searchName: 'request',
           ),
         );
         i++;
@@ -13831,6 +14679,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GuidanceResponse.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -13846,6 +14695,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'GuidanceResponse.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -13863,6 +14713,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'HealthcareService.active',
             i,
+            searchName: 'active',
           ),
         );
         i++;
@@ -13879,6 +14730,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'HealthcareService.characteristic',
             i,
+            searchName: 'characteristic',
           ),
         );
         i++;
@@ -13895,6 +14747,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'HealthcareService.communication',
             i,
+            searchName: 'communication',
           ),
         );
         i++;
@@ -13911,6 +14764,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'HealthcareService.coverageArea',
             i,
+            searchName: 'coverage-area',
           ),
         );
         i++;
@@ -13928,6 +14782,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'HealthcareService.eligibility.code',
             i,
+            searchName: 'eligibility',
           ),
         );
         i++;
@@ -13943,6 +14798,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'HealthcareService.endpoint',
             i,
+            searchName: 'endpoint',
           ),
         );
         i++;
@@ -13959,6 +14815,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'HealthcareService.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -13974,6 +14831,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'HealthcareService.location',
             i,
+            searchName: 'location',
           ),
         );
         i++;
@@ -13989,6 +14847,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'HealthcareService.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -14004,6 +14863,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'HealthcareService.offeredIn',
             i,
+            searchName: 'offered-in',
           ),
         );
         i++;
@@ -14019,6 +14879,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'HealthcareService.providedBy',
             i,
+            searchName: 'organization',
           ),
         );
         i++;
@@ -14035,6 +14896,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'HealthcareService.program',
             i,
+            searchName: 'program',
           ),
         );
         i++;
@@ -14051,6 +14913,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'HealthcareService.category',
             i,
+            searchName: 'service-category',
           ),
         );
         i++;
@@ -14066,6 +14929,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'HealthcareService.type',
             i,
+            searchName: 'service-type',
           ),
         );
         i++;
@@ -14082,6 +14946,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'HealthcareService.specialty',
             i,
+            searchName: 'specialty',
           ),
         );
         i++;
@@ -14100,6 +14965,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingSelection.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -14119,6 +14985,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingSelection.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -14134,6 +15001,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingSelection.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -14149,6 +15017,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingSelection.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -14166,6 +15035,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingSelection.bodySite.concept',
             i,
+            searchName: 'body-site',
           ),
         );
         i++;
@@ -14183,6 +15053,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingSelection.bodySite.reference',
             i,
+            searchName: 'body-structure',
           ),
         );
         i++;
@@ -14199,6 +15070,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingSelection.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -14215,6 +15087,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingSelection.derivedFrom',
             i,
+            searchName: 'derived-from',
           ),
         );
         i++;
@@ -14230,6 +15103,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingSelection.issued',
             i,
+            searchName: 'issued',
           ),
         );
         i++;
@@ -14245,6 +15119,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingSelection.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -14260,6 +15135,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingSelection.studyUid',
             i,
+            searchName: 'study-uid',
           ),
         );
         i++;
@@ -14275,6 +15151,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingSelection.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -14293,6 +15170,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -14312,6 +15190,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -14327,6 +15206,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -14342,6 +15222,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -14360,6 +15241,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.series.bodySite.concept',
             i,
+            searchName: 'body-site',
           ),
         );
         i++;
@@ -14378,6 +15260,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.series.bodySite.reference',
             i,
+            searchName: 'body-structure',
           ),
         );
         i++;
@@ -14396,6 +15279,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.series.instance.sopClass',
             i,
+            searchName: 'dicom-class',
           ),
         );
         i++;
@@ -14411,6 +15295,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.endpoint',
             i,
+            searchName: 'endpoint',
           ),
         );
         i++;
@@ -14428,6 +15313,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.series.endpoint',
             i,
+            searchName: 'endpoint',
           ),
         );
         i++;
@@ -14446,6 +15332,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.series.instance.uid',
             i,
+            searchName: 'instance',
           ),
         );
         i++;
@@ -14463,6 +15350,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.series.modality',
             i,
+            searchName: 'modality',
           ),
         );
         i++;
@@ -14481,6 +15369,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.series.performer.actor',
             i,
+            searchName: 'performer',
           ),
         );
         i++;
@@ -14498,6 +15387,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.reason.concept',
             i,
+            searchName: 'reason-concept',
           ),
         );
         i++;
@@ -14515,6 +15405,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.reason.reference',
             i,
+            searchName: 'reason-reference',
           ),
         );
         i++;
@@ -14530,6 +15421,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.referrer',
             i,
+            searchName: 'referrer',
           ),
         );
         i++;
@@ -14547,6 +15439,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.series.uid',
             i,
+            searchName: 'series',
           ),
         );
         i++;
@@ -14562,6 +15455,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.started',
             i,
+            searchName: 'started',
           ),
         );
         i++;
@@ -14577,6 +15471,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -14592,6 +15487,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImagingStudy.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -14610,6 +15506,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Immunization.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -14625,6 +15522,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Immunization.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -14640,6 +15538,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Immunization.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -14655,6 +15554,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Immunization.location',
             i,
+            searchName: 'location',
           ),
         );
         i++;
@@ -14670,6 +15570,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Immunization.lotNumber',
             i,
+            searchName: 'lot-number',
           ),
         );
         i++;
@@ -14686,6 +15587,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Immunization.manufacturer.reference',
             i,
+            searchName: 'manufacturer',
           ),
         );
         i++;
@@ -14703,6 +15605,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Immunization.performer.actor',
             i,
+            searchName: 'performer',
           ),
         );
         i++;
@@ -14721,6 +15624,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Immunization.reaction.manifestation.reference',
             i,
+            searchName: 'reaction',
           ),
         );
         i++;
@@ -14738,6 +15642,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Immunization.reaction.date',
             i,
+            searchName: 'reaction-date',
           ),
         );
         i++;
@@ -14755,6 +15660,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Immunization.reason.concept',
             i,
+            searchName: 'reason-code',
           ),
         );
         i++;
@@ -14772,6 +15678,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Immunization.reason.reference',
             i,
+            searchName: 'reason-reference',
           ),
         );
         i++;
@@ -14789,6 +15696,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Immunization.protocolApplied.series',
             i,
+            searchName: 'series',
           ),
         );
         i++;
@@ -14804,6 +15712,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Immunization.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -14820,6 +15729,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Immunization.statusReason',
             i,
+            searchName: 'status-reason',
           ),
         );
         i++;
@@ -14837,6 +15747,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Immunization.protocolApplied.targetDisease',
             i,
+            searchName: 'target-disease',
           ),
         );
         i++;
@@ -14853,6 +15764,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Immunization.vaccineCode',
             i,
+            searchName: 'vaccine-code',
           ),
         );
         i++;
@@ -14871,6 +15783,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImmunizationEvaluation.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -14886,6 +15799,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImmunizationEvaluation.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -14901,6 +15815,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImmunizationEvaluation.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -14917,6 +15832,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImmunizationEvaluation.doseStatus',
             i,
+            searchName: 'dose-status',
           ),
         );
         i++;
@@ -14933,6 +15849,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImmunizationEvaluation.immunizationEvent',
             i,
+            searchName: 'immunization-event',
           ),
         );
         i++;
@@ -14948,6 +15865,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImmunizationEvaluation.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -14964,6 +15882,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImmunizationEvaluation.targetDisease',
             i,
+            searchName: 'target-disease',
           ),
         );
         i++;
@@ -14982,6 +15901,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImmunizationRecommendation.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -14997,6 +15917,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImmunizationRecommendation.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -15012,6 +15933,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImmunizationRecommendation.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -15030,6 +15952,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImmunizationRecommendation.recommendation.supportingPatientInformation',
             i,
+            searchName: 'information',
           ),
         );
         i++;
@@ -15047,6 +15970,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImmunizationRecommendation.recommendation.forecastStatus',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -15064,6 +15988,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImmunizationRecommendation.recommendation.supportingImmunization',
             i,
+            searchName: 'support',
           ),
         );
         i++;
@@ -15081,6 +16006,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImmunizationRecommendation.recommendation.targetDisease',
             i,
+            searchName: 'target-disease',
           ),
         );
         i++;
@@ -15098,6 +16024,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImmunizationRecommendation.recommendation.vaccineCode',
             i,
+            searchName: 'vaccine-type',
           ),
         );
         i++;
@@ -15117,6 +16044,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImplementationGuide.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -15132,6 +16060,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImplementationGuide.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -15148,6 +16077,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImplementationGuide.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -15164,6 +16094,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImplementationGuide.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -15180,6 +16111,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImplementationGuide.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -15195,6 +16127,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImplementationGuide.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -15210,6 +16143,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImplementationGuide.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -15225,6 +16159,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImplementationGuide.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -15240,6 +16175,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImplementationGuide.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -15255,6 +16191,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImplementationGuide.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -15270,6 +16207,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImplementationGuide.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -15286,6 +16224,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImplementationGuide.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -15303,6 +16242,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImplementationGuide.dependsOn.uri',
             i,
+            searchName: 'depends-on',
           ),
         );
         i++;
@@ -15319,6 +16259,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImplementationGuide.experimental',
             i,
+            searchName: 'experimental',
           ),
         );
         i++;
@@ -15336,6 +16277,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImplementationGuide.global.profile',
             i,
+            searchName: 'global',
           ),
         );
         i++;
@@ -15353,6 +16295,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ImplementationGuide.definition.resource.reference',
             i,
+            searchName: 'resource',
           ),
         );
         i++;
@@ -15370,6 +16313,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Ingredient.for',
             i,
+            searchName: 'for',
           ),
         );
         i++;
@@ -15386,6 +16330,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Ingredient.function',
             i,
+            searchName: 'function',
           ),
         );
         i++;
@@ -15402,6 +16347,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Ingredient.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -15419,6 +16365,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Ingredient.manufacturer.manufacturer',
             i,
+            searchName: 'manufacturer',
           ),
         );
         i++;
@@ -15434,6 +16381,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Ingredient.role',
             i,
+            searchName: 'role',
           ),
         );
         i++;
@@ -15449,6 +16397,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Ingredient.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -15486,6 +16435,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Ingredient.substance.strength.concentration.ofType(Quantity)',
             i,
+            searchName: 'strength-concentration-quantity',
           ),
         );
         i++;
@@ -15523,6 +16473,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Ingredient.substance.strength.presentation.ofType(Quantity)',
             i,
+            searchName: 'strength-presentation-quantity',
           ),
         );
         i++;
@@ -15539,6 +16490,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Ingredient.substance.code.reference',
             i,
+            searchName: 'substance-definition',
           ),
         );
         i++;
@@ -15555,6 +16507,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Ingredient.substance.code.concept',
             i,
+            searchName: 'substance-code',
           ),
         );
         i++;
@@ -15572,6 +16525,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Ingredient.substance.strength.concentration.ofType(Ratio)',
             i,
+            searchName: 'strength-concentration-ratio',
           ),
         );
         i++;
@@ -15589,6 +16543,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Ingredient.substance.strength.presentation.ofType(Ratio)',
             i,
+            searchName: 'strength-presentation-ratio',
           ),
         );
         i++;
@@ -15607,6 +16562,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsurancePlan.coverageArea',
             i,
+            searchName: 'coverage-area',
           ),
         );
         i++;
@@ -15623,6 +16579,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsurancePlan.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -15638,6 +16595,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsurancePlan.network',
             i,
+            searchName: 'network',
           ),
         );
         i++;
@@ -15653,6 +16611,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsurancePlan.product',
             i,
+            searchName: 'product',
           ),
         );
         i++;
@@ -15668,6 +16627,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsurancePlan.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -15686,6 +16646,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsuranceProduct.administeredBy',
             i,
+            searchName: 'administered-by',
           ),
         );
         i++;
@@ -15703,6 +16664,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsuranceProduct.contact.address',
             i,
+            searchName: 'contact-address',
           ),
         );
         i++;
@@ -15721,6 +16683,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsuranceProduct.contact.address.city',
             i,
+            searchName: 'contact-address-city',
           ),
         );
         i++;
@@ -15739,6 +16702,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsuranceProduct.contact.address.country',
             i,
+            searchName: 'contact-address-country',
           ),
         );
         i++;
@@ -15757,6 +16721,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsuranceProduct.contact.address.postalCode',
             i,
+            searchName: 'contact-address-postalcode',
           ),
         );
         i++;
@@ -15775,6 +16740,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsuranceProduct.contact.address.state',
             i,
+            searchName: 'contact-address-state',
           ),
         );
         i++;
@@ -15793,6 +16759,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsuranceProduct.contact.address.use',
             i,
+            searchName: 'contact-address-use',
           ),
         );
         i++;
@@ -15808,6 +16775,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsuranceProduct.endpoint',
             i,
+            searchName: 'endpoint',
           ),
         );
         i++;
@@ -15824,6 +16792,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsuranceProduct.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -15839,6 +16808,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsuranceProduct.name',
             i,
+            searchName: 'phonetic',
           ),
         );
         i++;
@@ -15854,6 +16824,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsuranceProduct.alias',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -15869,6 +16840,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsuranceProduct.ownedBy',
             i,
+            searchName: 'owned-by',
           ),
         );
         i++;
@@ -15884,6 +16856,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsuranceProduct.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -15899,6 +16872,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InsuranceProduct.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -15916,6 +16890,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InventoryItem.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -15932,6 +16907,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InventoryItem.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -15947,6 +16923,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InventoryItem.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -15963,6 +16940,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InventoryItem.instance.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -15981,6 +16959,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InventoryReport.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -16000,6 +16979,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InventoryReport.inventoryListing.item.item.concept',
             i,
+            searchName: 'item',
           ),
         );
         i++;
@@ -16019,6 +16999,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InventoryReport.inventoryListing.item.item.reference',
             i,
+            searchName: 'item-reference',
           ),
         );
         i++;
@@ -16034,6 +17015,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'InventoryReport.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -16052,6 +17034,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Invoice.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -16071,6 +17054,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Invoice.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -16086,6 +17070,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Invoice.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -16101,6 +17086,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Invoice.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -16116,6 +17102,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Invoice.account',
             i,
+            searchName: 'account',
           ),
         );
         i++;
@@ -16131,6 +17118,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Invoice.issuer',
             i,
+            searchName: 'issuer',
           ),
         );
         i++;
@@ -16148,6 +17136,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Invoice.participant.actor',
             i,
+            searchName: 'participant',
           ),
         );
         i++;
@@ -16165,6 +17154,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Invoice.participant.role',
             i,
+            searchName: 'participant-role',
           ),
         );
         i++;
@@ -16180,6 +17170,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Invoice.recipient',
             i,
+            searchName: 'recipient',
           ),
         );
         i++;
@@ -16195,6 +17186,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Invoice.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -16210,6 +17202,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Invoice.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -16225,6 +17218,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Invoice.totalGross',
             i,
+            searchName: 'totalgross',
           ),
         );
         i++;
@@ -16240,6 +17234,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Invoice.totalNet',
             i,
+            searchName: 'totalnet',
           ),
         );
         i++;
@@ -16260,6 +17255,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "Library.relatedArtifact.where(type='composed-of').resource",
             i,
+            searchName: 'composed-of',
           ),
         );
         i++;
@@ -16277,6 +17273,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Library.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -16292,6 +17289,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Library.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -16310,6 +17308,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "Library.relatedArtifact.where(type='depends-on').resource",
             i,
+            searchName: 'depends-on',
           ),
         );
         i++;
@@ -16328,6 +17327,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "Library.relatedArtifact.where(type='derived-from').resource",
             i,
+            searchName: 'derived-from',
           ),
         );
         i++;
@@ -16344,6 +17344,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Library.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -16360,6 +17361,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Library.effectivePeriod',
             i,
+            searchName: 'effective',
           ),
         );
         i++;
@@ -16376,6 +17378,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Library.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -16392,6 +17395,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Library.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -16407,6 +17411,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Library.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -16425,6 +17430,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "Library.relatedArtifact.where(type='predecessor').resource",
             i,
+            searchName: 'predecessor',
           ),
         );
         i++;
@@ -16440,6 +17446,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Library.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -16455,6 +17462,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Library.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -16473,6 +17481,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "Library.relatedArtifact.where(type='successor').resource",
             i,
+            searchName: 'successor',
           ),
         );
         i++;
@@ -16488,6 +17497,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Library.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -16504,6 +17514,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Library.topic',
             i,
+            searchName: 'topic',
           ),
         );
         i++;
@@ -16519,6 +17530,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Library.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -16534,6 +17546,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Library.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -16550,6 +17563,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Library.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -16567,6 +17581,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Library.content.contentType',
             i,
+            searchName: 'content-type',
           ),
         );
         i++;
@@ -16612,6 +17627,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Library.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -16629,6 +17645,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Linkage.author',
             i,
+            searchName: 'author',
           ),
         );
         i++;
@@ -16646,6 +17663,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Linkage.item.resource',
             i,
+            searchName: 'source',
           ),
         );
         i++;
@@ -16664,6 +17682,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'List.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -16682,6 +17701,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'List.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -16697,6 +17717,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'List.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -16712,6 +17733,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'List.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -16727,6 +17749,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'List.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -16743,6 +17766,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'List.emptyReason',
             i,
+            searchName: 'empty-reason',
           ),
         );
         i++;
@@ -16760,6 +17784,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'List.entry.item',
             i,
+            searchName: 'item',
           ),
         );
         i++;
@@ -16777,6 +17802,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'List.note.text',
             i,
+            searchName: 'notes',
           ),
         );
         i++;
@@ -16792,6 +17818,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'List.source',
             i,
+            searchName: 'source',
           ),
         );
         i++;
@@ -16807,6 +17834,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'List.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -16822,6 +17850,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'List.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -16837,6 +17866,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'List.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -16854,6 +17884,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.address',
             i,
+            searchName: 'address',
           ),
         );
         i++;
@@ -16870,6 +17901,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.address.city',
             i,
+            searchName: 'address-city',
           ),
         );
         i++;
@@ -16886,6 +17918,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.address.country',
             i,
+            searchName: 'address-country',
           ),
         );
         i++;
@@ -16902,6 +17935,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.address.postalCode',
             i,
+            searchName: 'address-postalcode',
           ),
         );
         i++;
@@ -16918,6 +17952,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.address.state',
             i,
+            searchName: 'address-state',
           ),
         );
         i++;
@@ -16934,6 +17969,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.address.use',
             i,
+            searchName: 'address-use',
           ),
         );
         i++;
@@ -16949,6 +17985,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.form',
             i,
+            searchName: 'characteristic',
           ),
         );
         i++;
@@ -16974,6 +18011,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.endpoint',
             i,
+            searchName: 'endpoint',
           ),
         );
         i++;
@@ -16990,6 +18028,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -17005,6 +18044,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.mode',
             i,
+            searchName: 'mode',
           ),
         );
         i++;
@@ -17020,6 +18060,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -17035,6 +18076,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.alias',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -17051,6 +18093,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.position',
             i,
+            searchName: 'near',
           ),
         );
         i++;
@@ -17067,6 +18110,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.operationalStatus',
             i,
+            searchName: 'operational-status',
           ),
         );
         i++;
@@ -17083,6 +18127,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.managingOrganization',
             i,
+            searchName: 'organization',
           ),
         );
         i++;
@@ -17098,6 +18143,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.partOf',
             i,
+            searchName: 'partof',
           ),
         );
         i++;
@@ -17113,6 +18159,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -17128,6 +18175,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Location.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -17146,6 +18194,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ManufacturedItemDefinition.manufacturedDoseForm',
             i,
+            searchName: 'dose-form',
           ),
         );
         i++;
@@ -17162,6 +18211,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ManufacturedItemDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -17178,6 +18228,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ManufacturedItemDefinition.ingredient',
             i,
+            searchName: 'ingredient',
           ),
         );
         i++;
@@ -17193,6 +18244,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ManufacturedItemDefinition.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -17208,6 +18260,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ManufacturedItemDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -17228,6 +18281,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "Measure.relatedArtifact.where(type='composed-of').resource",
             i,
+            searchName: 'composed-of',
           ),
         );
         i++;
@@ -17245,6 +18299,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Measure.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -17260,6 +18315,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Measure.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -17278,6 +18334,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "Measure.relatedArtifact.where(type='depends-on').resource",
             i,
+            searchName: 'depends-on',
           ),
         );
         i++;
@@ -17294,6 +18351,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Measure.library',
             i,
+            searchName: 'depends-on',
           ),
         );
         i++;
@@ -17312,6 +18370,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "Measure.relatedArtifact.where(type='derived-from').resource",
             i,
+            searchName: 'derived-from',
           ),
         );
         i++;
@@ -17328,6 +18387,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Measure.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -17344,6 +18404,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Measure.effectivePeriod',
             i,
+            searchName: 'effective',
           ),
         );
         i++;
@@ -17360,6 +18421,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Measure.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -17376,6 +18438,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Measure.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -17391,6 +18454,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Measure.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -17409,6 +18473,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "Measure.relatedArtifact.where(type='predecessor').resource",
             i,
+            searchName: 'predecessor',
           ),
         );
         i++;
@@ -17424,6 +18489,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Measure.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -17439,6 +18505,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Measure.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -17457,6 +18524,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "Measure.relatedArtifact.where(type='successor').resource",
             i,
+            searchName: 'successor',
           ),
         );
         i++;
@@ -17472,6 +18540,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Measure.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -17488,6 +18557,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Measure.topic',
             i,
+            searchName: 'topic',
           ),
         );
         i++;
@@ -17503,6 +18573,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Measure.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -17518,6 +18589,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Measure.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -17534,6 +18606,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Measure.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -17582,6 +18655,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MeasureReport.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -17601,6 +18675,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MeasureReport.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -17616,6 +18691,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MeasureReport.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -17632,6 +18708,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MeasureReport.evaluatedResource',
             i,
+            searchName: 'evaluated-resource',
           ),
         );
         i++;
@@ -17647,6 +18724,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MeasureReport.location',
             i,
+            searchName: 'location',
           ),
         );
         i++;
@@ -17663,6 +18741,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MeasureReport.measure',
             i,
+            searchName: 'measure',
           ),
         );
         i++;
@@ -17678,6 +18757,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MeasureReport.period',
             i,
+            searchName: 'period',
           ),
         );
         i++;
@@ -17693,6 +18773,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MeasureReport.reporter',
             i,
+            searchName: 'reporter',
           ),
         );
         i++;
@@ -17708,6 +18789,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MeasureReport.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -17723,6 +18805,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MeasureReport.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -17741,6 +18824,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Medication.identifier',
             i,
+            searchName: 'serial-number',
           ),
         );
         i++;
@@ -17756,6 +18840,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Medication.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -17772,6 +18857,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Medication.batch.expirationDate',
             i,
+            searchName: 'expiration-date',
           ),
         );
         i++;
@@ -17788,6 +18874,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Medication.doseForm',
             i,
+            searchName: 'form',
           ),
         );
         i++;
@@ -17806,6 +18893,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Medication.ingredient.item.reference',
             i,
+            searchName: 'ingredient',
           ),
         );
         i++;
@@ -17824,6 +18912,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Medication.ingredient.item.concept',
             i,
+            searchName: 'ingredient-code',
           ),
         );
         i++;
@@ -17840,6 +18929,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Medication.batch.lotNumber',
             i,
+            searchName: 'lot-number',
           ),
         );
         i++;
@@ -17856,6 +18946,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Medication.marketingAuthorizationHolder',
             i,
+            searchName: 'marketingauthorizationholder',
           ),
         );
         i++;
@@ -17871,6 +18962,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Medication.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -17889,6 +18981,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationAdministration.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -17908,6 +19001,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationAdministration.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -17924,6 +19018,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationAdministration.medication.concept',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -17940,6 +19035,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationAdministration.occurrence.ofType(dateTime)',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -17956,6 +19052,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationAdministration.occurrence.ofType(Period)',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -17973,6 +19070,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationAdministration.device.reference',
             i,
+            searchName: 'device',
           ),
         );
         i++;
@@ -17988,6 +19086,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationAdministration.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -18004,6 +19103,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationAdministration.medication.reference',
             i,
+            searchName: 'medication',
           ),
         );
         i++;
@@ -18022,6 +19122,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationAdministration.performer.actor.reference',
             i,
+            searchName: 'performer',
           ),
         );
         i++;
@@ -18040,6 +19141,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationAdministration.performer.actor.concept',
             i,
+            searchName: 'performer-device-code',
           ),
         );
         i++;
@@ -18057,6 +19159,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationAdministration.reason.reference',
             i,
+            searchName: 'reason-given',
           ),
         );
         i++;
@@ -18074,6 +19177,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationAdministration.reason.concept',
             i,
+            searchName: 'reason-given-code',
           ),
         );
         i++;
@@ -18090,6 +19194,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationAdministration.statusReason',
             i,
+            searchName: 'reason-not-given',
           ),
         );
         i++;
@@ -18105,6 +19210,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationAdministration.request',
             i,
+            searchName: 'request',
           ),
         );
         i++;
@@ -18120,6 +19226,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationAdministration.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -18135,6 +19242,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationAdministration.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -18153,6 +19261,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationDispense.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -18172,6 +19281,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationDispense.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -18187,6 +19297,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationDispense.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -18203,6 +19314,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationDispense.medication.concept',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -18218,6 +19330,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationDispense.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -18234,6 +19347,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationDispense.medication.reference',
             i,
+            searchName: 'medication',
           ),
         );
         i++;
@@ -18249,6 +19363,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationDispense.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -18265,6 +19380,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationDispense.destination',
             i,
+            searchName: 'destination',
           ),
         );
         i++;
@@ -18280,6 +19396,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationDispense.location',
             i,
+            searchName: 'location',
           ),
         );
         i++;
@@ -18297,6 +19414,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationDispense.performer.actor',
             i,
+            searchName: 'performer',
           ),
         );
         i++;
@@ -18313,6 +19431,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationDispense.authorizingPrescription',
             i,
+            searchName: 'prescription',
           ),
         );
         i++;
@@ -18328,6 +19447,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationDispense.receiver',
             i,
+            searchName: 'receiver',
           ),
         );
         i++;
@@ -18344,6 +19464,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationDispense.recorded',
             i,
+            searchName: 'recorded',
           ),
         );
         i++;
@@ -18360,6 +19481,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationDispense.substitution.responsibleParty',
             i,
+            searchName: 'responsibleparty',
           ),
         );
         i++;
@@ -18375,6 +19497,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationDispense.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -18391,6 +19514,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationDispense.whenHandedOver',
             i,
+            searchName: 'whenhandedover',
           ),
         );
         i++;
@@ -18407,6 +19531,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationDispense.whenPrepared',
             i,
+            searchName: 'whenprepared',
           ),
         );
         i++;
@@ -18425,6 +19550,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationKnowledge.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -18440,6 +19566,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationKnowledge.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -18457,6 +19584,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationKnowledge.medicineClassification.classification',
             i,
+            searchName: 'classification',
           ),
         );
         i++;
@@ -18474,6 +19602,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationKnowledge.medicineClassification.type',
             i,
+            searchName: 'classification-type',
           ),
         );
         i++;
@@ -18489,6 +19618,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationKnowledge.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -18505,6 +19635,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationKnowledge.definitional.doseForm',
             i,
+            searchName: 'doseform',
           ),
         );
         i++;
@@ -18523,6 +19654,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationKnowledge.definitional.ingredient.item.reference',
             i,
+            searchName: 'ingredient',
           ),
         );
         i++;
@@ -18541,6 +19673,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationKnowledge.definitional.ingredient.item.concept',
             i,
+            searchName: 'ingredient-code',
           ),
         );
         i++;
@@ -18558,6 +19691,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationKnowledge.monitoringProgram.name',
             i,
+            searchName: 'monitoring-program-name',
           ),
         );
         i++;
@@ -18575,6 +19709,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationKnowledge.monitoringProgram.type',
             i,
+            searchName: 'monitoring-program-type',
           ),
         );
         i++;
@@ -18592,6 +19727,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationKnowledge.monograph.source',
             i,
+            searchName: 'monograph',
           ),
         );
         i++;
@@ -18609,6 +19745,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationKnowledge.monograph.type',
             i,
+            searchName: 'monograph-type',
           ),
         );
         i++;
@@ -18625,6 +19762,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationKnowledge.productType',
             i,
+            searchName: 'product-type',
           ),
         );
         i++;
@@ -18642,6 +19780,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationKnowledge.cost.source',
             i,
+            searchName: 'source-cost',
           ),
         );
         i++;
@@ -18660,6 +19799,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationRequest.identifier',
             i,
+            searchName: 'group-or-identifier',
           ),
         );
         i++;
@@ -18679,6 +19819,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationRequest.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -18695,6 +19836,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationRequest.medication.concept',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -18710,6 +19852,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationRequest.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -18726,6 +19869,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationRequest.medication.reference',
             i,
+            searchName: 'medication',
           ),
         );
         i++;
@@ -18741,6 +19885,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationRequest.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -18757,6 +19902,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationRequest.authoredOn',
             i,
+            searchName: 'authoredon',
           ),
         );
         i++;
@@ -18773,6 +19919,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationRequest.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -18791,6 +19938,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationRequest.dosageInstruction.timing.event',
             i,
+            searchName: 'combo-date',
           ),
         );
         i++;
@@ -18807,6 +19955,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationRequest.groupIdentifier',
             i,
+            searchName: 'group-or-identifier',
           ),
         );
         i++;
@@ -18823,6 +19972,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationRequest.dispenseRequest.dispenser',
             i,
+            searchName: 'intended-dispenser',
           ),
         );
         i++;
@@ -18838,6 +19988,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationRequest.performer',
             i,
+            searchName: 'intended-performer',
           ),
         );
         i++;
@@ -18854,6 +20005,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationRequest.performerType',
             i,
+            searchName: 'intended-performertype',
           ),
         );
         i++;
@@ -18869,6 +20021,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationRequest.intent',
             i,
+            searchName: 'intent',
           ),
         );
         i++;
@@ -18885,6 +20038,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationRequest.priority',
             i,
+            searchName: 'priority',
           ),
         );
         i++;
@@ -18900,6 +20054,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationRequest.requester',
             i,
+            searchName: 'requester',
           ),
         );
         i++;
@@ -18915,6 +20070,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationRequest.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -18933,6 +20089,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationStatement.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -18952,6 +20109,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationStatement.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -18968,6 +20126,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationStatement.medication.concept',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -18983,6 +20142,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationStatement.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -18999,6 +20159,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationStatement.medication.reference',
             i,
+            searchName: 'medication',
           ),
         );
         i++;
@@ -19014,6 +20175,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationStatement.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -19030,6 +20192,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationStatement.adherence.code',
             i,
+            searchName: 'adherence',
           ),
         );
         i++;
@@ -19046,6 +20209,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationStatement.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -19062,6 +20226,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationStatement.effective.ofType(dateTime)',
             i,
+            searchName: 'effective',
           ),
         );
         i++;
@@ -19078,6 +20243,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationStatement.effective.ofType(Period)',
             i,
+            searchName: 'effective',
           ),
         );
         i++;
@@ -19094,6 +20260,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationStatement.informationSource',
             i,
+            searchName: 'source',
           ),
         );
         i++;
@@ -19109,6 +20276,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicationStatement.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -19128,6 +20296,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicinalProductDefinition.characteristic.value.ofType(Quantity)',
             i,
+            searchName: 'characteristic',
           ),
         );
         i++;
@@ -19145,6 +20314,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicinalProductDefinition.characteristic.value.ofType(CodeableConcept)',
             i,
+            searchName: 'characteristic',
           ),
         );
         i++;
@@ -19162,6 +20332,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicinalProductDefinition.characteristic.type',
             i,
+            searchName: 'characteristic-type',
           ),
         );
         i++;
@@ -19179,6 +20350,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicinalProductDefinition.contact.contact',
             i,
+            searchName: 'contact',
           ),
         );
         i++;
@@ -19195,6 +20367,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicinalProductDefinition.domain',
             i,
+            searchName: 'domain',
           ),
         );
         i++;
@@ -19211,6 +20384,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicinalProductDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -19227,6 +20401,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicinalProductDefinition.ingredient',
             i,
+            searchName: 'ingredient',
           ),
         );
         i++;
@@ -19242,6 +20417,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicinalProductDefinition.masterFile',
             i,
+            searchName: 'master-file',
           ),
         );
         i++;
@@ -19259,6 +20435,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicinalProductDefinition.name.productName',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -19278,6 +20455,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicinalProductDefinition.name.usage.language',
             i,
+            searchName: 'name-language',
           ),
         );
         i++;
@@ -19294,6 +20472,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicinalProductDefinition.classification',
             i,
+            searchName: 'product-classification',
           ),
         );
         i++;
@@ -19310,6 +20489,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicinalProductDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -19325,6 +20505,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MedicinalProductDefinition.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -19344,6 +20525,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageDefinition.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -19359,6 +20541,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageDefinition.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -19375,6 +20558,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageDefinition.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -19391,6 +20575,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -19407,6 +20592,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageDefinition.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -19422,6 +20608,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageDefinition.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -19437,6 +20624,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageDefinition.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -19452,6 +20640,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -19467,6 +20656,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageDefinition.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -19482,6 +20672,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageDefinition.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -19497,6 +20688,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageDefinition.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -19513,6 +20705,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageDefinition.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -19529,6 +20722,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageDefinition.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -19544,6 +20738,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageDefinition.event.ofType(Coding)',
             i,
+            searchName: 'event',
           ),
         );
         i++;
@@ -19561,6 +20756,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageDefinition.focus.code',
             i,
+            searchName: 'focus',
           ),
         );
         i++;
@@ -19579,6 +20775,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageHeader.response.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -19596,6 +20793,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageHeader.destination.name',
             i,
+            searchName: 'destination',
           ),
         );
         i++;
@@ -19611,6 +20809,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageHeader.event.ofType(Coding)',
             i,
+            searchName: 'event',
           ),
         );
         i++;
@@ -19627,6 +20826,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageHeader.event.ofType(canonical)',
             i,
+            searchName: 'event',
           ),
         );
         i++;
@@ -19642,6 +20842,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageHeader.focus',
             i,
+            searchName: 'focus',
           ),
         );
         i++;
@@ -19659,6 +20860,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageHeader.destination.receiver',
             i,
+            searchName: 'receiver',
           ),
         );
         i++;
@@ -19675,6 +20877,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageHeader.response.identifier',
             i,
+            searchName: 'response-id',
           ),
         );
         i++;
@@ -19691,6 +20894,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageHeader.source.sender',
             i,
+            searchName: 'sender',
           ),
         );
         i++;
@@ -19707,6 +20911,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MessageHeader.source.name',
             i,
+            searchName: 'source',
           ),
         );
         i++;
@@ -19725,6 +20930,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MolecularDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -19740,6 +20946,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MolecularDefinition.member',
             i,
+            searchName: 'member',
           ),
         );
         i++;
@@ -19756,6 +20963,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MolecularDefinition.moleculeType',
             i,
+            searchName: 'moleculetype',
           ),
         );
         i++;
@@ -19772,6 +20980,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MolecularDefinition.topology',
             i,
+            searchName: 'topology',
           ),
         );
         i++;
@@ -19787,6 +20996,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MolecularDefinition.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -19805,6 +21015,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MolecularSequence.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -19820,6 +21031,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'MolecularSequence.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -19839,6 +21051,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -19854,6 +21067,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -19872,6 +21086,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "NamingSystem.relatedArtifact.where(type='derived-from').resource",
             i,
+            searchName: 'derived-from',
           ),
         );
         i++;
@@ -19888,6 +21103,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -19904,6 +21120,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.effectivePeriod',
             i,
+            searchName: 'effective',
           ),
         );
         i++;
@@ -19920,6 +21137,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -19936,6 +21154,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -19951,6 +21170,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -19969,6 +21189,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "NamingSystem.relatedArtifact.where(type='predecessor').resource",
             i,
+            searchName: 'predecessor',
           ),
         );
         i++;
@@ -19984,6 +21205,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -19999,6 +21221,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -20015,6 +21238,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.topic',
             i,
+            searchName: 'topic',
           ),
         );
         i++;
@@ -20030,6 +21254,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -20045,6 +21270,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -20061,6 +21287,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -20078,6 +21305,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.contact.name',
             i,
+            searchName: 'contact',
           ),
         );
         i++;
@@ -20095,6 +21323,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.uniqueId.type',
             i,
+            searchName: 'id-type',
           ),
         );
         i++;
@@ -20110,6 +21339,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.kind',
             i,
+            searchName: 'kind',
           ),
         );
         i++;
@@ -20127,6 +21357,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.uniqueId.period',
             i,
+            searchName: 'period',
           ),
         );
         i++;
@@ -20143,6 +21374,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.responsible',
             i,
+            searchName: 'responsible',
           ),
         );
         i++;
@@ -20160,6 +21392,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.contact.telecom',
             i,
+            searchName: 'telecom',
           ),
         );
         i++;
@@ -20175,6 +21408,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -20192,6 +21426,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NamingSystem.uniqueId.value',
             i,
+            searchName: 'value',
           ),
         );
         i++;
@@ -20210,6 +21445,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionIntake.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -20229,6 +21465,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionIntake.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -20244,6 +21481,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionIntake.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -20260,6 +21498,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionIntake.occurrence.ofType(dateTime)',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -20276,6 +21515,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionIntake.occurrence.ofType(Period)',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -20291,6 +21531,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionIntake.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -20309,6 +21550,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionIntake.nutritionItem.nutritionProduct.concept',
             i,
+            searchName: 'nutrition',
           ),
         );
         i++;
@@ -20324,6 +21566,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionIntake.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -20339,6 +21582,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionIntake.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -20357,6 +21601,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionOrder.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -20376,6 +21621,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionOrder.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -20391,6 +21637,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionOrder.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -20409,6 +21656,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionOrder.additive.modularType.concept',
             i,
+            searchName: 'additive',
           ),
         );
         i++;
@@ -20424,6 +21672,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionOrder.dateTime',
             i,
+            searchName: 'datetime',
           ),
         );
         i++;
@@ -20440,6 +21689,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionOrder.enteralFormula.type.concept',
             i,
+            searchName: 'formula',
           ),
         );
         i++;
@@ -20456,6 +21706,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionOrder.groupIdentifier',
             i,
+            searchName: 'group-identifier',
           ),
         );
         i++;
@@ -20472,6 +21723,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionOrder.oralDiet.type',
             i,
+            searchName: 'oraldiet',
           ),
         );
         i++;
@@ -20487,6 +21739,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionOrder.requester',
             i,
+            searchName: 'requester',
           ),
         );
         i++;
@@ -20502,6 +21755,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionOrder.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -20517,6 +21771,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionOrder.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -20535,6 +21790,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionOrder.supplement.type.concept',
             i,
+            searchName: 'supplement',
           ),
         );
         i++;
@@ -20552,6 +21808,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionProduct.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -20569,6 +21826,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionProduct.instance.expiry',
             i,
+            searchName: 'expiration-date',
           ),
         );
         i++;
@@ -20586,6 +21844,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionProduct.instance.identifier',
             i,
+            searchName: 'serial-number',
           ),
         );
         i++;
@@ -20604,6 +21863,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionProduct.ingredient.item.concept',
             i,
+            searchName: 'ingredient-item',
           ),
         );
         i++;
@@ -20621,6 +21881,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionProduct.instance.lotNumber',
             i,
+            searchName: 'lot-number',
           ),
         );
         i++;
@@ -20637,6 +21898,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'NutritionProduct.category',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -20655,6 +21917,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -20674,6 +21937,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -20689,6 +21953,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.code',
             i,
+            searchName: 'combo-code',
           ),
         );
         i++;
@@ -20705,6 +21970,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.effective.ofType(dateTime)',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -20721,6 +21987,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.effective.ofType(Period)',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -20737,6 +22004,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.effective.ofType(Timing)',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -20753,6 +22021,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.effective.ofType(instant)',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -20768,6 +22037,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -20783,6 +22053,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -20799,6 +22070,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -20816,6 +22088,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.component.code',
             i,
+            searchName: 'component-code',
           ),
         );
         i++;
@@ -20832,6 +22105,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.dataAbsentReason',
             i,
+            searchName: 'data-absent-reason',
           ),
         );
         i++;
@@ -20849,6 +22123,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.component.dataAbsentReason',
             i,
+            searchName: 'component-data-absent-reason',
           ),
         );
         i++;
@@ -20865,6 +22140,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.interpretation',
             i,
+            searchName: 'interpretation',
           ),
         );
         i++;
@@ -20882,6 +22158,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.component.interpretation',
             i,
+            searchName: 'component-interpretation',
           ),
         );
         i++;
@@ -20898,6 +22175,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.value.ofType(CodeableConcept)',
             i,
+            searchName: 'value-concept',
           ),
         );
         i++;
@@ -20915,6 +22193,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.component.value.ofType(CodeableConcept)',
             i,
+            searchName: 'component-value-concept',
           ),
         );
         i++;
@@ -20931,6 +22210,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.value.ofType(Quantity)',
             i,
+            searchName: 'value-quantity',
           ),
         );
         i++;
@@ -20947,6 +22227,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.value.ofType(SampledData)',
             i,
+            searchName: 'value-quantity',
           ),
         );
         i++;
@@ -20964,6 +22245,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.component.value.ofType(Quantity)',
             i,
+            searchName: 'component-value-quantity',
           ),
         );
         i++;
@@ -20981,6 +22263,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.component.value.ofType(SampledData)',
             i,
+            searchName: 'component-value-quantity',
           ),
         );
         i++;
@@ -21008,6 +22291,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.component.value.ofType(Reference)',
             i,
+            searchName: 'component-value-reference',
           ),
         );
         i++;
@@ -21024,6 +22308,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.derivedFrom',
             i,
+            searchName: 'derived-from',
           ),
         );
         i++;
@@ -21039,6 +22324,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.device',
             i,
+            searchName: 'device',
           ),
         );
         i++;
@@ -21054,6 +22340,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.focus',
             i,
+            searchName: 'focus',
           ),
         );
         i++;
@@ -21069,6 +22356,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.hasMember',
             i,
+            searchName: 'has-member',
           ),
         );
         i++;
@@ -21085,6 +22373,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.instantiates.ofType(canonical)',
             i,
+            searchName: 'instantiates-canonical',
           ),
         );
         i++;
@@ -21101,6 +22390,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.instantiates.ofType(Reference)',
             i,
+            searchName: 'instantiates-reference',
           ),
         );
         i++;
@@ -21117,6 +22407,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.method',
             i,
+            searchName: 'method',
           ),
         );
         i++;
@@ -21132,6 +22423,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.partOf',
             i,
+            searchName: 'part-of',
           ),
         );
         i++;
@@ -21147,6 +22439,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.performer',
             i,
+            searchName: 'performer',
           ),
         );
         i++;
@@ -21162,6 +22455,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.specimen',
             i,
+            searchName: 'specimen',
           ),
         );
         i++;
@@ -21177,6 +22471,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -21192,6 +22487,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -21218,6 +22514,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.value.ofType(dateTime)',
             i,
+            searchName: 'value-date',
           ),
         );
         i++;
@@ -21233,6 +22530,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.value.ofType(Period)',
             i,
+            searchName: 'value-date',
           ),
         );
         i++;
@@ -21249,6 +22547,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.value.ofType(Reference)',
             i,
+            searchName: 'value-reference',
           ),
         );
         i++;
@@ -21264,6 +22563,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation',
             i,
+            searchName: 'combo-code-value-quantity',
           ),
         );
         i++;
@@ -21280,6 +22580,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Observation.component',
             i,
+            searchName: 'component-code-value-quantity',
           ),
         );
         i++;
@@ -21298,6 +22599,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ObservationDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -21313,6 +22615,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ObservationDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -21328,6 +22631,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ObservationDefinition.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -21343,6 +22647,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ObservationDefinition.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -21359,6 +22664,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ObservationDefinition.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -21374,6 +22680,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ObservationDefinition.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -21390,6 +22697,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ObservationDefinition.experimental',
             i,
+            searchName: 'experimental',
           ),
         );
         i++;
@@ -21406,6 +22714,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ObservationDefinition.method',
             i,
+            searchName: 'method',
           ),
         );
         i++;
@@ -21425,6 +22734,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -21440,6 +22750,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -21456,6 +22767,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -21472,6 +22784,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -21488,6 +22801,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -21503,6 +22817,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -21518,6 +22833,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -21533,6 +22849,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -21548,6 +22865,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -21563,6 +22881,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -21578,6 +22897,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -21594,6 +22914,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -21609,6 +22930,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.base',
             i,
+            searchName: 'base',
           ),
         );
         i++;
@@ -21624,6 +22946,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -21640,6 +22963,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.inputProfile',
             i,
+            searchName: 'input-profile',
           ),
         );
         i++;
@@ -21655,6 +22979,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.instance',
             i,
+            searchName: 'instance',
           ),
         );
         i++;
@@ -21670,6 +22995,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.kind',
             i,
+            searchName: 'kind',
           ),
         );
         i++;
@@ -21686,6 +23012,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.outputProfile',
             i,
+            searchName: 'output-profile',
           ),
         );
         i++;
@@ -21701,6 +23028,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.system',
             i,
+            searchName: 'system',
           ),
         );
         i++;
@@ -21716,6 +23044,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OperationDefinition.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -21733,6 +23062,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Organization.active',
             i,
+            searchName: 'active',
           ),
         );
         i++;
@@ -21750,6 +23080,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Organization.contact.address',
             i,
+            searchName: 'address',
           ),
         );
         i++;
@@ -21768,6 +23099,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Organization.contact.address.city',
             i,
+            searchName: 'address-city',
           ),
         );
         i++;
@@ -21786,6 +23118,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Organization.contact.address.country',
             i,
+            searchName: 'address-country',
           ),
         );
         i++;
@@ -21804,6 +23137,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Organization.contact.address.postalCode',
             i,
+            searchName: 'address-postalcode',
           ),
         );
         i++;
@@ -21822,6 +23156,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Organization.contact.address.state',
             i,
+            searchName: 'address-state',
           ),
         );
         i++;
@@ -21840,6 +23175,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Organization.contact.address.use',
             i,
+            searchName: 'address-use',
           ),
         );
         i++;
@@ -21855,6 +23191,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Organization.endpoint',
             i,
+            searchName: 'endpoint',
           ),
         );
         i++;
@@ -21871,6 +23208,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Organization.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -21888,6 +23226,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Organization.qualification.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -21903,6 +23242,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Organization.name',
             i,
+            searchName: 'phonetic',
           ),
         );
         i++;
@@ -21918,6 +23258,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Organization.alias',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -21933,6 +23274,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Organization.partOf',
             i,
+            searchName: 'partof',
           ),
         );
         i++;
@@ -21948,6 +23290,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Organization.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -21965,6 +23308,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OrganizationAffiliation.active',
             i,
+            searchName: 'active',
           ),
         );
         i++;
@@ -21980,6 +23324,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OrganizationAffiliation.period',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -21998,6 +23343,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "OrganizationAffiliation.contact.telecom.where(system='email')",
             i,
+            searchName: 'email',
           ),
         );
         i++;
@@ -22013,6 +23359,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OrganizationAffiliation.endpoint',
             i,
+            searchName: 'endpoint',
           ),
         );
         i++;
@@ -22029,6 +23376,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OrganizationAffiliation.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -22044,6 +23392,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OrganizationAffiliation.location',
             i,
+            searchName: 'location',
           ),
         );
         i++;
@@ -22059,6 +23408,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OrganizationAffiliation.network',
             i,
+            searchName: 'network',
           ),
         );
         i++;
@@ -22075,6 +23425,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OrganizationAffiliation.participatingOrganization',
             i,
+            searchName: 'participating-organization',
           ),
         );
         i++;
@@ -22093,6 +23444,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "OrganizationAffiliation.contact.telecom.where(system='phone')",
             i,
+            searchName: 'phone',
           ),
         );
         i++;
@@ -22109,6 +23461,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OrganizationAffiliation.organization',
             i,
+            searchName: 'primary-organization',
           ),
         );
         i++;
@@ -22124,6 +23477,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OrganizationAffiliation.code',
             i,
+            searchName: 'role',
           ),
         );
         i++;
@@ -22140,6 +23494,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OrganizationAffiliation.healthcareService',
             i,
+            searchName: 'service',
           ),
         );
         i++;
@@ -22156,6 +23511,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OrganizationAffiliation.specialty',
             i,
+            searchName: 'specialty',
           ),
         );
         i++;
@@ -22173,6 +23529,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'OrganizationAffiliation.contact.telecom',
             i,
+            searchName: 'telecom',
           ),
         );
         i++;
@@ -22193,6 +23550,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PackagedProductDefinition.packaging.containedItem.item.reference',
             i,
+            searchName: 'package',
           ),
         );
         i++;
@@ -22209,6 +23567,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PackagedProductDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -22224,6 +23583,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PackagedProductDefinition.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -22239,6 +23599,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PackagedProductDefinition.packageFor',
             i,
+            searchName: 'package-for',
           ),
         );
         i++;
@@ -22255,6 +23616,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PackagedProductDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -22272,6 +23634,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.active',
             i,
+            searchName: 'active',
           ),
         );
         i++;
@@ -22287,6 +23650,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.address',
             i,
+            searchName: 'address',
           ),
         );
         i++;
@@ -22304,6 +23668,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.address.city',
             i,
+            searchName: 'address-city',
           ),
         );
         i++;
@@ -22321,6 +23686,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.address.country',
             i,
+            searchName: 'address-country',
           ),
         );
         i++;
@@ -22338,6 +23704,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.address.postalCode',
             i,
+            searchName: 'address-postalcode',
           ),
         );
         i++;
@@ -22355,6 +23722,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.address.state',
             i,
+            searchName: 'address-state',
           ),
         );
         i++;
@@ -22372,6 +23740,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.address.use',
             i,
+            searchName: 'address-use',
           ),
         );
         i++;
@@ -22387,6 +23756,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.birthDate',
             i,
+            searchName: 'birthdate',
           ),
         );
         i++;
@@ -22404,6 +23774,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.deceased.exists() and Patient.deceased != false',
             i,
+            searchName: 'deceased',
           ),
         );
         i++;
@@ -22421,6 +23792,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "Patient.telecom.where(system='email')",
             i,
+            searchName: 'email',
           ),
         );
         i++;
@@ -22438,6 +23810,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.name.family',
             i,
+            searchName: 'family',
           ),
         );
         i++;
@@ -22453,6 +23826,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.gender',
             i,
+            searchName: 'gender',
           ),
         );
         i++;
@@ -22469,6 +23843,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.generalPractitioner',
             i,
+            searchName: 'general-practitioner',
           ),
         );
         i++;
@@ -22486,6 +23861,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.name.given',
             i,
+            searchName: 'given',
           ),
         );
         i++;
@@ -22502,6 +23878,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -22519,6 +23896,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.communication.language',
             i,
+            searchName: 'language',
           ),
         );
         i++;
@@ -22536,6 +23914,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.link.other',
             i,
+            searchName: 'link',
           ),
         );
         i++;
@@ -22551,6 +23930,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.name',
             i,
+            searchName: 'phonetic',
           ),
         );
         i++;
@@ -22567,6 +23947,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.managingOrganization',
             i,
+            searchName: 'organization',
           ),
         );
         i++;
@@ -22584,6 +23965,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "Patient.telecom.where(system='phone')",
             i,
+            searchName: 'phone',
           ),
         );
         i++;
@@ -22599,6 +23981,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Patient.telecom',
             i,
+            searchName: 'telecom',
           ),
         );
         i++;
@@ -22616,6 +23999,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PaymentNotice.created',
             i,
+            searchName: 'created',
           ),
         );
         i++;
@@ -22632,6 +24016,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PaymentNotice.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -22648,6 +24033,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PaymentNotice.paymentStatus',
             i,
+            searchName: 'payment-status',
           ),
         );
         i++;
@@ -22663,6 +24049,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PaymentNotice.reporter',
             i,
+            searchName: 'reporter',
           ),
         );
         i++;
@@ -22678,6 +24065,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PaymentNotice.request',
             i,
+            searchName: 'request',
           ),
         );
         i++;
@@ -22693,6 +24081,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PaymentNotice.response',
             i,
+            searchName: 'response',
           ),
         );
         i++;
@@ -22708,6 +24097,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PaymentNotice.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -22727,6 +24117,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PaymentReconciliation.allocation.account',
             i,
+            searchName: 'allocation-account',
           ),
         );
         i++;
@@ -22744,6 +24135,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PaymentReconciliation.allocation.encounter',
             i,
+            searchName: 'allocation-encounter',
           ),
         );
         i++;
@@ -22759,6 +24151,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PaymentReconciliation.created',
             i,
+            searchName: 'created',
           ),
         );
         i++;
@@ -22775,6 +24168,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PaymentReconciliation.disposition',
             i,
+            searchName: 'disposition',
           ),
         );
         i++;
@@ -22791,6 +24185,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PaymentReconciliation.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -22806,6 +24201,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PaymentReconciliation.outcome',
             i,
+            searchName: 'outcome',
           ),
         );
         i++;
@@ -22822,6 +24218,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PaymentReconciliation.paymentIssuer',
             i,
+            searchName: 'payment-issuer',
           ),
         );
         i++;
@@ -22837,6 +24234,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PaymentReconciliation.request',
             i,
+            searchName: 'request',
           ),
         );
         i++;
@@ -22852,6 +24250,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PaymentReconciliation.requestor',
             i,
+            searchName: 'requestor',
           ),
         );
         i++;
@@ -22867,6 +24266,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PaymentReconciliation.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -22885,6 +24285,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Permission.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -22900,6 +24301,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Permission.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -22918,6 +24320,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -22937,6 +24340,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.link.target.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -22952,6 +24356,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.address',
             i,
+            searchName: 'address',
           ),
         );
         i++;
@@ -22969,6 +24374,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.address.city',
             i,
+            searchName: 'address-city',
           ),
         );
         i++;
@@ -22986,6 +24392,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.address.country',
             i,
+            searchName: 'address-country',
           ),
         );
         i++;
@@ -23003,6 +24410,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.address.postalCode',
             i,
+            searchName: 'address-postalcode',
           ),
         );
         i++;
@@ -23020,6 +24428,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.address.state',
             i,
+            searchName: 'address-state',
           ),
         );
         i++;
@@ -23037,6 +24446,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.address.use',
             i,
+            searchName: 'address-use',
           ),
         );
         i++;
@@ -23052,6 +24462,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.birthDate',
             i,
+            searchName: 'birthdate',
           ),
         );
         i++;
@@ -23069,6 +24480,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "Person.telecom.where(system='email')",
             i,
+            searchName: 'email',
           ),
         );
         i++;
@@ -23084,6 +24496,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.gender',
             i,
+            searchName: 'gender',
           ),
         );
         i++;
@@ -23101,6 +24514,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "Person.telecom.where(system='phone')",
             i,
+            searchName: 'phone',
           ),
         );
         i++;
@@ -23116,6 +24530,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -23131,6 +24546,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.telecom',
             i,
+            searchName: 'telecom',
           ),
         );
         i++;
@@ -23148,6 +24564,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.deceased.exists() and Person.deceased != false',
             i,
+            searchName: 'deceased',
           ),
         );
         i++;
@@ -23165,6 +24582,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.name.family',
             i,
+            searchName: 'family',
           ),
         );
         i++;
@@ -23182,6 +24600,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.name.given',
             i,
+            searchName: 'given',
           ),
         );
         i++;
@@ -23199,6 +24618,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.link.target',
             i,
+            searchName: 'link',
           ),
         );
         i++;
@@ -23215,6 +24635,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.managingOrganization',
             i,
+            searchName: 'organization',
           ),
         );
         i++;
@@ -23234,6 +24655,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.link.target.where(resolve() is Practitioner)',
             i,
+            searchName: 'practitioner',
           ),
         );
         i++;
@@ -23253,6 +24675,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Person.link.target.where(resolve() is RelatedPerson)',
             i,
+            searchName: 'relatedperson',
           ),
         );
         i++;
@@ -23274,6 +24697,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PersonalRelationship.source.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -23293,6 +24717,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PersonalRelationship.target.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -23309,6 +24734,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PersonalRelationship.relationshipType',
             i,
+            searchName: 'relationship',
           ),
         );
         i++;
@@ -23324,6 +24750,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PersonalRelationship.source',
             i,
+            searchName: 'source',
           ),
         );
         i++;
@@ -23339,6 +24766,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PersonalRelationship.target',
             i,
+            searchName: 'target',
           ),
         );
         i++;
@@ -23359,6 +24787,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "PlanDefinition.relatedArtifact.where(type='composed-of').resource",
             i,
+            searchName: 'composed-of',
           ),
         );
         i++;
@@ -23376,6 +24805,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -23391,6 +24821,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -23409,6 +24840,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "PlanDefinition.relatedArtifact.where(type='depends-on').resource",
             i,
+            searchName: 'depends-on',
           ),
         );
         i++;
@@ -23425,6 +24857,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.library',
             i,
+            searchName: 'depends-on',
           ),
         );
         i++;
@@ -23443,6 +24876,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "PlanDefinition.relatedArtifact.where(type='derived-from').resource",
             i,
+            searchName: 'derived-from',
           ),
         );
         i++;
@@ -23459,6 +24893,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -23475,6 +24910,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.effectivePeriod',
             i,
+            searchName: 'effective',
           ),
         );
         i++;
@@ -23491,6 +24927,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -23507,6 +24944,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -23522,6 +24960,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -23540,6 +24979,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "PlanDefinition.relatedArtifact.where(type='predecessor').resource",
             i,
+            searchName: 'predecessor',
           ),
         );
         i++;
@@ -23555,6 +24995,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -23570,6 +25011,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -23588,6 +25030,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "PlanDefinition.relatedArtifact.where(type='successor').resource",
             i,
+            searchName: 'successor',
           ),
         );
         i++;
@@ -23603,6 +25046,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -23619,6 +25063,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.topic',
             i,
+            searchName: 'topic',
           ),
         );
         i++;
@@ -23634,6 +25079,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -23649,6 +25095,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -23665,6 +25112,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -23682,6 +25130,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.action.definition.ofType(canonical)',
             i,
+            searchName: 'definition',
           ),
         );
         i++;
@@ -23699,6 +25148,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.action.definition.ofType(uri)',
             i,
+            searchName: 'definition',
           ),
         );
         i++;
@@ -23744,6 +25194,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PlanDefinition.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -23761,6 +25212,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.address',
             i,
+            searchName: 'address',
           ),
         );
         i++;
@@ -23778,6 +25230,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.address.city',
             i,
+            searchName: 'address-city',
           ),
         );
         i++;
@@ -23795,6 +25248,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.address.country',
             i,
+            searchName: 'address-country',
           ),
         );
         i++;
@@ -23812,6 +25266,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.address.postalCode',
             i,
+            searchName: 'address-postalcode',
           ),
         );
         i++;
@@ -23829,6 +25284,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.address.state',
             i,
+            searchName: 'address-state',
           ),
         );
         i++;
@@ -23846,6 +25302,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.address.use',
             i,
+            searchName: 'address-use',
           ),
         );
         i++;
@@ -23863,6 +25320,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "Practitioner.telecom.where(system='email')",
             i,
+            searchName: 'email',
           ),
         );
         i++;
@@ -23880,6 +25338,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.name.family',
             i,
+            searchName: 'family',
           ),
         );
         i++;
@@ -23895,6 +25354,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.gender',
             i,
+            searchName: 'gender',
           ),
         );
         i++;
@@ -23912,6 +25372,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.name.given',
             i,
+            searchName: 'given',
           ),
         );
         i++;
@@ -23929,6 +25390,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "Practitioner.telecom.where(system='phone')",
             i,
+            searchName: 'phone',
           ),
         );
         i++;
@@ -23944,6 +25406,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -23959,6 +25422,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.telecom',
             i,
+            searchName: 'telecom',
           ),
         );
         i++;
@@ -23974,6 +25438,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.active',
             i,
+            searchName: 'active',
           ),
         );
         i++;
@@ -23991,6 +25456,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.communication.language',
             i,
+            searchName: 'communication',
           ),
         );
         i++;
@@ -24008,6 +25474,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.deceased.exists() and Practitioner.deceased != false',
             i,
+            searchName: 'deceased',
           ),
         );
         i++;
@@ -24024,6 +25491,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -24041,6 +25509,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.qualification.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -24058,6 +25527,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.qualification.code',
             i,
+            searchName: 'qualification-code',
           ),
         );
         i++;
@@ -24075,6 +25545,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.qualification.period',
             i,
+            searchName: 'qualification-period',
           ),
         );
         i++;
@@ -24091,6 +25562,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Practitioner.qualification',
             i,
+            searchName: 'qual-code-period',
           ),
         );
         i++;
@@ -24111,6 +25583,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "PractitionerRole.contact.telecom.where(system='email')",
             i,
+            searchName: 'email',
           ),
         );
         i++;
@@ -24129,6 +25602,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "PractitionerRole.contact.telecom.where(system='phone')",
             i,
+            searchName: 'phone',
           ),
         );
         i++;
@@ -24146,6 +25620,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PractitionerRole.contact.telecom',
             i,
+            searchName: 'telecom',
           ),
         );
         i++;
@@ -24161,6 +25636,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PractitionerRole.active',
             i,
+            searchName: 'active',
           ),
         );
         i++;
@@ -24177,6 +25653,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PractitionerRole.characteristic',
             i,
+            searchName: 'characteristic',
           ),
         );
         i++;
@@ -24193,6 +25670,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PractitionerRole.communication',
             i,
+            searchName: 'communication',
           ),
         );
         i++;
@@ -24208,6 +25686,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PractitionerRole.period',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -24223,6 +25702,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PractitionerRole.endpoint',
             i,
+            searchName: 'endpoint',
           ),
         );
         i++;
@@ -24239,6 +25719,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PractitionerRole.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -24254,6 +25735,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PractitionerRole.location',
             i,
+            searchName: 'location',
           ),
         );
         i++;
@@ -24269,6 +25751,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PractitionerRole.network',
             i,
+            searchName: 'network',
           ),
         );
         i++;
@@ -24285,6 +25768,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PractitionerRole.organization',
             i,
+            searchName: 'organization',
           ),
         );
         i++;
@@ -24301,6 +25785,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PractitionerRole.practitioner',
             i,
+            searchName: 'practitioner',
           ),
         );
         i++;
@@ -24316,6 +25801,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PractitionerRole.code',
             i,
+            searchName: 'role',
           ),
         );
         i++;
@@ -24332,6 +25818,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PractitionerRole.healthcareService',
             i,
+            searchName: 'service',
           ),
         );
         i++;
@@ -24348,6 +25835,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'PractitionerRole.specialty',
             i,
+            searchName: 'specialty',
           ),
         );
         i++;
@@ -24366,6 +25854,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Procedure.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -24385,6 +25874,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Procedure.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -24400,6 +25890,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Procedure.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -24416,6 +25907,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Procedure.occurrence.ofType(dateTime)',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -24432,6 +25924,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Procedure.occurrence.ofType(Period)',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -24448,6 +25941,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Procedure.occurrence.ofType(Timing)',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -24463,6 +25957,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Procedure.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -24478,6 +25973,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Procedure.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -24494,6 +25990,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Procedure.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -24509,6 +26006,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Procedure.location',
             i,
+            searchName: 'location',
           ),
         );
         i++;
@@ -24524,6 +26022,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Procedure.partOf',
             i,
+            searchName: 'part-of',
           ),
         );
         i++;
@@ -24541,6 +26040,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Procedure.performer.actor',
             i,
+            searchName: 'performer',
           ),
         );
         i++;
@@ -24558,6 +26058,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Procedure.reason.concept',
             i,
+            searchName: 'reason-code',
           ),
         );
         i++;
@@ -24575,6 +26076,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Procedure.reason.reference',
             i,
+            searchName: 'reason-reference',
           ),
         );
         i++;
@@ -24590,6 +26092,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Procedure.report',
             i,
+            searchName: 'report',
           ),
         );
         i++;
@@ -24605,6 +26108,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Procedure.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -24620,6 +26124,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Procedure.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -24637,6 +26142,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Provenance.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -24652,6 +26158,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Provenance.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -24668,6 +26175,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Provenance.activity',
             i,
+            searchName: 'activity',
           ),
         );
         i++;
@@ -24685,6 +26193,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Provenance.agent.who',
             i,
+            searchName: 'agent',
           ),
         );
         i++;
@@ -24702,6 +26211,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Provenance.agent.role',
             i,
+            searchName: 'agent-role',
           ),
         );
         i++;
@@ -24719,6 +26229,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Provenance.agent.type',
             i,
+            searchName: 'agent-type',
           ),
         );
         i++;
@@ -24734,6 +26245,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Provenance.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -24751,6 +26263,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Provenance.entity.what',
             i,
+            searchName: 'entity',
           ),
         );
         i++;
@@ -24766,6 +26279,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Provenance.location',
             i,
+            searchName: 'location',
           ),
         );
         i++;
@@ -24781,6 +26295,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Provenance.recorded',
             i,
+            searchName: 'recorded',
           ),
         );
         i++;
@@ -24798,6 +26313,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Provenance.signature.type',
             i,
+            searchName: 'signature-type',
           ),
         );
         i++;
@@ -24813,6 +26329,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Provenance.target',
             i,
+            searchName: 'target',
           ),
         );
         i++;
@@ -24832,6 +26349,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Questionnaire.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -24847,6 +26365,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Questionnaire.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -24863,6 +26382,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Questionnaire.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -24879,6 +26399,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Questionnaire.effectivePeriod',
             i,
+            searchName: 'effective',
           ),
         );
         i++;
@@ -24895,6 +26416,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Questionnaire.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -24911,6 +26433,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Questionnaire.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -24926,6 +26449,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Questionnaire.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -24941,6 +26465,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Questionnaire.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -24956,6 +26481,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Questionnaire.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -24971,6 +26497,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Questionnaire.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -24986,6 +26513,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Questionnaire.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -25001,6 +26529,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Questionnaire.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -25017,6 +26546,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Questionnaire.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -25032,6 +26562,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Questionnaire.code',
             i,
+            searchName: 'questionnaire-code',
           ),
         );
         i++;
@@ -25049,6 +26580,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Questionnaire.item.code',
             i,
+            searchName: 'item-code',
           ),
         );
         i++;
@@ -25066,6 +26598,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Questionnaire.item.definition',
             i,
+            searchName: 'definition',
           ),
         );
         i++;
@@ -25081,6 +26614,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Questionnaire.subjectType',
             i,
+            searchName: 'subject-type',
           ),
         );
         i++;
@@ -25099,6 +26633,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -25118,6 +26653,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -25133,6 +26669,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -25151,6 +26688,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.item.answer.value.ofType(boolean)',
             i,
+            searchName: 'answer-concept',
           ),
         );
         i++;
@@ -25169,6 +26707,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.item.answer.value.ofType(Coding)',
             i,
+            searchName: 'answer-concept',
           ),
         );
         i++;
@@ -25187,6 +26726,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.item.answer.value.ofType(date)',
             i,
+            searchName: 'answer-date',
           ),
         );
         i++;
@@ -25205,6 +26745,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.item.answer.value.ofType(dateTime)',
             i,
+            searchName: 'answer-date',
           ),
         );
         i++;
@@ -25223,6 +26764,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.item.answer.value.ofType(integer)',
             i,
+            searchName: 'answer-number',
           ),
         );
         i++;
@@ -25241,6 +26783,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.item.answer.value.ofType(decimal)',
             i,
+            searchName: 'answer-number',
           ),
         );
         i++;
@@ -25259,6 +26802,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.item.answer.value.ofType(Quantity)',
             i,
+            searchName: 'answer-quantity',
           ),
         );
         i++;
@@ -25277,6 +26821,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.item.answer.value.ofType(Reference)',
             i,
+            searchName: 'answer-reference',
           ),
         );
         i++;
@@ -25295,6 +26840,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.item.answer.value.ofType(string)',
             i,
+            searchName: 'answer-string',
           ),
         );
         i++;
@@ -25310,6 +26856,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.author',
             i,
+            searchName: 'author',
           ),
         );
         i++;
@@ -25326,6 +26873,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.authored',
             i,
+            searchName: 'authored',
           ),
         );
         i++;
@@ -25341,6 +26889,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -25358,6 +26907,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.item.linkId',
             i,
+            searchName: 'linkid',
           ),
         );
         i++;
@@ -25373,6 +26923,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.partOf',
             i,
+            searchName: 'part-of',
           ),
         );
         i++;
@@ -25389,6 +26940,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.questionnaire',
             i,
+            searchName: 'questionnaire',
           ),
         );
         i++;
@@ -25404,6 +26956,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.source',
             i,
+            searchName: 'source',
           ),
         );
         i++;
@@ -25419,6 +26972,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -25434,6 +26988,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -25449,6 +27004,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'QuestionnaireResponse',
             i,
+            searchName: 'item-uri',
           ),
         );
         i++;
@@ -25467,6 +27023,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RegulatedAuthorization.case.identifier',
             i,
+            searchName: 'case',
           ),
         );
         i++;
@@ -25483,6 +27040,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RegulatedAuthorization.case.type',
             i,
+            searchName: 'case-type',
           ),
         );
         i++;
@@ -25498,6 +27056,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RegulatedAuthorization.holder',
             i,
+            searchName: 'holder',
           ),
         );
         i++;
@@ -25514,6 +27073,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RegulatedAuthorization.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -25530,6 +27090,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RegulatedAuthorization.region',
             i,
+            searchName: 'region',
           ),
         );
         i++;
@@ -25546,6 +27107,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RegulatedAuthorization.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -25561,6 +27123,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RegulatedAuthorization.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -25579,6 +27142,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RelatedPerson.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -25594,6 +27158,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RelatedPerson.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -25609,6 +27174,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RelatedPerson.address',
             i,
+            searchName: 'address',
           ),
         );
         i++;
@@ -25626,6 +27192,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RelatedPerson.address.city',
             i,
+            searchName: 'address-city',
           ),
         );
         i++;
@@ -25643,6 +27210,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RelatedPerson.address.country',
             i,
+            searchName: 'address-country',
           ),
         );
         i++;
@@ -25660,6 +27228,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RelatedPerson.address.postalCode',
             i,
+            searchName: 'address-postalcode',
           ),
         );
         i++;
@@ -25677,6 +27246,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RelatedPerson.address.state',
             i,
+            searchName: 'address-state',
           ),
         );
         i++;
@@ -25694,6 +27264,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RelatedPerson.address.use',
             i,
+            searchName: 'address-use',
           ),
         );
         i++;
@@ -25709,6 +27280,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RelatedPerson.birthDate',
             i,
+            searchName: 'birthdate',
           ),
         );
         i++;
@@ -25726,6 +27298,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "RelatedPerson.telecom.where(system='email')",
             i,
+            searchName: 'email',
           ),
         );
         i++;
@@ -25741,6 +27314,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RelatedPerson.gender',
             i,
+            searchName: 'gender',
           ),
         );
         i++;
@@ -25758,6 +27332,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "RelatedPerson.telecom.where(system='phone')",
             i,
+            searchName: 'phone',
           ),
         );
         i++;
@@ -25773,6 +27348,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RelatedPerson.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -25788,6 +27364,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RelatedPerson.telecom',
             i,
+            searchName: 'telecom',
           ),
         );
         i++;
@@ -25803,6 +27380,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RelatedPerson.active',
             i,
+            searchName: 'active',
           ),
         );
         i++;
@@ -25820,6 +27398,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RelatedPerson.name.family',
             i,
+            searchName: 'family',
           ),
         );
         i++;
@@ -25837,6 +27416,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RelatedPerson.name.given',
             i,
+            searchName: 'given',
           ),
         );
         i++;
@@ -25853,6 +27433,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RelatedPerson.relationship',
             i,
+            searchName: 'role',
           ),
         );
         i++;
@@ -25871,6 +27452,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RequestOrchestration.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -25890,6 +27472,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RequestOrchestration.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -25905,6 +27488,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RequestOrchestration.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -25920,6 +27504,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RequestOrchestration.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -25937,6 +27522,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RequestOrchestration.action.resource',
             i,
+            searchName: 'action-resource',
           ),
         );
         i++;
@@ -25952,6 +27538,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RequestOrchestration.author',
             i,
+            searchName: 'author',
           ),
         );
         i++;
@@ -25968,6 +27555,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RequestOrchestration.authoredOn',
             i,
+            searchName: 'authored',
           ),
         );
         i++;
@@ -25983,6 +27571,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RequestOrchestration.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -25999,6 +27588,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RequestOrchestration.groupIdentifier',
             i,
+            searchName: 'group-identifier',
           ),
         );
         i++;
@@ -26015,6 +27605,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RequestOrchestration.instantiatesCanonical',
             i,
+            searchName: 'instantiates-canonical',
           ),
         );
         i++;
@@ -26031,6 +27622,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RequestOrchestration.instantiatesUri',
             i,
+            searchName: 'instantiates-uri',
           ),
         );
         i++;
@@ -26046,6 +27638,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RequestOrchestration.intent',
             i,
+            searchName: 'intent',
           ),
         );
         i++;
@@ -26065,6 +27658,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RequestOrchestration.action.participant.actor.ofType(Reference)',
             i,
+            searchName: 'participant',
           ),
         );
         i++;
@@ -26084,6 +27678,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RequestOrchestration.action.participant.actor.ofType(canonical)',
             i,
+            searchName: 'participant',
           ),
         );
         i++;
@@ -26100,6 +27695,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RequestOrchestration.priority',
             i,
+            searchName: 'priority',
           ),
         );
         i++;
@@ -26115,6 +27711,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RequestOrchestration.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -26130,6 +27727,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RequestOrchestration.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -26149,6 +27747,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Requirements.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -26164,6 +27763,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Requirements.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -26180,6 +27780,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Requirements.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -26196,6 +27797,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Requirements.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -26212,6 +27814,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Requirements.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -26227,6 +27830,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Requirements.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -26242,6 +27846,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Requirements.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -26257,6 +27862,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Requirements.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -26272,6 +27878,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Requirements.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -26287,6 +27894,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Requirements.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -26302,6 +27910,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Requirements.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -26318,6 +27927,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Requirements.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -26335,6 +27945,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Requirements.actor.reference',
             i,
+            searchName: 'actor',
           ),
         );
         i++;
@@ -26351,6 +27962,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Requirements.derivedFrom',
             i,
+            searchName: 'derived-from',
           ),
         );
         i++;
@@ -26369,6 +27981,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.classifier',
             i,
+            searchName: 'classifier',
           ),
         );
         i++;
@@ -26385,6 +27998,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.condition',
             i,
+            searchName: 'condition',
           ),
         );
         i++;
@@ -26400,6 +28014,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.period',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -26416,6 +28031,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -26432,6 +28048,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.recruitment.eligibility',
             i,
+            searchName: 'eligibility',
           ),
         );
         i++;
@@ -26449,6 +28066,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.focus.concept',
             i,
+            searchName: 'focus-code',
           ),
         );
         i++;
@@ -26466,6 +28084,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.focus.reference',
             i,
+            searchName: 'focus-reference',
           ),
         );
         i++;
@@ -26482,6 +28101,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -26498,6 +28118,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.keyword',
             i,
+            searchName: 'keyword',
           ),
         );
         i++;
@@ -26513,6 +28134,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -26530,6 +28152,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.objective.description',
             i,
+            searchName: 'objective-description',
           ),
         );
         i++;
@@ -26547,6 +28170,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.objective.type',
             i,
+            searchName: 'objective-type',
           ),
         );
         i++;
@@ -26562,6 +28186,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.partOf',
             i,
+            searchName: 'part-of',
           ),
         );
         i++;
@@ -26578,6 +28203,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.phase',
             i,
+            searchName: 'phase',
           ),
         );
         i++;
@@ -26595,6 +28221,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.progressStatus.actual',
             i,
+            searchName: 'progress-actual',
           ),
         );
         i++;
@@ -26612,6 +28239,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.progressStatus.period',
             i,
+            searchName: 'progress-period',
           ),
         );
         i++;
@@ -26629,6 +28257,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.progressStatus.state',
             i,
+            searchName: 'progress-state',
           ),
         );
         i++;
@@ -26644,6 +28273,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.protocol',
             i,
+            searchName: 'protocol',
           ),
         );
         i++;
@@ -26660,6 +28290,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.recruitment.actualNumber',
             i,
+            searchName: 'recruitment-actual',
           ),
         );
         i++;
@@ -26676,6 +28307,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.recruitment.targetNumber',
             i,
+            searchName: 'recruitment-target',
           ),
         );
         i++;
@@ -26692,6 +28324,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.region',
             i,
+            searchName: 'region',
           ),
         );
         i++;
@@ -26707,6 +28340,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.site',
             i,
+            searchName: 'site',
           ),
         );
         i++;
@@ -26722,6 +28356,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -26738,6 +28373,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.studyDesign',
             i,
+            searchName: 'study-design',
           ),
         );
         i++;
@@ -26753,6 +28389,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -26769,6 +28406,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchStudy.progressStatus',
             i,
+            searchName: 'progress-status-state-period-actual',
           ),
         );
         i++;
@@ -26787,6 +28425,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchSubject.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -26806,6 +28445,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchSubject.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -26821,6 +28461,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchSubject.period',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -26836,6 +28477,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchSubject.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -26851,6 +28493,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchSubject.study',
             i,
+            searchName: 'study',
           ),
         );
         i++;
@@ -26866,6 +28509,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchSubject.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -26883,6 +28527,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ResearchSubject.subjectState.code',
             i,
+            searchName: 'subject_state',
           ),
         );
         i++;
@@ -26901,6 +28546,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RiskAssessment.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -26920,6 +28566,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RiskAssessment.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -26935,6 +28582,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RiskAssessment.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -26950,6 +28598,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RiskAssessment.condition',
             i,
+            searchName: 'condition',
           ),
         );
         i++;
@@ -26966,6 +28615,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RiskAssessment.method',
             i,
+            searchName: 'method',
           ),
         );
         i++;
@@ -26981,6 +28631,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RiskAssessment.performer',
             i,
+            searchName: 'performer',
           ),
         );
         i++;
@@ -26998,6 +28649,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RiskAssessment.prediction.probability.ofType(decimal)',
             i,
+            searchName: 'probability',
           ),
         );
         i++;
@@ -27015,6 +28667,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RiskAssessment.prediction.qualitativeRisk',
             i,
+            searchName: 'risk',
           ),
         );
         i++;
@@ -27030,6 +28683,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'RiskAssessment.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -27047,6 +28701,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Schedule.active',
             i,
+            searchName: 'active',
           ),
         );
         i++;
@@ -27062,6 +28717,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Schedule.actor',
             i,
+            searchName: 'actor',
           ),
         );
         i++;
@@ -27078,6 +28734,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Schedule.planningHorizon',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -27094,6 +28751,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Schedule.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -27109,6 +28767,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Schedule.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -27125,6 +28784,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Schedule.serviceCategory',
             i,
+            searchName: 'service-category',
           ),
         );
         i++;
@@ -27142,6 +28802,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Schedule.serviceType.concept',
             i,
+            searchName: 'service-type',
           ),
         );
         i++;
@@ -27159,6 +28820,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Schedule.serviceType.reference',
             i,
+            searchName: 'service-type-reference',
           ),
         );
         i++;
@@ -27175,6 +28837,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Schedule.specialty',
             i,
+            searchName: 'specialty',
           ),
         );
         i++;
@@ -27194,6 +28857,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SearchParameter.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -27209,6 +28873,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SearchParameter.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -27225,6 +28890,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SearchParameter.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -27241,6 +28907,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SearchParameter.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -27257,6 +28924,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SearchParameter.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -27272,6 +28940,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SearchParameter.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -27287,6 +28956,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SearchParameter.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -27302,6 +28972,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SearchParameter.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -27317,6 +28988,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SearchParameter.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -27332,6 +29004,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SearchParameter.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -27348,6 +29021,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SearchParameter.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -27363,6 +29037,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SearchParameter.base',
             i,
+            searchName: 'base',
           ),
         );
         i++;
@@ -27378,6 +29053,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SearchParameter.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -27395,6 +29071,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SearchParameter.component.definition',
             i,
+            searchName: 'component',
           ),
         );
         i++;
@@ -27411,6 +29088,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SearchParameter.derivedFrom',
             i,
+            searchName: 'derived-from',
           ),
         );
         i++;
@@ -27426,6 +29104,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SearchParameter.target',
             i,
+            searchName: 'target',
           ),
         );
         i++;
@@ -27441,6 +29120,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SearchParameter.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -27459,6 +29139,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.identifier',
             i,
+            searchName: 'group-or-identifier',
           ),
         );
         i++;
@@ -27478,6 +29159,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -27493,6 +29175,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -27509,6 +29192,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.authoredOn',
             i,
+            searchName: 'authored',
           ),
         );
         i++;
@@ -27524,6 +29208,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -27540,6 +29225,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.bodySite',
             i,
+            searchName: 'body-site',
           ),
         );
         i++;
@@ -27556,6 +29242,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.bodyStructure',
             i,
+            searchName: 'body-structure',
           ),
         );
         i++;
@@ -27572,6 +29259,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -27588,6 +29276,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.code.concept',
             i,
+            searchName: 'code-concept',
           ),
         );
         i++;
@@ -27604,6 +29293,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.code.reference',
             i,
+            searchName: 'code-reference',
           ),
         );
         i++;
@@ -27620,6 +29310,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.requisition',
             i,
+            searchName: 'requisition',
           ),
         );
         i++;
@@ -27636,6 +29327,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.instantiatesCanonical',
             i,
+            searchName: 'instantiates-canonical',
           ),
         );
         i++;
@@ -27652,6 +29344,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.instantiatesUri',
             i,
+            searchName: 'instantiates-uri',
           ),
         );
         i++;
@@ -27667,6 +29360,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.intent',
             i,
+            searchName: 'intent',
           ),
         );
         i++;
@@ -27684,6 +29378,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.location.concept',
             i,
+            searchName: 'location-code',
           ),
         );
         i++;
@@ -27701,6 +29396,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.location.reference',
             i,
+            searchName: 'location-reference',
           ),
         );
         i++;
@@ -27717,6 +29413,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.occurrence.ofType(dateTime)',
             i,
+            searchName: 'occurrence',
           ),
         );
         i++;
@@ -27733,6 +29430,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.occurrence.ofType(Period)',
             i,
+            searchName: 'occurrence',
           ),
         );
         i++;
@@ -27749,6 +29447,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.occurrence.ofType(Timing)',
             i,
+            searchName: 'occurrence',
           ),
         );
         i++;
@@ -27764,6 +29463,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.performer',
             i,
+            searchName: 'performer',
           ),
         );
         i++;
@@ -27780,6 +29480,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.performerType',
             i,
+            searchName: 'performer-type',
           ),
         );
         i++;
@@ -27796,6 +29497,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.priority',
             i,
+            searchName: 'priority',
           ),
         );
         i++;
@@ -27811,6 +29513,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.replaces',
             i,
+            searchName: 'replaces',
           ),
         );
         i++;
@@ -27826,6 +29529,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.requester',
             i,
+            searchName: 'requester',
           ),
         );
         i++;
@@ -27841,6 +29545,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.specimen',
             i,
+            searchName: 'specimen',
           ),
         );
         i++;
@@ -27856,6 +29561,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -27871,6 +29577,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ServiceRequest.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -27889,6 +29596,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Slot.appointmentType',
             i,
+            searchName: 'appointment-type',
           ),
         );
         i++;
@@ -27905,6 +29613,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Slot.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -27920,6 +29629,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Slot.schedule',
             i,
+            searchName: 'schedule',
           ),
         );
         i++;
@@ -27936,6 +29646,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Slot.serviceCategory',
             i,
+            searchName: 'service-category',
           ),
         );
         i++;
@@ -27953,6 +29664,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Slot.serviceType.concept',
             i,
+            searchName: 'service-type',
           ),
         );
         i++;
@@ -27970,6 +29682,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Slot.serviceType.reference',
             i,
+            searchName: 'service-type-reference',
           ),
         );
         i++;
@@ -27986,6 +29699,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Slot.specialty',
             i,
+            searchName: 'specialty',
           ),
         );
         i++;
@@ -28001,6 +29715,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Slot.start',
             i,
+            searchName: 'start',
           ),
         );
         i++;
@@ -28016,6 +29731,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Slot.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -28034,6 +29750,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Specimen.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -28053,6 +29770,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Specimen.subject.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -28068,6 +29786,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Specimen.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -28084,6 +29803,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Specimen.accessionIdentifier',
             i,
+            searchName: 'accession',
           ),
         );
         i++;
@@ -28100,6 +29820,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Specimen.collection.bodySite.reference',
             i,
+            searchName: 'bodysite',
           ),
         );
         i++;
@@ -28116,6 +29837,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Specimen.collection.collected.ofType(dateTime)',
             i,
+            searchName: 'collected',
           ),
         );
         i++;
@@ -28132,6 +29854,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Specimen.collection.collected.ofType(Period)',
             i,
+            searchName: 'collected',
           ),
         );
         i++;
@@ -28148,6 +29871,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Specimen.collection.collector',
             i,
+            searchName: 'collector',
           ),
         );
         i++;
@@ -28168,6 +29892,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Specimen.container.device.where(resolve() is Device)',
             i,
+            searchName: 'container-device',
           ),
         );
         i++;
@@ -28183,6 +29908,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Specimen.parent',
             i,
+            searchName: 'parent',
           ),
         );
         i++;
@@ -28199,6 +29925,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Specimen.collection.procedure',
             i,
+            searchName: 'procedure',
           ),
         );
         i++;
@@ -28214,6 +29941,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Specimen.request',
             i,
+            searchName: 'request',
           ),
         );
         i++;
@@ -28229,6 +29957,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Specimen.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -28244,6 +29973,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Specimen.subject',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -28262,6 +29992,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SpecimenDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -28277,6 +30008,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SpecimenDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -28292,6 +30024,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SpecimenDefinition.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -28307,6 +30040,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SpecimenDefinition.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -28325,6 +30059,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SpecimenDefinition.typeTested.container.type',
             i,
+            searchName: 'container',
           ),
         );
         i++;
@@ -28341,6 +30076,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SpecimenDefinition.experimental',
             i,
+            searchName: 'experimental',
           ),
         );
         i++;
@@ -28358,6 +30094,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SpecimenDefinition.typeTested.isDerived',
             i,
+            searchName: 'is-derived',
           ),
         );
         i++;
@@ -28374,6 +30111,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SpecimenDefinition.typeCollected',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -28391,6 +30129,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SpecimenDefinition.typeTested.type',
             i,
+            searchName: 'type-tested',
           ),
         );
         i++;
@@ -28410,6 +30149,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -28425,6 +30165,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -28441,6 +30182,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -28457,6 +30199,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -28473,6 +30216,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -28488,6 +30232,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -28503,6 +30248,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -28518,6 +30264,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -28533,6 +30280,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -28548,6 +30296,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -28563,6 +30312,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -28579,6 +30329,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -28594,6 +30345,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.abstract',
             i,
+            searchName: 'abstract',
           ),
         );
         i++;
@@ -28610,6 +30362,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.baseDefinition',
             i,
+            searchName: 'base',
           ),
         );
         i++;
@@ -28628,6 +30381,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.snapshot.element.base.path',
             i,
+            searchName: 'base-path',
           ),
         );
         i++;
@@ -28646,6 +30400,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.differential.element.base.path',
             i,
+            searchName: 'base-path',
           ),
         );
         i++;
@@ -28662,6 +30417,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.derivation',
             i,
+            searchName: 'derivation',
           ),
         );
         i++;
@@ -28678,6 +30434,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.experimental',
             i,
+            searchName: 'experimental',
           ),
         );
         i++;
@@ -28695,6 +30452,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.context.expression',
             i,
+            searchName: 'ext-context-expression',
           ),
         );
         i++;
@@ -28712,6 +30470,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.context.type',
             i,
+            searchName: 'ext-context-type',
           ),
         );
         i++;
@@ -28727,6 +30486,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.keyword',
             i,
+            searchName: 'keyword',
           ),
         );
         i++;
@@ -28742,6 +30502,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.kind',
             i,
+            searchName: 'kind',
           ),
         );
         i++;
@@ -28759,6 +30520,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.snapshot.element.path',
             i,
+            searchName: 'path',
           ),
         );
         i++;
@@ -28776,6 +30538,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.differential.element.path',
             i,
+            searchName: 'path',
           ),
         );
         i++;
@@ -28791,6 +30554,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.type',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -28809,6 +30573,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.snapshot.element.binding.valueSet',
             i,
+            searchName: 'valueset',
           ),
         );
         i++;
@@ -28825,6 +30590,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureDefinition.context',
             i,
+            searchName: 'ext-context',
           ),
         );
         i++;
@@ -28844,6 +30610,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureMap.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -28859,6 +30626,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureMap.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -28875,6 +30643,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureMap.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -28891,6 +30660,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureMap.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -28907,6 +30677,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureMap.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -28922,6 +30693,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureMap.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -28937,6 +30709,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureMap.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -28952,6 +30725,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureMap.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -28967,6 +30741,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureMap.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -28982,6 +30757,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureMap.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -28997,6 +30773,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureMap.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -29013,6 +30790,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'StructureMap.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -29030,6 +30808,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Subscription.contact',
             i,
+            searchName: 'contact',
           ),
         );
         i++;
@@ -29045,6 +30824,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Subscription.content',
             i,
+            searchName: 'content-level',
           ),
         );
         i++;
@@ -29062,6 +30842,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Subscription.filterBy.event',
             i,
+            searchName: 'filter-event',
           ),
         );
         i++;
@@ -29079,6 +30860,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Subscription.filterBy.value',
             i,
+            searchName: 'filter-value',
           ),
         );
         i++;
@@ -29095,6 +30877,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Subscription.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -29110,6 +30893,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Subscription.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -29126,6 +30910,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Subscription.managingEntity',
             i,
+            searchName: 'owner',
           ),
         );
         i++;
@@ -29141,6 +30926,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Subscription.contentType',
             i,
+            searchName: 'payload',
           ),
         );
         i++;
@@ -29156,6 +30942,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Subscription.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -29171,6 +30958,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Subscription.topic',
             i,
+            searchName: 'topic',
           ),
         );
         i++;
@@ -29186,6 +30974,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Subscription.channelType',
             i,
+            searchName: 'type',
           ),
         );
         i++;
@@ -29201,6 +30990,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Subscription.endpoint',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -29218,6 +31008,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SubscriptionTopic.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -29234,6 +31025,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SubscriptionTopic.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -29249,6 +31041,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SubscriptionTopic.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -29264,6 +31057,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SubscriptionTopic.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -29279,6 +31073,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SubscriptionTopic.url',
             i,
+            searchName: 'derived-or-self',
           ),
         );
         i++;
@@ -29294,6 +31089,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SubscriptionTopic.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -29310,6 +31106,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SubscriptionTopic.derivedFrom',
             i,
+            searchName: 'derived-or-self',
           ),
         );
         i++;
@@ -29326,6 +31123,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SubscriptionTopic.effectivePeriod',
             i,
+            searchName: 'effective',
           ),
         );
         i++;
@@ -29343,6 +31141,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SubscriptionTopic.trigger.event',
             i,
+            searchName: 'event',
           ),
         );
         i++;
@@ -29360,6 +31159,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SubscriptionTopic.trigger.resource',
             i,
+            searchName: 'resource',
           ),
         );
         i++;
@@ -29377,6 +31177,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SubscriptionTopic.trigger.description',
             i,
+            searchName: 'trigger-description',
           ),
         );
         i++;
@@ -29395,6 +31196,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Substance.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -29411,6 +31213,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Substance.code.concept',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -29427,6 +31230,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Substance.code.reference',
             i,
+            searchName: 'code-reference',
           ),
         );
         i++;
@@ -29442,6 +31246,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Substance.expiry',
             i,
+            searchName: 'expiry',
           ),
         );
         i++;
@@ -29458,6 +31263,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Substance.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -29473,6 +31279,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Substance.quantity',
             i,
+            searchName: 'quantity',
           ),
         );
         i++;
@@ -29488,6 +31295,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Substance.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -29506,6 +31314,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SubstanceDefinition.classification',
             i,
+            searchName: 'classification',
           ),
         );
         i++;
@@ -29523,6 +31332,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SubstanceDefinition.code.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -29539,6 +31349,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SubstanceDefinition.domain',
             i,
+            searchName: 'domain',
           ),
         );
         i++;
@@ -29555,6 +31366,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SubstanceDefinition.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -29572,6 +31384,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SubstanceDefinition.name.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -29590,6 +31403,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SupplyDelivery.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -29605,6 +31419,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SupplyDelivery.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -29620,6 +31435,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SupplyDelivery.receiver',
             i,
+            searchName: 'receiver',
           ),
         );
         i++;
@@ -29635,6 +31451,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SupplyDelivery.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -29650,6 +31467,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SupplyDelivery.supplier',
             i,
+            searchName: 'supplier',
           ),
         );
         i++;
@@ -29668,6 +31486,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SupplyRequest.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -29683,6 +31502,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SupplyRequest.deliverFor',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -29699,6 +31519,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SupplyRequest.authoredOn',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -29715,6 +31536,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SupplyRequest.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -29730,6 +31552,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SupplyRequest.requester',
             i,
+            searchName: 'requester',
           ),
         );
         i++;
@@ -29745,6 +31568,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SupplyRequest.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -29760,6 +31584,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SupplyRequest.deliverTo',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -29775,6 +31600,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'SupplyRequest.supplier',
             i,
+            searchName: 'supplier',
           ),
         );
         i++;
@@ -29793,6 +31619,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -29812,6 +31639,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.for.where(resolve() is Patient)',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -29827,6 +31655,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -29842,6 +31671,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -29859,6 +31689,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.performer.actor',
             i,
+            searchName: 'actor',
           ),
         );
         i++;
@@ -29875,6 +31706,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.authoredOn',
             i,
+            searchName: 'authored-on',
           ),
         );
         i++;
@@ -29890,6 +31722,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.basedOn',
             i,
+            searchName: 'based-on',
           ),
         );
         i++;
@@ -29906,6 +31739,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.businessStatus',
             i,
+            searchName: 'business-status',
           ),
         );
         i++;
@@ -29921,6 +31755,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.focus',
             i,
+            searchName: 'focus',
           ),
         );
         i++;
@@ -29937,6 +31772,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.groupIdentifier',
             i,
+            searchName: 'group-identifier',
           ),
         );
         i++;
@@ -29954,6 +31790,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.input.value.ofType(Reference)',
             i,
+            searchName: 'input',
           ),
         );
         i++;
@@ -29969,6 +31806,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.intent',
             i,
+            searchName: 'intent',
           ),
         );
         i++;
@@ -29985,6 +31823,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.lastModified',
             i,
+            searchName: 'modified',
           ),
         );
         i++;
@@ -30002,6 +31841,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.output.value.ofType(Reference)',
             i,
+            searchName: 'output',
           ),
         );
         i++;
@@ -30017,6 +31857,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.owner',
             i,
+            searchName: 'owner',
           ),
         );
         i++;
@@ -30032,6 +31873,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.partOf',
             i,
+            searchName: 'part-of',
           ),
         );
         i++;
@@ -30049,6 +31891,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.requestedPerformer.concept',
             i,
+            searchName: 'performer',
           ),
         );
         i++;
@@ -30065,6 +31908,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.executionPeriod',
             i,
+            searchName: 'period',
           ),
         );
         i++;
@@ -30081,6 +31925,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.priority',
             i,
+            searchName: 'priority',
           ),
         );
         i++;
@@ -30098,6 +31943,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.requestedPerformer.reference',
             i,
+            searchName: 'requestedperformer-reference',
           ),
         );
         i++;
@@ -30113,6 +31959,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.requester',
             i,
+            searchName: 'requester',
           ),
         );
         i++;
@@ -30128,6 +31975,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -30143,6 +31991,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Task.for',
             i,
+            searchName: 'subject',
           ),
         );
         i++;
@@ -30162,6 +32011,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TerminologyCapabilities.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -30177,6 +32027,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TerminologyCapabilities.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -30193,6 +32044,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TerminologyCapabilities.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -30209,6 +32061,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TerminologyCapabilities.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -30225,6 +32078,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TerminologyCapabilities.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -30240,6 +32094,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TerminologyCapabilities.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -30255,6 +32110,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TerminologyCapabilities.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -30270,6 +32126,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TerminologyCapabilities.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -30285,6 +32142,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TerminologyCapabilities.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -30300,6 +32158,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TerminologyCapabilities.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -30315,6 +32174,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TerminologyCapabilities.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -30331,6 +32191,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TerminologyCapabilities.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -30350,6 +32211,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestPlan.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -30365,6 +32227,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestPlan.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -30381,6 +32244,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestPlan.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -30397,6 +32261,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestPlan.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -30413,6 +32278,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestPlan.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -30428,6 +32294,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestPlan.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -30443,6 +32310,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestPlan.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -30458,6 +32326,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestPlan.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -30473,6 +32342,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestPlan.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -30488,6 +32358,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestPlan.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -30503,6 +32374,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestPlan.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -30519,6 +32391,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestPlan.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -30535,6 +32408,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestPlan.category',
             i,
+            searchName: 'category',
           ),
         );
         i++;
@@ -30553,6 +32427,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestPlan.testCase.requirement.reference',
             i,
+            searchName: 'requirement',
           ),
         );
         i++;
@@ -30570,6 +32445,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestPlan.scope.artifact.ofType(canonical)',
             i,
+            searchName: 'scope-canonical',
           ),
         );
         i++;
@@ -30587,6 +32463,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestPlan.scope.artifact.ofType(uri)',
             i,
+            searchName: 'scope-uri',
           ),
         );
         i++;
@@ -30604,6 +32481,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestPlan.testCase.requirement',
             i,
+            searchName: 'requirement-key',
           ),
         );
         i++;
@@ -30622,6 +32500,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestReport.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -30637,6 +32516,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestReport.issued',
             i,
+            searchName: 'issued',
           ),
         );
         i++;
@@ -30654,6 +32534,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestReport.participant.uri',
             i,
+            searchName: 'participant',
           ),
         );
         i++;
@@ -30669,6 +32550,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestReport.result',
             i,
+            searchName: 'result',
           ),
         );
         i++;
@@ -30684,6 +32566,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestReport.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -30699,6 +32582,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestReport.tester',
             i,
+            searchName: 'tester',
           ),
         );
         i++;
@@ -30715,6 +32599,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestReport.testScript',
             i,
+            searchName: 'testscript',
           ),
         );
         i++;
@@ -30734,6 +32619,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestScript.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -30749,6 +32635,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestScript.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -30765,6 +32652,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestScript.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -30781,6 +32669,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestScript.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -30797,6 +32686,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestScript.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -30812,6 +32702,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestScript.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -30827,6 +32718,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestScript.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -30842,6 +32734,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestScript.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -30857,6 +32750,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestScript.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -30872,6 +32766,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestScript.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -30887,6 +32782,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestScript.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -30903,6 +32799,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestScript.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -30920,6 +32817,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestScript.scope.artifact',
             i,
+            searchName: 'artifact',
           ),
         );
         i++;
@@ -30937,6 +32835,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestScript.scope.conformance.ofType(CodeableConcept)',
             i,
+            searchName: 'conformance',
           ),
         );
         i++;
@@ -30954,6 +32853,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestScript.scope.phase.ofType(CodeableConcept)',
             i,
+            searchName: 'phase',
           ),
         );
         i++;
@@ -30971,6 +32871,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestScript.metadata.capability.description',
             i,
+            searchName: 'testscript-capability',
           ),
         );
         i++;
@@ -30987,6 +32888,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'TestScript.scope',
             i,
+            searchName: 'scope-artifact-phase',
           ),
         );
         i++;
@@ -31005,6 +32907,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Transport.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -31020,6 +32923,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'Transport.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -31039,6 +32943,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.useContext.code',
             i,
+            searchName: 'context-type',
           ),
         );
         i++;
@@ -31054,6 +32959,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.date',
             i,
+            searchName: 'date',
           ),
         );
         i++;
@@ -31072,6 +32978,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "ValueSet.relatedArtifact.where(type='derived-from').resource",
             i,
+            searchName: 'derived-from',
           ),
         );
         i++;
@@ -31088,6 +32995,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.description',
             i,
+            searchName: 'description',
           ),
         );
         i++;
@@ -31104,6 +33012,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.effectivePeriod',
             i,
+            searchName: 'effective',
           ),
         );
         i++;
@@ -31120,6 +33029,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -31136,6 +33046,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.jurisdiction',
             i,
+            searchName: 'jurisdiction',
           ),
         );
         i++;
@@ -31151,6 +33062,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.name',
             i,
+            searchName: 'name',
           ),
         );
         i++;
@@ -31169,6 +33081,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             "ValueSet.relatedArtifact.where(type='predecessor').resource",
             i,
+            searchName: 'predecessor',
           ),
         );
         i++;
@@ -31184,6 +33097,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.publisher',
             i,
+            searchName: 'publisher',
           ),
         );
         i++;
@@ -31199,6 +33113,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -31214,6 +33129,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.title',
             i,
+            searchName: 'title',
           ),
         );
         i++;
@@ -31230,6 +33146,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.topic',
             i,
+            searchName: 'topic',
           ),
         );
         i++;
@@ -31245,6 +33162,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.url',
             i,
+            searchName: 'url',
           ),
         );
         i++;
@@ -31260,6 +33178,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.version',
             i,
+            searchName: 'version',
           ),
         );
         i++;
@@ -31276,6 +33195,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.useContext',
             i,
+            searchName: 'context-type-value',
           ),
         );
         i++;
@@ -31293,6 +33213,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.expansion.contains.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -31311,6 +33232,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.compose.include.concept.code',
             i,
+            searchName: 'code',
           ),
         );
         i++;
@@ -31327,6 +33249,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.expansion.identifier',
             i,
+            searchName: 'expansion',
           ),
         );
         i++;
@@ -31344,6 +33267,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'ValueSet.compose.include.system',
             i,
+            searchName: 'reference',
           ),
         );
         i++;
@@ -31362,6 +33286,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'VerificationResult.attestation.communicationMethod',
             i,
+            searchName: 'attestation-method',
           ),
         );
         i++;
@@ -31378,6 +33303,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'VerificationResult.attestation.onBehalfOf',
             i,
+            searchName: 'attestation-onbehalfof',
           ),
         );
         i++;
@@ -31394,6 +33320,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'VerificationResult.attestation.who',
             i,
+            searchName: 'attestation-who',
           ),
         );
         i++;
@@ -31411,6 +33338,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'VerificationResult.primarySource.validationDate',
             i,
+            searchName: 'primarysource-date',
           ),
         );
         i++;
@@ -31428,6 +33356,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'VerificationResult.primarySource.type',
             i,
+            searchName: 'primarysource-type',
           ),
         );
         i++;
@@ -31445,6 +33374,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'VerificationResult.primarySource.who',
             i,
+            searchName: 'primarysource-who',
           ),
         );
         i++;
@@ -31460,6 +33390,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'VerificationResult.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
@@ -31476,6 +33407,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'VerificationResult.statusDate',
             i,
+            searchName: 'status-date',
           ),
         );
         i++;
@@ -31491,6 +33423,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'VerificationResult.target',
             i,
+            searchName: 'target',
           ),
         );
         i++;
@@ -31508,6 +33441,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'VerificationResult.validator.organization',
             i,
+            searchName: 'validator-organization',
           ),
         );
         i++;
@@ -31526,6 +33460,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'VisionPrescription.identifier',
             i,
+            searchName: 'identifier',
           ),
         );
         i++;
@@ -31541,6 +33476,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'VisionPrescription.patient',
             i,
+            searchName: 'patient',
           ),
         );
         i++;
@@ -31556,6 +33492,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'VisionPrescription.encounter',
             i,
+            searchName: 'encounter',
           ),
         );
         i++;
@@ -31572,6 +33509,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'VisionPrescription.dateWritten',
             i,
+            searchName: 'datewritten',
           ),
         );
         i++;
@@ -31587,6 +33525,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'VisionPrescription.prescriber',
             i,
+            searchName: 'prescriber',
           ),
         );
         i++;
@@ -31602,6 +33541,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
             lastUpdated,
             'VisionPrescription.status',
             i,
+            searchName: 'status',
           ),
         );
         i++;
