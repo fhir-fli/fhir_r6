@@ -22,7 +22,7 @@ void main() {
           'status': 'final',
           'code': {
             'coding': [
-              {'system': 'http://loinc.org', 'code': '12345-6'}
+              {'system': 'http://loinc.org', 'code': '12345-6'},
             ],
           },
         };
@@ -135,7 +135,7 @@ void main() {
                       'http://terminology.hl7.org/CodeSystem/endpoint-connection-type',
                   'code': 'hl7-fhir-rest',
                 }
-              ]
+              ],
             }
           ],
           'address': 'http://example.org/fhir',
@@ -152,8 +152,8 @@ void main() {
           'membership': 'enumerated',
           'code': {
             'coding': [
-              {'code': 'person'}
-            ]
+              {'code': 'person'},
+            ],
           },
         };
         final resource = resourceFromJson(json);

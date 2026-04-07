@@ -45,9 +45,10 @@ void main() async {
 
           for (final key in allKeys) {
             if (original[key] != serialized[key]) {
-              differences.add('  $key:');
-              differences.add('    Original:   ${original[key]}');
-              differences.add('    Serialized: ${serialized[key]}');
+              differences
+                ..add('  $key:')
+                ..add('    Original:   ${original[key]}')
+                ..add('    Serialized: ${serialized[key]}');
             }
           }
 
@@ -55,7 +56,7 @@ void main() async {
             print(differences.join('\n'));
           } else {
             print(
-                '  ${differences.length ~/ 3} fields differ (showing first 10):');
+                '  ${differences.length ~/ 3} fields differ (showing first 10):',);
             print(differences.take(30).join('\n'));
             print('  ... and ${differences.length ~/ 3 - 10} more');
           }
@@ -87,22 +88,21 @@ void main() async {
   print('Total files: ${files.length}');
   print('Parse errors: ${categories['parse_error']!.length}');
   print(
-      'Serialization mismatches: ${categories['serialization_mismatch']!.length}');
+      'Serialization mismatches: ${categories['serialization_mismatch']!.length}',);
   print('Missing required fields: ${categories['missing_required']!.length}');
   print('Other errors: ${categories['other_error']!.length}');
 
   // Write detailed report
   final report = File('./test/quarantine_analysis.txt');
-  final sink = report.openWrite();
-
-  sink.writeln('FHIR R6 Quarantine Analysis');
-  sink.writeln('Generated: ${DateTime.now()}');
-  sink.writeln('=' * 80);
-  sink.writeln();
+  final sink = report.openWrite()
+    ..writeln('FHIR R6 Quarantine Analysis')
+    ..writeln('Generated: ${DateTime.now()}')
+    ..writeln('=' * 80)
+    ..writeln();
 
   for (final category in categories.entries) {
     sink.writeln(
-        '${category.key.toUpperCase()} (${category.value.length} files):');
+        '${category.key.toUpperCase()} (${category.value.length} files):',);
     for (final file in category.value) {
       sink.writeln('  - $file');
     }
@@ -114,7 +114,7 @@ void main() async {
 }
 
 Map<String, dynamic> _flattenJson(Map<String, dynamic> json,
-    [String prefix = '']) {
+    [String prefix = '',]) {
   final result = <String, dynamic>{};
 
   for (final entry in json.entries) {

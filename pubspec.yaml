@@ -8,24 +8,24 @@ dependencies:
 dependency_overrides:
   fhir_r6:
     path: packages/fhir_r6
-  fhir_r6_path:
-    path: packages/fhir_r6_path
   fhir_r6_at_rest:
     path: packages/fhir_r6_at_rest
   fhir_r6_auth:
     path: packages/fhir_r6_auth
   fhir_r6_bulk:
     path: packages/fhir_r6_bulk
-  fhir_r6_db:
-    path: packages/fhir_r6_db
   fhir_r6_cds_hooks:
     path: packages/fhir_r6_cds_hooks
-  fhir_r6_mapping:
-    path: packages/fhir_r6_mapping
-  fhir_r6_validation:
-    path: packages/fhir_r6_validation
   fhir_r6_cql:
     path: packages/fhir_r6_cql
+  fhir_r6_db:
+    path: packages/fhir_r6_db
+  fhir_r6_mapping:
+    path: packages/fhir_r6_mapping
+  fhir_r6_path:
+    path: packages/fhir_r6_path
+  fhir_r6_validation:
+    path: packages/fhir_r6_validation
 
 dev_dependencies:
   melos: ^7.3.0

@@ -214,7 +214,7 @@ void main() {
         for (final r in resources) {
           if (r is OperationOutcome) {
             print(
-                'OperationOutcome: ${r.issue.first.diagnostics?.valueString}');
+                'OperationOutcome: ${r.issue.first.diagnostics?.valueString}',);
           } else {
             print(
               'Resource: ${r?.resourceType}, id=${(r as DomainResource?)?.id}',

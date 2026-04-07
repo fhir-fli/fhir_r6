@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:test/test.dart';
@@ -73,7 +72,7 @@ void attachmentTest() {
     });
 
     test('fromJsonString works', () {
-      final json = '{"contentType":"text/plain","title":"Test"}';
+      const json = '{"contentType":"text/plain","title":"Test"}';
       final att = Attachment.fromJsonString(json);
       expect(att.contentType?.valueString, 'text/plain');
       expect(att.title?.valueString, 'Test');

@@ -817,9 +817,7 @@ class FhirMapEngine {
           remove.add(item);
         }
       }
-      for (final x in remove) {
-        items.remove(x);
-      }
+      remove.forEach(items.remove);
     }
 
     if (src.check != null) {

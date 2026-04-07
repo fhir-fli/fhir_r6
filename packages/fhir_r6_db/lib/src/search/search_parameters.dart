@@ -36,7 +36,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
   final resourceType = resource.resourceTypeString;
   final id = resource.id.toString();
   final lastUpdated = resource.meta!.lastUpdated!.valueDateTime!.millisecondsSinceEpoch;
-  int i = 0;
+  var i = 0;
   final searchParameterLists = SearchParameterLists();
   switch (resource) {
     case fhir.Account _:
@@ -208,7 +208,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ActivityDefinition _:
       // ActivityDefinition.relatedArtifact.where(type='composed-of').resource (reference)
       i = 0;
@@ -600,7 +599,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ActorDefinition _:
       // ActorDefinition.useContext.code (token)
       i = 0;
@@ -800,7 +798,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.AdministrableProductDefinition _:
       // AdministrableProductDefinition.device (reference)
       i = 0;
@@ -941,7 +938,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
       for (final entry in resource.routeOfAdministration
               .expand((e) =>
                   e.targetSpecies ??
-                  <fhir.AdministrableProductDefinitionTargetSpecies>[])
+                  <fhir.AdministrableProductDefinitionTargetSpecies>[],)
               .map<fhir.CodeableConcept?>((e) => e.code)
               .makeIterable<fhir.CodeableConcept>() ??
           <fhir.CodeableConcept>[]) {
@@ -957,7 +954,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.AdverseEvent _:
       // AdverseEvent.identifier (token)
       i = 0;
@@ -1264,7 +1260,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.AllergyIntolerance _:
       // AllergyIntolerance.identifier (token)
       i = 0;
@@ -1541,7 +1536,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Appointment _:
       // Appointment.identifier (token)
       i = 0;
@@ -1985,7 +1979,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.AppointmentResponse _:
       // AppointmentResponse.identifier (token)
       i = 0;
@@ -2133,7 +2126,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ArtifactAssessment _:
       // ArtifactAssessment.date (date)
       i = 0;
@@ -2168,7 +2160,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.AuditEvent _:
       // AuditEvent.patient (reference)
       i = 0;
@@ -2459,7 +2450,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Basic _:
       // Basic.identifier (token)
       i = 0;
@@ -2562,7 +2552,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.BiologicallyDerivedProduct _:
       // BiologicallyDerivedProduct.biologicalSourceEvent (token)
       i = 0;
@@ -2681,7 +2670,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.BiologicallyDerivedProductDispense _:
       // BiologicallyDerivedProductDispense.identifier (token)
       i = 0;
@@ -2766,7 +2754,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.BodyStructure _:
       // BodyStructure.identifier (token)
       i = 0;
@@ -2854,7 +2841,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Bundle _:
       // SKIPPED (unsupported FHIRPath): // Bundle.entry[0].resource as Composition (resource)
       // SKIPPED (unsupported FHIRPath): i = 0;
@@ -2926,7 +2912,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.CapabilityStatement _:
       // CapabilityStatement.useContext.code (token)
       i = 0;
@@ -3198,7 +3183,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
       i = 0;
       for (final entry in resource.rest
               ?.expand(
-                  (e) => e.resource ?? <fhir.CapabilityStatementResource>[])
+                  (e) => e.resource ?? <fhir.CapabilityStatementResource>[],)
               .map<fhir.FhirCodeEnum?>((e) => e.type)
               .makeIterable<fhir.FhirCodeEnum>() ??
           <fhir.FhirCodeEnum>[]) {
@@ -3218,7 +3203,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
       i = 0;
       for (final entry in resource.rest
               ?.expand(
-                  (e) => e.resource ?? <fhir.CapabilityStatementResource>[])
+                  (e) => e.resource ?? <fhir.CapabilityStatementResource>[],)
               .map<fhir.FhirCanonical?>((e) => e.profile)
               .makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
@@ -3274,7 +3259,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
       i = 0;
       for (final entry in resource.rest
               ?.expand(
-                  (e) => e.resource ?? <fhir.CapabilityStatementResource>[])
+                  (e) => e.resource ?? <fhir.CapabilityStatementResource>[],)
               .expand((e) => e.supportedProfile ?? <fhir.FhirCanonical>[])
               .makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
@@ -3290,7 +3275,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.CarePlan _:
       // CarePlan.identifier (token)
       i = 0;
@@ -3558,7 +3542,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.CareTeam _:
       // CareTeam.identifier (token)
       i = 0;
@@ -3690,7 +3673,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ChargeItem _:
       // ChargeItem.identifier (token)
       i = 0;
@@ -4031,7 +4013,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ChargeItemDefinition _:
       // ChargeItemDefinition.useContext.code (token)
       i = 0;
@@ -4249,7 +4230,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Citation _:
       // Citation.useContext.code (token)
       i = 0;
@@ -4483,7 +4463,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Claim _:
       // Claim.identifier (token)
       i = 0;
@@ -4775,7 +4754,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ClaimResponse _:
       // ClaimResponse.identifier (token)
       i = 0;
@@ -4956,7 +4934,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ClinicalAssessment _:
       // ClinicalAssessment.date (date)
       i = 0;
@@ -5162,7 +5139,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ClinicalUseDefinition _:
       // ClinicalUseDefinition.contraindication.diseaseSymptomProcedure.concept (token)
       i = 0;
@@ -5374,7 +5350,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.CodeSystem _:
       // CodeSystem.useContext.code (token)
       i = 0;
@@ -5716,7 +5691,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Communication _:
       // Communication.identifier (token)
       i = 0;
@@ -6004,7 +5978,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.CommunicationRequest _:
       // CommunicationRequest.identifier (token)
       i = 0;
@@ -6307,7 +6280,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.CompartmentDefinition _:
       // CompartmentDefinition.useContext.code (token)
       i = 0;
@@ -6491,7 +6463,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Composition _:
       // Composition.identifier (token)
       i = 0;
@@ -6854,7 +6825,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ConceptMap _:
       // ConceptMap.useContext.code (token)
       i = 0;
@@ -7238,7 +7208,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Condition _:
       // Condition.identifier (token)
       i = 0;
@@ -7662,7 +7631,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ConditionDefinition _:
       // ConditionDefinition.useContext.code (token)
       i = 0;
@@ -7862,7 +7830,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Consent _:
       // Consent.identifier (token)
       i = 0;
@@ -8177,7 +8144,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Contract _:
       // Contract.identifier (token)
       i = 0;
@@ -8346,7 +8312,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Coverage _:
       // Coverage.identifier (token)
       i = 0;
@@ -8549,7 +8514,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.CoverageEligibilityRequest _:
       // CoverageEligibilityRequest.identifier (token)
       i = 0;
@@ -8664,7 +8628,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.CoverageEligibilityResponse _:
       // CoverageEligibilityResponse.identifier (token)
       i = 0;
@@ -8812,7 +8775,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.DetectedIssue _:
       // DetectedIssue.identifier (token)
       i = 0;
@@ -8982,7 +8944,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Device _:
       // Device.biologicalSourceEvent (token)
       i = 0;
@@ -9386,7 +9347,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.DeviceAlert _:
       // DeviceAlert.signal.annunciator.concept (token)
       i = 0;
@@ -9666,7 +9626,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.DeviceAssociation _:
       // DeviceAssociation.period (date)
       i = 0;
@@ -9785,7 +9744,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.DeviceDefinition _:
       // DeviceDefinition.identifier (token)
       i = 0;
@@ -10085,7 +10043,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.DeviceDispense _:
       // DeviceDispense.device.concept (token)
       i = 0;
@@ -10173,7 +10130,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.DeviceMetric _:
       // DeviceMetric.category (token)
       i = 0;
@@ -10241,7 +10197,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.DeviceRequest _:
       // DeviceRequest.identifier (token)
       i = 0;
@@ -10544,7 +10499,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.DeviceUsage _:
       // DeviceUsage.identifier (token)
       i = 0;
@@ -10612,7 +10566,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.DiagnosticReport _:
       // DiagnosticReport.identifier (token)
       i = 0;
@@ -10949,7 +10902,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.DocumentReference _:
       // DocumentReference.identifier (token)
       i = 0;
@@ -11502,7 +11454,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Encounter _:
       // Encounter.identifier (token)
       i = 0;
@@ -12007,7 +11958,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.EncounterHistory _:
       // EncounterHistory.encounter (reference)
       i = 0;
@@ -12094,7 +12044,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.FhirEndpoint _:
       // Endpoint.connectionType (token)
       i = 0;
@@ -12197,7 +12146,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.EnrollmentRequest _:
       // EnrollmentRequest.identifier (token)
       i = 0;
@@ -12248,7 +12196,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.EnrollmentResponse _:
       // EnrollmentResponse.identifier (token)
       i = 0;
@@ -12299,7 +12246,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.EpisodeOfCare _:
       // EpisodeOfCare.identifier (token)
       i = 0;
@@ -12532,7 +12478,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.EventDefinition _:
       // EventDefinition.relatedArtifact.where(type='composed-of').resource (reference)
       i = 0;
@@ -12861,7 +12806,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Evidence _:
       // Evidence.useContext.code (token)
       i = 0;
@@ -13028,7 +12972,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.EvidenceVariable _:
       // EvidenceVariable.useContext.code (token)
       i = 0;
@@ -13211,7 +13154,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ExampleScenario _:
       // ExampleScenario.useContext.code (token)
       i = 0;
@@ -13378,7 +13320,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ExplanationOfBenefit _:
       // ExplanationOfBenefit.identifier (token)
       i = 0;
@@ -13657,7 +13598,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
       for (final entry in resource.item
               ?.expand((e) => e.detail ?? <fhir.ExplanationOfBenefitDetail>[])
               .expand(
-                  (e) => e.subDetail ?? <fhir.ExplanationOfBenefitSubDetail>[])
+                  (e) => e.subDetail ?? <fhir.ExplanationOfBenefitSubDetail>[],)
               .expand((e) => e.udi ?? <fhir.Reference>[])
               .makeIterable<fhir.Reference>() ??
           <fhir.Reference>[]) {
@@ -13673,7 +13614,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.FamilyMemberHistory _:
       // FamilyMemberHistory.identifier (token)
       i = 0;
@@ -13791,7 +13731,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Flag _:
       // Flag.identifier (token)
       i = 0;
@@ -13927,7 +13866,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.FormularyItem _:
       // FormularyItem.code (token)
       i = 0;
@@ -13962,7 +13900,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.GenomicStudy _:
       // GenomicStudy.analysis.focus (reference)
       i = 0;
@@ -14051,7 +13988,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Goal _:
       // Goal.identifier (token)
       i = 0;
@@ -14208,7 +14144,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.GraphDefinition _:
       // GraphDefinition.useContext.code (token)
       i = 0;
@@ -14408,7 +14343,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.FhirGroup _:
       // Group.identifier (token)
       i = 0;
@@ -14612,7 +14546,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.GuidanceResponse _:
       // GuidanceResponse.identifier (token)
       i = 0;
@@ -14700,7 +14633,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.HealthcareService _:
       // HealthcareService.active (token)
       i = 0;
@@ -14951,7 +14883,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ImagingSelection _:
       // ImagingSelection.identifier (token)
       i = 0;
@@ -15156,7 +15087,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ImagingStudy _:
       // ImagingStudy.identifier (token)
       i = 0;
@@ -15492,7 +15422,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Immunization _:
       // Immunization.identifier (token)
       i = 0;
@@ -15769,7 +15698,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ImmunizationEvaluation _:
       // ImmunizationEvaluation.identifier (token)
       i = 0;
@@ -15887,7 +15815,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ImmunizationRecommendation _:
       // ImmunizationRecommendation.identifier (token)
       i = 0;
@@ -15942,7 +15869,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
       i = 0;
       for (final entry in resource.recommendation
               .expand(
-                  (e) => e.supportingPatientInformation ?? <fhir.Reference>[])
+                  (e) => e.supportingPatientInformation ?? <fhir.Reference>[],)
               .makeIterable<fhir.Reference>() ??
           <fhir.Reference>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -16029,7 +15956,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ImplementationGuide _:
       // ImplementationGuide.useContext.code (token)
       i = 0;
@@ -16300,7 +16226,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Ingredient _:
       // Ingredient.for (reference)
       i = 0;
@@ -16548,7 +16473,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.InsurancePlan _:
       // InsurancePlan.coverageArea (reference)
       i = 0;
@@ -16632,7 +16556,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.InsuranceProduct _:
       // InsuranceProduct.administeredBy (reference)
       i = 0;
@@ -16877,7 +16800,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.InventoryItem _:
       // InventoryItem.code (token)
       i = 0;
@@ -16945,7 +16867,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.InventoryReport _:
       // InventoryReport.identifier (token)
       i = 0;
@@ -17020,7 +16941,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Invoice _:
       // Invoice.identifier (token)
       i = 0;
@@ -17239,7 +17159,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Library _:
       // Library.relatedArtifact.where(type='composed-of').resource (reference)
       i = 0;
@@ -17632,7 +17551,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Linkage _:
       // Linkage.author (reference)
       i = 0;
@@ -17668,7 +17586,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.FhirList _:
       // List.identifier (token)
       i = 0;
@@ -17871,7 +17788,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Location _:
       // Location.address (string)
       i = 0;
@@ -18180,7 +18096,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ManufacturedItemDefinition _:
       // ManufacturedItemDefinition.manufacturedDoseForm (token)
       i = 0;
@@ -18265,7 +18180,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Measure _:
       // Measure.relatedArtifact.where(type='composed-of').resource (reference)
       i = 0;
@@ -18641,7 +18555,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
       // SKIPPED (unsupported FHIRPath): );
       // SKIPPED (unsupported FHIRPath): i++;
       // SKIPPED (unsupported FHIRPath): }
-      break;
     case fhir.MeasureReport _:
       // MeasureReport.identifier (token)
       i = 0;
@@ -18810,7 +18723,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Medication _:
       // Medication.identifier (token)
       i = 0;
@@ -18967,7 +18879,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.MedicationAdministration _:
       // MedicationAdministration.identifier (token)
       i = 0;
@@ -19247,7 +19158,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.MedicationDispense _:
       // MedicationDispense.identifier (token)
       i = 0;
@@ -19536,7 +19446,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.MedicationKnowledge _:
       // MedicationKnowledge.identifier (token)
       i = 0;
@@ -19785,7 +19694,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.MedicationRequest _:
       // MedicationRequest.identifier (token)
       i = 0;
@@ -20075,7 +19983,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.MedicationStatement _:
       // MedicationStatement.identifier (token)
       i = 0;
@@ -20281,7 +20188,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.MedicinalProductDefinition _:
       // MedicinalProductDefinition.characteristic.value.ofType(Quantity) (token)
       i = 0;
@@ -20444,7 +20350,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
       i = 0;
       for (final entry in resource.name
               .expand(
-                  (e) => e.usage ?? <fhir.MedicinalProductDefinitionUsage>[])
+                  (e) => e.usage ?? <fhir.MedicinalProductDefinitionUsage>[],)
               .map<fhir.CodeableConcept?>((e) => e.language)
               .makeIterable<fhir.CodeableConcept>() ??
           <fhir.CodeableConcept>[]) {
@@ -20510,7 +20416,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.MessageDefinition _:
       // MessageDefinition.useContext.code (token)
       i = 0;
@@ -20761,7 +20666,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.MessageHeader _:
       // MessageHeader.response.code (token)
       i = 0;
@@ -20916,7 +20820,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.MolecularDefinition _:
       // MolecularDefinition.identifier (token)
       i = 0;
@@ -21001,7 +20904,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.MolecularSequence _:
       // MolecularSequence.identifier (token)
       i = 0;
@@ -21036,7 +20938,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.NamingSystem _:
       // NamingSystem.useContext.code (token)
       i = 0;
@@ -21431,7 +21332,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.NutritionIntake _:
       // NutritionIntake.identifier (token)
       i = 0;
@@ -21587,7 +21487,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.NutritionOrder _:
       // NutritionOrder.identifier (token)
       i = 0;
@@ -21795,7 +21694,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.NutritionProduct _:
       // NutritionProduct.code (token)
       i = 0;
@@ -21903,7 +21801,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Observation _:
       // Observation.identifier (token)
       i = 0;
@@ -22585,7 +22482,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ObservationDefinition _:
       // ObservationDefinition.identifier (token)
       i = 0;
@@ -22719,7 +22615,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.OperationDefinition _:
       // OperationDefinition.useContext.code (token)
       i = 0;
@@ -23049,7 +22944,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Organization _:
       // Organization.active (token)
       i = 0;
@@ -23295,7 +23189,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.OrganizationAffiliation _:
       // OrganizationAffiliation.active (token)
       i = 0;
@@ -23534,7 +23427,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.PackagedProductDefinition _:
       // PackagedProductDefinition.packaging.containedItem.item.reference (reference)
       i = 0;
@@ -23621,7 +23513,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Patient _:
       // Patient.active (token)
       i = 0;
@@ -23765,7 +23656,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
       i = 0;
       for (final entry in [
         fhir.FhirBoolean(resource.deceasedX != null &&
-            resource.deceasedBoolean?.valueBoolean != false)
+            (resource.deceasedBoolean?.valueBoolean ?? true),),
       ]) {
         searchParameterLists.tokenParams.addAll(
           entry.toTokenSearchParameter(
@@ -23986,7 +23877,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.PaymentNotice _:
       // PaymentNotice.created (date)
       i = 0;
@@ -24102,7 +23992,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.PaymentReconciliation _:
       // PaymentReconciliation.allocation.account (reference)
       i = 0;
@@ -24271,7 +24160,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Permission _:
       // Permission.identifier (token)
       i = 0;
@@ -24306,7 +24194,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Person _:
       // Person.identifier (token)
       i = 0;
@@ -24555,7 +24442,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
       i = 0;
       for (final entry in [
         fhir.FhirBoolean(resource.deceasedX != null &&
-            resource.deceasedBoolean?.valueBoolean != false)
+            (resource.deceasedBoolean?.valueBoolean ?? true),),
       ]) {
         searchParameterLists.tokenParams.addAll(
           entry.toTokenSearchParameter(
@@ -24680,7 +24567,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.PersonalRelationship _:
       // PersonalRelationship.source.where(resolve() is Patient) (reference)
       i = 0;
@@ -24771,7 +24657,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.PlanDefinition _:
       // PlanDefinition.relatedArtifact.where(type='composed-of').resource (reference)
       i = 0;
@@ -25199,7 +25084,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Practitioner _:
       // Practitioner.address (string)
       i = 0;
@@ -25465,7 +25349,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
       i = 0;
       for (final entry in [
         fhir.FhirBoolean(resource.deceasedX != null &&
-            resource.deceasedBoolean?.valueBoolean != false)
+            (resource.deceasedBoolean?.valueBoolean ?? true),),
       ]) {
         searchParameterLists.tokenParams.addAll(
           entry.toTokenSearchParameter(
@@ -25567,7 +25451,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.PractitionerRole _:
       // PractitionerRole.contact.telecom.where(system='email') (token)
       i = 0;
@@ -25840,7 +25723,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Procedure _:
       // Procedure.identifier (token)
       i = 0;
@@ -26129,7 +26011,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Provenance _:
       // Provenance.patient (reference)
       i = 0;
@@ -26334,7 +26215,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Questionnaire _:
       // Questionnaire.useContext.code (token)
       i = 0;
@@ -26619,7 +26499,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.QuestionnaireResponse _:
       // QuestionnaireResponse.identifier (token)
       i = 0;
@@ -27009,7 +26888,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.RegulatedAuthorization _:
       // RegulatedAuthorization.case.identifier (token)
       i = 0;
@@ -27128,7 +27006,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.RelatedPerson _:
       // RelatedPerson.identifier (token)
       i = 0;
@@ -27438,7 +27315,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.RequestOrchestration _:
       // RequestOrchestration.identifier (token)
       i = 0;
@@ -27647,7 +27523,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
       i = 0;
       for (final entry in resource.action
               ?.expand((e) =>
-                  e.participant ?? <fhir.RequestOrchestrationParticipant>[])
+                  e.participant ?? <fhir.RequestOrchestrationParticipant>[],)
               .map<fhir.Reference?>((e) => e.actorReference)
               .makeIterable<fhir.Reference>() ??
           <fhir.Reference>[]) {
@@ -27667,7 +27543,7 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
       i = 0;
       for (final entry in resource.action
               ?.expand((e) =>
-                  e.participant ?? <fhir.RequestOrchestrationParticipant>[])
+                  e.participant ?? <fhir.RequestOrchestrationParticipant>[],)
               .map<fhir.FhirCanonical?>((e) => e.actorCanonical)
               .makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
@@ -27732,7 +27608,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Requirements _:
       // Requirements.useContext.code (token)
       i = 0;
@@ -27967,7 +27842,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ResearchStudy _:
       // ResearchStudy.classifier (token)
       i = 0;
@@ -28411,7 +28285,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ResearchSubject _:
       // ResearchSubject.identifier (token)
       i = 0;
@@ -28532,7 +28405,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.RiskAssessment _:
       // RiskAssessment.identifier (token)
       i = 0;
@@ -28688,7 +28560,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Schedule _:
       // Schedule.active (token)
       i = 0;
@@ -28842,7 +28713,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.SearchParameter _:
       // SearchParameter.useContext.code (token)
       i = 0;
@@ -29125,7 +28995,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ServiceRequest _:
       // ServiceRequest.identifier (token)
       i = 0;
@@ -29582,7 +29451,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Slot _:
       // Slot.appointmentType (token)
       i = 0;
@@ -29736,7 +29604,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Specimen _:
       // Specimen.identifier (token)
       i = 0;
@@ -29978,7 +29845,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.SpecimenDefinition _:
       // SpecimenDefinition.identifier (token)
       i = 0;
@@ -30134,7 +30000,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.StructureDefinition _:
       // StructureDefinition.useContext.code (token)
       i = 0;
@@ -30595,7 +30460,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.StructureMap _:
       // StructureMap.useContext.code (token)
       i = 0;
@@ -30795,7 +30659,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Subscription _:
       // Subscription.contact (token)
       i = 0;
@@ -30995,7 +30858,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.SubscriptionTopic _:
       // SubscriptionTopic.date (date)
       i = 0;
@@ -31182,7 +31044,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Substance _:
       // Substance.category (token)
       i = 0;
@@ -31300,7 +31161,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.SubstanceDefinition _:
       // SubstanceDefinition.classification (token)
       i = 0;
@@ -31389,7 +31249,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.SupplyDelivery _:
       // SupplyDelivery.identifier (token)
       i = 0;
@@ -31472,7 +31331,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.SupplyRequest _:
       // SupplyRequest.identifier (token)
       i = 0;
@@ -31605,7 +31463,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Task _:
       // Task.identifier (token)
       i = 0;
@@ -31996,7 +31853,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.TerminologyCapabilities _:
       // TerminologyCapabilities.useContext.code (token)
       i = 0;
@@ -32196,7 +32052,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.TestPlan _:
       // TestPlan.useContext.code (token)
       i = 0;
@@ -32486,7 +32341,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.TestReport _:
       // TestReport.identifier (token)
       i = 0;
@@ -32604,7 +32458,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.TestScript _:
       // TestScript.useContext.code (token)
       i = 0;
@@ -32893,7 +32746,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.Transport _:
       // Transport.identifier (token)
       i = 0;
@@ -32928,7 +32780,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.ValueSet _:
       // ValueSet.useContext.code (token)
       i = 0;
@@ -33272,7 +33123,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.VerificationResult _:
       // VerificationResult.attestation.communicationMethod (token)
       i = 0;
@@ -33446,7 +33296,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
     case fhir.VisionPrescription _:
       // VisionPrescription.identifier (token)
       i = 0;
@@ -33546,7 +33395,6 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
         );
         i++;
       }
-      break;
   }
   return searchParameterLists;
 }

@@ -12,11 +12,11 @@ void main() {
   }
 
   final errorLogFile = File('./test/error_log.txt');
-  final errorLog = errorLogFile.openWrite();
-  errorLog.writeln('FHIR R6 Resource Test Error Log');
-  errorLog.writeln('Generated: ${DateTime.now()}');
-  errorLog.writeln('=' * 80);
-  errorLog.writeln();
+  final errorLog = errorLogFile.openWrite()
+    ..writeln('FHIR R6 Resource Test Error Log')
+    ..writeln('Generated: ${DateTime.now()}')
+    ..writeln('=' * 80)
+    ..writeln();
 
   tearDownAll(errorLog.close);
 
@@ -49,13 +49,14 @@ void main() {
             }
           } catch (e, stackTrace) {
             // Log the error
-            errorLog.writeln('FILE: ${file.path}');
-            errorLog.writeln('TEST: JSON Validation');
-            errorLog.writeln('ERROR: $e');
-            errorLog.writeln('STACK TRACE:');
-            errorLog.writeln(stackTrace);
-            errorLog.writeln('-' * 80);
-            errorLog.writeln();
+            errorLog
+              ..writeln('FILE: ${file.path}')
+              ..writeln('TEST: JSON Validation')
+              ..writeln('ERROR: $e')
+              ..writeln('STACK TRACE:')
+              ..writeln(stackTrace)
+              ..writeln('-' * 80)
+              ..writeln();
 
             // Move file to quarantine
             final fileName = file.path.split('/').last;
@@ -101,13 +102,14 @@ void main() {
             }
           } catch (e, stackTrace) {
             // Log the error
-            errorLog.writeln('FILE: ${file.path}');
-            errorLog.writeln('TEST: YAML Validation');
-            errorLog.writeln('ERROR: $e');
-            errorLog.writeln('STACK TRACE:');
-            errorLog.writeln(stackTrace);
-            errorLog.writeln('-' * 80);
-            errorLog.writeln();
+            errorLog
+              ..writeln('FILE: ${file.path}')
+              ..writeln('TEST: YAML Validation')
+              ..writeln('ERROR: $e')
+              ..writeln('STACK TRACE:')
+              ..writeln(stackTrace)
+              ..writeln('-' * 80)
+              ..writeln();
 
             // Move file to quarantine (if not already moved by JSON test)
             final fileName = file.path.split('/').last;

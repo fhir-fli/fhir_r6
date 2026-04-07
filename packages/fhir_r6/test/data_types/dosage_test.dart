@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:test/test.dart';
@@ -88,7 +87,7 @@ void dosageTest() {
     });
 
     test('fromJsonString works', () {
-      final json = '{"text":"Once daily","sequence":1}';
+      const json = '{"text":"Once daily","sequence":1}';
       final dosage = Dosage.fromJsonString(json);
       expect(dosage.text?.valueString, 'Once daily');
       expect(dosage.sequence?.valueNum, 1);

@@ -39,6 +39,7 @@ class SearchClinicalUseDefinition extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [ClinicalUseDefinition]
   // @override - different signature (token vs date), not overriding
+  @override
   SearchClinicalUseDefinition identifier(
     FhirString value, {
     FhirUri? system,
@@ -67,6 +68,7 @@ class SearchClinicalUseDefinition extends SearchResource {
   /// a token search for [status] in the resource
   /// [ClinicalUseDefinition]
   // @override - different signature (token vs date), not overriding
+  @override
   SearchClinicalUseDefinition status(
     FhirString value, {
     FhirUri? system,

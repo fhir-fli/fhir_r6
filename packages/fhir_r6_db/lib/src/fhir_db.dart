@@ -33,7 +33,7 @@ class FhirDb extends _$FhirDb {
   /// - Native: `NativeDatabase(File(path), setup: ...)`
   /// - Tests: `NativeDatabase.memory()`
   /// - Web: `WasmDatabase` or `WebDatabase`
-  FhirDb(super.executor);
+  FhirDb(super.e);
 
   @override
   int get schemaVersion => 4;
@@ -47,12 +47,12 @@ class FhirDb extends _$FhirDb {
           if (from < 2) {
             // Make referenceValue nullable for identifier-only references
             await customStatement(
-              'CREATE TABLE reference_search_parameters_new ('
+              'CREATE TABLE reference_search_parameters_new ( '
               'resource_type TEXT NOT NULL, '
               'id TEXT NOT NULL, '
               'last_updated INTEGER NOT NULL, '
               'search_path TEXT NOT NULL, '
-              'search_name TEXT NOT NULL DEFAULT \'\', '
+              "search_name TEXT NOT NULL DEFAULT '', "
               'param_index INTEGER NOT NULL, '
               'reference_value TEXT, '
               'reference_resource_type TEXT, '
@@ -61,7 +61,7 @@ class FhirDb extends _$FhirDb {
               'reference_base_url TEXT, '
               'identifier_system TEXT, '
               'identifier_value TEXT, '
-              'PRIMARY KEY (resource_type, id, search_path, param_index)'
+              'PRIMARY KEY (resource_type, id, search_path, param_index) '
               ')',
             );
             await customStatement(
@@ -78,25 +78,25 @@ class FhirDb extends _$FhirDb {
           }
           if (from < 3) {
             await customStatement(
-              'CREATE TABLE resources_history_new ('
+              'CREATE TABLE resources_history_new ( '
               'resource_type TEXT NOT NULL, '
               'id TEXT NOT NULL, '
               'version_id TEXT NOT NULL, '
               'resource TEXT NOT NULL, '
               'last_updated INTEGER NOT NULL, '
-              'PRIMARY KEY (resource_type, id, version_id)'
+              'PRIMARY KEY (resource_type, id, version_id) '
               ')',
             );
             await customStatement(
-              "INSERT OR IGNORE INTO resources_history_new "
-              "(resource_type, id, version_id, resource, last_updated) "
-              "SELECT resource_type, id, "
-              "COALESCE("
-              "json_extract(resource, '\$.meta.versionId'), "
-              "CAST(last_updated AS TEXT)"
-              "), "
-              "resource, last_updated "
-              "FROM resources_history",
+              'INSERT OR IGNORE INTO resources_history_new '
+              '(resource_type, id, version_id, resource, last_updated) '
+              'SELECT resource_type, id, '
+              'COALESCE('
+              r"json_extract(resource, '$.meta.versionId'), "
+              'CAST(last_updated AS TEXT) '
+              '), '
+              'resource, last_updated '
+              'FROM resources_history',
             );
             await customStatement('DROP TABLE resources_history');
             await customStatement(
