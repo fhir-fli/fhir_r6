@@ -81490,7 +81490,7 @@ final fhirmodelinfo401withmetadata = ModelInfo.fromJson({
           "description": "The name(s) associated with the practitioner",
           "definition": "The name(s) associated with the practitioner.",
           "comment":
-              "The selection of the use property should ensure that there is a single usual name specified, and others use the nickname (alias), old, or other values as appropriate.  \\r\\rIn general, select the value to be used in the ResourceReference.display based on this:\\r\\r1. There is more than 1 name\\r2. Use = usual\\r3. Period is current to the date of the usage\\r4. Use = official\\r5. Other order as decided by internal business rules."
+              "The selection of the use property should ensure that there is a single usual name specified, and others use the nickname (alias), old, or other values as appropriate.  \\r\\rIn general, select the value to be used in the ResourceReference.display based on this:\\r\\r1. There is more than 1 name\\r2. Use = usual\\r3. Period is current to the date of the usage\\r6. Use = official\\r5. Other order as decided by internal business rules."
         },
         {
           "name": "telecom",

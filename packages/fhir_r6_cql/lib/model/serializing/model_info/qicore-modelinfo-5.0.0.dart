@@ -160,7 +160,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Business identifiers assigned to this adverse event by the performer or other systems which remain constant as the resource is updated and propagates from server to server.",
           "comment":
-              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
+              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
         },
         {
           "name": "actuality",
@@ -478,7 +478,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Business identifiers assigned to this AllergyIntolerance by the performer or other systems which remain constant as the resource is updated and propagates from server to server.",
           "comment":
-              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
+              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
         },
         {
           "name": "clinicalStatus",
@@ -493,7 +493,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "description": "active | inactive | resolved",
           "definition": "The clinical status of the allergy or intolerance.",
           "comment":
-              "Refer to [discussion](http://hl7.org/fhir/R4/extensibility.html#Special-Case) if clincalStatus is missing data.\\\\nThe data type is CodeableConcept because clinicalStatus has some clinical judgment involved, such that there might need to be more specificity than the required FHIR value set allows. For example, a SNOMED coding might allow for additional specificity.",
+              "Refer to [discussion](http://hl7.org/fhir/R6/extensibility.html#Special-Case) if clincalStatus is missing data.\\\\nThe data type is CodeableConcept because clinicalStatus has some clinical judgment involved, such that there might need to be more specificity than the required FHIR value set allows. For example, a SNOMED coding might allow for additional specificity.",
           "mustSupport": true
         },
         {
@@ -546,7 +546,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "description": "food | medication | environment | biologic",
           "definition": "Category of the identified substance.",
           "comment":
-              "This data element has been included because it is currently being captured in some clinical systems. This data can be derived from the substance where coding systems are used, and is effectively redundant in that situation.  When searching on category, consider the implications of AllergyIntolerance resources without a category.  For example, when searching on category = medication, medication allergies that don't have a category valued will not be returned.  Refer to [search](http://hl7.org/fhir/R4/search.html) for more information on how to search category with a :missing modifier to get allergies that don't have a category.  Additionally, category should be used with caution because category can be subjective based on the sender.",
+              "This data element has been included because it is currently being captured in some clinical systems. This data can be derived from the substance where coding systems are used, and is effectively redundant in that situation.  When searching on category, consider the implications of AllergyIntolerance resources without a category.  For example, when searching on category = medication, medication allergies that don't have a category valued will not be returned.  Refer to [search](http://hl7.org/fhir/R6/search.html) for more information on how to search category with a :missing modifier to get allergies that don't have a category.  Additionally, category should be used with caution because category can be subjective based on the sender.",
           "mustSupport": true
         },
         {
@@ -1110,7 +1110,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Business identifiers assigned to this care plan by the performer or other systems which remain constant as the resource is updated and propagates from server to server.",
           "comment":
-              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
+              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
         },
         {
           "name": "instantiatesCanonical",
@@ -1396,7 +1396,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The details of the proposed activity represented in a specific resource.",
           "comment":
-              "Standard extension exists ([resource-pertainsToGoal](http://hl7.org/fhir/R4/extension-resource-pertainstogoal.html)) that allows goals to be referenced from any of the referenced resources in CarePlan.activity.reference.  \\rThe goal should be visible when the resource referenced by CarePlan.activity.reference is viewed independently from the CarePlan.  Requests that are pointed to by a CarePlan using this element should *not* point to this CarePlan using the \"basedOn\" element.  i.e. Requests that are part of a CarePlan are not \"based on\" the CarePlan."
+              "Standard extension exists ([resource-pertainsToGoal](http://hl7.org/fhir/R6/extension-resource-pertainstogoal.html)) that allows goals to be referenced from any of the referenced resources in CarePlan.activity.reference.  \\rThe goal should be visible when the resource referenced by CarePlan.activity.reference is viewed independently from the CarePlan.  Requests that are pointed to by a CarePlan using this element should *not* point to this CarePlan using the \"basedOn\" element.  i.e. Requests that are part of a CarePlan are not \"based on\" the CarePlan."
         },
         {
           "name": "detail",
@@ -1654,7 +1654,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Business identifiers assigned to this care team by the performer or other systems which remain constant as the resource is updated and propagates from server to server.",
           "comment":
-              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
+              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
         },
         {
           "name": "status",
@@ -4338,7 +4338,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Business identifiers assigned to this communication by the performer or other systems which remain constant as the resource is updated and propagates from server to server.",
           "comment":
-              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
+              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
         },
         {
           "name": "instantiatesCanonical",
@@ -4644,7 +4644,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Business identifiers assigned to this communication by the performer or other systems which remain constant as the resource is updated and propagates from server to server.",
           "comment":
-              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
+              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
         },
         {
           "name": "instantiatesCanonical",
@@ -4918,7 +4918,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Business identifiers assigned to this communication request by the performer or other systems which remain constant as the resource is updated and propagates from server to server.",
           "comment":
-              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
+              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
         },
         {
           "name": "basedOn",
@@ -5312,7 +5312,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Business identifiers assigned to this condition by the performer or other systems which remain constant as the resource is updated and propagates from server to server.",
           "comment":
-              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
+              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
         },
         {
           "name": "clinicalStatus",
@@ -5431,7 +5431,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The anatomical location where this condition manifests itself.",
           "comment":
-              "Only used if not implicit in code found in Condition.code. If the use case requires attributes from the BodySite resource (e.g. to identify and track separately) then use the standard extension [bodySite](http://hl7.org/fhir/R4/extension-bodysite.html).  May be a summary code, or a reference to a very precise definition of the location, or both.",
+              "Only used if not implicit in code found in Condition.code. If the use case requires attributes from the BodySite resource (e.g. to identify and track separately) then use the standard extension [bodySite](http://hl7.org/fhir/R6/extension-bodysite.html).  May be a summary code, or a reference to a very precise definition of the location, or both.",
           "mustSupport": true
         },
         {
@@ -5604,7 +5604,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Business identifiers assigned to this condition by the performer or other systems which remain constant as the resource is updated and propagates from server to server.",
           "comment":
-              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
+              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
         },
         {
           "name": "clinicalStatus",
@@ -5739,7 +5739,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The anatomical location where this condition manifests itself.",
           "comment":
-              "Only used if not implicit in code found in Condition.code. If the use case requires attributes from the BodySite resource (e.g. to identify and track separately) then use the standard extension [bodySite](http://hl7.org/fhir/R4/extension-bodysite.html).  May be a summary code, or a reference to a very precise definition of the location, or both.",
+              "Only used if not implicit in code found in Condition.code. If the use case requires attributes from the BodySite resource (e.g. to identify and track separately) then use the standard extension [bodySite](http://hl7.org/fhir/R6/extension-bodysite.html).  May be a summary code, or a reference to a very precise definition of the location, or both.",
           "mustSupport": true
         },
         {
@@ -7065,7 +7065,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The URL pointing to a FHIR-defined protocol, guideline, orderset or other definition that is adhered to in whole or in part by this DeviceRequest.",
           "comment":
-              "Note: This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
+              "Note: This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
         },
         {
           "name": "instantiatesUri",
@@ -7336,7 +7336,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The URL pointing to a FHIR-defined protocol, guideline, orderset or other definition that is adhered to in whole or in part by this DeviceRequest.",
           "comment":
-              "Note: This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
+              "Note: This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
         },
         {
           "name": "instantiatesUri",
@@ -8018,7 +8018,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "elementTypeSpecifier": {"type": "ListTypeSpecifier"},
           "description": "Observations",
           "definition":
-              "[Observations](http://hl7.org/fhir/R4/observation.html)  that are part of this diagnostic report.",
+              "[Observations](http://hl7.org/fhir/R6/observation.html)  that are part of this diagnostic report.",
           "comment": "Observations can contain observations.",
           "mustSupport": true
         },
@@ -8272,7 +8272,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "elementTypeSpecifier": {"type": "ListTypeSpecifier"},
           "description": "Observations",
           "definition":
-              "[Observations](http://hl7.org/fhir/R4/observation.html)  that are part of this diagnostic report.",
+              "[Observations](http://hl7.org/fhir/R6/observation.html)  that are part of this diagnostic report.",
           "comment": "Observations can contain observations.",
           "mustSupport": true
         },
@@ -9566,7 +9566,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Business identifiers assigned to this family member history by the performer or other systems which remain constant as the resource is updated and propagates from server to server.",
           "comment":
-              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
+              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
         },
         {
           "name": "instantiatesCanonical",
@@ -9922,7 +9922,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Business identifiers assigned to this flag by the performer or other systems which remain constant as the resource is updated and propagates from server to server.",
           "comment":
-              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
+              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
         },
         {
           "name": "status",
@@ -10049,7 +10049,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Business identifiers assigned to this goal by the performer or other systems which remain constant as the resource is updated and propagates from server to server.",
           "comment":
-              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
+              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
         },
         {
           "name": "lifecycleStatus",
@@ -10511,7 +10511,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Identifiers for the ImagingStudy such as DICOM Study Instance UID, and Accession Number.",
           "comment":
-              "See discussion under [Imaging Study Implementation Notes](http://hl7.org/fhir/R4/imagingstudy.html#notes) for encoding of DICOM Study Instance UID. Accession Number should use ACSN Identifier type."
+              "See discussion under [Imaging Study Implementation Notes](http://hl7.org/fhir/R6/imagingstudy.html#notes) for encoding of DICOM Study Instance UID. Accession Number should use ACSN Identifier type."
         },
         {
           "name": "status",
@@ -12199,7 +12199,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "A larger event of which this particular Observation is a component or step.  For example,  an observation as part of a procedure.",
           "comment":
-              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below for guidance on referencing another Observation."
+              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below for guidance on referencing another Observation."
         },
         {
           "name": "status",
@@ -12286,7 +12286,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The actual focus of an observation when it is not the patient of record representing something or someone associated with the patient such as a spouse, parent, fetus, or donor. For example, fetus observations in a mother's record.  The focus of an observation could also be an existing condition,  an intervention, the subject's diet,  another observation of the subject,  or a body structure such as tumor or implanted device.   An example use case would be using the Observation resource to capture whether the mother is trained to change her child's tracheostomy tube. In this example, the child is the patient of record and the mother is the focus.",
           "comment":
-              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R4/extension-observation-focuscode.html)."
+              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R6/extension-observation-focuscode.html)."
         },
         {
           "name": "encounter",
@@ -12320,7 +12320,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "For lab tests this is the specimen collection date.  For Ask at Order Entry Questions (AOE)'s this is the date the question was asked.",
           "comment":
-              "At least a date should be present unless this observation is a historical report.  For recording imprecise or \"fuzzy\" times (For example, a blood glucose measurement taken \"after breakfast\") use the [Timing](http://hl7.org/fhir/R4/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events.",
+              "At least a date should be present unless this observation is a historical report.  For recording imprecise or \"fuzzy\" times (For example, a blood glucose measurement taken \"after breakfast\") use the [Timing](http://hl7.org/fhir/R6/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events.",
           "mustSupport": true
         },
         {
@@ -12331,7 +12331,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The date and time this version of the observation was made available to providers, typically after the results have been reviewed and verified.",
           "comment":
-              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R4/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again."
+              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R6/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again."
         },
         {
           "name": "performer",
@@ -12386,7 +12386,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The Laboratory result value.  If a coded value,  the valueCodeableConcept.code **SHOULD** be selected from [SNOMED CT](http://hl7.org/fhir/ValueSet/uslab-obs-codedresults) if the concept exists. If a numeric value, valueQuantity.code **SHALL** be selected from [UCUM](http://unitsofmeasure.org).  A FHIR [UCUM Codes value set](http://hl7.org/fhir/STU3/valueset-ucum-units.html) that defines all UCUM codes is in the FHIR specification.",
           "comment":
-              "An observation may have; 1)  a single value here, 2)  both a value and a set of related or component values,  or 3)  only a set of related or component values. If a value is present, the datatype for this element should be determined by Observation.code.  A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R4/observation.html#notes) below.",
+              "An observation may have; 1)  a single value here, 2)  both a value and a set of related or component values,  or 3)  only a set of related or component values. If a value is present, the datatype for this element should be determined by Observation.code.  A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R6/observation.html#notes) below.",
           "mustSupport": true
         },
         {
@@ -12446,7 +12446,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Indicates the site on the subject's body where the observation was made (i.e. the target site).",
           "comment":
-              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R4/extension-bodysite.html)."
+              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R6/extension-bodysite.html)."
         },
         {
           "name": "method",
@@ -12497,7 +12497,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.",
           "comment":
-              "When using this element, an observation will typically have either a value or a set of related resources, although both may be present in some cases.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below.  Note that a system may calculate results from [QuestionnaireResponse](http://hl7.org/fhir/R4/questionnaireresponse.html)  into a final score and represent the score as an Observation."
+              "When using this element, an observation will typically have either a value or a set of related resources, although both may be present in some cases.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below.  Note that a system may calculate results from [QuestionnaireResponse](http://hl7.org/fhir/R6/questionnaireresponse.html)  into a final score and represent the score as an Observation."
         },
         {
           "name": "derivedFrom",
@@ -12506,7 +12506,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The target resource that represents a measurement from which this observation value is derived. For example, a calculated anion gap or a fetal measurement based on an ultrasound image.",
           "comment":
-              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below."
+              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below."
         },
         {
           "name": "component",
@@ -12515,7 +12515,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Some observations have multiple component observations.  These component observations are expressed as separate code value pairs that share the same attributes.  Examples include systolic and diastolic component observations for blood pressure measurement and multiple component observations for genetics observations.",
           "comment":
-              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R4/observation.html#notes) below.",
+              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R6/observation.html#notes) below.",
           "mustSupport": true
         }
       ]
@@ -13255,7 +13255,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "A coded specification of the anatomic site where the medication first entered the body.  For example, \"left arm\".",
           "comment":
-              "If the use case requires attributes from the BodySite resource (e.g. to identify and track separately) then use the standard extension [bodySite](http://hl7.org/fhir/R4/extension-bodysite.html).  May be a summary code, or a reference to a very precise definition of the location, or both."
+              "If the use case requires attributes from the BodySite resource (e.g. to identify and track separately) then use the standard extension [bodySite](http://hl7.org/fhir/R6/extension-bodysite.html).  May be a summary code, or a reference to a very precise definition of the location, or both."
         },
         {
           "name": "route",
@@ -15634,7 +15634,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "A larger event of which this particular Observation is a component or step.  For example,  an observation as part of a procedure.",
           "comment":
-              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below for guidance on referencing another Observation."
+              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below for guidance on referencing another Observation."
         },
         {
           "name": "status",
@@ -15705,7 +15705,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The actual focus of an observation when it is not the patient of record representing something or someone associated with the patient such as a spouse, parent, fetus, or donor. For example, fetus observations in a mother's record.  The focus of an observation could also be an existing condition,  an intervention, the subject's diet,  another observation of the subject,  or a body structure such as tumor or implanted device.   An example use case would be using the Observation resource to capture whether the mother is trained to change her child's tracheostomy tube. In this example, the child is the patient of record and the mother is the focus.",
           "comment":
-              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R4/extension-observation-focuscode.html)."
+              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R6/extension-observation-focuscode.html)."
         },
         {
           "name": "encounter",
@@ -15740,7 +15740,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the \"physiologically relevant time\". This is usually either the time of the procedure or of specimen collection, but very often the source of the date/time is not known, only the date/time itself.",
           "comment":
-              "At least a date should be present unless this observation is a historical report.  For recording imprecise or \"fuzzy\" times (For example, a blood glucose measurement taken \"after breakfast\") use the [Timing](http://hl7.org/fhir/R4/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events.",
+              "At least a date should be present unless this observation is a historical report.  For recording imprecise or \"fuzzy\" times (For example, a blood glucose measurement taken \"after breakfast\") use the [Timing](http://hl7.org/fhir/R6/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events.",
           "mustSupport": true
         },
         {
@@ -15751,7 +15751,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The date and time this version of the observation was made available to providers, typically after the results have been reviewed and verified.",
           "comment":
-              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R4/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again.",
+              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R6/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again.",
           "mustSupport": true
         },
         {
@@ -15815,7 +15815,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The information determined as a result of making the observation, if the information has a simple value.",
           "comment":
-              "An observation may have; 1)  a single value here, 2)  both a value and a set of related or component values,  or 3)  only a set of related or component values. If a value is present, the datatype for this element should be determined by Observation.code.  A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R4/observation.html#notes) below.",
+              "An observation may have; 1)  a single value here, 2)  both a value and a set of related or component values,  or 3)  only a set of related or component values. If a value is present, the datatype for this element should be determined by Observation.code.  A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R6/observation.html#notes) below.",
           "mustSupport": true
         },
         {
@@ -15876,7 +15876,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Indicates the site on the subject's body where the observation was made (i.e. the target site).",
           "comment":
-              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R4/extension-bodysite.html).",
+              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R6/extension-bodysite.html).",
           "mustSupport": true
         },
         {
@@ -15932,7 +15932,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.",
           "comment":
-              "When using this element, an observation will typically have either a value or a set of related resources, although both may be present in some cases.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below.  Note that a system may calculate results from [QuestionnaireResponse](http://hl7.org/fhir/R4/questionnaireresponse.html)  into a final score and represent the score as an Observation."
+              "When using this element, an observation will typically have either a value or a set of related resources, although both may be present in some cases.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below.  Note that a system may calculate results from [QuestionnaireResponse](http://hl7.org/fhir/R6/questionnaireresponse.html)  into a final score and represent the score as an Observation."
         },
         {
           "name": "derivedFrom",
@@ -15941,7 +15941,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The target resource that represents a measurement from which this observation value is derived. For example, a calculated anion gap or a fetal measurement based on an ultrasound image.",
           "comment":
-              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below.",
+              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below.",
           "mustSupport": false
         },
         {
@@ -15951,7 +15951,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Some observations have multiple component observations.  These component observations are expressed as separate code value pairs that share the same attributes.  Examples include systolic and diastolic component observations for blood pressure measurement and multiple component observations for genetics observations.",
           "comment":
-              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R4/observation.html#notes) below.",
+              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R6/observation.html#notes) below.",
           "mustSupport": true
         }
       ],
@@ -16035,7 +16035,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The information determined as a result of making the observation, if the information has a simple value.",
           "comment":
-              "Used when observation has a set of component observations. An observation may have both a value (e.g. an  Apgar score)  and component observations (the observations from which the Apgar score was derived). If a value is present, the datatype for this element should be determined by Observation.code. A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R4/observation.html#notes) below."
+              "Used when observation has a set of component observations. An observation may have both a value (e.g. an  Apgar score)  and component observations (the observations from which the Apgar score was derived). If a value is present, the datatype for this element should be determined by Observation.code. A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R6/observation.html#notes) below."
         },
         {
           "name": "dataAbsentReason",
@@ -16225,7 +16225,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "A larger event of which this particular Observation is a component or step.  For example,  an observation as part of a procedure.",
           "comment":
-              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below for guidance on referencing another Observation."
+              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below for guidance on referencing another Observation."
         },
         {
           "name": "status",
@@ -16308,7 +16308,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The actual focus of an observation when it is not the patient of record representing something or someone associated with the patient such as a spouse, parent, fetus, or donor. For example, fetus observations in a mother's record.  The focus of an observation could also be an existing condition,  an intervention, the subject's diet,  another observation of the subject,  or a body structure such as tumor or implanted device.   An example use case would be using the Observation resource to capture whether the mother is trained to change her child's tracheostomy tube. In this example, the child is the patient of record and the mother is the focus.",
           "comment":
-              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R4/extension-observation-focuscode.html)."
+              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R6/extension-observation-focuscode.html)."
         },
         {
           "name": "encounter",
@@ -16343,7 +16343,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the \"physiologically relevant time\". This is usually either the time of the procedure or of specimen collection, but very often the source of the date/time is not known, only the date/time itself.",
           "comment":
-              "At least a date should be present unless this observation is a historical report.  For recording imprecise or \"fuzzy\" times (For example, a blood glucose measurement taken \"after breakfast\") use the [Timing](http://hl7.org/fhir/R4/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events."
+              "At least a date should be present unless this observation is a historical report.  For recording imprecise or \"fuzzy\" times (For example, a blood glucose measurement taken \"after breakfast\") use the [Timing](http://hl7.org/fhir/R6/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events."
         },
         {
           "name": "issued",
@@ -16353,7 +16353,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The date and time this version of the observation was made available to providers, typically after the results have been reviewed and verified.",
           "comment":
-              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R4/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again.",
+              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R6/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again.",
           "mustSupport": true
         },
         {
@@ -16411,7 +16411,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The information determined as a result of making the observation, if the information has a simple value.",
           "comment":
-              "An observation may have; 1)  a single value here, 2)  both a value and a set of related or component values,  or 3)  only a set of related or component values. If a value is present, the datatype for this element should be determined by Observation.code.  A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R4/observation.html#notes) below."
+              "An observation may have; 1)  a single value here, 2)  both a value and a set of related or component values,  or 3)  only a set of related or component values. If a value is present, the datatype for this element should be determined by Observation.code.  A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R6/observation.html#notes) below."
         },
         {
           "name": "dataAbsentReason",
@@ -16469,7 +16469,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Indicates the site on the subject's body where the observation was made (i.e. the target site).",
           "comment":
-              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R4/extension-bodysite.html)."
+              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R6/extension-bodysite.html)."
         },
         {
           "name": "method",
@@ -16520,7 +16520,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.",
           "comment":
-              "When using this element, an observation will typically have either a value or a set of related resources, although both may be present in some cases.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below.  Note that a system may calculate results from [QuestionnaireResponse](http://hl7.org/fhir/R4/questionnaireresponse.html)  into a final score and represent the score as an Observation."
+              "When using this element, an observation will typically have either a value or a set of related resources, although both may be present in some cases.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below.  Note that a system may calculate results from [QuestionnaireResponse](http://hl7.org/fhir/R6/questionnaireresponse.html)  into a final score and represent the score as an Observation."
         },
         {
           "name": "derivedFrom",
@@ -16529,7 +16529,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The target resource that represents a measurement from which this observation value is derived. For example, a calculated anion gap or a fetal measurement based on an ultrasound image.",
           "comment":
-              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below."
+              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below."
         },
         {
           "name": "component",
@@ -16538,7 +16538,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Some observations have multiple component observations.  These component observations are expressed as separate code value pairs that share the same attributes.  Examples include systolic and diastolic component observations for blood pressure measurement and multiple component observations for genetics observations.",
           "comment":
-              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R4/observation.html#notes) below."
+              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R6/observation.html#notes) below."
         }
       ]
     },
@@ -16574,7 +16574,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "A larger event of which this particular Observation is a component or step.  For example,  an observation as part of a procedure.",
           "comment":
-              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below for guidance on referencing another Observation."
+              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below for guidance on referencing another Observation."
         },
         {
           "name": "status",
@@ -16661,7 +16661,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The actual focus of an observation when it is not the patient of record representing something or someone associated with the patient such as a spouse, parent, fetus, or donor. For example, fetus observations in a mother's record.  The focus of an observation could also be an existing condition,  an intervention, the subject's diet,  another observation of the subject,  or a body structure such as tumor or implanted device.   An example use case would be using the Observation resource to capture whether the mother is trained to change her child's tracheostomy tube. In this example, the child is the patient of record and the mother is the focus.",
           "comment":
-              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R4/extension-observation-focuscode.html)."
+              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R6/extension-observation-focuscode.html)."
         },
         {
           "name": "encounter",
@@ -16695,7 +16695,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the \"physiologically relevant time\". This is usually either the time of the procedure or of specimen collection, but very often the source of the date/time is not known, only the date/time itself.",
           "comment":
-              "At least a date should be present unless this observation is a historical report.  For recording imprecise or \"fuzzy\" times (For example, a blood glucose measurement taken \"after breakfast\") use the [Timing](http://hl7.org/fhir/R4/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events.",
+              "At least a date should be present unless this observation is a historical report.  For recording imprecise or \"fuzzy\" times (For example, a blood glucose measurement taken \"after breakfast\") use the [Timing](http://hl7.org/fhir/R6/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events.",
           "mustSupport": true
         },
         {
@@ -16706,7 +16706,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The date and time this version of the observation was made available to providers, typically after the results have been reviewed and verified.",
           "comment":
-              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R4/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again."
+              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R6/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again."
         },
         {
           "name": "performer",
@@ -16761,7 +16761,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The information determined as a result of making the observation, if the information has a simple value.",
           "comment":
-              "An observation may have; 1)  a single value here, 2)  both a value and a set of related or component values,  or 3)  only a set of related or component values. If a value is present, the datatype for this element should be determined by Observation.code.  A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R4/observation.html#notes) below.",
+              "An observation may have; 1)  a single value here, 2)  both a value and a set of related or component values,  or 3)  only a set of related or component values. If a value is present, the datatype for this element should be determined by Observation.code.  A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R6/observation.html#notes) below.",
           "mustSupport": true
         },
         {
@@ -16822,7 +16822,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Indicates the site on the subject's body where the observation was made (i.e. the target site).",
           "comment":
-              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R4/extension-bodysite.html)."
+              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R6/extension-bodysite.html)."
         },
         {
           "name": "method",
@@ -16873,7 +16873,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.",
           "comment":
-              "When using this element, an observation will typically have either a value or a set of related resources, although both may be present in some cases.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below.  Note that a system may calculate results from [QuestionnaireResponse](http://hl7.org/fhir/R4/questionnaireresponse.html)  into a final score and represent the score as an Observation."
+              "When using this element, an observation will typically have either a value or a set of related resources, although both may be present in some cases.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below.  Note that a system may calculate results from [QuestionnaireResponse](http://hl7.org/fhir/R6/questionnaireresponse.html)  into a final score and represent the score as an Observation."
         },
         {
           "name": "derivedFrom",
@@ -16882,7 +16882,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The target resource that represents a measurement from which this observation value is derived. For example, a calculated anion gap or a fetal measurement based on an ultrasound image.",
           "comment":
-              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below."
+              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below."
         },
         {
           "name": "component",
@@ -16891,7 +16891,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Some observations have multiple component observations.  These component observations are expressed as separate code value pairs that share the same attributes.  Examples include systolic and diastolic component observations for blood pressure measurement and multiple component observations for genetics observations.",
           "comment":
-              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R4/observation.html#notes) below.",
+              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R6/observation.html#notes) below.",
           "mustSupport": true
         }
       ]
@@ -16928,7 +16928,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "A larger event of which this particular Observation is a component or step.  For example,  an observation as part of a procedure.",
           "comment":
-              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below for guidance on referencing another Observation."
+              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below for guidance on referencing another Observation."
         },
         {
           "name": "status",
@@ -17015,7 +17015,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The actual focus of an observation when it is not the patient of record representing something or someone associated with the patient such as a spouse, parent, fetus, or donor. For example, fetus observations in a mother's record.  The focus of an observation could also be an existing condition,  an intervention, the subject's diet,  another observation of the subject,  or a body structure such as tumor or implanted device.   An example use case would be using the Observation resource to capture whether the mother is trained to change her child's tracheostomy tube. In this example, the child is the patient of record and the mother is the focus.",
           "comment":
-              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R4/extension-observation-focuscode.html)."
+              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R6/extension-observation-focuscode.html)."
         },
         {
           "name": "encounter",
@@ -17050,7 +17050,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the \"physiologically relevant time\". This is usually either the time of the procedure or of specimen collection, but very often the source of the date/time is not known, only the date/time itself.",
           "comment":
-              "At least a date should be present unless this observation is a historical report.  For recording imprecise or \"fuzzy\" times (For example, a blood glucose measurement taken \"after breakfast\") use the [Timing](http://hl7.org/fhir/R4/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events.",
+              "At least a date should be present unless this observation is a historical report.  For recording imprecise or \"fuzzy\" times (For example, a blood glucose measurement taken \"after breakfast\") use the [Timing](http://hl7.org/fhir/R6/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events.",
           "mustSupport": true
         },
         {
@@ -17061,7 +17061,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The date and time this version of the observation was made available to providers, typically after the results have been reviewed and verified.",
           "comment":
-              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R4/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again."
+              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R6/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again."
         },
         {
           "name": "performer",
@@ -17118,7 +17118,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The information determined as a result of making the observation, if the information has a simple value.",
           "comment":
-              "An observation may have; 1)  a single value here, 2)  both a value and a set of related or component values,  or 3)  only a set of related or component values. If a value is present, the datatype for this element should be determined by Observation.code.  A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R4/observation.html#notes) below.",
+              "An observation may have; 1)  a single value here, 2)  both a value and a set of related or component values,  or 3)  only a set of related or component values. If a value is present, the datatype for this element should be determined by Observation.code.  A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R6/observation.html#notes) below.",
           "mustSupport": true
         },
         {
@@ -17179,7 +17179,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Indicates the site on the subject's body where the observation was made (i.e. the target site).",
           "comment":
-              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R4/extension-bodysite.html).",
+              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R6/extension-bodysite.html).",
           "mustSupport": true
         },
         {
@@ -17232,7 +17232,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.",
           "comment":
-              "When using this element, an observation will typically have either a value or a set of related resources, although both may be present in some cases.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below.  Note that a system may calculate results from [QuestionnaireResponse](http://hl7.org/fhir/R4/questionnaireresponse.html)  into a final score and represent the score as an Observation."
+              "When using this element, an observation will typically have either a value or a set of related resources, although both may be present in some cases.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below.  Note that a system may calculate results from [QuestionnaireResponse](http://hl7.org/fhir/R6/questionnaireresponse.html)  into a final score and represent the score as an Observation."
         },
         {
           "name": "derivedFrom",
@@ -17241,7 +17241,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The target resource that represents a measurement from which this observation value is derived. For example, a calculated anion gap or a fetal measurement based on an ultrasound image.",
           "comment":
-              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below."
+              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below."
         },
         {
           "name": "component",
@@ -17250,7 +17250,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Some observations have multiple component observations.  These component observations are expressed as separate code value pairs that share the same attributes.  Examples include systolic and diastolic component observations for blood pressure measurement and multiple component observations for genetics observations.",
           "comment":
-              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R4/observation.html#notes) below."
+              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R6/observation.html#notes) below."
         }
       ]
     },
@@ -17293,7 +17293,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "A larger event of which this particular Observation is a component or step.  For example,  an observation as part of a procedure.",
           "comment":
-              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below for guidance on referencing another Observation."
+              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below for guidance on referencing another Observation."
         },
         {
           "name": "status",
@@ -17380,7 +17380,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The actual focus of an observation when it is not the patient of record representing something or someone associated with the patient such as a spouse, parent, fetus, or donor. For example, fetus observations in a mother's record.  The focus of an observation could also be an existing condition,  an intervention, the subject's diet,  another observation of the subject,  or a body structure such as tumor or implanted device.   An example use case would be using the Observation resource to capture whether the mother is trained to change her child's tracheostomy tube. In this example, the child is the patient of record and the mother is the focus.",
           "comment":
-              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R4/extension-observation-focuscode.html)."
+              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R6/extension-observation-focuscode.html)."
         },
         {
           "name": "encounter",
@@ -17425,7 +17425,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The date and time this version of the observation was made available to providers, typically after the results have been reviewed and verified.",
           "comment":
-              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R4/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again."
+              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R6/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again."
         },
         {
           "name": "performer",
@@ -17544,7 +17544,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Indicates the site on the subject's body where the observation was made (i.e. the target site).",
           "comment":
-              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R4/extension-bodysite.html)."
+              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R6/extension-bodysite.html)."
         },
         {
           "name": "method",
@@ -17605,7 +17605,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Observations or QuestionnaireResponses from which this observation value is derived.",
           "comment":
-              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below.",
+              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below.",
           "mustSupport": true
         },
         {
@@ -17615,7 +17615,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Some observations have multiple component observations.  These component observations are expressed as separate code value pairs that share the same attributes.  Examples include systolic and diastolic component observations for blood pressure measurement and multiple component observations for genetics observations.",
           "comment":
-              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R4/observation.html#notes) below."
+              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R6/observation.html#notes) below."
         }
       ]
     },
@@ -18442,7 +18442,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "description": "The name(s) associated with the practitioner",
           "definition": "The name(s) associated with the practitioner.",
           "comment":
-              "The selection of the use property should ensure that there is a single usual name specified, and others use the nickname (alias), old, or other values as appropriate.  \\r\\rIn general, select the value to be used in the ResourceReference.display based on this:\\r\\r1. There is more than 1 name\\r2. Use = usual\\r3. Period is current to the date of the usage\\r4. Use = official\\r5. Other order as decided by internal business rules.",
+              "The selection of the use property should ensure that there is a single usual name specified, and others use the nickname (alias), old, or other values as appropriate.  \\r\\rIn general, select the value to be used in the ResourceReference.display based on this:\\r\\r1. There is more than 1 name\\r2. Use = usual\\r3. Period is current to the date of the usage\\r6. Use = official\\r5. Other order as decided by internal business rules.",
           "mustSupport": true
         },
         {
@@ -18851,7 +18851,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Business identifiers assigned to this procedure by the performer or other systems which remain constant as the resource is updated and is propagated from server to server.",
           "comment":
-              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and Person resource instances might share the same social insurance number."
+              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and Person resource instances might share the same social insurance number."
         },
         {
           "name": "instantiatesCanonical",
@@ -19069,7 +19069,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Detailed and structured anatomical location information. Multiple locations are allowed - e.g. multiple punch biopsies of a lesion.",
           "comment":
-              "If the use case requires attributes from the BodySite resource (e.g. to identify and track separately) then use the standard extension [procedure-targetbodystructure](http://hl7.org/fhir/R4/extension-procedure-targetbodystructure.html).",
+              "If the use case requires attributes from the BodySite resource (e.g. to identify and track separately) then use the standard extension [procedure-targetbodystructure](http://hl7.org/fhir/R6/extension-procedure-targetbodystructure.html).",
           "mustSupport": true
         },
         {
@@ -19288,7 +19288,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Business identifiers assigned to this procedure by the performer or other systems which remain constant as the resource is updated and is propagated from server to server.",
           "comment":
-              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and Person resource instances might share the same social insurance number."
+              "This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and Person resource instances might share the same social insurance number."
         },
         {
           "name": "instantiatesCanonical",
@@ -19515,7 +19515,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Detailed and structured anatomical location information. Multiple locations are allowed - e.g. multiple punch biopsies of a lesion.",
           "comment":
-              "If the use case requires attributes from the BodySite resource (e.g. to identify and track separately) then use the standard extension [procedure-targetbodystructure](http://hl7.org/fhir/R4/extension-procedure-targetbodystructure.html)."
+              "If the use case requires attributes from the BodySite resource (e.g. to identify and track separately) then use the standard extension [procedure-targetbodystructure](http://hl7.org/fhir/R6/extension-procedure-targetbodystructure.html)."
         },
         {
           "name": "outcome",
@@ -20489,9 +20489,9 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "target": "%value.value",
           "description": "ElementDefinition - details for the item",
           "definition":
-              "A reference to an [ElementDefinition](http://hl7.org/fhir/R4/elementdefinition.html) that provides the details for the item.",
+              "A reference to an [ElementDefinition](http://hl7.org/fhir/R6/elementdefinition.html) that provides the details for the item.",
           "comment":
-              "The ElementDefinition must be in a [StructureDefinition](http://hl7.org/fhir/R4/structuredefinition.html#), and must have a fragment identifier that identifies the specific data element by its id (Element.id). E.g. http://hl7.org/fhir/StructureDefinition/Observation#Observation.value[x].\\\\n\\\\nThere is no need for this element if the item pointed to by the linkId has a definition listed."
+              "The ElementDefinition must be in a [StructureDefinition](http://hl7.org/fhir/R6/structuredefinition.html#), and must have a fragment identifier that identifies the specific data element by its id (Element.id). E.g. http://hl7.org/fhir/StructureDefinition/Observation#Observation.value[x].\\\\n\\\\nThere is no need for this element if the item pointed to by the linkId has a definition listed."
         },
         {
           "name": "text",
@@ -20635,7 +20635,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "A numeric value that allows the comparison (less than, greater than) or other numerical \\\\nmanipulation of a concept (e.g. Adding up components of a score). Scores are usually a whole number, but occasionally decimals are encountered in scores.",
           "comment":
-              "Scores are commonly encountered in various clinical assessment scales. Assigning a value to a concept should generally be done in a formal code system that defines the value, or in an applicable value set for the concept, but some concepts do not have a formal definition (or are not even represented as a concept formally, especially in [Questionnaires](http://hl7.org/fhir/R4/questionnaire.html), \\\\nso this extension is allowed to appear ouside those preferred contexts.  Scores may even be assigned arbitrarily during use (hence, on Coding). The value may be constrained to an integer in some contexts of use. Todo: Scoring algorithms may also be defined directly, but how this is done is not yet defined.",
+              "Scores are commonly encountered in various clinical assessment scales. Assigning a value to a concept should generally be done in a formal code system that defines the value, or in an applicable value set for the concept, but some concepts do not have a formal definition (or are not even represented as a concept formally, especially in [Questionnaires](http://hl7.org/fhir/R6/questionnaire.html), \\\\nso this extension is allowed to appear ouside those preferred contexts.  Scores may even be assigned arbitrarily during use (hence, on Coding). The value may be constrained to an integer in some contexts of use. Todo: Scoring algorithms may also be defined directly, but how this is done is not yet defined.",
           "mustSupport": false
         }
       ]
@@ -21203,7 +21203,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The URL pointing to a FHIR-defined protocol, guideline, orderset or other definition that is adhered to in whole or in part by this ServiceRequest.",
           "comment":
-              "Note: This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
+              "Note: This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
         },
         {
           "name": "instantiatesUri",
@@ -21251,7 +21251,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
               "draft | active | on-hold | revoked | completed | entered-in-error | unknown",
           "definition": "The status of the order.",
           "comment":
-              "The status is generally fully in the control of the requester - they determine whether the order is draft or active and, after it has been activated, competed, cancelled or suspended. States relating to the activities of the performer are reflected on either the corresponding event (see [Event Pattern](event.html) for general discussion) or using the [Task](http://hl7.org/fhir/R4/task.html) resource.",
+              "The status is generally fully in the control of the requester - they determine whether the order is draft or active and, after it has been activated, competed, cancelled or suspended. States relating to the activities of the performer are reflected on either the corresponding event (see [Event Pattern](event.html) for general discussion) or using the [Task](http://hl7.org/fhir/R6/task.html) resource.",
           "mustSupport": true
         },
         {
@@ -21504,7 +21504,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The desired performer for doing the requested service.  For example, the surgeon, dermatopathologist, endoscopist, etc.",
           "comment":
-              "If multiple performers are present, it is interpreted as a list of *alternative* performers without any preference regardless of order.  If order of preference is needed use the [request-performerOrder extension](http://hl7.org/fhir/R4/extension-request-performerorder.html).  Use CareTeam to represent a group of performers (for example, Practitioner A *and* Practitioner B).",
+              "If multiple performers are present, it is interpreted as a list of *alternative* performers without any preference regardless of order.  If order of preference is needed use the [request-performerOrder extension](http://hl7.org/fhir/R6/extension-request-performerorder.html).  Use CareTeam to represent a group of performers (for example, Practitioner A *and* Practitioner B).",
           "mustSupport": false
         },
         {
@@ -21578,7 +21578,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "One or more specimens that the laboratory procedure will use.",
           "comment":
-              "Many diagnostic procedures need a specimen, but the request itself is not actually about the specimen. This element is for when the diagnostic is requested on already existing specimens and the request points to the specimen it applies to.    Conversely, if the request is entered first with an unknown specimen, then the [Specimen](http://hl7.org/fhir/R4/specimen.html) resource points to the ServiceRequest."
+              "Many diagnostic procedures need a specimen, but the request itself is not actually about the specimen. This element is for when the diagnostic is requested on already existing specimens and the request points to the specimen it applies to.    Conversely, if the request is entered first with an unknown specimen, then the [Specimen](http://hl7.org/fhir/R6/specimen.html) resource points to the ServiceRequest."
         },
         {
           "name": "bodySite",
@@ -21595,7 +21595,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Anatomic location where the procedure should be performed. This is the target site.",
           "comment":
-              "Only used if not implicit in the code found in ServiceRequest.code.  If the use case requires BodySite to be handled as a separate resource instead of an inline coded element (e.g. to identify and track separately)  then use the standard extension [procedure-targetBodyStructure](http://hl7.org/fhir/R4/extension-procedure-targetbodystructure.html).",
+              "Only used if not implicit in the code found in ServiceRequest.code.  If the use case requires BodySite to be handled as a separate resource instead of an inline coded element (e.g. to identify and track separately)  then use the standard extension [procedure-targetBodyStructure](http://hl7.org/fhir/R6/extension-procedure-targetbodystructure.html).",
           "mustSupport": true
         },
         {
@@ -21680,7 +21680,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The URL pointing to a FHIR-defined protocol, guideline, orderset or other definition that is adhered to in whole or in part by this ServiceRequest.",
           "comment":
-              "Note: This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R4/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
+              "Note: This is a business identifier, not a resource identifier (see [discussion](http://hl7.org/fhir/R6/resource.html#identifiers)).  It is best practice for the identifier to only appear on a single resource instance, however business practices may occasionally dictate that multiple resource instances with the same identifier can exist - possibly even with different resource types.  For example, multiple Patient and a Person resource instance might share the same social insurance number."
         },
         {
           "name": "instantiatesUri",
@@ -21728,7 +21728,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
               "draft​ | active​ | on-hold​ | revoked​ | entered-in-error​ | unknown​",
           "definition": "The status of the order.",
           "comment":
-              "The status is generally fully in the control of the requester - they determine whether the order is draft or active and, after it has been activated, competed, cancelled or suspended. States relating to the activities of the performer are reflected on either the corresponding event (see [Event Pattern](event.html) for general discussion) or using the [Task](http://hl7.org/fhir/R4/task.html) resource.",
+              "The status is generally fully in the control of the requester - they determine whether the order is draft or active and, after it has been activated, competed, cancelled or suspended. States relating to the activities of the performer are reflected on either the corresponding event (see [Event Pattern](event.html) for general discussion) or using the [Task](http://hl7.org/fhir/R6/task.html) resource.",
           "mustSupport": true
         },
         {
@@ -21957,7 +21957,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The desired performer for doing the requested service.  For example, the surgeon, dermatopathologist, endoscopist, etc.",
           "comment":
-              "If multiple performers are present, it is interpreted as a list of *alternative* performers without any preference regardless of order.  If order of preference is needed use the [request-performerOrder extension](http://hl7.org/fhir/R4/extension-request-performerorder.html).  Use CareTeam to represent a group of performers (for example, Practitioner A *and* Practitioner B).",
+              "If multiple performers are present, it is interpreted as a list of *alternative* performers without any preference regardless of order.  If order of preference is needed use the [request-performerOrder extension](http://hl7.org/fhir/R6/extension-request-performerorder.html).  Use CareTeam to represent a group of performers (for example, Practitioner A *and* Practitioner B).",
           "mustSupport": false
         },
         {
@@ -22031,7 +22031,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "One or more specimens that the laboratory procedure will use.",
           "comment":
-              "Many diagnostic procedures need a specimen, but the request itself is not actually about the specimen. This element is for when the diagnostic is requested on already existing specimens and the request points to the specimen it applies to.    Conversely, if the request is entered first with an unknown specimen, then the [Specimen](http://hl7.org/fhir/R4/specimen.html) resource points to the ServiceRequest."
+              "Many diagnostic procedures need a specimen, but the request itself is not actually about the specimen. This element is for when the diagnostic is requested on already existing specimens and the request points to the specimen it applies to.    Conversely, if the request is entered first with an unknown specimen, then the [Specimen](http://hl7.org/fhir/R6/specimen.html) resource points to the ServiceRequest."
         },
         {
           "name": "bodySite",
@@ -22048,7 +22048,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Anatomic location where the procedure should be performed. This is the target site.",
           "comment":
-              "Only used if not implicit in the code found in ServiceRequest.code.  If the use case requires BodySite to be handled as a separate resource instead of an inline coded element (e.g. to identify and track separately)  then use the standard extension [procedure-targetBodyStructure](http://hl7.org/fhir/R4/extension-procedure-targetbodystructure.html).",
+              "Only used if not implicit in the code found in ServiceRequest.code.  If the use case requires BodySite to be handled as a separate resource instead of an inline coded element (e.g. to identify and track separately)  then use the standard extension [procedure-targetBodyStructure](http://hl7.org/fhir/R6/extension-procedure-targetbodystructure.html).",
           "mustSupport": true
         },
         {
@@ -22444,7 +22444,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Anatomical location from which the specimen was collected (if subject is a patient). This is the target site.  This element is not used for environmental specimens.",
           "comment":
-              "If the use case requires  BodySite to be handled as a separate resource instead of an inline coded element (e.g. to identify and track separately)  then use the standard extension [bodySite](http://hl7.org/fhir/R4/extension-bodysite.html).",
+              "If the use case requires  BodySite to be handled as a separate resource instead of an inline coded element (e.g. to identify and track separately)  then use the standard extension [bodySite](http://hl7.org/fhir/R6/extension-bodysite.html).",
           "mustSupport": true
         },
         {
@@ -26732,7 +26732,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "A larger event of which this particular Observation is a component or step.  For example,  an observation as part of a procedure.",
           "comment":
-              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below for guidance on referencing another Observation."
+              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below for guidance on referencing another Observation."
         },
         {
           "name": "status",
@@ -26836,7 +26836,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The actual focus of an observation when it is not the patient of record representing something or someone associated with the patient such as a spouse, parent, fetus, or donor. For example, fetus observations in a mother's record.  The focus of an observation could also be an existing condition,  an intervention, the subject's diet,  another observation of the subject,  or a body structure such as tumor or implanted device.   An example use case would be using the Observation resource to capture whether the mother is trained to change her child's tracheostomy tube. In this example, the child is the patient of record and the mother is the focus.",
           "comment":
-              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R4/extension-observation-focuscode.html)."
+              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R6/extension-observation-focuscode.html)."
         },
         {
           "name": "encounter",
@@ -26881,7 +26881,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The date and time this version of the observation was made available to providers, typically after the results have been reviewed and verified.",
           "comment":
-              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R4/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again."
+              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R6/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again."
         },
         {
           "name": "performer",
@@ -27000,7 +27000,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Indicates the site on the subject's body where the observation was made (i.e. the target site).",
           "comment":
-              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R4/extension-bodysite.html)."
+              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R6/extension-bodysite.html)."
         },
         {
           "name": "method",
@@ -27062,7 +27062,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Observations or QuestionnaireResponses from which this observation value is derived.",
           "comment":
-              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below.",
+              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below.",
           "mustSupport": true
         },
         {
@@ -27072,7 +27072,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Some observations have multiple component observations.  These component observations are expressed as separate code value pairs that share the same attributes.  Examples include systolic and diastolic component observations for blood pressure measurement and multiple component observations for genetics observations.",
           "comment":
-              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R4/observation.html#notes) below."
+              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R6/observation.html#notes) below."
         }
       ]
     },
@@ -27108,7 +27108,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "A larger event of which this particular Observation is a component or step.  For example,  an observation as part of a procedure.",
           "comment":
-              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below for guidance on referencing another Observation."
+              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below for guidance on referencing another Observation."
         },
         {
           "name": "status",
@@ -27177,7 +27177,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The actual focus of an observation when it is not the patient of record representing something or someone associated with the patient such as a spouse, parent, fetus, or donor. For example, fetus observations in a mother's record.  The focus of an observation could also be an existing condition,  an intervention, the subject's diet,  another observation of the subject,  or a body structure such as tumor or implanted device.   An example use case would be using the Observation resource to capture whether the mother is trained to change her child's tracheostomy tube. In this example, the child is the patient of record and the mother is the focus.",
           "comment":
-              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R4/extension-observation-focuscode.html)."
+              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R6/extension-observation-focuscode.html)."
         },
         {
           "name": "encounter",
@@ -27211,7 +27211,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "This records the time during which the patient had identified their emotional, romantic, sexual, or affectional attraction to another person.",
           "comment":
-              "At least a date should be present unless this observation is a historical report.  For recording imprecise or \"fuzzy\" times (For example, a blood glucose measurement taken \"after breakfast\") use the [Timing](http://hl7.org/fhir/R4/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events.",
+              "At least a date should be present unless this observation is a historical report.  For recording imprecise or \"fuzzy\" times (For example, a blood glucose measurement taken \"after breakfast\") use the [Timing](http://hl7.org/fhir/R6/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events.",
           "mustSupport": true
         },
         {
@@ -27222,7 +27222,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The date and time this version of the observation was made available to providers, typically after the results have been reviewed and verified.",
           "comment":
-              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R4/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again."
+              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R6/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again."
         },
         {
           "name": "performer",
@@ -27239,7 +27239,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The information determined as a result of making the observation, if the information has a simple value.",
           "comment":
-              "An observation may have; 1)  a single value here, 2)  both a value and a set of related or component values,  or 3)  only a set of related or component values. If a value is present, the datatype for this element should be determined by Observation.code.  A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R4/observation.html#notes) below."
+              "An observation may have; 1)  a single value here, 2)  both a value and a set of related or component values,  or 3)  only a set of related or component values. If a value is present, the datatype for this element should be determined by Observation.code.  A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R6/observation.html#notes) below."
         },
         {
           "name": "dataAbsentReason",
@@ -27297,7 +27297,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Indicates the site on the subject's body where the observation was made (i.e. the target site).",
           "comment":
-              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R4/extension-bodysite.html)."
+              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R6/extension-bodysite.html)."
         },
         {
           "name": "method",
@@ -27348,7 +27348,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.",
           "comment":
-              "When using this element, an observation will typically have either a value or a set of related resources, although both may be present in some cases.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below.  Note that a system may calculate results from [QuestionnaireResponse](http://hl7.org/fhir/R4/questionnaireresponse.html)  into a final score and represent the score as an Observation."
+              "When using this element, an observation will typically have either a value or a set of related resources, although both may be present in some cases.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below.  Note that a system may calculate results from [QuestionnaireResponse](http://hl7.org/fhir/R6/questionnaireresponse.html)  into a final score and represent the score as an Observation."
         },
         {
           "name": "derivedFrom",
@@ -27357,7 +27357,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The target resource that represents a measurement from which this observation value is derived. For example, a calculated anion gap or a fetal measurement based on an ultrasound image.",
           "comment":
-              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below."
+              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below."
         },
         {
           "name": "component",
@@ -27366,7 +27366,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Some observations have multiple component observations.  These component observations are expressed as separate code value pairs that share the same attributes.  Examples include systolic and diastolic component observations for blood pressure measurement and multiple component observations for genetics observations.",
           "comment":
-              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R4/observation.html#notes) below."
+              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R6/observation.html#notes) below."
         }
       ]
     },
@@ -27402,7 +27402,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "A larger event of which this particular Observation is a component or step.  For example,  an observation as part of a procedure.",
           "comment":
-              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below for guidance on referencing another Observation."
+              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below for guidance on referencing another Observation."
         },
         {
           "name": "status",
@@ -27506,7 +27506,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The actual focus of an observation when it is not the patient of record representing something or someone associated with the patient such as a spouse, parent, fetus, or donor. For example, fetus observations in a mother's record.  The focus of an observation could also be an existing condition,  an intervention, the subject's diet,  another observation of the subject,  or a body structure such as tumor or implanted device.   An example use case would be using the Observation resource to capture whether the mother is trained to change her child's tracheostomy tube. In this example, the child is the patient of record and the mother is the focus.",
           "comment":
-              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R4/extension-observation-focuscode.html)."
+              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R6/extension-observation-focuscode.html)."
         },
         {
           "name": "encounter",
@@ -27551,7 +27551,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The date and time this version of the observation was made available to providers, typically after the results have been reviewed and verified.",
           "comment":
-              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R4/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again."
+              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R6/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again."
         },
         {
           "name": "performer",
@@ -27608,7 +27608,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The information determined as a result of making the observation, if the information has a simple value.",
           "comment":
-              "An observation may have; 1)  a single value here, 2)  both a value and a set of related or component values,  or 3)  only a set of related or component values. If a value is present, the datatype for this element should be determined by Observation.code.  A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R4/observation.html#notes) below.",
+              "An observation may have; 1)  a single value here, 2)  both a value and a set of related or component values,  or 3)  only a set of related or component values. If a value is present, the datatype for this element should be determined by Observation.code.  A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R6/observation.html#notes) below.",
           "mustSupport": true
         },
         {
@@ -27667,7 +27667,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Indicates the site on the subject's body where the observation was made (i.e. the target site).",
           "comment":
-              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R4/extension-bodysite.html)."
+              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R6/extension-bodysite.html)."
         },
         {
           "name": "method",
@@ -27718,7 +27718,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.",
           "comment":
-              "When using this element, an observation will typically have either a value or a set of related resources, although both may be present in some cases.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below.  Note that a system may calculate results from [QuestionnaireResponse](http://hl7.org/fhir/R4/questionnaireresponse.html)  into a final score and represent the score as an Observation."
+              "When using this element, an observation will typically have either a value or a set of related resources, although both may be present in some cases.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below.  Note that a system may calculate results from [QuestionnaireResponse](http://hl7.org/fhir/R6/questionnaireresponse.html)  into a final score and represent the score as an Observation."
         },
         {
           "name": "derivedFrom",
@@ -27727,7 +27727,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The target resource that represents a measurement from which this observation value is derived. For example, a calculated anion gap or a fetal measurement based on an ultrasound image.",
           "comment":
-              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below."
+              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below."
         },
         {
           "name": "component",
@@ -27736,7 +27736,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Some observations have multiple component observations.  These component observations are expressed as separate code value pairs that share the same attributes.  Examples include systolic and diastolic component observations for blood pressure measurement and multiple component observations for genetics observations.",
           "comment":
-              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R4/observation.html#notes) below."
+              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R6/observation.html#notes) below."
         }
       ]
     },
@@ -29476,7 +29476,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "A larger event of which this particular Observation is a component or step.  For example,  an observation as part of a procedure.",
           "comment":
-              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below for guidance on referencing another Observation."
+              "To link an Observation to an Encounter use `encounter`.  See the  [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below for guidance on referencing another Observation."
         },
         {
           "name": "status",
@@ -29563,7 +29563,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The actual focus of an observation when it is not the patient of record representing something or someone associated with the patient such as a spouse, parent, fetus, or donor. For example, fetus observations in a mother's record.  The focus of an observation could also be an existing condition,  an intervention, the subject's diet,  another observation of the subject,  or a body structure such as tumor or implanted device.   An example use case would be using the Observation resource to capture whether the mother is trained to change her child's tracheostomy tube. In this example, the child is the patient of record and the mother is the focus.",
           "comment":
-              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R4/extension-observation-focuscode.html)."
+              "Typically, an observation is made about the subject - a patient, or group of patients, location, or device - and the distinction between the subject and what is directly measured for an observation is specified in the observation code itself ( e.g., \"Blood Glucose\") and does not need to be represented separately using this element.  Use `specimen` if a reference to a specimen is required.  If a code is required instead of a resource use either  `bodysite` for bodysites or the standard extension [focusCode](http://hl7.org/fhir/R6/extension-observation-focuscode.html)."
         },
         {
           "name": "encounter",
@@ -29583,7 +29583,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The time or time-period the observed value is asserted as being true. For biological subjects - e.g. human patients - this is usually called the \"physiologically relevant time\". This is usually either the time of the procedure or of specimen collection, but very often the source of the date/time is not known, only the date/time itself.",
           "comment":
-              "At least a date should be present unless this observation is a historical report.  For recording imprecise or \"fuzzy\" times (For example, a blood glucose measurement taken \"after breakfast\") use the [Timing](http://hl7.org/fhir/R4/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events."
+              "At least a date should be present unless this observation is a historical report.  For recording imprecise or \"fuzzy\" times (For example, a blood glucose measurement taken \"after breakfast\") use the [Timing](http://hl7.org/fhir/R6/datatypes.html#timing) datatype which allow the measurement to be tied to regular life events."
         },
         {
           "name": "issued",
@@ -29593,7 +29593,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The date and time this version of the observation was made available to providers, typically after the results have been reviewed and verified.",
           "comment":
-              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R4/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again."
+              "For Observations that don’t require review and verification, it may be the same as the [`lastUpdated` ](http://hl7.org/fhir/R6/resource-definitions.html#Meta.lastUpdated) time of the resource itself.  For Observations that do require review and verification for certain updates, it might not be the same as the `lastUpdated` time of the resource itself due to a non-clinically significant update that doesn’t require the new version to be reviewed and verified again."
         },
         {
           "name": "performer",
@@ -29610,7 +29610,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The information determined as a result of making the observation, if the information has a simple value.",
           "comment":
-              "An observation may have; 1)  a single value here, 2)  both a value and a set of related or component values,  or 3)  only a set of related or component values. If a value is present, the datatype for this element should be determined by Observation.code.  A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R4/observation.html#notes) below."
+              "An observation may have; 1)  a single value here, 2)  both a value and a set of related or component values,  or 3)  only a set of related or component values. If a value is present, the datatype for this element should be determined by Observation.code.  A CodeableConcept with just a text would be used instead of a string if the field was usually coded, or if the type associated with the Observation.code defines a coded value.  For additional guidance, see the [Notes section](http://hl7.org/fhir/R6/observation.html#notes) below."
         },
         {
           "name": "dataAbsentReason",
@@ -29668,7 +29668,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Indicates the site on the subject's body where the observation was made (i.e. the target site).",
           "comment":
-              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R4/extension-bodysite.html)."
+              "Only used if not implicit in code found in Observation.code.  In many systems, this may be represented as a related observation instead of an inline component.   \\\\n\\\\nIf the use case requires BodySite to be handled as a separate resource (e.g. to identify and track separately) then use the standard extension[ bodySite](http://hl7.org/fhir/R6/extension-bodysite.html)."
         },
         {
           "name": "method",
@@ -29719,7 +29719,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.",
           "comment":
-              "When using this element, an observation will typically have either a value or a set of related resources, although both may be present in some cases.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below.  Note that a system may calculate results from [QuestionnaireResponse](http://hl7.org/fhir/R4/questionnaireresponse.html)  into a final score and represent the score as an Observation."
+              "When using this element, an observation will typically have either a value or a set of related resources, although both may be present in some cases.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below.  Note that a system may calculate results from [QuestionnaireResponse](http://hl7.org/fhir/R6/questionnaireresponse.html)  into a final score and represent the score as an Observation."
         },
         {
           "name": "derivedFrom",
@@ -29728,7 +29728,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "The target resource that represents a measurement from which this observation value is derived. For example, a calculated anion gap or a fetal measurement based on an ultrasound image.",
           "comment":
-              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R4/observation.html#obsgrouping) below."
+              "All the reference choices that are listed in this element can represent clinical observations and other measurements that may be the source for a derived value.  The most common reference will be another Observation.  For a discussion on the ways Observations can assembled in groups together, see [Notes](http://hl7.org/fhir/R6/observation.html#obsgrouping) below."
         },
         {
           "name": "component",
@@ -29737,7 +29737,7 @@ final qicoremodelinfo500 = ModelInfo.fromJson({
           "definition":
               "Some observations have multiple component observations.  These component observations are expressed as separate code value pairs that share the same attributes.  Examples include systolic and diastolic component observations for blood pressure measurement and multiple component observations for genetics observations.",
           "comment":
-              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R4/observation.html#notes) below."
+              "For a discussion on the ways Observations can be assembled in groups together see [Notes](http://hl7.org/fhir/R6/observation.html#notes) below."
         }
       ]
     },
