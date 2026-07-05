@@ -129,6 +129,11 @@ Future<void> testQuestionnaire() async {
     });
 
     test('EnableWhen using a defined polymorphic type', () async {
+      // R6 (like R5) enforces case-sensitive `as` (Java:
+      // doNotEnforceAsCaseSensitive only for pre-R5 versions), so
+      // `value as Date` no longer matches the FHIR `date` value the way it
+      // leniently did in the R4 binding: the right-hand comparison collapses
+      // to empty, and `true and empty` is empty.
       expect(
         await walkFhirPath(
           context: questionnaireResponse2,
@@ -145,7 +150,7 @@ Future<void> testQuestionnaire() async {
               ' 40',
           resource: questionnaireResponse2,
         ),
-        [false.toFhirBoolean],
+        <FhirBase>[],
       );
     });
   });

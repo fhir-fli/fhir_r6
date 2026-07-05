@@ -2,7 +2,13 @@ import 'package:fhir_r6_path/fhir_r6_path.dart';
 import 'package:test/test.dart';
 
 /// Regression guard for FHIRPath Math empty-propagation conformance.
-/// See fhir_r4_path/test/test_math_empty_propagation.dart for the rationale.
+///
+/// The FHIRPath spec states, per-function, that math functions return an
+/// empty collection when the input collection is empty (and `power`/`log`
+/// when the exponent/base argument is empty). A single item with >1 element
+/// must still signal an error. This previously regressed: every math function
+/// did `if (focus.length != 1) throw FHIRPATH_FOCUS`, which wrongly threw on
+/// empty too. Keep this test so it cannot recur.
 void main() {
   group('Math empty-input propagation -> empty (FHIRPath spec)', () {
     for (final expr in [

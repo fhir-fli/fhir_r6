@@ -1,11 +1,19 @@
 import 'dart:convert';
 
+import 'package:fhir_node/fhir_node.dart';
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:fhir_r6_path/fhir_r6_path.dart';
 
 final worker = WorkerContext();
-List<dynamic> toJsonList(List<FhirBase> list) =>
-    list.map((e) => e is PrimitiveType ? e.valueString : e.toJson()).toList();
+List<dynamic> toJsonList(List<FhirNode> list) => list
+    .map((e) => e is PrimitiveType ? e.valueString : (e as FhirBase).toJson())
+    .toList();
+
+/// The parse-tree constant is a [FhirNode] after the engine's node swap;
+/// tests asserting its R6 JSON narrow it here (the R6 binding surface).
+extension FhirNodeR4JsonX on FhirNode {
+  Map<String, dynamic> toR6Json() => (this as FhirBase).toJson();
+}
 
 final patient1 = Patient.fromJson(<String, dynamic>{
   'resourceType': 'Patient',
@@ -491,8 +499,9 @@ final patient5 = Resource.fromJson(
 
 final questionnaireResponse1 = QuestionnaireResponse.fromJson({
   'resourceType': 'QuestionnaireResponse',
+  // R6 requires QuestionnaireResponse.questionnaire (1..1)
+  'questionnaire': 'http://example.org/Questionnaire/psc-preschool',
   'status': 'completed',
-  'questionnaire': 'Questionnaire/preschool',
   'item': [
     {'linkId': '/psc/preschool'},
     {
@@ -697,6 +706,8 @@ final questionnaireResponse3 = QuestionnaireResponse.fromJson({
 final questionnaireResponse4 = QuestionnaireResponse.fromJson({
   'resourceType': 'QuestionnaireResponse',
   'id': 'bb',
+  // R6 requires QuestionnaireResponse.questionnaire (1..1)
+  'questionnaire': 'http://example.org/Questionnaire/bb',
   'text': {
     'status': 'generated',
     'div':

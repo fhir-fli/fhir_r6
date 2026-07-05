@@ -1,13 +1,17 @@
 // ignore_for_file: public_member_api_docs
 
+import 'package:fhir_node/fhir_node.dart';
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:fhir_r6_path/fhir_r6_path.dart';
 
 import 'package:ucum/ucum.dart';
 
-class WorkerContext {
+class WorkerContext implements IWorkerContext {
   WorkerContext({this.txClient, ResourceCache? resourceCache})
       : resourceCache = resourceCache ?? CanonicalResourceCache();
+
+  @override
+  IFhirValueFactory get valueFactory => const FhirValueFactory();
   // Fields to store resources
   final ResourceCache resourceCache;
   final UcumService ucumService = UcumService();
@@ -37,8 +41,629 @@ class WorkerContext {
   }
 
   String getVersion() {
-    // Return a placeholder version for now
-    return '4.0.1'; // Replace with dynamic version if applicable
+    return '6.0.0';
+  }
+
+  /// Whether [typeName] resolves to a known FHIR type. A neutral type-query
+  /// the engine uses instead of inspecting a returned `StructureDefinition`,
+  /// so the type metadata (StructureDefinition lookup) stays binding-side.
+  Future<bool> isKnownType(String typeName) async {
+    // Fast-path on the generated model's type-name classification. This is
+    // model knowledge (the R6 type lists), so it lives binding-side; it also
+    // keeps type-existence checks working when no StructureDefinitions are
+    // loaded in the cache.
+    if (typeName.isFhirPrimitive ||
+        typeName.isBackboneElement ||
+        typeName.isFhirBackboneType ||
+        typeName.isFhirDataType ||
+        typeName.isFhirQuantity ||
+        typeName.isFhirResourceType) {
+      return true;
+    }
+    try {
+      return (await fetchTypeDefinition(typeName)) != null;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// The canonical-URL ancestry chain of the type at [uri]: this type, then
+  /// each successive `baseDefinition`, as `(url, typeName)` pairs. Mirrors
+  /// the walk in the Java reference's `TypeDetails.hasType`, including its
+  /// `uri` → `string` redirect. Supplied as data so the engine-side
+  /// `TypeDetails` never inspects a `StructureDefinition`.
+  Future<List<(String, String)>> typeAncestry(String uri) async {
+    final result = <(String, String)>[];
+    var sd = await fetchResource<StructureDefinition>(uri: uri);
+    while (sd?.url != null) {
+      result.add((sd!.url!.toString(), sd.type.toString()));
+      if (sd.baseDefinition != null) {
+        if (sd.type.toString() == 'uri') {
+          sd = await fetchResource<StructureDefinition>(
+            uri: 'http://hl7.org/fhir/StructureDefinition/string',
+          );
+        } else {
+          sd = await fetchResource<StructureDefinition>(
+            uri: sd.baseDefinition!.toString(),
+          );
+        }
+      } else {
+        sd = null;
+      }
+    }
+    return result;
+  }
+
+  /// Names of every specialization (non-logical) type in the loaded
+  /// structures — the engine's set of navigable type names (used by
+  /// `FhirPathContext.initialize` and the `type()`-reflection paths).
+  Future<List<String>> specializedTypeNames() async {
+    final names = <String>[];
+    for (final sd in await getStructures()) {
+      if (sd.derivation == TypeDerivationRule.specialization &&
+          sd.kind != StructureDefinitionKind.logical &&
+          sd.name.valueString != null) {
+        names.add(sd.name.valueString!);
+      }
+    }
+    return names;
+  }
+
+  /// The FHIRPath type-membership test shared by the `is` operator and the
+  /// `is()` function (equivalent per FHIRPath spec §6.3): does [value] belong
+  /// to the type named [name] in namespace [ns] (`'System'` or `'FHIR'`)?
+  ///
+  /// Holds the FHIR-model type semantics binding-side (so the engine names no
+  /// FHIR type): a `Resource` is never a System value; a System value is a
+  /// value outside the FHIR Element tree or a bare primitive
+  /// (`disallowExtensions`, the marker every engine-produced literal/result
+  /// carries) matched by its capitalised type name (plus the Date→DateTime
+  /// lattice rule); a FHIR-namespace test walks the subtype hierarchy via
+  /// [isSubtypeOf] (so `Age` matches `Quantity`, `Patient` matches
+  /// `Resource`). Matches the Java reference `FHIRPathEngine.funcIs`
+  /// (org.hl7.fhir.r4.fhirpath) and the official test suite's `testType`
+  /// group expectations.
+  Future<bool> isValueOfType(FhirNode node, String ns, String name) async {
+    final value = node as FhirBase;
+    if (ns == 'System') {
+      if (value is Resource) {
+        return false;
+      }
+      if (value is! Element || (value.disallowExtensions ?? false)) {
+        final t = value.fhirType.capitalize();
+        if (name == t) {
+          return true;
+        }
+        if (t == 'Date' && name == 'DateTime') {
+          return true;
+        }
+        return false;
+      }
+      return false;
+    } else if (ns == 'FHIR') {
+      return isSubtypeOf(value.fhirType, name);
+    }
+    return false;
+  }
+
+  /// The `ofType()` type filter for [value] against the parse-tree type
+  /// specifier [tn] (`System.X` or `FHIR.X`), matching the Java reference
+  /// `FHIRPathEngine.funcOfType`/`funcAs`: System values match by exact type
+  /// name; FHIR values match through the subtype hierarchy, but — unlike the
+  /// `is` walk ([isSubtypeOf]) — the `ofType` walk STOPS at primitive-type
+  /// definitions, so e.g. `gender.ofType(string)` is false for a `code` even
+  /// though `gender.is(string)` is true.
+  Future<bool> matchesOfType(FhirNode node, String tn) async {
+    final value = node as FhirBase;
+    if (tn.startsWith('System.')) {
+      return value is Element &&
+          (value.disallowExtensions ?? false) &&
+          value.hasType([tn.substring(7)]);
+    } else if (tn.startsWith('FHIR.')) {
+      final tnp = tn.substring(5);
+      if (value.fhirType == tnp) {
+        return true;
+      }
+      var sd = await fetchTypeDefinition(value.fhirType);
+      while (sd != null) {
+        if (sd.type.primitiveValue == tnp) {
+          return true;
+        }
+        if (sd.kind == StructureDefinitionKind.primitiveType) {
+          return false;
+        }
+        final base = sd.baseDefinition?.primitiveValue;
+        if (base == null) {
+          return false;
+        }
+        sd = await fetchResource<StructureDefinition>(
+          uri: base,
+          canonicalForSource: sd,
+        );
+      }
+      return false;
+    }
+    return false;
+  }
+
+  /// Whether [type] is [superType] or descends from it through the FHIR type
+  /// inheritance chain. A neutral type-query the engine uses for `is` (and
+  /// bare type-name navigation) instead of walking `StructureDefinition`
+  /// `baseDefinition` links itself, so the type metadata stays binding-side.
+  ///
+  /// The walk does NOT stop at primitive-type definitions, matching the Java
+  /// reference `funcIs`/`isAncestor`/name-navigation walks — this is what
+  /// makes `Patient.gender.is(string)` true for a `code` (official
+  /// testFHIRPathIsFunction2). Only the `ofType`/`as` walk ([matchesOfType])
+  /// stops at primitives.
+  Future<bool> isSubtypeOf(String type, String superType) async {
+    if (type == superType) {
+      return true;
+    }
+    var sd = await fetchTypeDefinition(type);
+    while (sd != null) {
+      if (sd.type.primitiveValue == superType) {
+        return true;
+      }
+      final base = sd.baseDefinition?.primitiveValue;
+      if (base == null) {
+        return false;
+      }
+      sd = await fetchResource<StructureDefinition>(
+        uri: base,
+        canonicalForSource: sd,
+      );
+    }
+    return false;
+  }
+
+  // ===========================================================================
+  // STATIC TYPE ANALYSIS
+  //
+  // Relocated from the FHIRPath engine so that every StructureDefinition /
+  // ElementDefinition snapshot walk stays binding-side. The engine drives these
+  // through neutral calls (type-name strings in, model-neutral `TypeDetails`
+  // out) and never inspects a `StructureDefinition`/`ElementDefinition` itself.
+  // ===========================================================================
+
+  Set<String>? _primitiveTypeCache;
+
+  /// The set of FHIR primitive type names, derived from the loaded structure
+  /// definitions. This is type metadata, so it is owned by the worker rather
+  /// than recomputed engine-side.
+  Future<Set<String>> primitiveTypeNames() async {
+    if (_primitiveTypeCache != null) {
+      return _primitiveTypeCache!;
+    }
+    final set = <String>{};
+    for (final sd in await getStructures()) {
+      if (sd.derivation == TypeDerivationRule.specialization &&
+          sd.kind == StructureDefinitionKind.primitiveType &&
+          sd.name.valueString != null) {
+        set.add(sd.name.valueString!);
+      }
+    }
+    return _primitiveTypeCache = set;
+  }
+
+  PathEngineException _makeException(
+    ExpressionNode? holder,
+    String constName,
+    List<Object> args,
+  ) {
+    final fmt = formatMessage(constName, args);
+    if (holder != null) {
+      return PathEngineException(
+        fmt,
+        location: holder.start,
+        expression: holder.toString(),
+      );
+    }
+    return PathEngineException(fmt);
+  }
+
+  /// Computes the possible FHIR types reachable by navigating [name] from
+  /// [type], accumulating them into [result]. This is the static type-analysis
+  /// counterpart of runtime child navigation (used by `checkParamTypes`), and
+  /// it is the sole home of `snapshot.element` walking.
+  Future<void> getChildTypesByName(
+    String? type,
+    String name,
+    TypeDetails result,
+    ExpressionNode expr, {
+    required bool allowPolymorphicNames,
+  }) async {
+    if (type == null || type.isEmpty) {
+      throw _makeException(expr, 'FHIRPATH_NO_TYPE', ['getChildTypesByName']);
+    }
+    if (type == 'http://hl7.org/fhir/StructureDefinition/xhtml') {
+      return;
+    }
+    if (type.startsWith(NS_SYSTEM_TYPE)) {
+      return;
+    }
+
+    if (type == TypeDetails.FP_SimpleTypeInfo) {
+      getSimpleTypeChildTypesByName(name, result);
+    } else if (type == TypeDetails.FP_ClassInfo) {
+      getClassInfoChildTypesByName(name, result);
+    } else {
+      String? url;
+      if (type.contains('#')) {
+        url = type.substring(0, type.indexOf('#'));
+      } else {
+        url = type;
+      }
+      var tail = '';
+      final sd = await fetchResource<StructureDefinition>(uri: url);
+      if (sd == null) {
+        throw _makeException(
+          expr,
+          'FHIRPATH_NO_TYPE',
+          [url, 'getChildTypesByName'],
+        );
+      }
+      final sdl = <StructureDefinition>[];
+      ElementDefinitionMatch? m;
+      if (type.contains('#')) {
+        m = await getElementDefinition(
+          sd,
+          type.substring(type.indexOf('#') + 1),
+          false,
+          expr,
+        );
+      }
+      if (m?.definition != null && hasDataType(m!.definition!)) {
+        if (m.fixedType != null) {
+          final dt = await fetchResource<StructureDefinition>(
+            uri: m.fixedType!.sdNs(getOverrideVersionNs()),
+          );
+          if (dt == null) {
+            throw _makeException(expr, 'FHIRPATH_NO_TYPE', [
+              m.fixedType!.sdNs(getOverrideVersionNs()),
+              'getChildTypesByName',
+            ]);
+          }
+          sdl.add(dt);
+        } else {
+          for (final t in m.definition!.type ?? <ElementDefinitionType>[]) {
+            final dt = await fetchResource<StructureDefinition>(
+              uri: t.code.toString().sdNs(getOverrideVersionNs()),
+            );
+            if (dt == null) {
+              throw _makeException(expr, 'FHIRPATH_NO_TYPE', [
+                t.code.toString().sdNs(getOverrideVersionNs()),
+                'getChildTypesByName',
+              ]);
+            }
+            addTypeAndDescendents(sdl, dt, await allStructures());
+          }
+        }
+      } else {
+        addTypeAndDescendents(sdl, sd, await allStructures());
+        if (type.contains('#')) {
+          tail = type.substring(type.indexOf('#') + 1);
+          tail = tail.substring(tail.indexOf('.'));
+        }
+      }
+
+      for (final sdi in sdl) {
+        var path = '${sdi.snapshot?.element[0].path ?? ''}$tail.';
+        if (name == '**') {
+          assert(
+            result.collectionStatus == CollectionStatus.unordered,
+            'CollectionStatus.unordered',
+          );
+          for (final ed in sdi.snapshot?.element ?? <ElementDefinition>[]) {
+            if (ed.path.valueString?.startsWith(path) ?? false) {
+              for (final t in ed.type ?? <ElementDefinitionType>[]) {
+                if (t.code.toString().isNotEmpty) {
+                  String? tn;
+                  if (t.code.toString() == 'Element' ||
+                      t.code.toString() == 'BackboneElement') {
+                    tn = '${sdi.type}#${ed.path}';
+                  } else {
+                    tn = t.code.toString();
+                  }
+                  if (t.code.toString() == 'Resource') {
+                    for (final rn in await getResourceNames()) {
+                      if (!(await result.hasTypeFromWorker(this, [rn]))) {
+                        await getChildTypesByName(
+                          result.addType(rn),
+                          '**',
+                          result,
+                          expr,
+                          allowPolymorphicNames: allowPolymorphicNames,
+                        );
+                      }
+                    }
+                  } else if (!(await result.hasTypeFromWorker(this, [tn]))) {
+                    await getChildTypesByName(
+                      result.addType(tn),
+                      '**',
+                      result,
+                      expr,
+                      allowPolymorphicNames: allowPolymorphicNames,
+                    );
+                  }
+                }
+              }
+            }
+          }
+        } else if (name == '*') {
+          assert(
+            result.collectionStatus == CollectionStatus.unordered,
+            'CollectionStatus.unordered',
+          );
+          for (final ed in sdi.snapshot?.element ?? <ElementDefinition>[]) {
+            if ((ed.path.valueString?.startsWith(path) ?? false) &&
+                !(ed.path.valueString?.substring(path.length).contains('.') ??
+                    false)) {
+              for (final t in ed.type ?? <ElementDefinitionType>[]) {
+                if (t.code.toString().isEmpty) {
+                  result.addType('System.string');
+                } else if (t.code.toString() == 'Element' ||
+                    t.code.toString() == 'BackboneElement') {
+                  result.addType('${sdi.type}#${ed.path}');
+                } else if (t.code.toString() == 'Resource') {
+                  result.addTypes(await getResourceNames());
+                } else {
+                  result.addType(t.code.toString());
+                }
+              }
+            }
+          }
+        } else {
+          path = '${sdi.snapshot?.element[0].path ?? ''}$tail.$name';
+
+          final ed = await getElementDefinition(
+            sdi,
+            path,
+            allowPolymorphicNames,
+            expr,
+          );
+          if (ed != null) {
+            if (ed.fixedType?.isNotEmpty ?? false) {
+              result.addType(ed.fixedType!);
+            } else {
+              for (final t
+                  in ed.definition?.type ?? <ElementDefinitionType>[]) {
+                if (t.code.toString().isEmpty) {
+                  if ((ed.definition?.id?.valueString != null &&
+                          [
+                            'Element.id',
+                            'Extension.url',
+                          ].contains(ed.definition!.id!.valueString)) ||
+                      (ed.definition?.base?.path.valueString != null &&
+                          [
+                            'Resource.id',
+                            'Element.id',
+                            'Extension.url',
+                          ].contains(ed.definition!.base!.path.valueString))) {
+                    result.addTypeWithProfile(TypeDetails.FP_NS, 'string');
+                  }
+                  break;
+                }
+
+                ProfiledType? pt;
+                if (t.code.toString() == 'Element' ||
+                    t.code.toString() == 'BackboneElement') {
+                  pt = ProfiledType('${sdi.url}#$path');
+                } else if (t.code.toString() == 'Resource') {
+                  result.addTypes(await getResourceNames());
+                } else {
+                  pt = ProfiledType(t.code.toString());
+                }
+                if (pt != null) {
+                  if (t.profile?.isNotEmpty ?? false) {
+                    pt.addProfiles(
+                      t.profile!.map((u) => u.toString()).toList(),
+                    );
+                  }
+                  if (ed.definition?.binding != null) {
+                    pt.addBinding(ed.definition!.binding);
+                  }
+                  result.addProfiledType(pt);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  void getClassInfoChildTypesByName(String name, TypeDetails result) {
+    if (name == 'namespace') {
+      result.addType(TypeDetails.FP_String);
+    }
+    if (name == 'name') {
+      result.addType(TypeDetails.FP_String);
+    }
+  }
+
+  void getSimpleTypeChildTypesByName(String name, TypeDetails result) {
+    if (name == 'namespace') {
+      result.addType(TypeDetails.FP_String);
+    }
+    if (name == 'name') {
+      result.addType(TypeDetails.FP_String);
+    }
+  }
+
+  Future<ElementDefinitionMatch?> getElementDefinition(
+    StructureDefinition sd,
+    String path,
+    bool allowTypedName,
+    ExpressionNode expr,
+  ) async {
+    for (final ed in sd.snapshot?.element ?? <ElementDefinition>[]) {
+      if (ed.path.valueString == path) {
+        if (ed.hasContentReference()) {
+          return getElementDefinitionById(sd, ed.contentReference!.toString());
+        } else {
+          return ElementDefinitionMatch(ed, null);
+        }
+      }
+
+      if ((ed.path.valueString?.endsWith('[x]') ?? false) &&
+          path.startsWith(
+            ed.path.valueString!.substring(0, ed.path.valueString!.length - 3),
+          ) &&
+          path.length == ed.path.valueString!.length - 3) {
+        return ElementDefinitionMatch(ed, null);
+      }
+
+      if (allowTypedName &&
+          (ed.path.valueString?.endsWith('[x]') ?? false) &&
+          path.startsWith(
+            ed.path.valueString!.substring(0, ed.path.valueString!.length - 3),
+          ) &&
+          path.length > ed.path.valueString!.length - 3) {
+        final s =
+            path.substring(ed.path.valueString!.length - 3).uncapitalize();
+        if ((await primitiveTypeNames()).contains(s)) {
+          return ElementDefinitionMatch(ed, s);
+        } else {
+          return ElementDefinitionMatch(
+            ed,
+            path.substring(ed.path.valueString!.length - 3),
+          );
+        }
+      }
+
+      if ((ed.path.valueString?.contains('.') ?? false) &&
+          path.startsWith('${ed.path.valueString}.') &&
+          ed.type != null &&
+          ed.type!.isNotEmpty &&
+          !isAbstractType(ed.type!)) {
+        if (ed.type!.length > 1) {
+          throw StateError('Internal typing issue...');
+        }
+
+        final nsd = await fetchResource<StructureDefinition>(
+          uri: ed.type![0].code.toString().sdNs(getOverrideVersionNs()),
+        );
+
+        if (nsd == null) {
+          throw _makeException(expr, 'FHIRPATH_NO_TYPE', [
+            ed.type![0].code.valueString ?? '',
+            'getElementDefinition',
+          ]);
+        }
+
+        return getElementDefinition(
+          nsd,
+          '${nsd.id?.valueString}'
+          '${path.substring(ed.path.valueString!.length)}',
+          allowTypedName,
+          expr,
+        );
+      }
+
+      if (ed.hasContentReference() &&
+          path.startsWith('${ed.path.valueString}.')) {
+        final m = getElementDefinitionById(sd, ed.contentReference!.toString());
+        if (m?.definition?.path.valueString != null) {
+          return getElementDefinition(
+            sd,
+            '${m!.definition!.path.valueString}'
+            '${path.substring(ed.path.valueString!.length)}',
+            allowTypedName,
+            expr,
+          );
+        }
+      }
+    }
+    return null;
+  }
+
+  ElementDefinitionMatch? getElementDefinitionById(
+    StructureDefinition sd,
+    String ref,
+  ) {
+    for (final ed in sd.snapshot?.element ?? <ElementDefinition>[]) {
+      if (ref == '#${ed.id}') {
+        return ElementDefinitionMatch(ed, null);
+      }
+    }
+    return null;
+  }
+
+  void addTypeAndDescendents(
+    List<StructureDefinition> sdl,
+    StructureDefinition dt,
+    List<StructureDefinition> types,
+  ) {
+    sdl.add(dt);
+    for (final sd in types) {
+      if (sd.baseDefinition != null &&
+          sd.baseDefinition.toString() == dt.url.toString() &&
+          sd.derivation == TypeDerivationRule.specialization) {
+        addTypeAndDescendents(sdl, sd, types);
+      }
+    }
+  }
+
+  bool isAbstractType(List<ElementDefinitionType> list) {
+    return list.length != 1 ||
+        list.first.code.toString().existsInList(
+          {'Element', 'BackboneElement', 'Resource', 'DomainResource'},
+        );
+  }
+
+  bool hasDataType(ElementDefinition ed) {
+    return ed.hasType([]) &&
+        !(ed.getType().first.code.toString() == 'Element' ||
+            ed.getType().first.code.toString() == 'BackboneElement');
+  }
+
+  /// Resolves the [context] element path against [sd] and returns the neutral
+  /// [TypeDetails] used by the type-checking entrypoints (the `check` API), so
+  /// the engine no longer inspects an `ElementDefinition`. [abstractTypePrefix]
+  /// is the type URL to synthesize a nested-type name from when the element is
+  /// abstract/untyped. Returns null when the element can't be resolved (the
+  /// caller raises its own site-specific error).
+  /// The canonical URL of the type named [type], or null when the type is
+  /// not known. Neutral form of `fetchTypeDefinition(type)?.url` for the
+  /// engine's `check()` API (which needs only the URL).
+  Future<String?> typeCanonicalUrl(String type) async {
+    final sd = await fetchTypeDefinition(type);
+    return sd == null ? null : sd.url!.toString();
+  }
+
+  /// Fetches the `StructureDefinition` resource with canonical URL [url] as
+  /// a plain node, or null. The engine passes it back opaquely to
+  /// [resolveContextTypeDetails].
+  Future<FhirNode?> fetchTypeDefinitionByUrl(String url) =>
+      fetchResource<StructureDefinition>(uri: url);
+
+  Future<TypeDetails?> resolveContextTypeDetails(
+    FhirNode structureDefinition,
+    String context,
+    String abstractTypePrefix,
+    ExpressionNode expr,
+  ) async {
+    final sd = structureDefinition as StructureDefinition;
+    final ed = await getElementDefinition(sd, context, true, expr);
+    if (ed == null) {
+      return null;
+    }
+    if (ed.fixedType != null) {
+      return TypeDetails(CollectionStatus.singleton, [ed.fixedType!]);
+    }
+    if ((ed.definition?.type?.isEmpty ?? true) ||
+        isAbstractType(ed.definition!.type!)) {
+      return TypeDetails(
+        CollectionStatus.singleton,
+        ['$abstractTypePrefix#$context'],
+      );
+    }
+    final types = TypeDetails(CollectionStatus.singleton);
+    for (final t in ed.definition?.type ?? <ElementDefinitionType>[]) {
+      types.addType(t.code.toString());
+    }
+    return types;
   }
 
   Future<StructureDefinition?> fetchTypeDefinition(String typeName) async {
@@ -265,6 +890,54 @@ class WorkerContext {
         message: 'Validation failed: $e',
       );
     }
+  }
+
+  /// Fetches the `ValueSet` resource for [url], or null if it is not known.
+  /// Returned as a plain node — the engine's `memberOf` plumbing never
+  /// inspects it, it just hands it back to [validateCodeForCodingValue]/
+  /// [validateCodeForCodeableConceptValue].
+  Future<FhirNode?> fetchValueSet(String? url) =>
+      fetchResource<ValueSet>(uri: url);
+
+  /// Validates a code-carrying value (a `Coding`, or a `code`/`string`/`uri`
+  /// primitive) against [valueSet] (a `ValueSet` resource node).
+  ///
+  /// The value→`Coding` adaptation is FHIR-version-specific, so it lives here
+  /// at the model boundary (the worker) rather than in the FHIRPath engine —
+  /// the engine passes the nodes and lets the worker interpret them.
+  Future<ValidationResult> validateCodeForCodingValue(
+    ValidationOptions options,
+    FhirNode node,
+    FhirNode? valueSet,
+  ) async {
+    final value = node as FhirBase;
+    final coding = TypeConvertor.castToCoding(value);
+    if (coding == null) {
+      return ValidationResult.error(
+        message: 'Unable to interpret a ${value.fhirType} as a Coding',
+      );
+    }
+    return validateCodeWithCoding(options, coding, valueSet as ValueSet?);
+  }
+
+  /// As [validateCodeForCodingValue], but for a `CodeableConcept`-typed value.
+  Future<ValidationResult> validateCodeForCodeableConceptValue(
+    ValidationOptions options,
+    FhirNode node,
+    FhirNode valueSet,
+  ) async {
+    final value = node as FhirBase;
+    final concept = TypeConvertor.castToCodeableConcept(value);
+    if (concept == null) {
+      return ValidationResult.error(
+        message: 'Unable to interpret a ${value.fhirType} as a CodeableConcept',
+      );
+    }
+    return validateCodeWithCodeableConcept(
+      options,
+      concept,
+      valueSet as ValueSet,
+    );
   }
 
   Future<ValidationResult> validateCodeWithCodeableConcept(

@@ -10,7 +10,7 @@ class FhirToolingClient {
   FhirToolingClient({
     Uri? baseUri,
     this.userAgent = 'FHIR Tooling Client',
-  }) : baseUri = baseUri ?? Uri.parse('https://hapi.fhir.org/baseR6') {
+  }) : baseUri = baseUri ?? Uri.parse('https://hapi.fhir.org/baseR4') {
     headers['User-Agent'] = userAgent;
     headers['Accept'] = 'application/fhir+json';
     headers['Content-Type'] = 'application/fhir+json';

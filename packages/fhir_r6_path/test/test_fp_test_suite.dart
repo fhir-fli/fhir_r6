@@ -29,7 +29,7 @@ Future<void> testFpTestSuite() async {
     // <output type="boolean">true</output>
     // });
 
-    test('testExtractBirthDate', () async {
+    test('testPatientHasBirthDate', () async {
       expect(
         await walkFhirPath(
           context: patient1,
@@ -48,7 +48,7 @@ Future<void> testFpTestSuite() async {
     // <output type="code">old</output>
     // });
 
-    test('testExtractBirthDate', () async {
+    test('testPatientTelecomTypes', () async {
       expect(
         await walkFhirPath(
           context: patient1,
@@ -78,9 +78,15 @@ Future<void> testFpTestSuite() async {
       expect(
         await walkFhirPath(
           context: patient1,
-          pathExpression: 'name.given[3]',
+          pathExpression: 'name.given',
         ),
-        ['Peter'.toFhirString],
+        [
+          'Peter'.toFhirString,
+          'James'.toFhirString,
+          'Jim'.toFhirString,
+          'Peter'.toFhirString,
+          'James'.toFhirString,
+        ],
       );
     });
 
@@ -90,6 +96,18 @@ Future<void> testFpTestSuite() async {
     // });
 
     test('testSimpleNone', () async {
+      expect(
+        await walkFhirPath(
+          context: patient1,
+          pathExpression: 'name.suffix',
+        ),
+        <FhirBase>[],
+      );
+    });
+
+    // Not in the official suite — keeps coverage of extracting a complex
+    // (non-primitive) child through the engine.
+    test('testSimplePeriod', () async {
       expect(
           (await walkFhirPath(
             context: patient1,
@@ -114,9 +132,15 @@ Future<void> testFpTestSuite() async {
       expect(
         await walkFhirPath(
           context: patient1,
-          pathExpression: 'name.`given`[3]',
+          pathExpression: 'name.`given`',
         ),
-        ['Peter'.toFhirString],
+        [
+          'Peter'.toFhirString,
+          'James'.toFhirString,
+          'Jim'.toFhirString,
+          'Peter'.toFhirString,
+          'James'.toFhirString,
+        ],
       );
     });
 
@@ -131,9 +155,15 @@ Future<void> testFpTestSuite() async {
       expect(
         await walkFhirPath(
           context: patient1,
-          pathExpression: '`Patient`.name.`given`[3]',
+          pathExpression: '`Patient`.name.`given`',
         ),
-        ['Peter'.toFhirString],
+        [
+          'Peter'.toFhirString,
+          'James'.toFhirString,
+          'Jim'.toFhirString,
+          'Peter'.toFhirString,
+          'James'.toFhirString,
+        ],
       );
     });
 
@@ -142,7 +172,10 @@ Future<void> testFpTestSuite() async {
     // <expression invalid="semantic">name.given1</expression>
     // });
 
-    test('testSimpleBackTick1', () async {
+    // Official testSimpleFail runs in strict mode and expects a semantic
+    // error for the unknown path; our engine evaluates leniently, where an
+    // unknown name resolves to empty.
+    test('testSimpleFail-lenient', () async {
       expect(
         await walkFhirPath(
           context: patient1,
@@ -164,9 +197,15 @@ Future<void> testFpTestSuite() async {
       expect(
         await walkFhirPath(
           context: patient1,
-          pathExpression: 'Patient.name.given[3]',
+          pathExpression: 'Patient.name.given',
         ),
-        ['Peter'.toFhirString],
+        [
+          'Peter'.toFhirString,
+          'James'.toFhirString,
+          'Jim'.toFhirString,
+          'Peter'.toFhirString,
+          'James'.toFhirString,
+        ],
       );
     });
 
@@ -174,7 +213,10 @@ Future<void> testFpTestSuite() async {
     // <test name="testSimpleWithWrongContext" inputfile="patient-example.xml"
     //  mode="strict">
     // <expression invalid="semantic">Encounter.name.given</expression>
-    test('testSimpleWithContext', () async {
+    // Official testSimpleWithWrongContext runs in strict mode and expects a
+    // semantic error (the context type does not match the resource); our
+    // engine evaluates leniently, where the wrong context resolves to empty.
+    test('testSimpleWithWrongContext-lenient', () async {
       expect(
         await walkFhirPath(
           context: patient1,
@@ -232,16 +274,16 @@ Future<void> testFpTestSuite() async {
       );
     });
 
-    // testBoolean(observation(), "Observation.value.as(Quantity).unit", true);
+    // Official testPolymorphismAsA: the as() function form is retained by
+    // the spec for backwards compatibility (the Java reference implements
+    // it); an earlier revision asserted a project-invented deprecation throw.
     test('testPolymorphismAsA', () async {
       expect(
-        () async {
-          await walkFhirPath(
-            context: observation1,
-            pathExpression: 'Observation.value.as(Quantity).unit',
-          );
-        },
-        throwsA(isA<FhirPathDeprecatedExpressionException>()),
+        await walkFhirPath(
+          context: observation1,
+          pathExpression: 'Observation.value.as(Quantity).unit',
+        ),
+        ['lbs'.toFhirString],
       );
     });
   });
@@ -272,18 +314,16 @@ Future<void> testFpTestSuite() async {
     );
   });
 
-  // test(observation(), "Observation.value.as(Period).start", 0);
-  // <test name="testPolymorphismAsBFunction" inputfile="observation-example.xml">
-  // <expression>Observation.value.as(Period).start</expression>
-  // });
-  // });
+  // Official testPolymorphismAsBFunction: the value is a Quantity, so
+  // as(Period) filters it out and the result is empty. (An earlier revision
+  // asserted a project-invented deprecation throw.)
   test('testPolymorphismAsBFunction', () async {
     expect(
-      () => walkFhirPath(
+      await walkFhirPath(
         context: observation1,
         pathExpression: 'Observation.value.as(Period).start',
       ),
-      throwsA(const TypeMatcher<PathEngineException>()),
+      <FhirBase>[],
     );
   });
 
@@ -312,23 +352,19 @@ Future<void> testFpTestSuite() async {
       );
     });
 
-    // FIXED: this appears to only capture the first given name, but it should
-    // capture three
-    // test("testDollarOrderAllowed", () async {
-    //   expect(
-    //       await walkFhirPath(
-    //           context: patient1,
-    //           pathExpression: r"Patient.name.skip(1).given"),
-    //       ["Jim"]);
-    // });
-
-    test('testDollarOrderAllowed-fixed', () async {
+    // Official testDollarOrderAllowed: skip(1) leaves the usual + maiden
+    // names, whose givens are Jim, Peter, James.
+    test('testDollarOrderAllowed', () async {
       expect(
         await walkFhirPath(
           context: patient1,
-          pathExpression: 'Patient.name.skip(1).given[0]',
+          pathExpression: 'Patient.name.skip(1).given',
         ),
-        ['Jim'.toFhirString],
+        [
+          'Jim'.toFhirString,
+          'Peter'.toFhirString,
+          'James'.toFhirString,
+        ],
       );
     });
 
@@ -346,10 +382,11 @@ Future<void> testFpTestSuite() async {
       );
     });
 
-    // <test name="testDollarOrderNotAllowed" inputfile="patient-example.xml"
-    // mode="strict" checkOrderedFunctions="true">
-    // <expression invalid="semantic">Patient.children().skip(1)</expression>
-    test('testDollarOrderAllowedA', () async {
+    // Official testDollarOrderNotAllowed runs in strict mode with
+    // checkOrderedFunctions and expects a semantic error (skip() over the
+    // unordered children() collection); our engine evaluates leniently, so
+    // this asserts the lenient evaluation instead.
+    test('testDollarOrderNotAllowed-lenient', () async {
       expect(
           (await walkFhirPath(
             context: patient1,
@@ -903,7 +940,8 @@ Future<void> testFpTestSuite() async {
     // inputfile="observation-example.xml">
     // <expression invalid="semantic">Observation.value.value
     // < 'test'</expression>// no output - empty set});*/
-    test('testLiteralDecimalLessThanInteger', () async {
+    // Not in the official suite — comparing a decimal to a string must throw.
+    test('testLiteralDecimalLessThanStringThrows', () async {
       expect(
         () => walkFhirPath(
           context: observation1,
@@ -1772,13 +1810,17 @@ Future<void> testFpTestSuite() async {
       );
     });
 
+    // Official expectation is true: a bare UCUM code (`wk`) is not a valid
+    // unquoted unit — only calendar keywords may appear unquoted, so
+    // '1 wk' does NOT convert. (An earlier revision expected [false],
+    // masking a parseQuantityString that accepted bare UCUM codes.)
     test('testStringQuantityWeekConvertsToQuantityFalse', () async {
       expect(
         await walkFhirPath(
           context: patient1,
           pathExpression: "'1 wk'.convertsToQuantity().not()",
         ),
-        [false.toFhirBoolean],
+        [true.toFhirBoolean],
       );
     });
 
@@ -2196,13 +2238,17 @@ Future<void> testFpTestSuite() async {
       );
     });
 
+    // Official testAllTrue2 (tests-fhir-r4.xml): => false — only the maiden
+    // name has a period, so [false, false, true].allTrue() is false. (An
+    // earlier revision expected [true], masking a funcAllTrue that had
+    // anyTrue's break-on-first-true logic.)
     test('testAllTrue2', () async {
       expect(
         await walkFhirPath(
           context: patient1,
           pathExpression: 'Patient.name.select(period.exists()).allTrue()',
         ),
-        [true.toFhirBoolean],
+        [false.toFhirBoolean],
       );
     });
 
@@ -3098,7 +3144,7 @@ Future<void> testFpTestSuite() async {
       );
     });
 
-    test('testToInteger6', () async {
+    test('testToInteger4', () async {
       expect(
         await walkFhirPath(
           context: patient1,
@@ -3108,7 +3154,7 @@ Future<void> testFpTestSuite() async {
       );
     });
 
-    test('testToInteger6', () async {
+    test('testToInteger5', () async {
       expect(
         await walkFhirPath(
           context: patient1,
@@ -3882,13 +3928,17 @@ Future<void> testFpTestSuite() async {
       );
     });
 
+    // Official testEquality23: empty — one operand has a timezone and the
+    // other does not, and the two could denote the same instant in some
+    // timezone, so the comparison is indeterminate. (An earlier revision
+    // expected [false], masking the missing timezone-presence rule.)
     test('testEquality23', () async {
       expect(
         await walkFhirPath(
           context: patient1,
           pathExpression: '@2012-04-15T15:00:00Z = @2012-04-15T10:00:00',
         ),
-        [false.toFhirBoolean],
+        <FhirBase>[],
       );
     });
 
@@ -4099,23 +4149,16 @@ Future<void> testFpTestSuite() async {
       );
     });
 
+    // Official testNEquality17: empty — same timezone-presence
+    // indeterminacy as testEquality23. (Earlier revisions, including a
+    // duplicate "-fixed" copy, expected [true].)
     test('testNEquality17', () async {
       expect(
         await walkFhirPath(
           context: patient1,
           pathExpression: '@2012-04-15T15:00:00Z != @2012-04-15T10:00:00',
         ),
-        [true.toFhirBoolean],
-      );
-    });
-
-    test('testNEquality17-fixed', () async {
-      expect(
-        await walkFhirPath(
-          context: patient1,
-          pathExpression: '@2012-04-15T15:00:00Z != @2012-04-15T10:00:00',
-        ),
-        [true.toFhirBoolean],
+        <FhirBase>[],
       );
     });
 
@@ -4174,9 +4217,9 @@ Future<void> testFpTestSuite() async {
       expect(
         await walkFhirPath(
           context: patient1,
-          pathExpression: '1.2 / 1.8 != 0.67',
+          pathExpression: '(1.2 / 1.8).round(2) != 0.67',
         ),
-        [true.toFhirBoolean],
+        [false.toFhirBoolean],
       );
     });
 
@@ -5958,7 +6001,7 @@ Future<void> testFpTestSuite() async {
       );
     });
 
-    test('testBooleanLogicOr6', () async {
+    test('testBooleanLogicOr4', () async {
       expect(
         await walkFhirPath(
           context: patient1,
@@ -5968,7 +6011,7 @@ Future<void> testFpTestSuite() async {
       );
     });
 
-    test('testBooleanLogicOr6', () async {
+    test('testBooleanLogicOr5', () async {
       expect(
         await walkFhirPath(
           context: patient1,
@@ -6050,7 +6093,7 @@ Future<void> testFpTestSuite() async {
       );
     });
 
-    test('testBooleanLogicXOr6', () async {
+    test('testBooleanLogicXOr4', () async {
       expect(
         await walkFhirPath(
           context: patient1,
@@ -6060,7 +6103,7 @@ Future<void> testFpTestSuite() async {
       );
     });
 
-    test('testBooleanLogicXOr6', () async {
+    test('testBooleanLogicXOr5', () async {
       expect(
         await walkFhirPath(
           context: patient1,
@@ -7054,22 +7097,30 @@ Future<void> testFpTestSuite() async {
       );
     });
 
+    // Official testType12: Patient.active.is(Boolean).not() => true — a bare
+    // `Boolean` resolves to System.Boolean, and a FHIR boolean is not a
+    // System value, so `is(Boolean)` is FALSE and the .not() is TRUE. (An
+    // earlier revision used the grammatically-invalid operator form
+    // `x is Boolean.not()` and expected [false], which encoded a
+    // case-insensitive-matching bug in the old `is` operator, not the spec.)
     test('testType12', () async {
       expect(
         await walkFhirPath(
           context: patient1,
-          pathExpression: 'Patient.active is Boolean.not()',
+          pathExpression: 'Patient.active.is(Boolean).not()',
         ),
-        [false.toFhirBoolean],
+        [true.toFhirBoolean],
       );
     });
+    // Operator-form equivalent of testType12 (`x is T` ≡ `x.is(T)`,
+    // FHIRPath spec §6.3), parenthesised so .not() applies to the result.
     test('testType12-fixed', () async {
       expect(
         await walkFhirPath(
           context: patient1,
           pathExpression: '(Patient.active is Boolean).not()',
         ),
-        [false.toFhirBoolean],
+        [true.toFhirBoolean],
       );
     });
 
@@ -7083,14 +7134,19 @@ Future<void> testFpTestSuite() async {
       );
     });
 
-    // FIXED: Incorrect assumption about precedence
-    // test("testType14", () async {
-    //   expect(
-    //       await walkFhirPath(
-    //           context: patient1,
-    //           pathExpression: r"Patient.active is System.Boolean.not()"),
-    //       [true]);
-    // });
+    // Official testType14: Patient.active.is(System.Boolean).not() => true
+    // (a FHIR boolean is not a System value).
+    test('testType14', () async {
+      expect(
+        await walkFhirPath(
+          context: patient1,
+          pathExpression: 'Patient.active.is(System.Boolean).not()',
+        ),
+        [true.toFhirBoolean],
+      );
+    });
+    // Operator-form equivalent, parenthesised so .not() applies to the
+    // result.
     test('testType14-fixed', () async {
       expect(
         await walkFhirPath(
@@ -7171,16 +7227,17 @@ Future<void> testFpTestSuite() async {
       );
     });
 
-    // TODO(Dokotela): eventually deal with System
-    // test('testType22', () async {
-    //   expect(
-    //     await walkFhirPath(
-    //       context: patient1,
-    //       pathExpression: 'Patient is System.Patient.not()',
-    //     ),
-    //     [true.toFhirBoolean],
-    //   );
-    // });
+    // Official testType22: Patient.is(System.Patient).not() => true (a
+    // Resource is never a System value). Parenthesised for the operator form.
+    test('testType22-fixed', () async {
+      expect(
+        await walkFhirPath(
+          context: patient1,
+          pathExpression: '(Patient is System.Patient).not()',
+        ),
+        [true.toFhirBoolean],
+      );
+    });
 
     test('testType23', () async {
       expect(
