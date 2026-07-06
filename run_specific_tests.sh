@@ -1,4 +1,5 @@
 #!/bin/bash
+set -o pipefail
 
 # Simple test runner - tests each package ONCE and reports results
 # Only tests: fhir_r6, at_rest, db, mapping, path, bulk, validation
