@@ -13,8 +13,7 @@ import 'package:cql/cql.dart';
 import 'package:fhir_r6/fhir_r6.dart' as r6;
 import 'package:fhir_r6_path/fhir_r6_path.dart'
     show FHIRPathEngine, WorkerContext;
-import 'package:ucum/fhir/validated_quantity.dart' show ValidatedQuantity;
-import 'package:ucum/fhir/validated_ratio.dart' show ValidatedRatio;
+import 'package:ucum/ucum.dart' show ValidatedQuantity, ValidatedRatio;
 
 /// Concrete [ModelResolver] for FHIR R6 data.
 ///
