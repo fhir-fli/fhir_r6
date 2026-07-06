@@ -1,4 +1,3 @@
-
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:test/test.dart';
 
@@ -11,7 +10,8 @@ void identifierTest() {
           coding: [
             Coding(
               system: FhirUri(
-                  'http://terminology.hl7.org/CodeSystem/v2-0203',),
+                'http://terminology.hl7.org/CodeSystem/v2-0203',
+              ),
               code: FhirCode('MR'),
             ),
           ],

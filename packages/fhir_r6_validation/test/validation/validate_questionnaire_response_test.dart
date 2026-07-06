@@ -36,8 +36,7 @@ void main() {
       expect(results.results, isA<List<ValidationDiagnostics>>());
     });
 
-    test(
-        'reports error when Questionnaire cannot be retrieved from cache',
+    test('reports error when Questionnaire cannot be retrieved from cache',
         () async {
       final questionnaire = Questionnaire(
         id: 'example'.toFhirString,

@@ -63,7 +63,8 @@ void main() {
     test('security() adds _security parameter', () {
       search.security(
         'R'.toFhirString,
-        system: FhirUri('http://terminology.hl7.org/CodeSystem/v3-Confidentiality'),
+        system:
+            FhirUri('http://terminology.hl7.org/CodeSystem/v3-Confidentiality'),
       );
       final query = search.buildQuery();
       expect(query, contains('_security='));
@@ -582,8 +583,7 @@ void main() {
     });
 
     test('SearchResource base methods chain from subclass', () {
-      final search = SearchPatient()
-          .family('Smith'.toFhirString)
+      final search = SearchPatient().family('Smith'.toFhirString)
         ..id('abc'.toFhirString)
         ..lastUpdated(
           FhirDateTime.fromString('2024-01-01'),

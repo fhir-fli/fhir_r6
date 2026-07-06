@@ -1,4 +1,3 @@
-
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:test/test.dart';
 
@@ -103,8 +102,10 @@ void main() {
         expect(json['extension'], isA<List>());
 
         final restored = Resource.fromJson(json) as Patient;
-        expect(restored.extension_!.first.url.valueString,
-            'http://example.org/ext',);
+        expect(
+          restored.extension_!.first.url.valueString,
+          'http://example.org/ext',
+        );
       });
     });
 

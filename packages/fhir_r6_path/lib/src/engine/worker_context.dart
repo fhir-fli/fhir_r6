@@ -14,6 +14,7 @@ class WorkerContext implements IWorkerContext {
   IFhirValueFactory get valueFactory => const FhirValueFactory();
   // Fields to store resources
   final ResourceCache resourceCache;
+  @override
   final UcumService ucumService = UcumService();
   final ValidatorFetcher locator = ValidatorFetcher();
   final TerminologyCache txCache = TerminologyCache('lock', null);
@@ -50,6 +51,7 @@ class WorkerContext implements IWorkerContext {
     return names.toList();
   }
 
+  @override
   String getVersion() {
     return '6.0.0';
   }
@@ -57,6 +59,7 @@ class WorkerContext implements IWorkerContext {
   /// Whether [typeName] resolves to a known FHIR type. A neutral type-query
   /// the engine uses instead of inspecting a returned `StructureDefinition`,
   /// so the type metadata (StructureDefinition lookup) stays binding-side.
+  @override
   Future<bool> isKnownType(String typeName) async {
     // Fast-path on the generated model's type-name classification. This is
     // model knowledge (the R6 type lists), so it lives binding-side; it also
@@ -83,6 +86,7 @@ class WorkerContext implements IWorkerContext {
   /// the walk in the Java reference's `TypeDetails.hasType`, including its
   /// `uri` → `string` redirect. Supplied as data so the engine-side
   /// `TypeDetails` never inspects a `StructureDefinition`.
+  @override
   Future<List<(String, String)>> typeAncestry(String uri) async {
     final result = <(String, String)>[];
     var node = await _resolveTypeNodeByUrl(uri);
@@ -103,6 +107,7 @@ class WorkerContext implements IWorkerContext {
   /// Names of every specialization (non-logical) type in the loaded
   /// structures — the engine's set of navigable type names (used by
   /// `FhirPathContext.initialize` and the `type()`-reflection paths).
+  @override
   Future<List<String>> specializedTypeNames() async {
     final names = <String>{
       for (final info in fhirTypeHierarchy.values)
@@ -133,6 +138,7 @@ class WorkerContext implements IWorkerContext {
   /// `Resource`). Matches the Java reference `FHIRPathEngine.funcIs`
   /// (org.hl7.fhir.r4.fhirpath) and the official test suite's `testType`
   /// group expectations.
+  @override
   Future<bool> isValueOfType(FhirNode node, String ns, String name) async {
     final value = node as FhirBase;
     if (ns == 'System') {
@@ -163,6 +169,7 @@ class WorkerContext implements IWorkerContext {
   /// `is` walk ([isSubtypeOf]) — the `ofType` walk STOPS at primitive-type
   /// definitions, so e.g. `gender.ofType(string)` is false for a `code` even
   /// though `gender.is(string)` is true.
+  @override
   Future<bool> matchesOfType(FhirNode node, String tn) async {
     final value = node as FhirBase;
     if (tn.startsWith('System.')) {
@@ -202,6 +209,7 @@ class WorkerContext implements IWorkerContext {
   /// makes `Patient.gender.is(string)` true for a `code` (official
   /// testFHIRPathIsFunction2). Only the `ofType`/`as` walk ([matchesOfType])
   /// stops at primitives.
+  @override
   Future<bool> isSubtypeOf(String type, String superType) async {
     if (type == superType) {
       return true;
@@ -271,6 +279,7 @@ class WorkerContext implements IWorkerContext {
   /// The set of FHIR primitive type names, derived from the loaded structure
   /// definitions. This is type metadata, so it is owned by the worker rather
   /// than recomputed engine-side.
+  @override
   Future<Set<String>> primitiveTypeNames() async {
     if (_primitiveTypeCache != null) {
       return _primitiveTypeCache!;
@@ -311,6 +320,7 @@ class WorkerContext implements IWorkerContext {
   /// [type], accumulating them into [result]. This is the static type-analysis
   /// counterpart of runtime child navigation (used by `checkParamTypes`), and
   /// it is the sole home of `snapshot.element` walking.
+  @override
   Future<void> getChildTypesByName(
     String? type,
     String name,
@@ -672,17 +682,20 @@ class WorkerContext implements IWorkerContext {
   /// The canonical URL of the type named [type], or null when the type is
   /// not known. Neutral form of `fetchTypeDefinition(type)?.url` for the
   /// engine's `check()` API (which needs only the URL).
+  @override
   Future<String?> typeCanonicalUrl(String type) async {
     final sd = await fetchTypeDefinition(type);
-    return sd == null ? null : sd.url!.toString();
+    return sd?.url!.toString();
   }
 
   /// Fetches the `StructureDefinition` resource with canonical URL [url] as
   /// a plain node, or null. The engine passes it back opaquely to
   /// [resolveContextTypeDetails].
+  @override
   Future<FhirNode?> fetchTypeDefinitionByUrl(String url) =>
       fetchResource<StructureDefinition>(uri: url);
 
+  @override
   Future<TypeDetails?> resolveContextTypeDetails(
     FhirNode structureDefinition,
     String context,
@@ -780,6 +793,7 @@ class WorkerContext implements IWorkerContext {
     return codeSystem;
   }
 
+  @override
   String formatMessage(String theMessage, List<dynamic> theMessageArguments) {
     // Include argument information in the output
     final argumentsInfo = theMessageArguments
@@ -802,6 +816,7 @@ class WorkerContext implements IWorkerContext {
     return '$formattedMessage\nArguments: $argumentsInfo';
   }
 
+  @override
   String formatMessagePlural(
     int pl,
     String theMessage,
@@ -941,6 +956,7 @@ class WorkerContext implements IWorkerContext {
   /// Returned as a plain node — the engine's `memberOf` plumbing never
   /// inspects it, it just hands it back to [validateCodeForCodingValue]/
   /// [validateCodeForCodeableConceptValue].
+  @override
   Future<FhirNode?> fetchValueSet(String? url) =>
       fetchResource<ValueSet>(uri: url);
 
@@ -950,6 +966,7 @@ class WorkerContext implements IWorkerContext {
   /// The value→`Coding` adaptation is FHIR-version-specific, so it lives here
   /// at the model boundary (the worker) rather than in the FHIRPath engine —
   /// the engine passes the nodes and lets the worker interpret them.
+  @override
   Future<ValidationResult> validateCodeForCodingValue(
     ValidationOptions options,
     FhirNode node,
@@ -966,6 +983,7 @@ class WorkerContext implements IWorkerContext {
   }
 
   /// As [validateCodeForCodingValue], but for a `CodeableConcept`-typed value.
+  @override
   Future<ValidationResult> validateCodeForCodeableConceptValue(
     ValidationOptions options,
     FhirNode node,

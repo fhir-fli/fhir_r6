@@ -56,7 +56,8 @@ void main() async {
             print(differences.join('\n'));
           } else {
             print(
-                '  ${differences.length ~/ 3} fields differ (showing first 10):',);
+              '  ${differences.length ~/ 3} fields differ (showing first 10):',
+            );
             print(differences.take(30).join('\n'));
             print('  ... and ${differences.length ~/ 3 - 10} more');
           }
@@ -88,7 +89,8 @@ void main() async {
   print('Total files: ${files.length}');
   print('Parse errors: ${categories['parse_error']!.length}');
   print(
-      'Serialization mismatches: ${categories['serialization_mismatch']!.length}',);
+    'Serialization mismatches: ${categories['serialization_mismatch']!.length}',
+  );
   print('Missing required fields: ${categories['missing_required']!.length}');
   print('Other errors: ${categories['other_error']!.length}');
 
@@ -102,7 +104,8 @@ void main() async {
 
   for (final category in categories.entries) {
     sink.writeln(
-        '${category.key.toUpperCase()} (${category.value.length} files):',);
+      '${category.key.toUpperCase()} (${category.value.length} files):',
+    );
     for (final file in category.value) {
       sink.writeln('  - $file');
     }
@@ -113,8 +116,10 @@ void main() async {
   print('\nDetailed report written to: test/quarantine_analysis.txt');
 }
 
-Map<String, dynamic> _flattenJson(Map<String, dynamic> json,
-    [String prefix = '',]) {
+Map<String, dynamic> _flattenJson(
+  Map<String, dynamic> json, [
+  String prefix = '',
+]) {
   final result = <String, dynamic>{};
 
   for (final entry in json.entries) {

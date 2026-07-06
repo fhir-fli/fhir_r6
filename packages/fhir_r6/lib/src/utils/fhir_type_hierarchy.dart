@@ -1,5 +1,3 @@
-// ignore_for_file: require_trailing_commas
-
 /// Type-hierarchy metadata for one core FHIR type, taken from its
 /// StructureDefinition in the R6 specification
 /// (profiles-types.json / profiles-resources.json).
@@ -79,7 +77,8 @@ const Map<String, FhirTypeInfo> fhirTypeHierarchy = <String, FhirTypeInfo>{
     name: 'AdministrableProductDefinition',
     type: 'AdministrableProductDefinition',
     kind: 'resource',
-    url: 'http://hl7.org/fhir/StructureDefinition/AdministrableProductDefinition',
+    url:
+        'http://hl7.org/fhir/StructureDefinition/AdministrableProductDefinition',
     base: 'DomainResource',
     derivation: 'specialization',
   ),
@@ -216,7 +215,8 @@ const Map<String, FhirTypeInfo> fhirTypeHierarchy = <String, FhirTypeInfo>{
     name: 'BiologicallyDerivedProductDispense',
     type: 'BiologicallyDerivedProductDispense',
     kind: 'resource',
-    url: 'http://hl7.org/fhir/StructureDefinition/BiologicallyDerivedProductDispense',
+    url:
+        'http://hl7.org/fhir/StructureDefinition/BiologicallyDerivedProductDispense',
     base: 'DomainResource',
     derivation: 'specialization',
   ),
@@ -1647,7 +1647,8 @@ const Map<String, FhirTypeInfo> fhirTypeHierarchy = <String, FhirTypeInfo>{
     name: 'SubstanceReferenceInformation',
     type: 'SubstanceReferenceInformation',
     kind: 'resource',
-    url: 'http://hl7.org/fhir/StructureDefinition/SubstanceReferenceInformation',
+    url:
+        'http://hl7.org/fhir/StructureDefinition/SubstanceReferenceInformation',
     base: 'DomainResource',
     derivation: 'specialization',
   ),
