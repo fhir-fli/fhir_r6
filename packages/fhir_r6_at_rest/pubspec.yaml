@@ -1,6 +1,6 @@
 name: fhir_r6_at_rest
 description: A Dart package providing type-safe, fluent RESTful operations for FHIR R6 resources. 
-version: 0.5.1
+version: 0.6.0
 homepage: https://www.fhirfli.dev/
 repository: https://github.com/fhir-fli/fhir_r6
 
@@ -24,7 +24,7 @@ environment:
   sdk: ^3.5.0
 
 dependencies:
-  fhir_r6: ^0.5.0
+  fhir_r6: ^0.6.0
   http: ^1.6.0
 
 dev_dependencies:

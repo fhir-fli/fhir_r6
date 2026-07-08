@@ -1,6 +1,6 @@
 name: fhir_r6_db
 description: FHIR R6 database with SQLite/Drift backend, search parameter indexing, and optional encryption.
-version: 0.5.1
+version: 0.6.0
 homepage: https://www.fhirfli.dev/
 repository: https://github.com/fhir-fli/fhir_r6
 
@@ -27,7 +27,7 @@ dependencies:
   collection: ^1.19.1
   crypto: ^3.0.7
   drift: ^2.33.0
-  fhir_r6: ^0.5.0
+  fhir_r6: ^0.6.0
   sqlite3: ^3.1.5
 
 dev_dependencies:
