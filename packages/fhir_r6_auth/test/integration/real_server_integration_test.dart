@@ -11,6 +11,7 @@
 /// Note: These tests require actual server access and may take longer to run.
 library;
 
+import 'dart:developer';
 import 'dart:io';
 import 'package:fhir_r6_auth/fhir_r6_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -125,7 +126,10 @@ void _testPatientStandaloneLaunch() {
         }
       } catch (e) {
         // Log error but don't fail if it's a network/credential issue
-        print('Epic patient standalone launch test failed: $e');
+        log(
+          'Epic patient standalone launch test failed: $e',
+          name: 'fhir_r6_auth.test',
+        );
         // Re-throw if it's a configuration issue
         if (e is ConfigurationException) {
           rethrow;
@@ -162,7 +166,10 @@ void _testPatientStandaloneLaunch() {
         expect(client.patientContext, isNotNull);
         expect(client.patientContext, isNotEmpty);
       } catch (e) {
-        print('Cerner patient standalone launch test failed: $e');
+        log(
+          'Cerner patient standalone launch test failed: $e',
+          name: 'fhir_r6_auth.test',
+        );
         if (e is ConfigurationException) {
           rethrow;
         }
@@ -197,7 +204,10 @@ void _testPatientStandaloneLaunch() {
         expect(client.patientContext, isNotNull);
         expect(client.patientContext, isNotEmpty);
       } catch (e) {
-        print('Generic SMART patient standalone launch test failed: $e');
+        log(
+          'Generic SMART patient standalone launch test failed: $e',
+          name: 'fhir_r6_auth.test',
+        );
         if (e is ConfigurationException) {
           rethrow;
         }
@@ -239,7 +249,10 @@ void _testPatientEhrLaunch() {
         expect(client.patientContext, isNotNull);
         expect(client.patientContext, isNotEmpty);
       } catch (e) {
-        print('Epic patient EHR launch test failed: $e');
+        log(
+          'Epic patient EHR launch test failed: $e',
+          name: 'fhir_r6_auth.test',
+        );
         if (e is ConfigurationException) {
           rethrow;
         }
@@ -277,7 +290,10 @@ void _testPatientEhrLaunch() {
         expect(isAuth, isTrue);
         expect(client.patientContext, isNotNull);
       } catch (e) {
-        print('Cerner patient EHR launch test failed: $e');
+        log(
+          'Cerner patient EHR launch test failed: $e',
+          name: 'fhir_r6_auth.test',
+        );
         if (e is ConfigurationException) {
           rethrow;
         }
@@ -315,7 +331,10 @@ void _testPatientEhrLaunch() {
         expect(isAuth, isTrue);
         expect(client.patientContext, isNotNull);
       } catch (e) {
-        print('Generic SMART patient EHR launch test failed: $e');
+        log(
+          'Generic SMART patient EHR launch test failed: $e',
+          name: 'fhir_r6_auth.test',
+        );
         if (e is ConfigurationException) {
           rethrow;
         }
@@ -359,7 +378,10 @@ void _testPractitionerStandaloneLaunch() {
           reason: 'FHIR user should reference a Practitioner',
         );
       } catch (e) {
-        print('Epic practitioner standalone launch test failed: $e');
+        log(
+          'Epic practitioner standalone launch test failed: $e',
+          name: 'fhir_r6_auth.test',
+        );
         if (e is ConfigurationException) {
           rethrow;
         }
@@ -397,7 +419,10 @@ void _testPractitionerStandaloneLaunch() {
           isTrue,
         );
       } catch (e) {
-        print('Cerner practitioner standalone launch test failed: $e');
+        log(
+          'Cerner practitioner standalone launch test failed: $e',
+          name: 'fhir_r6_auth.test',
+        );
         if (e is ConfigurationException) {
           rethrow;
         }
@@ -431,7 +456,10 @@ void _testPractitionerStandaloneLaunch() {
         expect(isAuth, isTrue);
         expect(client.fhirUser, isNotNull);
       } catch (e) {
-        print('Generic SMART practitioner standalone launch test failed: $e');
+        log(
+          'Generic SMART practitioner standalone launch test failed: $e',
+          name: 'fhir_r6_auth.test',
+        );
         if (e is ConfigurationException) {
           rethrow;
         }
@@ -476,7 +504,10 @@ void _testPractitionerEhrLaunch() {
           isTrue,
         );
       } catch (e) {
-        print('Epic practitioner EHR launch test failed: $e');
+        log(
+          'Epic practitioner EHR launch test failed: $e',
+          name: 'fhir_r6_auth.test',
+        );
         if (e is ConfigurationException) {
           rethrow;
         }
@@ -514,7 +545,10 @@ void _testPractitionerEhrLaunch() {
         expect(isAuth, isTrue);
         expect(client.fhirUser, isNotNull);
       } catch (e) {
-        print('Cerner practitioner EHR launch test failed: $e');
+        log(
+          'Cerner practitioner EHR launch test failed: $e',
+          name: 'fhir_r6_auth.test',
+        );
         if (e is ConfigurationException) {
           rethrow;
         }
@@ -552,7 +586,10 @@ void _testPractitionerEhrLaunch() {
         expect(isAuth, isTrue);
         expect(client.fhirUser, isNotNull);
       } catch (e) {
-        print('Generic SMART practitioner EHR launch test failed: $e');
+        log(
+          'Generic SMART practitioner EHR launch test failed: $e',
+          name: 'fhir_r6_auth.test',
+        );
         if (e is ConfigurationException) {
           rethrow;
         }
@@ -591,7 +628,10 @@ void _testBackendServiceLaunch() {
         expect(client.patientContext, isNull);
         expect(client.fhirUser, isNull);
       } catch (e) {
-        print('Epic backend service launch test failed: $e');
+        log(
+          'Epic backend service launch test failed: $e',
+          name: 'fhir_r6_auth.test',
+        );
         if (e is ConfigurationException) {
           rethrow;
         }
@@ -626,7 +666,10 @@ void _testBackendServiceLaunch() {
         expect(client.patientContext, isNull);
         expect(client.fhirUser, isNull);
       } catch (e) {
-        print('Cerner backend service launch test failed: $e');
+        log(
+          'Cerner backend service launch test failed: $e',
+          name: 'fhir_r6_auth.test',
+        );
         if (e is ConfigurationException) {
           rethrow;
         }
@@ -661,7 +704,10 @@ void _testBackendServiceLaunch() {
         expect(client.patientContext, isNull);
         expect(client.fhirUser, isNull);
       } catch (e) {
-        print('Generic SMART backend service launch test failed: $e');
+        log(
+          'Generic SMART backend service launch test failed: $e',
+          name: 'fhir_r6_auth.test',
+        );
         if (e is ConfigurationException) {
           rethrow;
         }
