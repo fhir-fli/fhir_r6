@@ -7,25 +7,25 @@ Production-ready SMART on FHIR authentication and authorization for Flutter appl
 
 ## Features
 
-**Complete SMART on FHIR Implementation**
+✅ **Complete SMART on FHIR Implementation**
 - Standalone launch (patient-facing apps)
 - EHR launch (embedded within EHR systems)
 - Backend services (server-to-server)
 
-**Security Best Practices**
+✅ **Security Best Practices**
 - PKCE (Proof Key for Code Exchange) required by default
 - Secure token storage with encryption
 - JWT validation and verification
 - Token introspection and revocation
 - Audit logging
 
-**Enterprise Features**
+✅ **Enterprise Features**
 - Session management with timeout controls
 - Token refresh handling
 - Multi-platform support (iOS, Android, Web, Desktop)
 - Comprehensive error handling
 
-**Developer Experience**
+✅ **Developer Experience**
 - Type-safe API
 - Extensive documentation
 - Working examples for all launch types
@@ -39,8 +39,8 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  fhir_r6_auth: ^0.4.0
-  fhir_r6: ^0.4.2
+  fhir_r6_auth: ^0.6.0
+  fhir_r6: ^0.6.0
 ```
 
 ### Basic Standalone Launch
@@ -58,14 +58,12 @@ final client = SmartFhirClient(
   ),
 );
 
-// 2. Authenticate
-await client.authenticate();
+// 2. Authenticate (launches the SMART authorization flow)
+await client.login();
 
-// 3. Make FHIR requests
-final patient = await client.read(
-  resourceType: 'Patient',
-  id: 'patient-123',
-);
+// 3. SmartFhirClient is an authenticated http.Client. Use it directly,
+//    or hand it to fhir_r6_at_rest to build typed FHIR requests:
+//    FhirReadRequest(..., client: client).sendRequest();
 ```
 
 ### EHR Launch
@@ -85,7 +83,7 @@ final client = SmartFhirClient(
   ),
 );
 
-await client.authenticate();
+await client.login();
 ```
 
 ## Common Use Cases
@@ -96,7 +94,7 @@ Tokens are automatically refreshed before expiry:
 
 ```dart
 // Manual refresh if needed
-await client.refreshAccessToken();
+await client.refreshToken();
 ```
 
 ### Token Revocation
@@ -115,8 +113,10 @@ await client.revokeAccessToken();
 final client = SmartFhirClient(
   config: config,
   sessionManager: SessionManager(
-    idleTimeout: Duration(minutes: 15),
-    absoluteTimeout: Duration(hours: 8),
+    config: SessionConfig(
+      idleTimeout: Duration(minutes: 15),
+      absoluteTimeout: Duration(hours: 8),
+    ),
   ),
 );
 
@@ -137,12 +137,19 @@ await client.recordActivity();
 ### Audit Logging
 
 ```dart
+// Events are recorded to an in-memory store by default
+final auditLogger = AuditLogger();
+
 final client = SmartFhirClient(
   config: config,
-  auditLogger: AuditLogger(
-    onLog: (event) => print('Audit: ${event.eventType}'),
-  ),
+  auditLogger: auditLogger,
 );
+
+// Inspect recorded events at any time
+final events = await auditLogger.queryEvents();
+for (final event in events) {
+  print('Audit: ${event.eventType.name}');
+}
 ```
 
 ### Secure Token Storage
@@ -212,20 +219,20 @@ Create `web/redirect.html`:
 
 Tested and working with:
 
-- Epic (Sandbox & Production)
-- Cerner (Sandbox & Production)
-- SMART Health IT Sandbox
-- HAPI FHIR Server
-- Google Cloud Healthcare API
-- Microsoft Azure API for FHIR
-- AWS HealthLake
+- ✅ Epic (Sandbox & Production)
+- ✅ Cerner (Sandbox & Production)
+- ✅ SMART Health IT Sandbox
+- ✅ HAPI FHIR Server
+- ✅ Google Cloud Healthcare API
+- ✅ Microsoft Azure API for FHIR
+- ✅ AWS HealthLake
 
 ## Documentation
 
-- [Full Documentation](https://www.fhirfli.dev/docs/auth)
-- [API Reference](https://pub.dev/documentation/fhir_r6_auth/latest/)
-- [Examples](https://github.com/fhirfli/fhir_r6_auth/tree/main/example)
-- [Migration Guide](https://www.fhirfli.dev/docs/auth/migration)
+- 📚 [Full Documentation](https://www.fhirfli.dev/docs/auth)
+- 🎯 [API Reference](https://pub.dev/documentation/fhir_r6_auth/latest/)
+- 💡 [Examples](https://github.com/fhirfli/fhir_r6_auth/tree/main/example)
+- 🔧 [Migration Guide](https://www.fhirfli.dev/docs/auth/migration)
 
 ## Examples
 
@@ -283,12 +290,12 @@ BSD-3-Clause License - see [LICENSE](LICENSE) file for details.
 
 ## Support
 
-- [Report Issues](https://github.com/fhirfli/fhir_r6_auth/issues)
-- [Discussions](https://github.com/fhirfli/fhir_r6_auth/discussions)
-- [Email Support](mailto:support@fhirfli.dev)
+- 🐛 [Report Issues](https://github.com/fhirfli/fhir_r6_auth/issues)
+- 💬 [Discussions](https://github.com/fhirfli/fhir_r6_auth/discussions)
+- 📧 [Email Support](mailto:support@fhirfli.dev)
 
 ## Acknowledgments
 
-Built by the [FHIRfli](https://www.fhirfli.dev) team.
+Built with ❤️ by the [FHIRfli](https://www.fhirfli.dev) team.
 
 Implements [SMART App Launch](http://hl7.org/fhir/smart-app-launch/) specification from HL7.

@@ -36,18 +36,18 @@ final patient = Patient.fromJson(jsonDecode(response.body));
 
 ```yaml
 dependencies:
-  fhir_r6_at_rest: ^0.4.0
-  fhir_r6: ^0.4.2
+  fhir_r6_at_rest: ^0.6.0
+  fhir_r6: ^0.6.0
   
   # Optional: For authenticated requests
-  fhir_r6_auth: ^0.4.0
+  fhir_r6_auth: ^0.6.0
 ```
 
 ## FHIR Version Support
 
 This package supports FHIR R6. For other FHIR versions, see:
-- `fhir_r6_at_rest` - R6 support
-- `fhir_r6_at_rest` - R6 support
+- `fhir_r4_at_rest` - R4 support
+- `fhir_r5_at_rest` - R5 support
 
 ## Basic Usage
 
@@ -319,15 +319,17 @@ import 'package:fhir_r6_auth/fhir_r6_auth.dart';
 
 // Create and authenticate a SMART on FHIR client
 final authClient = SmartFhirClient(
-  fhirUri: FhirUri('https://server.org/fhir'),
-  clientId: 'my-client-id',
-  redirectUri: FhirUri('https://myapp.com/callback'),
-  scopes: ['patient/*.read'],
+  config: SmartConfig(
+    fhirBaseUrl: 'https://server.org/fhir'.toFhirUri,
+    clientId: 'my-client-id',
+    redirectUri: Uri.parse('https://myapp.com/callback'),
+    scopes: ['patient/*.read'],
+  ),
 );
 
 await authClient.login();
 
-// Pass the authenticated client to any request
+// SmartFhirClient is an authenticated http.Client; pass it to any request
 final request = FhirReadRequest(
   base: Uri.parse('https://server.org/fhir'),
   resourceType: 'Patient',
