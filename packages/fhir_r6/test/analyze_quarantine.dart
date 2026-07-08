@@ -3,6 +3,14 @@ import 'dart:io';
 
 import 'package:fhir_r6/fhir_r6.dart';
 
+/// Writes [message] followed by a newline to stdout.
+///
+/// This is a command-line diagnostic tool, so its console output is the
+/// intended result rather than incidental logging; routing through
+/// [stdout] keeps the analyzer's `avoid_print` guidance satisfied while
+/// preserving the exact `print`-style behavior.
+void _out(Object? message) => stdout.writeln(message);
+
 void main() async {
   final quarantineDir = Directory('./test/quarantine');
   final files = quarantineDir
@@ -11,8 +19,8 @@ void main() async {
       .cast<File>()
       .toList();
 
-  print('Analyzing ${files.length} quarantined files...\n');
-  print('=' * 80);
+  _out('Analyzing ${files.length} quarantined files...\n');
+  _out('=' * 80);
 
   final categories = <String, List<String>>{
     'parse_error': [],
@@ -33,7 +41,7 @@ void main() async {
 
         if (!deepCompare(contentJson, resourceJson)) {
           categories['serialization_mismatch']!.add(fileName);
-          print('\n[$fileName] - SERIALIZATION MISMATCH');
+          _out('\n[$fileName] - SERIALIZATION MISMATCH');
 
           // Show differences
           final original = _flattenJson(contentJson);
@@ -53,13 +61,13 @@ void main() async {
           }
 
           if (differences.length <= 20) {
-            print(differences.join('\n'));
+            _out(differences.join('\n'));
           } else {
-            print(
+            _out(
               '  ${differences.length ~/ 3} fields differ (showing first 10):',
             );
-            print(differences.take(30).join('\n'));
-            print('  ... and ${differences.length ~/ 3 - 10} more');
+            _out(differences.take(30).join('\n'));
+            _out('  ... and ${differences.length ~/ 3 - 10} more');
           }
         }
       } catch (e) {
@@ -67,32 +75,32 @@ void main() async {
             e.toString().contains('must not be null') ||
             e.toString().contains('Missing required')) {
           categories['missing_required']!.add(fileName);
-          print('\n[$fileName] - MISSING REQUIRED FIELD');
-          print('  Error: $e');
+          _out('\n[$fileName] - MISSING REQUIRED FIELD');
+          _out('  Error: $e');
         } else {
           categories['parse_error']!.add(fileName);
-          print('\n[$fileName] - PARSE ERROR');
-          print('  Error: $e');
+          _out('\n[$fileName] - PARSE ERROR');
+          _out('  Error: $e');
         }
       }
     } catch (e) {
       categories['other_error']!.add(fileName);
-      print('\n[$fileName] - OTHER ERROR');
-      print('  Error: $e');
+      _out('\n[$fileName] - OTHER ERROR');
+      _out('  Error: $e');
     }
   }
 
-  print('\n');
-  print('=' * 80);
-  print('SUMMARY');
-  print('=' * 80);
-  print('Total files: ${files.length}');
-  print('Parse errors: ${categories['parse_error']!.length}');
-  print(
+  _out('\n');
+  _out('=' * 80);
+  _out('SUMMARY');
+  _out('=' * 80);
+  _out('Total files: ${files.length}');
+  _out('Parse errors: ${categories['parse_error']!.length}');
+  _out(
     'Serialization mismatches: ${categories['serialization_mismatch']!.length}',
   );
-  print('Missing required fields: ${categories['missing_required']!.length}');
-  print('Other errors: ${categories['other_error']!.length}');
+  _out('Missing required fields: ${categories['missing_required']!.length}');
+  _out('Other errors: ${categories['other_error']!.length}');
 
   // Write detailed report
   final report = File('./test/quarantine_analysis.txt');
@@ -113,7 +121,7 @@ void main() async {
   }
 
   await sink.close();
-  print('\nDetailed report written to: test/quarantine_analysis.txt');
+  _out('\nDetailed report written to: test/quarantine_analysis.txt');
 }
 
 Map<String, dynamic> _flattenJson(
