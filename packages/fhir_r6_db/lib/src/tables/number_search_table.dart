@@ -32,6 +32,9 @@ class NumberSearchParameters extends Table {
 
 /// Extension on [fhir.FhirBase] to extract number search parameters.
 extension NumberSearchParametersExtension on fhir.FhirBase {
+  /// Extracts number search-index rows from this element, converting FHIR
+  /// integer and decimal values into [NumberSearchParametersCompanion]
+  /// entries for numeric range queries.
   List<NumberSearchParametersCompanion> toNumberSearchParameter(
     String resourceType,
     String id,

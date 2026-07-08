@@ -163,9 +163,11 @@ class SearchMedicationKnowledge extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    final paramValue = (modifier != null
-        ? '$modifier$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
-        : '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}');
+    final systemStr = system?.toString() ?? '';
+    final unitStr = unit?.toString() ?? '';
+    final paramValue = modifier != null
+        ? '$modifier$value|$systemStr|$unitStr'
+        : '$value|$systemStr|$unitStr';
     addParameterValue('packaging_cost', paramValue);
     return this;
   }

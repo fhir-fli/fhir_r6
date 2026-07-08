@@ -35,6 +35,9 @@ class CompositeSearchParameters extends Table {
 
 /// Extension on [fhir.FhirBase] to extract composite search parameters.
 extension CompositeSearchParametersExtension on fhir.FhirBase {
+  /// Extracts composite search-index rows from this element, pairing the
+  /// component values that make up a FHIR composite search parameter into
+  /// [CompositeSearchParametersCompanion] entries.
   List<CompositeSearchParametersCompanion> toCompositeSearchParameter(
     String resourceType,
     String id,

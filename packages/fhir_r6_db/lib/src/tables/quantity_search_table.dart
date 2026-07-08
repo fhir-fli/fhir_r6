@@ -41,6 +41,9 @@ class QuantitySearchParameters extends Table {
 
 /// Extension on [fhir.FhirBase] to extract quantity search parameters.
 extension QuantitySearchParametersExtension on fhir.FhirBase {
+  /// Extracts quantity search-index rows from this element, capturing the
+  /// numeric value together with its unit and system into
+  /// [QuantitySearchParametersCompanion] entries.
   List<QuantitySearchParametersCompanion> toQuantitySearchParameter(
     String resourceType,
     String id,

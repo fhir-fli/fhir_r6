@@ -51,6 +51,9 @@ class ReferenceSearchParameters extends Table {
 
 /// Extension on [fhir.FhirBase] to extract reference search parameters.
 extension ReferenceSearchParametersExtension on fhir.FhirBase {
+  /// Extracts reference search-index rows from this element, recording the
+  /// target type and logical id of each [fhir.Reference] as a
+  /// [ReferenceSearchParametersCompanion] entry.
   List<ReferenceSearchParametersCompanion> toReferenceSearchParameter(
     String resourceType,
     String id,

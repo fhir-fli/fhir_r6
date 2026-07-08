@@ -32,6 +32,9 @@ class SpecialSearchParameters extends Table {
 
 /// Extension on [fhir.FhirBase] to extract special search parameters.
 extension SpecialSearchParametersExtension on fhir.FhirBase {
+  /// Extracts special search-index rows from this element for FHIR
+  /// special-type parameters (such as positional/`near` searches),
+  /// producing [SpecialSearchParametersCompanion] entries.
   List<SpecialSearchParametersCompanion> toSpecialSearchParameter(
     String resourceType,
     String id,

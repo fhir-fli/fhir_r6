@@ -32,6 +32,9 @@ class StringSearchParameters extends Table {
 
 /// Extension on [fhir.FhirBase] to extract string search parameters.
 extension StringSearchParametersExtension on fhir.FhirBase {
+  /// Extracts string search-index rows from this element, flattening FHIR
+  /// strings and composite types like [fhir.HumanName] and [fhir.Address]
+  /// into [StringSearchParametersCompanion] entries.
   List<StringSearchParametersCompanion> toStringSearchParameter(
     String resourceType,
     String id,

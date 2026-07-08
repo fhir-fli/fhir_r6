@@ -316,7 +316,7 @@ void main() {
           id: 'e1'.toFhirString,
           status: EncounterStatus.planned,
           class_: [
-            CodeableConcept(coding: [Coding(code: 'AMB'.toFhirCode)])
+            CodeableConcept(coding: [Coding(code: 'AMB'.toFhirCode)]),
           ],
         ),
         AllergyIntolerance(

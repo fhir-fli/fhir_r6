@@ -319,7 +319,7 @@ Future<void> main() async {
             security: <Coding>[
               Coding(
                 system: FhirUri(
-                    'http://terminology.hl7.org/CodeSystem/v3-Confidentiality'),
+                    'http://terminology.hl7.org/CodeSystem/v3-Confidentiality',),
                 code: FhirCode('R'),
               ),
             ],
@@ -481,7 +481,7 @@ Future<void> main() async {
       var results = await dao.search(
         resourceType: R6ResourceType.Patient,
         searchParameters: {
-          'family': ['OldName']
+          'family': ['OldName'],
         },
       );
       expect(results.length, 1);
@@ -500,7 +500,7 @@ Future<void> main() async {
       results = await dao.search(
         resourceType: R6ResourceType.Patient,
         searchParameters: {
-          'family': ['OldName']
+          'family': ['OldName'],
         },
       );
       expect(results, isEmpty);
@@ -509,7 +509,7 @@ Future<void> main() async {
       results = await dao.search(
         resourceType: R6ResourceType.Patient,
         searchParameters: {
-          'family': ['NewName']
+          'family': ['NewName'],
         },
       );
       expect(results.length, 1);
@@ -528,7 +528,7 @@ Future<void> main() async {
       var results = await dao.search(
         resourceType: R6ResourceType.Patient,
         searchParameters: {
-          'family': ['DeleteMe']
+          'family': ['DeleteMe'],
         },
       );
       expect(results.length, 1);
@@ -538,7 +538,7 @@ Future<void> main() async {
       results = await dao.search(
         resourceType: R6ResourceType.Patient,
         searchParameters: {
-          'family': ['DeleteMe']
+          'family': ['DeleteMe'],
         },
       );
       expect(results, isEmpty);

@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'dart:async';
 import 'dart:convert';
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:fhir_r6_path/fhir_r6_path.dart';
@@ -231,7 +232,7 @@ class TerminologyCache {
         sink.writeln(entryMarker);
       }
 
-      sink.close();
+      unawaited(sink.close());
     } catch (e) {
       print('Error saving ${nc.name}: $e');
     }

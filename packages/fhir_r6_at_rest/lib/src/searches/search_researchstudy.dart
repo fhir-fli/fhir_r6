@@ -218,9 +218,11 @@ class SearchResearchStudy extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for number type');
     }
-    final paramValue = (modifier != null
-        ? '$modifier$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
-        : '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}');
+    final systemStr = system?.toString() ?? '';
+    final unitStr = unit?.toString() ?? '';
+    final paramValue = modifier != null
+        ? '$modifier$value|$systemStr|$unitStr'
+        : '$value|$systemStr|$unitStr';
     addParameterValue('recruitment_actual', paramValue);
     return this;
   }
@@ -237,9 +239,11 @@ class SearchResearchStudy extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for number type');
     }
-    final paramValue = (modifier != null
-        ? '$modifier$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}'
-        : '$value|${system?.toString() ?? ''}|${unit?.toString() ?? ''}');
+    final systemStr = system?.toString() ?? '';
+    final unitStr = unit?.toString() ?? '';
+    final paramValue = modifier != null
+        ? '$modifier$value|$systemStr|$unitStr'
+        : '$value|$systemStr|$unitStr';
     addParameterValue('recruitment_target', paramValue);
     return this;
   }

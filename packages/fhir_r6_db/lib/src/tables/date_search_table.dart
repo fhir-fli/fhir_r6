@@ -34,6 +34,9 @@ class DateSearchParameters extends Table {
 
 /// Extension on [fhir.FhirBase] to extract date search parameters.
 extension DateSearchParametersExtension on fhir.FhirBase {
+  /// Extracts date search-index rows from this element, converting FHIR
+  /// dates, dateTimes, instants and periods into
+  /// [DateSearchParametersCompanion] entries with their lower/upper bounds.
   List<DateSearchParametersCompanion> toDateSearchParameter(
     String resourceType,
     String id,

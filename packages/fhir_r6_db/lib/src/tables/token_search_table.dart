@@ -37,6 +37,10 @@ class TokenSearchParameters extends Table {
 
 /// Extension on [fhir.FhirBase] to extract token search parameters.
 extension TokenSearchParametersExtension on fhir.FhirBase {
+  /// Extracts token search-index rows from this element, emitting a
+  /// [TokenSearchParametersCompanion] for each system/value pair found
+  /// in codes, [fhir.Coding]s, [fhir.CodeableConcept]s, [fhir.Identifier]s,
+  /// booleans and strings.
   List<TokenSearchParametersCompanion> toTokenSearchParameter(
     String resourceType,
     String id,
