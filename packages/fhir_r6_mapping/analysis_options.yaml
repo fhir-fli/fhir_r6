@@ -1,0 +1,10 @@
+include: ../../analysis_options.yaml
+
+# lib/src/builders/ is a bulk, mechanical Builder mirror of every FHIR type,
+# emitted by fhir_generator (builder_class_buffer.dart, which stamps a
+# "GENERATED CODE - DO NOT EDIT BY HAND" banner). Like the generated core type
+# classes, it is validated by the compiler and tests, not by style lints;
+# hand-written engine/extension code stays analyzed.
+analyzer:
+  exclude:
+    - lib/src/builders/**
