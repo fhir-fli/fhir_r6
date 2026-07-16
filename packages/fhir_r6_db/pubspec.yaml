@@ -3,6 +3,7 @@ description: FHIR R6 database with SQLite/Drift backend, search parameter indexi
 version: 0.6.0
 homepage: https://www.fhirfli.dev/
 repository: https://github.com/fhir-fli/fhir_r6
+issue_tracker: https://github.com/fhir-fli/fhir_r6/issues
 
 topics:
   - fhir
