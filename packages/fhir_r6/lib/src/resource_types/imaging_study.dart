@@ -697,157 +697,157 @@ class ImagingStudy extends DomainResource {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       meta,
       o.meta,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       implicitRules,
       o.implicitRules,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       language,
       o.language,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       text,
       o.text,
     )) {
       return false;
     }
-    if (!listEquals<Resource>(
+    if (!FhirBase.listEquals<Resource>(
       contained,
       o.contained,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!listEquals<Identifier>(
+    if (!FhirBase.listEquals<Identifier>(
       identifier,
       o.identifier,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       status,
       o.status,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       modality,
       o.modality,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       subject,
       o.subject,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       encounter,
       o.encounter,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       started,
       o.started,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       basedOn,
       o.basedOn,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       partOf,
       o.partOf,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       referrer,
       o.referrer,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       endpoint,
       o.endpoint,
     )) {
       return false;
     }
-    if (!listEquals<CodeableReference>(
+    if (!FhirBase.listEquals<CodeableReference>(
       procedure,
       o.procedure,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       location,
       o.location,
     )) {
       return false;
     }
-    if (!listEquals<CodeableReference>(
+    if (!FhirBase.listEquals<CodeableReference>(
       reason,
       o.reason,
     )) {
       return false;
     }
-    if (!listEquals<Annotation>(
+    if (!FhirBase.listEquals<Annotation>(
       note,
       o.note,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       description,
       o.description,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       numberOfSeries,
       o.numberOfSeries,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       numberOfInstances,
       o.numberOfInstances,
     )) {
       return false;
     }
-    if (!listEquals<ImagingStudySeries>(
+    if (!FhirBase.listEquals<ImagingStudySeries>(
       series,
       o.series,
     )) {
@@ -1335,91 +1335,91 @@ class ImagingStudySeries extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       uid,
       o.uid,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       number,
       o.number,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       modality,
       o.modality,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       description,
       o.description,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       numberOfInstances,
       o.numberOfInstances,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       endpoint,
       o.endpoint,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       bodySite,
       o.bodySite,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       laterality,
       o.laterality,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       specimen,
       o.specimen,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       started,
       o.started,
     )) {
       return false;
     }
-    if (!listEquals<ImagingStudyPerformer>(
+    if (!FhirBase.listEquals<ImagingStudyPerformer>(
       performer,
       o.performer,
     )) {
       return false;
     }
-    if (!listEquals<ImagingStudyInstance>(
+    if (!FhirBase.listEquals<ImagingStudyInstance>(
       instance,
       o.instance,
     )) {
@@ -1696,31 +1696,31 @@ class ImagingStudyPerformer extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       function_,
       o.function_,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       actor,
       o.actor,
     )) {
@@ -2034,43 +2034,43 @@ class ImagingStudyInstance extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       uid,
       o.uid,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       sopClass,
       o.sopClass,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       number,
       o.number,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       title,
       o.title,
     )) {

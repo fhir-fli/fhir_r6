@@ -494,97 +494,97 @@ class MolecularDefinition extends DomainResource {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       meta,
       o.meta,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       implicitRules,
       o.implicitRules,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       language,
       o.language,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       text,
       o.text,
     )) {
       return false;
     }
-    if (!listEquals<Resource>(
+    if (!FhirBase.listEquals<Resource>(
       contained,
       o.contained,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!listEquals<Identifier>(
+    if (!FhirBase.listEquals<Identifier>(
       identifier,
       o.identifier,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       description,
       o.description,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       moleculeType,
       o.moleculeType,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       type,
       o.type,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       topology,
       o.topology,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       member,
       o.member,
     )) {
       return false;
     }
-    if (!listEquals<MolecularDefinitionLocation>(
+    if (!FhirBase.listEquals<MolecularDefinitionLocation>(
       location,
       o.location,
     )) {
       return false;
     }
-    if (!listEquals<MolecularDefinitionRepresentation>(
+    if (!FhirBase.listEquals<MolecularDefinitionRepresentation>(
       representation,
       o.representation,
     )) {
@@ -867,31 +867,31 @@ class MolecularDefinitionLocation extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       sequenceLocation,
       o.sequenceLocation,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       cytobandLocation,
       o.cytobandLocation,
     )) {
@@ -1193,37 +1193,37 @@ class MolecularDefinitionSequenceLocation extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       sequenceContext,
       o.sequenceContext,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       coordinateInterval,
       o.coordinateInterval,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       strand,
       o.strand,
     )) {
@@ -1589,37 +1589,37 @@ class MolecularDefinitionCoordinateInterval extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       coordinateSystem,
       o.coordinateSystem,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       startX,
       o.startX,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       endX,
       o.endX,
     )) {
@@ -1928,37 +1928,37 @@ class MolecularDefinitionCoordinateSystem extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       system,
       o.system,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       origin,
       o.origin,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       normalizationMethod,
       o.normalizationMethod,
     )) {
@@ -2236,31 +2236,31 @@ class MolecularDefinitionCytobandLocation extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       genomeAssembly,
       o.genomeAssembly,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       cytobandInterval,
       o.cytobandInterval,
     )) {
@@ -2606,43 +2606,43 @@ class MolecularDefinitionGenomeAssembly extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       organism,
       o.organism,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       build,
       o.build,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       accession,
       o.accession,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       descriptionX,
       o.descriptionX,
     )) {
@@ -2940,37 +2940,37 @@ class MolecularDefinitionCytobandInterval extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       chromosome,
       o.chromosome,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       startCytoband,
       o.startCytoband,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       endCytoband,
       o.endCytoband,
     )) {
@@ -3398,43 +3398,43 @@ class MolecularDefinitionStartCytoband extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       armX,
       o.armX,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       regionX,
       o.regionX,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       bandX,
       o.bandX,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       subBandX,
       o.subBandX,
     )) {
@@ -3862,43 +3862,43 @@ class MolecularDefinitionEndCytoband extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       armX,
       o.armX,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       regionX,
       o.regionX,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       bandX,
       o.bandX,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       subBandX,
       o.subBandX,
     )) {
@@ -4310,67 +4310,67 @@ class MolecularDefinitionRepresentation extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       focus,
       o.focus,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       code,
       o.code,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       literal,
       o.literal,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       resolvable,
       o.resolvable,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       extracted,
       o.extracted,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       repeated,
       o.repeated,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       concatenated,
       o.concatenated,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       relative,
       o.relative,
     )) {
@@ -4652,31 +4652,31 @@ class MolecularDefinitionLiteral extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       encoding,
       o.encoding,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       value,
       o.value,
     )) {
@@ -4986,37 +4986,37 @@ class MolecularDefinitionExtracted extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       startingMolecule,
       o.startingMolecule,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       coordinateInterval,
       o.coordinateInterval,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       reverseComplement,
       o.reverseComplement,
     )) {
@@ -5382,37 +5382,37 @@ class MolecularDefinitionCoordinateInterval1 extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       coordinateSystem,
       o.coordinateSystem,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       startX,
       o.startX,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       endX,
       o.endX,
     )) {
@@ -5721,37 +5721,37 @@ class MolecularDefinitionCoordinateSystem1 extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       system,
       o.system,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       origin,
       o.origin,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       normalizationMethod,
       o.normalizationMethod,
     )) {
@@ -6030,31 +6030,31 @@ class MolecularDefinitionRepeated extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       sequenceMotif,
       o.sequenceMotif,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       copyCount,
       o.copyCount,
     )) {
@@ -6317,25 +6317,25 @@ class MolecularDefinitionConcatenated extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!listEquals<MolecularDefinitionSequenceElement>(
+    if (!FhirBase.listEquals<MolecularDefinitionSequenceElement>(
       sequenceElement,
       o.sequenceElement,
     )) {
@@ -6615,31 +6615,31 @@ class MolecularDefinitionSequenceElement extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       sequence,
       o.sequence,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       ordinalIndex,
       o.ordinalIndex,
     )) {
@@ -6922,31 +6922,31 @@ class MolecularDefinitionRelative extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       startingMolecule,
       o.startingMolecule,
     )) {
       return false;
     }
-    if (!listEquals<MolecularDefinitionEdit>(
+    if (!FhirBase.listEquals<MolecularDefinitionEdit>(
       edit,
       o.edit,
     )) {
@@ -7272,43 +7272,43 @@ class MolecularDefinitionEdit extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       editOrder,
       o.editOrder,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       coordinateInterval,
       o.coordinateInterval,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       replacementMolecule,
       o.replacementMolecule,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       replacedMolecule,
       o.replacedMolecule,
     )) {
@@ -7676,37 +7676,37 @@ class MolecularDefinitionCoordinateInterval2 extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       coordinateSystem,
       o.coordinateSystem,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       startX,
       o.startX,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       endX,
       o.endX,
     )) {
@@ -8015,37 +8015,37 @@ class MolecularDefinitionCoordinateSystem2 extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       system,
       o.system,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       origin,
       o.origin,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       normalizationMethod,
       o.normalizationMethod,
     )) {

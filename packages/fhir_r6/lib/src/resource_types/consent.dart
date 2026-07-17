@@ -719,163 +719,163 @@ class Consent extends DomainResource {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       meta,
       o.meta,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       implicitRules,
       o.implicitRules,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       language,
       o.language,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       text,
       o.text,
     )) {
       return false;
     }
-    if (!listEquals<Resource>(
+    if (!FhirBase.listEquals<Resource>(
       contained,
       o.contained,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!listEquals<Identifier>(
+    if (!FhirBase.listEquals<Identifier>(
       identifier,
       o.identifier,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       status,
       o.status,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       category,
       o.category,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       subject,
       o.subject,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       date,
       o.date,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       period,
       o.period,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       grantor,
       o.grantor,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       grantee,
       o.grantee,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       manager,
       o.manager,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       controller,
       o.controller,
     )) {
       return false;
     }
-    if (!listEquals<Attachment>(
+    if (!FhirBase.listEquals<Attachment>(
       sourceAttachment,
       o.sourceAttachment,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       sourceReference,
       o.sourceReference,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       regulatoryBasis,
       o.regulatoryBasis,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       policyBasis,
       o.policyBasis,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       policyText,
       o.policyText,
     )) {
       return false;
     }
-    if (!listEquals<ConsentVerification>(
+    if (!FhirBase.listEquals<ConsentVerification>(
       verification,
       o.verification,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       decision,
       o.decision,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       provisionReference,
       o.provisionReference,
     )) {
       return false;
     }
-    if (!listEquals<ConsentProvision>(
+    if (!FhirBase.listEquals<ConsentProvision>(
       provision,
       o.provision,
     )) {
@@ -1159,31 +1159,31 @@ class ConsentPolicyBasis extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       reference,
       o.reference,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       uri,
       o.uri,
     )) {
@@ -1522,49 +1522,49 @@ class ConsentVerification extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       verified,
       o.verified,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       verificationType,
       o.verificationType,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       verifiedBy,
       o.verifiedBy,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       verifiedWith,
       o.verifiedWith,
     )) {
       return false;
     }
-    if (!listEquals<FhirDateTime>(
+    if (!FhirBase.listEquals<FhirDateTime>(
       verificationDate,
       o.verificationDate,
     )) {
@@ -2063,91 +2063,91 @@ class ConsentProvision extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       period,
       o.period,
     )) {
       return false;
     }
-    if (!listEquals<ConsentActor>(
+    if (!FhirBase.listEquals<ConsentActor>(
       actor,
       o.actor,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       action,
       o.action,
     )) {
       return false;
     }
-    if (!listEquals<Coding>(
+    if (!FhirBase.listEquals<Coding>(
       securityLabel,
       o.securityLabel,
     )) {
       return false;
     }
-    if (!listEquals<Coding>(
+    if (!FhirBase.listEquals<Coding>(
       purpose,
       o.purpose,
     )) {
       return false;
     }
-    if (!listEquals<Coding>(
+    if (!FhirBase.listEquals<Coding>(
       documentType,
       o.documentType,
     )) {
       return false;
     }
-    if (!listEquals<Coding>(
+    if (!FhirBase.listEquals<Coding>(
       resourceType,
       o.resourceType,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       code,
       o.code,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       dataPeriod,
       o.dataPeriod,
     )) {
       return false;
     }
-    if (!listEquals<ConsentData>(
+    if (!FhirBase.listEquals<ConsentData>(
       data,
       o.data,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       expression,
       o.expression,
     )) {
       return false;
     }
-    if (!listEquals<ConsentProvision>(
+    if (!FhirBase.listEquals<ConsentProvision>(
       provision,
       o.provision,
     )) {
@@ -2430,31 +2430,31 @@ class ConsentActor extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       role,
       o.role,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       reference,
       o.reference,
     )) {
@@ -2732,31 +2732,31 @@ class ConsentData extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       meaning,
       o.meaning,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       reference,
       o.reference,
     )) {

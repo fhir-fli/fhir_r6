@@ -747,169 +747,169 @@ class MedicationKnowledge extends DomainResource {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       meta,
       o.meta,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       implicitRules,
       o.implicitRules,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       language,
       o.language,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       text,
       o.text,
     )) {
       return false;
     }
-    if (!listEquals<Resource>(
+    if (!FhirBase.listEquals<Resource>(
       contained,
       o.contained,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!listEquals<Identifier>(
+    if (!FhirBase.listEquals<Identifier>(
       identifier,
       o.identifier,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       code,
       o.code,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       status,
       o.status,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       author,
       o.author,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       jurisdiction,
       o.jurisdiction,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       name,
       o.name,
     )) {
       return false;
     }
-    if (!listEquals<MedicationKnowledgeRelatedMedicationKnowledge>(
+    if (!FhirBase.listEquals<MedicationKnowledgeRelatedMedicationKnowledge>(
       relatedMedicationKnowledge,
       o.relatedMedicationKnowledge,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       associatedMedication,
       o.associatedMedication,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       productType,
       o.productType,
     )) {
       return false;
     }
-    if (!listEquals<MedicationKnowledgeMonograph>(
+    if (!FhirBase.listEquals<MedicationKnowledgeMonograph>(
       monograph,
       o.monograph,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       preparationInstruction,
       o.preparationInstruction,
     )) {
       return false;
     }
-    if (!listEquals<MedicationKnowledgeCost>(
+    if (!FhirBase.listEquals<MedicationKnowledgeCost>(
       cost,
       o.cost,
     )) {
       return false;
     }
-    if (!listEquals<MedicationKnowledgeMonitoringProgram>(
+    if (!FhirBase.listEquals<MedicationKnowledgeMonitoringProgram>(
       monitoringProgram,
       o.monitoringProgram,
     )) {
       return false;
     }
-    if (!listEquals<MedicationKnowledgeIndicationGuideline>(
+    if (!FhirBase.listEquals<MedicationKnowledgeIndicationGuideline>(
       indicationGuideline,
       o.indicationGuideline,
     )) {
       return false;
     }
-    if (!listEquals<MedicationKnowledgeMedicineClassification>(
+    if (!FhirBase.listEquals<MedicationKnowledgeMedicineClassification>(
       medicineClassification,
       o.medicineClassification,
     )) {
       return false;
     }
-    if (!listEquals<MedicationKnowledgePackaging>(
+    if (!FhirBase.listEquals<MedicationKnowledgePackaging>(
       packaging,
       o.packaging,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       clinicalUseIssue,
       o.clinicalUseIssue,
     )) {
       return false;
     }
-    if (!listEquals<MedicationKnowledgeStorageGuideline>(
+    if (!FhirBase.listEquals<MedicationKnowledgeStorageGuideline>(
       storageGuideline,
       o.storageGuideline,
     )) {
       return false;
     }
-    if (!listEquals<MedicationKnowledgeRegulatory>(
+    if (!FhirBase.listEquals<MedicationKnowledgeRegulatory>(
       regulatory,
       o.regulatory,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       definitional,
       o.definitional,
     )) {
@@ -1192,31 +1192,31 @@ class MedicationKnowledgeRelatedMedicationKnowledge extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       type,
       o.type,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       reference,
       o.reference,
     )) {
@@ -1497,31 +1497,31 @@ class MedicationKnowledgeMonograph extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       type,
       o.type,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       source,
       o.source,
     )) {
@@ -1859,43 +1859,43 @@ class MedicationKnowledgeCost extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!listEquals<Period>(
+    if (!FhirBase.listEquals<Period>(
       effectiveDate,
       o.effectiveDate,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       type,
       o.type,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       source,
       o.source,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       costX,
       o.costX,
     )) {
@@ -2176,31 +2176,31 @@ class MedicationKnowledgeMonitoringProgram extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       type,
       o.type,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       name,
       o.name,
     )) {
@@ -2487,31 +2487,31 @@ class MedicationKnowledgeIndicationGuideline extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!listEquals<CodeableReference>(
+    if (!FhirBase.listEquals<CodeableReference>(
       indication,
       o.indication,
     )) {
       return false;
     }
-    if (!listEquals<MedicationKnowledgeDosingGuideline>(
+    if (!FhirBase.listEquals<MedicationKnowledgeDosingGuideline>(
       dosingGuideline,
       o.dosingGuideline,
     )) {
@@ -2837,43 +2837,43 @@ class MedicationKnowledgeDosingGuideline extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       treatmentIntent,
       o.treatmentIntent,
     )) {
       return false;
     }
-    if (!listEquals<MedicationKnowledgeDosage>(
+    if (!FhirBase.listEquals<MedicationKnowledgeDosage>(
       dosage,
       o.dosage,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       administrationTreatment,
       o.administrationTreatment,
     )) {
       return false;
     }
-    if (!listEquals<MedicationKnowledgePatientCharacteristic>(
+    if (!FhirBase.listEquals<MedicationKnowledgePatientCharacteristic>(
       patientCharacteristic,
       o.patientCharacteristic,
     )) {
@@ -3151,31 +3151,31 @@ class MedicationKnowledgeDosage extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       type,
       o.type,
     )) {
       return false;
     }
-    if (!listEquals<Dosage>(
+    if (!FhirBase.listEquals<Dosage>(
       dosage,
       o.dosage,
     )) {
@@ -3493,31 +3493,31 @@ class MedicationKnowledgePatientCharacteristic extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       type,
       o.type,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       valueX,
       o.valueX,
     )) {
@@ -3849,37 +3849,37 @@ class MedicationKnowledgeMedicineClassification extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       type,
       o.type,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       sourceX,
       o.sourceX,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       classification,
       o.classification,
     )) {
@@ -4162,31 +4162,31 @@ class MedicationKnowledgePackaging extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!listEquals<MedicationKnowledgeCost>(
+    if (!FhirBase.listEquals<MedicationKnowledgeCost>(
       cost,
       o.cost,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       packagedProduct,
       o.packagedProduct,
     )) {
@@ -4514,43 +4514,43 @@ class MedicationKnowledgeStorageGuideline extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       reference,
       o.reference,
     )) {
       return false;
     }
-    if (!listEquals<Annotation>(
+    if (!FhirBase.listEquals<Annotation>(
       note,
       o.note,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       stabilityDuration,
       o.stabilityDuration,
     )) {
       return false;
     }
-    if (!listEquals<MedicationKnowledgeEnvironmentalSetting>(
+    if (!FhirBase.listEquals<MedicationKnowledgeEnvironmentalSetting>(
       environmentalSetting,
       o.environmentalSetting,
     )) {
@@ -4859,31 +4859,31 @@ class MedicationKnowledgeEnvironmentalSetting extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       type,
       o.type,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       valueX,
       o.valueX,
     )) {
@@ -5205,43 +5205,43 @@ class MedicationKnowledgeRegulatory extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       regulatoryAuthority,
       o.regulatoryAuthority,
     )) {
       return false;
     }
-    if (!listEquals<MedicationKnowledgeSubstitution>(
+    if (!FhirBase.listEquals<MedicationKnowledgeSubstitution>(
       substitution,
       o.substitution,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       schedule,
       o.schedule,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       maxDispense,
       o.maxDispense,
     )) {
@@ -5519,31 +5519,31 @@ class MedicationKnowledgeSubstitution extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       type,
       o.type,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       allowed,
       o.allowed,
     )) {
@@ -5822,31 +5822,31 @@ class MedicationKnowledgeMaxDispense extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       quantity,
       o.quantity,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       period,
       o.period,
     )) {
@@ -6194,49 +6194,49 @@ class MedicationKnowledgeDefinitional extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       definition,
       o.definition,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       doseForm,
       o.doseForm,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       intendedRoute,
       o.intendedRoute,
     )) {
       return false;
     }
-    if (!listEquals<MedicationKnowledgeIngredient>(
+    if (!FhirBase.listEquals<MedicationKnowledgeIngredient>(
       ingredient,
       o.ingredient,
     )) {
       return false;
     }
-    if (!listEquals<MedicationKnowledgeDrugCharacteristic>(
+    if (!FhirBase.listEquals<MedicationKnowledgeDrugCharacteristic>(
       drugCharacteristic,
       o.drugCharacteristic,
     )) {
@@ -6580,37 +6580,37 @@ class MedicationKnowledgeIngredient extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       item,
       o.item,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       type,
       o.type,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       strengthX,
       o.strengthX,
     )) {
@@ -6953,31 +6953,31 @@ class MedicationKnowledgeDrugCharacteristic extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       type,
       o.type,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       valueX,
       o.valueX,
     )) {

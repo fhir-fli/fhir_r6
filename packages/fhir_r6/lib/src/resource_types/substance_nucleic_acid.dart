@@ -425,79 +425,79 @@ class SubstanceNucleicAcid extends DomainResource {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       meta,
       o.meta,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       implicitRules,
       o.implicitRules,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       language,
       o.language,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       text,
       o.text,
     )) {
       return false;
     }
-    if (!listEquals<Resource>(
+    if (!FhirBase.listEquals<Resource>(
       contained,
       o.contained,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       sequenceType,
       o.sequenceType,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       numberOfSubunits,
       o.numberOfSubunits,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       areaOfHybridisation,
       o.areaOfHybridisation,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       oligoNucleotideType,
       o.oligoNucleotideType,
     )) {
       return false;
     }
-    if (!listEquals<SubstanceNucleicAcidSubunit>(
+    if (!FhirBase.listEquals<SubstanceNucleicAcidSubunit>(
       subunit,
       o.subunit,
     )) {
@@ -908,67 +908,67 @@ class SubstanceNucleicAcidSubunit extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       subunit,
       o.subunit,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       sequence,
       o.sequence,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       length,
       o.length,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       sequenceAttachment,
       o.sequenceAttachment,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       fivePrime,
       o.fivePrime,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       threePrime,
       o.threePrime,
     )) {
       return false;
     }
-    if (!listEquals<SubstanceNucleicAcidLinkage>(
+    if (!FhirBase.listEquals<SubstanceNucleicAcidLinkage>(
       linkage,
       o.linkage,
     )) {
       return false;
     }
-    if (!listEquals<SubstanceNucleicAcidSugar>(
+    if (!FhirBase.listEquals<SubstanceNucleicAcidSugar>(
       sugar,
       o.sugar,
     )) {
@@ -1291,43 +1291,43 @@ class SubstanceNucleicAcidLinkage extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       connectivity,
       o.connectivity,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       identifier,
       o.identifier,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       name,
       o.name,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       residueSite,
       o.residueSite,
     )) {
@@ -1629,37 +1629,37 @@ class SubstanceNucleicAcidSugar extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       identifier,
       o.identifier,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       name,
       o.name,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       residueSite,
       o.residueSite,
     )) {

@@ -1046,271 +1046,271 @@ class ObservationDefinition extends MetadataResource {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       meta,
       o.meta,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       implicitRules,
       o.implicitRules,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       language,
       o.language,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       text,
       o.text,
     )) {
       return false;
     }
-    if (!listEquals<Resource>(
+    if (!FhirBase.listEquals<Resource>(
       contained,
       o.contained,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       url,
       o.url,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       identifier,
       o.identifier,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       version,
       o.version,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       versionAlgorithmX,
       o.versionAlgorithmX,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       name,
       o.name,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       title,
       o.title,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       status,
       o.status,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       experimental,
       o.experimental,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       date,
       o.date,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       publisher,
       o.publisher,
     )) {
       return false;
     }
-    if (!listEquals<ContactDetail>(
+    if (!FhirBase.listEquals<ContactDetail>(
       contact,
       o.contact,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       description,
       o.description,
     )) {
       return false;
     }
-    if (!listEquals<UsageContext>(
+    if (!FhirBase.listEquals<UsageContext>(
       useContext,
       o.useContext,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       jurisdiction,
       o.jurisdiction,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       purpose,
       o.purpose,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       copyright,
       o.copyright,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       copyrightLabel,
       o.copyrightLabel,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       approvalDate,
       o.approvalDate,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       lastReviewDate,
       o.lastReviewDate,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       effectivePeriod,
       o.effectivePeriod,
     )) {
       return false;
     }
-    if (!listEquals<FhirCanonical>(
+    if (!FhirBase.listEquals<FhirCanonical>(
       derivedFromCanonical,
       o.derivedFromCanonical,
     )) {
       return false;
     }
-    if (!listEquals<FhirUri>(
+    if (!FhirBase.listEquals<FhirUri>(
       derivedFromUri,
       o.derivedFromUri,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       subject,
       o.subject,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       performerType,
       o.performerType,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       category,
       o.category,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       code,
       o.code,
     )) {
       return false;
     }
-    if (!listEquals<ObservationDataType>(
+    if (!FhirBase.listEquals<ObservationDataType>(
       permittedDataType,
       o.permittedDataType,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       multipleResultsAllowed,
       o.multipleResultsAllowed,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       bodySite,
       o.bodySite,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       method,
       o.method,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       specimen,
       o.specimen,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       device,
       o.device,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       preferredReportName,
       o.preferredReportName,
     )) {
       return false;
     }
-    if (!listEquals<Coding>(
+    if (!FhirBase.listEquals<Coding>(
       permittedUnit,
       o.permittedUnit,
     )) {
       return false;
     }
-    if (!listEquals<ObservationDefinitionQualifiedValue>(
+    if (!FhirBase.listEquals<ObservationDefinitionQualifiedValue>(
       qualifiedValue,
       o.qualifiedValue,
     )) {
       return false;
     }
-    if (!listEquals<Reference>(
+    if (!FhirBase.listEquals<Reference>(
       hasMember,
       o.hasMember,
     )) {
       return false;
     }
-    if (!listEquals<ObservationDefinitionComponent>(
+    if (!FhirBase.listEquals<ObservationDefinitionComponent>(
       component,
       o.component,
     )) {
@@ -1814,97 +1814,97 @@ class ObservationDefinitionQualifiedValue extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       context,
       o.context,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       appliesTo,
       o.appliesTo,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       gender,
       o.gender,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       age,
       o.age,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       gestationalAge,
       o.gestationalAge,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       condition,
       o.condition,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       rangeCategory,
       o.rangeCategory,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       range,
       o.range,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       validCodedValueSet,
       o.validCodedValueSet,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       normalCodedValueSet,
       o.normalCodedValueSet,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       abnormalCodedValueSet,
       o.abnormalCodedValueSet,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       criticalCodedValueSet,
       o.criticalCodedValueSet,
     )) {
       return false;
     }
-    if (!listEquals<CodeableConcept>(
+    if (!FhirBase.listEquals<CodeableConcept>(
       interpretation,
       o.interpretation,
     )) {
@@ -2229,43 +2229,43 @@ class ObservationDefinitionComponent extends BackboneElement {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       modifierExtension,
       o.modifierExtension,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       code,
       o.code,
     )) {
       return false;
     }
-    if (!listEquals<ObservationDataType>(
+    if (!FhirBase.listEquals<ObservationDataType>(
       permittedDataType,
       o.permittedDataType,
     )) {
       return false;
     }
-    if (!listEquals<Coding>(
+    if (!FhirBase.listEquals<Coding>(
       permittedUnit,
       o.permittedUnit,
     )) {
       return false;
     }
-    if (!listEquals<ObservationDefinitionQualifiedValue>(
+    if (!FhirBase.listEquals<ObservationDefinitionQualifiedValue>(
       qualifiedValue,
       o.qualifiedValue,
     )) {

@@ -458,67 +458,67 @@ class DataRequirement extends DataType
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       type,
       o.type,
     )) {
       return false;
     }
-    if (!listEquals<FhirCanonical>(
+    if (!FhirBase.listEquals<FhirCanonical>(
       profile,
       o.profile,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       subjectX,
       o.subjectX,
     )) {
       return false;
     }
-    if (!listEquals<FhirString>(
+    if (!FhirBase.listEquals<FhirString>(
       mustSupport,
       o.mustSupport,
     )) {
       return false;
     }
-    if (!listEquals<DataRequirementCodeFilter>(
+    if (!FhirBase.listEquals<DataRequirementCodeFilter>(
       codeFilter,
       o.codeFilter,
     )) {
       return false;
     }
-    if (!listEquals<DataRequirementDateFilter>(
+    if (!FhirBase.listEquals<DataRequirementDateFilter>(
       dateFilter,
       o.dateFilter,
     )) {
       return false;
     }
-    if (!listEquals<DataRequirementValueFilter>(
+    if (!FhirBase.listEquals<DataRequirementValueFilter>(
       valueFilter,
       o.valueFilter,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       limit,
       o.limit,
     )) {
       return false;
     }
-    if (!listEquals<DataRequirementSort>(
+    if (!FhirBase.listEquals<DataRequirementSort>(
       sort,
       o.sort,
     )) {
@@ -839,37 +839,37 @@ class DataRequirementCodeFilter extends Element {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       path,
       o.path,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       searchParam,
       o.searchParam,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       valueSet,
       o.valueSet,
     )) {
       return false;
     }
-    if (!listEquals<Coding>(
+    if (!FhirBase.listEquals<Coding>(
       code,
       o.code,
     )) {
@@ -1203,31 +1203,31 @@ class DataRequirementDateFilter extends Element {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       path,
       o.path,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       searchParam,
       o.searchParam,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       valueX,
       o.valueX,
     )) {
@@ -1576,37 +1576,37 @@ class DataRequirementValueFilter extends Element {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       path,
       o.path,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       searchParam,
       o.searchParam,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       comparator,
       o.comparator,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       valueX,
       o.valueX,
     )) {
@@ -1868,25 +1868,25 @@ class DataRequirementSort extends Element {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       path,
       o.path,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       direction,
       o.direction,
     )) {

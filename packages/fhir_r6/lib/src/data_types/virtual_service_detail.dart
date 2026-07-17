@@ -369,43 +369,43 @@ class VirtualServiceDetail extends DataType {
     }
     if (identical(this, o)) return true;
     if (runtimeType != o.runtimeType) return false;
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       id,
       o.id,
     )) {
       return false;
     }
-    if (!listEquals<FhirExtension>(
+    if (!FhirBase.listEquals<FhirExtension>(
       extension_,
       o.extension_,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       channelType,
       o.channelType,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       addressX,
       o.addressX,
     )) {
       return false;
     }
-    if (!listEquals<FhirUrl>(
+    if (!FhirBase.listEquals<FhirUrl>(
       additionalInfo,
       o.additionalInfo,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       maxParticipants,
       o.maxParticipants,
     )) {
       return false;
     }
-    if (!equalsDeepWithNull(
+    if (!FhirBase.equalsDeepWithNull(
       sessionKey,
       o.sessionKey,
     )) {
