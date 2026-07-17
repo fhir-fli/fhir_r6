@@ -1,1 +1,0 @@
-{"resourceType":"Device","id":"example-software","identifier":[{"system":"http://acme.com/ehr/client-ids","value":"goodhealth"}],"manufacturer":"Acme Devices, Inc","type":[{"text":"EHR"}],"deviceVersion":[{"value":"10.23-23423"}],"contact":[{"system":"url","value":"http://acme.com"}]}

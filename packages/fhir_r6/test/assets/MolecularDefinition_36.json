@@ -1,1 +1,0 @@
-{"resourceType":"MolecularDefinition","id":"example-sequence-fmr1","moleculeType":{"coding":[{"system":"http://hl7.org/fhir/sequence-type","code":"dna","display":"DNA Sequence"}]},"representation":[{"resolvable":{"reference":"DocumentReference/example-genomicFile-nm0020245"}}]}
