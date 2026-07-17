@@ -4,7 +4,7 @@
 
 A Dart implementation of the [FHIRPath](https://hl7.org/fhirpath/) specification for FHIR R6 resources, allowing you to query and manipulate FHIR data using standardized expressions.
 
-`fhir_r6_path` is the **R6 binding** over the model-independent [`fhirpath`](https://pub.dev/packages/fhirpath) engine. The engine itself has zero FHIR-version coupling; this package supplies the R6 `WorkerContext` (an `IWorkerContext` implementation), the R6 value factory, and the terminology/validation plumbing, then re-exports the engine. Depend on this one package and you get both the engine and its R6 model bindings.
+`fhir_r6_path` is the **R6 binding** over the model-independent [`fhir_path`](https://pub.dev/packages/fhir_path) engine. The engine itself has zero FHIR-version coupling; this package supplies the R6 `WorkerContext` (an `IWorkerContext` implementation), the R6 value factory, and the terminology/validation plumbing, then re-exports the engine. Depend on this one package and you get both the engine and its R6 model bindings.
 
 FHIR® is the registered trademark of HL7 and is used with the permission of HL7. Use of the FHIR trademark does not constitute endorsement of this product by HL7.
 
