@@ -319,7 +319,8 @@ Future<void> main() async {
             security: <Coding>[
               Coding(
                 system: FhirUri(
-                    'http://terminology.hl7.org/CodeSystem/v3-Confidentiality',),
+                  'http://terminology.hl7.org/CodeSystem/v3-Confidentiality',
+                ),
                 code: FhirCode('R'),
               ),
             ],
