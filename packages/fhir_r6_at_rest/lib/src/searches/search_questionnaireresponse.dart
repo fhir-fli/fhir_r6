@@ -46,15 +46,9 @@ class SearchQuestionnaireResponse extends SearchResource {
   /// [QuestionnaireResponse]
   SearchQuestionnaireResponse answerNumber(
     FhirDecimal value, {
-    FhirString? unit,
-    FhirUri? system,
     SearchModifier? modifier,
   }) {
-    final paramValue = modifier != null
-        ? '$modifier$value|${system?.toString() ?? ''}|'
-            '${unit?.toString() ?? ''}'
-        : '$value|${system?.toString() ?? ''}|'
-            '${unit?.toString() ?? ''}';
+    final paramValue = modifier != null ? '$modifier$value' : value.toString();
     addParameterValue('answer-number', paramValue);
     return this;
   }
@@ -67,10 +61,10 @@ class SearchQuestionnaireResponse extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    final paramValue = modifier != null
-        ? '$modifier$value|${system?.toString() ?? ''}|'
-            '${unit?.toString() ?? ''}'
-        : '$value|${system?.toString() ?? ''}|'
+    final numberPart = modifier != null ? '$modifier$value' : value.toString();
+    final paramValue = (system == null && unit == null)
+        ? numberPart
+        : '$numberPart|${system?.toString() ?? ''}|'
             '${unit?.toString() ?? ''}';
     addParameterValue('answer-quantity', paramValue);
     return this;

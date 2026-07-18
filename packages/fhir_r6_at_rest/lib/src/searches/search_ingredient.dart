@@ -60,10 +60,10 @@ class SearchIngredient extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    final paramValue = modifier != null
-        ? '$modifier$value|${system?.toString() ?? ''}|'
-            '${unit?.toString() ?? ''}'
-        : '$value|${system?.toString() ?? ''}|'
+    final numberPart = modifier != null ? '$modifier$value' : value.toString();
+    final paramValue = (system == null && unit == null)
+        ? numberPart
+        : '$numberPart|${system?.toString() ?? ''}|'
             '${unit?.toString() ?? ''}';
     addParameterValue('strength-concentration-denominator', paramValue);
     return this;
@@ -77,10 +77,10 @@ class SearchIngredient extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    final paramValue = modifier != null
-        ? '$modifier$value|${system?.toString() ?? ''}|'
-            '${unit?.toString() ?? ''}'
-        : '$value|${system?.toString() ?? ''}|'
+    final numberPart = modifier != null ? '$modifier$value' : value.toString();
+    final paramValue = (system == null && unit == null)
+        ? numberPart
+        : '$numberPart|${system?.toString() ?? ''}|'
             '${unit?.toString() ?? ''}';
     addParameterValue('strength-concentration-numerator', paramValue);
     return this;
@@ -94,10 +94,10 @@ class SearchIngredient extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    final paramValue = modifier != null
-        ? '$modifier$value|${system?.toString() ?? ''}|'
-            '${unit?.toString() ?? ''}'
-        : '$value|${system?.toString() ?? ''}|'
+    final numberPart = modifier != null ? '$modifier$value' : value.toString();
+    final paramValue = (system == null && unit == null)
+        ? numberPart
+        : '$numberPart|${system?.toString() ?? ''}|'
             '${unit?.toString() ?? ''}';
     addParameterValue('strength-concentration-quantity', paramValue);
     return this;
@@ -111,10 +111,10 @@ class SearchIngredient extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    final paramValue = modifier != null
-        ? '$modifier$value|${system?.toString() ?? ''}|'
-            '${unit?.toString() ?? ''}'
-        : '$value|${system?.toString() ?? ''}|'
+    final numberPart = modifier != null ? '$modifier$value' : value.toString();
+    final paramValue = (system == null && unit == null)
+        ? numberPart
+        : '$numberPart|${system?.toString() ?? ''}|'
             '${unit?.toString() ?? ''}';
     addParameterValue('strength-presentation-denominator', paramValue);
     return this;
@@ -128,10 +128,10 @@ class SearchIngredient extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    final paramValue = modifier != null
-        ? '$modifier$value|${system?.toString() ?? ''}|'
-            '${unit?.toString() ?? ''}'
-        : '$value|${system?.toString() ?? ''}|'
+    final numberPart = modifier != null ? '$modifier$value' : value.toString();
+    final paramValue = (system == null && unit == null)
+        ? numberPart
+        : '$numberPart|${system?.toString() ?? ''}|'
             '${unit?.toString() ?? ''}';
     addParameterValue('strength-presentation-numerator', paramValue);
     return this;
@@ -145,10 +145,10 @@ class SearchIngredient extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    final paramValue = modifier != null
-        ? '$modifier$value|${system?.toString() ?? ''}|'
-            '${unit?.toString() ?? ''}'
-        : '$value|${system?.toString() ?? ''}|'
+    final numberPart = modifier != null ? '$modifier$value' : value.toString();
+    final paramValue = (system == null && unit == null)
+        ? numberPart
+        : '$numberPart|${system?.toString() ?? ''}|'
             '${unit?.toString() ?? ''}';
     addParameterValue('strength-presentation-quantity', paramValue);
     return this;

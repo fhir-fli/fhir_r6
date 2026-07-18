@@ -156,15 +156,9 @@ class SearchResearchStudy extends SearchResource {
   /// [ResearchStudy]
   SearchResearchStudy recruitmentActual(
     FhirDecimal value, {
-    FhirString? unit,
-    FhirUri? system,
     SearchModifier? modifier,
   }) {
-    final paramValue = modifier != null
-        ? '$modifier$value|${system?.toString() ?? ''}|'
-            '${unit?.toString() ?? ''}'
-        : '$value|${system?.toString() ?? ''}|'
-            '${unit?.toString() ?? ''}';
+    final paramValue = modifier != null ? '$modifier$value' : value.toString();
     addParameterValue('recruitment-actual', paramValue);
     return this;
   }
@@ -173,15 +167,9 @@ class SearchResearchStudy extends SearchResource {
   /// [ResearchStudy]
   SearchResearchStudy recruitmentTarget(
     FhirDecimal value, {
-    FhirString? unit,
-    FhirUri? system,
     SearchModifier? modifier,
   }) {
-    final paramValue = modifier != null
-        ? '$modifier$value|${system?.toString() ?? ''}|'
-            '${unit?.toString() ?? ''}'
-        : '$value|${system?.toString() ?? ''}|'
-            '${unit?.toString() ?? ''}';
+    final paramValue = modifier != null ? '$modifier$value' : value.toString();
     addParameterValue('recruitment-target', paramValue);
     return this;
   }
