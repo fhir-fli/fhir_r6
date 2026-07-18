@@ -38,8 +38,6 @@ class SearchClinicalUseDefinition extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [ClinicalUseDefinition]
-  // @override - different signature (token vs date), not overriding
-  @override
   SearchClinicalUseDefinition identifier(
     FhirString value, {
     FhirUri? system,
@@ -52,6 +50,21 @@ class SearchClinicalUseDefinition extends SearchResource {
     return this;
   }
 
+  /// a token search for [indication] in the resource
+  /// [ClinicalUseDefinition]
+  SearchClinicalUseDefinition indication(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('indication', paramValue);
+    return this;
+  }
+
+  /// a token search for [interaction] in the resource
   /// [ClinicalUseDefinition]
   SearchClinicalUseDefinition interaction(
     FhirString value, {
@@ -67,8 +80,6 @@ class SearchClinicalUseDefinition extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [ClinicalUseDefinition]
-  // @override - different signature (token vs date), not overriding
-  @override
   SearchClinicalUseDefinition status(
     FhirString value, {
     FhirUri? system,

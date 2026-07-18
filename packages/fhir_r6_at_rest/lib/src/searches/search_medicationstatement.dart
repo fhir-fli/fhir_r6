@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchMedicationStatement extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [MedicationStatement]
-  @override
   SearchMedicationStatement identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchMedicationStatement extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [MedicationStatement]
-  @override
   SearchMedicationStatement code(
     FhirString value, {
     FhirUri? system,
@@ -40,7 +38,6 @@ class SearchMedicationStatement extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [MedicationStatement]
-  @override
   SearchMedicationStatement status(
     FhirString value, {
     FhirUri? system,

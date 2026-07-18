@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchDetectedIssue extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [DetectedIssue]
-  @override
   SearchDetectedIssue identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchDetectedIssue extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [DetectedIssue]
-  @override
   SearchDetectedIssue code(
     FhirString value, {
     FhirUri? system,
@@ -66,7 +64,6 @@ class SearchDetectedIssue extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [DetectedIssue]
-  @override
   SearchDetectedIssue status(
     FhirString value, {
     FhirUri? system,

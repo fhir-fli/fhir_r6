@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchMeasureReport extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [MeasureReport]
-  @override
   SearchMeasureReport identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchMeasureReport extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [MeasureReport]
-  @override
   SearchMeasureReport date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -50,7 +48,6 @@ class SearchMeasureReport extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [MeasureReport]
-  @override
   SearchMeasureReport status(
     FhirString value, {
     FhirUri? system,

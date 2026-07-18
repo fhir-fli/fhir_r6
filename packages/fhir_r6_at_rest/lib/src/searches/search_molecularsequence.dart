@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchMolecularSequence extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [MolecularSequence]
-  @override
   SearchMolecularSequence identifier(
     FhirString value, {
     FhirUri? system,

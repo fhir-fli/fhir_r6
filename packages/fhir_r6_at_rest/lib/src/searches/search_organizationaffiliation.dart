@@ -24,7 +24,6 @@ class SearchOrganizationAffiliation extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [OrganizationAffiliation]
-  @override
   SearchOrganizationAffiliation date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -51,7 +50,6 @@ class SearchOrganizationAffiliation extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [OrganizationAffiliation]
-  @override
   SearchOrganizationAffiliation identifier(
     FhirString value, {
     FhirUri? system,

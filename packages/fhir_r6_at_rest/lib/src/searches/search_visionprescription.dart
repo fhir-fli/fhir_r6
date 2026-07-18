@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchVisionPrescription extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [VisionPrescription]
-  @override
   SearchVisionPrescription identifier(
     FhirString value, {
     FhirUri? system,
@@ -37,7 +36,6 @@ class SearchVisionPrescription extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [VisionPrescription]
-  @override
   SearchVisionPrescription status(
     FhirString value, {
     FhirUri? system,

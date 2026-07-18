@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchFamilyMemberHistory extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [FamilyMemberHistory]
-  @override
   SearchFamilyMemberHistory identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchFamilyMemberHistory extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [FamilyMemberHistory]
-  @override
   SearchFamilyMemberHistory code(
     FhirString value, {
     FhirUri? system,
@@ -40,7 +38,6 @@ class SearchFamilyMemberHistory extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [FamilyMemberHistory]
-  @override
   SearchFamilyMemberHistory date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -53,7 +50,6 @@ class SearchFamilyMemberHistory extends SearchResource {
 
   /// a token search for [relationship] in the resource
   /// [FamilyMemberHistory]
-  @override
   SearchFamilyMemberHistory relationship(
     FhirString value, {
     FhirUri? system,
@@ -82,7 +78,6 @@ class SearchFamilyMemberHistory extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [FamilyMemberHistory]
-  @override
   SearchFamilyMemberHistory status(
     FhirString value, {
     FhirUri? system,

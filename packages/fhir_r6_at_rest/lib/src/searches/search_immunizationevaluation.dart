@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchImmunizationEvaluation extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [ImmunizationEvaluation]
-  @override
   SearchImmunizationEvaluation identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchImmunizationEvaluation extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [ImmunizationEvaluation]
-  @override
   SearchImmunizationEvaluation date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -46,13 +44,12 @@ class SearchImmunizationEvaluation extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('dose_status', paramValue);
+    addParameterValue('dose-status', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [ImmunizationEvaluation]
-  @override
   SearchImmunizationEvaluation status(
     FhirString value, {
     FhirUri? system,
@@ -75,7 +72,7 @@ class SearchImmunizationEvaluation extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('target_disease', paramValue);
+    addParameterValue('target-disease', paramValue);
     return this;
   }
 }

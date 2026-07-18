@@ -34,12 +34,12 @@ class SearchCompartmentDefinition extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
     final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('context_quantity', paramValue);
+        ? '$modifier$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
+    addParameterValue('context-quantity', paramValue);
     return this;
   }
 
@@ -53,13 +53,12 @@ class SearchCompartmentDefinition extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('context_type', paramValue);
+    addParameterValue('context-type', paramValue);
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [CompartmentDefinition]
-  @override
   SearchCompartmentDefinition date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -87,7 +86,6 @@ class SearchCompartmentDefinition extends SearchResource {
 
   /// a string search for [name] in the resource
   /// [CompartmentDefinition]
-  @override
   SearchCompartmentDefinition name(
     FhirString value, {
     SearchModifier? modifier,
@@ -118,7 +116,6 @@ class SearchCompartmentDefinition extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [CompartmentDefinition]
-  @override
   SearchCompartmentDefinition status(
     FhirString value, {
     FhirUri? system,
@@ -159,7 +156,6 @@ class SearchCompartmentDefinition extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [CompartmentDefinition]
-  @override
   SearchCompartmentDefinition code(
     FhirString value, {
     FhirUri? system,

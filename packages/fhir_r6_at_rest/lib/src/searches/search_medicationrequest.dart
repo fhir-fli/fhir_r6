@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchMedicationRequest extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [MedicationRequest]
-  @override
   SearchMedicationRequest identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchMedicationRequest extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [MedicationRequest]
-  @override
   SearchMedicationRequest code(
     FhirString value, {
     FhirUri? system,
@@ -40,7 +38,6 @@ class SearchMedicationRequest extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [MedicationRequest]
-  @override
   SearchMedicationRequest status(
     FhirString value, {
     FhirUri? system,
@@ -87,7 +84,7 @@ class SearchMedicationRequest extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('combo_date', paramValue);
+    addParameterValue('combo-date', paramValue);
     return this;
   }
 
@@ -101,7 +98,7 @@ class SearchMedicationRequest extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('group_identifier', paramValue);
+    addParameterValue('group-identifier', paramValue);
     return this;
   }
 
@@ -115,7 +112,7 @@ class SearchMedicationRequest extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('group_or_identifier', paramValue);
+    addParameterValue('group-or-identifier', paramValue);
     return this;
   }
 
@@ -129,7 +126,7 @@ class SearchMedicationRequest extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('intended_performertype', paramValue);
+    addParameterValue('intended-performertype', paramValue);
     return this;
   }
 
@@ -149,7 +146,6 @@ class SearchMedicationRequest extends SearchResource {
 
   /// a token search for [priority] in the resource
   /// [MedicationRequest]
-  @override
   SearchMedicationRequest priority(
     FhirString value, {
     FhirUri? system,

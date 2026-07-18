@@ -32,7 +32,7 @@ class SearchSubscription extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('content_level', paramValue);
+    addParameterValue('content-level', paramValue);
     return this;
   }
 
@@ -46,7 +46,7 @@ class SearchSubscription extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('filter_event', paramValue);
+    addParameterValue('filter-event', paramValue);
     return this;
   }
 
@@ -61,13 +61,12 @@ class SearchSubscription extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('filter_value', paramValue);
+    addParameterValue('filter-value', paramValue);
     return this;
   }
 
   /// a token search for [identifier] in the resource
   /// [Subscription]
-  @override
   SearchSubscription identifier(
     FhirString value, {
     FhirUri? system,
@@ -82,7 +81,6 @@ class SearchSubscription extends SearchResource {
 
   /// a string search for [name] in the resource
   /// [Subscription]
-  @override
   SearchSubscription name(
     FhirString value, {
     SearchModifier? modifier,
@@ -112,7 +110,6 @@ class SearchSubscription extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Subscription]
-  @override
   SearchSubscription status(
     FhirString value, {
     FhirUri? system,

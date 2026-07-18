@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchComposition extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Composition]
-  @override
   SearchComposition identifier(
     FhirString value, {
     FhirUri? system,
@@ -39,7 +38,6 @@ class SearchComposition extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [Composition]
-  @override
   SearchComposition date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -74,7 +72,7 @@ class SearchComposition extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('event_code', paramValue);
+    addParameterValue('event-code', paramValue);
     return this;
   }
 
@@ -106,7 +104,6 @@ class SearchComposition extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Composition]
-  @override
   SearchComposition status(
     FhirString value, {
     FhirUri? system,

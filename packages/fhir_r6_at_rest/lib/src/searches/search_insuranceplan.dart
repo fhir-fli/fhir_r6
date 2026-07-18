@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchInsurancePlan extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [InsurancePlan]
-  @override
   SearchInsurancePlan identifier(
     FhirString value, {
     FhirUri? system,

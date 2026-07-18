@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchCoverageEligibilityResponse extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [CoverageEligibilityResponse]
-  @override
   SearchCoverageEligibilityResponse identifier(
     FhirString value, {
     FhirUri? system,
@@ -66,7 +65,6 @@ class SearchCoverageEligibilityResponse extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [CoverageEligibilityResponse]
-  @override
   SearchCoverageEligibilityResponse status(
     FhirString value, {
     FhirUri? system,

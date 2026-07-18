@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchAccount extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Account]
-  @override
   SearchAccount identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchAccount extends SearchResource {
 
   /// a string search for [name] in the resource
   /// [Account]
-  @override
   SearchAccount name(
     FhirString value, {
     SearchModifier? modifier,
@@ -53,7 +51,6 @@ class SearchAccount extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Account]
-  @override
   SearchAccount status(
     FhirString value, {
     FhirUri? system,

@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchBasic extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Basic]
-  @override
   SearchBasic identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchBasic extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [Basic]
-  @override
   SearchBasic code(
     FhirString value, {
     FhirUri? system,

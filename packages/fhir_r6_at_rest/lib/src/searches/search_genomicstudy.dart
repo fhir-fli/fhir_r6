@@ -1,5 +1,7 @@
 // This file is auto-generated. Do not edit directly.
 
+// ignore_for_file: avoid_returning_this
+
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 
@@ -8,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchGenomicStudy extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [GenomicStudy]
-  @override
   SearchGenomicStudy identifier(
     FhirString value, {
     FhirUri? system,
@@ -23,7 +24,6 @@ class SearchGenomicStudy extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [GenomicStudy]
-  @override
   SearchGenomicStudy status(
     FhirString value, {
     FhirUri? system,

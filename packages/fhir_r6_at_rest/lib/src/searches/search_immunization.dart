@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchImmunization extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Immunization]
-  @override
   SearchImmunization identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchImmunization extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [Immunization]
-  @override
   SearchImmunization date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -47,7 +45,7 @@ class SearchImmunization extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('lot_number', paramValue);
+    addParameterValue('lot-number', paramValue);
     return this;
   }
 
@@ -59,7 +57,7 @@ class SearchImmunization extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('reaction_date', paramValue);
+    addParameterValue('reaction-date', paramValue);
     return this;
   }
 
@@ -73,7 +71,7 @@ class SearchImmunization extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('reason_code', paramValue);
+    addParameterValue('reason-code', paramValue);
     return this;
   }
 
@@ -94,7 +92,6 @@ class SearchImmunization extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Immunization]
-  @override
   SearchImmunization status(
     FhirString value, {
     FhirUri? system,
@@ -117,7 +114,7 @@ class SearchImmunization extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('status_reason', paramValue);
+    addParameterValue('status-reason', paramValue);
     return this;
   }
 
@@ -131,7 +128,7 @@ class SearchImmunization extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('target_disease', paramValue);
+    addParameterValue('target-disease', paramValue);
     return this;
   }
 
@@ -145,7 +142,7 @@ class SearchImmunization extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('vaccine_code', paramValue);
+    addParameterValue('vaccine-code', paramValue);
     return this;
   }
 }

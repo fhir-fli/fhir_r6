@@ -18,13 +18,12 @@ class SearchManufacturedItemDefinition extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('dose_form', paramValue);
+    addParameterValue('dose-form', paramValue);
     return this;
   }
 
   /// a token search for [identifier] in the resource
   /// [ManufacturedItemDefinition]
-  @override
   SearchManufacturedItemDefinition identifier(
     FhirString value, {
     FhirUri? system,
@@ -53,7 +52,6 @@ class SearchManufacturedItemDefinition extends SearchResource {
 
   /// a token search for [name] in the resource
   /// [ManufacturedItemDefinition]
-  @override
   SearchManufacturedItemDefinition name(
     FhirString value, {
     FhirUri? system,
@@ -68,7 +66,6 @@ class SearchManufacturedItemDefinition extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [ManufacturedItemDefinition]
-  @override
   SearchManufacturedItemDefinition status(
     FhirString value, {
     FhirUri? system,

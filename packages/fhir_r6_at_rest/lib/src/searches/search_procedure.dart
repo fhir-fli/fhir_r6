@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchProcedure extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Procedure]
-  @override
   SearchProcedure identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchProcedure extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [Procedure]
-  @override
   SearchProcedure code(
     FhirString value, {
     FhirUri? system,
@@ -40,7 +38,6 @@ class SearchProcedure extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [Procedure]
-  @override
   SearchProcedure date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -75,13 +72,12 @@ class SearchProcedure extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('reason_code', paramValue);
+    addParameterValue('reason-code', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [Procedure]
-  @override
   SearchProcedure status(
     FhirString value, {
     FhirUri? system,

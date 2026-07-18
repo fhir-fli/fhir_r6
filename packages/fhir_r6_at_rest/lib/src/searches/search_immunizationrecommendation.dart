@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchImmunizationRecommendation extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [ImmunizationRecommendation]
-  @override
   SearchImmunizationRecommendation identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchImmunizationRecommendation extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [ImmunizationRecommendation]
-  @override
   SearchImmunizationRecommendation date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -38,7 +36,6 @@ class SearchImmunizationRecommendation extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [ImmunizationRecommendation]
-  @override
   SearchImmunizationRecommendation status(
     FhirString value, {
     FhirUri? system,
@@ -61,7 +58,7 @@ class SearchImmunizationRecommendation extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('target_disease', paramValue);
+    addParameterValue('target-disease', paramValue);
     return this;
   }
 
@@ -75,7 +72,7 @@ class SearchImmunizationRecommendation extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('vaccine_type', paramValue);
+    addParameterValue('vaccine-type', paramValue);
     return this;
   }
 }

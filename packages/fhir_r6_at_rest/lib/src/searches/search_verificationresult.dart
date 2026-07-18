@@ -18,7 +18,7 @@ class SearchVerificationResult extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('attestation_method', paramValue);
+    addParameterValue('attestation-method', paramValue);
     return this;
   }
 
@@ -30,7 +30,7 @@ class SearchVerificationResult extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('primarysource_date', paramValue);
+    addParameterValue('primarysource-date', paramValue);
     return this;
   }
 
@@ -44,13 +44,12 @@ class SearchVerificationResult extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('primarysource_type', paramValue);
+    addParameterValue('primarysource-type', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [VerificationResult]
-  @override
   SearchVerificationResult status(
     FhirString value, {
     FhirUri? system,
@@ -71,7 +70,7 @@ class SearchVerificationResult extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('status_date', paramValue);
+    addParameterValue('status-date', paramValue);
     return this;
   }
 }

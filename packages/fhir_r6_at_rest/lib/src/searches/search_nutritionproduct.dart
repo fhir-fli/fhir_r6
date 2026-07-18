@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchNutritionProduct extends SearchResource {
   /// a token search for [code] in the resource
   /// [NutritionProduct]
-  @override
   SearchNutritionProduct code(
     FhirString value, {
     FhirUri? system,
@@ -31,13 +30,12 @@ class SearchNutritionProduct extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('expiration_date', paramValue);
+    addParameterValue('expiration-date', paramValue);
     return this;
   }
 
   /// a token search for [identifier] in the resource
   /// [NutritionProduct]
-  @override
   SearchNutritionProduct identifier(
     FhirString value, {
     FhirUri? system,
@@ -60,7 +58,7 @@ class SearchNutritionProduct extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('ingredient_item', paramValue);
+    addParameterValue('ingredient-item', paramValue);
     return this;
   }
 
@@ -74,7 +72,7 @@ class SearchNutritionProduct extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('lot_number', paramValue);
+    addParameterValue('lot-number', paramValue);
     return this;
   }
 
@@ -88,13 +86,12 @@ class SearchNutritionProduct extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('serial_number', paramValue);
+    addParameterValue('serial-number', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [NutritionProduct]
-  @override
   SearchNutritionProduct status(
     FhirString value, {
     FhirUri? system,

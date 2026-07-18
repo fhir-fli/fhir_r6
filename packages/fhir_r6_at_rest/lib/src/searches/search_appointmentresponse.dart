@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchAppointmentResponse extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [AppointmentResponse]
-  @override
   SearchAppointmentResponse identifier(
     FhirString value, {
     FhirUri? system,
@@ -33,7 +32,7 @@ class SearchAppointmentResponse extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('part_status', paramValue);
+    addParameterValue('part-status', paramValue);
     return this;
   }
 }

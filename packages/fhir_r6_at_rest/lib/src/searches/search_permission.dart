@@ -1,5 +1,7 @@
 // This file is auto-generated. Do not edit directly.
 
+// ignore_for_file: avoid_returning_this
+
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 
@@ -8,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchPermission extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Permission]
-  @override
   SearchPermission identifier(
     FhirString value, {
     FhirUri? system,
@@ -23,7 +24,6 @@ class SearchPermission extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Permission]
-  @override
   SearchPermission status(
     FhirString value, {
     FhirUri? system,

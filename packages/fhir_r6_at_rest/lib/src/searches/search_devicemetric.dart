@@ -24,7 +24,6 @@ class SearchDeviceMetric extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [DeviceMetric]
-  @override
   SearchDeviceMetric identifier(
     FhirString value, {
     FhirUri? system,

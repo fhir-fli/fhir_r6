@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchTask extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Task]
-  @override
   SearchTask identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchTask extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [Task]
-  @override
   SearchTask code(
     FhirString value, {
     FhirUri? system,
@@ -46,7 +44,7 @@ class SearchTask extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('authored_on', paramValue);
+    addParameterValue('authored-on', paramValue);
     return this;
   }
 
@@ -60,7 +58,7 @@ class SearchTask extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('business_status', paramValue);
+    addParameterValue('business-status', paramValue);
     return this;
   }
 
@@ -74,7 +72,7 @@ class SearchTask extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('group_identifier', paramValue);
+    addParameterValue('group-identifier', paramValue);
     return this;
   }
 
@@ -132,7 +130,6 @@ class SearchTask extends SearchResource {
 
   /// a token search for [priority] in the resource
   /// [Task]
-  @override
   SearchTask priority(
     FhirString value, {
     FhirUri? system,
@@ -147,7 +144,6 @@ class SearchTask extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Task]
-  @override
   SearchTask status(
     FhirString value, {
     FhirUri? system,

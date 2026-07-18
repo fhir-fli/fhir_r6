@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchSubscriptionTopic extends SearchResource {
   /// a date search for [date] in the resource
   /// [SubscriptionTopic]
-  @override
   SearchSubscriptionTopic date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -23,7 +22,6 @@ class SearchSubscriptionTopic extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [SubscriptionTopic]
-  @override
   SearchSubscriptionTopic identifier(
     FhirString value, {
     FhirUri? system,
@@ -38,7 +36,6 @@ class SearchSubscriptionTopic extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [SubscriptionTopic]
-  @override
   SearchSubscriptionTopic status(
     FhirString value, {
     FhirUri? system,
@@ -100,7 +97,7 @@ class SearchSubscriptionTopic extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('derived_or_self', paramValue);
+    addParameterValue('derived-or-self', paramValue);
     return this;
   }
 
@@ -153,7 +150,7 @@ class SearchSubscriptionTopic extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('trigger_description', paramValue);
+    addParameterValue('trigger-description', paramValue);
     return this;
   }
 }

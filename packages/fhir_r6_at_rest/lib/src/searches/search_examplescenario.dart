@@ -34,12 +34,12 @@ class SearchExampleScenario extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
     final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('context_quantity', paramValue);
+        ? '$modifier$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
+    addParameterValue('context-quantity', paramValue);
     return this;
   }
 
@@ -53,13 +53,12 @@ class SearchExampleScenario extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('context_type', paramValue);
+    addParameterValue('context-type', paramValue);
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [ExampleScenario]
-  @override
   SearchExampleScenario date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -72,7 +71,6 @@ class SearchExampleScenario extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [ExampleScenario]
-  @override
   SearchExampleScenario identifier(
     FhirString value, {
     FhirUri? system,
@@ -101,7 +99,6 @@ class SearchExampleScenario extends SearchResource {
 
   /// a string search for [name] in the resource
   /// [ExampleScenario]
-  @override
   SearchExampleScenario name(
     FhirString value, {
     SearchModifier? modifier,
@@ -132,7 +129,6 @@ class SearchExampleScenario extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [ExampleScenario]
-  @override
   SearchExampleScenario status(
     FhirString value, {
     FhirUri? system,

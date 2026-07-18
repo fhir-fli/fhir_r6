@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchCoverage extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Coverage]
-  @override
   SearchCoverage identifier(
     FhirString value, {
     FhirUri? system,
@@ -47,7 +46,7 @@ class SearchCoverage extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('class_type', paramValue);
+    addParameterValue('class-type', paramValue);
     return this;
   }
 
@@ -61,7 +60,7 @@ class SearchCoverage extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('class_value', paramValue);
+    addParameterValue('class-value', paramValue);
     return this;
   }
 
@@ -82,7 +81,6 @@ class SearchCoverage extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Coverage]
-  @override
   SearchCoverage status(
     FhirString value, {
     FhirUri? system,

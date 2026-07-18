@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchServiceRequest extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [ServiceRequest]
-  @override
   SearchServiceRequest identifier(
     FhirString value, {
     FhirUri? system,
@@ -45,7 +44,7 @@ class SearchServiceRequest extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('body_site', paramValue);
+    addParameterValue('body-site', paramValue);
     return this;
   }
 
@@ -73,7 +72,7 @@ class SearchServiceRequest extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('code_concept', paramValue);
+    addParameterValue('code-concept', paramValue);
     return this;
   }
 
@@ -87,7 +86,7 @@ class SearchServiceRequest extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('group_or_identifier', paramValue);
+    addParameterValue('group-or-identifier', paramValue);
     return this;
   }
 
@@ -99,7 +98,7 @@ class SearchServiceRequest extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('instantiates_uri', paramValue);
+    addParameterValue('instantiates-uri', paramValue);
     return this;
   }
 
@@ -127,7 +126,7 @@ class SearchServiceRequest extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('location_code', paramValue);
+    addParameterValue('location-code', paramValue);
     return this;
   }
 
@@ -153,13 +152,12 @@ class SearchServiceRequest extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('performer_type', paramValue);
+    addParameterValue('performer-type', paramValue);
     return this;
   }
 
   /// a token search for [priority] in the resource
   /// [ServiceRequest]
-  @override
   SearchServiceRequest priority(
     FhirString value, {
     FhirUri? system,
@@ -188,7 +186,6 @@ class SearchServiceRequest extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [ServiceRequest]
-  @override
   SearchServiceRequest status(
     FhirString value, {
     FhirUri? system,

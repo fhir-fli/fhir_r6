@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchGuidanceResponse extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [GuidanceResponse]
-  @override
   SearchGuidanceResponse identifier(
     FhirString value, {
     FhirUri? system,
@@ -39,7 +38,6 @@ class SearchGuidanceResponse extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [GuidanceResponse]
-  @override
   SearchGuidanceResponse status(
     FhirString value, {
     FhirUri? system,

@@ -24,7 +24,6 @@ class SearchSubstanceDefinition extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [SubstanceDefinition]
-  @override
   SearchSubstanceDefinition code(
     FhirString value, {
     FhirUri? system,
@@ -53,7 +52,6 @@ class SearchSubstanceDefinition extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [SubstanceDefinition]
-  @override
   SearchSubstanceDefinition identifier(
     FhirString value, {
     FhirUri? system,
@@ -68,7 +66,6 @@ class SearchSubstanceDefinition extends SearchResource {
 
   /// a string search for [name] in the resource
   /// [SubstanceDefinition]
-  @override
   SearchSubstanceDefinition name(
     FhirString value, {
     SearchModifier? modifier,

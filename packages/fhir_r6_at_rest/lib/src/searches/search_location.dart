@@ -34,7 +34,7 @@ class SearchLocation extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_city', paramValue);
+    addParameterValue('address-city', paramValue);
     return this;
   }
 
@@ -49,7 +49,7 @@ class SearchLocation extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_country', paramValue);
+    addParameterValue('address-country', paramValue);
     return this;
   }
 
@@ -64,7 +64,7 @@ class SearchLocation extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_postalcode', paramValue);
+    addParameterValue('address-postalcode', paramValue);
     return this;
   }
 
@@ -79,7 +79,7 @@ class SearchLocation extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_state', paramValue);
+    addParameterValue('address-state', paramValue);
     return this;
   }
 
@@ -93,7 +93,7 @@ class SearchLocation extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_use', paramValue);
+    addParameterValue('address-use', paramValue);
     return this;
   }
 
@@ -113,7 +113,6 @@ class SearchLocation extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [Location]
-  @override
   SearchLocation identifier(
     FhirString value, {
     FhirUri? system,
@@ -142,7 +141,6 @@ class SearchLocation extends SearchResource {
 
   /// a string search for [name] in the resource
   /// [Location]
-  @override
   SearchLocation name(
     FhirString value, {
     SearchModifier? modifier,
@@ -166,13 +164,12 @@ class SearchLocation extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('operational_status', paramValue);
+    addParameterValue('operational-status', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [Location]
-  @override
   SearchLocation status(
     FhirString value, {
     FhirUri? system,

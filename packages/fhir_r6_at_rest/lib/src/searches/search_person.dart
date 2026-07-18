@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchPerson extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Person]
-  @override
   SearchPerson identifier(
     FhirString value, {
     FhirUri? system,
@@ -49,7 +48,7 @@ class SearchPerson extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_city', paramValue);
+    addParameterValue('address-city', paramValue);
     return this;
   }
 
@@ -64,7 +63,7 @@ class SearchPerson extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_country', paramValue);
+    addParameterValue('address-country', paramValue);
     return this;
   }
 
@@ -79,7 +78,7 @@ class SearchPerson extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_postalcode', paramValue);
+    addParameterValue('address-postalcode', paramValue);
     return this;
   }
 
@@ -94,7 +93,7 @@ class SearchPerson extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_state', paramValue);
+    addParameterValue('address-state', paramValue);
     return this;
   }
 
@@ -108,7 +107,7 @@ class SearchPerson extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_use', paramValue);
+    addParameterValue('address-use', paramValue);
     return this;
   }
 
@@ -168,7 +167,6 @@ class SearchPerson extends SearchResource {
 
   /// a string search for [phonetic] in the resource
   /// [Person]
-  @override
   SearchPerson phonetic(
     FhirString value, {
     SearchModifier? modifier,
@@ -204,7 +202,7 @@ class SearchPerson extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('death_date', paramValue);
+    addParameterValue('death-date', paramValue);
     return this;
   }
 
@@ -254,7 +252,6 @@ class SearchPerson extends SearchResource {
 
   /// a string search for [name] in the resource
   /// [Person]
-  @override
   SearchPerson name(
     FhirString value, {
     SearchModifier? modifier,

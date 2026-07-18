@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchRiskAssessment extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [RiskAssessment]
-  @override
   SearchRiskAssessment identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchRiskAssessment extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [RiskAssessment]
-  @override
   SearchRiskAssessment date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -62,11 +60,11 @@ class SearchRiskAssessment extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for number type');
     }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
     final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
+        ? '$modifier$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
     addParameterValue('probability', paramValue);
     return this;
   }

@@ -94,7 +94,6 @@ class SearchPractitionerRole extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [PractitionerRole]
-  @override
   SearchPractitionerRole date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -107,7 +106,6 @@ class SearchPractitionerRole extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [PractitionerRole]
-  @override
   SearchPractitionerRole identifier(
     FhirString value, {
     FhirUri? system,

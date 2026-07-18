@@ -1,5 +1,7 @@
 // This file is auto-generated. Do not edit directly.
 
+// ignore_for_file: avoid_returning_this
+
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 
@@ -8,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchInventoryItem extends SearchResource {
   /// a token search for [code] in the resource
   /// [InventoryItem]
-  @override
   SearchInventoryItem code(
     FhirString value, {
     FhirUri? system,
@@ -23,7 +24,6 @@ class SearchInventoryItem extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [InventoryItem]
-  @override
   SearchInventoryItem identifier(
     FhirString value, {
     FhirUri? system,
@@ -38,7 +38,6 @@ class SearchInventoryItem extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [InventoryItem]
-  @override
   SearchInventoryItem status(
     FhirString value, {
     FhirUri? system,

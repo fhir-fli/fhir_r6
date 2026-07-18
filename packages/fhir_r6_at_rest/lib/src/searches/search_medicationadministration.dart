@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchMedicationAdministration extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [MedicationAdministration]
-  @override
   SearchMedicationAdministration identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchMedicationAdministration extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [MedicationAdministration]
-  @override
   SearchMedicationAdministration code(
     FhirString value, {
     FhirUri? system,
@@ -40,7 +38,6 @@ class SearchMedicationAdministration extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [MedicationAdministration]
-  @override
   SearchMedicationAdministration date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -61,7 +58,7 @@ class SearchMedicationAdministration extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('performer_device_code', paramValue);
+    addParameterValue('performer-device-code', paramValue);
     return this;
   }
 
@@ -75,7 +72,7 @@ class SearchMedicationAdministration extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('reason_given_code', paramValue);
+    addParameterValue('reason-given-code', paramValue);
     return this;
   }
 
@@ -89,13 +86,12 @@ class SearchMedicationAdministration extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('reason_not_given', paramValue);
+    addParameterValue('reason-not-given', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [MedicationAdministration]
-  @override
   SearchMedicationAdministration status(
     FhirString value, {
     FhirUri? system,

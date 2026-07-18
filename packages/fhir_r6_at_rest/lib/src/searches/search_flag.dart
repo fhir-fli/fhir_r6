@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchFlag extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Flag]
-  @override
   SearchFlag identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchFlag extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [Flag]
-  @override
   SearchFlag date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -52,7 +50,6 @@ class SearchFlag extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Flag]
-  @override
   SearchFlag status(
     FhirString value, {
     FhirUri? system,

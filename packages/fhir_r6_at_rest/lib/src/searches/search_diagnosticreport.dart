@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchDiagnosticReport extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [DiagnosticReport]
-  @override
   SearchDiagnosticReport identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchDiagnosticReport extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [DiagnosticReport]
-  @override
   SearchDiagnosticReport code(
     FhirString value, {
     FhirUri? system,
@@ -40,7 +38,6 @@ class SearchDiagnosticReport extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [DiagnosticReport]
-  @override
   SearchDiagnosticReport date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -75,7 +72,7 @@ class SearchDiagnosticReport extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('conclusioncode_code', paramValue);
+    addParameterValue('conclusioncode-code', paramValue);
     return this;
   }
 
@@ -93,7 +90,6 @@ class SearchDiagnosticReport extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [DiagnosticReport]
-  @override
   SearchDiagnosticReport status(
     FhirString value, {
     FhirUri? system,

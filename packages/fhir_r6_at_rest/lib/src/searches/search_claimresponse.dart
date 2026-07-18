@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchClaimResponse extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [ClaimResponse]
-  @override
   SearchClaimResponse identifier(
     FhirString value, {
     FhirUri? system,
@@ -72,13 +71,12 @@ class SearchClaimResponse extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('payment_date', paramValue);
+    addParameterValue('payment-date', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [ClaimResponse]
-  @override
   SearchClaimResponse status(
     FhirString value, {
     FhirUri? system,

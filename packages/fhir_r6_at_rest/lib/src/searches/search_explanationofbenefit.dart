@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchExplanationOfBenefit extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [ExplanationOfBenefit]
-  @override
   SearchExplanationOfBenefit identifier(
     FhirString value, {
     FhirUri? system,
@@ -52,7 +51,6 @@ class SearchExplanationOfBenefit extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [ExplanationOfBenefit]
-  @override
   SearchExplanationOfBenefit status(
     FhirString value, {
     FhirUri? system,

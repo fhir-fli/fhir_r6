@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchAuditEvent extends SearchResource {
   /// a date search for [date] in the resource
   /// [AuditEvent]
-  @override
   SearchAuditEvent date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -45,7 +44,7 @@ class SearchAuditEvent extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('agent_role', paramValue);
+    addParameterValue('agent-role', paramValue);
     return this;
   }
 
@@ -60,7 +59,7 @@ class SearchAuditEvent extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('entity_desc', paramValue);
+    addParameterValue('entity-desc', paramValue);
     return this;
   }
 
@@ -74,7 +73,7 @@ class SearchAuditEvent extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('entity_role', paramValue);
+    addParameterValue('entity-role', paramValue);
     return this;
   }
 

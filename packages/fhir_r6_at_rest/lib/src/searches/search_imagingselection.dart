@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchImagingSelection extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [ImagingSelection]
-  @override
   SearchImagingSelection identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchImagingSelection extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [ImagingSelection]
-  @override
   SearchImagingSelection code(
     FhirString value, {
     FhirUri? system,
@@ -48,7 +46,7 @@ class SearchImagingSelection extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('body_site', paramValue);
+    addParameterValue('body-site', paramValue);
     return this;
   }
 
@@ -80,7 +78,6 @@ class SearchImagingSelection extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [ImagingSelection]
-  @override
   SearchImagingSelection status(
     FhirString value, {
     FhirUri? system,
@@ -103,7 +100,7 @@ class SearchImagingSelection extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('study_uid', paramValue);
+    addParameterValue('study-uid', paramValue);
     return this;
   }
 }

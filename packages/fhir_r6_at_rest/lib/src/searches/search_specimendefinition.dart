@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchSpecimenDefinition extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [SpecimenDefinition]
-  @override
   SearchSpecimenDefinition identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchSpecimenDefinition extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [SpecimenDefinition]
-  @override
   SearchSpecimenDefinition status(
     FhirString value, {
     FhirUri? system,
@@ -103,7 +101,7 @@ class SearchSpecimenDefinition extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('is_derived', paramValue);
+    addParameterValue('is-derived', paramValue);
     return this;
   }
 
@@ -131,7 +129,7 @@ class SearchSpecimenDefinition extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('type_tested', paramValue);
+    addParameterValue('type-tested', paramValue);
     return this;
   }
 }

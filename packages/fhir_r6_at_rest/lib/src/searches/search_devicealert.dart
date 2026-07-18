@@ -6,11 +6,11 @@ import 'package:fhir_r6/fhir_r6.dart';
 import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 
 /// A class to build query parameters for RESTful requests for
-/// the [AllergyIntolerance] resource.
-class SearchAllergyIntolerance extends SearchResource {
-  /// a token search for [identifier] in the resource
-  /// [AllergyIntolerance]
-  SearchAllergyIntolerance identifier(
+/// the [DeviceAlert] resource.
+class SearchDeviceAlert extends SearchResource {
+  /// a token search for [annunciatorConcept] in the resource
+  /// [DeviceAlert]
+  SearchDeviceAlert annunciatorConcept(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
@@ -18,27 +18,13 @@ class SearchAllergyIntolerance extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('identifier', paramValue);
-    return this;
-  }
-
-  /// a token search for [type] in the resource
-  /// [AllergyIntolerance]
-  SearchAllergyIntolerance type(
-    FhirString value, {
-    FhirUri? system,
-    SearchModifier? modifier,
-  }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('type', paramValue);
+    addParameterValue('annunciator-concept', paramValue);
     return this;
   }
 
   /// a token search for [code] in the resource
-  /// [AllergyIntolerance]
-  SearchAllergyIntolerance code(
+  /// [DeviceAlert]
+  SearchDeviceAlert code(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
@@ -50,9 +36,9 @@ class SearchAllergyIntolerance extends SearchResource {
     return this;
   }
 
-  /// a token search for [category] in the resource
-  /// [AllergyIntolerance]
-  SearchAllergyIntolerance category(
+  /// a token search for [identifier] in the resource
+  /// [DeviceAlert]
+  SearchDeviceAlert identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
@@ -60,65 +46,107 @@ class SearchAllergyIntolerance extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('category', paramValue);
+    addParameterValue('identifier', paramValue);
     return this;
   }
 
-  /// a token search for [clinicalStatus] in the resource
-  /// [AllergyIntolerance]
-  SearchAllergyIntolerance clinicalStatus(
-    FhirString value, {
-    FhirUri? system,
-    SearchModifier? modifier,
-  }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('clinical-status', paramValue);
-    return this;
-  }
-
-  /// a token search for [criticality] in the resource
-  /// [AllergyIntolerance]
-  SearchAllergyIntolerance criticality(
-    FhirString value, {
-    FhirUri? system,
-    SearchModifier? modifier,
-  }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('criticality', paramValue);
-    return this;
-  }
-
-  /// a date search for [date] in the resource
-  /// [AllergyIntolerance]
-  SearchAllergyIntolerance date(
+  /// a date search for [indication] in the resource
+  /// [DeviceAlert]
+  SearchDeviceAlert indication(
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('date', paramValue);
+    addParameterValue('indication', paramValue);
     return this;
   }
 
-  /// a date search for [lastReactionDate] in the resource
-  /// [AllergyIntolerance]
-  SearchAllergyIntolerance lastReactionDate(
+  /// a token search for [manifestation] in the resource
+  /// [DeviceAlert]
+  SearchDeviceAlert manifestation(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('manifestation', paramValue);
+    return this;
+  }
+
+  /// a token search for [presence] in the resource
+  /// [DeviceAlert]
+  SearchDeviceAlert presence(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('presence', paramValue);
+    return this;
+  }
+
+  /// a token search for [priority] in the resource
+  /// [DeviceAlert]
+  SearchDeviceAlert priority(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('priority', paramValue);
+    return this;
+  }
+
+  /// a token search for [signalPresence] in the resource
+  /// [DeviceAlert]
+  SearchDeviceAlert signalPresence(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('signal-presence', paramValue);
+    return this;
+  }
+
+  /// a token search for [status] in the resource
+  /// [DeviceAlert]
+  SearchDeviceAlert status(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a date search for [timing] in the resource
+  /// [DeviceAlert]
+  SearchDeviceAlert timing(
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('last-reaction-date', paramValue);
+    addParameterValue('timing', paramValue);
     return this;
   }
 
-  /// a token search for [manifestationCode] in the resource
-  /// [AllergyIntolerance]
-  SearchAllergyIntolerance manifestationCode(
+  /// a token search for [type] in the resource
+  /// [DeviceAlert]
+  SearchDeviceAlert type(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
@@ -126,49 +154,7 @@ class SearchAllergyIntolerance extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('manifestation-code', paramValue);
-    return this;
-  }
-
-  /// a token search for [route] in the resource
-  /// [AllergyIntolerance]
-  SearchAllergyIntolerance route(
-    FhirString value, {
-    FhirUri? system,
-    SearchModifier? modifier,
-  }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('route', paramValue);
-    return this;
-  }
-
-  /// a token search for [severity] in the resource
-  /// [AllergyIntolerance]
-  SearchAllergyIntolerance severity(
-    FhirString value, {
-    FhirUri? system,
-    SearchModifier? modifier,
-  }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('severity', paramValue);
-    return this;
-  }
-
-  /// a token search for [verificationStatus] in the resource
-  /// [AllergyIntolerance]
-  SearchAllergyIntolerance verificationStatus(
-    FhirString value, {
-    FhirUri? system,
-    SearchModifier? modifier,
-  }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('verification-status', paramValue);
+    addParameterValue('type', paramValue);
     return this;
   }
 }

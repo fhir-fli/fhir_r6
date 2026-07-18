@@ -81,25 +81,6 @@ void main() {
       final query = search.buildQuery();
       expect(query, contains('_language=en'));
     });
-
-    test('name() as string throws on invalid modifier', () {
-      expect(
-        () => search.name('test'.toFhirString, modifier: SearchModifier.gt),
-        throwsA(isA<ArgumentError>()),
-      );
-    });
-
-    test('name() allows eq modifier', () {
-      search.name('test'.toFhirString, modifier: SearchModifier.eq);
-      final query = search.buildQuery();
-      expect(query, contains('name=eqtest'));
-    });
-
-    test('name() allows ne modifier', () {
-      search.name('test'.toFhirString, modifier: SearchModifier.ne);
-      final query = search.buildQuery();
-      expect(query, contains('name=netest'));
-    });
   });
 
   // ──────────────────────────────────────────────────────────────────────────
@@ -130,34 +111,53 @@ void main() {
       expect(query, contains('name=John'));
     });
 
+    test('name() as string throws on invalid modifier', () {
+      expect(
+        () => search.name('test'.toFhirString, modifier: SearchModifier.gt),
+        throwsA(isA<ArgumentError>()),
+      );
+    });
+
+    test('name() allows eq modifier', () {
+      search.name('test'.toFhirString, modifier: SearchModifier.eq);
+      final query = search.buildQuery();
+      expect(query, contains('name=eqtest'));
+    });
+
+    test('name() allows ne modifier', () {
+      search.name('test'.toFhirString, modifier: SearchModifier.ne);
+      final query = search.buildQuery();
+      expect(query, contains('name=netest'));
+    });
+
     test('address() adds address parameter', () {
       search.address('Boston'.toFhirString);
       final query = search.buildQuery();
       expect(query, contains('address=Boston'));
     });
 
-    test('addressCity() adds address_city parameter', () {
+    test('addressCity() adds address-city parameter', () {
       search.addressCity('Boston'.toFhirString);
       final query = search.buildQuery();
-      expect(query, contains('address_city=Boston'));
+      expect(query, contains('address-city=Boston'));
     });
 
-    test('addressState() adds address_state parameter', () {
+    test('addressState() adds address-state parameter', () {
       search.addressState('MA'.toFhirString);
       final query = search.buildQuery();
-      expect(query, contains('address_state=MA'));
+      expect(query, contains('address-state=MA'));
     });
 
-    test('addressPostalcode() adds address_postalcode parameter', () {
+    test('addressPostalcode() adds address-postalcode parameter', () {
       search.addressPostalcode('02101'.toFhirString);
       final query = search.buildQuery();
-      expect(query, contains('address_postalcode=02101'));
+      expect(query, contains('address-postalcode=02101'));
     });
 
-    test('addressCountry() adds address_country parameter', () {
+    test('addressCountry() adds address-country parameter', () {
       search.addressCountry('US'.toFhirString);
       final query = search.buildQuery();
-      expect(query, contains('address_country=US'));
+      expect(query, contains('address-country=US'));
     });
 
     test('phonetic() adds phonetic parameter', () {
@@ -289,10 +289,10 @@ void main() {
       expect(query, contains('telecom=555-1234'));
     });
 
-    test('addressUse() adds address_use parameter', () {
+    test('addressUse() adds address-use parameter', () {
       search.addressUse('home'.toFhirString);
       final query = search.buildQuery();
-      expect(query, contains('address_use=home'));
+      expect(query, contains('address-use=home'));
     });
 
     test('deceased() adds deceased parameter', () {
@@ -334,10 +334,10 @@ void main() {
       expect(query, contains('birthdate=1990-01-15'));
     });
 
-    test('deathDate() adds death_date parameter', () {
+    test('deathDate() adds death-date parameter', () {
       search.deathDate(FhirDateTime.fromString('2024-06-15'));
       final query = search.buildQuery();
-      expect(query, contains('death_date=2024-06-15'));
+      expect(query, contains('death-date=2024-06-15'));
     });
 
     test('date param with ge modifier', () {
@@ -387,10 +387,10 @@ void main() {
       search = SearchObservation();
     });
 
-    test('valueQuantity() adds value_quantity parameter (value only)', () {
+    test('valueQuantity() adds value-quantity parameter (value only)', () {
       search.valueQuantity(FhirDecimal(98.6));
       final query = search.buildQuery();
-      expect(query, contains('value_quantity='));
+      expect(query, contains('value-quantity='));
       expect(query, contains('98.6'));
     });
 
@@ -401,38 +401,38 @@ void main() {
         system: FhirUri('http://unitsofmeasure.org'),
       );
       final query = search.buildQuery();
-      expect(query, contains('value_quantity='));
+      expect(query, contains('value-quantity='));
       expect(query, contains('120'));
     });
 
     test('valueQuantity() with gt modifier', () {
       search.valueQuantity(FhirDecimal(100), modifier: SearchModifier.gt);
       final query = search.buildQuery();
-      expect(query, contains('value_quantity=gt100'));
+      expect(query, contains('value-quantity=gt100'));
     });
 
     test('valueQuantity() with lt modifier', () {
       search.valueQuantity(FhirDecimal(200), modifier: SearchModifier.lt);
       final query = search.buildQuery();
-      expect(query, contains('value_quantity=lt200'));
+      expect(query, contains('value-quantity=lt200'));
     });
 
     test('valueQuantity() with ge modifier', () {
       search.valueQuantity(FhirDecimal(100), modifier: SearchModifier.ge);
       final query = search.buildQuery();
-      expect(query, contains('value_quantity=ge100'));
+      expect(query, contains('value-quantity=ge100'));
     });
 
     test('valueQuantity() with le modifier', () {
       search.valueQuantity(FhirDecimal(200), modifier: SearchModifier.le);
       final query = search.buildQuery();
-      expect(query, contains('value_quantity=le200'));
+      expect(query, contains('value-quantity=le200'));
     });
 
     test('valueQuantity() with ap modifier', () {
       search.valueQuantity(FhirDecimal(150), modifier: SearchModifier.ap);
       final query = search.buildQuery();
-      expect(query, contains('value_quantity=ap150'));
+      expect(query, contains('value-quantity=ap150'));
     });
 
     test('valueQuantity() throws on eq modifier', () {
@@ -478,7 +478,7 @@ void main() {
     test('comboValueQuantity() with modifier', () {
       search.comboValueQuantity(FhirDecimal(50), modifier: SearchModifier.ge);
       final query = search.buildQuery();
-      expect(query, contains('combo_value_quantity=ge50'));
+      expect(query, contains('combo-value-quantity=ge50'));
     });
 
     test('componentValueQuantity() with modifier', () {
@@ -487,7 +487,7 @@ void main() {
         modifier: SearchModifier.le,
       );
       final query = search.buildQuery();
-      expect(query, contains('component_value_quantity=le80'));
+      expect(query, contains('component-value-quantity=le80'));
     });
   });
 
@@ -536,16 +536,16 @@ void main() {
       expect(query, contains('laboratory'));
     });
 
-    test('valueString() adds value_string string parameter', () {
+    test('valueString() adds value-string string parameter', () {
       search.valueString('positive'.toFhirString);
       final query = search.buildQuery();
-      expect(query, contains('value_string=positive'));
+      expect(query, contains('value-string=positive'));
     });
 
-    test('valueDate() adds value_date date parameter', () {
+    test('valueDate() adds value-date date parameter', () {
       search.valueDate(FhirDateTime.fromString('2024-03-01'));
       final query = search.buildQuery();
-      expect(query, contains('value_date=2024-03-01'));
+      expect(query, contains('value-date=2024-03-01'));
     });
   });
 

@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchImagingStudy extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [ImagingStudy]
-  @override
   SearchImagingStudy identifier(
     FhirString value, {
     FhirUri? system,
@@ -33,7 +32,7 @@ class SearchImagingStudy extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('body_site', paramValue);
+    addParameterValue('body-site', paramValue);
     return this;
   }
 
@@ -45,7 +44,7 @@ class SearchImagingStudy extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('dicom_class', paramValue);
+    addParameterValue('dicom-class', paramValue);
     return this;
   }
 
@@ -87,7 +86,7 @@ class SearchImagingStudy extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('reason_concept', paramValue);
+    addParameterValue('reason-concept', paramValue);
     return this;
   }
 
@@ -119,7 +118,6 @@ class SearchImagingStudy extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [ImagingStudy]
-  @override
   SearchImagingStudy status(
     FhirString value, {
     FhirUri? system,

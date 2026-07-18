@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchBodyStructure extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [BodyStructure]
-  @override
   SearchBodyStructure identifier(
     FhirString value, {
     FhirUri? system,

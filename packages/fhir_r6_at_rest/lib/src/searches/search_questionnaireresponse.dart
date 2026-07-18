@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchQuestionnaireResponse extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [QuestionnaireResponse]
-  @override
   SearchQuestionnaireResponse identifier(
     FhirString value, {
     FhirUri? system,
@@ -33,7 +32,7 @@ class SearchQuestionnaireResponse extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('answer_concept', paramValue);
+    addParameterValue('answer-concept', paramValue);
     return this;
   }
 
@@ -45,7 +44,7 @@ class SearchQuestionnaireResponse extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('answer_date', paramValue);
+    addParameterValue('answer-date', paramValue);
     return this;
   }
 
@@ -61,12 +60,12 @@ class SearchQuestionnaireResponse extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for number type');
     }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
     final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('answer_number', paramValue);
+        ? '$modifier$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
+    addParameterValue('answer-number', paramValue);
     return this;
   }
 
@@ -82,12 +81,12 @@ class SearchQuestionnaireResponse extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
     final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('answer_quantity', paramValue);
+        ? '$modifier$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
+    addParameterValue('answer-quantity', paramValue);
     return this;
   }
 
@@ -102,7 +101,7 @@ class SearchQuestionnaireResponse extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('answer_string', paramValue);
+    addParameterValue('answer-string', paramValue);
     return this;
   }
 
@@ -134,7 +133,6 @@ class SearchQuestionnaireResponse extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [QuestionnaireResponse]
-  @override
   SearchQuestionnaireResponse status(
     FhirString value, {
     FhirUri? system,

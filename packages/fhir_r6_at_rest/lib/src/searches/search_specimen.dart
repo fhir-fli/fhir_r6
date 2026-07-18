@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchSpecimen extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Specimen]
-  @override
   SearchSpecimen identifier(
     FhirString value, {
     FhirUri? system,
@@ -65,7 +64,6 @@ class SearchSpecimen extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Specimen]
-  @override
   SearchSpecimen status(
     FhirString value, {
     FhirUri? system,

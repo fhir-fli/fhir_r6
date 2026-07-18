@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchDeviceDefinition extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [DeviceDefinition]
-  @override
   SearchDeviceDefinition identifier(
     FhirString value, {
     FhirUri? system,
@@ -75,7 +74,7 @@ class SearchDeviceDefinition extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('device_name', paramValue);
+    addParameterValue('device-name', paramValue);
     return this;
   }
 
@@ -89,7 +88,7 @@ class SearchDeviceDefinition extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('model_number', paramValue);
+    addParameterValue('model-number', paramValue);
     return this;
   }
 
@@ -104,7 +103,7 @@ class SearchDeviceDefinition extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('part_number', paramValue);
+    addParameterValue('part-number', paramValue);
     return this;
   }
 

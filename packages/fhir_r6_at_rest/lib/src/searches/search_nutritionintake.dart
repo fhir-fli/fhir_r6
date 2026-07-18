@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchNutritionIntake extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [NutritionIntake]
-  @override
   SearchNutritionIntake identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchNutritionIntake extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [NutritionIntake]
-  @override
   SearchNutritionIntake code(
     FhirString value, {
     FhirUri? system,
@@ -40,7 +38,6 @@ class SearchNutritionIntake extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [NutritionIntake]
-  @override
   SearchNutritionIntake date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -67,7 +64,6 @@ class SearchNutritionIntake extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [NutritionIntake]
-  @override
   SearchNutritionIntake status(
     FhirString value, {
     FhirUri? system,

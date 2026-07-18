@@ -6,23 +6,37 @@ import 'package:fhir_r6/fhir_r6.dart';
 import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 
 /// A class to build query parameters for RESTful requests for
-/// the [PaymentNotice] resource.
-class SearchPaymentNotice extends SearchResource {
-  /// a date search for [created] in the resource
-  /// [PaymentNotice]
-  SearchPaymentNotice created(
+/// the [ClinicalAssessment] resource.
+class SearchClinicalAssessment extends SearchResource {
+  /// a date search for [date] in the resource
+  /// [ClinicalAssessment]
+  SearchClinicalAssessment date(
     FhirDateTime value, {
     SearchModifier? modifier,
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('created', paramValue);
+    addParameterValue('date', paramValue);
+    return this;
+  }
+
+  /// a token search for [findingCode] in the resource
+  /// [ClinicalAssessment]
+  SearchClinicalAssessment findingCode(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('finding-code', paramValue);
     return this;
   }
 
   /// a token search for [identifier] in the resource
-  /// [PaymentNotice]
-  SearchPaymentNotice identifier(
+  /// [ClinicalAssessment]
+  SearchClinicalAssessment identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
@@ -34,23 +48,9 @@ class SearchPaymentNotice extends SearchResource {
     return this;
   }
 
-  /// a token search for [paymentStatus] in the resource
-  /// [PaymentNotice]
-  SearchPaymentNotice paymentStatus(
-    FhirString value, {
-    FhirUri? system,
-    SearchModifier? modifier,
-  }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('payment-status', paramValue);
-    return this;
-  }
-
   /// a token search for [status] in the resource
-  /// [PaymentNotice]
-  SearchPaymentNotice status(
+  /// [ClinicalAssessment]
+  SearchClinicalAssessment status(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,

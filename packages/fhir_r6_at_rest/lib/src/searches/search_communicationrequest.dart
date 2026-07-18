@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchCommunicationRequest extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [CommunicationRequest]
-  @override
   SearchCommunicationRequest identifier(
     FhirString value, {
     FhirUri? system,
@@ -59,7 +58,7 @@ class SearchCommunicationRequest extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('group_identifier', paramValue);
+    addParameterValue('group-identifier', paramValue);
     return this;
   }
 
@@ -91,7 +90,6 @@ class SearchCommunicationRequest extends SearchResource {
 
   /// a token search for [priority] in the resource
   /// [CommunicationRequest]
-  @override
   SearchCommunicationRequest priority(
     FhirString value, {
     FhirUri? system,
@@ -106,7 +104,6 @@ class SearchCommunicationRequest extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [CommunicationRequest]
-  @override
   SearchCommunicationRequest status(
     FhirString value, {
     FhirUri? system,

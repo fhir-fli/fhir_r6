@@ -34,12 +34,12 @@ class SearchEvidenceVariable extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
     final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('context_quantity', paramValue);
+        ? '$modifier$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
+    addParameterValue('context-quantity', paramValue);
     return this;
   }
 
@@ -53,13 +53,12 @@ class SearchEvidenceVariable extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('context_type', paramValue);
+    addParameterValue('context-type', paramValue);
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [EvidenceVariable]
-  @override
   SearchEvidenceVariable date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -87,7 +86,6 @@ class SearchEvidenceVariable extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [EvidenceVariable]
-  @override
   SearchEvidenceVariable identifier(
     FhirString value, {
     FhirUri? system,
@@ -102,7 +100,6 @@ class SearchEvidenceVariable extends SearchResource {
 
   /// a string search for [name] in the resource
   /// [EvidenceVariable]
-  @override
   SearchEvidenceVariable name(
     FhirString value, {
     SearchModifier? modifier,
@@ -133,7 +130,6 @@ class SearchEvidenceVariable extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [EvidenceVariable]
-  @override
   SearchEvidenceVariable status(
     FhirString value, {
     FhirUri? system,

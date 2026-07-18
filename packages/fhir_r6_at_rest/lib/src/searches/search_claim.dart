@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchClaim extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Claim]
-  @override
   SearchClaim identifier(
     FhirString value, {
     FhirUri? system,
@@ -37,7 +36,6 @@ class SearchClaim extends SearchResource {
 
   /// a token search for [priority] in the resource
   /// [Claim]
-  @override
   SearchClaim priority(
     FhirString value, {
     FhirUri? system,
@@ -52,7 +50,6 @@ class SearchClaim extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Claim]
-  @override
   SearchClaim status(
     FhirString value, {
     FhirUri? system,

@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchEncounter extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Encounter]
-  @override
   SearchEncounter identifier(
     FhirString value, {
     FhirUri? system,
@@ -39,7 +38,6 @@ class SearchEncounter extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [Encounter]
-  @override
   SearchEncounter date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -72,7 +70,7 @@ class SearchEncounter extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('date_start', paramValue);
+    addParameterValue('date-start', paramValue);
     return this;
   }
 
@@ -86,7 +84,7 @@ class SearchEncounter extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('diagnosis_code', paramValue);
+    addParameterValue('diagnosis-code', paramValue);
     return this;
   }
 
@@ -98,7 +96,7 @@ class SearchEncounter extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('end_date', paramValue);
+    addParameterValue('end-date', paramValue);
     return this;
   }
 
@@ -114,11 +112,11 @@ class SearchEncounter extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
     final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
+        ? '$modifier$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
     addParameterValue('length', paramValue);
     return this;
   }
@@ -131,7 +129,7 @@ class SearchEncounter extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('location_period', paramValue);
+    addParameterValue('location-period', paramValue);
     return this;
   }
 
@@ -145,7 +143,7 @@ class SearchEncounter extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('participant_type', paramValue);
+    addParameterValue('participant-type', paramValue);
     return this;
   }
 
@@ -159,7 +157,7 @@ class SearchEncounter extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('reason_code', paramValue);
+    addParameterValue('reason-code', paramValue);
     return this;
   }
 
@@ -173,13 +171,12 @@ class SearchEncounter extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('special_arrangement', paramValue);
+    addParameterValue('special-arrangement', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [Encounter]
-  @override
   SearchEncounter status(
     FhirString value, {
     FhirUri? system,
@@ -202,7 +199,7 @@ class SearchEncounter extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('subject_status', paramValue);
+    addParameterValue('subject-status', paramValue);
     return this;
   }
 }

@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchList extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [List]
-  @override
   SearchList identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchList extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [List]
-  @override
   SearchList code(
     FhirString value, {
     FhirUri? system,
@@ -40,7 +38,6 @@ class SearchList extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [List]
-  @override
   SearchList date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -61,7 +58,7 @@ class SearchList extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('empty_reason', paramValue);
+    addParameterValue('empty-reason', paramValue);
     return this;
   }
 
@@ -82,7 +79,6 @@ class SearchList extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [List]
-  @override
   SearchList status(
     FhirString value, {
     FhirUri? system,

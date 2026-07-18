@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchNutritionOrder extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [NutritionOrder]
-  @override
   SearchNutritionOrder identifier(
     FhirString value, {
     FhirUri? system,
@@ -73,7 +72,7 @@ class SearchNutritionOrder extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('group_identifier', paramValue);
+    addParameterValue('group-identifier', paramValue);
     return this;
   }
 
@@ -93,7 +92,6 @@ class SearchNutritionOrder extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [NutritionOrder]
-  @override
   SearchNutritionOrder status(
     FhirString value, {
     FhirUri? system,

@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchDocumentReference extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [DocumentReference]
-  @override
   SearchDocumentReference identifier(
     FhirString value, {
     FhirUri? system,
@@ -39,7 +38,6 @@ class SearchDocumentReference extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [DocumentReference]
-  @override
   SearchDocumentReference date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -129,7 +127,7 @@ class SearchDocumentReference extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('doc_status', paramValue);
+    addParameterValue('doc-status', paramValue);
     return this;
   }
 
@@ -143,7 +141,7 @@ class SearchDocumentReference extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('event_code', paramValue);
+    addParameterValue('event-code', paramValue);
     return this;
   }
 
@@ -169,7 +167,7 @@ class SearchDocumentReference extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('format_canonical', paramValue);
+    addParameterValue('format-canonical', paramValue);
     return this;
   }
 
@@ -183,7 +181,7 @@ class SearchDocumentReference extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('format_code', paramValue);
+    addParameterValue('format-code', paramValue);
     return this;
   }
 
@@ -195,7 +193,7 @@ class SearchDocumentReference extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('format_uri', paramValue);
+    addParameterValue('format-uri', paramValue);
     return this;
   }
 
@@ -276,7 +274,7 @@ class SearchDocumentReference extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('security_label', paramValue);
+    addParameterValue('security-label', paramValue);
     return this;
   }
 
@@ -296,7 +294,6 @@ class SearchDocumentReference extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [DocumentReference]
-  @override
   SearchDocumentReference status(
     FhirString value, {
     FhirUri? system,

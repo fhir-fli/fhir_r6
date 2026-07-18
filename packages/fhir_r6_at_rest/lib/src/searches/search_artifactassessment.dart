@@ -1,5 +1,7 @@
 // This file is auto-generated. Do not edit directly.
 
+// ignore_for_file: avoid_returning_this
+
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 
@@ -8,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchArtifactAssessment extends SearchResource {
   /// a date search for [date] in the resource
   /// [ArtifactAssessment]
-  @override
   SearchArtifactAssessment date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -21,7 +22,6 @@ class SearchArtifactAssessment extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [ArtifactAssessment]
-  @override
   SearchArtifactAssessment identifier(
     FhirString value, {
     FhirUri? system,

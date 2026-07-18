@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchConsent extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Consent]
-  @override
   SearchConsent identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchConsent extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [Consent]
-  @override
   SearchConsent date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -100,13 +98,12 @@ class SearchConsent extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('security_label', paramValue);
+    addParameterValue('security-label', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [Consent]
-  @override
   SearchConsent status(
     FhirString value, {
     FhirUri? system,
@@ -141,7 +138,7 @@ class SearchConsent extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('verified_date', paramValue);
+    addParameterValue('verified-date', paramValue);
     return this;
   }
 }

@@ -18,13 +18,12 @@ class SearchEndpoint extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('connection_type', paramValue);
+    addParameterValue('connection-type', paramValue);
     return this;
   }
 
   /// a token search for [identifier] in the resource
   /// [Endpoint]
-  @override
   SearchEndpoint identifier(
     FhirString value, {
     FhirUri? system,
@@ -39,7 +38,6 @@ class SearchEndpoint extends SearchResource {
 
   /// a string search for [name] in the resource
   /// [Endpoint]
-  @override
   SearchEndpoint name(
     FhirString value, {
     SearchModifier? modifier,
@@ -63,13 +61,12 @@ class SearchEndpoint extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('payload_type', paramValue);
+    addParameterValue('payload-type', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [Endpoint]
-  @override
   SearchEndpoint status(
     FhirString value, {
     FhirUri? system,

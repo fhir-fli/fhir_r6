@@ -34,12 +34,12 @@ class SearchNamingSystem extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
     final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('context_quantity', paramValue);
+        ? '$modifier$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
+    addParameterValue('context-quantity', paramValue);
     return this;
   }
 
@@ -53,13 +53,12 @@ class SearchNamingSystem extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('context_type', paramValue);
+    addParameterValue('context-type', paramValue);
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [NamingSystem]
-  @override
   SearchNamingSystem date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -99,7 +98,6 @@ class SearchNamingSystem extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [NamingSystem]
-  @override
   SearchNamingSystem identifier(
     FhirString value, {
     FhirUri? system,
@@ -128,7 +126,6 @@ class SearchNamingSystem extends SearchResource {
 
   /// a string search for [name] in the resource
   /// [NamingSystem]
-  @override
   SearchNamingSystem name(
     FhirString value, {
     SearchModifier? modifier,
@@ -159,7 +156,6 @@ class SearchNamingSystem extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [NamingSystem]
-  @override
   SearchNamingSystem status(
     FhirString value, {
     FhirUri? system,
@@ -237,7 +233,7 @@ class SearchNamingSystem extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('id_type', paramValue);
+    addParameterValue('id-type', paramValue);
     return this;
   }
 

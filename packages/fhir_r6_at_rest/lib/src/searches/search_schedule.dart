@@ -24,7 +24,6 @@ class SearchSchedule extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [Schedule]
-  @override
   SearchSchedule date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -37,7 +36,6 @@ class SearchSchedule extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [Schedule]
-  @override
   SearchSchedule identifier(
     FhirString value, {
     FhirUri? system,
@@ -52,7 +50,6 @@ class SearchSchedule extends SearchResource {
 
   /// a string search for [name] in the resource
   /// [Schedule]
-  @override
   SearchSchedule name(
     FhirString value, {
     SearchModifier? modifier,
@@ -76,7 +73,7 @@ class SearchSchedule extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('service_category', paramValue);
+    addParameterValue('service-category', paramValue);
     return this;
   }
 
@@ -90,7 +87,7 @@ class SearchSchedule extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('service_type', paramValue);
+    addParameterValue('service-type', paramValue);
     return this;
   }
 

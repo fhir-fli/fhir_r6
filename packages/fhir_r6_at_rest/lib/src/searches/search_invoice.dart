@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchInvoice extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Invoice]
-  @override
   SearchInvoice identifier(
     FhirString value, {
     FhirUri? system,
@@ -39,7 +38,6 @@ class SearchInvoice extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [Invoice]
-  @override
   SearchInvoice date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -60,13 +58,12 @@ class SearchInvoice extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('participant_role', paramValue);
+    addParameterValue('participant-role', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [Invoice]
-  @override
   SearchInvoice status(
     FhirString value, {
     FhirUri? system,
@@ -91,11 +88,11 @@ class SearchInvoice extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
     final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
+        ? '$modifier$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
     addParameterValue('totalgross', paramValue);
     return this;
   }
@@ -112,11 +109,11 @@ class SearchInvoice extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
     final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
+        ? '$modifier$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
     addParameterValue('totalnet', paramValue);
     return this;
   }

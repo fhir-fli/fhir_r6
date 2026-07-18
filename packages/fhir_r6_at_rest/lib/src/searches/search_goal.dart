@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchGoal extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Goal]
-  @override
   SearchGoal identifier(
     FhirString value, {
     FhirUri? system,
@@ -33,7 +32,7 @@ class SearchGoal extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('achievement_status', paramValue);
+    addParameterValue('achievement-status', paramValue);
     return this;
   }
 
@@ -75,7 +74,7 @@ class SearchGoal extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('lifecycle_status', paramValue);
+    addParameterValue('lifecycle-status', paramValue);
     return this;
   }
 
@@ -87,7 +86,7 @@ class SearchGoal extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('start_date', paramValue);
+    addParameterValue('start-date', paramValue);
     return this;
   }
 
@@ -99,7 +98,7 @@ class SearchGoal extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('target_date', paramValue);
+    addParameterValue('target-date', paramValue);
     return this;
   }
 
@@ -113,7 +112,7 @@ class SearchGoal extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('target_measure', paramValue);
+    addParameterValue('target-measure', paramValue);
     return this;
   }
 }

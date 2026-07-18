@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchChargeItem extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [ChargeItem]
-  @override
   SearchChargeItem identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchChargeItem extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [ChargeItem]
-  @override
   SearchChargeItem code(
     FhirString value, {
     FhirUri? system,
@@ -46,7 +44,7 @@ class SearchChargeItem extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('entered_date', paramValue);
+    addParameterValue('entered-date', paramValue);
     return this;
   }
 
@@ -62,12 +60,12 @@ class SearchChargeItem extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for number type');
     }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
     final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('factor_override', paramValue);
+        ? '$modifier$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
+    addParameterValue('factor-override', paramValue);
     return this;
   }
 
@@ -93,7 +91,7 @@ class SearchChargeItem extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('performer_function', paramValue);
+    addParameterValue('performer-function', paramValue);
     return this;
   }
 
@@ -109,12 +107,12 @@ class SearchChargeItem extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
     final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('price_override', paramValue);
+        ? '$modifier$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
+    addParameterValue('price-override', paramValue);
     return this;
   }
 
@@ -130,18 +128,17 @@ class SearchChargeItem extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
     final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
+        ? '$modifier$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
     addParameterValue('quantity', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [ChargeItem]
-  @override
   SearchChargeItem status(
     FhirString value, {
     FhirUri? system,

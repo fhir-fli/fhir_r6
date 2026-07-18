@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchSupplyRequest extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [SupplyRequest]
-  @override
   SearchSupplyRequest identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchSupplyRequest extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [SupplyRequest]
-  @override
   SearchSupplyRequest date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -52,7 +50,6 @@ class SearchSupplyRequest extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [SupplyRequest]
-  @override
   SearchSupplyRequest status(
     FhirString value, {
     FhirUri? system,

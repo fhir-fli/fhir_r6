@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchAppointment extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Appointment]
-  @override
   SearchAppointment identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchAppointment extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [Appointment]
-  @override
   SearchAppointment date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -46,7 +44,7 @@ class SearchAppointment extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('appointment_type', paramValue);
+    addParameterValue('appointment-type', paramValue);
     return this;
   }
 
@@ -60,7 +58,7 @@ class SearchAppointment extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('has_recurrence_template', paramValue);
+    addParameterValue('has-recurrence-template', paramValue);
     return this;
   }
 
@@ -74,7 +72,7 @@ class SearchAppointment extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('is_recurring', paramValue);
+    addParameterValue('is-recurring', paramValue);
     return this;
   }
 
@@ -88,7 +86,7 @@ class SearchAppointment extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('occurrence_changed', paramValue);
+    addParameterValue('occurrence-changed', paramValue);
     return this;
   }
 
@@ -102,7 +100,7 @@ class SearchAppointment extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('part_status', paramValue);
+    addParameterValue('part-status', paramValue);
     return this;
   }
 
@@ -116,7 +114,7 @@ class SearchAppointment extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('reason_code', paramValue);
+    addParameterValue('reason-code', paramValue);
     return this;
   }
 
@@ -128,7 +126,7 @@ class SearchAppointment extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('requested_period', paramValue);
+    addParameterValue('requested-period', paramValue);
     return this;
   }
 
@@ -142,7 +140,7 @@ class SearchAppointment extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('service_category', paramValue);
+    addParameterValue('service-category', paramValue);
     return this;
   }
 
@@ -156,7 +154,7 @@ class SearchAppointment extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('service_type', paramValue);
+    addParameterValue('service-type', paramValue);
     return this;
   }
 
@@ -176,7 +174,6 @@ class SearchAppointment extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Appointment]
-  @override
   SearchAppointment status(
     FhirString value, {
     FhirUri? system,

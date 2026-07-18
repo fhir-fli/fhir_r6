@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchMedicationKnowledge extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [MedicationKnowledge]
-  @override
   SearchMedicationKnowledge identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchMedicationKnowledge extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [MedicationKnowledge]
-  @override
   SearchMedicationKnowledge status(
     FhirString value, {
     FhirUri? system,
@@ -62,13 +60,12 @@ class SearchMedicationKnowledge extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('classification_type', paramValue);
+    addParameterValue('classification-type', paramValue);
     return this;
   }
 
   /// a token search for [code] in the resource
   /// [MedicationKnowledge]
-  @override
   SearchMedicationKnowledge code(
     FhirString value, {
     FhirUri? system,
@@ -105,7 +102,7 @@ class SearchMedicationKnowledge extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('ingredient_code', paramValue);
+    addParameterValue('ingredient-code', paramValue);
     return this;
   }
 
@@ -119,7 +116,7 @@ class SearchMedicationKnowledge extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('monitoring_program_name', paramValue);
+    addParameterValue('monitoring-program-name', paramValue);
     return this;
   }
 
@@ -133,7 +130,7 @@ class SearchMedicationKnowledge extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('monitoring_program_type', paramValue);
+    addParameterValue('monitoring-program-type', paramValue);
     return this;
   }
 
@@ -147,7 +144,7 @@ class SearchMedicationKnowledge extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('monograph_type', paramValue);
+    addParameterValue('monograph-type', paramValue);
     return this;
   }
 
@@ -163,12 +160,12 @@ class SearchMedicationKnowledge extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
     final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('packaging_cost', paramValue);
+        ? '$modifier$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
+    addParameterValue('packaging-cost', paramValue);
     return this;
   }
 
@@ -182,7 +179,7 @@ class SearchMedicationKnowledge extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('packaging_cost_concept', paramValue);
+    addParameterValue('packaging-cost-concept', paramValue);
     return this;
   }
 
@@ -196,7 +193,7 @@ class SearchMedicationKnowledge extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('product_type', paramValue);
+    addParameterValue('product-type', paramValue);
     return this;
   }
 
@@ -210,7 +207,7 @@ class SearchMedicationKnowledge extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('source_cost', paramValue);
+    addParameterValue('source-cost', paramValue);
     return this;
   }
 }

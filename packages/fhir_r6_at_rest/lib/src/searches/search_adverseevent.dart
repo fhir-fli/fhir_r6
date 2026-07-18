@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchAdverseEvent extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [AdverseEvent]
-  @override
   SearchAdverseEvent identifier(
     FhirString value, {
     FhirUri? system,
@@ -65,7 +64,6 @@ class SearchAdverseEvent extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [AdverseEvent]
-  @override
   SearchAdverseEvent code(
     FhirString value, {
     FhirUri? system,
@@ -100,7 +98,7 @@ class SearchAdverseEvent extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('resultingeffect_code', paramValue);
+    addParameterValue('resultingeffect-code', paramValue);
     return this;
   }
 
@@ -120,7 +118,6 @@ class SearchAdverseEvent extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [AdverseEvent]
-  @override
   SearchAdverseEvent status(
     FhirString value, {
     FhirUri? system,

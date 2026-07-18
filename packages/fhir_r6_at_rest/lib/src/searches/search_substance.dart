@@ -24,7 +24,6 @@ class SearchSubstance extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [Substance]
-  @override
   SearchSubstance code(
     FhirString value, {
     FhirUri? system,
@@ -51,7 +50,6 @@ class SearchSubstance extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [Substance]
-  @override
   SearchSubstance identifier(
     FhirString value, {
     FhirUri? system,
@@ -76,18 +74,17 @@ class SearchSubstance extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
     final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
+        ? '$modifier$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
     addParameterValue('quantity', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [Substance]
-  @override
   SearchSubstance status(
     FhirString value, {
     FhirUri? system,

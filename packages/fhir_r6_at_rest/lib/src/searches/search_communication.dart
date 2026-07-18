@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchCommunication extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Communication]
-  @override
   SearchCommunication identifier(
     FhirString value, {
     FhirUri? system,
@@ -61,7 +60,7 @@ class SearchCommunication extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('reason_code', paramValue);
+    addParameterValue('reason-code', paramValue);
     return this;
   }
 
@@ -91,7 +90,6 @@ class SearchCommunication extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Communication]
-  @override
   SearchCommunication status(
     FhirString value, {
     FhirUri? system,

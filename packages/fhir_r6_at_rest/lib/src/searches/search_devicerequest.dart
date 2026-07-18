@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchDeviceRequest extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [DeviceRequest]
-  @override
   SearchDeviceRequest identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchDeviceRequest extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [DeviceRequest]
-  @override
   SearchDeviceRequest code(
     FhirString value, {
     FhirUri? system,
@@ -46,7 +44,7 @@ class SearchDeviceRequest extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('authored_on', paramValue);
+    addParameterValue('authored-on', paramValue);
     return this;
   }
 
@@ -58,7 +56,7 @@ class SearchDeviceRequest extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('event_date', paramValue);
+    addParameterValue('event-date', paramValue);
     return this;
   }
 
@@ -72,7 +70,7 @@ class SearchDeviceRequest extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('group_identifier', paramValue);
+    addParameterValue('group-identifier', paramValue);
     return this;
   }
 
@@ -84,7 +82,7 @@ class SearchDeviceRequest extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('instantiates_uri', paramValue);
+    addParameterValue('instantiates-uri', paramValue);
     return this;
   }
 
@@ -112,13 +110,12 @@ class SearchDeviceRequest extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('performer_code', paramValue);
+    addParameterValue('performer-code', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [DeviceRequest]
-  @override
   SearchDeviceRequest status(
     FhirString value, {
     FhirUri? system,

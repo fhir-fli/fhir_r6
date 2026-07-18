@@ -18,13 +18,12 @@ class SearchSlot extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('appointment_type', paramValue);
+    addParameterValue('appointment-type', paramValue);
     return this;
   }
 
   /// a token search for [identifier] in the resource
   /// [Slot]
-  @override
   SearchSlot identifier(
     FhirString value, {
     FhirUri? system,
@@ -47,7 +46,7 @@ class SearchSlot extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('service_category', paramValue);
+    addParameterValue('service-category', paramValue);
     return this;
   }
 
@@ -61,7 +60,7 @@ class SearchSlot extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('service_type', paramValue);
+    addParameterValue('service-type', paramValue);
     return this;
   }
 
@@ -93,7 +92,6 @@ class SearchSlot extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Slot]
-  @override
   SearchSlot status(
     FhirString value, {
     FhirUri? system,

@@ -6,23 +6,11 @@ import 'package:fhir_r6/fhir_r6.dart';
 import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 
 /// A class to build query parameters for RESTful requests for
-/// the [PaymentNotice] resource.
-class SearchPaymentNotice extends SearchResource {
-  /// a date search for [created] in the resource
-  /// [PaymentNotice]
-  SearchPaymentNotice created(
-    FhirDateTime value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('created', paramValue);
-    return this;
-  }
-
+/// the [MolecularDefinition] resource.
+class SearchMolecularDefinition extends SearchResource {
   /// a token search for [identifier] in the resource
-  /// [PaymentNotice]
-  SearchPaymentNotice identifier(
+  /// [MolecularDefinition]
+  SearchMolecularDefinition identifier(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
@@ -34,9 +22,9 @@ class SearchPaymentNotice extends SearchResource {
     return this;
   }
 
-  /// a token search for [paymentStatus] in the resource
-  /// [PaymentNotice]
-  SearchPaymentNotice paymentStatus(
+  /// a token search for [moleculetype] in the resource
+  /// [MolecularDefinition]
+  SearchMolecularDefinition moleculetype(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
@@ -44,13 +32,13 @@ class SearchPaymentNotice extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('payment-status', paramValue);
+    addParameterValue('moleculetype', paramValue);
     return this;
   }
 
-  /// a token search for [status] in the resource
-  /// [PaymentNotice]
-  SearchPaymentNotice status(
+  /// a token search for [topology] in the resource
+  /// [MolecularDefinition]
+  SearchMolecularDefinition topology(
     FhirString value, {
     FhirUri? system,
     SearchModifier? modifier,
@@ -58,7 +46,21 @@ class SearchPaymentNotice extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('status', paramValue);
+    addParameterValue('topology', paramValue);
+    return this;
+  }
+
+  /// a token search for [type] in the resource
+  /// [MolecularDefinition]
+  SearchMolecularDefinition type(
+    FhirString value, {
+    FhirUri? system,
+    SearchModifier? modifier,
+  }) {
+    final paramValue = system != null
+        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
+        : (modifier != null ? '$modifier$value' : value.toString());
+    addParameterValue('type', paramValue);
     return this;
   }
 }

@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchGroup extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Group]
-  @override
   SearchGroup identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchGroup extends SearchResource {
 
   /// a string search for [name] in the resource
   /// [Group]
-  @override
   SearchGroup name(
     FhirString value, {
     SearchModifier? modifier,
@@ -41,7 +39,6 @@ class SearchGroup extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Group]
-  @override
   SearchGroup status(
     FhirString value, {
     FhirUri? system,
@@ -82,7 +79,6 @@ class SearchGroup extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [Group]
-  @override
   SearchGroup code(
     FhirString value, {
     FhirUri? system,

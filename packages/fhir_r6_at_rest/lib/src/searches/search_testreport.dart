@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchTestReport extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [TestReport]
-  @override
   SearchTestReport identifier(
     FhirString value, {
     FhirUri? system,
@@ -63,7 +62,6 @@ class SearchTestReport extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [TestReport]
-  @override
   SearchTestReport status(
     FhirString value, {
     FhirUri? system,

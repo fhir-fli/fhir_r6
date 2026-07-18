@@ -37,7 +37,6 @@ class SearchPaymentReconciliation extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [PaymentReconciliation]
-  @override
   SearchPaymentReconciliation identifier(
     FhirString value, {
     FhirUri? system,
@@ -66,7 +65,6 @@ class SearchPaymentReconciliation extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [PaymentReconciliation]
-  @override
   SearchPaymentReconciliation status(
     FhirString value, {
     FhirUri? system,

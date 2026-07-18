@@ -32,13 +32,12 @@ class SearchRegulatedAuthorization extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('case_type', paramValue);
+    addParameterValue('case-type', paramValue);
     return this;
   }
 
   /// a token search for [identifier] in the resource
   /// [RegulatedAuthorization]
-  @override
   SearchRegulatedAuthorization identifier(
     FhirString value, {
     FhirUri? system,
@@ -67,7 +66,6 @@ class SearchRegulatedAuthorization extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [RegulatedAuthorization]
-  @override
   SearchRegulatedAuthorization status(
     FhirString value, {
     FhirUri? system,

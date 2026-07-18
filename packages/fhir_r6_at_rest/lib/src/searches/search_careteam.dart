@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchCareTeam extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [CareTeam]
-  @override
   SearchCareTeam identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchCareTeam extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [CareTeam]
-  @override
   SearchCareTeam date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -52,7 +50,6 @@ class SearchCareTeam extends SearchResource {
 
   /// a string search for [name] in the resource
   /// [CareTeam]
-  @override
   SearchCareTeam name(
     FhirString value, {
     SearchModifier? modifier,
@@ -68,7 +65,6 @@ class SearchCareTeam extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [CareTeam]
-  @override
   SearchCareTeam status(
     FhirString value, {
     FhirUri? system,

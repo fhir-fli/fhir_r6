@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchCarePlan extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [CarePlan]
-  @override
   SearchCarePlan identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchCarePlan extends SearchResource {
 
   /// a date search for [date] in the resource
   /// [CarePlan]
-  @override
   SearchCarePlan date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -66,7 +64,6 @@ class SearchCarePlan extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [CarePlan]
-  @override
   SearchCarePlan status(
     FhirString value, {
     FhirUri? system,

@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchContract extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Contract]
-  @override
   SearchContract identifier(
     FhirString value, {
     FhirUri? system,
@@ -49,7 +48,6 @@ class SearchContract extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Contract]
-  @override
   SearchContract status(
     FhirString value, {
     FhirUri? system,

@@ -34,7 +34,7 @@ class SearchPractitioner extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_city', paramValue);
+    addParameterValue('address-city', paramValue);
     return this;
   }
 
@@ -49,7 +49,7 @@ class SearchPractitioner extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_country', paramValue);
+    addParameterValue('address-country', paramValue);
     return this;
   }
 
@@ -64,7 +64,7 @@ class SearchPractitioner extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_postalcode', paramValue);
+    addParameterValue('address-postalcode', paramValue);
     return this;
   }
 
@@ -79,7 +79,7 @@ class SearchPractitioner extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_state', paramValue);
+    addParameterValue('address-state', paramValue);
     return this;
   }
 
@@ -93,7 +93,7 @@ class SearchPractitioner extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_use', paramValue);
+    addParameterValue('address-use', paramValue);
     return this;
   }
 
@@ -171,7 +171,6 @@ class SearchPractitioner extends SearchResource {
 
   /// a string search for [phonetic] in the resource
   /// [Practitioner]
-  @override
   SearchPractitioner phonetic(
     FhirString value, {
     SearchModifier? modifier,
@@ -235,7 +234,7 @@ class SearchPractitioner extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('death_date', paramValue);
+    addParameterValue('death-date', paramValue);
     return this;
   }
 
@@ -255,7 +254,6 @@ class SearchPractitioner extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [Practitioner]
-  @override
   SearchPractitioner identifier(
     FhirString value, {
     FhirUri? system,
@@ -270,7 +268,6 @@ class SearchPractitioner extends SearchResource {
 
   /// a string search for [name] in the resource
   /// [Practitioner]
-  @override
   SearchPractitioner name(
     FhirString value, {
     SearchModifier? modifier,
@@ -294,7 +291,7 @@ class SearchPractitioner extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('qualification_code', paramValue);
+    addParameterValue('qualification-code', paramValue);
     return this;
   }
 
@@ -306,7 +303,7 @@ class SearchPractitioner extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('qualification_period', paramValue);
+    addParameterValue('qualification-period', paramValue);
     return this;
   }
 }

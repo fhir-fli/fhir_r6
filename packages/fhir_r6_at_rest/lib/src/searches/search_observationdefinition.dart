@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchObservationDefinition extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [ObservationDefinition]
-  @override
   SearchObservationDefinition identifier(
     FhirString value, {
     FhirUri? system,
@@ -25,7 +24,6 @@ class SearchObservationDefinition extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [ObservationDefinition]
-  @override
   SearchObservationDefinition status(
     FhirString value, {
     FhirUri? system,
@@ -81,7 +79,6 @@ class SearchObservationDefinition extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [ObservationDefinition]
-  @override
   SearchObservationDefinition code(
     FhirString value, {
     FhirUri? system,

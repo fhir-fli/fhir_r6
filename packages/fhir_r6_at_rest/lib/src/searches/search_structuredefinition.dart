@@ -34,12 +34,12 @@ class SearchStructureDefinition extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
     final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('context_quantity', paramValue);
+        ? '$modifier$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
+    addParameterValue('context-quantity', paramValue);
     return this;
   }
 
@@ -53,13 +53,12 @@ class SearchStructureDefinition extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('context_type', paramValue);
+    addParameterValue('context-type', paramValue);
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [StructureDefinition]
-  @override
   SearchStructureDefinition date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -87,7 +86,6 @@ class SearchStructureDefinition extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [StructureDefinition]
-  @override
   SearchStructureDefinition identifier(
     FhirString value, {
     FhirUri? system,
@@ -116,7 +114,6 @@ class SearchStructureDefinition extends SearchResource {
 
   /// a string search for [name] in the resource
   /// [StructureDefinition]
-  @override
   SearchStructureDefinition name(
     FhirString value, {
     SearchModifier? modifier,
@@ -147,7 +144,6 @@ class SearchStructureDefinition extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [StructureDefinition]
-  @override
   SearchStructureDefinition status(
     FhirString value, {
     FhirUri? system,
@@ -225,7 +221,7 @@ class SearchStructureDefinition extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('base_path', paramValue);
+    addParameterValue('base-path', paramValue);
     return this;
   }
 
@@ -267,7 +263,7 @@ class SearchStructureDefinition extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('ext_context_expression', paramValue);
+    addParameterValue('ext-context-expression', paramValue);
     return this;
   }
 
@@ -281,7 +277,7 @@ class SearchStructureDefinition extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('ext_context_type', paramValue);
+    addParameterValue('ext-context-type', paramValue);
     return this;
   }
 

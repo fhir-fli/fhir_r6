@@ -34,12 +34,12 @@ class SearchQuestionnaire extends SearchResource {
         !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
       throw ArgumentError('Modifier $modifier not allowed for quantity type');
     }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
     final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('context_quantity', paramValue);
+        ? '$modifier$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}'
+        : '$value|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
+    addParameterValue('context-quantity', paramValue);
     return this;
   }
 
@@ -53,13 +53,12 @@ class SearchQuestionnaire extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('context_type', paramValue);
+    addParameterValue('context-type', paramValue);
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [Questionnaire]
-  @override
   SearchQuestionnaire date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -99,7 +98,6 @@ class SearchQuestionnaire extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [Questionnaire]
-  @override
   SearchQuestionnaire identifier(
     FhirString value, {
     FhirUri? system,
@@ -128,7 +126,6 @@ class SearchQuestionnaire extends SearchResource {
 
   /// a string search for [name] in the resource
   /// [Questionnaire]
-  @override
   SearchQuestionnaire name(
     FhirString value, {
     SearchModifier? modifier,
@@ -159,7 +156,6 @@ class SearchQuestionnaire extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Questionnaire]
-  @override
   SearchQuestionnaire status(
     FhirString value, {
     FhirUri? system,
@@ -223,7 +219,7 @@ class SearchQuestionnaire extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('combo_code', paramValue);
+    addParameterValue('combo-code', paramValue);
     return this;
   }
 
@@ -249,7 +245,7 @@ class SearchQuestionnaire extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('item_code', paramValue);
+    addParameterValue('item-code', paramValue);
     return this;
   }
 
@@ -263,7 +259,7 @@ class SearchQuestionnaire extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('questionnaire_code', paramValue);
+    addParameterValue('questionnaire-code', paramValue);
     return this;
   }
 
@@ -277,7 +273,7 @@ class SearchQuestionnaire extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('subject_type', paramValue);
+    addParameterValue('subject-type', paramValue);
     return this;
   }
 }

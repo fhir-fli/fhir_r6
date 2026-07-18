@@ -10,7 +10,6 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchRelatedPerson extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [RelatedPerson]
-  @override
   SearchRelatedPerson identifier(
     FhirString value, {
     FhirUri? system,
@@ -49,7 +48,7 @@ class SearchRelatedPerson extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_city', paramValue);
+    addParameterValue('address-city', paramValue);
     return this;
   }
 
@@ -64,7 +63,7 @@ class SearchRelatedPerson extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_country', paramValue);
+    addParameterValue('address-country', paramValue);
     return this;
   }
 
@@ -79,7 +78,7 @@ class SearchRelatedPerson extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_postalcode', paramValue);
+    addParameterValue('address-postalcode', paramValue);
     return this;
   }
 
@@ -94,7 +93,7 @@ class SearchRelatedPerson extends SearchResource {
     }
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_state', paramValue);
+    addParameterValue('address-state', paramValue);
     return this;
   }
 
@@ -108,7 +107,7 @@ class SearchRelatedPerson extends SearchResource {
     final paramValue = system != null
         ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
         : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address_use', paramValue);
+    addParameterValue('address-use', paramValue);
     return this;
   }
 
@@ -168,7 +167,6 @@ class SearchRelatedPerson extends SearchResource {
 
   /// a string search for [phonetic] in the resource
   /// [RelatedPerson]
-  @override
   SearchRelatedPerson phonetic(
     FhirString value, {
     SearchModifier? modifier,
@@ -242,7 +240,6 @@ class SearchRelatedPerson extends SearchResource {
 
   /// a string search for [name] in the resource
   /// [RelatedPerson]
-  @override
   SearchRelatedPerson name(
     FhirString value, {
     SearchModifier? modifier,
@@ -258,7 +255,6 @@ class SearchRelatedPerson extends SearchResource {
 
   /// a token search for [relationship] in the resource
   /// [RelatedPerson]
-  @override
   SearchRelatedPerson relationship(
     FhirString value, {
     FhirUri? system,
