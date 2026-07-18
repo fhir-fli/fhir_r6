@@ -25,11 +25,8 @@ class SearchSubscriptionTopic extends SearchResource {
   SearchSubscriptionTopic identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
     return this;
   }
@@ -39,39 +36,23 @@ class SearchSubscriptionTopic extends SearchResource {
   SearchSubscriptionTopic status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
     return this;
   }
 
   /// a string search for [title] in the resource
   /// [SubscriptionTopic]
-  SearchSubscriptionTopic title(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('title', paramValue);
+  SearchSubscriptionTopic title(FhirString value) {
+    addParameterValue('title', value.toString());
     return this;
   }
 
   /// a uri search for [url] in the resource
   /// [SubscriptionTopic]
-  SearchSubscriptionTopic url(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('url', paramValue);
+  SearchSubscriptionTopic url(FhirUri value) {
+    addParameterValue('url', value.toString());
     return this;
   }
 
@@ -80,24 +61,16 @@ class SearchSubscriptionTopic extends SearchResource {
   SearchSubscriptionTopic version(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('version', paramValue);
     return this;
   }
 
   /// a uri search for [derivedOrSelf] in the resource
   /// [SubscriptionTopic]
-  SearchSubscriptionTopic derivedOrSelf(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('derived-or-self', paramValue);
+  SearchSubscriptionTopic derivedOrSelf(FhirUri value) {
+    addParameterValue('derived-or-self', value.toString());
     return this;
   }
 
@@ -118,39 +91,23 @@ class SearchSubscriptionTopic extends SearchResource {
   SearchSubscriptionTopic event(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('event', paramValue);
     return this;
   }
 
   /// a uri search for [resource] in the resource
   /// [SubscriptionTopic]
-  SearchSubscriptionTopic resource(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('resource', paramValue);
+  SearchSubscriptionTopic resource(FhirUri value) {
+    addParameterValue('resource', value.toString());
     return this;
   }
 
   /// a string search for [triggerDescription] in the resource
   /// [SubscriptionTopic]
-  SearchSubscriptionTopic triggerDescription(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('trigger-description', paramValue);
+  SearchSubscriptionTopic triggerDescription(FhirString value) {
+    addParameterValue('trigger-description', value.toString());
     return this;
   }
 }

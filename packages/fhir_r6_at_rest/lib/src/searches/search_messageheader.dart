@@ -13,27 +13,16 @@ class SearchMessageHeader extends SearchResource {
   SearchMessageHeader code(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('code', paramValue);
     return this;
   }
 
   /// a string search for [destination] in the resource
   /// [MessageHeader]
-  SearchMessageHeader destination(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('destination', paramValue);
+  SearchMessageHeader destination(FhirString value) {
+    addParameterValue('destination', value.toString());
     return this;
   }
 
@@ -42,11 +31,8 @@ class SearchMessageHeader extends SearchResource {
   SearchMessageHeader event(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('event', paramValue);
     return this;
   }
@@ -56,27 +42,16 @@ class SearchMessageHeader extends SearchResource {
   SearchMessageHeader responseId(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('response-id', paramValue);
     return this;
   }
 
   /// a string search for [source] in the resource
   /// [MessageHeader]
-  SearchMessageHeader source(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('source', paramValue);
+  SearchMessageHeader source(FhirString value) {
+    addParameterValue('source', value.toString());
     return this;
   }
 }

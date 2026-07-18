@@ -10,76 +10,36 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchInsuranceProduct extends SearchResource {
   /// a string search for [contactAddress] in the resource
   /// [InsuranceProduct]
-  SearchInsuranceProduct contactAddress(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('contact-address', paramValue);
+  SearchInsuranceProduct contactAddress(FhirString value) {
+    addParameterValue('contact-address', value.toString());
     return this;
   }
 
   /// a string search for [contactAddressCity] in the resource
   /// [InsuranceProduct]
-  SearchInsuranceProduct contactAddressCity(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('contact-address-city', paramValue);
+  SearchInsuranceProduct contactAddressCity(FhirString value) {
+    addParameterValue('contact-address-city', value.toString());
     return this;
   }
 
   /// a string search for [contactAddressCountry] in the resource
   /// [InsuranceProduct]
-  SearchInsuranceProduct contactAddressCountry(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('contact-address-country', paramValue);
+  SearchInsuranceProduct contactAddressCountry(FhirString value) {
+    addParameterValue('contact-address-country', value.toString());
     return this;
   }
 
   /// a string search for [contactAddressPostalcode] in the resource
   /// [InsuranceProduct]
-  SearchInsuranceProduct contactAddressPostalcode(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('contact-address-postalcode', paramValue);
+  SearchInsuranceProduct contactAddressPostalcode(FhirString value) {
+    addParameterValue('contact-address-postalcode', value.toString());
     return this;
   }
 
   /// a string search for [contactAddressState] in the resource
   /// [InsuranceProduct]
-  SearchInsuranceProduct contactAddressState(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('contact-address-state', paramValue);
+  SearchInsuranceProduct contactAddressState(FhirString value) {
+    addParameterValue('contact-address-state', value.toString());
     return this;
   }
 
@@ -88,11 +48,8 @@ class SearchInsuranceProduct extends SearchResource {
   SearchInsuranceProduct contactAddressUse(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('contact-address-use', paramValue);
     return this;
   }
@@ -102,42 +59,23 @@ class SearchInsuranceProduct extends SearchResource {
   SearchInsuranceProduct identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
     return this;
   }
 
   /// a string search for [name] in the resource
   /// [InsuranceProduct]
-  SearchInsuranceProduct name(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('name', paramValue);
+  SearchInsuranceProduct name(FhirString value) {
+    addParameterValue('name', value.toString());
     return this;
   }
 
   /// a string search for [phonetic] in the resource
   /// [InsuranceProduct]
-  SearchInsuranceProduct phonetic(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('phonetic', paramValue);
+  SearchInsuranceProduct phonetic(FhirString value) {
+    addParameterValue('phonetic', value.toString());
     return this;
   }
 
@@ -146,11 +84,8 @@ class SearchInsuranceProduct extends SearchResource {
   SearchInsuranceProduct status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
     return this;
   }
@@ -160,11 +95,8 @@ class SearchInsuranceProduct extends SearchResource {
   SearchInsuranceProduct type(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('type', paramValue);
     return this;
   }

@@ -13,11 +13,8 @@ class SearchPersonalRelationship extends SearchResource {
   SearchPersonalRelationship relationship(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('relationship', paramValue);
     return this;
   }

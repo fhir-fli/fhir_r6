@@ -13,11 +13,8 @@ class SearchRequestOrchestration extends SearchResource {
   SearchRequestOrchestration identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
     return this;
   }
@@ -27,11 +24,8 @@ class SearchRequestOrchestration extends SearchResource {
   SearchRequestOrchestration code(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('code', paramValue);
     return this;
   }
@@ -53,24 +47,16 @@ class SearchRequestOrchestration extends SearchResource {
   SearchRequestOrchestration groupIdentifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('group-identifier', paramValue);
     return this;
   }
 
   /// a uri search for [instantiatesUri] in the resource
   /// [RequestOrchestration]
-  SearchRequestOrchestration instantiatesUri(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('instantiates-uri', paramValue);
+  SearchRequestOrchestration instantiatesUri(FhirUri value) {
+    addParameterValue('instantiates-uri', value.toString());
     return this;
   }
 
@@ -79,11 +65,8 @@ class SearchRequestOrchestration extends SearchResource {
   SearchRequestOrchestration intent(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('intent', paramValue);
     return this;
   }
@@ -93,11 +76,8 @@ class SearchRequestOrchestration extends SearchResource {
   SearchRequestOrchestration priority(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('priority', paramValue);
     return this;
   }
@@ -107,11 +87,8 @@ class SearchRequestOrchestration extends SearchResource {
   SearchRequestOrchestration status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
     return this;
   }

@@ -13,11 +13,8 @@ class SearchSpecimenDefinition extends SearchResource {
   SearchSpecimenDefinition identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
     return this;
   }
@@ -27,39 +24,23 @@ class SearchSpecimenDefinition extends SearchResource {
   SearchSpecimenDefinition status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
     return this;
   }
 
   /// a string search for [title] in the resource
   /// [SpecimenDefinition]
-  SearchSpecimenDefinition title(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('title', paramValue);
+  SearchSpecimenDefinition title(FhirString value) {
+    addParameterValue('title', value.toString());
     return this;
   }
 
   /// a uri search for [url] in the resource
   /// [SpecimenDefinition]
-  SearchSpecimenDefinition url(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('url', paramValue);
+  SearchSpecimenDefinition url(FhirUri value) {
+    addParameterValue('url', value.toString());
     return this;
   }
 
@@ -68,11 +49,8 @@ class SearchSpecimenDefinition extends SearchResource {
   SearchSpecimenDefinition container(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('container', paramValue);
     return this;
   }
@@ -82,11 +60,8 @@ class SearchSpecimenDefinition extends SearchResource {
   SearchSpecimenDefinition experimental(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('experimental', paramValue);
     return this;
   }
@@ -96,11 +71,8 @@ class SearchSpecimenDefinition extends SearchResource {
   SearchSpecimenDefinition isDerived(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('is-derived', paramValue);
     return this;
   }
@@ -110,11 +82,8 @@ class SearchSpecimenDefinition extends SearchResource {
   SearchSpecimenDefinition type(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('type', paramValue);
     return this;
   }
@@ -124,11 +93,8 @@ class SearchSpecimenDefinition extends SearchResource {
   SearchSpecimenDefinition typeTested(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('type-tested', paramValue);
     return this;
   }

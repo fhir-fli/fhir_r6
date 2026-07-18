@@ -13,11 +13,8 @@ class SearchConceptMap extends SearchResource {
   SearchConceptMap context(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('context', paramValue);
     return this;
   }
@@ -30,10 +27,6 @@ class SearchConceptMap extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    if (modifier != null &&
-        !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for quantity type');
-    }
     final paramValue = modifier != null
         ? '$modifier$value|${system?.toString() ?? ''}|'
             '${unit?.toString() ?? ''}'
@@ -48,11 +41,8 @@ class SearchConceptMap extends SearchResource {
   SearchConceptMap contextType(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('context-type', paramValue);
     return this;
   }
@@ -71,16 +61,8 @@ class SearchConceptMap extends SearchResource {
 
   /// a string search for [description] in the resource
   /// [ConceptMap]
-  SearchConceptMap description(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('description', paramValue);
+  SearchConceptMap description(FhirString value) {
+    addParameterValue('description', value.toString());
     return this;
   }
 
@@ -101,11 +83,8 @@ class SearchConceptMap extends SearchResource {
   SearchConceptMap identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
     return this;
   }
@@ -115,42 +94,23 @@ class SearchConceptMap extends SearchResource {
   SearchConceptMap jurisdiction(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('jurisdiction', paramValue);
     return this;
   }
 
   /// a string search for [name] in the resource
   /// [ConceptMap]
-  SearchConceptMap name(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('name', paramValue);
+  SearchConceptMap name(FhirString value) {
+    addParameterValue('name', value.toString());
     return this;
   }
 
   /// a string search for [publisher] in the resource
   /// [ConceptMap]
-  SearchConceptMap publisher(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('publisher', paramValue);
+  SearchConceptMap publisher(FhirString value) {
+    addParameterValue('publisher', value.toString());
     return this;
   }
 
@@ -159,27 +119,16 @@ class SearchConceptMap extends SearchResource {
   SearchConceptMap status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
     return this;
   }
 
   /// a string search for [title] in the resource
   /// [ConceptMap]
-  SearchConceptMap title(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('title', paramValue);
+  SearchConceptMap title(FhirString value) {
+    addParameterValue('title', value.toString());
     return this;
   }
 
@@ -188,24 +137,16 @@ class SearchConceptMap extends SearchResource {
   SearchConceptMap topic(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('topic', paramValue);
     return this;
   }
 
   /// a uri search for [url] in the resource
   /// [ConceptMap]
-  SearchConceptMap url(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('url', paramValue);
+  SearchConceptMap url(FhirUri value) {
+    addParameterValue('url', value.toString());
     return this;
   }
 
@@ -214,24 +155,16 @@ class SearchConceptMap extends SearchResource {
   SearchConceptMap version(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('version', paramValue);
     return this;
   }
 
   /// a uri search for [mappingProperty] in the resource
   /// [ConceptMap]
-  SearchConceptMap mappingProperty(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('mapping-property', paramValue);
+  SearchConceptMap mappingProperty(FhirUri value) {
+    addParameterValue('mapping-property', value.toString());
     return this;
   }
 
@@ -240,24 +173,16 @@ class SearchConceptMap extends SearchResource {
   SearchConceptMap sourceCode(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('source-code', paramValue);
     return this;
   }
 
   /// a uri search for [sourceScopeUri] in the resource
   /// [ConceptMap]
-  SearchConceptMap sourceScopeUri(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('source-scope-uri', paramValue);
+  SearchConceptMap sourceScopeUri(FhirUri value) {
+    addParameterValue('source-scope-uri', value.toString());
     return this;
   }
 
@@ -266,24 +191,16 @@ class SearchConceptMap extends SearchResource {
   SearchConceptMap targetCode(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('target-code', paramValue);
     return this;
   }
 
   /// a uri search for [targetScopeUri] in the resource
   /// [ConceptMap]
-  SearchConceptMap targetScopeUri(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('target-scope-uri', paramValue);
+  SearchConceptMap targetScopeUri(FhirUri value) {
+    addParameterValue('target-scope-uri', value.toString());
     return this;
   }
 }

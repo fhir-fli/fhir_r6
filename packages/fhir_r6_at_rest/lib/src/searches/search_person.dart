@@ -13,87 +13,44 @@ class SearchPerson extends SearchResource {
   SearchPerson identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
     return this;
   }
 
   /// a string search for [address] in the resource
   /// [Person]
-  SearchPerson address(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address', paramValue);
+  SearchPerson address(FhirString value) {
+    addParameterValue('address', value.toString());
     return this;
   }
 
   /// a string search for [addressCity] in the resource
   /// [Person]
-  SearchPerson addressCity(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address-city', paramValue);
+  SearchPerson addressCity(FhirString value) {
+    addParameterValue('address-city', value.toString());
     return this;
   }
 
   /// a string search for [addressCountry] in the resource
   /// [Person]
-  SearchPerson addressCountry(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address-country', paramValue);
+  SearchPerson addressCountry(FhirString value) {
+    addParameterValue('address-country', value.toString());
     return this;
   }
 
   /// a string search for [addressPostalcode] in the resource
   /// [Person]
-  SearchPerson addressPostalcode(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address-postalcode', paramValue);
+  SearchPerson addressPostalcode(FhirString value) {
+    addParameterValue('address-postalcode', value.toString());
     return this;
   }
 
   /// a string search for [addressState] in the resource
   /// [Person]
-  SearchPerson addressState(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('address-state', paramValue);
+  SearchPerson addressState(FhirString value) {
+    addParameterValue('address-state', value.toString());
     return this;
   }
 
@@ -102,11 +59,8 @@ class SearchPerson extends SearchResource {
   SearchPerson addressUse(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('address-use', paramValue);
     return this;
   }
@@ -128,11 +82,8 @@ class SearchPerson extends SearchResource {
   SearchPerson email(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('email', paramValue);
     return this;
   }
@@ -142,11 +93,8 @@ class SearchPerson extends SearchResource {
   SearchPerson gender(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('gender', paramValue);
     return this;
   }
@@ -156,27 +104,16 @@ class SearchPerson extends SearchResource {
   SearchPerson phone(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('phone', paramValue);
     return this;
   }
 
   /// a string search for [phonetic] in the resource
   /// [Person]
-  SearchPerson phonetic(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('phonetic', paramValue);
+  SearchPerson phonetic(FhirString value) {
+    addParameterValue('phonetic', value.toString());
     return this;
   }
 
@@ -185,11 +122,8 @@ class SearchPerson extends SearchResource {
   SearchPerson telecom(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('telecom', paramValue);
     return this;
   }
@@ -211,57 +145,30 @@ class SearchPerson extends SearchResource {
   SearchPerson deceased(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('deceased', paramValue);
     return this;
   }
 
   /// a string search for [family] in the resource
   /// [Person]
-  SearchPerson family(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('family', paramValue);
+  SearchPerson family(FhirString value) {
+    addParameterValue('family', value.toString());
     return this;
   }
 
   /// a string search for [given] in the resource
   /// [Person]
-  SearchPerson given(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('given', paramValue);
+  SearchPerson given(FhirString value) {
+    addParameterValue('given', value.toString());
     return this;
   }
 
   /// a string search for [name] in the resource
   /// [Person]
-  SearchPerson name(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('name', paramValue);
+  SearchPerson name(FhirString value) {
+    addParameterValue('name', value.toString());
     return this;
   }
 }
