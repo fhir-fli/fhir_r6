@@ -30,6 +30,14 @@ class SearchInventoryReport extends SearchResource {
     return this;
   }
 
+  /// a reference search for [itemReference] in the resource
+  /// [InventoryReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchInventoryReport itemReference(FhirString value) {
+    addParameterValue('item-reference', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [InventoryReport]
   SearchInventoryReport status(

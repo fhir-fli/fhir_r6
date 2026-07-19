@@ -137,4 +137,20 @@ class SearchRequirements extends SearchResource {
     addParameterValue('version', paramValue);
     return this;
   }
+
+  /// a reference search for [actor] in the resource
+  /// [Requirements]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchRequirements actor(FhirString value) {
+    addParameterValue('actor', value.toString());
+    return this;
+  }
+
+  /// a reference search for [derivedFrom] in the resource
+  /// [Requirements]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchRequirements derivedFrom(FhirString value) {
+    addParameterValue('derived-from', value.toString());
+    return this;
+  }
 }

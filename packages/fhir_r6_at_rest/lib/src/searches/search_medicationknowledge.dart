@@ -74,6 +74,14 @@ class SearchMedicationKnowledge extends SearchResource {
     return this;
   }
 
+  /// a reference search for [ingredient] in the resource
+  /// [MedicationKnowledge]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationKnowledge ingredient(FhirString value) {
+    addParameterValue('ingredient', value.toString());
+    return this;
+  }
+
   /// a token search for [ingredientCode] in the resource
   /// [MedicationKnowledge]
   SearchMedicationKnowledge ingredientCode(
@@ -104,6 +112,14 @@ class SearchMedicationKnowledge extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('monitoring-program-type', paramValue);
+    return this;
+  }
+
+  /// a reference search for [monograph] in the resource
+  /// [MedicationKnowledge]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationKnowledge monograph(FhirString value) {
+    addParameterValue('monograph', value.toString());
     return this;
   }
 

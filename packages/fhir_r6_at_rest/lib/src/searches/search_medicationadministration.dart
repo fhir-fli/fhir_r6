@@ -19,6 +19,14 @@ class SearchMedicationAdministration extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [MedicationAdministration]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationAdministration patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [code] in the resource
   /// [MedicationAdministration]
   SearchMedicationAdministration code(
@@ -42,6 +50,38 @@ class SearchMedicationAdministration extends SearchResource {
     return this;
   }
 
+  /// a reference search for [device] in the resource
+  /// [MedicationAdministration]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationAdministration device(FhirString value) {
+    addParameterValue('device', value.toString());
+    return this;
+  }
+
+  /// a reference search for [encounter] in the resource
+  /// [MedicationAdministration]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationAdministration encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [medication] in the resource
+  /// [MedicationAdministration]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationAdministration medication(FhirString value) {
+    addParameterValue('medication', value.toString());
+    return this;
+  }
+
+  /// a reference search for [performer] in the resource
+  /// [MedicationAdministration]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationAdministration performer(FhirString value) {
+    addParameterValue('performer', value.toString());
+    return this;
+  }
+
   /// a token search for [performerDeviceCode] in the resource
   /// [MedicationAdministration]
   SearchMedicationAdministration performerDeviceCode(
@@ -50,6 +90,14 @@ class SearchMedicationAdministration extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('performer-device-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [reasonGiven] in the resource
+  /// [MedicationAdministration]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationAdministration reasonGiven(FhirString value) {
+    addParameterValue('reason-given', value.toString());
     return this;
   }
 
@@ -75,6 +123,14 @@ class SearchMedicationAdministration extends SearchResource {
     return this;
   }
 
+  /// a reference search for [request] in the resource
+  /// [MedicationAdministration]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationAdministration request(FhirString value) {
+    addParameterValue('request', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [MedicationAdministration]
   SearchMedicationAdministration status(
@@ -83,6 +139,14 @@ class SearchMedicationAdministration extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [MedicationAdministration]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationAdministration subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

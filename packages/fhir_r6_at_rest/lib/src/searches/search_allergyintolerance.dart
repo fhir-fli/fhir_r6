@@ -19,6 +19,14 @@ class SearchAllergyIntolerance extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [AllergyIntolerance]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAllergyIntolerance patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [type] in the resource
   /// [AllergyIntolerance]
   SearchAllergyIntolerance type(
@@ -38,6 +46,14 @@ class SearchAllergyIntolerance extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [asserter] in the resource
+  /// [AllergyIntolerance]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAllergyIntolerance asserter(FhirString value) {
+    addParameterValue('asserter', value.toString());
     return this;
   }
 
@@ -106,6 +122,14 @@ class SearchAllergyIntolerance extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('manifestation-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [manifestationReference] in the resource
+  /// [AllergyIntolerance]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAllergyIntolerance manifestationReference(FhirString value) {
+    addParameterValue('manifestation-reference', value.toString());
     return this;
   }
 

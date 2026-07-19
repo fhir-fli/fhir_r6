@@ -30,6 +30,14 @@ class SearchSubstance extends SearchResource {
     return this;
   }
 
+  /// a reference search for [codeReference] in the resource
+  /// [Substance]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchSubstance codeReference(FhirString value) {
+    addParameterValue('code-reference', value.toString());
+    return this;
+  }
+
   /// a date search for [expiry] in the resource
   /// [Substance]
   SearchSubstance expiry(

@@ -40,4 +40,12 @@ class SearchInventoryItem extends SearchResource {
     addParameterValue('status', paramValue);
     return this;
   }
+
+  /// a reference search for [subject] in the resource
+  /// [InventoryItem]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchInventoryItem subject(FhirString value) {
+    addParameterValue('subject', value.toString());
+    return this;
+  }
 }

@@ -8,6 +8,14 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 /// A class to build query parameters for RESTful requests for
 /// the [InsuranceProduct] resource.
 class SearchInsuranceProduct extends SearchResource {
+  /// a reference search for [administeredBy] in the resource
+  /// [InsuranceProduct]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchInsuranceProduct administeredBy(FhirString value) {
+    addParameterValue('administered-by', value.toString());
+    return this;
+  }
+
   /// a string search for [contactAddress] in the resource
   /// [InsuranceProduct]
   SearchInsuranceProduct contactAddress(FhirString value) {
@@ -54,6 +62,14 @@ class SearchInsuranceProduct extends SearchResource {
     return this;
   }
 
+  /// a reference search for [endpoint] in the resource
+  /// [InsuranceProduct]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchInsuranceProduct endpoint(FhirString value) {
+    addParameterValue('endpoint', value.toString());
+    return this;
+  }
+
   /// a token search for [identifier] in the resource
   /// [InsuranceProduct]
   SearchInsuranceProduct identifier(
@@ -69,6 +85,14 @@ class SearchInsuranceProduct extends SearchResource {
   /// [InsuranceProduct]
   SearchInsuranceProduct name(FhirString value) {
     addParameterValue('name', value.toString());
+    return this;
+  }
+
+  /// a reference search for [ownedBy] in the resource
+  /// [InsuranceProduct]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchInsuranceProduct ownedBy(FhirString value) {
+    addParameterValue('owned-by', value.toString());
     return this;
   }
 

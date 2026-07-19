@@ -20,6 +20,14 @@ class SearchClinicalAssessment extends SearchResource {
     return this;
   }
 
+  /// a reference search for [encounter] in the resource
+  /// [ClinicalAssessment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchClinicalAssessment encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
   /// a token search for [findingCode] in the resource
   /// [ClinicalAssessment]
   SearchClinicalAssessment findingCode(
@@ -28,6 +36,14 @@ class SearchClinicalAssessment extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('finding-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [findingRef] in the resource
+  /// [ClinicalAssessment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchClinicalAssessment findingRef(FhirString value) {
+    addParameterValue('finding-ref', value.toString());
     return this;
   }
 
@@ -42,6 +58,38 @@ class SearchClinicalAssessment extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [ClinicalAssessment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchClinicalAssessment patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
+  /// a reference search for [performer] in the resource
+  /// [ClinicalAssessment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchClinicalAssessment performer(FhirString value) {
+    addParameterValue('performer', value.toString());
+    return this;
+  }
+
+  /// a reference search for [previous] in the resource
+  /// [ClinicalAssessment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchClinicalAssessment previous(FhirString value) {
+    addParameterValue('previous', value.toString());
+    return this;
+  }
+
+  /// a reference search for [problem] in the resource
+  /// [ClinicalAssessment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchClinicalAssessment problem(FhirString value) {
+    addParameterValue('problem', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [ClinicalAssessment]
   SearchClinicalAssessment status(
@@ -50,6 +98,22 @@ class SearchClinicalAssessment extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [ClinicalAssessment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchClinicalAssessment subject(FhirString value) {
+    addParameterValue('subject', value.toString());
+    return this;
+  }
+
+  /// a reference search for [supportingInfo] in the resource
+  /// [ClinicalAssessment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchClinicalAssessment supportingInfo(FhirString value) {
+    addParameterValue('supporting-info', value.toString());
     return this;
   }
 }

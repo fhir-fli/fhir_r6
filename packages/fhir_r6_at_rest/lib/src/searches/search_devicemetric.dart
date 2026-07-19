@@ -19,6 +19,14 @@ class SearchDeviceMetric extends SearchResource {
     return this;
   }
 
+  /// a reference search for [device] in the resource
+  /// [DeviceMetric]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDeviceMetric device(FhirString value) {
+    addParameterValue('device', value.toString());
+    return this;
+  }
+
   /// a token search for [identifier] in the resource
   /// [DeviceMetric]
   SearchDeviceMetric identifier(

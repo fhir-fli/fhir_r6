@@ -19,6 +19,14 @@ class SearchRelatedPerson extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [RelatedPerson]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchRelatedPerson patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a string search for [address] in the resource
   /// [RelatedPerson]
   SearchRelatedPerson address(FhirString value) {

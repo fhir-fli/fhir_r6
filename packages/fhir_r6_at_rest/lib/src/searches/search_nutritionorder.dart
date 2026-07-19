@@ -19,6 +19,22 @@ class SearchNutritionOrder extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [NutritionOrder]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchNutritionOrder patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
+  /// a reference search for [encounter] in the resource
+  /// [NutritionOrder]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchNutritionOrder encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
   /// a token search for [additive] in the resource
   /// [NutritionOrder]
   SearchNutritionOrder additive(
@@ -75,6 +91,14 @@ class SearchNutritionOrder extends SearchResource {
     return this;
   }
 
+  /// a reference search for [requester] in the resource
+  /// [NutritionOrder]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchNutritionOrder requester(FhirString value) {
+    addParameterValue('requester', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [NutritionOrder]
   SearchNutritionOrder status(
@@ -83,6 +107,14 @@ class SearchNutritionOrder extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [NutritionOrder]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchNutritionOrder subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 

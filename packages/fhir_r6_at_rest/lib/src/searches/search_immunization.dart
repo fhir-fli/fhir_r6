@@ -19,6 +19,14 @@ class SearchImmunization extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [Immunization]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImmunization patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a date search for [date] in the resource
   /// [Immunization]
   SearchImmunization date(
@@ -31,10 +39,50 @@ class SearchImmunization extends SearchResource {
     return this;
   }
 
+  /// a reference search for [encounter] in the resource
+  /// [Immunization]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImmunization encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [location] in the resource
+  /// [Immunization]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImmunization location(FhirString value) {
+    addParameterValue('location', value.toString());
+    return this;
+  }
+
   /// a string search for [lotNumber] in the resource
   /// [Immunization]
   SearchImmunization lotNumber(FhirString value) {
     addParameterValue('lot-number', value.toString());
+    return this;
+  }
+
+  /// a reference search for [manufacturer] in the resource
+  /// [Immunization]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImmunization manufacturer(FhirString value) {
+    addParameterValue('manufacturer', value.toString());
+    return this;
+  }
+
+  /// a reference search for [performer] in the resource
+  /// [Immunization]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImmunization performer(FhirString value) {
+    addParameterValue('performer', value.toString());
+    return this;
+  }
+
+  /// a reference search for [reaction] in the resource
+  /// [Immunization]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImmunization reaction(FhirString value) {
+    addParameterValue('reaction', value.toString());
     return this;
   }
 
@@ -58,6 +106,14 @@ class SearchImmunization extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('reason-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [reasonReference] in the resource
+  /// [Immunization]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImmunization reasonReference(FhirString value) {
+    addParameterValue('reason-reference', value.toString());
     return this;
   }
 

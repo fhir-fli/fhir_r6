@@ -37,6 +37,22 @@ class SearchMessageHeader extends SearchResource {
     return this;
   }
 
+  /// a reference search for [focus] in the resource
+  /// [MessageHeader]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMessageHeader focus(FhirString value) {
+    addParameterValue('focus', value.toString());
+    return this;
+  }
+
+  /// a reference search for [receiver] in the resource
+  /// [MessageHeader]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMessageHeader receiver(FhirString value) {
+    addParameterValue('receiver', value.toString());
+    return this;
+  }
+
   /// a token search for [responseId] in the resource
   /// [MessageHeader]
   SearchMessageHeader responseId(
@@ -45,6 +61,14 @@ class SearchMessageHeader extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('response-id', paramValue);
+    return this;
+  }
+
+  /// a reference search for [sender] in the resource
+  /// [MessageHeader]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMessageHeader sender(FhirString value) {
+    addParameterValue('sender', value.toString());
     return this;
   }
 

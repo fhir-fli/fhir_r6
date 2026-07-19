@@ -19,6 +19,14 @@ class SearchTask extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [Task]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchTask patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [code] in the resource
   /// [Task]
   SearchTask code(
@@ -27,6 +35,22 @@ class SearchTask extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [encounter] in the resource
+  /// [Task]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchTask encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [actor] in the resource
+  /// [Task]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchTask actor(FhirString value) {
+    addParameterValue('actor', value.toString());
     return this;
   }
 
@@ -42,6 +66,14 @@ class SearchTask extends SearchResource {
     return this;
   }
 
+  /// a reference search for [basedOn] in the resource
+  /// [Task]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchTask basedOn(FhirString value) {
+    addParameterValue('based-on', value.toString());
+    return this;
+  }
+
   /// a token search for [businessStatus] in the resource
   /// [Task]
   SearchTask businessStatus(
@@ -53,6 +85,14 @@ class SearchTask extends SearchResource {
     return this;
   }
 
+  /// a reference search for [focus] in the resource
+  /// [Task]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchTask focus(FhirString value) {
+    addParameterValue('focus', value.toString());
+    return this;
+  }
+
   /// a token search for [groupIdentifier] in the resource
   /// [Task]
   SearchTask groupIdentifier(
@@ -61,6 +101,14 @@ class SearchTask extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('group-identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [input] in the resource
+  /// [Task]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchTask input(FhirString value) {
+    addParameterValue('input', value.toString());
     return this;
   }
 
@@ -84,6 +132,30 @@ class SearchTask extends SearchResource {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
     addParameterValue('modified', paramValue);
+    return this;
+  }
+
+  /// a reference search for [output] in the resource
+  /// [Task]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchTask output(FhirString value) {
+    addParameterValue('output', value.toString());
+    return this;
+  }
+
+  /// a reference search for [owner] in the resource
+  /// [Task]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchTask owner(FhirString value) {
+    addParameterValue('owner', value.toString());
+    return this;
+  }
+
+  /// a reference search for [partOf] in the resource
+  /// [Task]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchTask partOf(FhirString value) {
+    addParameterValue('part-of', value.toString());
     return this;
   }
 
@@ -121,6 +193,22 @@ class SearchTask extends SearchResource {
     return this;
   }
 
+  /// a reference search for [requestedperformerReference] in the resource
+  /// [Task]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchTask requestedperformerReference(FhirString value) {
+    addParameterValue('requestedperformer-reference', value.toString());
+    return this;
+  }
+
+  /// a reference search for [requester] in the resource
+  /// [Task]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchTask requester(FhirString value) {
+    addParameterValue('requester', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [Task]
   SearchTask status(
@@ -129,6 +217,14 @@ class SearchTask extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [Task]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchTask subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

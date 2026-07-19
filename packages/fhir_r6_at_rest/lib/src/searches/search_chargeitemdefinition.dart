@@ -142,4 +142,12 @@ class SearchChargeItemDefinition extends SearchResource {
     addParameterValue('version', paramValue);
     return this;
   }
+
+  /// a reference search for [account] in the resource
+  /// [ChargeItemDefinition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchChargeItemDefinition account(FhirString value) {
+    addParameterValue('account', value.toString());
+    return this;
+  }
 }

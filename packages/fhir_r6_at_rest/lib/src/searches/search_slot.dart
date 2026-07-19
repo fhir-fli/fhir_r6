@@ -30,6 +30,14 @@ class SearchSlot extends SearchResource {
     return this;
   }
 
+  /// a reference search for [schedule] in the resource
+  /// [Slot]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchSlot schedule(FhirString value) {
+    addParameterValue('schedule', value.toString());
+    return this;
+  }
+
   /// a token search for [serviceCategory] in the resource
   /// [Slot]
   SearchSlot serviceCategory(
@@ -49,6 +57,14 @@ class SearchSlot extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('service-type', paramValue);
+    return this;
+  }
+
+  /// a reference search for [serviceTypeReference] in the resource
+  /// [Slot]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchSlot serviceTypeReference(FhirString value) {
+    addParameterValue('service-type-reference', value.toString());
     return this;
   }
 

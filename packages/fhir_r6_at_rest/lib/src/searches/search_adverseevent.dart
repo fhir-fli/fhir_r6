@@ -19,6 +19,14 @@ class SearchAdverseEvent extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [AdverseEvent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAdverseEvent patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [actuality] in the resource
   /// [AdverseEvent]
   SearchAdverseEvent actuality(
@@ -76,6 +84,22 @@ class SearchAdverseEvent extends SearchResource {
     return this;
   }
 
+  /// a reference search for [location] in the resource
+  /// [AdverseEvent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAdverseEvent location(FhirString value) {
+    addParameterValue('location', value.toString());
+    return this;
+  }
+
+  /// a reference search for [recorder] in the resource
+  /// [AdverseEvent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAdverseEvent recorder(FhirString value) {
+    addParameterValue('recorder', value.toString());
+    return this;
+  }
+
   /// a token search for [resultingeffectCode] in the resource
   /// [AdverseEvent]
   SearchAdverseEvent resultingeffectCode(
@@ -84,6 +108,14 @@ class SearchAdverseEvent extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('resultingeffect-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [resultingeffectReference] in the resource
+  /// [AdverseEvent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAdverseEvent resultingeffectReference(FhirString value) {
+    addParameterValue('resultingeffect-reference', value.toString());
     return this;
   }
 
@@ -106,6 +138,30 @@ class SearchAdverseEvent extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [study] in the resource
+  /// [AdverseEvent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAdverseEvent study(FhirString value) {
+    addParameterValue('study', value.toString());
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [AdverseEvent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAdverseEvent subject(FhirString value) {
+    addParameterValue('subject', value.toString());
+    return this;
+  }
+
+  /// a reference search for [substance] in the resource
+  /// [AdverseEvent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAdverseEvent substance(FhirString value) {
+    addParameterValue('substance', value.toString());
     return this;
   }
 }

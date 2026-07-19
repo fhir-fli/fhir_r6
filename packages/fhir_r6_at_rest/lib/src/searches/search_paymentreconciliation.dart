@@ -8,6 +8,22 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 /// A class to build query parameters for RESTful requests for
 /// the [PaymentReconciliation] resource.
 class SearchPaymentReconciliation extends SearchResource {
+  /// a reference search for [allocationAccount] in the resource
+  /// [PaymentReconciliation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchPaymentReconciliation allocationAccount(FhirString value) {
+    addParameterValue('allocation-account', value.toString());
+    return this;
+  }
+
+  /// a reference search for [allocationEncounter] in the resource
+  /// [PaymentReconciliation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchPaymentReconciliation allocationEncounter(FhirString value) {
+    addParameterValue('allocation-encounter', value.toString());
+    return this;
+  }
+
   /// a date search for [created] in the resource
   /// [PaymentReconciliation]
   SearchPaymentReconciliation created(
@@ -46,6 +62,30 @@ class SearchPaymentReconciliation extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('outcome', paramValue);
+    return this;
+  }
+
+  /// a reference search for [paymentIssuer] in the resource
+  /// [PaymentReconciliation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchPaymentReconciliation paymentIssuer(FhirString value) {
+    addParameterValue('payment-issuer', value.toString());
+    return this;
+  }
+
+  /// a reference search for [request] in the resource
+  /// [PaymentReconciliation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchPaymentReconciliation request(FhirString value) {
+    addParameterValue('request', value.toString());
+    return this;
+  }
+
+  /// a reference search for [requestor] in the resource
+  /// [PaymentReconciliation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchPaymentReconciliation requestor(FhirString value) {
+    addParameterValue('requestor', value.toString());
     return this;
   }
 

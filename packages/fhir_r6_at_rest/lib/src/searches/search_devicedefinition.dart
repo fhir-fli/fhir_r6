@@ -51,6 +51,22 @@ class SearchDeviceDefinition extends SearchResource {
     return this;
   }
 
+  /// a reference search for [hasPart] in the resource
+  /// [DeviceDefinition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDeviceDefinition hasPart(FhirString value) {
+    addParameterValue('has-part', value.toString());
+    return this;
+  }
+
+  /// a reference search for [manufacturer] in the resource
+  /// [DeviceDefinition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDeviceDefinition manufacturer(FhirString value) {
+    addParameterValue('manufacturer', value.toString());
+    return this;
+  }
+
   /// a token search for [modelNumber] in the resource
   /// [DeviceDefinition]
   SearchDeviceDefinition modelNumber(

@@ -8,6 +8,14 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 /// A class to build query parameters for RESTful requests for
 /// the [Ingredient] resource.
 class SearchIngredient extends SearchResource {
+  /// a reference search for [for_] in the resource
+  /// [Ingredient]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchIngredient for_(FhirString value) {
+    addParameterValue('for', value.toString());
+    return this;
+  }
+
   /// a token search for [function] in the resource
   /// [Ingredient]
   SearchIngredient function(
@@ -27,6 +35,14 @@ class SearchIngredient extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [manufacturer] in the resource
+  /// [Ingredient]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchIngredient manufacturer(FhirString value) {
+    addParameterValue('manufacturer', value.toString());
     return this;
   }
 
@@ -154,6 +170,14 @@ class SearchIngredient extends SearchResource {
     return this;
   }
 
+  /// a reference search for [substance] in the resource
+  /// [Ingredient]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchIngredient substance(FhirString value) {
+    addParameterValue('substance', value.toString());
+    return this;
+  }
+
   /// a token search for [substanceCode] in the resource
   /// [Ingredient]
   SearchIngredient substanceCode(
@@ -162,6 +186,14 @@ class SearchIngredient extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('substance-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [substanceDefinition] in the resource
+  /// [Ingredient]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchIngredient substanceDefinition(FhirString value) {
+    addParameterValue('substance-definition', value.toString());
     return this;
   }
 }

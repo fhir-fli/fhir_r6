@@ -8,6 +8,14 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 /// A class to build query parameters for RESTful requests for
 /// the [Library] resource.
 class SearchLibrary extends SearchResource {
+  /// a reference search for [composedOf] in the resource
+  /// [Library]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchLibrary composedOf(FhirString value) {
+    addParameterValue('composed-of', value.toString());
+    return this;
+  }
+
   /// a token search for [context] in the resource
   /// [Library]
   SearchLibrary context(
@@ -59,6 +67,22 @@ class SearchLibrary extends SearchResource {
     return this;
   }
 
+  /// a reference search for [dependsOn] in the resource
+  /// [Library]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchLibrary dependsOn(FhirString value) {
+    addParameterValue('depends-on', value.toString());
+    return this;
+  }
+
+  /// a reference search for [derivedFrom] in the resource
+  /// [Library]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchLibrary derivedFrom(FhirString value) {
+    addParameterValue('derived-from', value.toString());
+    return this;
+  }
+
   /// a string search for [description] in the resource
   /// [Library]
   SearchLibrary description(FhirString value) {
@@ -107,6 +131,14 @@ class SearchLibrary extends SearchResource {
     return this;
   }
 
+  /// a reference search for [predecessor] in the resource
+  /// [Library]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchLibrary predecessor(FhirString value) {
+    addParameterValue('predecessor', value.toString());
+    return this;
+  }
+
   /// a string search for [publisher] in the resource
   /// [Library]
   SearchLibrary publisher(FhirString value) {
@@ -122,6 +154,14 @@ class SearchLibrary extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [successor] in the resource
+  /// [Library]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchLibrary successor(FhirString value) {
+    addParameterValue('successor', value.toString());
     return this;
   }
 
@@ -172,6 +212,14 @@ class SearchLibrary extends SearchResource {
     return this;
   }
 
+  /// a reference search for [subjectCanonical] in the resource
+  /// [Library]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchLibrary subjectCanonical(FhirString value) {
+    addParameterValue('subject-canonical', value.toString());
+    return this;
+  }
+
   /// a token search for [subjectCode] in the resource
   /// [Library]
   SearchLibrary subjectCode(
@@ -180,6 +228,14 @@ class SearchLibrary extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('subject-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subjectReference] in the resource
+  /// [Library]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchLibrary subjectReference(FhirString value) {
+    addParameterValue('subject-reference', value.toString());
     return this;
   }
 

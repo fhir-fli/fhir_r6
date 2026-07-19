@@ -19,6 +19,14 @@ class SearchFamilyMemberHistory extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [FamilyMemberHistory]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchFamilyMemberHistory patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [code] in the resource
   /// [FamilyMemberHistory]
   SearchFamilyMemberHistory code(

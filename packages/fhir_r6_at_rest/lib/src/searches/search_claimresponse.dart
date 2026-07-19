@@ -19,6 +19,14 @@ class SearchClaimResponse extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [ClaimResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchClaimResponse patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a date search for [created] in the resource
   /// [ClaimResponse]
   SearchClaimResponse created(
@@ -35,6 +43,14 @@ class SearchClaimResponse extends SearchResource {
   /// [ClaimResponse]
   SearchClaimResponse disposition(FhirString value) {
     addParameterValue('disposition', value.toString());
+    return this;
+  }
+
+  /// a reference search for [insurer] in the resource
+  /// [ClaimResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchClaimResponse insurer(FhirString value) {
+    addParameterValue('insurer', value.toString());
     return this;
   }
 
@@ -58,6 +74,22 @@ class SearchClaimResponse extends SearchResource {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
     addParameterValue('payment-date', paramValue);
+    return this;
+  }
+
+  /// a reference search for [request] in the resource
+  /// [ClaimResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchClaimResponse request(FhirString value) {
+    addParameterValue('request', value.toString());
+    return this;
+  }
+
+  /// a reference search for [requestor] in the resource
+  /// [ClaimResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchClaimResponse requestor(FhirString value) {
+    addParameterValue('requestor', value.toString());
     return this;
   }
 

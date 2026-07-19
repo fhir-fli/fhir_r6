@@ -19,6 +19,14 @@ class SearchChargeItem extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [ChargeItem]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchChargeItem patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [code] in the resource
   /// [ChargeItem]
   SearchChargeItem code(
@@ -27,6 +35,22 @@ class SearchChargeItem extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [encounter] in the resource
+  /// [ChargeItem]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchChargeItem encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [account] in the resource
+  /// [ChargeItem]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchChargeItem account(FhirString value) {
+    addParameterValue('account', value.toString());
     return this;
   }
 
@@ -39,6 +63,14 @@ class SearchChargeItem extends SearchResource {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
     addParameterValue('entered-date', paramValue);
+    return this;
+  }
+
+  /// a reference search for [enterer] in the resource
+  /// [ChargeItem]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchChargeItem enterer(FhirString value) {
+    addParameterValue('enterer', value.toString());
     return this;
   }
 
@@ -65,6 +97,14 @@ class SearchChargeItem extends SearchResource {
     return this;
   }
 
+  /// a reference search for [performerActor] in the resource
+  /// [ChargeItem]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchChargeItem performerActor(FhirString value) {
+    addParameterValue('performer-actor', value.toString());
+    return this;
+  }
+
   /// a token search for [performerFunction] in the resource
   /// [ChargeItem]
   SearchChargeItem performerFunction(
@@ -73,6 +113,14 @@ class SearchChargeItem extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('performer-function', paramValue);
+    return this;
+  }
+
+  /// a reference search for [performingOrganization] in the resource
+  /// [ChargeItem]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchChargeItem performingOrganization(FhirString value) {
+    addParameterValue('performing-organization', value.toString());
     return this;
   }
 
@@ -110,6 +158,22 @@ class SearchChargeItem extends SearchResource {
     return this;
   }
 
+  /// a reference search for [requestingOrganization] in the resource
+  /// [ChargeItem]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchChargeItem requestingOrganization(FhirString value) {
+    addParameterValue('requesting-organization', value.toString());
+    return this;
+  }
+
+  /// a reference search for [service] in the resource
+  /// [ChargeItem]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchChargeItem service(FhirString value) {
+    addParameterValue('service', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [ChargeItem]
   SearchChargeItem status(
@@ -118,6 +182,14 @@ class SearchChargeItem extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [ChargeItem]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchChargeItem subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

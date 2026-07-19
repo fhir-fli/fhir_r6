@@ -59,6 +59,14 @@ class SearchCodeSystem extends SearchResource {
     return this;
   }
 
+  /// a reference search for [derivedFrom] in the resource
+  /// [CodeSystem]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCodeSystem derivedFrom(FhirString value) {
+    addParameterValue('derived-from', value.toString());
+    return this;
+  }
+
   /// a string search for [description] in the resource
   /// [CodeSystem]
   SearchCodeSystem description(FhirString value) {
@@ -104,6 +112,14 @@ class SearchCodeSystem extends SearchResource {
   /// [CodeSystem]
   SearchCodeSystem name(FhirString value) {
     addParameterValue('name', value.toString());
+    return this;
+  }
+
+  /// a reference search for [predecessor] in the resource
+  /// [CodeSystem]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCodeSystem predecessor(FhirString value) {
+    addParameterValue('predecessor', value.toString());
     return this;
   }
 
@@ -192,6 +208,14 @@ class SearchCodeSystem extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('language', paramValue);
+    return this;
+  }
+
+  /// a reference search for [supplements] in the resource
+  /// [CodeSystem]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCodeSystem supplements(FhirString value) {
+    addParameterValue('supplements', value.toString());
     return this;
   }
 

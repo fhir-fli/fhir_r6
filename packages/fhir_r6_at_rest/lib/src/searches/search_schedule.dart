@@ -19,6 +19,14 @@ class SearchSchedule extends SearchResource {
     return this;
   }
 
+  /// a reference search for [actor] in the resource
+  /// [Schedule]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchSchedule actor(FhirString value) {
+    addParameterValue('actor', value.toString());
+    return this;
+  }
+
   /// a date search for [date] in the resource
   /// [Schedule]
   SearchSchedule date(
@@ -68,6 +76,14 @@ class SearchSchedule extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('service-type', paramValue);
+    return this;
+  }
+
+  /// a reference search for [serviceTypeReference] in the resource
+  /// [Schedule]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchSchedule serviceTypeReference(FhirString value) {
+    addParameterValue('service-type-reference', value.toString());
     return this;
   }
 

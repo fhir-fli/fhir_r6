@@ -19,6 +19,14 @@ class SearchAppointment extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [Appointment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAppointment patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a date search for [date] in the resource
   /// [Appointment]
   SearchAppointment date(
@@ -31,6 +39,14 @@ class SearchAppointment extends SearchResource {
     return this;
   }
 
+  /// a reference search for [actor] in the resource
+  /// [Appointment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAppointment actor(FhirString value) {
+    addParameterValue('actor', value.toString());
+    return this;
+  }
+
   /// a token search for [appointmentType] in the resource
   /// [Appointment]
   SearchAppointment appointmentType(
@@ -39,6 +55,22 @@ class SearchAppointment extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('appointment-type', paramValue);
+    return this;
+  }
+
+  /// a reference search for [basedOn] in the resource
+  /// [Appointment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAppointment basedOn(FhirString value) {
+    addParameterValue('based-on', value.toString());
+    return this;
+  }
+
+  /// a reference search for [group] in the resource
+  /// [Appointment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAppointment group(FhirString value) {
+    addParameterValue('group', value.toString());
     return this;
   }
 
@@ -64,6 +96,14 @@ class SearchAppointment extends SearchResource {
     return this;
   }
 
+  /// a reference search for [location] in the resource
+  /// [Appointment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAppointment location(FhirString value) {
+    addParameterValue('location', value.toString());
+    return this;
+  }
+
   /// a token search for [occurrenceChanged] in the resource
   /// [Appointment]
   SearchAppointment occurrenceChanged(
@@ -72,6 +112,14 @@ class SearchAppointment extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('occurrence-changed', paramValue);
+    return this;
+  }
+
+  /// a reference search for [originatingAppointment] in the resource
+  /// [Appointment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAppointment originatingAppointment(FhirString value) {
+    addParameterValue('originating-appointment', value.toString());
     return this;
   }
 
@@ -86,6 +134,22 @@ class SearchAppointment extends SearchResource {
     return this;
   }
 
+  /// a reference search for [practitioner] in the resource
+  /// [Appointment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAppointment practitioner(FhirString value) {
+    addParameterValue('practitioner', value.toString());
+    return this;
+  }
+
+  /// a reference search for [previousAppointment] in the resource
+  /// [Appointment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAppointment previousAppointment(FhirString value) {
+    addParameterValue('previous-appointment', value.toString());
+    return this;
+  }
+
   /// a token search for [reasonCode] in the resource
   /// [Appointment]
   SearchAppointment reasonCode(
@@ -94,6 +158,14 @@ class SearchAppointment extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('reason-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [reasonReference] in the resource
+  /// [Appointment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAppointment reasonReference(FhirString value) {
+    addParameterValue('reason-reference', value.toString());
     return this;
   }
 
@@ -131,6 +203,22 @@ class SearchAppointment extends SearchResource {
     return this;
   }
 
+  /// a reference search for [serviceTypeReference] in the resource
+  /// [Appointment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAppointment serviceTypeReference(FhirString value) {
+    addParameterValue('service-type-reference', value.toString());
+    return this;
+  }
+
+  /// a reference search for [slot] in the resource
+  /// [Appointment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAppointment slot(FhirString value) {
+    addParameterValue('slot', value.toString());
+    return this;
+  }
+
   /// a token search for [specialty] in the resource
   /// [Appointment]
   SearchAppointment specialty(
@@ -150,6 +238,22 @@ class SearchAppointment extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [Appointment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAppointment subject(FhirString value) {
+    addParameterValue('subject', value.toString());
+    return this;
+  }
+
+  /// a reference search for [supportingInfo] in the resource
+  /// [Appointment]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAppointment supportingInfo(FhirString value) {
+    addParameterValue('supporting-info', value.toString());
     return this;
   }
 }

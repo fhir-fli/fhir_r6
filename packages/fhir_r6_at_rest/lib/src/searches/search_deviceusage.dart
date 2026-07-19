@@ -19,6 +19,14 @@ class SearchDeviceUsage extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [DeviceUsage]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDeviceUsage patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [device] in the resource
   /// [DeviceUsage]
   SearchDeviceUsage device(

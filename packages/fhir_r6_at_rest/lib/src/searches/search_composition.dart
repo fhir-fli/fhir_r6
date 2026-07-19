@@ -19,6 +19,14 @@ class SearchComposition extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [Composition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchComposition patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [type] in the resource
   /// [Composition]
   SearchComposition type(
@@ -42,6 +50,30 @@ class SearchComposition extends SearchResource {
     return this;
   }
 
+  /// a reference search for [encounter] in the resource
+  /// [Composition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchComposition encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [attester] in the resource
+  /// [Composition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchComposition attester(FhirString value) {
+    addParameterValue('attester', value.toString());
+    return this;
+  }
+
+  /// a reference search for [author] in the resource
+  /// [Composition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchComposition author(FhirString value) {
+    addParameterValue('author', value.toString());
+    return this;
+  }
+
   /// a token search for [category] in the resource
   /// [Composition]
   SearchComposition category(
@@ -53,6 +85,14 @@ class SearchComposition extends SearchResource {
     return this;
   }
 
+  /// a reference search for [entry] in the resource
+  /// [Composition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchComposition entry(FhirString value) {
+    addParameterValue('entry', value.toString());
+    return this;
+  }
+
   /// a token search for [eventCode] in the resource
   /// [Composition]
   SearchComposition eventCode(
@@ -61,6 +101,14 @@ class SearchComposition extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('event-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [eventReference] in the resource
+  /// [Composition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchComposition eventReference(FhirString value) {
+    addParameterValue('event-reference', value.toString());
     return this;
   }
 
@@ -95,6 +143,14 @@ class SearchComposition extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [Composition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchComposition subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 

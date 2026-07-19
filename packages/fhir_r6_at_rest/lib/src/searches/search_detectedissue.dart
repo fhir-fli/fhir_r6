@@ -19,6 +19,14 @@ class SearchDetectedIssue extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [DetectedIssue]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDetectedIssue patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [code] in the resource
   /// [DetectedIssue]
   SearchDetectedIssue code(
@@ -27,6 +35,14 @@ class SearchDetectedIssue extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [author] in the resource
+  /// [DetectedIssue]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDetectedIssue author(FhirString value) {
+    addParameterValue('author', value.toString());
     return this;
   }
 
@@ -53,6 +69,14 @@ class SearchDetectedIssue extends SearchResource {
     return this;
   }
 
+  /// a reference search for [implicated] in the resource
+  /// [DetectedIssue]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDetectedIssue implicated(FhirString value) {
+    addParameterValue('implicated', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [DetectedIssue]
   SearchDetectedIssue status(
@@ -61,6 +85,14 @@ class SearchDetectedIssue extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [DetectedIssue]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDetectedIssue subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

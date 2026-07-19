@@ -66,6 +66,14 @@ class SearchSubscription extends SearchResource {
     return this;
   }
 
+  /// a reference search for [owner] in the resource
+  /// [Subscription]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchSubscription owner(FhirString value) {
+    addParameterValue('owner', value.toString());
+    return this;
+  }
+
   /// a token search for [payload] in the resource
   /// [Subscription]
   SearchSubscription payload(

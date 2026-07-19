@@ -19,6 +19,14 @@ class SearchInvoice extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [Invoice]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchInvoice patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [type] in the resource
   /// [Invoice]
   SearchInvoice type(
@@ -42,6 +50,30 @@ class SearchInvoice extends SearchResource {
     return this;
   }
 
+  /// a reference search for [account] in the resource
+  /// [Invoice]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchInvoice account(FhirString value) {
+    addParameterValue('account', value.toString());
+    return this;
+  }
+
+  /// a reference search for [issuer] in the resource
+  /// [Invoice]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchInvoice issuer(FhirString value) {
+    addParameterValue('issuer', value.toString());
+    return this;
+  }
+
+  /// a reference search for [participant] in the resource
+  /// [Invoice]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchInvoice participant(FhirString value) {
+    addParameterValue('participant', value.toString());
+    return this;
+  }
+
   /// a token search for [participantRole] in the resource
   /// [Invoice]
   SearchInvoice participantRole(
@@ -53,6 +85,14 @@ class SearchInvoice extends SearchResource {
     return this;
   }
 
+  /// a reference search for [recipient] in the resource
+  /// [Invoice]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchInvoice recipient(FhirString value) {
+    addParameterValue('recipient', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [Invoice]
   SearchInvoice status(
@@ -61,6 +101,14 @@ class SearchInvoice extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [Invoice]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchInvoice subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 

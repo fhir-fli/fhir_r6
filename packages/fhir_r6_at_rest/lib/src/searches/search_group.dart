@@ -55,6 +55,14 @@ class SearchGroup extends SearchResource {
     return this;
   }
 
+  /// a reference search for [characteristicReference] in the resource
+  /// [Group]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchGroup characteristicReference(FhirString value) {
+    addParameterValue('characteristic-reference', value.toString());
+    return this;
+  }
+
   /// a token search for [code] in the resource
   /// [Group]
   SearchGroup code(
@@ -74,6 +82,22 @@ class SearchGroup extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('exclude', paramValue);
+    return this;
+  }
+
+  /// a reference search for [managingEntity] in the resource
+  /// [Group]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchGroup managingEntity(FhirString value) {
+    addParameterValue('managing-entity', value.toString());
+    return this;
+  }
+
+  /// a reference search for [member] in the resource
+  /// [Group]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchGroup member(FhirString value) {
+    addParameterValue('member', value.toString());
     return this;
   }
 

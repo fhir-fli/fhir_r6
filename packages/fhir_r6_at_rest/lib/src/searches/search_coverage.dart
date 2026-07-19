@@ -19,6 +19,14 @@ class SearchCoverage extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [Coverage]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCoverage patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [type] in the resource
   /// [Coverage]
   SearchCoverage type(
@@ -27,6 +35,14 @@ class SearchCoverage extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('type', paramValue);
+    return this;
+  }
+
+  /// a reference search for [beneficiary] in the resource
+  /// [Coverage]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCoverage beneficiary(FhirString value) {
+    addParameterValue('beneficiary', value.toString());
     return this;
   }
 
@@ -59,6 +75,30 @@ class SearchCoverage extends SearchResource {
     return this;
   }
 
+  /// a reference search for [insurer] in the resource
+  /// [Coverage]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCoverage insurer(FhirString value) {
+    addParameterValue('insurer', value.toString());
+    return this;
+  }
+
+  /// a reference search for [paymentbyParty] in the resource
+  /// [Coverage]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCoverage paymentbyParty(FhirString value) {
+    addParameterValue('paymentby-party', value.toString());
+    return this;
+  }
+
+  /// a reference search for [policyHolder] in the resource
+  /// [Coverage]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCoverage policyHolder(FhirString value) {
+    addParameterValue('policy-holder', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [Coverage]
   SearchCoverage status(
@@ -67,6 +107,14 @@ class SearchCoverage extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subscriber] in the resource
+  /// [Coverage]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCoverage subscriber(FhirString value) {
+    addParameterValue('subscriber', value.toString());
     return this;
   }
 

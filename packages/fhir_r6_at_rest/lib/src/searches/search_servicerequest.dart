@@ -19,6 +19,22 @@ class SearchServiceRequest extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [ServiceRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchServiceRequest patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
+  /// a reference search for [encounter] in the resource
+  /// [ServiceRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchServiceRequest encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
   /// a date search for [authored] in the resource
   /// [ServiceRequest]
   SearchServiceRequest authored(
@@ -31,6 +47,14 @@ class SearchServiceRequest extends SearchResource {
     return this;
   }
 
+  /// a reference search for [basedOn] in the resource
+  /// [ServiceRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchServiceRequest basedOn(FhirString value) {
+    addParameterValue('based-on', value.toString());
+    return this;
+  }
+
   /// a token search for [bodySite] in the resource
   /// [ServiceRequest]
   SearchServiceRequest bodySite(
@@ -39,6 +63,14 @@ class SearchServiceRequest extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('body-site', paramValue);
+    return this;
+  }
+
+  /// a reference search for [bodyStructure] in the resource
+  /// [ServiceRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchServiceRequest bodyStructure(FhirString value) {
+    addParameterValue('body-structure', value.toString());
     return this;
   }
 
@@ -64,6 +96,14 @@ class SearchServiceRequest extends SearchResource {
     return this;
   }
 
+  /// a reference search for [codeReference] in the resource
+  /// [ServiceRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchServiceRequest codeReference(FhirString value) {
+    addParameterValue('code-reference', value.toString());
+    return this;
+  }
+
   /// a token search for [groupOrIdentifier] in the resource
   /// [ServiceRequest]
   SearchServiceRequest groupOrIdentifier(
@@ -72,6 +112,14 @@ class SearchServiceRequest extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('group-or-identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [instantiatesCanonical] in the resource
+  /// [ServiceRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchServiceRequest instantiatesCanonical(FhirString value) {
+    addParameterValue('instantiates-canonical', value.toString());
     return this;
   }
 
@@ -104,6 +152,14 @@ class SearchServiceRequest extends SearchResource {
     return this;
   }
 
+  /// a reference search for [locationReference] in the resource
+  /// [ServiceRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchServiceRequest locationReference(FhirString value) {
+    addParameterValue('location-reference', value.toString());
+    return this;
+  }
+
   /// a date search for [occurrence] in the resource
   /// [ServiceRequest]
   SearchServiceRequest occurrence(
@@ -113,6 +169,14 @@ class SearchServiceRequest extends SearchResource {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
     addParameterValue('occurrence', paramValue);
+    return this;
+  }
+
+  /// a reference search for [performer] in the resource
+  /// [ServiceRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchServiceRequest performer(FhirString value) {
+    addParameterValue('performer', value.toString());
     return this;
   }
 
@@ -138,6 +202,22 @@ class SearchServiceRequest extends SearchResource {
     return this;
   }
 
+  /// a reference search for [replaces] in the resource
+  /// [ServiceRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchServiceRequest replaces(FhirString value) {
+    addParameterValue('replaces', value.toString());
+    return this;
+  }
+
+  /// a reference search for [requester] in the resource
+  /// [ServiceRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchServiceRequest requester(FhirString value) {
+    addParameterValue('requester', value.toString());
+    return this;
+  }
+
   /// a token search for [requisition] in the resource
   /// [ServiceRequest]
   SearchServiceRequest requisition(
@@ -149,6 +229,14 @@ class SearchServiceRequest extends SearchResource {
     return this;
   }
 
+  /// a reference search for [specimen] in the resource
+  /// [ServiceRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchServiceRequest specimen(FhirString value) {
+    addParameterValue('specimen', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [ServiceRequest]
   SearchServiceRequest status(
@@ -157,6 +245,14 @@ class SearchServiceRequest extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [ServiceRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchServiceRequest subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

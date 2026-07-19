@@ -30,6 +30,14 @@ class SearchDevice extends SearchResource {
     return this;
   }
 
+  /// a reference search for [definition] in the resource
+  /// [Device]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDevice definition(FhirString value) {
+    addParameterValue('definition', value.toString());
+    return this;
+  }
+
   /// a string search for [deviceName] in the resource
   /// [Device]
   SearchDevice deviceName(FhirString value) {
@@ -57,6 +65,14 @@ class SearchDevice extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [location] in the resource
+  /// [Device]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDevice location(FhirString value) {
+    addParameterValue('location', value.toString());
     return this;
   }
 
@@ -90,6 +106,14 @@ class SearchDevice extends SearchResource {
   /// [Device]
   SearchDevice model(FhirString value) {
     addParameterValue('model', value.toString());
+    return this;
+  }
+
+  /// a reference search for [parent] in the resource
+  /// [Device]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDevice parent(FhirString value) {
+    addParameterValue('parent', value.toString());
     return this;
   }
 

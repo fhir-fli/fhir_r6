@@ -19,6 +19,14 @@ class SearchMedicationRequest extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [MedicationRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationRequest patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [code] in the resource
   /// [MedicationRequest]
   SearchMedicationRequest code(
@@ -27,6 +35,22 @@ class SearchMedicationRequest extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [encounter] in the resource
+  /// [MedicationRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationRequest encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [medication] in the resource
+  /// [MedicationRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationRequest medication(FhirString value) {
+    addParameterValue('medication', value.toString());
     return this;
   }
 
@@ -98,6 +122,22 @@ class SearchMedicationRequest extends SearchResource {
     return this;
   }
 
+  /// a reference search for [intendedDispenser] in the resource
+  /// [MedicationRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationRequest intendedDispenser(FhirString value) {
+    addParameterValue('intended-dispenser', value.toString());
+    return this;
+  }
+
+  /// a reference search for [intendedPerformer] in the resource
+  /// [MedicationRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationRequest intendedPerformer(FhirString value) {
+    addParameterValue('intended-performer', value.toString());
+    return this;
+  }
+
   /// a token search for [intendedPerformertype] in the resource
   /// [MedicationRequest]
   SearchMedicationRequest intendedPerformertype(
@@ -128,6 +168,22 @@ class SearchMedicationRequest extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('priority', paramValue);
+    return this;
+  }
+
+  /// a reference search for [requester] in the resource
+  /// [MedicationRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationRequest requester(FhirString value) {
+    addParameterValue('requester', value.toString());
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [MedicationRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationRequest subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

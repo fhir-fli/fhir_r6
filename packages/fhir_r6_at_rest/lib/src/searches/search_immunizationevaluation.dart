@@ -19,6 +19,14 @@ class SearchImmunizationEvaluation extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [ImmunizationEvaluation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImmunizationEvaluation patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a date search for [date] in the resource
   /// [ImmunizationEvaluation]
   SearchImmunizationEvaluation date(
@@ -39,6 +47,14 @@ class SearchImmunizationEvaluation extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('dose-status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [immunizationEvent] in the resource
+  /// [ImmunizationEvaluation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImmunizationEvaluation immunizationEvent(FhirString value) {
+    addParameterValue('immunization-event', value.toString());
     return this;
   }
 

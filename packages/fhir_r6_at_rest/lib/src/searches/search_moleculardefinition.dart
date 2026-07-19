@@ -19,6 +19,14 @@ class SearchMolecularDefinition extends SearchResource {
     return this;
   }
 
+  /// a reference search for [member] in the resource
+  /// [MolecularDefinition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMolecularDefinition member(FhirString value) {
+    addParameterValue('member', value.toString());
+    return this;
+  }
+
   /// a token search for [moleculetype] in the resource
   /// [MolecularDefinition]
   SearchMolecularDefinition moleculetype(

@@ -19,6 +19,22 @@ class SearchVerificationResult extends SearchResource {
     return this;
   }
 
+  /// a reference search for [attestationOnbehalfof] in the resource
+  /// [VerificationResult]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchVerificationResult attestationOnbehalfof(FhirString value) {
+    addParameterValue('attestation-onbehalfof', value.toString());
+    return this;
+  }
+
+  /// a reference search for [attestationWho] in the resource
+  /// [VerificationResult]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchVerificationResult attestationWho(FhirString value) {
+    addParameterValue('attestation-who', value.toString());
+    return this;
+  }
+
   /// a date search for [primarysourceDate] in the resource
   /// [VerificationResult]
   SearchVerificationResult primarysourceDate(
@@ -42,6 +58,14 @@ class SearchVerificationResult extends SearchResource {
     return this;
   }
 
+  /// a reference search for [primarysourceWho] in the resource
+  /// [VerificationResult]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchVerificationResult primarysourceWho(FhirString value) {
+    addParameterValue('primarysource-who', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [VerificationResult]
   SearchVerificationResult status(
@@ -62,6 +86,22 @@ class SearchVerificationResult extends SearchResource {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
     addParameterValue('status-date', paramValue);
+    return this;
+  }
+
+  /// a reference search for [target] in the resource
+  /// [VerificationResult]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchVerificationResult target(FhirString value) {
+    addParameterValue('target', value.toString());
+    return this;
+  }
+
+  /// a reference search for [validatorOrganization] in the resource
+  /// [VerificationResult]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchVerificationResult validatorOrganization(FhirString value) {
+    addParameterValue('validator-organization', value.toString());
     return this;
   }
 }

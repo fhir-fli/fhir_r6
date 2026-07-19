@@ -19,6 +19,14 @@ class SearchObservation extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [Observation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchObservation patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [code] in the resource
   /// [Observation]
   SearchObservation code(
@@ -39,6 +47,22 @@ class SearchObservation extends SearchResource {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
     addParameterValue('date', paramValue);
+    return this;
+  }
+
+  /// a reference search for [encounter] in the resource
+  /// [Observation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchObservation encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [basedOn] in the resource
+  /// [Observation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchObservation basedOn(FhirString value) {
+    addParameterValue('based-on', value.toString());
     return this;
   }
 
@@ -147,6 +171,14 @@ class SearchObservation extends SearchResource {
     return this;
   }
 
+  /// a reference search for [componentValueCanonical] in the resource
+  /// [Observation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchObservation componentValueCanonical(FhirString value) {
+    addParameterValue('component-value-canonical', value.toString());
+    return this;
+  }
+
   /// a token search for [componentValueConcept] in the resource
   /// [Observation]
   SearchObservation componentValueConcept(
@@ -175,6 +207,14 @@ class SearchObservation extends SearchResource {
     return this;
   }
 
+  /// a reference search for [componentValueReference] in the resource
+  /// [Observation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchObservation componentValueReference(FhirString value) {
+    addParameterValue('component-value-reference', value.toString());
+    return this;
+  }
+
   /// a token search for [dataAbsentReason] in the resource
   /// [Observation]
   SearchObservation dataAbsentReason(
@@ -186,10 +226,50 @@ class SearchObservation extends SearchResource {
     return this;
   }
 
+  /// a reference search for [derivedFrom] in the resource
+  /// [Observation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchObservation derivedFrom(FhirString value) {
+    addParameterValue('derived-from', value.toString());
+    return this;
+  }
+
+  /// a reference search for [device] in the resource
+  /// [Observation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchObservation device(FhirString value) {
+    addParameterValue('device', value.toString());
+    return this;
+  }
+
+  /// a reference search for [focus] in the resource
+  /// [Observation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchObservation focus(FhirString value) {
+    addParameterValue('focus', value.toString());
+    return this;
+  }
+
+  /// a reference search for [hasMember] in the resource
+  /// [Observation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchObservation hasMember(FhirString value) {
+    addParameterValue('has-member', value.toString());
+    return this;
+  }
+
   /// a uri search for [instantiatesCanonical] in the resource
   /// [Observation]
   SearchObservation instantiatesCanonical(FhirUri value) {
     addParameterValue('instantiates-canonical', value.toString());
+    return this;
+  }
+
+  /// a reference search for [instantiatesReference] in the resource
+  /// [Observation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchObservation instantiatesReference(FhirString value) {
+    addParameterValue('instantiates-reference', value.toString());
     return this;
   }
 
@@ -215,6 +295,30 @@ class SearchObservation extends SearchResource {
     return this;
   }
 
+  /// a reference search for [partOf] in the resource
+  /// [Observation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchObservation partOf(FhirString value) {
+    addParameterValue('part-of', value.toString());
+    return this;
+  }
+
+  /// a reference search for [performer] in the resource
+  /// [Observation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchObservation performer(FhirString value) {
+    addParameterValue('performer', value.toString());
+    return this;
+  }
+
+  /// a reference search for [specimen] in the resource
+  /// [Observation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchObservation specimen(FhirString value) {
+    addParameterValue('specimen', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [Observation]
   SearchObservation status(
@@ -223,6 +327,14 @@ class SearchObservation extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [Observation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchObservation subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 
@@ -270,6 +382,14 @@ class SearchObservation extends SearchResource {
         : '$numberPart|${system?.toString() ?? ''}|'
             '${unit?.toString() ?? ''}';
     addParameterValue('value-quantity', paramValue);
+    return this;
+  }
+
+  /// a reference search for [valueReference] in the resource
+  /// [Observation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchObservation valueReference(FhirString value) {
+    addParameterValue('value-reference', value.toString());
     return this;
   }
 

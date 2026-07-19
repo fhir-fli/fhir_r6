@@ -19,6 +19,14 @@ class SearchMedicationDispense extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [MedicationDispense]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationDispense patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [type] in the resource
   /// [MedicationDispense]
   SearchMedicationDispense type(
@@ -41,6 +49,22 @@ class SearchMedicationDispense extends SearchResource {
     return this;
   }
 
+  /// a reference search for [encounter] in the resource
+  /// [MedicationDispense]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationDispense encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [medication] in the resource
+  /// [MedicationDispense]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationDispense medication(FhirString value) {
+    addParameterValue('medication', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [MedicationDispense]
   SearchMedicationDispense status(
@@ -49,6 +73,46 @@ class SearchMedicationDispense extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [destination] in the resource
+  /// [MedicationDispense]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationDispense destination(FhirString value) {
+    addParameterValue('destination', value.toString());
+    return this;
+  }
+
+  /// a reference search for [location] in the resource
+  /// [MedicationDispense]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationDispense location(FhirString value) {
+    addParameterValue('location', value.toString());
+    return this;
+  }
+
+  /// a reference search for [performer] in the resource
+  /// [MedicationDispense]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationDispense performer(FhirString value) {
+    addParameterValue('performer', value.toString());
+    return this;
+  }
+
+  /// a reference search for [prescription] in the resource
+  /// [MedicationDispense]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationDispense prescription(FhirString value) {
+    addParameterValue('prescription', value.toString());
+    return this;
+  }
+
+  /// a reference search for [receiver] in the resource
+  /// [MedicationDispense]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationDispense receiver(FhirString value) {
+    addParameterValue('receiver', value.toString());
     return this;
   }
 
@@ -61,6 +125,22 @@ class SearchMedicationDispense extends SearchResource {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
     addParameterValue('recorded', paramValue);
+    return this;
+  }
+
+  /// a reference search for [responsibleparty] in the resource
+  /// [MedicationDispense]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationDispense responsibleparty(FhirString value) {
+    addParameterValue('responsibleparty', value.toString());
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [MedicationDispense]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedicationDispense subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 

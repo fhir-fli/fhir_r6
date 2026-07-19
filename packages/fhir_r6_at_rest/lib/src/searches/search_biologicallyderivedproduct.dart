@@ -30,6 +30,14 @@ class SearchBiologicallyDerivedProduct extends SearchResource {
     return this;
   }
 
+  /// a reference search for [collector] in the resource
+  /// [BiologicallyDerivedProduct]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchBiologicallyDerivedProduct collector(FhirString value) {
+    addParameterValue('collector', value.toString());
+    return this;
+  }
+
   /// a token search for [identifier] in the resource
   /// [BiologicallyDerivedProduct]
   SearchBiologicallyDerivedProduct identifier(
@@ -60,6 +68,14 @@ class SearchBiologicallyDerivedProduct extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('product-status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [request] in the resource
+  /// [BiologicallyDerivedProduct]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchBiologicallyDerivedProduct request(FhirString value) {
+    addParameterValue('request', value.toString());
     return this;
   }
 

@@ -30,6 +30,14 @@ class SearchDeviceDispense extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [DeviceDispense]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDeviceDispense patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [DeviceDispense]
   SearchDeviceDispense status(
@@ -38,6 +46,14 @@ class SearchDeviceDispense extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [DeviceDispense]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDeviceDispense subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

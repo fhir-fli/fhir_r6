@@ -19,6 +19,14 @@ class SearchRequestOrchestration extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [RequestOrchestration]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchRequestOrchestration patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [code] in the resource
   /// [RequestOrchestration]
   SearchRequestOrchestration code(
@@ -27,6 +35,30 @@ class SearchRequestOrchestration extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [encounter] in the resource
+  /// [RequestOrchestration]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchRequestOrchestration encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [actionResource] in the resource
+  /// [RequestOrchestration]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchRequestOrchestration actionResource(FhirString value) {
+    addParameterValue('action-resource', value.toString());
+    return this;
+  }
+
+  /// a reference search for [author] in the resource
+  /// [RequestOrchestration]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchRequestOrchestration author(FhirString value) {
+    addParameterValue('author', value.toString());
     return this;
   }
 
@@ -42,6 +74,14 @@ class SearchRequestOrchestration extends SearchResource {
     return this;
   }
 
+  /// a reference search for [basedOn] in the resource
+  /// [RequestOrchestration]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchRequestOrchestration basedOn(FhirString value) {
+    addParameterValue('based-on', value.toString());
+    return this;
+  }
+
   /// a token search for [groupIdentifier] in the resource
   /// [RequestOrchestration]
   SearchRequestOrchestration groupIdentifier(
@@ -50,6 +90,14 @@ class SearchRequestOrchestration extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('group-identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [instantiatesCanonical] in the resource
+  /// [RequestOrchestration]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchRequestOrchestration instantiatesCanonical(FhirString value) {
+    addParameterValue('instantiates-canonical', value.toString());
     return this;
   }
 
@@ -68,6 +116,14 @@ class SearchRequestOrchestration extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('intent', paramValue);
+    return this;
+  }
+
+  /// a reference search for [participant] in the resource
+  /// [RequestOrchestration]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchRequestOrchestration participant(FhirString value) {
+    addParameterValue('participant', value.toString());
     return this;
   }
 
@@ -90,6 +146,14 @@ class SearchRequestOrchestration extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [RequestOrchestration]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchRequestOrchestration subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

@@ -19,6 +19,14 @@ class SearchFlag extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [Flag]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchFlag patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a date search for [date] in the resource
   /// [Flag]
   SearchFlag date(
@@ -28,6 +36,22 @@ class SearchFlag extends SearchResource {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
     addParameterValue('date', paramValue);
+    return this;
+  }
+
+  /// a reference search for [encounter] in the resource
+  /// [Flag]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchFlag encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [author] in the resource
+  /// [Flag]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchFlag author(FhirString value) {
+    addParameterValue('author', value.toString());
     return this;
   }
 
@@ -50,6 +74,14 @@ class SearchFlag extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [Flag]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchFlag subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

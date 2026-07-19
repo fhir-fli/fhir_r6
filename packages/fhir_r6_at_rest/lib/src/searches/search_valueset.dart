@@ -59,6 +59,14 @@ class SearchValueSet extends SearchResource {
     return this;
   }
 
+  /// a reference search for [derivedFrom] in the resource
+  /// [ValueSet]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchValueSet derivedFrom(FhirString value) {
+    addParameterValue('derived-from', value.toString());
+    return this;
+  }
+
   /// a string search for [description] in the resource
   /// [ValueSet]
   SearchValueSet description(FhirString value) {
@@ -104,6 +112,14 @@ class SearchValueSet extends SearchResource {
   /// [ValueSet]
   SearchValueSet name(FhirString value) {
     addParameterValue('name', value.toString());
+    return this;
+  }
+
+  /// a reference search for [predecessor] in the resource
+  /// [ValueSet]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchValueSet predecessor(FhirString value) {
+    addParameterValue('predecessor', value.toString());
     return this;
   }
 

@@ -19,6 +19,14 @@ class SearchCareTeam extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [CareTeam]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCareTeam patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a date search for [date] in the resource
   /// [CareTeam]
   SearchCareTeam date(
@@ -49,6 +57,14 @@ class SearchCareTeam extends SearchResource {
     return this;
   }
 
+  /// a reference search for [participant] in the resource
+  /// [CareTeam]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCareTeam participant(FhirString value) {
+    addParameterValue('participant', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [CareTeam]
   SearchCareTeam status(
@@ -57,6 +73,14 @@ class SearchCareTeam extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [CareTeam]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCareTeam subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

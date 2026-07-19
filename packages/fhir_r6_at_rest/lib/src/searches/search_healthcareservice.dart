@@ -41,6 +41,14 @@ class SearchHealthcareService extends SearchResource {
     return this;
   }
 
+  /// a reference search for [coverageArea] in the resource
+  /// [HealthcareService]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchHealthcareService coverageArea(FhirString value) {
+    addParameterValue('coverage-area', value.toString());
+    return this;
+  }
+
   /// a token search for [eligibility] in the resource
   /// [HealthcareService]
   SearchHealthcareService eligibility(
@@ -49,6 +57,14 @@ class SearchHealthcareService extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('eligibility', paramValue);
+    return this;
+  }
+
+  /// a reference search for [endpoint] in the resource
+  /// [HealthcareService]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchHealthcareService endpoint(FhirString value) {
+    addParameterValue('endpoint', value.toString());
     return this;
   }
 
@@ -63,10 +79,34 @@ class SearchHealthcareService extends SearchResource {
     return this;
   }
 
+  /// a reference search for [location] in the resource
+  /// [HealthcareService]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchHealthcareService location(FhirString value) {
+    addParameterValue('location', value.toString());
+    return this;
+  }
+
   /// a string search for [name] in the resource
   /// [HealthcareService]
   SearchHealthcareService name(FhirString value) {
     addParameterValue('name', value.toString());
+    return this;
+  }
+
+  /// a reference search for [offeredIn] in the resource
+  /// [HealthcareService]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchHealthcareService offeredIn(FhirString value) {
+    addParameterValue('offered-in', value.toString());
+    return this;
+  }
+
+  /// a reference search for [organization] in the resource
+  /// [HealthcareService]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchHealthcareService organization(FhirString value) {
+    addParameterValue('organization', value.toString());
     return this;
   }
 

@@ -59,6 +59,14 @@ class SearchNamingSystem extends SearchResource {
     return this;
   }
 
+  /// a reference search for [derivedFrom] in the resource
+  /// [NamingSystem]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchNamingSystem derivedFrom(FhirString value) {
+    addParameterValue('derived-from', value.toString());
+    return this;
+  }
+
   /// a string search for [description] in the resource
   /// [NamingSystem]
   SearchNamingSystem description(FhirString value) {
@@ -104,6 +112,14 @@ class SearchNamingSystem extends SearchResource {
   /// [NamingSystem]
   SearchNamingSystem name(FhirString value) {
     addParameterValue('name', value.toString());
+    return this;
+  }
+
+  /// a reference search for [predecessor] in the resource
+  /// [NamingSystem]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchNamingSystem predecessor(FhirString value) {
+    addParameterValue('predecessor', value.toString());
     return this;
   }
 

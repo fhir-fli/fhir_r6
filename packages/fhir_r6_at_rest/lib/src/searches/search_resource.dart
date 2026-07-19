@@ -19,6 +19,14 @@ class SearchResource extends RestfulParameters {
     return this;
   }
 
+  /// a reference search for [in_] in the resource
+  /// [Resource]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchResource in_(FhirString value) {
+    addParameterValue('_in', value.toString());
+    return this;
+  }
+
   /// a token search for [language] in the resource
   /// [Resource]
   SearchResource language(
@@ -39,6 +47,14 @@ class SearchResource extends RestfulParameters {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
     addParameterValue('_lastUpdated', paramValue);
+    return this;
+  }
+
+  /// a reference search for [profile] in the resource
+  /// [Resource]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchResource profile(FhirString value) {
+    addParameterValue('_profile', value.toString());
     return this;
   }
 

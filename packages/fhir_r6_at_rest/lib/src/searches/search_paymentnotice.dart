@@ -42,6 +42,30 @@ class SearchPaymentNotice extends SearchResource {
     return this;
   }
 
+  /// a reference search for [reporter] in the resource
+  /// [PaymentNotice]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchPaymentNotice reporter(FhirString value) {
+    addParameterValue('reporter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [request] in the resource
+  /// [PaymentNotice]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchPaymentNotice request(FhirString value) {
+    addParameterValue('request', value.toString());
+    return this;
+  }
+
+  /// a reference search for [response] in the resource
+  /// [PaymentNotice]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchPaymentNotice response(FhirString value) {
+    addParameterValue('response', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [PaymentNotice]
   SearchPaymentNotice status(

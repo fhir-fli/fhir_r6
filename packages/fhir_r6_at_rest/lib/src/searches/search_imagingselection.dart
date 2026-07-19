@@ -19,6 +19,14 @@ class SearchImagingSelection extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [ImagingSelection]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImagingSelection patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [code] in the resource
   /// [ImagingSelection]
   SearchImagingSelection code(
@@ -27,6 +35,14 @@ class SearchImagingSelection extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [basedOn] in the resource
+  /// [ImagingSelection]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImagingSelection basedOn(FhirString value) {
+    addParameterValue('based-on', value.toString());
     return this;
   }
 
@@ -41,6 +57,14 @@ class SearchImagingSelection extends SearchResource {
     return this;
   }
 
+  /// a reference search for [bodyStructure] in the resource
+  /// [ImagingSelection]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImagingSelection bodyStructure(FhirString value) {
+    addParameterValue('body-structure', value.toString());
+    return this;
+  }
+
   /// a token search for [category] in the resource
   /// [ImagingSelection]
   SearchImagingSelection category(
@@ -49,6 +73,14 @@ class SearchImagingSelection extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('category', paramValue);
+    return this;
+  }
+
+  /// a reference search for [derivedFrom] in the resource
+  /// [ImagingSelection]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImagingSelection derivedFrom(FhirString value) {
+    addParameterValue('derived-from', value.toString());
     return this;
   }
 
@@ -83,6 +115,14 @@ class SearchImagingSelection extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('study-uid', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [ImagingSelection]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImagingSelection subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

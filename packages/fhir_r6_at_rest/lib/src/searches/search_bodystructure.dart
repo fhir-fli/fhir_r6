@@ -19,6 +19,14 @@ class SearchBodyStructure extends SearchResource {
     return this;
   }
 
+  /// a reference search for [patient] in the resource
+  /// [BodyStructure]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchBodyStructure patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
   /// a token search for [excludedStructure] in the resource
   /// [BodyStructure]
   SearchBodyStructure excludedStructure(

@@ -49,6 +49,14 @@ class SearchResearchStudy extends SearchResource {
     return this;
   }
 
+  /// a reference search for [eligibility] in the resource
+  /// [ResearchStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchResearchStudy eligibility(FhirString value) {
+    addParameterValue('eligibility', value.toString());
+    return this;
+  }
+
   /// a token search for [focusCode] in the resource
   /// [ResearchStudy]
   SearchResearchStudy focusCode(
@@ -57,6 +65,14 @@ class SearchResearchStudy extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('focus-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [focusReference] in the resource
+  /// [ResearchStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchResearchStudy focusReference(FhirString value) {
+    addParameterValue('focus-reference', value.toString());
     return this;
   }
 
@@ -107,6 +123,14 @@ class SearchResearchStudy extends SearchResource {
     return this;
   }
 
+  /// a reference search for [partOf] in the resource
+  /// [ResearchStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchResearchStudy partOf(FhirString value) {
+    addParameterValue('part-of', value.toString());
+    return this;
+  }
+
   /// a token search for [phase] in the resource
   /// [ResearchStudy]
   SearchResearchStudy phase(
@@ -152,6 +176,14 @@ class SearchResearchStudy extends SearchResource {
     return this;
   }
 
+  /// a reference search for [protocol] in the resource
+  /// [ResearchStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchResearchStudy protocol(FhirString value) {
+    addParameterValue('protocol', value.toString());
+    return this;
+  }
+
   /// a numerical search for [recruitmentActual] in the resource
   /// [ResearchStudy]
   SearchResearchStudy recruitmentActual(
@@ -182,6 +214,14 @@ class SearchResearchStudy extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('region', paramValue);
+    return this;
+  }
+
+  /// a reference search for [site] in the resource
+  /// [ResearchStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchResearchStudy site(FhirString value) {
+    addParameterValue('site', value.toString());
     return this;
   }
 

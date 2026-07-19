@@ -59,6 +59,14 @@ class SearchConceptMap extends SearchResource {
     return this;
   }
 
+  /// a reference search for [derivedFrom] in the resource
+  /// [ConceptMap]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchConceptMap derivedFrom(FhirString value) {
+    addParameterValue('derived-from', value.toString());
+    return this;
+  }
+
   /// a string search for [description] in the resource
   /// [ConceptMap]
   SearchConceptMap description(FhirString value) {
@@ -104,6 +112,14 @@ class SearchConceptMap extends SearchResource {
   /// [ConceptMap]
   SearchConceptMap name(FhirString value) {
     addParameterValue('name', value.toString());
+    return this;
+  }
+
+  /// a reference search for [predecessor] in the resource
+  /// [ConceptMap]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchConceptMap predecessor(FhirString value) {
+    addParameterValue('predecessor', value.toString());
     return this;
   }
 
@@ -168,6 +184,14 @@ class SearchConceptMap extends SearchResource {
     return this;
   }
 
+  /// a reference search for [otherMap] in the resource
+  /// [ConceptMap]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchConceptMap otherMap(FhirString value) {
+    addParameterValue('other-map', value.toString());
+    return this;
+  }
+
   /// a token search for [sourceCode] in the resource
   /// [ConceptMap]
   SearchConceptMap sourceCode(
@@ -176,6 +200,22 @@ class SearchConceptMap extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('source-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [sourceGroupSystem] in the resource
+  /// [ConceptMap]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchConceptMap sourceGroupSystem(FhirString value) {
+    addParameterValue('source-group-system', value.toString());
+    return this;
+  }
+
+  /// a reference search for [sourceScope] in the resource
+  /// [ConceptMap]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchConceptMap sourceScope(FhirString value) {
+    addParameterValue('source-scope', value.toString());
     return this;
   }
 
@@ -194,6 +234,22 @@ class SearchConceptMap extends SearchResource {
   }) {
     final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('target-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [targetGroupSystem] in the resource
+  /// [ConceptMap]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchConceptMap targetGroupSystem(FhirString value) {
+    addParameterValue('target-group-system', value.toString());
+    return this;
+  }
+
+  /// a reference search for [targetScope] in the resource
+  /// [ConceptMap]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchConceptMap targetScope(FhirString value) {
+    addParameterValue('target-scope', value.toString());
     return this;
   }
 
