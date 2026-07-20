@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 void main() {
   final initialMedicationRequest = MedicationRequest(
     id: '1'.toFhirString,
-    status: MedicationrequestStatus.active,
+    status: MedicationRequestStatus.active,
     intent: MedicationRequestIntent.plan,
     medication: CodeableReference(
       reference: Reference(reference: 'Medication/1'.toFhirString),
@@ -15,7 +15,7 @@ void main() {
   final medicationRequests = [
     MedicationRequest(
       id: '1'.toFhirString,
-      status: MedicationrequestStatus.active,
+      status: MedicationRequestStatus.active,
       intent: MedicationRequestIntent.plan,
       medication: CodeableReference(
         reference: Reference(reference: 'Medication/1'.toFhirString),

@@ -22,7 +22,7 @@ abstract class $MedicationRequestCopyWith<T>
     List<Reference>? basedOn,
     Reference? priorPrescription,
     Identifier? groupIdentifier,
-    MedicationrequestStatus? status,
+    MedicationRequestStatus? status,
     CodeableConcept? statusReason,
     FhirDateTime? statusChanged,
     MedicationRequestIntent? intent,
@@ -141,7 +141,7 @@ class _$MedicationRequestCopyWithImpl<T>
             : groupIdentifier as Identifier?,
         status: identical(status, fhirSentinel)
             ? _value.status
-            : (status as MedicationrequestStatus?) ?? _value.status,
+            : (status as MedicationRequestStatus?) ?? _value.status,
         statusReason: identical(statusReason, fhirSentinel)
             ? _value.statusReason
             : statusReason as CodeableConcept?,
