@@ -8,16 +8,21 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 /// A class to build query parameters for RESTful requests for
 /// the [ActivityDefinition] resource.
 class SearchActivityDefinition extends SearchResource {
+  /// a reference search for [composedOf] in the resource
+  /// [ActivityDefinition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchActivityDefinition composedOf(FhirString value) {
+    addParameterValue('composed-of', value.toString());
+    return this;
+  }
+
   /// a token search for [context] in the resource
   /// [ActivityDefinition]
   SearchActivityDefinition context(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('context', paramValue);
     return this;
   }
@@ -30,16 +35,12 @@ class SearchActivityDefinition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    if (modifier != null &&
-        !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for quantity type');
-    }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
-    final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('context_quantity', paramValue);
+    final numberPart = modifier != null ? '$modifier$value' : value.toString();
+    final paramValue = (system == null && unit == null)
+        ? numberPart
+        : '$numberPart|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
+    addParameterValue('context-quantity', paramValue);
     return this;
   }
 
@@ -48,18 +49,14 @@ class SearchActivityDefinition extends SearchResource {
   SearchActivityDefinition contextType(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('context_type', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('context-type', paramValue);
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [ActivityDefinition]
-  @override
   SearchActivityDefinition date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -70,18 +67,26 @@ class SearchActivityDefinition extends SearchResource {
     return this;
   }
 
+  /// a reference search for [dependsOn] in the resource
+  /// [ActivityDefinition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchActivityDefinition dependsOn(FhirString value) {
+    addParameterValue('depends-on', value.toString());
+    return this;
+  }
+
+  /// a reference search for [derivedFrom] in the resource
+  /// [ActivityDefinition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchActivityDefinition derivedFrom(FhirString value) {
+    addParameterValue('derived-from', value.toString());
+    return this;
+  }
+
   /// a string search for [description] in the resource
   /// [ActivityDefinition]
-  SearchActivityDefinition description(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('description', paramValue);
+  SearchActivityDefinition description(FhirString value) {
+    addParameterValue('description', value.toString());
     return this;
   }
 
@@ -99,15 +104,11 @@ class SearchActivityDefinition extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [ActivityDefinition]
-  @override
   SearchActivityDefinition identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
     return this;
   }
@@ -117,11 +118,8 @@ class SearchActivityDefinition extends SearchResource {
   SearchActivityDefinition jurisdiction(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('jurisdiction', paramValue);
     return this;
   }
@@ -131,58 +129,50 @@ class SearchActivityDefinition extends SearchResource {
   SearchActivityDefinition kind(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('kind', paramValue);
     return this;
   }
 
   /// a string search for [name] in the resource
   /// [ActivityDefinition]
-  @override
-  SearchActivityDefinition name(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('name', paramValue);
+  SearchActivityDefinition name(FhirString value) {
+    addParameterValue('name', value.toString());
+    return this;
+  }
+
+  /// a reference search for [predecessor] in the resource
+  /// [ActivityDefinition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchActivityDefinition predecessor(FhirString value) {
+    addParameterValue('predecessor', value.toString());
     return this;
   }
 
   /// a string search for [publisher] in the resource
   /// [ActivityDefinition]
-  SearchActivityDefinition publisher(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('publisher', paramValue);
+  SearchActivityDefinition publisher(FhirString value) {
+    addParameterValue('publisher', value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [ActivityDefinition]
-  @override
   SearchActivityDefinition status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subjectCanonical] in the resource
+  /// [ActivityDefinition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchActivityDefinition subjectCanonical(FhirString value) {
+    addParameterValue('subject-canonical', value.toString());
     return this;
   }
 
@@ -191,27 +181,32 @@ class SearchActivityDefinition extends SearchResource {
   SearchActivityDefinition subjectCode(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('subject_code', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('subject-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subjectReference] in the resource
+  /// [ActivityDefinition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchActivityDefinition subjectReference(FhirString value) {
+    addParameterValue('subject-reference', value.toString());
+    return this;
+  }
+
+  /// a reference search for [successor] in the resource
+  /// [ActivityDefinition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchActivityDefinition successor(FhirString value) {
+    addParameterValue('successor', value.toString());
     return this;
   }
 
   /// a string search for [title] in the resource
   /// [ActivityDefinition]
-  SearchActivityDefinition title(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('title', paramValue);
+  SearchActivityDefinition title(FhirString value) {
+    addParameterValue('title', value.toString());
     return this;
   }
 
@@ -220,24 +215,16 @@ class SearchActivityDefinition extends SearchResource {
   SearchActivityDefinition topic(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('topic', paramValue);
     return this;
   }
 
   /// a uri search for [url] in the resource
   /// [ActivityDefinition]
-  SearchActivityDefinition url(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('url', paramValue);
+  SearchActivityDefinition url(FhirUri value) {
+    addParameterValue('url', value.toString());
     return this;
   }
 
@@ -246,11 +233,8 @@ class SearchActivityDefinition extends SearchResource {
   SearchActivityDefinition version(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('version', paramValue);
     return this;
   }

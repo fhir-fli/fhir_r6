@@ -13,12 +13,25 @@ class SearchVerificationResult extends SearchResource {
   SearchVerificationResult attestationMethod(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('attestation_method', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('attestation-method', paramValue);
+    return this;
+  }
+
+  /// a reference search for [attestationOnbehalfof] in the resource
+  /// [VerificationResult]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchVerificationResult attestationOnbehalfof(FhirString value) {
+    addParameterValue('attestation-onbehalfof', value.toString());
+    return this;
+  }
+
+  /// a reference search for [attestationWho] in the resource
+  /// [VerificationResult]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchVerificationResult attestationWho(FhirString value) {
+    addParameterValue('attestation-who', value.toString());
     return this;
   }
 
@@ -30,7 +43,7 @@ class SearchVerificationResult extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('primarysource_date', paramValue);
+    addParameterValue('primarysource-date', paramValue);
     return this;
   }
 
@@ -39,26 +52,27 @@ class SearchVerificationResult extends SearchResource {
   SearchVerificationResult primarysourceType(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('primarysource_type', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('primarysource-type', paramValue);
+    return this;
+  }
+
+  /// a reference search for [primarysourceWho] in the resource
+  /// [VerificationResult]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchVerificationResult primarysourceWho(FhirString value) {
+    addParameterValue('primarysource-who', value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [VerificationResult]
-  @override
   SearchVerificationResult status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
     return this;
   }
@@ -71,7 +85,23 @@ class SearchVerificationResult extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('status_date', paramValue);
+    addParameterValue('status-date', paramValue);
+    return this;
+  }
+
+  /// a reference search for [target] in the resource
+  /// [VerificationResult]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchVerificationResult target(FhirString value) {
+    addParameterValue('target', value.toString());
+    return this;
+  }
+
+  /// a reference search for [validatorOrganization] in the resource
+  /// [VerificationResult]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchVerificationResult validatorOrganization(FhirString value) {
+    addParameterValue('validator-organization', value.toString());
     return this;
   }
 }

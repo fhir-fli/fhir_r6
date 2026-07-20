@@ -13,11 +13,8 @@ class SearchSubscription extends SearchResource {
   SearchSubscription contact(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('contact', paramValue);
     return this;
   }
@@ -27,12 +24,9 @@ class SearchSubscription extends SearchResource {
   SearchSubscription contentLevel(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('content_level', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('content-level', paramValue);
     return this;
   }
 
@@ -41,58 +35,42 @@ class SearchSubscription extends SearchResource {
   SearchSubscription filterEvent(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('filter_event', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('filter-event', paramValue);
     return this;
   }
 
   /// a string search for [filterValue] in the resource
   /// [Subscription]
-  SearchSubscription filterValue(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('filter_value', paramValue);
+  SearchSubscription filterValue(FhirString value) {
+    addParameterValue('filter-value', value.toString());
     return this;
   }
 
   /// a token search for [identifier] in the resource
   /// [Subscription]
-  @override
   SearchSubscription identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
     return this;
   }
 
   /// a string search for [name] in the resource
   /// [Subscription]
-  @override
-  SearchSubscription name(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('name', paramValue);
+  SearchSubscription name(FhirString value) {
+    addParameterValue('name', value.toString());
+    return this;
+  }
+
+  /// a reference search for [owner] in the resource
+  /// [Subscription]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchSubscription owner(FhirString value) {
+    addParameterValue('owner', value.toString());
     return this;
   }
 
@@ -101,39 +79,27 @@ class SearchSubscription extends SearchResource {
   SearchSubscription payload(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('payload', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [Subscription]
-  @override
   SearchSubscription status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
     return this;
   }
 
   /// a uri search for [topic] in the resource
   /// [Subscription]
-  SearchSubscription topic(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('topic', paramValue);
+  SearchSubscription topic(FhirUri value) {
+    addParameterValue('topic', value.toString());
     return this;
   }
 
@@ -142,24 +108,16 @@ class SearchSubscription extends SearchResource {
   SearchSubscription type(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('type', paramValue);
     return this;
   }
 
   /// a uri search for [url] in the resource
   /// [Subscription]
-  SearchSubscription url(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('url', paramValue);
+  SearchSubscription url(FhirUri value) {
+    addParameterValue('url', value.toString());
     return this;
   }
 }

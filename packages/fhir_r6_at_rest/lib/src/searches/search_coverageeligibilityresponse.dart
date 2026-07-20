@@ -10,16 +10,20 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchCoverageEligibilityResponse extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [CoverageEligibilityResponse]
-  @override
   SearchCoverageEligibilityResponse identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [CoverageEligibilityResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCoverageEligibilityResponse patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
@@ -37,16 +41,16 @@ class SearchCoverageEligibilityResponse extends SearchResource {
 
   /// a string search for [disposition] in the resource
   /// [CoverageEligibilityResponse]
-  SearchCoverageEligibilityResponse disposition(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('disposition', paramValue);
+  SearchCoverageEligibilityResponse disposition(FhirString value) {
+    addParameterValue('disposition', value.toString());
+    return this;
+  }
+
+  /// a reference search for [insurer] in the resource
+  /// [CoverageEligibilityResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCoverageEligibilityResponse insurer(FhirString value) {
+    addParameterValue('insurer', value.toString());
     return this;
   }
 
@@ -55,26 +59,35 @@ class SearchCoverageEligibilityResponse extends SearchResource {
   SearchCoverageEligibilityResponse outcome(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('outcome', paramValue);
+    return this;
+  }
+
+  /// a reference search for [request] in the resource
+  /// [CoverageEligibilityResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCoverageEligibilityResponse request(FhirString value) {
+    addParameterValue('request', value.toString());
+    return this;
+  }
+
+  /// a reference search for [requestor] in the resource
+  /// [CoverageEligibilityResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCoverageEligibilityResponse requestor(FhirString value) {
+    addParameterValue('requestor', value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [CoverageEligibilityResponse]
-  @override
   SearchCoverageEligibilityResponse status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
     return this;
   }

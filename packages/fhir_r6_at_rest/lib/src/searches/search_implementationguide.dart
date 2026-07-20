@@ -13,11 +13,8 @@ class SearchImplementationGuide extends SearchResource {
   SearchImplementationGuide context(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('context', paramValue);
     return this;
   }
@@ -30,16 +27,12 @@ class SearchImplementationGuide extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    if (modifier != null &&
-        !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for quantity type');
-    }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
-    final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('context_quantity', paramValue);
+    final numberPart = modifier != null ? '$modifier$value' : value.toString();
+    final paramValue = (system == null && unit == null)
+        ? numberPart
+        : '$numberPart|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
+    addParameterValue('context-quantity', paramValue);
     return this;
   }
 
@@ -48,18 +41,14 @@ class SearchImplementationGuide extends SearchResource {
   SearchImplementationGuide contextType(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('context_type', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('context-type', paramValue);
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [ImplementationGuide]
-  @override
   SearchImplementationGuide date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -72,30 +61,18 @@ class SearchImplementationGuide extends SearchResource {
 
   /// a string search for [description] in the resource
   /// [ImplementationGuide]
-  SearchImplementationGuide description(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('description', paramValue);
+  SearchImplementationGuide description(FhirString value) {
+    addParameterValue('description', value.toString());
     return this;
   }
 
   /// a token search for [identifier] in the resource
   /// [ImplementationGuide]
-  @override
   SearchImplementationGuide identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
     return this;
   }
@@ -105,85 +82,48 @@ class SearchImplementationGuide extends SearchResource {
   SearchImplementationGuide jurisdiction(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('jurisdiction', paramValue);
     return this;
   }
 
   /// a string search for [name] in the resource
   /// [ImplementationGuide]
-  @override
-  SearchImplementationGuide name(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('name', paramValue);
+  SearchImplementationGuide name(FhirString value) {
+    addParameterValue('name', value.toString());
     return this;
   }
 
   /// a string search for [publisher] in the resource
   /// [ImplementationGuide]
-  SearchImplementationGuide publisher(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('publisher', paramValue);
+  SearchImplementationGuide publisher(FhirString value) {
+    addParameterValue('publisher', value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [ImplementationGuide]
-  @override
   SearchImplementationGuide status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
     return this;
   }
 
   /// a string search for [title] in the resource
   /// [ImplementationGuide]
-  SearchImplementationGuide title(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('title', paramValue);
+  SearchImplementationGuide title(FhirString value) {
+    addParameterValue('title', value.toString());
     return this;
   }
 
   /// a uri search for [url] in the resource
   /// [ImplementationGuide]
-  SearchImplementationGuide url(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('url', paramValue);
+  SearchImplementationGuide url(FhirUri value) {
+    addParameterValue('url', value.toString());
     return this;
   }
 
@@ -192,12 +132,17 @@ class SearchImplementationGuide extends SearchResource {
   SearchImplementationGuide version(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('version', paramValue);
+    return this;
+  }
+
+  /// a reference search for [dependsOn] in the resource
+  /// [ImplementationGuide]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImplementationGuide dependsOn(FhirString value) {
+    addParameterValue('depends-on', value.toString());
     return this;
   }
 
@@ -206,12 +151,25 @@ class SearchImplementationGuide extends SearchResource {
   SearchImplementationGuide experimental(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('experimental', paramValue);
+    return this;
+  }
+
+  /// a reference search for [global] in the resource
+  /// [ImplementationGuide]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImplementationGuide global(FhirString value) {
+    addParameterValue('global', value.toString());
+    return this;
+  }
+
+  /// a reference search for [resource] in the resource
+  /// [ImplementationGuide]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImplementationGuide resource(FhirString value) {
+    addParameterValue('resource', value.toString());
     return this;
   }
 }

@@ -10,37 +10,36 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchDiagnosticReport extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [DiagnosticReport]
-  @override
   SearchDiagnosticReport identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [DiagnosticReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDiagnosticReport patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
   /// a token search for [code] in the resource
   /// [DiagnosticReport]
-  @override
   SearchDiagnosticReport code(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('code', paramValue);
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [DiagnosticReport]
-  @override
   SearchDiagnosticReport date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -51,16 +50,29 @@ class SearchDiagnosticReport extends SearchResource {
     return this;
   }
 
+  /// a reference search for [encounter] in the resource
+  /// [DiagnosticReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDiagnosticReport encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [basedOn] in the resource
+  /// [DiagnosticReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDiagnosticReport basedOn(FhirString value) {
+    addParameterValue('based-on', value.toString());
+    return this;
+  }
+
   /// a token search for [category] in the resource
   /// [DiagnosticReport]
   SearchDiagnosticReport category(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('category', paramValue);
     return this;
   }
@@ -70,12 +82,17 @@ class SearchDiagnosticReport extends SearchResource {
   SearchDiagnosticReport conclusioncodeCode(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('conclusioncode_code', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('conclusioncode-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [conclusioncodeReference] in the resource
+  /// [DiagnosticReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDiagnosticReport conclusioncodeReference(FhirString value) {
+    addParameterValue('conclusioncode-reference', value.toString());
     return this;
   }
 
@@ -91,18 +108,78 @@ class SearchDiagnosticReport extends SearchResource {
     return this;
   }
 
+  /// a reference search for [media] in the resource
+  /// [DiagnosticReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDiagnosticReport media(FhirString value) {
+    addParameterValue('media', value.toString());
+    return this;
+  }
+
+  /// a reference search for [performer] in the resource
+  /// [DiagnosticReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDiagnosticReport performer(FhirString value) {
+    addParameterValue('performer', value.toString());
+    return this;
+  }
+
+  /// a reference search for [procedure] in the resource
+  /// [DiagnosticReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDiagnosticReport procedure(FhirString value) {
+    addParameterValue('procedure', value.toString());
+    return this;
+  }
+
+  /// a reference search for [result] in the resource
+  /// [DiagnosticReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDiagnosticReport result(FhirString value) {
+    addParameterValue('result', value.toString());
+    return this;
+  }
+
+  /// a reference search for [resultsInterpreter] in the resource
+  /// [DiagnosticReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDiagnosticReport resultsInterpreter(FhirString value) {
+    addParameterValue('results-interpreter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [specimen] in the resource
+  /// [DiagnosticReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDiagnosticReport specimen(FhirString value) {
+    addParameterValue('specimen', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [DiagnosticReport]
-  @override
   SearchDiagnosticReport status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [study] in the resource
+  /// [DiagnosticReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDiagnosticReport study(FhirString value) {
+    addParameterValue('study', value.toString());
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [DiagnosticReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDiagnosticReport subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

@@ -10,16 +10,20 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchCoverage extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Coverage]
-  @override
   SearchCoverage identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [Coverage]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCoverage patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
@@ -28,12 +32,17 @@ class SearchCoverage extends SearchResource {
   SearchCoverage type(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('type', paramValue);
+    return this;
+  }
+
+  /// a reference search for [beneficiary] in the resource
+  /// [Coverage]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCoverage beneficiary(FhirString value) {
+    addParameterValue('beneficiary', value.toString());
     return this;
   }
 
@@ -42,12 +51,9 @@ class SearchCoverage extends SearchResource {
   SearchCoverage classType(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('class_type', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('class-type', paramValue);
     return this;
   }
 
@@ -56,42 +62,59 @@ class SearchCoverage extends SearchResource {
   SearchCoverage classValue(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('class_value', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('class-value', paramValue);
     return this;
   }
 
   /// a string search for [dependent] in the resource
   /// [Coverage]
-  SearchCoverage dependent(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('dependent', paramValue);
+  SearchCoverage dependent(FhirString value) {
+    addParameterValue('dependent', value.toString());
+    return this;
+  }
+
+  /// a reference search for [insurer] in the resource
+  /// [Coverage]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCoverage insurer(FhirString value) {
+    addParameterValue('insurer', value.toString());
+    return this;
+  }
+
+  /// a reference search for [paymentbyParty] in the resource
+  /// [Coverage]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCoverage paymentbyParty(FhirString value) {
+    addParameterValue('paymentby-party', value.toString());
+    return this;
+  }
+
+  /// a reference search for [policyHolder] in the resource
+  /// [Coverage]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCoverage policyHolder(FhirString value) {
+    addParameterValue('policy-holder', value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [Coverage]
-  @override
   SearchCoverage status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subscriber] in the resource
+  /// [Coverage]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCoverage subscriber(FhirString value) {
+    addParameterValue('subscriber', value.toString());
     return this;
   }
 
@@ -100,11 +123,8 @@ class SearchCoverage extends SearchResource {
   SearchCoverage subscriberid(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('subscriberid', paramValue);
     return this;
   }

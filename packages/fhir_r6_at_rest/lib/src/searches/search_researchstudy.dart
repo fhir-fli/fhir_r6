@@ -13,11 +13,8 @@ class SearchResearchStudy extends SearchResource {
   SearchResearchStudy classifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('classifier', paramValue);
     return this;
   }
@@ -27,18 +24,14 @@ class SearchResearchStudy extends SearchResource {
   SearchResearchStudy condition(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('condition', paramValue);
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [ResearchStudy]
-  @override
   SearchResearchStudy date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -51,16 +44,16 @@ class SearchResearchStudy extends SearchResource {
 
   /// a string search for [description] in the resource
   /// [ResearchStudy]
-  SearchResearchStudy description(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('description', paramValue);
+  SearchResearchStudy description(FhirString value) {
+    addParameterValue('description', value.toString());
+    return this;
+  }
+
+  /// a reference search for [eligibility] in the resource
+  /// [ResearchStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchResearchStudy eligibility(FhirString value) {
+    addParameterValue('eligibility', value.toString());
     return this;
   }
 
@@ -69,26 +62,27 @@ class SearchResearchStudy extends SearchResource {
   SearchResearchStudy focusCode(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('focus_code', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('focus-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [focusReference] in the resource
+  /// [ResearchStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchResearchStudy focusReference(FhirString value) {
+    addParameterValue('focus-reference', value.toString());
     return this;
   }
 
   /// a token search for [identifier] in the resource
   /// [ResearchStudy]
-  @override
   SearchResearchStudy identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
     return this;
   }
@@ -98,43 +92,23 @@ class SearchResearchStudy extends SearchResource {
   SearchResearchStudy keyword(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('keyword', paramValue);
     return this;
   }
 
   /// a string search for [name] in the resource
   /// [ResearchStudy]
-  @override
-  SearchResearchStudy name(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('name', paramValue);
+  SearchResearchStudy name(FhirString value) {
+    addParameterValue('name', value.toString());
     return this;
   }
 
   /// a string search for [objectiveDescription] in the resource
   /// [ResearchStudy]
-  SearchResearchStudy objectiveDescription(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('objective_description', paramValue);
+  SearchResearchStudy objectiveDescription(FhirString value) {
+    addParameterValue('objective-description', value.toString());
     return this;
   }
 
@@ -143,12 +117,17 @@ class SearchResearchStudy extends SearchResource {
   SearchResearchStudy objectiveType(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('objective_type', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('objective-type', paramValue);
+    return this;
+  }
+
+  /// a reference search for [partOf] in the resource
+  /// [ResearchStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchResearchStudy partOf(FhirString value) {
+    addParameterValue('part-of', value.toString());
     return this;
   }
 
@@ -157,11 +136,8 @@ class SearchResearchStudy extends SearchResource {
   SearchResearchStudy phase(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('phase', paramValue);
     return this;
   }
@@ -171,12 +147,9 @@ class SearchResearchStudy extends SearchResource {
   SearchResearchStudy progressActual(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('progress_actual', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('progress-actual', paramValue);
     return this;
   }
 
@@ -188,7 +161,7 @@ class SearchResearchStudy extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('progress_period', paramValue);
+    addParameterValue('progress-period', paramValue);
     return this;
   }
 
@@ -197,12 +170,17 @@ class SearchResearchStudy extends SearchResource {
   SearchResearchStudy progressState(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('progress_state', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('progress-state', paramValue);
+    return this;
+  }
+
+  /// a reference search for [protocol] in the resource
+  /// [ResearchStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchResearchStudy protocol(FhirString value) {
+    addParameterValue('protocol', value.toString());
     return this;
   }
 
@@ -210,20 +188,10 @@ class SearchResearchStudy extends SearchResource {
   /// [ResearchStudy]
   SearchResearchStudy recruitmentActual(
     FhirDecimal value, {
-    FhirString? unit,
-    FhirUri? system,
     SearchModifier? modifier,
   }) {
-    if (modifier != null &&
-        !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for number type');
-    }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
-    final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('recruitment_actual', paramValue);
+    final paramValue = modifier != null ? '$modifier$value' : value.toString();
+    addParameterValue('recruitment-actual', paramValue);
     return this;
   }
 
@@ -231,20 +199,10 @@ class SearchResearchStudy extends SearchResource {
   /// [ResearchStudy]
   SearchResearchStudy recruitmentTarget(
     FhirDecimal value, {
-    FhirString? unit,
-    FhirUri? system,
     SearchModifier? modifier,
   }) {
-    if (modifier != null &&
-        !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for number type');
-    }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
-    final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('recruitment_target', paramValue);
+    final paramValue = modifier != null ? '$modifier$value' : value.toString();
+    addParameterValue('recruitment-target', paramValue);
     return this;
   }
 
@@ -253,26 +211,27 @@ class SearchResearchStudy extends SearchResource {
   SearchResearchStudy region(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('region', paramValue);
+    return this;
+  }
+
+  /// a reference search for [site] in the resource
+  /// [ResearchStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchResearchStudy site(FhirString value) {
+    addParameterValue('site', value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [ResearchStudy]
-  @override
   SearchResearchStudy status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
     return this;
   }
@@ -282,27 +241,16 @@ class SearchResearchStudy extends SearchResource {
   SearchResearchStudy studyDesign(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('study_design', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('study-design', paramValue);
     return this;
   }
 
   /// a string search for [title] in the resource
   /// [ResearchStudy]
-  SearchResearchStudy title(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('title', paramValue);
+  SearchResearchStudy title(FhirString value) {
+    addParameterValue('title', value.toString());
     return this;
   }
 }

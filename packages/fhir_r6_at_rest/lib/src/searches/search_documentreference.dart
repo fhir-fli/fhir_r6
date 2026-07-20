@@ -10,16 +10,20 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchDocumentReference extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [DocumentReference]
-  @override
   SearchDocumentReference identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [DocumentReference]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDocumentReference patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
@@ -28,18 +32,14 @@ class SearchDocumentReference extends SearchResource {
   SearchDocumentReference type(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('type', paramValue);
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [DocumentReference]
-  @override
   SearchDocumentReference date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -50,17 +50,46 @@ class SearchDocumentReference extends SearchResource {
     return this;
   }
 
+  /// a reference search for [attester] in the resource
+  /// [DocumentReference]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDocumentReference attester(FhirString value) {
+    addParameterValue('attester', value.toString());
+    return this;
+  }
+
+  /// a reference search for [author] in the resource
+  /// [DocumentReference]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDocumentReference author(FhirString value) {
+    addParameterValue('author', value.toString());
+    return this;
+  }
+
+  /// a reference search for [basedOn] in the resource
+  /// [DocumentReference]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDocumentReference basedOn(FhirString value) {
+    addParameterValue('based-on', value.toString());
+    return this;
+  }
+
   /// a token search for [bodysite] in the resource
   /// [DocumentReference]
   SearchDocumentReference bodysite(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('bodysite', paramValue);
+    return this;
+  }
+
+  /// a reference search for [bodysiteReference] in the resource
+  /// [DocumentReference]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDocumentReference bodysiteReference(FhirString value) {
+    addParameterValue('bodysite-reference', value.toString());
     return this;
   }
 
@@ -69,11 +98,8 @@ class SearchDocumentReference extends SearchResource {
   SearchDocumentReference category(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('category', paramValue);
     return this;
   }
@@ -83,12 +109,17 @@ class SearchDocumentReference extends SearchResource {
   SearchDocumentReference contenttype(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('contenttype', paramValue);
+    return this;
+  }
+
+  /// a reference search for [context] in the resource
+  /// [DocumentReference]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDocumentReference context(FhirString value) {
+    addParameterValue('context', value.toString());
     return this;
   }
 
@@ -104,18 +135,18 @@ class SearchDocumentReference extends SearchResource {
     return this;
   }
 
+  /// a reference search for [custodian] in the resource
+  /// [DocumentReference]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDocumentReference custodian(FhirString value) {
+    addParameterValue('custodian', value.toString());
+    return this;
+  }
+
   /// a string search for [description] in the resource
   /// [DocumentReference]
-  SearchDocumentReference description(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('description', paramValue);
+  SearchDocumentReference description(FhirString value) {
+    addParameterValue('description', value.toString());
     return this;
   }
 
@@ -124,12 +155,9 @@ class SearchDocumentReference extends SearchResource {
   SearchDocumentReference docStatus(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('doc_status', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('doc-status', paramValue);
     return this;
   }
 
@@ -138,12 +166,17 @@ class SearchDocumentReference extends SearchResource {
   SearchDocumentReference eventCode(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('event_code', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('event-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [eventReference] in the resource
+  /// [DocumentReference]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDocumentReference eventReference(FhirString value) {
+    addParameterValue('event-reference', value.toString());
     return this;
   }
 
@@ -152,24 +185,16 @@ class SearchDocumentReference extends SearchResource {
   SearchDocumentReference facility(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('facility', paramValue);
     return this;
   }
 
   /// a uri search for [formatCanonical] in the resource
   /// [DocumentReference]
-  SearchDocumentReference formatCanonical(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('format_canonical', paramValue);
+  SearchDocumentReference formatCanonical(FhirUri value) {
+    addParameterValue('format-canonical', value.toString());
     return this;
   }
 
@@ -178,24 +203,16 @@ class SearchDocumentReference extends SearchResource {
   SearchDocumentReference formatCode(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('format_code', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('format-code', paramValue);
     return this;
   }
 
   /// a uri search for [formatUri] in the resource
   /// [DocumentReference]
-  SearchDocumentReference formatUri(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('format_uri', paramValue);
+  SearchDocumentReference formatUri(FhirUri value) {
+    addParameterValue('format-uri', value.toString());
     return this;
   }
 
@@ -205,24 +222,16 @@ class SearchDocumentReference extends SearchResource {
   SearchDocumentReference language(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('language', paramValue);
     return this;
   }
 
   /// a uri search for [location] in the resource
   /// [DocumentReference]
-  SearchDocumentReference location(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('location', paramValue);
+  SearchDocumentReference location(FhirUri value) {
+    addParameterValue('location', value.toString());
     return this;
   }
 
@@ -231,11 +240,8 @@ class SearchDocumentReference extends SearchResource {
   SearchDocumentReference modality(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('modality', paramValue);
     return this;
   }
@@ -252,16 +258,29 @@ class SearchDocumentReference extends SearchResource {
     return this;
   }
 
+  /// a reference search for [related] in the resource
+  /// [DocumentReference]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDocumentReference related(FhirString value) {
+    addParameterValue('related', value.toString());
+    return this;
+  }
+
+  /// a reference search for [relatesto] in the resource
+  /// [DocumentReference]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDocumentReference relatesto(FhirString value) {
+    addParameterValue('relatesto', value.toString());
+    return this;
+  }
+
   /// a token search for [relation] in the resource
   /// [DocumentReference]
   SearchDocumentReference relation(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('relation', paramValue);
     return this;
   }
@@ -271,12 +290,9 @@ class SearchDocumentReference extends SearchResource {
   SearchDocumentReference securityLabel(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('security_label', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('security-label', paramValue);
     return this;
   }
 
@@ -285,42 +301,35 @@ class SearchDocumentReference extends SearchResource {
   SearchDocumentReference setting(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('setting', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [DocumentReference]
-  @override
   SearchDocumentReference status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [DocumentReference]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchDocumentReference subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 
   /// a string search for [version] in the resource
   /// [DocumentReference]
-  SearchDocumentReference version(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('version', paramValue);
+  SearchDocumentReference version(FhirString value) {
+    addParameterValue('version', value.toString());
     return this;
   }
 }

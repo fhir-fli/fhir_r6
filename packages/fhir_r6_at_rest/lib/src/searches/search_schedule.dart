@@ -13,18 +13,22 @@ class SearchSchedule extends SearchResource {
   SearchSchedule active(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('active', paramValue);
+    return this;
+  }
+
+  /// a reference search for [actor] in the resource
+  /// [Schedule]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchSchedule actor(FhirString value) {
+    addParameterValue('actor', value.toString());
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [Schedule]
-  @override
   SearchSchedule date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -37,32 +41,19 @@ class SearchSchedule extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [Schedule]
-  @override
   SearchSchedule identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
     return this;
   }
 
   /// a string search for [name] in the resource
   /// [Schedule]
-  @override
-  SearchSchedule name(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('name', paramValue);
+  SearchSchedule name(FhirString value) {
+    addParameterValue('name', value.toString());
     return this;
   }
 
@@ -71,12 +62,9 @@ class SearchSchedule extends SearchResource {
   SearchSchedule serviceCategory(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('service_category', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('service-category', paramValue);
     return this;
   }
 
@@ -85,12 +73,17 @@ class SearchSchedule extends SearchResource {
   SearchSchedule serviceType(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('service_type', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('service-type', paramValue);
+    return this;
+  }
+
+  /// a reference search for [serviceTypeReference] in the resource
+  /// [Schedule]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchSchedule serviceTypeReference(FhirString value) {
+    addParameterValue('service-type-reference', value.toString());
     return this;
   }
 
@@ -99,11 +92,8 @@ class SearchSchedule extends SearchResource {
   SearchSchedule specialty(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('specialty', paramValue);
     return this;
   }

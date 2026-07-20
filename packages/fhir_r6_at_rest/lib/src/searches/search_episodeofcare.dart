@@ -10,16 +10,20 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchEpisodeOfCare extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [EpisodeOfCare]
-  @override
   SearchEpisodeOfCare identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [EpisodeOfCare]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchEpisodeOfCare patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
@@ -28,18 +32,14 @@ class SearchEpisodeOfCare extends SearchResource {
   SearchEpisodeOfCare type(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('type', paramValue);
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [EpisodeOfCare]
-  @override
   SearchEpisodeOfCare date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -50,17 +50,46 @@ class SearchEpisodeOfCare extends SearchResource {
     return this;
   }
 
+  /// a reference search for [careManager] in the resource
+  /// [EpisodeOfCare]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchEpisodeOfCare careManager(FhirString value) {
+    addParameterValue('care-manager', value.toString());
+    return this;
+  }
+
   /// a token search for [diagnosisCode] in the resource
   /// [EpisodeOfCare]
   SearchEpisodeOfCare diagnosisCode(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('diagnosis_code', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('diagnosis-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [diagnosisReference] in the resource
+  /// [EpisodeOfCare]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchEpisodeOfCare diagnosisReference(FhirString value) {
+    addParameterValue('diagnosis-reference', value.toString());
+    return this;
+  }
+
+  /// a reference search for [incomingReferral] in the resource
+  /// [EpisodeOfCare]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchEpisodeOfCare incomingReferral(FhirString value) {
+    addParameterValue('incoming-referral', value.toString());
+    return this;
+  }
+
+  /// a reference search for [organization] in the resource
+  /// [EpisodeOfCare]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchEpisodeOfCare organization(FhirString value) {
+    addParameterValue('organization', value.toString());
     return this;
   }
 
@@ -69,27 +98,36 @@ class SearchEpisodeOfCare extends SearchResource {
   SearchEpisodeOfCare reasonCode(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('reason_code', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('reason-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [reasonReference] in the resource
+  /// [EpisodeOfCare]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchEpisodeOfCare reasonReference(FhirString value) {
+    addParameterValue('reason-reference', value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [EpisodeOfCare]
-  @override
   SearchEpisodeOfCare status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [EpisodeOfCare]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchEpisodeOfCare subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

@@ -13,11 +13,8 @@ class SearchRegulatedAuthorization extends SearchResource {
   SearchRegulatedAuthorization case_(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('case', paramValue);
     return this;
   }
@@ -27,26 +24,27 @@ class SearchRegulatedAuthorization extends SearchResource {
   SearchRegulatedAuthorization caseType(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('case_type', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('case-type', paramValue);
+    return this;
+  }
+
+  /// a reference search for [holder] in the resource
+  /// [RegulatedAuthorization]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchRegulatedAuthorization holder(FhirString value) {
+    addParameterValue('holder', value.toString());
     return this;
   }
 
   /// a token search for [identifier] in the resource
   /// [RegulatedAuthorization]
-  @override
   SearchRegulatedAuthorization identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
     return this;
   }
@@ -56,27 +54,28 @@ class SearchRegulatedAuthorization extends SearchResource {
   SearchRegulatedAuthorization region(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('region', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [RegulatedAuthorization]
-  @override
   SearchRegulatedAuthorization status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [RegulatedAuthorization]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchRegulatedAuthorization subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

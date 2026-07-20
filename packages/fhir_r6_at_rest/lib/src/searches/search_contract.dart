@@ -10,28 +10,43 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchContract extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Contract]
-  @override
   SearchContract identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [Contract]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchContract patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
+  /// a reference search for [authority] in the resource
+  /// [Contract]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchContract authority(FhirString value) {
+    addParameterValue('authority', value.toString());
+    return this;
+  }
+
+  /// a reference search for [domain] in the resource
+  /// [Contract]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchContract domain(FhirString value) {
+    addParameterValue('domain', value.toString());
     return this;
   }
 
   /// a uri search for [instantiates] in the resource
   /// [Contract]
-  SearchContract instantiates(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('instantiates', paramValue);
+  SearchContract instantiates(FhirUri value) {
+    addParameterValue('instantiates', value.toString());
     return this;
   }
 
@@ -47,30 +62,37 @@ class SearchContract extends SearchResource {
     return this;
   }
 
+  /// a reference search for [signer] in the resource
+  /// [Contract]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchContract signer(FhirString value) {
+    addParameterValue('signer', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [Contract]
-  @override
   SearchContract status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [Contract]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchContract subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 
   /// a uri search for [url] in the resource
   /// [Contract]
-  SearchContract url(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('url', paramValue);
+  SearchContract url(FhirUri value) {
+    addParameterValue('url', value.toString());
     return this;
   }
 }

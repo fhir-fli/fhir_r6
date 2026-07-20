@@ -10,22 +10,25 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchMeasureReport extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [MeasureReport]
-  @override
   SearchMeasureReport identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [MeasureReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMeasureReport patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [MeasureReport]
-  @override
   SearchMeasureReport date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -33,6 +36,30 @@ class SearchMeasureReport extends SearchResource {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
     addParameterValue('date', paramValue);
+    return this;
+  }
+
+  /// a reference search for [evaluatedResource] in the resource
+  /// [MeasureReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMeasureReport evaluatedResource(FhirString value) {
+    addParameterValue('evaluated-resource', value.toString());
+    return this;
+  }
+
+  /// a reference search for [location] in the resource
+  /// [MeasureReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMeasureReport location(FhirString value) {
+    addParameterValue('location', value.toString());
+    return this;
+  }
+
+  /// a reference search for [measure] in the resource
+  /// [MeasureReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMeasureReport measure(FhirString value) {
+    addParameterValue('measure', value.toString());
     return this;
   }
 
@@ -48,18 +75,30 @@ class SearchMeasureReport extends SearchResource {
     return this;
   }
 
+  /// a reference search for [reporter] in the resource
+  /// [MeasureReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMeasureReport reporter(FhirString value) {
+    addParameterValue('reporter', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [MeasureReport]
-  @override
   SearchMeasureReport status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [MeasureReport]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMeasureReport subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

@@ -10,22 +10,25 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchSupplyRequest extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [SupplyRequest]
-  @override
   SearchSupplyRequest identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [SupplyRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchSupplyRequest patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [SupplyRequest]
-  @override
   SearchSupplyRequest date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -41,27 +44,44 @@ class SearchSupplyRequest extends SearchResource {
   SearchSupplyRequest category(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('category', paramValue);
+    return this;
+  }
+
+  /// a reference search for [requester] in the resource
+  /// [SupplyRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchSupplyRequest requester(FhirString value) {
+    addParameterValue('requester', value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [SupplyRequest]
-  @override
   SearchSupplyRequest status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [SupplyRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchSupplyRequest subject(FhirString value) {
+    addParameterValue('subject', value.toString());
+    return this;
+  }
+
+  /// a reference search for [supplier] in the resource
+  /// [SupplyRequest]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchSupplyRequest supplier(FhirString value) {
+    addParameterValue('supplier', value.toString());
     return this;
   }
 }

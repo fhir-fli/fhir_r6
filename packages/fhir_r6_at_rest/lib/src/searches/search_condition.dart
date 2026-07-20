@@ -10,31 +10,39 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchCondition extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Condition]
-  @override
   SearchCondition identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [Condition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCondition patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
   /// a token search for [code] in the resource
   /// [Condition]
-  @override
   SearchCondition code(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [encounter] in the resource
+  /// [Condition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCondition encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
     return this;
   }
 
@@ -46,16 +54,12 @@ class SearchCondition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    if (modifier != null &&
-        !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for quantity type');
-    }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
-    final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('abatement_age', paramValue);
+    final numberPart = modifier != null ? '$modifier$value' : value.toString();
+    final paramValue = (system == null && unit == null)
+        ? numberPart
+        : '$numberPart|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
+    addParameterValue('abatement-age', paramValue);
     return this;
   }
 
@@ -67,22 +71,22 @@ class SearchCondition extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('abatement_date', paramValue);
+    addParameterValue('abatement-date', paramValue);
     return this;
   }
 
   /// a string search for [abatementString] in the resource
   /// [Condition]
-  SearchCondition abatementString(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('abatement_string', paramValue);
+  SearchCondition abatementString(FhirString value) {
+    addParameterValue('abatement-string', value.toString());
+    return this;
+  }
+
+  /// a reference search for [asserter] in the resource
+  /// [Condition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCondition asserter(FhirString value) {
+    addParameterValue('asserter', value.toString());
     return this;
   }
 
@@ -91,12 +95,9 @@ class SearchCondition extends SearchResource {
   SearchCondition bodySite(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('body_site', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('body-site', paramValue);
     return this;
   }
 
@@ -105,11 +106,8 @@ class SearchCondition extends SearchResource {
   SearchCondition category(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('category', paramValue);
     return this;
   }
@@ -119,12 +117,9 @@ class SearchCondition extends SearchResource {
   SearchCondition clinicalStatus(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('clinical_status', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('clinical-status', paramValue);
     return this;
   }
 
@@ -133,12 +128,17 @@ class SearchCondition extends SearchResource {
   SearchCondition evidence(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('evidence', paramValue);
+    return this;
+  }
+
+  /// a reference search for [evidenceDetail] in the resource
+  /// [Condition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCondition evidenceDetail(FhirString value) {
+    addParameterValue('evidence-detail', value.toString());
     return this;
   }
 
@@ -150,16 +150,12 @@ class SearchCondition extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    if (modifier != null &&
-        !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for quantity type');
-    }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
-    final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('onset_age', paramValue);
+    final numberPart = modifier != null ? '$modifier$value' : value.toString();
+    final paramValue = (system == null && unit == null)
+        ? numberPart
+        : '$numberPart|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
+    addParameterValue('onset-age', paramValue);
     return this;
   }
 
@@ -171,22 +167,14 @@ class SearchCondition extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('onset_date', paramValue);
+    addParameterValue('onset-date', paramValue);
     return this;
   }
 
   /// a string search for [onsetInfo] in the resource
   /// [Condition]
-  SearchCondition onsetInfo(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('onset_info', paramValue);
+  SearchCondition onsetInfo(FhirString value) {
+    addParameterValue('onset-info', value.toString());
     return this;
   }
 
@@ -198,7 +186,7 @@ class SearchCondition extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('recorded_date', paramValue);
+    addParameterValue('recorded-date', paramValue);
     return this;
   }
 
@@ -207,11 +195,8 @@ class SearchCondition extends SearchResource {
   SearchCondition severity(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('severity', paramValue);
     return this;
   }
@@ -221,12 +206,17 @@ class SearchCondition extends SearchResource {
   SearchCondition stage(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('stage', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [Condition]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCondition subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 
@@ -235,12 +225,9 @@ class SearchCondition extends SearchResource {
   SearchCondition verificationStatus(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('verification_status', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('verification-status', paramValue);
     return this;
   }
 }

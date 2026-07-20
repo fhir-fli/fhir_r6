@@ -13,41 +13,38 @@ class SearchBiologicallyDerivedProduct extends SearchResource {
   SearchBiologicallyDerivedProduct biologicalSourceEvent(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('biological_source_event', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('biological-source-event', paramValue);
     return this;
   }
 
   /// a token search for [code] in the resource
   /// [BiologicallyDerivedProduct]
-  @override
   SearchBiologicallyDerivedProduct code(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [collector] in the resource
+  /// [BiologicallyDerivedProduct]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchBiologicallyDerivedProduct collector(FhirString value) {
+    addParameterValue('collector', value.toString());
     return this;
   }
 
   /// a token search for [identifier] in the resource
   /// [BiologicallyDerivedProduct]
-  @override
   SearchBiologicallyDerivedProduct identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
     return this;
   }
@@ -57,12 +54,9 @@ class SearchBiologicallyDerivedProduct extends SearchResource {
   SearchBiologicallyDerivedProduct productCategory(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('product_category', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('product-category', paramValue);
     return this;
   }
 
@@ -71,12 +65,17 @@ class SearchBiologicallyDerivedProduct extends SearchResource {
   SearchBiologicallyDerivedProduct productStatus(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('product_status', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('product-status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [request] in the resource
+  /// [BiologicallyDerivedProduct]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchBiologicallyDerivedProduct request(FhirString value) {
+    addParameterValue('request', value.toString());
     return this;
   }
 
@@ -85,12 +84,9 @@ class SearchBiologicallyDerivedProduct extends SearchResource {
   SearchBiologicallyDerivedProduct serialNumber(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('serial_number', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('serial-number', paramValue);
     return this;
   }
 }

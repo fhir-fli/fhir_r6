@@ -10,37 +10,36 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchFamilyMemberHistory extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [FamilyMemberHistory]
-  @override
   SearchFamilyMemberHistory identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [FamilyMemberHistory]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchFamilyMemberHistory patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
   /// a token search for [code] in the resource
   /// [FamilyMemberHistory]
-  @override
   SearchFamilyMemberHistory code(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('code', paramValue);
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [FamilyMemberHistory]
-  @override
   SearchFamilyMemberHistory date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -53,15 +52,11 @@ class SearchFamilyMemberHistory extends SearchResource {
 
   /// a token search for [relationship] in the resource
   /// [FamilyMemberHistory]
-  @override
   SearchFamilyMemberHistory relationship(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('relationship', paramValue);
     return this;
   }
@@ -71,26 +66,19 @@ class SearchFamilyMemberHistory extends SearchResource {
   SearchFamilyMemberHistory sex(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('sex', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [FamilyMemberHistory]
-  @override
   SearchFamilyMemberHistory status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
     return this;
   }

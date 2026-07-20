@@ -10,22 +10,25 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchConsent extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Consent]
-  @override
   SearchConsent identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [Consent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchConsent patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [Consent]
-  @override
   SearchConsent date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -41,12 +44,17 @@ class SearchConsent extends SearchResource {
   SearchConsent action(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('action', paramValue);
+    return this;
+  }
+
+  /// a reference search for [actor] in the resource
+  /// [Consent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchConsent actor(FhirString value) {
+    addParameterValue('actor', value.toString());
     return this;
   }
 
@@ -55,12 +63,41 @@ class SearchConsent extends SearchResource {
   SearchConsent category(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('category', paramValue);
+    return this;
+  }
+
+  /// a reference search for [controller] in the resource
+  /// [Consent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchConsent controller(FhirString value) {
+    addParameterValue('controller', value.toString());
+    return this;
+  }
+
+  /// a reference search for [data] in the resource
+  /// [Consent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchConsent data(FhirString value) {
+    addParameterValue('data', value.toString());
+    return this;
+  }
+
+  /// a reference search for [grantee] in the resource
+  /// [Consent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchConsent grantee(FhirString value) {
+    addParameterValue('grantee', value.toString());
+    return this;
+  }
+
+  /// a reference search for [manager] in the resource
+  /// [Consent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchConsent manager(FhirString value) {
+    addParameterValue('manager', value.toString());
     return this;
   }
 
@@ -81,11 +118,8 @@ class SearchConsent extends SearchResource {
   SearchConsent purpose(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('purpose', paramValue);
     return this;
   }
@@ -95,27 +129,36 @@ class SearchConsent extends SearchResource {
   SearchConsent securityLabel(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('security_label', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('security-label', paramValue);
+    return this;
+  }
+
+  /// a reference search for [sourceReference] in the resource
+  /// [Consent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchConsent sourceReference(FhirString value) {
+    addParameterValue('source-reference', value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [Consent]
-  @override
   SearchConsent status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [Consent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchConsent subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 
@@ -124,11 +167,8 @@ class SearchConsent extends SearchResource {
   SearchConsent verified(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('verified', paramValue);
     return this;
   }
@@ -141,7 +181,7 @@ class SearchConsent extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('verified_date', paramValue);
+    addParameterValue('verified-date', paramValue);
     return this;
   }
 }

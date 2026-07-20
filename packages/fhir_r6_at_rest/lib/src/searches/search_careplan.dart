@@ -10,22 +10,25 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchCarePlan extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [CarePlan]
-  @override
   SearchCarePlan identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [CarePlan]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCarePlan patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [CarePlan]
-  @override
   SearchCarePlan date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -36,17 +39,70 @@ class SearchCarePlan extends SearchResource {
     return this;
   }
 
+  /// a reference search for [encounter] in the resource
+  /// [CarePlan]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCarePlan encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [activityReference] in the resource
+  /// [CarePlan]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCarePlan activityReference(FhirString value) {
+    addParameterValue('activity-reference', value.toString());
+    return this;
+  }
+
+  /// a reference search for [basedOn] in the resource
+  /// [CarePlan]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCarePlan basedOn(FhirString value) {
+    addParameterValue('based-on', value.toString());
+    return this;
+  }
+
+  /// a reference search for [careTeam] in the resource
+  /// [CarePlan]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCarePlan careTeam(FhirString value) {
+    addParameterValue('care-team', value.toString());
+    return this;
+  }
+
   /// a token search for [category] in the resource
   /// [CarePlan]
   SearchCarePlan category(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('category', paramValue);
+    return this;
+  }
+
+  /// a reference search for [condition] in the resource
+  /// [CarePlan]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCarePlan condition(FhirString value) {
+    addParameterValue('condition', value.toString());
+    return this;
+  }
+
+  /// a reference search for [custodian] in the resource
+  /// [CarePlan]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCarePlan custodian(FhirString value) {
+    addParameterValue('custodian', value.toString());
+    return this;
+  }
+
+  /// a reference search for [goal] in the resource
+  /// [CarePlan]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCarePlan goal(FhirString value) {
+    addParameterValue('goal', value.toString());
     return this;
   }
 
@@ -55,27 +111,44 @@ class SearchCarePlan extends SearchResource {
   SearchCarePlan intent(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('intent', paramValue);
+    return this;
+  }
+
+  /// a reference search for [partOf] in the resource
+  /// [CarePlan]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCarePlan partOf(FhirString value) {
+    addParameterValue('part-of', value.toString());
+    return this;
+  }
+
+  /// a reference search for [replaces] in the resource
+  /// [CarePlan]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCarePlan replaces(FhirString value) {
+    addParameterValue('replaces', value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [CarePlan]
-  @override
   SearchCarePlan status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [CarePlan]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCarePlan subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

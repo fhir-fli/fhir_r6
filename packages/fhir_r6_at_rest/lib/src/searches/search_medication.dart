@@ -10,30 +10,22 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchMedication extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Medication]
-  @override
   SearchMedication identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
     return this;
   }
 
   /// a token search for [code] in the resource
   /// [Medication]
-  @override
   SearchMedication code(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('code', paramValue);
     return this;
   }
@@ -46,7 +38,7 @@ class SearchMedication extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('expiration_date', paramValue);
+    addParameterValue('expiration-date', paramValue);
     return this;
   }
 
@@ -55,12 +47,17 @@ class SearchMedication extends SearchResource {
   SearchMedication form(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('form', paramValue);
+    return this;
+  }
+
+  /// a reference search for [ingredient] in the resource
+  /// [Medication]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedication ingredient(FhirString value) {
+    addParameterValue('ingredient', value.toString());
     return this;
   }
 
@@ -69,12 +66,9 @@ class SearchMedication extends SearchResource {
   SearchMedication ingredientCode(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('ingredient_code', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('ingredient-code', paramValue);
     return this;
   }
 
@@ -83,12 +77,17 @@ class SearchMedication extends SearchResource {
   SearchMedication lotNumber(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('lot_number', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('lot-number', paramValue);
+    return this;
+  }
+
+  /// a reference search for [marketingauthorizationholder] in the resource
+  /// [Medication]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchMedication marketingauthorizationholder(FhirString value) {
+    addParameterValue('marketingauthorizationholder', value.toString());
     return this;
   }
 
@@ -97,26 +96,19 @@ class SearchMedication extends SearchResource {
   SearchMedication serialNumber(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('serial_number', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('serial-number', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [Medication]
-  @override
   SearchMedication status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
     return this;
   }

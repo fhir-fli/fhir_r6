@@ -10,37 +10,36 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchProcedure extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Procedure]
-  @override
   SearchProcedure identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [Procedure]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchProcedure patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
   /// a token search for [code] in the resource
   /// [Procedure]
-  @override
   SearchProcedure code(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('code', paramValue);
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [Procedure]
-  @override
   SearchProcedure date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -51,17 +50,54 @@ class SearchProcedure extends SearchResource {
     return this;
   }
 
+  /// a reference search for [encounter] in the resource
+  /// [Procedure]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchProcedure encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [basedOn] in the resource
+  /// [Procedure]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchProcedure basedOn(FhirString value) {
+    addParameterValue('based-on', value.toString());
+    return this;
+  }
+
   /// a token search for [category] in the resource
   /// [Procedure]
   SearchProcedure category(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('category', paramValue);
+    return this;
+  }
+
+  /// a reference search for [location] in the resource
+  /// [Procedure]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchProcedure location(FhirString value) {
+    addParameterValue('location', value.toString());
+    return this;
+  }
+
+  /// a reference search for [partOf] in the resource
+  /// [Procedure]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchProcedure partOf(FhirString value) {
+    addParameterValue('part-of', value.toString());
+    return this;
+  }
+
+  /// a reference search for [performer] in the resource
+  /// [Procedure]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchProcedure performer(FhirString value) {
+    addParameterValue('performer', value.toString());
     return this;
   }
 
@@ -70,27 +106,44 @@ class SearchProcedure extends SearchResource {
   SearchProcedure reasonCode(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('reason_code', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('reason-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [reasonReference] in the resource
+  /// [Procedure]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchProcedure reasonReference(FhirString value) {
+    addParameterValue('reason-reference', value.toString());
+    return this;
+  }
+
+  /// a reference search for [report] in the resource
+  /// [Procedure]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchProcedure report(FhirString value) {
+    addParameterValue('report', value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [Procedure]
-  @override
   SearchProcedure status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [Procedure]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchProcedure subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

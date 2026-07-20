@@ -10,16 +10,20 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchAdverseEvent extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [AdverseEvent]
-  @override
   SearchAdverseEvent identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [AdverseEvent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAdverseEvent patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
@@ -28,11 +32,8 @@ class SearchAdverseEvent extends SearchResource {
   SearchAdverseEvent actuality(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('actuality', paramValue);
     return this;
   }
@@ -42,11 +43,8 @@ class SearchAdverseEvent extends SearchResource {
   SearchAdverseEvent category(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('category', paramValue);
     return this;
   }
@@ -65,15 +63,11 @@ class SearchAdverseEvent extends SearchResource {
 
   /// a token search for [code] in the resource
   /// [AdverseEvent]
-  @override
   SearchAdverseEvent code(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('code', paramValue);
     return this;
   }
@@ -90,17 +84,38 @@ class SearchAdverseEvent extends SearchResource {
     return this;
   }
 
+  /// a reference search for [location] in the resource
+  /// [AdverseEvent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAdverseEvent location(FhirString value) {
+    addParameterValue('location', value.toString());
+    return this;
+  }
+
+  /// a reference search for [recorder] in the resource
+  /// [AdverseEvent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAdverseEvent recorder(FhirString value) {
+    addParameterValue('recorder', value.toString());
+    return this;
+  }
+
   /// a token search for [resultingeffectCode] in the resource
   /// [AdverseEvent]
   SearchAdverseEvent resultingeffectCode(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('resultingeffect_code', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('resultingeffect-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [resultingeffectReference] in the resource
+  /// [AdverseEvent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAdverseEvent resultingeffectReference(FhirString value) {
+    addParameterValue('resultingeffect-reference', value.toString());
     return this;
   }
 
@@ -109,27 +124,44 @@ class SearchAdverseEvent extends SearchResource {
   SearchAdverseEvent seriousness(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('seriousness', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [AdverseEvent]
-  @override
   SearchAdverseEvent status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [study] in the resource
+  /// [AdverseEvent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAdverseEvent study(FhirString value) {
+    addParameterValue('study', value.toString());
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [AdverseEvent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAdverseEvent subject(FhirString value) {
+    addParameterValue('subject', value.toString());
+    return this;
+  }
+
+  /// a reference search for [substance] in the resource
+  /// [AdverseEvent]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAdverseEvent substance(FhirString value) {
+    addParameterValue('substance', value.toString());
     return this;
   }
 }

@@ -10,22 +10,25 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchImmunizationRecommendation extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [ImmunizationRecommendation]
-  @override
   SearchImmunizationRecommendation identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [ImmunizationRecommendation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImmunizationRecommendation patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [ImmunizationRecommendation]
-  @override
   SearchImmunizationRecommendation date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -36,18 +39,30 @@ class SearchImmunizationRecommendation extends SearchResource {
     return this;
   }
 
+  /// a reference search for [information] in the resource
+  /// [ImmunizationRecommendation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImmunizationRecommendation information(FhirString value) {
+    addParameterValue('information', value.toString());
+    return this;
+  }
+
   /// a token search for [status] in the resource
   /// [ImmunizationRecommendation]
-  @override
   SearchImmunizationRecommendation status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [support] in the resource
+  /// [ImmunizationRecommendation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImmunizationRecommendation support(FhirString value) {
+    addParameterValue('support', value.toString());
     return this;
   }
 
@@ -56,12 +71,9 @@ class SearchImmunizationRecommendation extends SearchResource {
   SearchImmunizationRecommendation targetDisease(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('target_disease', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('target-disease', paramValue);
     return this;
   }
 
@@ -70,12 +82,9 @@ class SearchImmunizationRecommendation extends SearchResource {
   SearchImmunizationRecommendation vaccineType(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('vaccine_type', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('vaccine-type', paramValue);
     return this;
   }
 }

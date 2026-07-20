@@ -10,16 +10,28 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchQuestionnaireResponse extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [QuestionnaireResponse]
-  @override
   SearchQuestionnaireResponse identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [QuestionnaireResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchQuestionnaireResponse patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
+  /// a reference search for [encounter] in the resource
+  /// [QuestionnaireResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchQuestionnaireResponse encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
     return this;
   }
 
@@ -28,12 +40,9 @@ class SearchQuestionnaireResponse extends SearchResource {
   SearchQuestionnaireResponse answerConcept(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('answer_concept', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('answer-concept', paramValue);
     return this;
   }
 
@@ -45,7 +54,7 @@ class SearchQuestionnaireResponse extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('answer_date', paramValue);
+    addParameterValue('answer-date', paramValue);
     return this;
   }
 
@@ -53,20 +62,10 @@ class SearchQuestionnaireResponse extends SearchResource {
   /// [QuestionnaireResponse]
   SearchQuestionnaireResponse answerNumber(
     FhirDecimal value, {
-    FhirString? unit,
-    FhirUri? system,
     SearchModifier? modifier,
   }) {
-    if (modifier != null &&
-        !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for number type');
-    }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
-    final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('answer_number', paramValue);
+    final paramValue = modifier != null ? '$modifier$value' : value.toString();
+    addParameterValue('answer-number', paramValue);
     return this;
   }
 
@@ -78,31 +77,35 @@ class SearchQuestionnaireResponse extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    if (modifier != null &&
-        !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for quantity type');
-    }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
-    final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('answer_quantity', paramValue);
+    final numberPart = modifier != null ? '$modifier$value' : value.toString();
+    final paramValue = (system == null && unit == null)
+        ? numberPart
+        : '$numberPart|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
+    addParameterValue('answer-quantity', paramValue);
+    return this;
+  }
+
+  /// a reference search for [answerReference] in the resource
+  /// [QuestionnaireResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchQuestionnaireResponse answerReference(FhirString value) {
+    addParameterValue('answer-reference', value.toString());
     return this;
   }
 
   /// a string search for [answerString] in the resource
   /// [QuestionnaireResponse]
-  SearchQuestionnaireResponse answerString(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('answer_string', paramValue);
+  SearchQuestionnaireResponse answerString(FhirString value) {
+    addParameterValue('answer-string', value.toString());
+    return this;
+  }
+
+  /// a reference search for [author] in the resource
+  /// [QuestionnaireResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchQuestionnaireResponse author(FhirString value) {
+    addParameterValue('author', value.toString());
     return this;
   }
 
@@ -118,32 +121,73 @@ class SearchQuestionnaireResponse extends SearchResource {
     return this;
   }
 
+  /// a reference search for [basedOn] in the resource
+  /// [QuestionnaireResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchQuestionnaireResponse basedOn(FhirString value) {
+    addParameterValue('based-on', value.toString());
+    return this;
+  }
+
+  /// a reference search for [itemSubject] in the resource
+  /// [QuestionnaireResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchQuestionnaireResponse itemSubject(FhirString value) {
+    addParameterValue('item-subject', value.toString());
+    return this;
+  }
+
   /// a token search for [linkid] in the resource
   /// [QuestionnaireResponse]
   SearchQuestionnaireResponse linkid(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('linkid', paramValue);
+    return this;
+  }
+
+  /// a reference search for [partOf] in the resource
+  /// [QuestionnaireResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchQuestionnaireResponse partOf(FhirString value) {
+    addParameterValue('part-of', value.toString());
+    return this;
+  }
+
+  /// a reference search for [questionnaire] in the resource
+  /// [QuestionnaireResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchQuestionnaireResponse questionnaire(FhirString value) {
+    addParameterValue('questionnaire', value.toString());
+    return this;
+  }
+
+  /// a reference search for [source] in the resource
+  /// [QuestionnaireResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchQuestionnaireResponse source(FhirString value) {
+    addParameterValue('source', value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [QuestionnaireResponse]
-  @override
   SearchQuestionnaireResponse status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [QuestionnaireResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchQuestionnaireResponse subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

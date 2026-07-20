@@ -8,34 +8,53 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 /// A class to build query parameters for RESTful requests for
 /// the [Account] resource.
 class SearchAccount extends SearchResource {
+  /// a reference search for [guarantor] in the resource
+  /// [Account]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAccount guarantor(FhirString value) {
+    addParameterValue('guarantor', value.toString());
+    return this;
+  }
+
+  /// a reference search for [guarantorAccount] in the resource
+  /// [Account]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAccount guarantorAccount(FhirString value) {
+    addParameterValue('guarantor-account', value.toString());
+    return this;
+  }
+
   /// a token search for [identifier] in the resource
   /// [Account]
-  @override
   SearchAccount identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
     return this;
   }
 
   /// a string search for [name] in the resource
   /// [Account]
-  @override
-  SearchAccount name(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('name', paramValue);
+  SearchAccount name(FhirString value) {
+    addParameterValue('name', value.toString());
+    return this;
+  }
+
+  /// a reference search for [owner] in the resource
+  /// [Account]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAccount owner(FhirString value) {
+    addParameterValue('owner', value.toString());
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [Account]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAccount patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
@@ -53,16 +72,20 @@ class SearchAccount extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Account]
-  @override
   SearchAccount status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [Account]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchAccount subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 
@@ -71,11 +94,8 @@ class SearchAccount extends SearchResource {
   SearchAccount type(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('type', paramValue);
     return this;
   }

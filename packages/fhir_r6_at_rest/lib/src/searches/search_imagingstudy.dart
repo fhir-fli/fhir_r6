@@ -10,16 +10,36 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchImagingStudy extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [ImagingStudy]
-  @override
   SearchImagingStudy identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [ImagingStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImagingStudy patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
+  /// a reference search for [encounter] in the resource
+  /// [ImagingStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImagingStudy encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [basedOn] in the resource
+  /// [ImagingStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImagingStudy basedOn(FhirString value) {
+    addParameterValue('based-on', value.toString());
     return this;
   }
 
@@ -28,24 +48,32 @@ class SearchImagingStudy extends SearchResource {
   SearchImagingStudy bodySite(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('body_site', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('body-site', paramValue);
+    return this;
+  }
+
+  /// a reference search for [bodyStructure] in the resource
+  /// [ImagingStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImagingStudy bodyStructure(FhirString value) {
+    addParameterValue('body-structure', value.toString());
     return this;
   }
 
   /// a uri search for [dicomClass] in the resource
   /// [ImagingStudy]
-  SearchImagingStudy dicomClass(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('dicom_class', paramValue);
+  SearchImagingStudy dicomClass(FhirUri value) {
+    addParameterValue('dicom-class', value.toString());
+    return this;
+  }
+
+  /// a reference search for [endpoint] in the resource
+  /// [ImagingStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImagingStudy endpoint(FhirString value) {
+    addParameterValue('endpoint', value.toString());
     return this;
   }
 
@@ -54,11 +82,8 @@ class SearchImagingStudy extends SearchResource {
   SearchImagingStudy instance(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('instance', paramValue);
     return this;
   }
@@ -68,12 +93,17 @@ class SearchImagingStudy extends SearchResource {
   SearchImagingStudy modality(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('modality', paramValue);
+    return this;
+  }
+
+  /// a reference search for [performer] in the resource
+  /// [ImagingStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImagingStudy performer(FhirString value) {
+    addParameterValue('performer', value.toString());
     return this;
   }
 
@@ -82,12 +112,25 @@ class SearchImagingStudy extends SearchResource {
   SearchImagingStudy reasonConcept(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('reason_concept', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('reason-concept', paramValue);
+    return this;
+  }
+
+  /// a reference search for [reasonReference] in the resource
+  /// [ImagingStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImagingStudy reasonReference(FhirString value) {
+    addParameterValue('reason-reference', value.toString());
+    return this;
+  }
+
+  /// a reference search for [referrer] in the resource
+  /// [ImagingStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImagingStudy referrer(FhirString value) {
+    addParameterValue('referrer', value.toString());
     return this;
   }
 
@@ -96,11 +139,8 @@ class SearchImagingStudy extends SearchResource {
   SearchImagingStudy series(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('series', paramValue);
     return this;
   }
@@ -119,16 +159,20 @@ class SearchImagingStudy extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [ImagingStudy]
-  @override
   SearchImagingStudy status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [ImagingStudy]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImagingStudy subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

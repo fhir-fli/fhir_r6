@@ -10,16 +10,20 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchGuidanceResponse extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [GuidanceResponse]
-  @override
   SearchGuidanceResponse identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [GuidanceResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchGuidanceResponse patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
@@ -28,27 +32,28 @@ class SearchGuidanceResponse extends SearchResource {
   SearchGuidanceResponse request(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('request', paramValue);
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [GuidanceResponse]
-  @override
   SearchGuidanceResponse status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [GuidanceResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchGuidanceResponse subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 }

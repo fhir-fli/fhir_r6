@@ -22,15 +22,11 @@ class SearchPaymentNotice extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [PaymentNotice]
-  @override
   SearchPaymentNotice identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
     return this;
   }
@@ -40,26 +36,43 @@ class SearchPaymentNotice extends SearchResource {
   SearchPaymentNotice paymentStatus(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('payment_status', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('payment-status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [reporter] in the resource
+  /// [PaymentNotice]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchPaymentNotice reporter(FhirString value) {
+    addParameterValue('reporter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [request] in the resource
+  /// [PaymentNotice]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchPaymentNotice request(FhirString value) {
+    addParameterValue('request', value.toString());
+    return this;
+  }
+
+  /// a reference search for [response] in the resource
+  /// [PaymentNotice]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchPaymentNotice response(FhirString value) {
+    addParameterValue('response', value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [PaymentNotice]
-  @override
   SearchPaymentNotice status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
     return this;
   }

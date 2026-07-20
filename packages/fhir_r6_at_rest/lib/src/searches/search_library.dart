@@ -8,16 +8,21 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 /// A class to build query parameters for RESTful requests for
 /// the [Library] resource.
 class SearchLibrary extends SearchResource {
+  /// a reference search for [composedOf] in the resource
+  /// [Library]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchLibrary composedOf(FhirString value) {
+    addParameterValue('composed-of', value.toString());
+    return this;
+  }
+
   /// a token search for [context] in the resource
   /// [Library]
   SearchLibrary context(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('context', paramValue);
     return this;
   }
@@ -30,16 +35,12 @@ class SearchLibrary extends SearchResource {
     FhirUri? system,
     SearchModifier? modifier,
   }) {
-    if (modifier != null &&
-        !['gt', 'lt', 'ge', 'le', 'ap'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for quantity type');
-    }
-    final systemStr = system?.toString() ?? '';
-    final unitStr = unit?.toString() ?? '';
-    final paramValue = modifier != null
-        ? '$modifier$value|$systemStr|$unitStr'
-        : '$value|$systemStr|$unitStr';
-    addParameterValue('context_quantity', paramValue);
+    final numberPart = modifier != null ? '$modifier$value' : value.toString();
+    final paramValue = (system == null && unit == null)
+        ? numberPart
+        : '$numberPart|${system?.toString() ?? ''}|'
+            '${unit?.toString() ?? ''}';
+    addParameterValue('context-quantity', paramValue);
     return this;
   }
 
@@ -48,18 +49,14 @@ class SearchLibrary extends SearchResource {
   SearchLibrary contextType(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('context_type', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('context-type', paramValue);
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [Library]
-  @override
   SearchLibrary date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -70,18 +67,26 @@ class SearchLibrary extends SearchResource {
     return this;
   }
 
+  /// a reference search for [dependsOn] in the resource
+  /// [Library]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchLibrary dependsOn(FhirString value) {
+    addParameterValue('depends-on', value.toString());
+    return this;
+  }
+
+  /// a reference search for [derivedFrom] in the resource
+  /// [Library]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchLibrary derivedFrom(FhirString value) {
+    addParameterValue('derived-from', value.toString());
+    return this;
+  }
+
   /// a string search for [description] in the resource
   /// [Library]
-  SearchLibrary description(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('description', paramValue);
+  SearchLibrary description(FhirString value) {
+    addParameterValue('description', value.toString());
     return this;
   }
 
@@ -99,15 +104,11 @@ class SearchLibrary extends SearchResource {
 
   /// a token search for [identifier] in the resource
   /// [Library]
-  @override
   SearchLibrary identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
     return this;
   }
@@ -117,73 +118,57 @@ class SearchLibrary extends SearchResource {
   SearchLibrary jurisdiction(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('jurisdiction', paramValue);
     return this;
   }
 
   /// a string search for [name] in the resource
   /// [Library]
-  @override
-  SearchLibrary name(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('name', paramValue);
+  SearchLibrary name(FhirString value) {
+    addParameterValue('name', value.toString());
+    return this;
+  }
+
+  /// a reference search for [predecessor] in the resource
+  /// [Library]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchLibrary predecessor(FhirString value) {
+    addParameterValue('predecessor', value.toString());
     return this;
   }
 
   /// a string search for [publisher] in the resource
   /// [Library]
-  SearchLibrary publisher(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('publisher', paramValue);
+  SearchLibrary publisher(FhirString value) {
+    addParameterValue('publisher', value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [Library]
-  @override
   SearchLibrary status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [successor] in the resource
+  /// [Library]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchLibrary successor(FhirString value) {
+    addParameterValue('successor', value.toString());
     return this;
   }
 
   /// a string search for [title] in the resource
   /// [Library]
-  SearchLibrary title(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('title', paramValue);
+  SearchLibrary title(FhirString value) {
+    addParameterValue('title', value.toString());
     return this;
   }
 
@@ -192,24 +177,16 @@ class SearchLibrary extends SearchResource {
   SearchLibrary topic(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('topic', paramValue);
     return this;
   }
 
   /// a uri search for [url] in the resource
   /// [Library]
-  SearchLibrary url(
-    FhirUri value, {
-    SearchModifier? modifier,
-  }) {
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('url', paramValue);
+  SearchLibrary url(FhirUri value) {
+    addParameterValue('url', value.toString());
     return this;
   }
 
@@ -218,11 +195,8 @@ class SearchLibrary extends SearchResource {
   SearchLibrary version(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('version', paramValue);
     return this;
   }
@@ -232,12 +206,17 @@ class SearchLibrary extends SearchResource {
   SearchLibrary contentType(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('content_type', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('content-type', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subjectCanonical] in the resource
+  /// [Library]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchLibrary subjectCanonical(FhirString value) {
+    addParameterValue('subject-canonical', value.toString());
     return this;
   }
 
@@ -246,12 +225,17 @@ class SearchLibrary extends SearchResource {
   SearchLibrary subjectCode(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('subject_code', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('subject-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subjectReference] in the resource
+  /// [Library]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchLibrary subjectReference(FhirString value) {
+    addParameterValue('subject-reference', value.toString());
     return this;
   }
 
@@ -260,11 +244,8 @@ class SearchLibrary extends SearchResource {
   SearchLibrary type(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('type', paramValue);
     return this;
   }

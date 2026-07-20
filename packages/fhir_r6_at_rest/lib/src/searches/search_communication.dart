@@ -10,16 +10,36 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchCommunication extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [Communication]
-  @override
   SearchCommunication identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [Communication]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCommunication patient(FhirString value) {
+    addParameterValue('patient', value.toString());
+    return this;
+  }
+
+  /// a reference search for [encounter] in the resource
+  /// [Communication]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCommunication encounter(FhirString value) {
+    addParameterValue('encounter', value.toString());
+    return this;
+  }
+
+  /// a reference search for [basedOn] in the resource
+  /// [Communication]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCommunication basedOn(FhirString value) {
+    addParameterValue('based-on', value.toString());
     return this;
   }
 
@@ -28,12 +48,17 @@ class SearchCommunication extends SearchResource {
   SearchCommunication category(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('category', paramValue);
+    return this;
+  }
+
+  /// a reference search for [inResponseTo] in the resource
+  /// [Communication]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCommunication inResponseTo(FhirString value) {
+    addParameterValue('in-response-to', value.toString());
     return this;
   }
 
@@ -42,12 +67,17 @@ class SearchCommunication extends SearchResource {
   SearchCommunication medium(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('medium', paramValue);
+    return this;
+  }
+
+  /// a reference search for [partOf] in the resource
+  /// [Communication]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCommunication partOf(FhirString value) {
+    addParameterValue('part-of', value.toString());
     return this;
   }
 
@@ -56,12 +86,17 @@ class SearchCommunication extends SearchResource {
   SearchCommunication reasonCode(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('reason_code', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('reason-code', paramValue);
+    return this;
+  }
+
+  /// a reference search for [reasonReference] in the resource
+  /// [Communication]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCommunication reasonReference(FhirString value) {
+    addParameterValue('reason-reference', value.toString());
     return this;
   }
 
@@ -74,6 +109,22 @@ class SearchCommunication extends SearchResource {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
     addParameterValue('received', paramValue);
+    return this;
+  }
+
+  /// a reference search for [recipient] in the resource
+  /// [Communication]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCommunication recipient(FhirString value) {
+    addParameterValue('recipient', value.toString());
+    return this;
+  }
+
+  /// a reference search for [sender] in the resource
+  /// [Communication]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCommunication sender(FhirString value) {
+    addParameterValue('sender', value.toString());
     return this;
   }
 
@@ -91,16 +142,20 @@ class SearchCommunication extends SearchResource {
 
   /// a token search for [status] in the resource
   /// [Communication]
-  @override
   SearchCommunication status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [subject] in the resource
+  /// [Communication]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchCommunication subject(FhirString value) {
+    addParameterValue('subject', value.toString());
     return this;
   }
 
@@ -109,11 +164,8 @@ class SearchCommunication extends SearchResource {
   SearchCommunication topic(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('topic', paramValue);
     return this;
   }

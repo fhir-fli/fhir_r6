@@ -10,22 +10,25 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchImmunizationEvaluation extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [ImmunizationEvaluation]
-  @override
   SearchImmunizationEvaluation identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [ImmunizationEvaluation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImmunizationEvaluation patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
   /// a date search for [date] in the resource
   /// [ImmunizationEvaluation]
-  @override
   SearchImmunizationEvaluation date(
     FhirDateTime value, {
     SearchModifier? modifier,
@@ -41,26 +44,27 @@ class SearchImmunizationEvaluation extends SearchResource {
   SearchImmunizationEvaluation doseStatus(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('dose_status', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('dose-status', paramValue);
+    return this;
+  }
+
+  /// a reference search for [immunizationEvent] in the resource
+  /// [ImmunizationEvaluation]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchImmunizationEvaluation immunizationEvent(FhirString value) {
+    addParameterValue('immunization-event', value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [ImmunizationEvaluation]
-  @override
   SearchImmunizationEvaluation status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
     return this;
   }
@@ -70,12 +74,9 @@ class SearchImmunizationEvaluation extends SearchResource {
   SearchImmunizationEvaluation targetDisease(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('target_disease', paramValue);
+    final paramValue = system != null ? '$system|$value' : value.toString();
+    addParameterValue('target-disease', paramValue);
     return this;
   }
 }

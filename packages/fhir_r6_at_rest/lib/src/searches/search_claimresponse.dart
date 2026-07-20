@@ -10,16 +10,20 @@ import 'package:fhir_r6_at_rest/fhir_r6_at_rest.dart';
 class SearchClaimResponse extends SearchResource {
   /// a token search for [identifier] in the resource
   /// [ClaimResponse]
-  @override
   SearchClaimResponse identifier(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('identifier', paramValue);
+    return this;
+  }
+
+  /// a reference search for [patient] in the resource
+  /// [ClaimResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchClaimResponse patient(FhirString value) {
+    addParameterValue('patient', value.toString());
     return this;
   }
 
@@ -37,16 +41,16 @@ class SearchClaimResponse extends SearchResource {
 
   /// a string search for [disposition] in the resource
   /// [ClaimResponse]
-  SearchClaimResponse disposition(
-    FhirString value, {
-    SearchModifier? modifier,
-  }) {
-    if (modifier != null && !['eq', 'ne'].contains(modifier.toString())) {
-      throw ArgumentError('Modifier $modifier not allowed for string type');
-    }
-    final paramValue =
-        (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('disposition', paramValue);
+  SearchClaimResponse disposition(FhirString value) {
+    addParameterValue('disposition', value.toString());
+    return this;
+  }
+
+  /// a reference search for [insurer] in the resource
+  /// [ClaimResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchClaimResponse insurer(FhirString value) {
+    addParameterValue('insurer', value.toString());
     return this;
   }
 
@@ -55,11 +59,8 @@ class SearchClaimResponse extends SearchResource {
   SearchClaimResponse outcome(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('outcome', paramValue);
     return this;
   }
@@ -72,21 +73,33 @@ class SearchClaimResponse extends SearchResource {
   }) {
     final paramValue =
         (modifier != null ? '$modifier$value' : value.toString());
-    addParameterValue('payment_date', paramValue);
+    addParameterValue('payment-date', paramValue);
+    return this;
+  }
+
+  /// a reference search for [request] in the resource
+  /// [ClaimResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchClaimResponse request(FhirString value) {
+    addParameterValue('request', value.toString());
+    return this;
+  }
+
+  /// a reference search for [requestor] in the resource
+  /// [ClaimResponse]
+  /// (accepts an id, a `Type/id` relative reference, or a URL)
+  SearchClaimResponse requestor(FhirString value) {
+    addParameterValue('requestor', value.toString());
     return this;
   }
 
   /// a token search for [status] in the resource
   /// [ClaimResponse]
-  @override
   SearchClaimResponse status(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('status', paramValue);
     return this;
   }
@@ -96,11 +109,8 @@ class SearchClaimResponse extends SearchResource {
   SearchClaimResponse use(
     FhirString value, {
     FhirUri? system,
-    SearchModifier? modifier,
   }) {
-    final paramValue = system != null
-        ? (modifier != null ? '$modifier$system|$value' : '$system|$value')
-        : (modifier != null ? '$modifier$value' : value.toString());
+    final paramValue = system != null ? '$system|$value' : value.toString();
     addParameterValue('use', paramValue);
     return this;
   }
