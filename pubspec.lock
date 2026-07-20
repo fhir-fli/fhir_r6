@@ -159,70 +159,70 @@ packages:
       path: "packages/fhir_r6"
       relative: true
     source: path
-    version: "0.6.1"
+    version: "0.7.0"
   fhir_r6_at_rest:
     dependency: "direct overridden"
     description:
       path: "packages/fhir_r6_at_rest"
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.7.0"
   fhir_r6_auth:
     dependency: "direct overridden"
     description:
       path: "packages/fhir_r6_auth"
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.7.0"
   fhir_r6_bulk:
     dependency: "direct overridden"
     description:
       path: "packages/fhir_r6_bulk"
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.7.0"
   fhir_r6_cds_hooks:
     dependency: "direct overridden"
     description:
       path: "packages/fhir_r6_cds_hooks"
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.7.0"
   fhir_r6_cql:
     dependency: "direct overridden"
     description:
       path: "packages/fhir_r6_cql"
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.7.0"
   fhir_r6_db:
     dependency: "direct overridden"
     description:
       path: "packages/fhir_r6_db"
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.7.0"
   fhir_r6_mapping:
     dependency: "direct overridden"
     description:
       path: "packages/fhir_r6_mapping"
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.7.0"
   fhir_r6_path:
     dependency: "direct overridden"
     description:
       path: "packages/fhir_r6_path"
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.7.0"
   fhir_r6_validation:
     dependency: "direct overridden"
     description:
       path: "packages/fhir_r6_validation"
       relative: true
     source: path
-    version: "0.6.0"
+    version: "0.7.0"
   file:
     dependency: transitive
     description:
