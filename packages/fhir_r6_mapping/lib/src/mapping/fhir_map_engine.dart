@@ -1424,7 +1424,7 @@ class FhirMapEngine {
 
         case 'translate':
           {
-            return _translate(
+            return await _translate(
               context,
               map,
               vars,
@@ -1557,7 +1557,7 @@ class FhirMapEngine {
             );
             final String code =
                 _getParamStringNoNull(vars, tgt.parameter![1], tgt.toString());
-            return _buildCoding(uri, code);
+            return await _buildCoding(uri, code);
           }
 
         default:
