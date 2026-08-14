@@ -934,7 +934,7 @@ class WorkerContext implements IWorkerContext {
           valueSet: valueSet,
           context: this,
         );
-        return checker.validateCode(
+        return await checker.validateCode(
           CodeableConcept(coding: <Coding>[coding]),
         );
       }
