@@ -3,7 +3,7 @@ description: >-
   FHIR R6 binding for the model-independent `cql` engine: the R6
   ModelResolver and TerminologyProvider implementations that let the CQL
   engine execute against FHIR R6 data.
-version: 0.7.0
+version: 0.8.0
 homepage: https://www.fhirfli.dev/
 repository: https://github.com/fhir-fli/fhir_r6
 issue_tracker: https://github.com/fhir-fli/fhir_r6/issues
@@ -20,8 +20,8 @@ environment:
 
 dependencies:
   cql: ^0.6.0
-  fhir_r6: ^0.7.0
-  fhir_r6_path: ^0.7.0
+  fhir_r6: ^0.8.0
+  fhir_r6_path: ^0.8.0
   ucum: ^0.9.0
 dev_dependencies:
   test: ^1.29.0
