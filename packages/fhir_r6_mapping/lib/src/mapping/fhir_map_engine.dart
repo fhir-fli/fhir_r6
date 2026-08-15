@@ -907,16 +907,18 @@ class FhirMapEngine {
       switch (src.listMode?.valueString) {
         case 'first':
           final bt = items.first;
-          items.clear();
-          items.add(bt);
+          items
+            ..clear()
+            ..add(bt);
         case 'not_first':
           if (items.isNotEmpty) {
             items.removeAt(0);
           }
         case 'last':
           final bt = items.last;
-          items.clear();
-          items.add(bt);
+          items
+            ..clear()
+            ..add(bt);
         case 'not_last':
           if (items.isNotEmpty) {
             items.removeLast();
@@ -1424,7 +1426,7 @@ class FhirMapEngine {
 
         case 'translate':
           {
-            return _translate(
+            return await _translate(
               context,
               map,
               vars,
@@ -1557,7 +1559,7 @@ class FhirMapEngine {
             );
             final String code =
                 _getParamStringNoNull(vars, tgt.parameter![1], tgt.toString());
-            return _buildCoding(uri, code);
+            return await _buildCoding(uri, code);
           }
 
         default:
