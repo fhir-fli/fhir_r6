@@ -1,25 +1,13 @@
-import 'test_arg_fxns.dart';
-import 'test_basic_operators.dart';
-import 'test_basic_types.dart';
-import 'test_date_times.dart';
-import 'test_fp_test_suite.dart';
-import 'test_no_arg_fxns.dart';
-import 'test_parser.dart';
-import 'test_paths.dart';
 import 'test_questionnaire.dart';
-import 'test_type_hierarchy_table.dart';
-import 'test_type_operators.dart';
 
+/// What stays in the binding is what is specific to R6: the Questionnaire
+/// resource walk here, and terminology membership in member_of_test.dart.
+///
+/// The engine's own semantics — parsing, operators, functions, type
+/// operators, date/time arithmetic and the official HL7 suite — live in the
+/// `fhir_path` package, which is where the code being tested lives. They ran
+/// here as a third byte-identical copy of the same suites; keeping three
+/// copies of the engine's tests did not test the engine three times.
 Future<void> main() async {
-  await testBasicTypes();
-  await testParser();
-  await testPaths();
-  await testBasicOperators();
-  await testDateTimes();
-  await testNoArgFxns();
-  await testArgFxns();
   await testQuestionnaire();
-  await testFpTestSuite();
-  await testTypeOperators();
-  await testTypeHierarchyTable();
 }
