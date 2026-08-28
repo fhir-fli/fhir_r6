@@ -1,5 +1,9 @@
 # fhir_r6_cql
 
+## [0.9.0]
+
+- No code changes; version aligned with the fhir_r6 0.9.0 family release
+
 ## [0.8.0]
 
 - Carries the `memberOf` behavior change from fhir_r6_path ^0.8.0 — an invariant or expression using `memberOf` against a value set that cannot be resolved now throws rather than silently answering no. See the fhir_r6_path 0.8.0 entry
