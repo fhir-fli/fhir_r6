@@ -1,3 +1,12 @@
 # One lint policy for the whole monorepo: very_good_analysis with the
 # family-standard suppressions (see the root analysis_options.yaml).
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
 include: ../../analysis_options.yaml
