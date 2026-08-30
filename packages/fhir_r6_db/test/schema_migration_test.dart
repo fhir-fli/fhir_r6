@@ -62,8 +62,24 @@ void main() {
       final sql = row.data['sql']! as String;
       // Only the primary-key clause spells it `"search_name",` — in the
       // column list it is `"search_name" TEXT ...`.
-      final v4Sql = sql.replaceFirst('"search_name", ', '');
+      var v4Sql = sql.replaceFirst('"search_name", ', '');
       expect(v4Sql, isNot(equals(sql)), reason: 'PK rewrite failed for $name');
+      // A real version-4 database has no exact_value: that column arrived
+      // with schema 6, when `:exact` needed the value as written rather than
+      // the normalized one. Leaving it in would make the fixture a database
+      // that never existed.
+      if (name == 'string_search_parameters') {
+        final before = v4Sql;
+        v4Sql = v4Sql.replaceFirst(
+          RegExp(r',\s*"exact_value" TEXT NOT NULL DEFAULT \x27\x27'),
+          '',
+        );
+        expect(
+          v4Sql,
+          isNot(equals(before)),
+          reason: 'exact_value not found in the generated schema',
+        );
+      }
       await db.customStatement('DROP TABLE "$name"');
       await db.customStatement(v4Sql);
     }
@@ -72,41 +88,91 @@ void main() {
     await db.close();
   }
 
-  test('an existing schema-4 database opens, and keeps its rows', () async {
+  test('an existing schema-4 database opens, and its index is rebuilt',
+      () async {
     await createSchemaV4(dbFile);
 
-    // Two rows a version-4 database could legitimately hold.
+    // A resource, plus the stale index rows a version-4 database would hold
+    // for it. The index is DERIVED from the resource, so the upgrade throws
+    // the rows away and re-extracts them: the alternative is rows with no
+    // exact value, which would make :exact silently ignore this patient.
+    // meta.lastUpdated included because every stored resource has it:
+    // saveResource sets it, and updateSearchParameters requires it.
+    final patient = Patient(
+      id: 'pat-1'.toFhirString,
+      meta: FhirMeta(
+        versionId: '1'.toFhirId,
+        lastUpdated: FhirInstant.fromDateTime(DateTime.utc(2026)),
+      ),
+      name: [HumanName(family: 'Mu\u00f1oz'.toFhirString)],
+    );
     final seed = _SeedDb(NativeDatabase(dbFile));
     await seed.customStatement(
-      'INSERT INTO string_search_parameters VALUES '
-      "('Patient', 'pat-1', 0, 'Patient.name', 'name', 0, 'Faulkenberry')",
+      'INSERT INTO resources VALUES '
+      "('Patient', 'pat-1', ?, 0)",
+      [patient.toJsonString()],
     );
     await seed.customStatement(
       'INSERT INTO string_search_parameters VALUES '
-      "('Patient', 'pat-1', 0, 'Patient.address.city', 'address-city', 0, "
-      "'Gulu')",
+      "('Patient', 'pat-1', 0, 'Patient.name', 'name', 0, 'stale')",
     );
     await seed.close();
 
-    // Opening with the current code runs onUpgrade for real.
     final db = FhirDb(NativeDatabase(dbFile));
     final rows = await db.fhirDao.select(db.stringSearchParameters).get();
 
     expect(
-      rows.length,
-      equals(2),
-      reason: 'the upgrade rebuilds each index table by copying rows into a '
-          'new one; losing them here would lose the index for every resource '
-          'already stored',
+      rows.any((r) => r.exactValue == 'Mu\u00f1oz'),
+      isTrue,
+      reason: 'the exact spelling has to come back, or :exact cannot answer '
+          'for anything stored before the upgrade',
     );
     expect(
-      rows.map((r) => r.stringValue).toSet(),
-      equals({'Faulkenberry', 'Gulu'}),
+      rows.any((r) => r.stringValue == 'munoz'),
+      isTrue,
+      reason: 'and the folded form, since accent folding changed in the same '
+          'version and every accented value was stale',
+    );
+    expect(
+      rows.any((r) => r.stringValue == 'stale'),
+      isFalse,
+      reason: 'the old rows are replaced, not added to',
     );
 
     final version = await db.customSelect('PRAGMA user_version').getSingle();
-    expect(version.data.values.first, equals(5));
+    expect(version.data.values.first, equals(6));
 
+    await db.close();
+  });
+
+  test('a version-5 database gains the column without a rebuild', () async {
+    // The 4 to 5 rebuild recreates each index table from the current
+    // definition, so it brings exact_value with it. A database already at 5
+    // did not go through that, and needs the column added on its own — and
+    // adding it twice is a duplicate-column error, which is why the branch
+    // tests `from == 5` rather than `from < 6`.
+    await createSchemaV4(dbFile);
+    final upgraded = FhirDb(NativeDatabase(dbFile));
+    await upgraded.customSelect('SELECT 1').get();
+    await upgraded.customStatement('PRAGMA user_version = 5');
+    await upgraded.customStatement(
+      'ALTER TABLE string_search_parameters DROP COLUMN exact_value',
+    );
+    await upgraded.close();
+
+    final db = FhirDb(NativeDatabase(dbFile));
+    await db.fhirDao.saveResource(
+      Patient(
+        id: 'pat-3'.toFhirString,
+        name: [HumanName(family: 'Mu\u00f1oz'.toFhirString)],
+      ),
+    );
+    final rows = await db.fhirDao.select(db.stringSearchParameters).get();
+    expect(
+      rows.any((r) => r.exactValue == 'Mu\u00f1oz'),
+      isTrue,
+      reason: 'the column has to exist and be written after the upgrade',
+    );
     await db.close();
   });
 
