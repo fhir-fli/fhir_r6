@@ -1,0 +1,61 @@
+# Search audit against R4B search.html, section by section (R6 port)
+
+The audit was done on `fhir_r6_db` and ported here with the code; the R6 search page was checked for each rule and carries the same text (its sort-on-repeats rule is discretionary; the earliest value is taken). Section numbers are R4B's.
+
+Started 2026-09-04. Every numbered section of
+https://hl7.org/fhir/R4B/search.html read verbatim against `lib/src/fhir_dao.dart`,
+with a test per rule in `test/`. **The release waits until every row is ✅ or ⛔
+(server's job, not this package's).** Measurements are on the 928,935-resource
+MIMIC-IV-on-FHIR demo unless stated.
+
+| § | Rule (quoted) | This package | Test |
+|---|---|---|---|
+| 3.1.1.3 | "Empty parameters are not an error - they are just ignored" | ✅ ignored (was: whole search empty) | `search_paged_in_sql_test` "an unknown parameter is ignored, an empty one too" |
+| 3.1.1.3 | "servers SHOULD ignore unknown or unsupported parameters" (strict is the client's `Prefer` header, the server's job) | ✅ ignored (was: whole search empty via a type-guessing path) | same |
+| 3.1.1.3 | "Where the content of the parameter is syntactically incorrect, servers SHOULD return an error" | ✅ throws `InvalidSearchValue` for date, number, quantity (was: empty set) — **fhirant must map it to 400** | "a date value that is not a date is an error", "a number value that is not a number is an error" |
+| 3.1.1.3 | logical miss (unknown subject, unknown code) → empty set, not an error | ✅ | throughout |
+| 3.1.1.4.1 | `_id`: "servers SHALL use exact match … always case sensitive", no system | ✅ `resources.id = ?` (BINARY collation) | "_id and _lastUpdated page in SQL" |
+| 3.1.1.4.1 | `_lastUpdated=gt2010-10-01` | ✅ same range rule as every date | "_lastUpdated uses the same semantics" |
+| 3.1.1.4.1 | `_tag`, `_security` token; `_profile` on `meta.profile`; `_source` | ✅ indexed (were never indexed; schema 9 fills) | "_tag, _security, _profile and _source page in SQL" |
+| 3.1.1.4.1 | `_profile=Profile/lipid` "relative and refers a local profile on the same server"; prose says reference, the R4B definition says **uri** | ⚠️ follows the definition (uri, exact). In R5/R6 the definition is reference and `StructureDefinition/lipid` matches the canonical's tail. | — |
+| 3.1.1.4.1 | `_content`, `_text`, `_list`, `_query`, `_type`, `_filter` | ⛔ `_filter` is fhirant's; `_text`/`_content` need full-text (see 3.1.1.4.20); `_list` 3.1.1.4.22; `_type` 3.1.1.4.24 | below |
+| 3.1.1.4.2 | "matches if any of the paths contain matching content" (multi-path parameters) | ✅ every path is a row with the same `searchName` | e.g. `combo-code` |
+| 3.1.1.4.2 | only `_id` is required; custom parameters allowed | ⚠️ a parameter not in the generated definitions is ignored (nothing indexes it). Custom SearchParameter support is a separate design item (memory `fhirant-search-indexing-gap`). | — |
+| 3.1.1.4.3 | number "SHALL be a number" | ✅ `InvalidSearchValue` otherwise | above |
+| 3.1.1.4.3 | string "case-insensitive and accent-insensitive. May match just the start" | ✅ normalized starts-with | "a string parameter pages in SQL with the starts-with default" |
+| 3.1.1.4.3 | token: text, display, code, code/codesystem; identifier label/system/key | ✅ codes and system\|code; `:text` on display and CodeableConcept.text; Identifier system\|value | "token modifiers page in SQL" |
+| 3.1.1.4.3 | reference: Reference or canonical | ✅ both extracted | — |
+| 3.1.1.4.4 | `:missing` all types except composite; `true` = element omitted or present with no @value | ✅ a primitive with no value writes no row | ":missing pages in SQL" |
+| 3.1.1.4.4 | string `:exact` "including casing and combining characters"; `:contains` anywhere, case/accent-insensitive | ✅ `exact_value` as written; `LIKE %v%` on the normalized column | "string modifiers page in SQL" |
+| 3.1.1.4.4 | token `:text` "text portion of a CodeableConcept or the display portion of a Coding" | ✅ (was: CodeableConcept.text written as a **code**, so `code=Heart Rate` matched and `:text` did not) | "token modifiers page in SQL" |
+| 3.1.1.4.4 | token `:in`, `:not-in` | ✅ over the stored ValueSet's expansion | general path tests |
+| 3.1.1.4.4 | token `:below`, `:above` (subsumption, 3.1.1.4.10) | ⛔ **refused** (`UnsupportedSearchModifier`), was answered as a plain match | "a modifier this server does not support is refused" |
+| 3.1.1.4.4 | reference `:[type]`, `:identifier` | ✅ | "reference modifiers page in SQL" |
+| 3.1.1.4.4 | reference `:above`, `:below` (hierarchies, 3.1.1.4.14) | ⛔ **refused**, was treated as a resource type named "above" | same |
+| 3.1.1.4.4 | uri `:below` (search term left-matches the value), `:above` (vice-versa) | ✅ `:below` in SQL; `:above` on the Dart path | "uri :below pages in SQL; :above falls back" |
+| 3.1.1.4.4 | "Server SHALL reject any search request … suffixed by a modifier that the server does not support" | ✅ thrown before building, both paths; fhirant maps to 400 | same |
+| 3.1.1.4.8 | string: "insensitive to casing and included combining characters"; "Punctuation and non-significant whitespace … should also be ignored" | ✅ (was: combining marks, punctuation and whitespace runs all significant) | "a string search folds case, accents, combining marks, punctuation and whitespace" |
+| 3.1.1.4.8 | "equals or starts with … after both have been normalized" | ✅ | "a string parameter pages in SQL with the starts-with default" |
+| 3.1.1.4.8 | `:contains` anywhere; `:exact` "entire supplied parameter, including casing and accents" | ✅ | "string modifiers page in SQL" |
+| 3.1.1.4.8 | "servers should search the parts of a family name independently" ("Carreno" or "Quinones" match "Carreno Quinones") | ✅ name parts (`name.family/given/prefix/suffix/text`) indexed word by word; `:exact` keeps the whole (was: whole-string starts-with only) | same folding test |
+| 3.1.1.4.8 | HumanName/Address search covers the string elements, not `use`/`period` | ✅ extractor | extraction tests |
+| 3.1.1.4.8 | phone numbers: "a server might remove all spaces and - characters" (discretion) | ⚠️ punctuation folds to a space on both sides, so `555-1234` = `555 1234` ≠ `5551234` | "extracts ContactPoint value" |
+| 3.1.1.4.9 | uri: "matches are precise (e.g. case, accent, and escape) sensitive, and the entire URI must match" | ✅ stored and compared as written (was: scheme/host lower-cased, trailing slash stripped on the stored side only, so an as-written search could miss) | "uri :below and :above page in SQL, for URLs only" |
+| 3.1.1.4.9 | `:below` left-matches, `:above` the converse; "only apply to URLs, and not URNs such as OIDs" | ✅ both in SQL (`substr` / `instr`, not LIKE); a URN is matched whole | same |
+| 3.1.1.4.9 | canonical URLs: "SHOULD support automatically detecting a \|[version] portion … as a search on the version" | ✅ when the resource type has a `version` parameter | "a uri with \|version searches the version too" |
+| 3.1.1.4.5 | "Searches are always performed on values that are implicitly or explicitly a range" — the STORED value too | ✅ number and quantity rows carry `[low, high)` from the value as written (schema 7); an integer is a point; a Range is its bounds, either open | "eq on a number is the implicit range, not equality", "parameters that indexed nothing" (Range) |
+| 3.1.1.4.5 | eq / ne / gt / lt / ge / le / sa / eb / ap as range rules | ✅ both sides ranges, one helper for number and quantity, one for dates. ⚠️ A decimal written `100.0` matches `gt100` (its range reaches above 100), which HAPI and Microsoft's server, comparing points, would not | same |
+| 3.1.1.4.6 | number: significant digits, `1e2` example inconsistent with the rule | ✅ rule followed, documented at `_numericPrefixCondition` | `implicit_range_test` |
+| 3.1.1.4.6 | integer elements: "searching is based on exact matches" | ✅ integer stored as a point | — |
+| 3.1.1.4.6 | a record's own precision | ⚠️ JSON number parsing drops trailing zeros (`0.30` arrives as 0.3), so a record can be no more precise than its shortest spelling | noted in the eq test |
+| 3.1.1.4.10 | token forms `[code]`, `[system]\|[code]`, `\|[code]` (no system), `[system]\|` (any code) | ✅ | `search_integration_test` token cases |
+| 3.1.1.4.10 | "Match is case sensitive unless … When in doubt, servers SHOULD treat tokens in a case-insensitive manner" | ⚠️ case-sensitive, the section's primary rule; case-insensitive comparison would defeat the value index on 3.6M rows. Recorded as a choice | — |
+| 3.1.1.4.10 | ContactPoint, uri, boolean: only `[parameter]=[code]`; cross-map (3.1.1.9): boolean, code, id, string, CodeableConcept, Coding, ContactPoint, Identifier | ✅ **ContactPoint (20 parameters) and id (ImagingStudy uid) wrote NO row in 0.12.0**; fixed | "parameters that indexed nothing" |
+| 3.1.1.4.10 | `:text` "either CodeableConcept.text, Coding.display, or Identifier.type.text … functions as a normal string search" | ⚠️ CodeableConcept.text and Coding.display, partial case-insensitive; **Identifier.type.text not indexed**; not accent-folded | "token modifiers page in SQL" |
+| 3.1.1.4.10 | `:not` includes resources with no value; negation applies to the set | ✅ NOT EXISTS | ":missing pages in SQL", "token modifiers" |
+| 3.1.1.4.10 | `:in` / `:not-in` a ValueSet by literal or logical URL | ✅ over the stored ValueSet's expansion (`_getCodesFromValueSet`) | general-path tests |
+| 3.1.1.4.10 | `:of-type` `system\|code\|value`, all three parts | ✅ on the Dart path (Identifier.type is not indexed) | fallback test |
+| 3.1.1.4.11 | quantity `[prefix][number]\|[system]\|[code]`; `5.4\|\|mg` matches code or unit | ✅ (was parsed as `system\|number\|code`) | "a quantity parameter pages in SQL" |
+| 3.1.1.4.11 | cross-map: Quantity, Age, Duration (extend Quantity), Money, Range | ✅ **Money and Range wrote NO row in 0.12.0**; fixed | "parameters that indexed nothing" |
+| 3.1.1.4.11 | canonical-unit conversion (UCUM) "may choose" | ⛔ not done | — |
+| 3.1.1.4.12 | reference `[id]`, `[type]/[id]`, `[url]`; cross-map: Reference, canonical, uri | ✅ (`[url]` was unmatched; **uri elements and CodeableReference wrote NO row**; the 35 `relatedArtifact.where(type=…).resource` parameters had the generator filter for the wrong type and wrote NO row) | "an absolute or canonical URL reference matches as written", "parameters that indexed nothing" |

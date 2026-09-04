@@ -99,14 +99,56 @@ class UnsupportedSearchModifier implements Exception {
   final Set<String> allowed;
 
   /// A message naming what was asked for and what the type permits.
-  String get message =>
-      'The modifier ":$modifier" is not allowed on "$parameter", which is a '
-      '$type search parameter. '
-      '${allowed.isEmpty ? "That type takes no modifiers." : "Allowed: "
-          "${(allowed.toList()..sort()).map((m) => ":$m").join(", ")}."}';
+  String get message {
+    if (unsupportedModifiersByType[type]?.contains(modifier) ?? false) {
+      return 'The modifier ":$modifier" is defined for $type search '
+          'parameters but this server does not support it on "$parameter".';
+    }
+    return 'The modifier ":$modifier" is not allowed on "$parameter", which '
+        'is a $type search parameter. '
+        '${allowed.isEmpty ? "That type takes no modifiers." : "Allowed: "
+            "${(allowed.toList()..sort()).map((m) => ":$m").join(", ")}."}';
+  }
 
   @override
   String toString() => 'UnsupportedSearchModifier: $message';
+}
+
+/// Thrown when a search value is not syntactically valid for its
+/// parameter's type: a date that is not a date, a number that is not a
+/// number.
+///
+/// R4B 3.1.1.3: "Where the content of the parameter is syntactically
+/// incorrect, servers SHOULD return an error. However, where the issue is a
+/// logical condition (e.g. unknown subject or code), the server SHOULD
+/// process the search … with the result of returning an empty search set".
+/// So `code=loinc|1234-1` for an unknown code is an empty set, and
+/// `onset=23 May 2009` is this. It used to be an empty set too, which told
+/// the client there were no such records when the question had not been
+/// understood.
+class InvalidSearchValue implements Exception {
+  /// Creates the failure for [value] on [parameter].
+  const InvalidSearchValue({
+    required this.parameter,
+    required this.value,
+    required this.type,
+  });
+
+  /// The search parameter as the client wrote it.
+  final String parameter;
+
+  /// The value that does not parse.
+  final String value;
+
+  /// The parameter's declared search type.
+  final String type;
+
+  /// A message naming the value and what it had to be.
+  String get message =>
+      'The value "$value" is not a valid $type for "$parameter".';
+
+  @override
+  String toString() => 'InvalidSearchValue: $message';
 }
 
 /// The modifiers R6 allows, per search parameter type.
@@ -122,33 +164,11 @@ const modifiersByType = <String, Set<String>>{
   // published page yet — the definitions here are 6.0.0-ballot3, so the two
   // may drift apart before R6 is final.
   'string': {'missing', 'exact', 'contains', 'text'},
-  'token': {
-    'missing',
-    'text',
-    'text-advanced',
-    'code-text',
-    'not',
-    'above',
-    'below',
-    'in',
-    'not-in',
-    'of-type',
-  },
+  'token': {'missing', 'text', 'not', 'in', 'not-in', 'of-type'},
   // A reference also takes ":[ResourceType]", which is not a fixed word and is
   // checked separately.
-  'reference': {
-    'missing',
-    'identifier',
-    'above',
-    'below',
-    'type',
-    'not-in',
-    'text',
-    'text-advanced',
-    'code-text',
-    'contains',
-  },
-  'uri': {'missing', 'above', 'below', 'contains'},
+  'reference': {'missing', 'identifier', 'type'},
+  'uri': {'missing', 'above', 'below'},
   'date': {'missing'},
   'number': {'missing'},
   'quantity': {'missing'},
@@ -157,6 +177,31 @@ const modifiersByType = <String, Set<String>>{
   'special': <String>{},
   // "Note that search modifiers are NOT allowed on composite parameters."
   'composite': <String>{},
+};
+
+/// Modifiers R6 defines for a type that this package does NOT implement,
+/// so a search using one is refused rather than answered wrongly.
+///
+/// The SHALL is R4B 3.1.1.4.4's, carried unchanged by the R6 page: "Server
+/// SHALL reject any search request that contains … a modifier that the
+/// server does not support for that parameter … using an HTTP 400 error".
+/// Token `:above`/`:below` are code subsumption; reference `:above`/`:below`
+/// are resource hierarchies; `:text-advanced` and `:code-text` are the R6
+/// text searches; reference `:not-in`/`:text` and uri `:contains` are R6
+/// additions. Before this every one was listed as allowed and answered as
+/// a plain match — a narrower answer than asked for, silently.
+const unsupportedModifiersByType = <String, Set<String>>{
+  'token': {'above', 'below', 'text-advanced', 'code-text'},
+  'reference': {
+    'above',
+    'below',
+    'not-in',
+    'text',
+    'text-advanced',
+    'code-text',
+    'contains'
+  },
+  'uri': {'contains'},
 };
 
 /// The definition of [code] on [resourceType], or null when there is none.

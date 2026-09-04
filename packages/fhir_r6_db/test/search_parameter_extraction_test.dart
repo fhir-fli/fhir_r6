@@ -38,8 +38,10 @@ void main() {
         text: 'Dr John Q Smith Jr'.toFhirString,
       );
       final results = name.toStringSearchParameter(_rt, _id, _lu, _path, _idx);
-      // family + 2 given + 1 prefix + 1 suffix + 1 text = 6
-      expect(results.length, 6);
+      // family + 2 given + 1 prefix + 1 suffix + 1 text = 6 whole values,
+      // plus one row per further word of the text (R4B 3.1.1.4.8: "servers
+      // should search the parts of a family name independently"), 4 more.
+      expect(results.length, 10);
 
       final values = results.map((r) => r.stringValue.value).toList();
       expect(values, contains('smith'));
@@ -48,6 +50,35 @@ void main() {
       expect(values, contains('dr'));
       expect(values, contains('jr'));
       expect(values, contains('dr john q smith jr'));
+      // The word rows keep the whole element as their exact value.
+      final wordRow = results.firstWhere(
+        (r) => r.stringValue.value == 'smith' && r.exactValue.value != 'Smith',
+      );
+      expect(wordRow.exactValue.value, 'Dr John Q Smith Jr');
+    });
+
+    test('a family name is indexed by its words, other strings are not', () {
+      final family = 'Carreno Quinones'.toFhirString;
+      final rows = family.toStringSearchParameter(
+        _rt,
+        _id,
+        _lu,
+        'Patient.name.family',
+        _idx,
+      );
+      expect(
+        rows.map((r) => r.stringValue.value),
+        ['carreno quinones', 'quinones'],
+      );
+      expect(rows.map((r) => r.exactValue.value).toSet(), {'Carreno Quinones'});
+      final plain = 'Alpha reading'.toFhirString.toStringSearchParameter(
+            _rt,
+            _id,
+            _lu,
+            'Observation.value.ofType(string)',
+            _idx,
+          );
+      expect(plain.map((r) => r.stringValue.value), ['alpha reading']);
     });
 
     test('extracts HumanName with only family', () {
@@ -101,7 +132,11 @@ void main() {
       final results =
           cp.toStringSearchParameter(_rt, _id, _lu, 'Patient.telecom', _idx);
       expect(results.length, 1);
-      expect(results.first.stringValue.value, '555-1234');
+      // 3.1.1.4.8: punctuation is ignored; it folds to a space so that a
+      // hyphenated name's words stay separable. (The section leaves a phone
+      // number's dashes to the server: "might remove all spaces and -".)
+      expect(results.first.stringValue.value, '555 1234');
+      expect(results.first.exactValue.value, '555-1234');
     });
 
     test('returns empty for unsupported type', () {
@@ -160,8 +195,11 @@ void main() {
       expect(results[0].tokenValue.value, '12345-6');
       expect(results[1].tokenSystem.value, 'http://snomed.info/sct');
       expect(results[1].tokenValue.value, '999999');
-      // text entry has no system
-      expect(results[2].tokenValue.value, 'Hemoglobin test');
+      // The text is a DISPLAY (R4B 3.1.1.4.4: `:text` searches "the text
+      // portion of a CodeableConcept"), and the row carries no code, so a
+      // code search cannot match it.
+      expect(results[2].tokenValue.value, '');
+      expect(results[2].tokenDisplay.value, 'Hemoglobin test');
     });
 
     test('extracts Identifier with system', () {
@@ -458,7 +496,37 @@ void main() {
       );
       expect(results.length, 1);
       expect(results.first.quantityValue.value, closeTo(98.6, 0.01));
-      expect(results.first.quantityUnit.present, false);
+      expect(results.first.quantityUnit.value, isNull);
+      // R4B 3.1.1.4.5: the stored value is a range too, half a unit of its
+      // last significant digit either side.
+      expect(results.first.quantityLow.value, closeTo(98.55, 1e-9));
+      expect(results.first.quantityHigh.value, closeTo(98.65, 1e-9));
+    });
+
+    test('extracts a Range as its explicit bounds, a Money as a quantity', () {
+      // R4B 3.1.1.9's cross-map: Range and Money are searched by quantity
+      // parameters. Neither wrote a row before.
+      final range = Range(
+        low: Quantity(value: FhirDecimal('1.0'), code: FhirCode('mg')),
+        high: Quantity(value: FhirDecimal('5.0'), code: FhirCode('mg')),
+      );
+      final rangeRows =
+          range.toQuantitySearchParameter(_rt, _id, _lu, _path, _idx);
+      expect(rangeRows.single.quantityValue.value, isNull);
+      expect(rangeRows.single.quantityLow.value, closeTo(0.95, 1e-9));
+      expect(rangeRows.single.quantityHigh.value, closeTo(5.05, 1e-9));
+      expect(rangeRows.single.quantityCode.value, 'mg');
+      final open = Range(low: Quantity(value: FhirDecimal('1.0')));
+      final openRows =
+          open.toQuantitySearchParameter(_rt, _id, _lu, _path, _idx);
+      expect(openRows.single.quantityHigh.value, isNull);
+      final money =
+          Money(value: FhirDecimal('12.50'), currency: FhirCode('USD'));
+      final moneyRows =
+          money.toQuantitySearchParameter(_rt, _id, _lu, _path, _idx);
+      expect(moneyRows.single.quantityValue.value, 12.5);
+      expect(moneyRows.single.quantityCode.value, 'USD');
+      expect(moneyRows.single.quantitySystem.value, 'urn:iso:std:iso:4217');
     });
 
     test('returns empty for non-Quantity type', () {
@@ -499,16 +567,19 @@ void main() {
       expect(results.first.uriValue.value, contains('Patient'));
     });
 
-    test('normalizes trailing slash', () {
-      final uri = FhirUri('http://example.org/fhir/');
-      final results = uri.toUriSearchParameter(_rt, _id, _lu, _path, _idx);
-      expect(results.first.uriValue.value, isNot(endsWith('/')));
-    });
-
-    test('normalizes scheme and host to lowercase', () {
-      final uri = FhirUri('HTTP://EXAMPLE.ORG/ValueSet/test');
-      final results = uri.toUriSearchParameter(_rt, _id, _lu, _path, _idx);
-      expect(results.first.uriValue.value, startsWith('http://example.org'));
+    test('a uri is stored as written', () {
+      // R4B 3.1.1.4.9: "matches are precise (e.g. case, accent, and escape)
+      // sensitive, and the entire URI must match". This used to lower-case
+      // the scheme and host and strip a trailing slash.
+      for (final written in [
+        'http://example.org/fhir/',
+        'HTTP://EXAMPLE.ORG/ValueSet/test',
+        'urn:oid:1.2.3.4.5',
+      ]) {
+        final results =
+            FhirUri(written).toUriSearchParameter(_rt, _id, _lu, _path, _idx);
+        expect(results.first.uriValue.value, written);
+      }
     });
 
     test('returns empty for unsupported type', () {

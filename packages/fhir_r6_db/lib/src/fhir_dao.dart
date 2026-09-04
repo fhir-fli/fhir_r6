@@ -547,12 +547,22 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
       // table; the comma-separated values inside it are ORed on that same
       // table. The split honours FHIR's backslash escaping, so `a\,b` is
       // one value.
+      // R4B 3.1.1.3: "servers SHOULD ignore unknown or unsupported
+      // parameters"; a strict client asks the SERVER to refuse them, with
+      // `Prefer: handling=strict`, and that is where it is enforced. Nothing
+      // this build has no definition for was ever indexed, so there is
+      // nothing to search either way. This used to fall through to a path
+      // that guessed the type from the value's shape and returned nothing.
+      if (searchParameterFor(resourceType, key.name) == null) continue;
+
       for (final repetition in entry.value) {
         final orValues = splitEscaped(repetition, ',')
             .map((v) => v.trim())
             .where((v) => v.isNotEmpty)
             .toList();
-        if (orValues.isEmpty) return null;
+        // 3.1.1.3: "Empty parameters are not an error - they are just
+        // ignored by the server."
+        if (orValues.isEmpty) continue;
 
         // The first condition is the outer select on its own table; every
         // further one is nested on an ALIAS of its table, so two conditions
@@ -832,7 +842,7 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
           table: s,
           on: (id) =>
               path(s.resourceType, s.searchName, s.searchPath, s.id, id),
-          value: s.numberValue,
+          value: s.numberLow,
           descending: descending,
         );
       case 'quantity':
@@ -841,7 +851,7 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
           table: s,
           on: (id) =>
               path(s.resourceType, s.searchName, s.searchPath, s.id, id),
-          value: s.quantityValue,
+          value: s.quantityLow,
           descending: descending,
         );
       case 'reference':
@@ -903,6 +913,17 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
     // published against Resource (R4B 3.1.1.4.1), not against each type.
     final declared = searchParameterFor(resourceType, key.name);
     if (declared == null) return null;
+    // 3.1.1.4.4, a SHALL: a modifier the type does not allow, or one this
+    // package does not implement, is refused rather than answered wrongly.
+    final modifier = key.modifier;
+    if (modifier != null && !isModifierAllowed(declared.type, modifier)) {
+      throw UnsupportedSearchModifier(
+        parameter: key.name,
+        modifier: modifier,
+        type: declared.type,
+        allowed: modifiersByType[declared.type] ?? const <String>{},
+      );
+    }
     if (key.chain != null) {
       if (declared.type != 'reference') return null;
       return _chainCondition(
@@ -1115,7 +1136,9 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
         final (prefix, rest) = splitComparator(declared, value);
         condition = _lastUpdatedCondition(prefix, rest, on: r);
       }
-      if (condition == null) return null;
+      if (condition == null) {
+        throw InvalidSearchValue(parameter: name, value: value, type: 'date');
+      }
       return _IndexCondition(
         r,
         r.id,
@@ -1235,7 +1258,13 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
         final (prefix, rest) = splitComparator(declared, value);
         final condition =
             _numberCondition(resourceType, name, prefix, rest, on: t);
-        if (condition == null) return null;
+        if (condition == null) {
+          throw InvalidSearchValue(
+            parameter: name,
+            value: value,
+            type: 'number',
+          );
+        }
         return _IndexCondition(t, t.id, condition);
       case 'quantity':
         final t = aliasName == null
@@ -1249,7 +1278,13 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
         final (prefix, rest) = splitComparator(declared, value);
         final condition =
             _quantityCondition(resourceType, name, prefix, rest, on: t);
-        if (condition == null) return null;
+        if (condition == null) {
+          throw InvalidSearchValue(
+            parameter: name,
+            value: value,
+            type: 'quantity',
+          );
+        }
         return _IndexCondition(t, t.id, condition);
       case 'uri':
         final t = aliasName == null
@@ -1266,11 +1301,24 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
           case 'missing':
             return _IndexCondition(t, t.id, path, negated: value == 'true');
           case 'below':
-            return _IndexCondition(
-              t,
-              t.id,
-              path & t.uriValue.like('${unescapeValue(value)}%'),
-            );
+          case 'above':
+            // 3.1.1.4.9: `:below` "the search term left-matches the value",
+            // `:above` "vice-versa"; "the :above and :below modifiers only
+            // apply to URLs, and not URNs such as OIDs", so a URN is matched
+            // whole. Prefix tests by substr/instr rather than LIKE, because
+            // `_` is common in URLs and is a LIKE wildcard.
+            final term = unescapeValue(value);
+            if (!_isUrl(term)) {
+              return _IndexCondition(t, t.id, path & t.uriValue.equals(term));
+            }
+            final prefix = modifier == 'below'
+                ? t.uriValue.substr(1, term.length).equals(term)
+                // instr(term, stored) = 1: the stored value starts the term.
+                : FunctionCallExpression<int>(
+                    'instr',
+                    [Constant<String>(term), t.uriValue],
+                  ).equals(1);
+            return _IndexCondition(t, t.id, path & prefix);
           default:
             return null;
         }
@@ -1317,7 +1365,9 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
         final (prefix, rest) = splitComparator(declared, value);
         final condition =
             _dateCondition(resourceType, name, prefix, rest, on: t);
-        if (condition == null) return null;
+        if (condition == null) {
+          throw InvalidSearchValue(parameter: name, value: value, type: 'date');
+        }
         return _IndexCondition(t, t.id, condition);
       default:
         return null;
@@ -2134,7 +2184,13 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
     $StringSearchParametersTable? on,
   }) {
     final t = on ?? stringSearchParameters;
-    final normalized = normalizeSearchString(unescapeValue(value)).trim();
+    final normalized = normalizeSearchString(unescapeValue(value));
+    // 3.1.1.4.8: "a field matches a string query if the value of the field
+    // equals or starts with the supplied parameter value, after both have
+    // been normalized". Name parts are also indexed word by word (see the
+    // string extractor), which is how "Quinones" finds "Carreno Quinones".
+    // LIKE's wildcards `%` and `_` are punctuation, which the normalisation
+    // drops from both sides, so none can reach the pattern.
     return t.resourceType.equals(resourceType) &
         (t.searchName.equals(searchPath) |
             t.searchPath.like('$resourceType.$searchPath') |
@@ -2892,75 +2948,86 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
     return allResourceIds.difference(idsWithParam);
   }
 
-  /// The comparison for one number or quantity value under its prefix,
-  /// R4B 3.1.1.4.5 and 3.1.1.4.6.
+  /// The comparison of a stored numeric range `[low, high)` against a search
+  /// value under its prefix, R4B 3.1.1.4.5 and 3.1.1.4.6.
   ///
-  /// A search value has an implicit range, half a unit of its last
-  /// significant digit either side: `100` is [99.5, 100.5), `100.00` is
-  /// [99.995, 100.005), `5.4` is [5.35, 5.45), `5.40e-3` is
-  /// [0.005395, 0.005405). 3.1.1.4.6: "the number of significant digits of
-  /// the implicit range is the number of digits specified in the search
-  /// parameter value, excluding leading zeros. So 100 and 1.00e2 both have
-  /// the same number of significant digits - three". The stored value is a
-  /// point, so:
+  /// Both sides are ranges. The search value's is half a unit of its last
+  /// significant digit either side ([implicitRange]: `100` is [99.5, 100.5),
+  /// `100.00` is [99.995, 100.005)); the stored value's was written at
+  /// extraction the same way, with an integer as a point and a Range as its
+  /// explicit bounds, either of which may be open (null). With the stored
+  /// `[L, H)` and the search `[l, h)`:
   ///
   /// - `eq` — "the range of the search value fully contains the range of the
-  ///   target value": `low <= v < high`. This used to be `v == value`, which
-  ///   3.1.1.4.6 rules out ("The way search parameters operate in resources
-  ///   is not the same as whether two numbers are equal to each other in a
-  ///   mathematical sense"): `probability=0.3` did not find 0.31.
+  ///   target value": `L >= l AND H <= h`. A missing bound cannot be
+  ///   contained. This used to be `v == value`.
   /// - `ne` — "does not fully contain": the complement.
   /// - `gt`, `lt`, `ge`, `le` — "the implicit precision of the number is
-  ///   ignored, and they are treated as if they have arbitrarily high
-  ///   precision": exact against `value`.
-  /// - `sa` — "the range above the search value contains the range of the
-  ///   target value" and they do not overlap: `v >= high`. `eb`: `v < low`.
-  ///   These two used to fall into `eq`, a wrong answer.
+  ///   ignored" for the SEARCH value, which is a point; the stored range
+  ///   still counts: `gt` is "the range above the search value intersects
+  ///   with the range of the target value", `H > value` (a decimal written
+  ///   `100.0` reaches above 100 and matches `gt100`; an integer 100 does
+  ///   not). `ge`/`le` add containment.
+  /// - `sa` — "does not overlap … and the range above the search value
+  ///   contains the range of the target value": `L >= h`. `eb`: `H <= l`.
   /// - `ap` — "the range of the search value overlaps with the range of the
-  ///   target value", with the recommended approximation of 10% of the
-  ///   stated value: the implicit range widened by that on each side.
+  ///   target value", with the recommended 10% of the stated value.
   ///
   /// ⚠️ One example in 3.1.1.4.6 does not follow its own rule: it gives
   /// `1e2` as "1 significant figures precision" with the range [95, 105),
   /// which is a two-figure range. By the rule as worded, one significant
   /// figure at the hundreds place is [50, 150), and that is what this does.
   /// HAPI uses exact matching for eq/ne ("per discussions with Grahame
-  /// Grieve", NumberPredicateBuilder.java) and Microsoft's server widens by
-  /// half a unit of the last DECIMAL place, so 1e2 is ±0.5 there. Neither
-  /// follows the text, so the text is what is implemented here.
+  /// Grieve", NumberPredicateBuilder.java) and a point comparison for
+  /// gt/lt; Microsoft's server widens by half a unit of the last DECIMAL
+  /// place. Neither follows the text, so the text is what is implemented.
   Expression<bool> _numericPrefixCondition(
-    GeneratedColumn<double> column,
+    GeneratedColumn<double> lowColumn,
+    GeneratedColumn<double> highColumn,
     String? prefix,
     String written,
     double value,
   ) {
     // The caller has parsed [written], so the range is never null.
     final (:low, :high) = implicitRange(written)!;
+    final lowMissing = lowColumn.isNull();
+    final highMissing = highColumn.isNull();
+    final contained = lowColumn.isNotNull() &
+        highColumn.isNotNull() &
+        lowColumn.isBiggerOrEqualValue(low) &
+        highColumn.isSmallerOrEqualValue(high);
+    // A point (integer) is stored with low == high; "above" a search point
+    // means the stored range has something greater than it.
+    final above = highMissing |
+        highColumn.isBiggerThanValue(value) |
+        (lowColumn.equalsExp(highColumn) & lowColumn.isBiggerThanValue(value));
+    final below = lowMissing | lowColumn.isSmallerThanValue(value);
     switch (prefix) {
       case 'gt':
-        return column.isBiggerThanValue(value);
+        return above;
       case 'lt':
-        return column.isSmallerThanValue(value);
+        return below;
       case 'ge':
-        return column.isBiggerOrEqualValue(value);
+        return above |
+            (lowColumn.isNotNull() & lowColumn.isBiggerOrEqualValue(value));
       case 'le':
-        return column.isSmallerOrEqualValue(value);
+        return below |
+            (highColumn.isNotNull() & highColumn.isSmallerOrEqualValue(value));
       case 'sa':
-        return column.isBiggerOrEqualValue(high);
+        return lowColumn.isNotNull() & lowColumn.isBiggerOrEqualValue(high);
       case 'eb':
-        return column.isSmallerThanValue(low);
+        return highColumn.isNotNull() & highColumn.isSmallerOrEqualValue(low);
       case 'ne':
-        return column.isSmallerThanValue(low) |
-            column.isBiggerOrEqualValue(high);
+        return contained.not();
       case 'ap':
         final approximation = value.abs() * 0.1;
-        return column.isBiggerOrEqualValue(low - approximation) &
-            column.isSmallerThanValue(high + approximation);
+        return (lowMissing |
+                lowColumn.isSmallerThanValue(high + approximation)) &
+            (highMissing | highColumn.isBiggerThanValue(low - approximation));
       default:
         // eq, and no prefix at all: 3.1.1.4.5, "If no prefix is present,
         // the prefix eq is assumed."
-        return column.isBiggerOrEqualValue(low) &
-            column.isSmallerThanValue(high);
+        return contained;
     }
   }
 
@@ -2986,7 +3053,8 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
 
     return whereCondition &
         _numericPrefixCondition(
-          t.numberValue,
+          t.numberLow,
+          t.numberHigh,
           modifier,
           searchValue,
           numValue,
@@ -3083,7 +3151,8 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
 
     return whereCondition &
         _numericPrefixCondition(
-          t.quantityValue,
+          t.quantityLow,
+          t.quantityHigh,
           modifier,
           parts[0],
           numValue,
@@ -3130,6 +3199,11 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
     return matchingIds;
   }
 
+  /// Whether a uri search value is a URL (a scheme with an authority), as
+  /// opposed to a URN such as an OID, for 3.1.1.4.9's rule that `:above`
+  /// and `:below` apply only to URLs.
+  static bool _isUrl(String value) => value.contains('://');
+
   /// The WHERE for one plain uri value: exact match on the stored URI
   /// (R4B 3.1.1.4.13 — "the search is case sensitive and accent sensitive",
   /// with `:above` and `:below` as modifiers, which take the general path).
@@ -3140,11 +3214,31 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
     $UriSearchParametersTable? on,
   }) {
     final t = on ?? uriSearchParameters;
-    return t.resourceType.equals(resourceType) &
+    final path = t.resourceType.equals(resourceType) &
         (t.searchName.equals(searchPath) |
             t.searchPath.like('$resourceType.$searchPath') |
-            t.searchPath.like('$resourceType.%.$searchPath')) &
-        t.uriValue.equals(unescapeValue(value));
+            t.searchPath.like('$resourceType.%.$searchPath'));
+    final unescaped = unescapeValue(value);
+    // 3.1.1.4.9: for the canonical URLs of the conformance and knowledge
+    // resources, "servers SHOULD support automatically detecting a
+    // |[version] portion as part of the search parameter, and interpreting
+    // that portion as a search on the version". A `|` splits off a version
+    // when the resource type has a `version` parameter; the version is then
+    // a token condition on the same resource.
+    final bar = unescaped.lastIndexOf('|');
+    if (bar > 0 && searchParameterFor(resourceType, 'version') != null) {
+      final url = unescaped.substring(0, bar);
+      final version = unescaped.substring(bar + 1);
+      final v = alias(tokenSearchParameters, '${t.aliasedName}v');
+      final versioned = selectOnly(v)
+        ..addColumns([const Constant(1)])
+        ..where(
+          _tokenCondition(resourceType, 'version', version, on: v) &
+              v.id.equalsExp(t.id),
+        );
+      return path & t.uriValue.equals(url) & existsQuery(versioned);
+    }
+    return path & t.uriValue.equals(unescaped);
   }
 
   Future<Set<String>> _searchUriParameter(
@@ -3153,58 +3247,31 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
     List<String> values, [
     String? modifier,
   ]) async {
+    // The same conditions the SQL-paged path builds, so both paths mean
+    // the same thing (this one is reached only for shapes the paged path
+    // cannot build, which for a uri is none of its own modifiers).
     final matchingIds = <String>{};
+    final declared = searchParameterFor(resourceType, searchPath) ??
+        const SearchParameterDefinition('uri', []);
     for (final value in values) {
-      // :above and :below were already implemented here and already correct.
-      // They were simply unreachable: the modifier was read off the END of the
-      // value, so `url:below=http://x` never arrived and `url=http://x:below`
-      // did. The modifier now comes from the parameter name.
-      final searchValue = unescapeValue(value);
-
-      final pathCondition = uriSearchParameters.searchName.equals(searchPath) |
-          uriSearchParameters.searchPath.like('$resourceType.$searchPath') |
-          uriSearchParameters.searchPath.like('$resourceType.%.$searchPath');
-
-      if (modifier == 'above') {
-        // :above means stored URI is a parent/prefix of the search value
-        // i.e., searchValue.startsWith(storedUri)
-        // Can't express this directly in Drift's query builder, so fetch and
-        // filter in Dart.
-        final query = select(uriSearchParameters)
-          ..where(
-            (tbl) => tbl.resourceType.equals(resourceType) & pathCondition,
-          );
-        final rows = await query.get();
-        for (final row in rows) {
-          if (searchValue.startsWith(row.uriValue)) {
-            matchingIds.add(row.id);
-          }
-        }
-      } else {
-        Expression<bool> valueCondition;
-        if (modifier == 'below') {
-          // :below means stored URI starts with the search value (stored is more specific)
-          valueCondition = uriSearchParameters.uriValue.like('$searchValue%');
-        } else {
-          valueCondition = uriSearchParameters.uriValue.equals(searchValue);
-        }
-
-        // Only the id column is read, not every column of every
-        // matching row; see _executeTokenQuery for the measurement.
-        final idColumn = uriSearchParameters.id;
-        final rows = await (selectOnly(uriSearchParameters, distinct: true)
-              ..addColumns([idColumn])
-              ..where(
-                uriSearchParameters.resourceType.equals(resourceType) &
-                    pathCondition &
-                    valueCondition,
-              ))
-            .get();
-        for (final row in rows) {
-          final id = row.read(idColumn);
-          if (id != null) {
-            matchingIds.add(id);
-          }
+      final part = await _conditionFor(
+        resourceType,
+        searchPath,
+        value,
+        declared,
+        modifier: modifier,
+      );
+      if (part == null) {
+        continue;
+      }
+      final rows = await (selectOnly(part.table, distinct: true)
+            ..addColumns([part.idColumn])
+            ..where(part.condition))
+          .get();
+      for (final row in rows) {
+        final id = row.read(part.idColumn);
+        if (id != null) {
+          matchingIds.add(id);
         }
       }
     }
@@ -3615,13 +3682,15 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
       case 'number':
         for (final p in lists.numberParams) {
           if (named(p.searchName.value, p.searchPath.value)) {
-            values.add(p.numberValue.value);
+            final low = p.numberLow.value;
+            if (low != null) values.add(low);
           }
         }
       case 'quantity':
         for (final p in lists.quantityParams) {
           if (named(p.searchName.value, p.searchPath.value)) {
-            values.add(p.quantityValue.value);
+            final low = p.quantityLow.value;
+            if (low != null) values.add(low);
           }
         }
       case 'reference':
