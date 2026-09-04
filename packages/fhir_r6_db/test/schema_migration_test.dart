@@ -140,7 +140,7 @@ void main() {
     );
 
     final version = await db.customSelect('PRAGMA user_version').getSingle();
-    expect(version.data.values.first, equals(6));
+    expect(version.data.values.first, equals(db.schemaVersion));
 
     await db.close();
   });
@@ -173,6 +173,139 @@ void main() {
       isTrue,
       reason: 'the column has to exist and be written after the upgrade',
     );
+    await db.close();
+  });
+
+  test('a version-7 database has its date index rebuilt as ranges', () async {
+    // Version 8 turns every date row into a range and indexes Period and
+    // Timing values for the first time. A version-7 database holds an
+    // Encounter whose period was never indexed at all, and an Observation
+    // whose date was indexed as a single instant. Both have to come back as
+    // ranges after the upgrade, from the stored resources alone.
+    final db7 = FhirDb(NativeDatabase(dbFile));
+    await db7.fhirDao.saveResource(
+      Encounter.fromJson({
+        'resourceType': 'Encounter',
+        'id': 'enc',
+        'status': 'finished',
+        'class': [
+          {
+            'coding': [
+              {'code': 'IMP'},
+            ],
+          },
+        ],
+        'actualPeriod': {'start': '2013-01-14', 'end': '2013-01-16'},
+      }),
+    );
+    await db7.fhirDao.saveResource(
+      Observation.fromJson({
+        'resourceType': 'Observation',
+        'id': 'obs',
+        'status': 'final',
+        'code': {
+          'coding': [
+            {'system': 'http://example.org', 'code': 'X'},
+          ],
+        },
+        'effectiveDateTime': '2013-01-14',
+      }),
+    );
+    // Walk the table back to the version-7 shape: one non-null instant and
+    // no end column, and no row for the Encounter, which version 7 never
+    // wrote. Then stamp the version.
+    await db7.customStatement(
+      "DELETE FROM date_search_parameters WHERE resource_type = 'Encounter'",
+    );
+    await db7.customStatement('DROP INDEX idx_date_value_end');
+    await db7.customStatement(
+      'ALTER TABLE date_search_parameters DROP COLUMN date_value_end',
+    );
+    await db7.customStatement('PRAGMA user_version = 7');
+    await db7.close();
+
+    final db = FhirDb(NativeDatabase(dbFile));
+    final rows = await db.fhirDao.select(db.dateSearchParameters).get();
+    // R5 also indexes date-start and end-date from the same period.
+    final enc =
+        rows.where((r) => r.id == 'enc' && r.searchName == 'date').toList();
+    expect(enc, hasLength(1), reason: 'the Period is indexed now');
+    expect(enc.single.dateValue, DateTime(2013, 1, 14));
+    expect(enc.single.dateValueEnd, DateTime(2013, 1, 17));
+    final obs = rows.where((r) => r.id == 'obs' && r.searchName == 'date');
+    expect(obs.single.dateValueEnd, DateTime(2013, 1, 15));
+    // And the search that always returned nothing answers.
+    final found = await db.fhirDao.search(
+      resourceType: R6ResourceType.Encounter,
+      searchParameters: {
+        'date': ['2013-01'],
+      },
+    );
+    expect(found.map((r) => r.id!.valueString), ['enc']);
+    final version = await db.customSelect('PRAGMA user_version').getSingle();
+    expect(version.data.values.first, equals(8));
+    await db.close();
+  });
+
+  test('the value indexes exist after a fresh create and after an upgrade',
+      () async {
+    // The search tables' primary keys lead with resource_type and id, which a
+    // search PRODUCES rather than filters on. Without an index on each value
+    // column, `WHERE token_value = ?` scans the whole resource type. fhirant
+    // created these itself from its first schema, so it never showed the
+    // problem; any other consumer of this package got no indexes at all.
+    Future<Set<String>> indexesIn(FhirDb db) async {
+      final rows = await db
+          .customSelect(
+            "SELECT name FROM sqlite_master WHERE type = 'index' "
+            "AND name NOT LIKE 'sqlite_autoindex%'",
+          )
+          .get();
+      return rows.map((r) => r.read<String>('name')).toSet();
+    }
+
+    const expected = {
+      'idx_string_value',
+      'idx_token_value',
+      'idx_token_system',
+      'idx_ref_type',
+      'idx_ref_id',
+      'idx_ref_identifier_sys',
+      'idx_ref_identifier_val',
+      'idx_uri_value',
+      'idx_date_value',
+      'idx_number_value',
+      'idx_quantity_value',
+      'idx_special_value',
+    };
+
+    final fresh = FhirDb(NativeDatabase.memory());
+    await fresh.customSelect('SELECT 1').get();
+    expect(await indexesIn(fresh), containsAll(expected));
+    await fresh.close();
+
+    await createSchemaV4(dbFile);
+    final upgraded = FhirDb(NativeDatabase(dbFile));
+    await upgraded.customSelect('SELECT 1').get();
+    expect(await indexesIn(upgraded), containsAll(expected));
+    await upgraded.close();
+  });
+
+  test('the planner has statistics once the database is open', () async {
+    // A database that has never been ANALYZEd has no sqlite_stat1, and the
+    // planner then guesses. Measured 2026-09-03 on 928,935 resources: it
+    // picked the primary key for a DISTINCT-id reference query and turned
+    // 0.01s into 10.35s. beforeOpen runs ANALYZE when the statistics are
+    // missing, so the table has to exist after any open.
+    final db = FhirDb(NativeDatabase(dbFile));
+    await db.fhirDao.saveResource(Patient(id: 'p'.toFhirString));
+    final stat = await db
+        .customSelect(
+          "SELECT name FROM sqlite_master WHERE type = 'table' "
+          "AND name = 'sqlite_stat1'",
+        )
+        .get();
+    expect(stat, isNotEmpty, reason: 'ANALYZE never ran');
     await db.close();
   });
 

@@ -410,6 +410,513 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
   }) async {
     final resourceTypeString = resourceType.toString();
 
+    final paged = await _pagedIds(
+      resourceTypeString,
+      searchParameters,
+      hasParameters,
+      sort,
+      count,
+      offset,
+    );
+    if (paged != null) {
+      final results = <fhir.Resource>[];
+      for (final id in paged) {
+        final resource = await getResource(resourceType, id);
+        if (resource != null) {
+          results.add(resource);
+        }
+      }
+      return results;
+    }
+
+    final matchingIds = await _matchingIds(
+      resourceType: resourceType,
+      searchParameters: searchParameters,
+      hasParameters: hasParameters,
+    );
+
+    if (matchingIds.isEmpty) {
+      return [];
+    }
+
+    // Cut the page out of the ID set BEFORE reading any resource.
+    //
+    // This used to read every match — one query and one parse each — build the
+    // whole list in memory, and then throw away all but the page. Measured on
+    // 928,935 MIMIC resources: `Observation?status=final` with count=20 took
+    // **190.94 seconds**, because it read roughly 800,000 rows to return 20.
+    //
+    // `matchingIds` is a Set, so its iteration order is not a defined order to
+    // page over: offset 20 was not guaranteed to continue where offset 0 left
+    // off. The ids are sorted first, which makes paging stable and repeatable
+    // for a caller that walks the pages.
+    //
+    // A sort on this path still reads every match, because the page cannot
+    // be chosen until the resources are ordered. This path is reached only
+    // for a search the SQL-paged path refuses (a modifier, a chain, `_has`,
+    // a comma, a repeated parameter); a plain sorted search is paged in SQL.
+    final ordered = matchingIds.toList()..sort();
+
+    if (sort != null && sort.isNotEmpty) {
+      final all = <fhir.Resource>[];
+      for (final id in ordered) {
+        final resource = await getResource(resourceType, id);
+        if (resource != null) {
+          all.add(resource);
+        }
+      }
+      await _sortResults(all, sort, resourceTypeString);
+      return _page(all, offset, count);
+    }
+
+    final page = _page(ordered, offset, count);
+    final results = <fhir.Resource>[];
+    for (final id in page) {
+      final resource = await getResource(resourceType, id);
+      if (resource != null) {
+        results.add(resource);
+      }
+    }
+    return results;
+  }
+
+  /// The requested slice of [items], given an offset and a count.
+  static List<T> _page<T>(List<T> items, int? offset, int? count) {
+    final start = (offset != null && offset > 0)
+        ? (offset > items.length ? items.length : offset)
+        : 0;
+    var end = items.length;
+    if (count != null && count > 0 && end - start > count) {
+      end = start + count;
+    }
+    return items.sublist(start, end);
+  }
+
+  /// The page of ids, cut in SQL, for a search made only of parameters this
+  /// path knows how to express as a typed WHERE: any number of them, each one
+  /// repetition, no modifier, no comma, no `_has`, no `_sort`. Returns null
+  /// for anything else, and the general path runs.
+  ///
+  /// The first parameter is the select; each further one becomes
+  /// `id IN (SELECT id FROM <its table> WHERE …)` on it through Drift's
+  /// `isInQuery`, so nothing is raw SQL and SQLite intersects the parameters
+  /// and stops at the page. `status=final` alone took 46.71s on the published
+  /// 0.12.0 and ~5s after the earlier fixes, every remaining second of it
+  /// SQLite handing 813,513 ids to Dart so Dart could keep 20; measured after
+  /// this, 1.12s, and `status=final AND code=227969` 0.73s.
+  ///
+  /// Types covered: token, date, string, reference, number, quantity,
+  /// uri. Each further type is one condition builder
+  /// added to [_conditionFor]; a search using a type not there falls through.
+  ///
+  /// A `_sort` is paged here too, as a LEFT JOIN per key with GROUP BY and
+  /// MIN/MAX; see [_sortKeyFor]. A search with no parameter at all selects
+  /// from the resources table.
+  Future<List<String>?> _pagedIds(
+    String resourceType,
+    Map<String, List<String>>? searchParameters,
+    List<HasParameter>? hasParameters,
+    List<String>? sort,
+    int? count,
+    int? offset,
+  ) async {
+    if (count == null || count <= 0) return null;
+    if (hasParameters != null && hasParameters.isNotEmpty) return null;
+
+    final sortKeys = <_SortKey>[];
+    for (final (i, rule) in (sort ?? const <String>[]).indexed) {
+      final key = _sortKeyFor(resourceType, rule, 's$i');
+      if (key == null) return null;
+      sortKeys.add(key);
+    }
+
+    final parts = <_IndexCondition>[];
+    for (final entry in (searchParameters ?? const {}).entries) {
+      if (entry.value.length != 1) return null;
+      final value = entry.value.single;
+      if (value.contains(',') || value.isEmpty) return null;
+
+      final key = SearchQueryKey.parse(entry.key);
+      if (key.qualifier != null) return null;
+      if (key.name.startsWith('_')) return null;
+
+      final declared = searchParameterFor(resourceType, key.name);
+      if (declared == null) return null;
+
+      // The first parameter is the outer select on its own table; every
+      // further one is a correlated EXISTS on an ALIAS of its table, so two
+      // parameters on the same table (status and code are both tokens) do
+      // not collide.
+      final part = _conditionFor(
+        resourceType,
+        key.name,
+        value,
+        declared,
+        aliasName: parts.isEmpty ? null : 'p${parts.length}',
+      );
+      if (part == null) return null;
+      parts.add(part);
+    }
+
+    // Which parameter is the outer select, and how the others nest, is
+    // decided by SIZE, because SQLite cannot: sqlite_stat1 holds one average
+    // per index (idx_token_value: 25 rows per value) and this build has no
+    // STAT4, so the planner reads `status=final` as 25 rows when it is
+    // 813,513, and walks it through the value index followed by a sort that
+    // has to see every row before the LIMIT. Measured 2026-09-04 on the
+    // 929k-resource MIMIC load, 20 rows each:
+    //
+    //   status=final & code=227969   IN, status outer    0.63s
+    //                                EXISTS, code outer  0.15s
+    //                                EXISTS, status outer 3.89s
+    //   date=2137 & status=final     IN, date outer      2.19s
+    //                                EXISTS, date outer  0.00s
+    //                                EXISTS, status outer 4.52s
+    //   subject=Patient/x & code     IN, subject outer   0.06s
+    //                                EXISTS, code outer  0.16s
+    //
+    // `id IN (SELECT …)` has SQLite materialise the whole inner set first,
+    // so its cost is the inner's size; a correlated EXISTS probes the inner
+    // table's primary key once per outer row, so its cost is the outer's
+    // size. Each parameter is therefore probed for its row count, capped
+    // so the probe itself stays cheap (0.03–0.17s each at 100,000 on that
+    // load, counted inside SQLite). The smallest known set
+    // is the outer; a nested set that is known to be small is materialised
+    // (IN), one that is not is probed (EXISTS). When every set exceeds the
+    // cap nothing is known, and the parameters are taken in the order given
+    // with IN, whose cost is at least bounded by the inner sizes.
+    //
+    // The probe escalates, 2,000 then 100,000, so the common case pays
+    // almost nothing: one patient's records against one code is settled
+    // by the first stage in a few milliseconds, and only a query whose
+    // every parameter matches thousands of rows pays for the second.
+    var limit = _probeLimits.first;
+    final sized = <(_IndexCondition, int)>[];
+    if (parts.isEmpty) {
+      // No parameter at all — `Observation?_count=20`, or a bare `_sort`:
+      // the outer select is the resources table itself.
+      sized.add(
+        (
+          _IndexCondition(
+            resources,
+            resources.id,
+            resources.resourceType.equals(resourceType),
+          ),
+          0,
+        ),
+      );
+    } else if (parts.length > 1) {
+      for (final probeLimit in _probeLimits) {
+        limit = probeLimit;
+        sized.clear();
+        for (final part in parts) {
+          sized.add((part, await _probeSize(part, probeLimit)));
+        }
+        if (sized.any((s) => s.$2 < probeLimit)) {
+          break;
+        }
+      }
+    } else {
+      sized.add((parts.single, 0));
+    }
+    final allBig = sized.every((s) => s.$2 >= limit);
+    if (!allBig) {
+      sized.sort((a, b) => a.$2.compareTo(b.$2));
+    }
+    final first = sized.first.$1;
+    var where = first.condition;
+    for (final (other, size) in sized.skip(1)) {
+      if (size < limit) {
+        where = where &
+            first.idColumn.isInQuery(
+              selectOnly(other.table, distinct: true)
+                ..addColumns([other.idColumn])
+                ..where(other.condition),
+            );
+      } else {
+        where = where &
+            existsQuery(
+              selectOnly(other.table)
+                ..addColumns([const Constant(1)])
+                ..where(
+                  other.condition & other.idColumn.equalsExp(first.idColumn),
+                ),
+            );
+      }
+    }
+    if (sortKeys.isEmpty) {
+      final rows = await (selectOnly(first.table, distinct: true)
+            ..addColumns([first.idColumn])
+            ..where(where)
+            ..orderBy([OrderingTerm.asc(first.idColumn)])
+            ..limit(count, offset: offset))
+          .get();
+      return rows
+          .map((r) => r.read(first.idColumn))
+          .whereType<String>()
+          .toList();
+    }
+
+    // §3.1.1.5.1: "there can be multiple values for a given search parameter
+    // for a single resource. In this case, the sort is based on the item in
+    // the set of multiple parameters that comes earliest in the specified
+    // sort order" — so each sort key is a LEFT JOIN to its index table, the
+    // rows are grouped by id, and the key is MIN of the value ascending or
+    // MAX descending. A resource with no value for the key keeps its place
+    // in the result and sorts last (a LEFT JOIN, and NULLS LAST, which is
+    // not SQLite's default for ascending). Ties break on id so a page is
+    // stable. This used to read EVERY matching resource and sort in Dart.
+    final joined = selectOnly(first.table).join([
+      for (final key in sortKeys)
+        leftOuterJoin(
+          key.table,
+          key.on(first.idColumn),
+          useColumns: false,
+        ),
+    ])
+      ..addColumns([first.idColumn])
+      ..where(where)
+      ..groupBy([first.idColumn])
+      ..orderBy([
+        for (final key in sortKeys)
+          OrderingTerm(
+            expression: key.descending ? key.value.max() : key.value.min(),
+            mode: key.descending ? OrderingMode.desc : OrderingMode.asc,
+            nulls: NullsOrder.last,
+          ),
+        OrderingTerm.asc(first.idColumn),
+      ])
+      ..limit(count, offset: offset);
+    final rows = await joined.get();
+    return rows.map((r) => r.read(first.idColumn)).whereType<String>().toList();
+  }
+
+  /// One `_sort` rule as a join to the table holding its value, or null when
+  /// the rule names nothing this path can sort by (a parameter of a type with
+  /// no value column, or an unknown parameter), which sends the search down
+  /// the general path.
+  ///
+  /// `_id` and `_lastUpdated` join the resources table. A string sorts on its
+  /// normalized column, which is lower-cased and accent-folded: §3.1.1.5.1,
+  /// "sorting SHOULD be performed on a case-insensitive basis. Accents may
+  /// either be ignored or sorted as per realm convention."
+  _SortKey? _sortKeyFor(String resourceType, String rule, String aliasName) {
+    final descending = rule.startsWith('-');
+    final name = descending ? rule.substring(1) : rule;
+    if (name.isEmpty) return null;
+
+    if (name == '_id' || name == '_lastUpdated') {
+      final r = alias(resources, aliasName);
+      return _SortKey(
+        table: r,
+        on: (id) => r.resourceType.equals(resourceType) & r.id.equalsExp(id),
+        value: name == '_id' ? r.id : r.lastUpdated,
+        descending: descending,
+      );
+    }
+
+    final declared = searchParameterFor(resourceType, name);
+    if (declared == null) return null;
+
+    Expression<bool> path(
+      GeneratedColumn<String> type,
+      GeneratedColumn<String> searchName,
+      GeneratedColumn<String> searchPath,
+      GeneratedColumn<String> id,
+      GeneratedColumn<String> outerId,
+    ) =>
+        type.equals(resourceType) &
+        id.equalsExp(outerId) &
+        (searchName.equals(name) |
+            searchPath.like('$resourceType.$name') |
+            searchPath.like('$resourceType.%.$name'));
+
+    switch (declared.type) {
+      case 'string':
+        final s = alias(stringSearchParameters, aliasName);
+        return _SortKey(
+          table: s,
+          on: (id) =>
+              path(s.resourceType, s.searchName, s.searchPath, s.id, id),
+          value: s.stringValue,
+          descending: descending,
+        );
+      case 'token':
+        final s = alias(tokenSearchParameters, aliasName);
+        return _SortKey(
+          table: s,
+          on: (id) =>
+              path(s.resourceType, s.searchName, s.searchPath, s.id, id),
+          value: s.tokenValue,
+          descending: descending,
+        );
+      case 'date':
+        final s = alias(dateSearchParameters, aliasName);
+        return _SortKey(
+          table: s,
+          on: (id) =>
+              path(s.resourceType, s.searchName, s.searchPath, s.id, id),
+          value: s.dateValue,
+          descending: descending,
+        );
+      case 'number':
+        final s = alias(numberSearchParameters, aliasName);
+        return _SortKey(
+          table: s,
+          on: (id) =>
+              path(s.resourceType, s.searchName, s.searchPath, s.id, id),
+          value: s.numberValue,
+          descending: descending,
+        );
+      case 'quantity':
+        final s = alias(quantitySearchParameters, aliasName);
+        return _SortKey(
+          table: s,
+          on: (id) =>
+              path(s.resourceType, s.searchName, s.searchPath, s.id, id),
+          value: s.quantityValue,
+          descending: descending,
+        );
+      case 'reference':
+        final s = alias(referenceSearchParameters, aliasName);
+        return _SortKey(
+          table: s,
+          on: (id) =>
+              path(s.resourceType, s.searchName, s.searchPath, s.id, id),
+          value: s.referenceValue,
+          descending: descending,
+        );
+      case 'uri':
+        final s = alias(uriSearchParameters, aliasName);
+        return _SortKey(
+          table: s,
+          on: (id) =>
+              path(s.resourceType, s.searchName, s.searchPath, s.id, id),
+          value: s.uriValue,
+          descending: descending,
+        );
+      default:
+        return null;
+    }
+  }
+
+  /// Rows a condition matches, counted inside SQLite and capped at
+  /// [_probeLimit]: `SELECT count(*) FROM (SELECT id … LIMIT n)`. Not
+  /// DISTINCT, so a parameter indexed twice per resource counts double —
+  /// this ranks sets, it does not report them, and the plain count was
+  /// measured at a third of the DISTINCT one on the big sets.
+  Future<int> _probeSize(_IndexCondition part, int limit) async {
+    final limited = Subquery(
+      selectOnly(part.table)
+        ..addColumns([part.idColumn])
+        ..where(part.condition)
+        ..limit(limit),
+      'probe',
+    );
+    final count = countAll();
+    final row = await (selectOnly(limited)..addColumns([count])).getSingle();
+    return row.read(count) ?? 0;
+  }
+
+  /// The probe's stages. A set at or above the last one is "big" and its
+  /// exact size is not worth finding: the probe would cost as much as the
+  /// search (0.17s for 100,000 rows of the date index on the MIMIC load).
+  static const _probeLimits = [2000, 100000];
+
+  /// One parameter's typed WHERE on its own index table, or null when this
+  /// path has no builder for the parameter's type or the value does not
+  /// parse for it.
+  _IndexCondition? _conditionFor(
+    String resourceType,
+    String name,
+    String value,
+    SearchParameterDefinition declared, {
+    String? aliasName,
+  }) {
+    switch (declared.type) {
+      case 'token':
+        final t = aliasName == null
+            ? tokenSearchParameters
+            : alias(tokenSearchParameters, aliasName);
+        return _IndexCondition(
+          t,
+          t.id,
+          _tokenCondition(resourceType, name, value, on: t),
+        );
+      case 'reference':
+        // A chain (`subject.name`) never reaches here: the key's qualifier
+        // is rejected above. Only `Type/id` and bare ids do.
+        final t = aliasName == null
+            ? referenceSearchParameters
+            : alias(referenceSearchParameters, aliasName);
+        return _IndexCondition(
+          t,
+          t.id,
+          _referenceCondition(resourceType, name, value, on: t),
+        );
+      case 'number':
+        final (prefix, rest) = splitComparator(declared, value);
+        final t = aliasName == null
+            ? numberSearchParameters
+            : alias(numberSearchParameters, aliasName);
+        final condition =
+            _numberCondition(resourceType, name, prefix, rest, on: t);
+        if (condition == null) return null;
+        return _IndexCondition(t, t.id, condition);
+      case 'quantity':
+        final (prefix, rest) = splitComparator(declared, value);
+        final t = aliasName == null
+            ? quantitySearchParameters
+            : alias(quantitySearchParameters, aliasName);
+        final condition =
+            _quantityCondition(resourceType, name, prefix, rest, on: t);
+        if (condition == null) return null;
+        return _IndexCondition(t, t.id, condition);
+      case 'uri':
+        final t = aliasName == null
+            ? uriSearchParameters
+            : alias(uriSearchParameters, aliasName);
+        return _IndexCondition(
+          t,
+          t.id,
+          _uriCondition(resourceType, name, value, on: t),
+        );
+      case 'string':
+        final t = aliasName == null
+            ? stringSearchParameters
+            : alias(stringSearchParameters, aliasName);
+        return _IndexCondition(
+          t,
+          t.id,
+          _stringCondition(resourceType, name, value, on: t),
+        );
+      case 'date':
+        final (prefix, rest) = splitComparator(declared, value);
+        final t = aliasName == null
+            ? dateSearchParameters
+            : alias(dateSearchParameters, aliasName);
+        final condition =
+            _dateCondition(resourceType, name, prefix, rest, on: t);
+        if (condition == null) return null;
+        return _IndexCondition(t, t.id, condition);
+      default:
+        return null;
+    }
+  }
+
+  /// The ids matching a search, without reading a single resource.
+  ///
+  /// Split out so `searchCount` can answer without hydrating: it used to call
+  /// `search` with no count and return `results.length`, which read and parsed
+  /// every match. Measured on 928,935 MIMIC resources, `Observation?status=
+  /// final`: 184.63s to count 813,513, against 10.54s for the same ids inside
+  /// `search`.
+  Future<Set<String>> _matchingIds({
+    required fhir.R6ResourceType resourceType,
+    Map<String, List<String>>? searchParameters,
+    List<HasParameter>? hasParameters,
+  }) async {
+    final resourceTypeString = resourceType.toString();
     var matchingIds = <String>{};
     var firstParam = true;
 
@@ -580,34 +1087,7 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
           .get();
       matchingIds = allRows.map((r) => r.id).toSet();
     }
-
-    if (matchingIds.isEmpty) {
-      return [];
-    }
-
-    // Retrieve matching resources
-    final results = <fhir.Resource>[];
-    for (final id in matchingIds) {
-      final resource = await getResource(resourceType, id);
-      if (resource != null) {
-        results.add(resource);
-      }
-    }
-
-    // Apply sorting
-    if (sort != null && sort.isNotEmpty) {
-      await _sortResults(results, sort, resourceTypeString);
-    }
-
-    // Apply pagination
-    if (offset != null && offset > 0) {
-      results.removeRange(0, offset > results.length ? results.length : offset);
-    }
-    if (count != null && count > 0 && results.length > count) {
-      results.removeRange(count, results.length);
-    }
-
-    return results;
+    return matchingIds;
   }
 
   /// Get count of resources matching search parameters.
@@ -622,12 +1102,12 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
       return getResourceCount(resourceType);
     }
 
-    final results = await search(
+    final ids = await _matchingIds(
       resourceType: resourceType,
       searchParameters: searchParameters,
       hasParameters: hasParameters,
     );
-    return results.length;
+    return ids.length;
   }
 
   // ──────────────────────────────────────────────────────────────────────────
@@ -1255,6 +1735,26 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
   // Private: Individual search parameter type handlers
   // ──────────────────────────────────────────────────────────────────────────
 
+  /// The WHERE for one plain string value — the default match, R4 3.1.1.4.8:
+  /// "equals or starts with the supplied parameter value, after both have
+  /// been normalized by case and combining characters". `:exact` and
+  /// `:contains` are not built here; the SQL-paged path admits no modifier,
+  /// so they take the general path.
+  Expression<bool> _stringCondition(
+    String resourceType,
+    String searchPath,
+    String value, {
+    $StringSearchParametersTable? on,
+  }) {
+    final t = on ?? stringSearchParameters;
+    final normalized = normalizeSearchString(unescapeValue(value)).trim();
+    return t.resourceType.equals(resourceType) &
+        (t.searchName.equals(searchPath) |
+            t.searchPath.like('$resourceType.$searchPath') |
+            t.searchPath.like('$resourceType.%.$searchPath')) &
+        t.stringValue.like('$normalized%');
+  }
+
   Future<Set<String>> _searchStringParameter(
     String resourceType,
     String searchPath,
@@ -1323,9 +1823,18 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
       }
 
       query.where((tbl) => whereCondition);
-      final rows = await query.get();
+      // Only the id column is read, not every column of every
+      // matching row; see _executeTokenQuery for the measurement.
+      final idColumn = stringSearchParameters.id;
+      final rows = await (selectOnly(stringSearchParameters, distinct: true)
+            ..addColumns([idColumn])
+            ..where(whereCondition))
+          .get();
       for (final row in rows) {
-        matchingIds.add(row.id);
+        final id = row.read(idColumn);
+        if (id != null) {
+          matchingIds.add(id);
+        }
       }
     }
 
@@ -1468,13 +1977,15 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
     return matchingIds;
   }
 
-  Future<Set<String>> _executeTokenQuery(
+  /// The WHERE for one plain token value, as a typed expression, so it can be
+  /// run on its own or nested as `id IN (SELECT …)` inside another.
+  Expression<bool> _tokenCondition(
     String resourceType,
     String searchPath,
-    String searchValue,
-  ) async {
-    final matchingIds = <String>{};
-
+    String searchValue, {
+    $TokenSearchParametersTable? on,
+  }) {
+    final t = on ?? tokenSearchParameters;
     String? system;
     var tokenValue = searchValue;
 
@@ -1486,30 +1997,58 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
       }
     }
 
-    final query = select(tokenSearchParameters);
-    var whereCondition = tokenSearchParameters.resourceType
-            .equals(resourceType) &
-        (tokenSearchParameters.searchName.equals(searchPath) |
-            tokenSearchParameters.searchPath.like('$resourceType.$searchPath') |
-            tokenSearchParameters.searchPath
-                .like('$resourceType.%.$searchPath'));
+    var whereCondition = t.resourceType.equals(resourceType) &
+        (t.searchName.equals(searchPath) |
+            t.searchPath.like('$resourceType.$searchPath') |
+            t.searchPath.like('$resourceType.%.$searchPath'));
 
     if (system != null && system.isNotEmpty && tokenValue.isNotEmpty) {
       whereCondition = whereCondition &
-          tokenSearchParameters.tokenSystem.equals(system) &
-          tokenSearchParameters.tokenValue.equals(tokenValue);
+          t.tokenSystem.equals(system) &
+          t.tokenValue.equals(tokenValue);
     } else if (system != null && system.isNotEmpty) {
-      whereCondition =
-          whereCondition & tokenSearchParameters.tokenSystem.equals(system);
+      whereCondition = whereCondition & t.tokenSystem.equals(system);
     } else if (tokenValue.isNotEmpty) {
-      whereCondition =
-          whereCondition & tokenSearchParameters.tokenValue.equals(tokenValue);
+      whereCondition = whereCondition & t.tokenValue.equals(tokenValue);
     }
+    return whereCondition;
+  }
 
-    query.where((tbl) => whereCondition);
+  Future<Set<String>> _executeTokenQuery(
+    String resourceType,
+    String searchPath,
+    String searchValue, {
+    int? limit,
+    int? offset,
+  }) async {
+    final matchingIds = <String>{};
+    final whereCondition =
+        _tokenCondition(resourceType, searchPath, searchValue);
+
+    // Only the id column is wanted, so only the id column is read. Selecting
+    // whole rows marshalled every column of every match — searchPath,
+    // searchName, tokenSystem, tokenValue, paramIndex, lastUpdated — to keep
+    // one string. On 928,935 MIMIC resources, `Observation?status=final`
+    // matches 813,513 rows, so that is 813,513 rows built and discarded.
+    final idColumn = tokenSearchParameters.id;
+    final query = selectOnly(tokenSearchParameters, distinct: true)
+      ..addColumns([idColumn])
+      ..where(whereCondition);
+    if (limit != null) {
+      // The page is cut HERE, in SQL, when the caller can prove it is the
+      // whole answer. Measured on 928,935 resources, `status=final`,
+      // 813,513 matches: every id 3.77s; `ORDER BY id LIMIT 20` 0.55s. The
+      // ORDER BY is what makes offset 20 follow offset 0.
+      query
+        ..orderBy([OrderingTerm.asc(idColumn)])
+        ..limit(limit, offset: offset);
+    }
     final rows = await query.get();
     for (final row in rows) {
-      matchingIds.add(row.id);
+      final id = row.read(idColumn);
+      if (id != null) {
+        matchingIds.add(id);
+      }
     }
 
     return matchingIds;
@@ -1697,6 +2236,109 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
     return false;
   }
 
+  /// The WHERE for one date value with its prefix, or null when the value
+  /// is not a search date.
+  ///
+  /// R4B §3.1.1.4.7: the value "SHALL be populated from the left", "the
+  /// minutes SHALL be present if an hour is present", and "Time can consist
+  /// of hours and minutes with no seconds". That grammar is checked whole
+  /// before parsing, because the primitive parser is lenient at the tail —
+  /// `2013-1-4` parsed as the year 2013, which is a different search.
+  Expression<bool>? _dateCondition(
+    String resourceType,
+    String searchPath,
+    String? modifier,
+    String searchValue, {
+    $DateSearchParametersTable? on,
+  }) {
+    final t = on ?? dateSearchParameters;
+    final range = searchDateRange(searchValue);
+    if (range == null) {
+      return null;
+    }
+    return t.resourceType.equals(resourceType) &
+        (t.searchName.equals(searchPath) |
+            t.searchPath.like('$resourceType.$searchPath') |
+            t.searchPath.like('$resourceType.%.$searchPath')) &
+        _dateRangeCondition(
+          low: t.dateValue,
+          high: t.dateValueEnd,
+          prefix: modifier,
+          search: range,
+        );
+  }
+
+  /// The comparison of a stored range `[low, high)` against a search range,
+  /// R4B §3.1.1.4.5 as applied to dates in §3.1.1.4.7. A null [low] is
+  /// "'less than' any actual date" and a null [high] "'greater than' any
+  /// actual date", which is how a Period with a missing bound is indexed.
+  ///
+  /// With the stored range `[L, H)` and the search range `[l, h)`:
+  ///
+  /// - `eq`: "the range of the search value fully contains the range of the
+  ///   target value": `L >= l AND H <= h`. A missing bound cannot be
+  ///   contained.
+  /// - `ne`: "does not fully contain": the complement.
+  /// - `gt`: "the range above the search value intersects (i.e. overlaps)
+  ///   with the range of the target value": `H > h`, or no upper bound.
+  /// - `lt`: the range below intersects: `L < l`, or no lower bound.
+  /// - `ge`: `gt` or `eq`. `le`: `lt` or `eq`.
+  /// - `sa`: "does not overlap … and the range above the search value
+  ///   contains the range of the target value": `L >= h`.
+  /// - `eb`: `H <= l`.
+  /// - `ap`: the search range widened by "10% of the gap between now and the
+  ///   date" on each side overlaps the target.
+  ///
+  /// Every worked example in §3.1.1.4.7 is a test: "from 21-Jan 2013
+  /// onwards" is a Period with no end, and `ge2013-03-14` includes it
+  /// "because that period may include times after 14-Mar 2013".
+  Expression<bool> _dateRangeCondition({
+    required Expression<DateTime> low,
+    required Expression<DateTime> high,
+    required String? prefix,
+    required ({DateTime low, DateTime high}) search,
+  }) {
+    final l = search.low;
+    final h = search.high;
+    final lowMissing = low.isNull();
+    final highMissing = high.isNull();
+    final contained = low.isNotNull() &
+        high.isNotNull() &
+        low.isBiggerOrEqualValue(l) &
+        high.isSmallerOrEqualValue(h);
+    final above = highMissing | high.isBiggerThanValue(h);
+    final below = lowMissing | low.isSmallerThanValue(l);
+    switch (prefix) {
+      case 'gt':
+        return above;
+      case 'lt':
+        return below;
+      case 'ge':
+        return above | contained;
+      case 'le':
+        return below | contained;
+      case 'sa':
+        return low.isNotNull() & low.isBiggerOrEqualValue(h);
+      case 'eb':
+        return high.isNotNull() & high.isSmallerOrEqualValue(l);
+      case 'ne':
+        return contained.not();
+      case 'ap':
+        // "the recommended value for the approximation is 10% of the stated
+        // value (or for a date, 10% of the gap between now and the date)".
+        final gap = DateTime.now().difference(l).abs();
+        final margin = Duration(milliseconds: gap.inMilliseconds ~/ 10);
+        final widenedLow = l.subtract(margin);
+        final widenedHigh = h.add(margin);
+        return (lowMissing | low.isSmallerThanValue(widenedHigh)) &
+            (highMissing | high.isBiggerThanValue(widenedLow));
+      default:
+        // eq, and no prefix at all: §3.1.1.4.5, "If no prefix is present,
+        // the prefix eq is assumed."
+        return contained;
+    }
+  }
+
   Future<Set<String>> _searchDateParameter(
     String resourceType,
     String searchPath,
@@ -1744,194 +2386,76 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
         continue;
       }
 
-      late DateTime searchDate;
-      try {
-        if (searchValue.contains('T')) {
-          searchDate = DateTime.parse(searchValue);
-        } else {
-          final dateParts = searchValue.split('-');
-          if (dateParts.length >= 3) {
-            searchDate = DateTime(
-              int.parse(dateParts[0]),
-              int.parse(dateParts[1]),
-              int.parse(dateParts[2]),
-            );
-          } else if (dateParts.length == 2) {
-            searchDate =
-                DateTime(int.parse(dateParts[0]), int.parse(dateParts[1]));
-          } else if (dateParts.length == 1) {
-            searchDate = DateTime(int.parse(dateParts[0]));
-          } else {
-            continue;
-          }
-        }
-      } catch (_) {
+      final whereCondition =
+          _dateCondition(resourceType, searchPath, modifier, searchValue);
+      if (whereCondition == null) {
         continue;
       }
 
-      final query = select(dateSearchParameters);
-      var whereCondition =
-          dateSearchParameters.resourceType.equals(resourceType) &
-              (dateSearchParameters.searchName.equals(searchPath) |
-                  dateSearchParameters.searchPath
-                      .like('$resourceType.$searchPath') |
-                  dateSearchParameters.searchPath
-                      .like('$resourceType.%.$searchPath'));
-
-      switch (modifier) {
-        case 'gt':
-          whereCondition = whereCondition &
-              dateSearchParameters.dateValue.isBiggerThanValue(searchDate);
-        case 'lt':
-          whereCondition = whereCondition &
-              dateSearchParameters.dateValue.isSmallerThanValue(searchDate);
-        case 'ge':
-          whereCondition = whereCondition &
-              dateSearchParameters.dateValue.isBiggerOrEqualValue(searchDate);
-        case 'le':
-          whereCondition = whereCondition &
-              dateSearchParameters.dateValue.isSmallerOrEqualValue(searchDate);
-        case 'sa':
-          whereCondition = whereCondition &
-              dateSearchParameters.dateValue.isBiggerThanValue(searchDate);
-        case 'eb':
-          whereCondition = whereCondition &
-              dateSearchParameters.dateValue.isSmallerThanValue(searchDate);
-        case 'ap':
-          final dayBefore = searchDate.subtract(const Duration(days: 1));
-          final dayAfter = searchDate.add(const Duration(days: 1));
-          whereCondition = whereCondition &
-              (dateSearchParameters.dateValue.isBiggerOrEqualValue(dayBefore) &
-                  dateSearchParameters.dateValue
-                      .isSmallerOrEqualValue(dayAfter));
-        case 'ne':
-          whereCondition = whereCondition &
-              dateSearchParameters.dateValue.equals(searchDate).not();
-        default:
-          // eq, and no prefix at all, which R6 makes the same thing: "eq" is
-          // the default.
-          whereCondition = whereCondition &
-              dateSearchParameters.dateValue.equals(searchDate);
-      }
-
-      query.where((tbl) => whereCondition);
-      final rows = await query.get();
+      final idColumn = dateSearchParameters.id;
+      final rows = await (selectOnly(dateSearchParameters, distinct: true)
+            ..addColumns([idColumn])
+            ..where(whereCondition))
+          .get();
       for (final row in rows) {
-        matchingIds.add(row.id);
+        final id = row.read(idColumn);
+        if (id != null) {
+          matchingIds.add(id);
+        }
       }
     }
 
     return matchingIds;
   }
 
+  /// `_lastUpdated` reads `resources.last_updated`, an instant in
+  /// milliseconds, so the stored range is the point `[t, t + 1ms)`; the
+  /// prefix semantics are the same as for every other date parameter.
   Future<Set<String>> _searchLastUpdatedParameter(
     String resourceType,
     List<String> values,
   ) async {
     final matchingIds = <String>{};
-
     for (final value in values) {
-      String? modifier;
-      var dateValue = value;
-
-      const lastUpdatedModifiers = ['gt', 'lt', 'ge', 'le', 'ap', 'sa', 'eb'];
-      for (final mod in lastUpdatedModifiers) {
-        // Support both FHIR prefix format (gt2026-01-01) and legacy
-        // suffix format (2026-01-01:gt)
-        if (value.startsWith(mod)) {
-          modifier = mod;
-          dateValue = value.substring(mod.length);
-          break;
-        }
-        if (value.endsWith(':$mod')) {
-          modifier = mod;
-          dateValue = value.substring(0, value.length - mod.length - 1);
-          break;
-        }
-      }
-
-      DateTime? searchDate;
-      try {
-        if (dateValue.length == 4) {
-          searchDate = DateTime(int.parse(dateValue));
-        } else if (dateValue.length == 7) {
-          final parts = dateValue.split('-');
-          searchDate = DateTime(int.parse(parts[0]), int.parse(parts[1]));
-        } else if (dateValue.length == 10) {
-          final parts = dateValue.split('-');
-          searchDate = DateTime(
-            int.parse(parts[0]),
-            int.parse(parts[1]),
-            int.parse(parts[2]),
-          );
-        } else if (dateValue.contains('T')) {
-          searchDate = DateTime.parse(dateValue);
-        } else {
-          searchDate = DateTime.parse(dateValue);
-        }
-      } catch (_) {
+      final (prefix, rest) = splitComparator(
+        const SearchParameterDefinition('date', comparatorPrefixes),
+        value,
+      );
+      final condition = _lastUpdatedCondition(prefix, rest);
+      if (condition == null) {
         continue;
       }
-
-      final searchMillis = searchDate.millisecondsSinceEpoch;
-
-      final query = select(resources);
-      var whereCondition = resources.resourceType.equals(resourceType);
-
-      if (modifier == null || modifier.isEmpty) {
-        if (dateValue.length <= 10) {
-          final startOfDay =
-              DateTime(searchDate.year, searchDate.month, searchDate.day);
-          final endOfDay = startOfDay.add(const Duration(days: 1));
-          whereCondition = whereCondition &
-              (resources.lastUpdated.isBiggerOrEqualValue(
-                    startOfDay.millisecondsSinceEpoch,
-                  ) &
-                  resources.lastUpdated.isSmallerThanValue(
-                    endOfDay.millisecondsSinceEpoch,
-                  ));
-        } else {
-          whereCondition =
-              whereCondition & resources.lastUpdated.equals(searchMillis);
-        }
-      } else if (modifier == 'gt') {
-        whereCondition = whereCondition &
-            resources.lastUpdated.isBiggerThanValue(searchMillis);
-      } else if (modifier == 'lt') {
-        whereCondition = whereCondition &
-            resources.lastUpdated.isSmallerThanValue(searchMillis);
-      } else if (modifier == 'ge') {
-        whereCondition = whereCondition &
-            resources.lastUpdated.isBiggerOrEqualValue(searchMillis);
-      } else if (modifier == 'le') {
-        whereCondition = whereCondition &
-            resources.lastUpdated.isSmallerOrEqualValue(searchMillis);
-      } else if (modifier == 'ap') {
-        final startMillis =
-            searchDate.subtract(const Duration(days: 1)).millisecondsSinceEpoch;
-        final endMillis =
-            searchDate.add(const Duration(days: 1)).millisecondsSinceEpoch;
-        whereCondition = whereCondition &
-            (resources.lastUpdated.isBiggerOrEqualValue(startMillis) &
-                resources.lastUpdated.isSmallerOrEqualValue(endMillis));
-      } else if (modifier == 'sa') {
-        whereCondition = whereCondition &
-            resources.lastUpdated.isBiggerThanValue(searchMillis);
-      } else if (modifier == 'eb') {
-        whereCondition = whereCondition &
-            resources.lastUpdated.isSmallerThanValue(searchMillis);
-      } else {
-        continue;
-      }
-
-      query.where((tbl) => whereCondition);
-      final rows = await query.get();
+      final rows = await (selectOnly(resources)
+            ..addColumns([resources.id])
+            ..where(resources.resourceType.equals(resourceType) & condition))
+          .get();
       for (final row in rows) {
-        matchingIds.add(row.id);
+        matchingIds.add(row.read(resources.id)!);
       }
     }
-
     return matchingIds;
+  }
+
+  /// The WHERE on `resources.last_updated` for one `_lastUpdated` value, or
+  /// null when the value is not a search date.
+  Expression<bool>? _lastUpdatedCondition(String? prefix, String value) {
+    final range = searchDateRange(value);
+    if (range == null) {
+      return null;
+    }
+    // last_updated is integer milliseconds; the range comparison is written
+    // over DateTime expressions, so the point is lifted to one. SQLite
+    // stores a Drift DateTime as whole seconds, hence the division.
+    final instant =
+        resources.lastUpdated.dartCast<double>() / const Constant(1000);
+    final low = instant.dartCast<DateTime>();
+    final high = (instant + const Constant(1)).dartCast<DateTime>();
+    return _dateRangeCondition(
+      low: low,
+      high: high,
+      prefix: prefix,
+      search: range,
+    );
   }
 
   Future<Set<String>> _searchTagParameter(
@@ -2135,6 +2659,107 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
     return allResourceIds.difference(idsWithParam);
   }
 
+  /// The comparison for one number or quantity value under its prefix,
+  /// R4B 3.1.1.4.5 and 3.1.1.4.6.
+  ///
+  /// A search value has an implicit range, half a unit of its last
+  /// significant digit either side: `100` is [99.5, 100.5), `100.00` is
+  /// [99.995, 100.005), `5.4` is [5.35, 5.45), `5.40e-3` is
+  /// [0.005395, 0.005405). 3.1.1.4.6: "the number of significant digits of
+  /// the implicit range is the number of digits specified in the search
+  /// parameter value, excluding leading zeros. So 100 and 1.00e2 both have
+  /// the same number of significant digits - three". The stored value is a
+  /// point, so:
+  ///
+  /// - `eq` — "the range of the search value fully contains the range of the
+  ///   target value": `low <= v < high`. This used to be `v == value`, which
+  ///   3.1.1.4.6 rules out ("The way search parameters operate in resources
+  ///   is not the same as whether two numbers are equal to each other in a
+  ///   mathematical sense"): `probability=0.3` did not find 0.31.
+  /// - `ne` — "does not fully contain": the complement.
+  /// - `gt`, `lt`, `ge`, `le` — "the implicit precision of the number is
+  ///   ignored, and they are treated as if they have arbitrarily high
+  ///   precision": exact against `value`.
+  /// - `sa` — "the range above the search value contains the range of the
+  ///   target value" and they do not overlap: `v >= high`. `eb`: `v < low`.
+  ///   These two used to fall into `eq`, a wrong answer.
+  /// - `ap` — "the range of the search value overlaps with the range of the
+  ///   target value", with the recommended approximation of 10% of the
+  ///   stated value: the implicit range widened by that on each side.
+  ///
+  /// ⚠️ One example in 3.1.1.4.6 does not follow its own rule: it gives
+  /// `1e2` as "1 significant figures precision" with the range [95, 105),
+  /// which is a two-figure range. By the rule as worded, one significant
+  /// figure at the hundreds place is [50, 150), and that is what this does.
+  /// HAPI uses exact matching for eq/ne ("per discussions with Grahame
+  /// Grieve", NumberPredicateBuilder.java) and Microsoft's server widens by
+  /// half a unit of the last DECIMAL place, so 1e2 is ±0.5 there. Neither
+  /// follows the text, so the text is what is implemented here.
+  Expression<bool> _numericPrefixCondition(
+    GeneratedColumn<double> column,
+    String? prefix,
+    String written,
+    double value,
+  ) {
+    // The caller has parsed [written], so the range is never null.
+    final (:low, :high) = implicitRange(written)!;
+    switch (prefix) {
+      case 'gt':
+        return column.isBiggerThanValue(value);
+      case 'lt':
+        return column.isSmallerThanValue(value);
+      case 'ge':
+        return column.isBiggerOrEqualValue(value);
+      case 'le':
+        return column.isSmallerOrEqualValue(value);
+      case 'sa':
+        return column.isBiggerOrEqualValue(high);
+      case 'eb':
+        return column.isSmallerThanValue(low);
+      case 'ne':
+        return column.isSmallerThanValue(low) |
+            column.isBiggerOrEqualValue(high);
+      case 'ap':
+        final approximation = value.abs() * 0.1;
+        return column.isBiggerOrEqualValue(low - approximation) &
+            column.isSmallerThanValue(high + approximation);
+      default:
+        // eq, and no prefix at all: 3.1.1.4.5, "If no prefix is present,
+        // the prefix eq is assumed."
+        return column.isBiggerOrEqualValue(low) &
+            column.isSmallerThanValue(high);
+    }
+  }
+
+  /// The WHERE for one number value with its comparator prefix, or null
+  /// when the value is not a number.
+  Expression<bool>? _numberCondition(
+    String resourceType,
+    String searchPath,
+    String? modifier,
+    String searchValue, {
+    $NumberSearchParametersTable? on,
+  }) {
+    final t = on ?? numberSearchParameters;
+    final numValue = double.tryParse(searchValue);
+    if (numValue == null) {
+      return null;
+    }
+
+    final whereCondition = t.resourceType.equals(resourceType) &
+        (t.searchName.equals(searchPath) |
+            t.searchPath.like('$resourceType.$searchPath') |
+            t.searchPath.like('$resourceType.%.$searchPath'));
+
+    return whereCondition &
+        _numericPrefixCondition(
+          t.numberValue,
+          modifier,
+          searchValue,
+          numValue,
+        );
+  }
+
   Future<Set<String>> _searchNumberParameter(
     String resourceType,
     String searchPath,
@@ -2155,59 +2780,81 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
         searchValue = rest;
       }
 
-      double? numValue;
-      try {
-        numValue = double.parse(searchValue);
-      } catch (_) {
+      final whereCondition =
+          _numberCondition(resourceType, searchPath, modifier, searchValue);
+      if (whereCondition == null) {
         continue;
       }
-
-      final query = select(numberSearchParameters);
-      var whereCondition =
-          numberSearchParameters.resourceType.equals(resourceType) &
-              (numberSearchParameters.searchName.equals(searchPath) |
-                  numberSearchParameters.searchPath
-                      .like('$resourceType.$searchPath') |
-                  numberSearchParameters.searchPath
-                      .like('$resourceType.%.$searchPath'));
-
-      switch (modifier) {
-        case 'gt':
-          whereCondition = whereCondition &
-              numberSearchParameters.numberValue.isBiggerThanValue(numValue);
-        case 'lt':
-          whereCondition = whereCondition &
-              numberSearchParameters.numberValue.isSmallerThanValue(numValue);
-        case 'ge':
-          whereCondition = whereCondition &
-              numberSearchParameters.numberValue.isBiggerOrEqualValue(numValue);
-        case 'le':
-          whereCondition = whereCondition &
-              numberSearchParameters.numberValue
-                  .isSmallerOrEqualValue(numValue);
-        case 'ap':
-          final range = numValue.abs() * 0.1;
-          whereCondition = whereCondition &
-              numberSearchParameters.numberValue
-                  .isBiggerOrEqualValue(numValue - range) &
-              numberSearchParameters.numberValue
-                  .isSmallerOrEqualValue(numValue + range);
-        case 'ne':
-          whereCondition = whereCondition &
-              numberSearchParameters.numberValue.equals(numValue).not();
-        default:
-          // eq, and no prefix at all: R6 makes eq the default.
-          whereCondition = whereCondition &
-              numberSearchParameters.numberValue.equals(numValue);
-      }
-
-      query.where((tbl) => whereCondition);
-      final rows = await query.get();
+      final idColumn = numberSearchParameters.id;
+      final rows = await (selectOnly(numberSearchParameters, distinct: true)
+            ..addColumns([idColumn])
+            ..where(whereCondition))
+          .get();
       for (final row in rows) {
-        matchingIds.add(row.id);
+        final id = row.read(idColumn);
+        if (id != null) {
+          matchingIds.add(id);
+        }
       }
     }
     return matchingIds;
+  }
+
+  /// The WHERE for one quantity value — `[prefix]number|system|code` — or
+  /// null when the number does not parse.
+  Expression<bool>? _quantityCondition(
+    String resourceType,
+    String searchPath,
+    String? modifier,
+    String searchValue, {
+    $QuantitySearchParametersTable? on,
+  }) {
+    final t = on ?? quantitySearchParameters;
+    // R4B 3.1.1.4.11: `[prefix][number]|[system]|[code]`. The number comes
+    // FIRST. This used to read a three-part value as `system|number|code`, so
+    // the spec's own example `5.4|http://unitsofmeasure.org|mg` tried to parse
+    // the URL as a number and matched nothing. The section defines three
+    // shapes — `5.4`, `5.4||mg`, `5.4|system|mg` — and no two-part one.
+    final parts = splitEscaped(searchValue, '|');
+    if (parts.length != 1 && parts.length != 3) {
+      return null;
+    }
+    final numValue = double.tryParse(parts[0]);
+    if (numValue == null) {
+      return null;
+    }
+    final system = parts.length == 3 && parts[1].isNotEmpty ? parts[1] : null;
+    final code = parts.length == 3 && parts[2].isNotEmpty ? parts[2] : null;
+
+    // searchName first, as every other matcher does. Without it a quantity
+    // parameter could only be found when its name happened to be the last
+    // segment of its path — which `value-quantity` never is, because its
+    // path is `Observation.value.ofType(Quantity)`. That is why the row was
+    // written correctly and the search still returned nothing.
+    var whereCondition = t.resourceType.equals(resourceType) &
+        (t.searchName.equals(searchPath) |
+            t.searchPath.like('$resourceType.$searchPath') |
+            t.searchPath.like('$resourceType.%.$searchPath'));
+
+    if (system != null) {
+      // System given: "a precise match is desired", on system and code.
+      whereCondition = whereCondition & t.quantitySystem.equals(system);
+      if (code != null) {
+        whereCondition = whereCondition & t.quantityCode.equals(code);
+      }
+    } else if (code != null) {
+      // `5.4||mg`: "either the code (code) or the stated human unit (unit)".
+      whereCondition = whereCondition &
+          (t.quantityCode.equals(code) | t.quantityUnit.equals(code));
+    }
+
+    return whereCondition &
+        _numericPrefixCondition(
+          t.quantityValue,
+          modifier,
+          parts[0],
+          numValue,
+        );
   }
 
   Future<Set<String>> _searchQuantityParameter(
@@ -2230,90 +2877,41 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
         searchValue = rest;
       }
 
-      final parts = splitEscaped(searchValue, '|');
-      double? numValue;
-      String? system;
-      String? code;
-
-      if (parts.length == 3) {
-        system = parts[0].isEmpty ? null : parts[0];
-        try {
-          numValue = double.parse(parts[1]);
-        } catch (_) {
-          continue;
-        }
-        code = parts[2].isEmpty ? null : parts[2];
-      } else if (parts.length == 2) {
-        try {
-          numValue = double.parse(parts[0]);
-        } catch (_) {
-          continue;
-        }
-        code = parts[1].isEmpty ? null : parts[1];
-      } else {
-        try {
-          numValue = double.parse(parts[0]);
-        } catch (_) {
-          continue;
-        }
+      final whereCondition =
+          _quantityCondition(resourceType, searchPath, modifier, searchValue);
+      if (whereCondition == null) {
+        continue;
       }
-
-      final query = select(quantitySearchParameters);
-      // searchName first, as every other matcher does. Without it a quantity
-      // parameter could only be found when its name happened to be the last
-      // segment of its path — which `value-quantity` never is, because its
-      // path is `Observation.value.ofType(Quantity)`. That is why the row was
-      // written correctly and the search still returned nothing.
-      var whereCondition =
-          quantitySearchParameters.resourceType.equals(resourceType) &
-              (quantitySearchParameters.searchName.equals(searchPath) |
-                  quantitySearchParameters.searchPath
-                      .like('$resourceType.$searchPath') |
-                  quantitySearchParameters.searchPath
-                      .like('$resourceType.%.$searchPath'));
-
-      if (system != null) {
-        whereCondition = whereCondition &
-            quantitySearchParameters.quantitySystem.equals(system);
-      }
-      if (code != null) {
-        whereCondition =
-            whereCondition & quantitySearchParameters.quantityCode.equals(code);
-      }
-
-      switch (modifier) {
-        case 'gt':
-          whereCondition = whereCondition &
-              quantitySearchParameters.quantityValue
-                  .isBiggerThanValue(numValue);
-        case 'lt':
-          whereCondition = whereCondition &
-              quantitySearchParameters.quantityValue
-                  .isSmallerThanValue(numValue);
-        case 'ge':
-          whereCondition = whereCondition &
-              quantitySearchParameters.quantityValue
-                  .isBiggerOrEqualValue(numValue);
-        case 'le':
-          whereCondition = whereCondition &
-              quantitySearchParameters.quantityValue
-                  .isSmallerOrEqualValue(numValue);
-        case 'ne':
-          whereCondition = whereCondition &
-              quantitySearchParameters.quantityValue.equals(numValue).not();
-        default:
-          // eq, and no prefix at all: R6 makes eq the default.
-          whereCondition = whereCondition &
-              quantitySearchParameters.quantityValue.equals(numValue);
-      }
-
-      query.where((tbl) => whereCondition);
-      final rows = await query.get();
+      final idColumn = quantitySearchParameters.id;
+      final rows = await (selectOnly(quantitySearchParameters, distinct: true)
+            ..addColumns([idColumn])
+            ..where(whereCondition))
+          .get();
       for (final row in rows) {
-        matchingIds.add(row.id);
+        final id = row.read(idColumn);
+        if (id != null) {
+          matchingIds.add(id);
+        }
       }
     }
     return matchingIds;
+  }
+
+  /// The WHERE for one plain uri value: exact match on the stored URI
+  /// (R4B 3.1.1.4.13 — "the search is case sensitive and accent sensitive",
+  /// with `:above` and `:below` as modifiers, which take the general path).
+  Expression<bool> _uriCondition(
+    String resourceType,
+    String searchPath,
+    String value, {
+    $UriSearchParametersTable? on,
+  }) {
+    final t = on ?? uriSearchParameters;
+    return t.resourceType.equals(resourceType) &
+        (t.searchName.equals(searchPath) |
+            t.searchPath.like('$resourceType.$searchPath') |
+            t.searchPath.like('$resourceType.%.$searchPath')) &
+        t.uriValue.equals(unescapeValue(value));
   }
 
   Future<Set<String>> _searchUriParameter(
@@ -2358,20 +2956,53 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
           valueCondition = uriSearchParameters.uriValue.equals(searchValue);
         }
 
-        final query = select(uriSearchParameters)
-          ..where(
-            (tbl) =>
-                tbl.resourceType.equals(resourceType) &
-                pathCondition &
-                valueCondition,
-          );
-        final rows = await query.get();
+        // Only the id column is read, not every column of every
+        // matching row; see _executeTokenQuery for the measurement.
+        final idColumn = uriSearchParameters.id;
+        final rows = await (selectOnly(uriSearchParameters, distinct: true)
+              ..addColumns([idColumn])
+              ..where(
+                uriSearchParameters.resourceType.equals(resourceType) &
+                    pathCondition &
+                    valueCondition,
+              ))
+            .get();
         for (final row in rows) {
-          matchingIds.add(row.id);
+          final id = row.read(idColumn);
+          if (id != null) {
+            matchingIds.add(id);
+          }
         }
       }
     }
     return matchingIds;
+  }
+
+  /// The WHERE for one plain reference value, `Type/id` or a bare `id`, as a
+  /// typed expression. R4 3.1.1.4.12: `subject=Patient/23` names the type
+  /// and the id; a bare `23` matches any type with that id. `:identifier`
+  /// and the type-as-modifier form are modifiers, which the SQL-paged path
+  /// does not admit, so they take the general path.
+  Expression<bool> _referenceCondition(
+    String resourceType,
+    String searchPath,
+    String value, {
+    $ReferenceSearchParametersTable? on,
+  }) {
+    final t = on ?? referenceSearchParameters;
+    var where = t.resourceType.equals(resourceType) &
+        (t.searchName.equals(searchPath) |
+            t.searchPath.like('$resourceType.$searchPath') |
+            t.searchPath.like('$resourceType.%.$searchPath'));
+    final parts = value.split('/');
+    if (parts.length == 2) {
+      where = where &
+          t.referenceResourceType.equals(parts[0]) &
+          t.referenceIdPart.equals(parts[1]);
+    } else {
+      where = where & t.referenceIdPart.equals(value);
+    }
+    return where;
   }
 
   Future<Set<String>> _searchReferenceParameter(
@@ -2493,9 +3124,26 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
         }
 
         query.where((tbl) => whereCondition);
-        final rows = await query.get();
+        // Only the id column is read; see _executeTokenQuery.
+        //
+        // This conversion regressed once — `subject=Patient/does-not-exist`
+        // went from 0.01s to 10.35s — and the cause was measured with
+        // EXPLAIN QUERY PLAN: with no sqlite_stat1, the planner chose the
+        // primary key for the DISTINCT-id shape, whose leading column
+        // resource_type matched 2.9 million rows. The database is ANALYZEd
+        // on open now (fhir_db.dart, beforeOpen), and with statistics the
+        // planner picks idx_ref_id for both shapes.
+        final idColumn = referenceSearchParameters.id;
+        final rows =
+            await (selectOnly(referenceSearchParameters, distinct: true)
+                  ..addColumns([idColumn])
+                  ..where(whereCondition))
+                .get();
         for (final row in rows) {
-          matchingIds.add(row.id);
+          final id = row.read(idColumn);
+          if (id != null) {
+            matchingIds.add(id);
+          }
         }
       }
     }
@@ -2626,155 +3274,155 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
   // Private: Sorting helper
   // ──────────────────────────────────────────────────────────────────────────
 
+  /// Orders hydrated resources for the general path, R4B §3.1.1.5.1.
+  ///
+  /// The keys come from the resources themselves, through the same extractor
+  /// that writes the index, so nothing is read back from the database (the
+  /// previous version queried each index table with `id IN (<every id>)`,
+  /// which SQLite caps at 32,766 variables, and compared numbers as
+  /// strings). "There can be multiple values for a given search parameter
+  /// for a single resource. In this case, the sort is based on the item in
+  /// the set of multiple parameters that comes earliest in the specified
+  /// sort order": the smallest value ascending, the largest descending. A
+  /// resource with no value sorts last; ties break on id.
   Future<void> _sortResults(
     List<fhir.Resource> results,
     List<String> sort,
     String resourceType,
   ) async {
-    // Pre-fetch sort values from search parameter tables for each sort field.
-    // Maps: sortField -> (resourceId -> sortValue)
-    final sortMaps = <String, Map<String, String>>{};
-
-    for (final sortParam in sort) {
-      final field =
-          sortParam.startsWith('-') ? sortParam.substring(1) : sortParam;
-      if (field == '_id' || field == '_lastUpdated') continue;
-
-      final ids = results.map((r) => r.id?.toString() ?? '').toSet();
-      if (ids.isEmpty) continue;
-
-      final valueMap = await _getSortValues(resourceType, field, ids);
-      sortMaps[field] = valueMap;
-    }
-
+    final rules = <(String name, bool descending, SearchParameterDefinition?)>[
+      for (final rule in sort)
+        if (rule.startsWith('-'))
+          (
+            rule.substring(1),
+            true,
+            searchParameterFor(resourceType, rule.substring(1))
+          )
+        else
+          (rule, false, searchParameterFor(resourceType, rule)),
+    ];
+    final keys = <String, List<Comparable<Object>?>>{
+      for (final r in results)
+        r.id?.valueString ?? '': [
+          for (final (name, descending, declared) in rules)
+            _sortKeyOf(r, name, descending, declared),
+        ],
+    };
     results.sort((a, b) {
-      for (final sortParam in sort) {
-        final descending = sortParam.startsWith('-');
-        final field = descending ? sortParam.substring(1) : sortParam;
-
-        var comparison = 0;
-        if (field == '_id') {
-          comparison = (a.id?.toString() ?? '').compareTo(
-            b.id?.toString() ?? '',
-          );
-        } else if (field == '_lastUpdated') {
-          final aDate = a.meta?.lastUpdated?.valueDateTime ?? DateTime(1970);
-          final bDate = b.meta?.lastUpdated?.valueDateTime ?? DateTime(1970);
-          comparison = aDate.compareTo(bDate);
-        } else {
-          final valueMap = sortMaps[field];
-          if (valueMap != null) {
-            final aVal = valueMap[a.id?.toString() ?? ''];
-            final bVal = valueMap[b.id?.toString() ?? ''];
-            if (aVal == null && bVal == null) {
-              comparison = 0;
-            } else if (aVal == null) {
-              comparison = 1; // nulls sort last
-            } else if (bVal == null) {
-              comparison = -1;
-            } else {
-              comparison = aVal.compareTo(bVal);
-            }
-          }
-        }
-
-        if (comparison != 0) {
-          return descending ? -comparison : comparison;
-        }
+      final ka = keys[a.id?.valueString ?? '']!;
+      final kb = keys[b.id?.valueString ?? '']!;
+      for (final (i, (_, descending, _)) in rules.indexed) {
+        final va = ka[i];
+        final vb = kb[i];
+        if (va == null && vb == null) continue;
+        if (va == null) return 1;
+        if (vb == null) return -1;
+        final c = va.compareTo(vb);
+        if (c != 0) return descending ? -c : c;
       }
-      return 0;
+      return (a.id?.valueString ?? '').compareTo(b.id?.valueString ?? '');
     });
   }
 
-  /// Look up sort values for a search parameter from the indexed tables.
-  /// Returns a map of resourceId -> sortable string value.
-  Future<Map<String, String>> _getSortValues(
-    String resourceType,
-    String paramName,
-    Set<String> ids,
-  ) async {
-    final idList = ids.toList();
-
-    // Try string search parameters (covers name, family, given, etc.)
-    final stringRows = await (select(stringSearchParameters)
-          ..where(
-            (tbl) =>
-                tbl.resourceType.equals(resourceType) &
-                tbl.id.isIn(idList) &
-                (tbl.searchName.equals(paramName) |
-                    tbl.searchPath.equals(paramName)) &
-                tbl.paramIndex.equals(0),
-          ))
-        .get();
-    if (stringRows.isNotEmpty) {
-      return {for (final r in stringRows) r.id: r.stringValue};
+  /// One resource's key for one sort rule: the earliest of its values in the
+  /// rule's direction, typed so numbers and dates compare as themselves.
+  Comparable<Object>? _sortKeyOf(
+    fhir.Resource resource,
+    String name,
+    bool descending,
+    SearchParameterDefinition? declared,
+  ) {
+    if (name == '_id') return resource.id?.valueString;
+    if (name == '_lastUpdated') {
+      return resource.meta?.lastUpdated?.valueDateTime;
     }
-
-    // Try date search parameters (covers birthdate, date, etc.)
-    final dateRows = await (select(dateSearchParameters)
-          ..where(
-            (tbl) =>
-                tbl.resourceType.equals(resourceType) &
-                tbl.id.isIn(idList) &
-                (tbl.searchName.equals(paramName) |
-                    tbl.searchPath.equals(paramName)) &
-                tbl.paramIndex.equals(0),
-          ))
-        .get();
-    if (dateRows.isNotEmpty) {
-      return {
-        for (final r in dateRows)
-          r.id: r.dateValue.millisecondsSinceEpoch.toString(),
-      };
+    if (declared == null) return null;
+    final resourceType = resource.resourceTypeString;
+    bool named(String searchName, String searchPath) =>
+        searchName == name ||
+        searchPath == '$resourceType.$name' ||
+        (searchPath.startsWith('$resourceType.') &&
+            searchPath.endsWith('.$name'));
+    final lists = extractSearchParameters(resource);
+    final values = <Comparable<Object>>[];
+    switch (declared.type) {
+      case 'string':
+        for (final p in lists.stringParams) {
+          if (named(p.searchName.value, p.searchPath.value)) {
+            values.add(p.stringValue.value);
+          }
+        }
+      case 'token':
+        for (final p in lists.tokenParams) {
+          if (named(p.searchName.value, p.searchPath.value)) {
+            values.add(p.tokenValue.value);
+          }
+        }
+      case 'date':
+        for (final p in lists.dateParams) {
+          if (named(p.searchName.value, p.searchPath.value)) {
+            final low = p.dateValue.value;
+            if (low != null) values.add(low);
+          }
+        }
+      case 'number':
+        for (final p in lists.numberParams) {
+          if (named(p.searchName.value, p.searchPath.value)) {
+            values.add(p.numberValue.value);
+          }
+        }
+      case 'quantity':
+        for (final p in lists.quantityParams) {
+          if (named(p.searchName.value, p.searchPath.value)) {
+            values.add(p.quantityValue.value);
+          }
+        }
+      case 'reference':
+        for (final p in lists.referenceParams) {
+          if (named(p.searchName.value, p.searchPath.value)) {
+            final v = p.referenceValue.value;
+            if (v != null) values.add(v);
+          }
+        }
+      case 'uri':
+        for (final p in lists.uriParams) {
+          if (named(p.searchName.value, p.searchPath.value)) {
+            values.add(p.uriValue.value);
+          }
+        }
+      default:
+        return null;
     }
-
-    // Try token search parameters (covers status, code, etc.)
-    final tokenRows = await (select(tokenSearchParameters)
-          ..where(
-            (tbl) =>
-                tbl.resourceType.equals(resourceType) &
-                tbl.id.isIn(idList) &
-                (tbl.searchName.equals(paramName) |
-                    tbl.searchPath.equals(paramName)) &
-                tbl.paramIndex.equals(0),
-          ))
-        .get();
-    if (tokenRows.isNotEmpty) {
-      return {for (final r in tokenRows) r.id: r.tokenValue};
-    }
-
-    // Try number search parameters
-    final numberRows = await (select(numberSearchParameters)
-          ..where(
-            (tbl) =>
-                tbl.resourceType.equals(resourceType) &
-                tbl.id.isIn(idList) &
-                (tbl.searchName.equals(paramName) |
-                    tbl.searchPath.equals(paramName)) &
-                tbl.paramIndex.equals(0),
-          ))
-        .get();
-    if (numberRows.isNotEmpty) {
-      return {for (final r in numberRows) r.id: r.numberValue.toString()};
-    }
-
-    // Try quantity search parameters
-    final quantityRows = await (select(quantitySearchParameters)
-          ..where(
-            (tbl) =>
-                tbl.resourceType.equals(resourceType) &
-                tbl.id.isIn(idList) &
-                (tbl.searchName.equals(paramName) |
-                    tbl.searchPath.equals(paramName)) &
-                tbl.paramIndex.equals(0),
-          ))
-        .get();
-    if (quantityRows.isNotEmpty) {
-      return {
-        for (final r in quantityRows) r.id: r.quantityValue.toString(),
-      };
-    }
-
-    return {};
+    if (values.isEmpty) return null;
+    return values.reduce(
+      (a, b) => descending
+          ? (a.compareTo(b) >= 0 ? a : b)
+          : (a.compareTo(b) <= 0 ? a : b),
+    );
   }
+}
+
+/// One search parameter expressed as a WHERE on its own index table.
+class _IndexCondition {
+  const _IndexCondition(this.table, this.idColumn, this.condition);
+
+  final TableInfo<Table, dynamic> table;
+  final GeneratedColumn<String> idColumn;
+  final Expression<bool> condition;
+}
+
+/// One `_sort` rule: the (aliased) table holding the value, how it joins to
+/// the outer select's id, the value column, and the direction.
+class _SortKey {
+  const _SortKey({
+    required this.table,
+    required this.on,
+    required this.value,
+    required this.descending,
+  });
+
+  final TableInfo<Table, dynamic> table;
+  final Expression<bool> Function(GeneratedColumn<String> outerId) on;
+  final Expression<Object> value;
+  final bool descending;
 }
