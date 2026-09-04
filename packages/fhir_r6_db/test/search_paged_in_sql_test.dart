@@ -77,6 +77,54 @@ Future<void> main() async {
 
   tearDown(() => db.close());
 
+  /// Two patients and an organisation for the chains: p1 is Anna Smith at
+  /// Org A, p2 is Ben Jones at Org B. Observations o00..o14 point at p1,
+  /// o15..o29 at p2.
+  Future<void> saveChainTargets() async {
+    await dao.saveResource(
+      Organization.fromJson({
+        'resourceType': 'Organization',
+        'id': 'orgA',
+        'name': 'Alpha Clinic',
+      }),
+    );
+    await dao.saveResource(
+      Organization.fromJson({
+        'resourceType': 'Organization',
+        'id': 'orgB',
+        'name': 'Beta Hospital',
+      }),
+    );
+    await dao.saveResource(
+      Patient.fromJson({
+        'resourceType': 'Patient',
+        'id': 'p1',
+        'name': [
+          {
+            'family': 'Smith',
+            'given': ['Anna'],
+          },
+        ],
+        'gender': 'female',
+        'managingOrganization': {'reference': 'Organization/orgA'},
+      }),
+    );
+    await dao.saveResource(
+      Patient.fromJson({
+        'resourceType': 'Patient',
+        'id': 'p2',
+        'name': [
+          {
+            'family': 'Jones',
+            'given': ['Ben'],
+          },
+        ],
+        'gender': 'male',
+        'managingOrganization': {'reference': 'Organization/orgB'},
+      }),
+    );
+  }
+
   Future<List<String>> riskIds(
     Map<String, List<String>> params, {
     int? count,
@@ -733,6 +781,34 @@ Future<void> main() async {
       contains('texted'),
       reason: 'a text-only CodeableConcept still has a value for the parameter',
     );
+    // "either CodeableConcept.text, Coding.display, or Identifier.type.text"
+    await dao.saveResource(
+      Observation.fromJson({
+        'resourceType': 'Observation',
+        'id': 'mrn',
+        'status': 'final',
+        'code': {
+          'coding': [
+            {'system': 'http://example.org', 'code': 'A'},
+          ],
+        },
+        'identifier': [
+          {
+            'type': {'text': 'Placer order number'},
+            'value': 'ORD-1',
+          },
+        ],
+      }),
+    );
+    expect(
+      await ids(
+        {
+          'identifier:text': ['placer'],
+        },
+        count: 3,
+      ),
+      ['mrn'],
+    );
   });
 
   test('a modifier this server does not support is refused, not narrowed',
@@ -1091,6 +1167,388 @@ Future<void> main() async {
     );
   });
 
+  test(':below on a mime type and on a canonical reference', () async {
+    // "Searching MIME Types": `contenttype:below=text/xml` finds "text/xml;
+    // charset=UTF-8". The canonical half differs from R4B: see below.
+    for (final (id, type) in [
+      ('xml', 'text/xml'),
+      ('xmlc', 'text/xml; charset=UTF-8'),
+      ('json', 'application/json'),
+    ]) {
+      await dao.saveResource(
+        DocumentReference.fromJson({
+          'resourceType': 'DocumentReference',
+          'id': id,
+          'status': 'current',
+          'content': [
+            {
+              'attachment': {'contentType': type},
+            },
+          ],
+        }),
+      );
+    }
+    Future<List<String>> docs(String key, String value) async =>
+        (await dao.search(
+          resourceType: R6ResourceType.DocumentReference,
+          searchParameters: {
+            key: [value],
+          },
+          count: 10,
+        ))
+            .map((r) => r.id!.valueString!)
+            .toList();
+    expect(await docs('contenttype', 'text/xml'), ['xml']);
+    expect(await docs('contenttype:below', 'text/xml'), ['xml', 'xmlc']);
+    // R6 "Searching MIME Types": "the below modifier can be applied to the
+    // first segment only: contenttype:below=image will match all image/
+    // content types".
+    expect(await docs('contenttype:below', 'text'), ['xml', 'xmlc']);
+    expect(await docs('contenttype:below', 'application'), ['json']);
+    expect(await docs('contenttype:below', 'tex'), isEmpty);
+    // Whether a parameter is a mime type comes from its element's binding,
+    // not from the shape of the value: `code` is not, so `:below` on it is
+    // subsumption and refused even when the value looks like a mime type.
+    await expectLater(
+      ids(
+        {
+          'code:below': ['text/plain'],
+        },
+        count: 3,
+      ),
+      throwsA(isA<UnsupportedSearchModifier>()),
+    );
+    for (final (id, version) in [
+      ('d10', '1.0'),
+      ('d11', '1.1'),
+      ('d20', '2.0'),
+    ]) {
+      await dao.saveResource(
+        PlanDefinition.fromJson({
+          'resourceType': 'PlanDefinition',
+          'id': id,
+          'status': 'active',
+          'relatedArtifact': [
+            {
+              'type': 'depends-on',
+              'resource': 'http://acme.com/some-profile|$version',
+            },
+          ],
+        }),
+      );
+    }
+    Future<List<String>> plans(String key, String value) async =>
+        (await dao.search(
+          resourceType: R6ResourceType.PlanDefinition,
+          searchParameters: {
+            key: [value],
+          },
+          count: 10,
+        ))
+            .map((r) => r.id!.valueString!)
+            .toList();
+    // R6 "below with canonical references": "The below modifier comparison
+    // is performed as a 'less than' against the version-scheme defined by
+    // the resource", and "only allowed if the version scheme for the
+    // resource is known". No version scheme is read here, so it is refused
+    // rather than answered as R4B's prefix match.
+    await expectLater(
+      plans('depends-on:below', 'http://acme.com/some-profile|1'),
+      throwsA(isA<UnsupportedSearchModifier>()),
+    );
+    expect(
+      await plans('depends-on', 'http://acme.com/some-profile|1.1'),
+      ['d11'],
+    );
+  });
+
+  test('a bare id that refers to more than one type is rejected', () async {
+    // 3.1.1.4.12: "Servers SHOULD reject a search where the logical id
+    // refers to more than one matching resource across different types."
+    await dao.saveResource(
+      Observation.fromJson({
+        'resourceType': 'Observation',
+        'id': 'grp',
+        'status': 'final',
+        'code': {
+          'coding': [
+            {'system': 'http://example.org', 'code': 'A'},
+          ],
+        },
+        'subject': {'reference': 'Group/p1'},
+      }),
+    );
+    await expectLater(
+      ids(
+        {
+          'subject': ['p1'],
+        },
+        count: 3,
+      ),
+      throwsA(isA<AmbiguousReference>()),
+    );
+    expect(
+      await ids(
+        {
+          'subject': ['Group/p1'],
+        },
+        count: 3,
+      ),
+      ['grp'],
+    );
+    expect(
+      await ids(
+        {
+          'subject': ['p2'],
+        },
+        count: 2,
+      ),
+      ['o15', 'o16'],
+      reason: 'one type only, so no ambiguity',
+    );
+  });
+
+  test(
+      'a relative and an absolute reference match each other under the '
+      'server base', () async {
+    // 3.1.1.4.12: "A relative reference resolving to the same value as a
+    // specified absolute URL, or vice versa, qualifies as a match."
+    await dao.saveResource(
+      Observation.fromJson({
+        'resourceType': 'Observation',
+        'id': 'here',
+        'status': 'final',
+        'code': {
+          'coding': [
+            {'system': 'http://example.org', 'code': 'A'},
+          ],
+        },
+        'subject': {'reference': 'http://example.org/fhir/Patient/p9'},
+      }),
+    );
+    await dao.saveResource(
+      Observation.fromJson({
+        'resourceType': 'Observation',
+        'id': 'elsewhere',
+        'status': 'final',
+        'code': {
+          'coding': [
+            {'system': 'http://example.org', 'code': 'A'},
+          ],
+        },
+        'subject': {'reference': 'http://other.example.org/fhir/Patient/p9'},
+      }),
+    );
+    // No base known: a relative search admits any absolute reference with
+    // that type and id.
+    expect(
+      await ids(
+        {
+          'subject': ['Patient/p9'],
+        },
+        count: 5,
+      ),
+      ['elsewhere', 'here'],
+    );
+    dao.serverBaseUrl = 'http://example.org/fhir';
+    expect(
+      await ids(
+        {
+          'subject': ['Patient/p9'],
+        },
+        count: 5,
+      ),
+      ['here'],
+    );
+    expect(
+      await ids(
+        {
+          'subject': ['http://example.org/fhir/Patient/p9'],
+        },
+        count: 5,
+      ),
+      ['here'],
+    );
+    expect(
+      await ids(
+        {
+          'subject': ['http://other.example.org/fhir/Patient/p9'],
+        },
+        count: 5,
+      ),
+      ['elsewhere'],
+    );
+    // A relative stored reference is found by the absolute search too.
+    expect(
+      await ids(
+        {
+          'subject': ['http://example.org/fhir/Patient/p2'],
+        },
+        count: 2,
+      ),
+      ['o15', 'o16'],
+    );
+    dao.serverBaseUrl = null;
+  });
+
+  test('_has takes OR values', () async {
+    // 3.1.1.4.16: '"Or" searches are allowed (e.g.
+    // _has:Observation:patient:code=123,456)'.
+    await saveChainTargets();
+    final found = await dao.search(
+      resourceType: R6ResourceType.Patient,
+      hasParameters: [
+        HasParameter.parse('_has:Observation:subject:code', 'B,Z')!,
+      ],
+      count: 5,
+    );
+    expect(dao.lastSearchPagedInSql, isTrue);
+    expect(found.map((r) => r.id!.valueString), ['p2']);
+  });
+
+  test('a value and :missing=true on the same parameter is empty', () async {
+    // 3.1.1.4.18: "This query will always return an empty list, as no
+    // resource can satisfy both criteria at once".
+    expect(
+      await ids(
+        {
+          'status': ['final'],
+          'status:missing': ['true'],
+        },
+        count: 3,
+      ),
+      isEmpty,
+    );
+  });
+
+  test('_list selects the resources a List refers to', () async {
+    // 3.1.1.4.22: "all Patient resources that are referenced from the list
+    // found at [base]/List/42 in List.entry.item", combinable with other
+    // criteria: "_list=42&gender=female".
+    await saveChainTargets();
+    await dao.saveResource(
+      FhirList.fromJson({
+        'resourceType': 'List',
+        'id': '42',
+        'status': 'current',
+        'mode': 'working',
+        'entry': [
+          {
+            'item': {'reference': 'Patient/p1'},
+          },
+          {
+            'item': {'reference': 'Patient/p2'},
+          },
+          {
+            'item': {'reference': 'Organization/orgA'},
+          },
+        ],
+      }),
+    );
+    Future<List<String>> patients(Map<String, List<String>> params) async {
+      final found = await dao.search(
+        resourceType: R6ResourceType.Patient,
+        searchParameters: params,
+        count: 5,
+      );
+      expect(dao.lastSearchPagedInSql, isTrue, reason: '$params');
+      return found.map((r) => r.id!.valueString!).toList();
+    }
+
+    expect(
+      await patients({
+        '_list': ['42'],
+      }),
+      ['p1', 'p2'],
+    );
+    expect(
+      await patients({
+        '_list': ['42'],
+        'gender': ['female'],
+      }),
+      ['p1'],
+    );
+    expect(
+      await patients({
+        '_list': ['no-such-list'],
+      }),
+      isEmpty,
+    );
+    // A functional list is not supported and is refused, not answered
+    // with everything.
+    await expectLater(
+      patients({
+        '_list': [r'$current-allergies'],
+      }),
+      throwsA(isA<InvalidSearchValue>()),
+    );
+  });
+
+  test('_text searches the narrative and _content the whole resource',
+      () async {
+    // 3.1.1.4.20, the plain reading: every word of the value appears in
+    // the narrative (`_text`) or anywhere in the resource (`_content`).
+    await dao.saveResource(
+      Condition.fromJson({
+        'resourceType': 'Condition',
+        'id': 'mets',
+        'clinicalStatus': {
+          'coding': [
+            {'code': 'active'},
+          ],
+        },
+        'text': {
+          'status': 'generated',
+          'div': '<div xmlns="http://www.w3.org/1999/xhtml"><p>Liver '
+              'metastases, <b>bone</b> pain</p></div>',
+        },
+        'subject': {'reference': 'Patient/p1'},
+        'code': {'text': 'Secondary malignant neoplasm'},
+      }),
+    );
+    await dao.saveResource(
+      Condition.fromJson({
+        'resourceType': 'Condition',
+        'id': 'plain',
+        'clinicalStatus': {
+          'coding': [
+            {'code': 'active'},
+          ],
+        },
+        'subject': {'reference': 'Patient/p1'},
+        'code': {'text': 'Headache'},
+      }),
+    );
+    Future<List<String>> conditions(String key, String value) async {
+      final found = await dao.search(
+        resourceType: R6ResourceType.Condition,
+        searchParameters: {
+          key: [value],
+        },
+        count: 5,
+      );
+      expect(dao.lastSearchPagedInSql, isTrue, reason: '$key=$value');
+      return found.map((r) => r.id!.valueString!).toList();
+    }
+
+    expect(await conditions('_text', 'metastases'), ['mets']);
+    expect(await conditions('_text', 'liver METASTASES'), ['mets']);
+    expect(
+      await conditions('_text', 'bone'),
+      ['mets'],
+      reason: 'tags stripped',
+    );
+    expect(await conditions('_text', 'kidney'), isEmpty);
+    expect(
+      await conditions('_text', 'neoplasm'),
+      isEmpty,
+      reason: '_text is the narrative only',
+    );
+    expect(await conditions('_content', 'neoplasm'), ['mets']);
+    expect(await conditions('_content', 'Headache'), ['plain']);
+    expect(await conditions('_content', 'headache patient/p1'), ['plain']);
+  });
+
   test('modifiers the SQL path does not build fall back', () async {
     // :of-type reads the identifier's type from the resource in Dart.
     expect(
@@ -1429,54 +1887,6 @@ Future<void> main() async {
     expect(await vsIds('http://example.org/vs/EVEN'), isEmpty);
     expect(await vsIds('http://example.org/vs/ev'), isEmpty);
   });
-
-  /// Two patients and an organisation for the chains: p1 is Anna Smith at
-  /// Org A, p2 is Ben Jones at Org B. Observations o00..o14 point at p1,
-  /// o15..o29 at p2.
-  Future<void> saveChainTargets() async {
-    await dao.saveResource(
-      Organization.fromJson({
-        'resourceType': 'Organization',
-        'id': 'orgA',
-        'name': 'Alpha Clinic',
-      }),
-    );
-    await dao.saveResource(
-      Organization.fromJson({
-        'resourceType': 'Organization',
-        'id': 'orgB',
-        'name': 'Beta Hospital',
-      }),
-    );
-    await dao.saveResource(
-      Patient.fromJson({
-        'resourceType': 'Patient',
-        'id': 'p1',
-        'name': [
-          {
-            'family': 'Smith',
-            'given': ['Anna'],
-          },
-        ],
-        'gender': 'female',
-        'managingOrganization': {'reference': 'Organization/orgA'},
-      }),
-    );
-    await dao.saveResource(
-      Patient.fromJson({
-        'resourceType': 'Patient',
-        'id': 'p2',
-        'name': [
-          {
-            'family': 'Jones',
-            'given': ['Ben'],
-          },
-        ],
-        'gender': 'male',
-        'managingOrganization': {'reference': 'Organization/orgB'},
-      }),
-    );
-  }
 
   test('a chained parameter pages in SQL, one hop', () async {
     await saveChainTargets();

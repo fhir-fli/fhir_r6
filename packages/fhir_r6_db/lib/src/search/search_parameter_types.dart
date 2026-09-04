@@ -1,4 +1,4 @@
-// ignore_for_file: require_trailing_commas
+// ignore_for_file: require_trailing_commas, unnecessary_raw_strings, lines_longer_than_80_chars
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // Generated from search-parameters.json by
 // fhir_generator/lib/src/generate_search_parameter_types.dart
@@ -12,7 +12,12 @@
 /// of the value.
 class SearchParameterDefinition {
   /// Creates a definition.
-  const SearchParameterDefinition(this.type, this.comparators);
+  const SearchParameterDefinition(
+    this.type,
+    this.comparators, {
+    this.components = const [],
+    this.mime = false,
+  });
 
   /// string | token | date | number | quantity | reference |
   /// uri | composite | special.
@@ -21,6 +26,34 @@ class SearchParameterDefinition {
   /// The prefixes this parameter accepts, empty for the types
   /// that take none.
   final List<String> comparators;
+
+  /// For a composite (R4B 3.1.1.4.17): its components, in the
+  /// order the $-joined value gives them, each the type of the
+  /// parameter it stands for and its expression relative to the
+  /// composite's own element. Empty for every other type.
+  final List<SearchComponent> components;
+
+  /// True for a token parameter whose element is bound to the
+  /// mimetypes value set (`Attachment.contentType`,
+  /// `CapabilityStatement.format`, ...). `:below` on such a
+  /// parameter is the mime-type search of search.html
+  /// "Searching MIME Types"; on any other token it is code
+  /// subsumption.
+  final bool mime;
+}
+
+/// One component of a composite search parameter.
+class SearchComponent {
+  /// Creates a component.
+  const SearchComponent(this.type, this.expression);
+
+  /// The component parameter's type: token, quantity, ...
+  final String type;
+
+  /// The path from the composite's element to the value, as
+  /// the definition writes it: `code`, `value.as(Quantity)`,
+  /// `%resource.referenceSeq.chromosome`.
+  final String expression;
 }
 
 /// Every search parameter, by resource type then by code.
@@ -45,8 +78,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'depends-on': SearchParameterDefinition('reference', []),
@@ -75,8 +117,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'description': SearchParameterDefinition('string', []),
@@ -249,8 +300,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'description': SearchParameterDefinition('string', []),
@@ -333,8 +393,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'description': SearchParameterDefinition('string', []),
@@ -349,15 +418,27 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'version': SearchParameterDefinition('token', []),
   },
   'Citation': {
-    'classification': SearchParameterDefinition('composite', []),
+    'classification': SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'type'),
+      SearchComponent('token', r'classifier')
+    ]),
     'classification-type': SearchParameterDefinition('token', []),
     'classifier': SearchParameterDefinition('token', []),
     'context': SearchParameterDefinition('token', []),
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'description': SearchParameterDefinition('string', []),
@@ -428,8 +509,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'derived-from': SearchParameterDefinition('reference', []),
@@ -498,8 +588,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'description': SearchParameterDefinition('string', []),
@@ -525,7 +624,11 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'period': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'section': SearchParameterDefinition('token', []),
-    'section-code-text': SearchParameterDefinition('composite', []),
+    'section-code-text':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'section.code'),
+      SearchComponent('special', r'section.text')
+    ]),
     'section-text': SearchParameterDefinition('special', []),
     'status': SearchParameterDefinition('token', []),
     'subject': SearchParameterDefinition('reference', []),
@@ -539,8 +642,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'derived-from': SearchParameterDefinition('reference', []),
@@ -601,8 +713,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'description': SearchParameterDefinition('string', []),
@@ -703,7 +824,11 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
   'Device': {
     'biological-source-event': SearchParameterDefinition('token', []),
     'code': SearchParameterDefinition('token', []),
-    'code-value-concept': SearchParameterDefinition('composite', []),
+    'code-value-concept':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'specification.ofType(CodeableConcept)'),
+      SearchComponent('string', r'version.ofType(string)')
+    ]),
     'definition': SearchParameterDefinition('reference', []),
     'device-name': SearchParameterDefinition('string', []),
     'expiration-date': SearchParameterDefinition(
@@ -718,13 +843,16 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'parent': SearchParameterDefinition('reference', []),
     'serial-number': SearchParameterDefinition('string', []),
     'specification': SearchParameterDefinition('token', []),
-    'specification-version': SearchParameterDefinition('composite', []),
+    'specification-version':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'specification'),
+      SearchComponent('string', r'version')
+    ]),
     'status': SearchParameterDefinition('token', []),
     'type': SearchParameterDefinition('token', []),
     'udi-carrier-hrf': SearchParameterDefinition('string', []),
     'udi-di': SearchParameterDefinition('string', []),
     'version': SearchParameterDefinition('string', []),
-    'version-type': SearchParameterDefinition('composite', []),
   },
   'DeviceAssociation': {
     'date': SearchParameterDefinition(
@@ -745,11 +873,14 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'part-number': SearchParameterDefinition('string', []),
     'publisher': SearchParameterDefinition('string', []),
     'specification': SearchParameterDefinition('token', []),
-    'specification-version': SearchParameterDefinition('composite', []),
+    'specification-version': SearchParameterDefinition('composite', [],
+        components: [
+          SearchComponent('token', r'specification'),
+          SearchComponent('token', r'version')
+        ]),
     'type': SearchParameterDefinition('token', []),
     'url': SearchParameterDefinition('uri', []),
     'version': SearchParameterDefinition('token', []),
-    'version-type': SearchParameterDefinition('composite', []),
   },
   'DeviceDispense': {
     'code': SearchParameterDefinition('token', []),
@@ -823,7 +954,7 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'bodysite': SearchParameterDefinition('token', []),
     'bodysite-reference': SearchParameterDefinition('reference', []),
     'category': SearchParameterDefinition('token', []),
-    'contenttype': SearchParameterDefinition('token', []),
+    'contenttype': SearchParameterDefinition('token', [], mime: true),
     'context': SearchParameterDefinition('reference', []),
     'creation': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
@@ -848,7 +979,10 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'related': SearchParameterDefinition('reference', []),
     'relatesto': SearchParameterDefinition('reference', []),
     'relation': SearchParameterDefinition('token', []),
-    'relationship': SearchParameterDefinition('composite', []),
+    'relationship': SearchParameterDefinition('composite', [], components: [
+      SearchComponent('reference', r'target'),
+      SearchComponent('token', r'code')
+    ]),
     'security-label': SearchParameterDefinition('token', []),
     'setting': SearchParameterDefinition('token', []),
     'status': SearchParameterDefinition('token', []),
@@ -880,7 +1014,11 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'location': SearchParameterDefinition('reference', []),
     'location-period': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
-    'location-value-period': SearchParameterDefinition('composite', []),
+    'location-value-period': SearchParameterDefinition('composite', [],
+        components: [
+          SearchComponent('reference', r'location'),
+          SearchComponent('date', r'period')
+        ]),
     'part-of': SearchParameterDefinition('reference', []),
     'participant': SearchParameterDefinition('reference', []),
     'participant-type': SearchParameterDefinition('token', []),
@@ -943,8 +1081,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'depends-on': SearchParameterDefinition('reference', []),
@@ -969,8 +1116,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'description': SearchParameterDefinition('string', []),
@@ -986,8 +1142,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'description': SearchParameterDefinition('string', []),
@@ -1005,8 +1170,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'identifier': SearchParameterDefinition('token', []),
@@ -1089,8 +1263,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'description': SearchParameterDefinition('string', []),
@@ -1106,7 +1289,12 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
   'Group': {
     'characteristic': SearchParameterDefinition('token', []),
     'characteristic-reference': SearchParameterDefinition('reference', []),
-    'characteristic-value': SearchParameterDefinition('composite', []),
+    'characteristic-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'token', r'(value.ofType(CodeableConcept)) | (value.ofType(boolean))')
+    ]),
     'code': SearchParameterDefinition('token', []),
     'exclude': SearchParameterDefinition('token', []),
     'identifier': SearchParameterDefinition('token', []),
@@ -1226,8 +1414,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'depends-on': SearchParameterDefinition('reference', []),
@@ -1257,14 +1454,12 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'strength-concentration-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
-    'strength-concentration-ratio': SearchParameterDefinition('composite', []),
     'strength-presentation-denominator': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'strength-presentation-numerator': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'strength-presentation-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
-    'strength-presentation-ratio': SearchParameterDefinition('composite', []),
     'substance': SearchParameterDefinition('reference', []),
     'substance-code': SearchParameterDefinition('token', []),
     'substance-definition': SearchParameterDefinition('reference', []),
@@ -1308,13 +1503,22 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
   },
   'Library': {
     'composed-of': SearchParameterDefinition('reference', []),
-    'content-type': SearchParameterDefinition('token', []),
+    'content-type': SearchParameterDefinition('token', [], mime: true),
     'context': SearchParameterDefinition('token', []),
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'depends-on': SearchParameterDefinition('reference', []),
@@ -1391,8 +1595,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'depends-on': SearchParameterDefinition('reference', []),
@@ -1557,8 +1770,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'description': SearchParameterDefinition('string', []),
@@ -1593,8 +1815,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'derived-from': SearchParameterDefinition('reference', []),
@@ -1660,21 +1891,52 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'based-on': SearchParameterDefinition('reference', []),
     'category': SearchParameterDefinition('token', []),
     'code': SearchParameterDefinition('token', []),
-    'code-value-concept': SearchParameterDefinition('composite', []),
-    'code-value-date': SearchParameterDefinition('composite', []),
-    'code-value-quantity': SearchParameterDefinition('composite', []),
-    'code-value-string': SearchParameterDefinition('composite', []),
+    'code-value-concept':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
+    'code-value-date': SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('date', r'value.ofType(dateTime) | value.ofType(Period)')
+    ]),
+    'code-value-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('quantity', r'value.ofType(Quantity)')
+    ]),
+    'code-value-string':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('string', r'value.ofType(string)')
+    ]),
     'combo-code': SearchParameterDefinition('token', []),
-    'combo-code-value-concept': SearchParameterDefinition('composite', []),
-    'combo-code-value-quantity': SearchParameterDefinition('composite', []),
+    'combo-code-value-concept':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
+    'combo-code-value-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('quantity', r'value.ofType(Quantity)')
+    ]),
     'combo-data-absent-reason': SearchParameterDefinition('token', []),
     'combo-interpretation': SearchParameterDefinition('token', []),
     'combo-value-concept': SearchParameterDefinition('token', []),
     'combo-value-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'component-code': SearchParameterDefinition('token', []),
-    'component-code-value-concept': SearchParameterDefinition('composite', []),
-    'component-code-value-quantity': SearchParameterDefinition('composite', []),
+    'component-code-value-concept':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
+    'component-code-value-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('quantity', r'value.ofType(Quantity)')
+    ]),
     'component-data-absent-reason': SearchParameterDefinition('token', []),
     'component-interpretation': SearchParameterDefinition('token', []),
     'component-value-canonical': SearchParameterDefinition('reference', []),
@@ -1727,8 +1989,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'description': SearchParameterDefinition('string', []),
@@ -1879,8 +2150,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'definition': SearchParameterDefinition('reference', []),
@@ -1925,7 +2205,10 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'name': SearchParameterDefinition('string', []),
     'phone': SearchParameterDefinition('token', []),
     'phonetic': SearchParameterDefinition('string', []),
-    'qual-code-period': SearchParameterDefinition('composite', []),
+    'qual-code-period': SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('date', r'period')
+    ]),
     'qualification-code': SearchParameterDefinition('token', []),
     'qualification-period': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
@@ -1991,8 +2274,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'definition': SearchParameterDefinition('uri', []),
@@ -2027,14 +2319,34 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'based-on': SearchParameterDefinition('reference', []),
     'encounter': SearchParameterDefinition('reference', []),
     'identifier': SearchParameterDefinition('token', []),
-    'item-concept': SearchParameterDefinition('composite', []),
-    'item-date': SearchParameterDefinition('composite', []),
-    'item-number': SearchParameterDefinition('composite', []),
-    'item-quantity': SearchParameterDefinition('composite', []),
-    'item-reference': SearchParameterDefinition('composite', []),
-    'item-string': SearchParameterDefinition('composite', []),
+    'item-concept': SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'item.linkId'),
+      SearchComponent('token',
+          r'item.answer.value.ofType(boolean) | item.answer.value.ofType(Coding)')
+    ]),
+    'item-date': SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'item.linkId'),
+      SearchComponent('date',
+          r'item.answer.value.ofType(date) | item.answer.value.ofType(dateTime)')
+    ]),
+    'item-number': SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'item.linkId'),
+      SearchComponent('number',
+          r'item.answer.value.ofType(integer) | item.answer.value.ofType(decimal)')
+    ]),
+    'item-quantity': SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'item.linkId'),
+      SearchComponent('quantity', r'item.answer.value.ofType(Quantity)')
+    ]),
+    'item-reference': SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'item.linkId'),
+      SearchComponent('reference', r'item.answer.value.ofType(Reference)')
+    ]),
+    'item-string': SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'item.linkId'),
+      SearchComponent('string', r'item.answer.value.ofType(String)')
+    ]),
     'item-subject': SearchParameterDefinition('reference', []),
-    'item-uri': SearchParameterDefinition('composite', []),
     'linkid': SearchParameterDefinition('token', []),
     'part-of': SearchParameterDefinition('reference', []),
     'patient': SearchParameterDefinition('reference', []),
@@ -2100,8 +2412,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'derived-from': SearchParameterDefinition('reference', []),
@@ -2135,10 +2456,22 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'progress-period': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'progress-state': SearchParameterDefinition('token', []),
-    'progress-status-state-actual': SearchParameterDefinition('composite', []),
-    'progress-status-state-period': SearchParameterDefinition('composite', []),
+    'progress-status-state-actual':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'progress-state'),
+      SearchComponent('token', r'progress-actual')
+    ]),
+    'progress-status-state-period':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'progress-state'),
+      SearchComponent('date', r'progress-period')
+    ]),
     'progress-status-state-period-actual':
-        SearchParameterDefinition('composite', []),
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'progress-state'),
+      SearchComponent('date', r'progress-period'),
+      SearchComponent('token', r'progress-actual')
+    ]),
     'protocol': SearchParameterDefinition('reference', []),
     'recruitment-actual': SearchParameterDefinition(
         'number', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
@@ -2254,8 +2587,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'derived-from': SearchParameterDefinition('reference', []),
@@ -2349,14 +2691,26 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'derivation': SearchParameterDefinition('token', []),
     'description': SearchParameterDefinition('string', []),
     'experimental': SearchParameterDefinition('token', []),
-    'ext-context': SearchParameterDefinition('composite', []),
+    'ext-context': SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'type'),
+      SearchComponent('token', r'expression')
+    ]),
     'ext-context-expression': SearchParameterDefinition('token', []),
     'ext-context-type': SearchParameterDefinition('token', []),
     'identifier': SearchParameterDefinition('token', []),
@@ -2378,8 +2732,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'description': SearchParameterDefinition('string', []),
@@ -2400,7 +2763,7 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'identifier': SearchParameterDefinition('token', []),
     'name': SearchParameterDefinition('string', []),
     'owner': SearchParameterDefinition('reference', []),
-    'payload': SearchParameterDefinition('token', []),
+    'payload': SearchParameterDefinition('token', [], mime: true),
     'status': SearchParameterDefinition('token', []),
     'topic': SearchParameterDefinition('uri', []),
     'type': SearchParameterDefinition('token', []),
@@ -2490,8 +2853,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'description': SearchParameterDefinition('string', []),
@@ -2510,8 +2882,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'description': SearchParameterDefinition('string', []),
@@ -2520,7 +2901,6 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'name': SearchParameterDefinition('string', []),
     'publisher': SearchParameterDefinition('string', []),
     'requirement': SearchParameterDefinition('uri', []),
-    'requirement-key': SearchParameterDefinition('composite', []),
     'scope-canonical': SearchParameterDefinition('uri', []),
     'scope-uri': SearchParameterDefinition('uri', []),
     'status': SearchParameterDefinition('token', []),
@@ -2545,8 +2925,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'description': SearchParameterDefinition('string', []),
@@ -2555,8 +2944,16 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'name': SearchParameterDefinition('string', []),
     'phase': SearchParameterDefinition('token', []),
     'publisher': SearchParameterDefinition('string', []),
-    'scope-artifact-conformance': SearchParameterDefinition('composite', []),
-    'scope-artifact-phase': SearchParameterDefinition('composite', []),
+    'scope-artifact-conformance':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('reference', r'artifact'),
+      SearchComponent('token', r'conformance.ofType(CodeableConcept)')
+    ]),
+    'scope-artifact-phase':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('reference', r'artifact'),
+      SearchComponent('token', r'phase.ofType(CodeableConcept)')
+    ]),
     'status': SearchParameterDefinition('token', []),
     'testscript-capability': SearchParameterDefinition('string', []),
     'title': SearchParameterDefinition('string', []),
@@ -2573,8 +2970,17 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'context-quantity': SearchParameterDefinition(
         'quantity', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'context-type': SearchParameterDefinition('token', []),
-    'context-type-quantity': SearchParameterDefinition('composite', []),
-    'context-type-value': SearchParameterDefinition('composite', []),
+    'context-type-quantity':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent(
+          'quantity', r'value.ofType(Quantity) | value.ofType(Range)')
+    ]),
+    'context-type-value':
+        SearchParameterDefinition('composite', [], components: [
+      SearchComponent('token', r'code'),
+      SearchComponent('token', r'value.ofType(CodeableConcept)')
+    ]),
     'date': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'derived-from': SearchParameterDefinition('reference', []),
