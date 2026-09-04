@@ -222,57 +222,21 @@ Future<void> main() async {
     );
   });
 
-  /// Thirty patients, family Alpha on the first ten and Beta on the rest,
-  /// gender female on the even ones. The string tests live on Patient here
-  /// because the generated extractor indexes no string parameter for
-  /// Observation in this version: R5's `value-markdown` expression and R6
-  /// ballot 3's unprefixed `value-string` expression are both dropped by the
-  /// generator (see fhir_generator).
-  Future<void> savePatients() async {
-    for (var i = 0; i < 30; i++) {
-      await dao.saveResource(
-        Patient.fromJson({
-          'resourceType': 'Patient',
-          'id': 'p${i.toString().padLeft(2, '0')}',
-          'name': [
-            {'family': i < 10 ? 'Alpha reading' : 'Beta reading'},
-          ],
-          'gender': i.isEven ? 'female' : 'male',
-        }),
-      );
-    }
-  }
-
-  Future<List<String>> patientIds(
-    Map<String, List<String>> params, {
-    int? count,
-    int? offset,
-  }) async =>
-      (await dao.search(
-        resourceType: R6ResourceType.Patient,
-        searchParameters: params,
-        count: count,
-        offset: offset,
-      ))
-          .map((r) => r.id!.valueString!)
-          .toList();
-
   test('a string parameter pages in SQL with the starts-with default',
       () async {
-    await savePatients();
-    // family sw "alpha" -> p00..p09 -> 10 rows; case-insensitive.
-    final page = await patientIds(
+    // value-string sw "alpha" -> o00..o09 -> 10 rows; case-insensitive.
+    final page = await ids(
       {
-        'family': ['alpha'],
+        'value-string': ['alpha'],
       },
       count: 4,
       offset: 8,
     );
-    expect(page, ['p08', 'p09']);
+    expect(page, ['o08', 'o09']);
     expect(
-      await patientIds(
+      await ids(
         {
-          'family': ['reading'],
+          'value-string': ['reading'],
         },
         count: 5,
       ),
@@ -282,28 +246,26 @@ Future<void> main() async {
   });
 
   test('a string and a token parameter intersect', () async {
-    await savePatients();
-    // "Beta" AND female -> even ids in 10..29 -> 10 rows.
-    final page = await patientIds(
+    // "Beta" AND final -> even ids in 10..29 -> 10 rows.
+    final page = await ids(
       {
-        'family': ['Beta'],
-        'gender': ['female'],
+        'value-string': ['Beta'],
+        'status': ['final'],
       },
       count: 3,
       offset: 6,
     );
-    expect(page, ['p22', 'p24', 'p26']);
+    expect(page, ['o22', 'o24', 'o26']);
   });
 
   test('a string modifier falls back to the general path', () async {
-    await savePatients();
-    final exact = await patientIds(
+    final exact = await ids(
       {
-        'family:exact': ['Alpha reading'],
+        'value-string:exact': ['Alpha reading'],
       },
       count: 3,
     );
-    expect(exact, ['p00', 'p01', 'p02']);
+    expect(exact, ['o00', 'o01', 'o02']);
   });
 
   test('a reference parameter pages in SQL, Type/id and bare id', () async {
