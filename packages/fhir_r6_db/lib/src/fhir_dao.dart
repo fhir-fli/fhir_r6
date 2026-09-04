@@ -1,5 +1,4 @@
 // ignore_for_file: lines_longer_than_80_chars, avoid_print
-import 'dart:convert';
 
 import 'package:drift/drift.dart';
 import 'package:fhir_r6/fhir_r6.dart' as fhir;
@@ -399,6 +398,12 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
   // Search Operations
   // ──────────────────────────────────────────────────────────────────────────
 
+  /// Whether the last [search] was paged in SQL (true) or resolved its ids
+  /// on the general path (false). For tests: a search that gives the right
+  /// answer on either path proves nothing about which one ran.
+  @visibleForTesting
+  bool lastSearchPagedInSql = false;
+
   /// Search resources using search parameters.
   Future<List<fhir.Resource>> search({
     required fhir.R6ResourceType resourceType,
@@ -418,6 +423,7 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
       count,
       offset,
     );
+    lastSearchPagedInSql = paged != null;
     if (paged != null) {
       final results = <fhir.Resource>[];
       for (final id in paged) {
@@ -532,30 +538,56 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
 
     final parts = <_IndexCondition>[];
     for (final entry in (searchParameters ?? const {}).entries) {
-      if (entry.value.length != 1) return null;
-      final value = entry.value.single;
-      if (value.contains(',') || value.isEmpty) return null;
-
       final key = SearchQueryKey.parse(entry.key);
-      if (key.qualifier != null) return null;
-      if (key.name.startsWith('_')) return null;
+      // A chain (`subject.name`, `subject:Patient.name`) is resolved through
+      // another resource type and takes the general path.
+      if (key.chain != null) return null;
+      final modifier = key.modifier;
 
+      // `_tag`, `_profile`, `_security`, `_source`, `_id`, `_lastUpdated` are
+      // published against Resource (R4B 3.1.1.4.1), not against each type.
       final declared = searchParameterFor(resourceType, key.name);
       if (declared == null) return null;
 
-      // The first parameter is the outer select on its own table; every
-      // further one is a correlated EXISTS on an ALIAS of its table, so two
-      // parameters on the same table (status and code are both tokens) do
-      // not collide.
-      final part = _conditionFor(
-        resourceType,
-        key.name,
-        value,
-        declared,
-        aliasName: parts.isEmpty ? null : 'p${parts.length}',
-      );
-      if (part == null) return null;
-      parts.add(part);
+      // R4B 3.1.1.4.17: a repeated parameter is an AND, a comma inside one
+      // is an OR. Each repetition is one condition on its own (aliased)
+      // table; the comma-separated values inside it are ORed on that same
+      // table. The split honours FHIR's backslash escaping, so `a\,b` is
+      // one value.
+      for (final repetition in entry.value) {
+        final orValues = splitEscaped(repetition, ',')
+            .map((v) => v.trim())
+            .where((v) => v.isNotEmpty)
+            .toList();
+        if (orValues.isEmpty) return null;
+
+        // The first condition is the outer select on its own table; every
+        // further one is nested on an ALIAS of its table, so two conditions
+        // on the same table (status and code are both tokens) do not
+        // collide.
+        final aliasName = parts.isEmpty ? null : 'p${parts.length}';
+        _IndexCondition? combined;
+        for (final value in orValues) {
+          final one = await _conditionFor(
+            resourceType,
+            key.name,
+            value,
+            declared,
+            modifier: modifier,
+            aliasName: aliasName,
+          );
+          if (one == null) return null;
+          combined = combined == null
+              ? one
+              : _IndexCondition(
+                  combined.table,
+                  combined.idColumn,
+                  combined.condition | one.condition,
+                  negated: combined.negated,
+                );
+        }
+        parts.add(combined!);
+      }
     }
 
     // Which parameter is the outer select, and how the others nest, is
@@ -590,6 +622,13 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
     // almost nothing: one patient's records against one code is settled
     // by the first stage in a few milliseconds, and only a query whose
     // every parameter matches thousands of rows pays for the second.
+    // A negated condition (`:missing=true`, `:not`, `:not-in`) says what a
+    // resource must NOT have a row for. It cannot drive the select, so it
+    // is set aside and nested as NOT EXISTS on whatever the outer is; when
+    // nothing positive remains, the resources table is the outer.
+    final negated = parts.where((p) => p.negated).toList();
+    parts.removeWhere((p) => p.negated);
+
     var limit = _probeLimits.first;
     final sized = <(_IndexCondition, int)>[];
     if (parts.isEmpty) {
@@ -644,6 +683,17 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
             );
       }
     }
+    for (final other in negated) {
+      where = where &
+          notExistsQuery(
+            selectOnly(other.table)
+              ..addColumns([const Constant(1)])
+              ..where(
+                other.condition & other.idColumn.equalsExp(first.idColumn),
+              ),
+          );
+    }
+
     if (sortKeys.isEmpty) {
       final rows = await (selectOnly(first.table, distinct: true)
             ..addColumns([first.idColumn])
@@ -824,50 +874,188 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
   static const _probeLimits = [2000, 100000];
 
   /// One parameter's typed WHERE on its own index table, or null when this
-  /// path has no builder for the parameter's type or the value does not
-  /// parse for it.
-  _IndexCondition? _conditionFor(
+  /// path has no builder for the parameter's type, the value does not parse
+  /// for it, or the modifier is one the general path alone handles.
+  ///
+  /// Modifiers, R4B §3.1.1.4.4, by type:
+  /// - any type: `:missing`. `true` is negated (no row with this path);
+  ///   `false` is any row with this path.
+  /// - string: `:exact` on the value as written; `:contains` on the
+  ///   normalized value.
+  /// - token: `:text` on the display; `:not` is the plain match, negated;
+  ///   `:in` is an OR over the ValueSet's codes and `:not-in` that, negated
+  ///   (`:not-in` with an empty expansion excludes nothing). `:of-type` is
+  ///   not built: the index has no identifier type and the general path
+  ///   reads resources for it.
+  /// - reference: `:identifier` on `Reference.identifier`; a resource type
+  ///   as the modifier (`subject:Patient=23`) "has the same effect as
+  ///   subject=Patient/23" (§3.1.1.4.12).
+  /// - uri: `:below` is prefix; `:above` is not built (it needs the stored
+  ///   value as the prefix of the search value, which the general path does
+  ///   in Dart).
+  Future<_IndexCondition?> _conditionFor(
     String resourceType,
     String name,
     String value,
     SearchParameterDefinition declared, {
+    String? modifier,
     String? aliasName,
-  }) {
+  }) async {
+    Expression<bool> onPath(
+      GeneratedColumn<String> type,
+      GeneratedColumn<String> searchName,
+      GeneratedColumn<String> searchPath,
+    ) =>
+        type.equals(resourceType) &
+        (searchName.equals(name) |
+            searchPath.like('$resourceType.$name') |
+            searchPath.like('$resourceType.%.$name'));
+
+    // `_id` and `_lastUpdated` are columns of the resources table, not
+    // index rows. `_id:missing` and `_lastUpdated:missing` are meaningless
+    // (every resource has both) and take the general path.
+    if (name == '_id' || name == '_lastUpdated') {
+      if (modifier != null) return null;
+      final r = aliasName == null ? resources : alias(resources, aliasName);
+      final Expression<bool>? condition;
+      if (name == '_id') {
+        condition = r.id.equals(unescapeValue(value));
+      } else {
+        final (prefix, rest) = splitComparator(declared, value);
+        condition = _lastUpdatedCondition(prefix, rest, on: r);
+      }
+      if (condition == null) return null;
+      return _IndexCondition(
+        r,
+        r.id,
+        r.resourceType.equals(resourceType) & condition,
+      );
+    }
+
     switch (declared.type) {
       case 'token':
         final t = aliasName == null
             ? tokenSearchParameters
             : alias(tokenSearchParameters, aliasName);
-        return _IndexCondition(
-          t,
-          t.id,
-          _tokenCondition(resourceType, name, value, on: t),
-        );
+        final path = onPath(t.resourceType, t.searchName, t.searchPath);
+        switch (modifier) {
+          case null:
+            return _IndexCondition(
+              t,
+              t.id,
+              _tokenCondition(resourceType, name, value, on: t),
+            );
+          case 'not':
+            return _IndexCondition(
+              t,
+              t.id,
+              _tokenCondition(resourceType, name, value, on: t),
+              negated: true,
+            );
+          case 'missing':
+            return _IndexCondition(t, t.id, path, negated: value == 'true');
+          case 'text':
+            return _IndexCondition(
+              t,
+              t.id,
+              path & t.tokenDisplay.like('%${unescapeValue(value)}%'),
+            );
+          case 'in':
+          case 'not-in':
+            final codes = await _getCodesFromValueSet(value);
+            if (codes.isEmpty) {
+              // `:in` an empty expansion matches nothing; `:not-in` excludes
+              // nothing. A condition no row satisfies does both when negated
+              // accordingly.
+              return _IndexCondition(
+                t,
+                t.id,
+                const Constant(false),
+                negated: modifier == 'not-in',
+              );
+            }
+            Expression<bool>? any;
+            for (final code in codes) {
+              final one = _tokenCondition(
+                resourceType,
+                name,
+                code.system != null ? '${code.system}|${code.code}' : code.code,
+                on: t,
+              );
+              any = any == null ? one : any | one;
+            }
+            return _IndexCondition(
+              t,
+              t.id,
+              any!,
+              negated: modifier == 'not-in',
+            );
+          default:
+            return null;
+        }
       case 'reference':
-        // A chain (`subject.name`) never reaches here: the key's qualifier
-        // is rejected above. Only `Type/id` and bare ids do.
         final t = aliasName == null
             ? referenceSearchParameters
             : alias(referenceSearchParameters, aliasName);
-        return _IndexCondition(
-          t,
-          t.id,
-          _referenceCondition(resourceType, name, value, on: t),
-        );
+        final path = onPath(t.resourceType, t.searchName, t.searchPath);
+        switch (modifier) {
+          case null:
+            return _IndexCondition(
+              t,
+              t.id,
+              _referenceCondition(resourceType, name, value, on: t),
+            );
+          case 'missing':
+            return _IndexCondition(t, t.id, path, negated: value == 'true');
+          case 'identifier':
+            final parts = splitEscaped(value, '|');
+            var where = path &
+                t.identifierValue.equals(
+                  parts.length > 1 ? parts[1] : unescapeValue(value),
+                );
+            if (parts.length > 1 && parts[0].isNotEmpty) {
+              where = where & t.identifierSystem.equals(parts[0]);
+            }
+            return _IndexCondition(t, t.id, where);
+          default:
+            // A resource type: `subject:Patient=23` is `subject=Patient/23`.
+            if (fhir.R6ResourceType.fromString(modifier) == null) return null;
+            if (value.contains('/')) return null;
+            return _IndexCondition(
+              t,
+              t.id,
+              _referenceCondition(
+                resourceType,
+                name,
+                '$modifier/${unescapeValue(value)}',
+                on: t,
+              ),
+            );
+        }
       case 'number':
-        final (prefix, rest) = splitComparator(declared, value);
         final t = aliasName == null
             ? numberSearchParameters
             : alias(numberSearchParameters, aliasName);
+        if (modifier == 'missing') {
+          final path = onPath(t.resourceType, t.searchName, t.searchPath);
+          return _IndexCondition(t, t.id, path, negated: value == 'true');
+        }
+        if (modifier != null) return null;
+        final (prefix, rest) = splitComparator(declared, value);
         final condition =
             _numberCondition(resourceType, name, prefix, rest, on: t);
         if (condition == null) return null;
         return _IndexCondition(t, t.id, condition);
       case 'quantity':
-        final (prefix, rest) = splitComparator(declared, value);
         final t = aliasName == null
             ? quantitySearchParameters
             : alias(quantitySearchParameters, aliasName);
+        if (modifier == 'missing') {
+          final path = onPath(t.resourceType, t.searchName, t.searchPath);
+          return _IndexCondition(t, t.id, path, negated: value == 'true');
+        }
+        if (modifier != null) return null;
+        final (prefix, rest) = splitComparator(declared, value);
         final condition =
             _quantityCondition(resourceType, name, prefix, rest, on: t);
         if (condition == null) return null;
@@ -876,25 +1064,66 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
         final t = aliasName == null
             ? uriSearchParameters
             : alias(uriSearchParameters, aliasName);
-        return _IndexCondition(
-          t,
-          t.id,
-          _uriCondition(resourceType, name, value, on: t),
-        );
+        final path = onPath(t.resourceType, t.searchName, t.searchPath);
+        switch (modifier) {
+          case null:
+            return _IndexCondition(
+              t,
+              t.id,
+              _uriCondition(resourceType, name, value, on: t),
+            );
+          case 'missing':
+            return _IndexCondition(t, t.id, path, negated: value == 'true');
+          case 'below':
+            return _IndexCondition(
+              t,
+              t.id,
+              path & t.uriValue.like('${unescapeValue(value)}%'),
+            );
+          default:
+            return null;
+        }
       case 'string':
         final t = aliasName == null
             ? stringSearchParameters
             : alias(stringSearchParameters, aliasName);
-        return _IndexCondition(
-          t,
-          t.id,
-          _stringCondition(resourceType, name, value, on: t),
-        );
+        final path = onPath(t.resourceType, t.searchName, t.searchPath);
+        switch (modifier) {
+          case null:
+            return _IndexCondition(
+              t,
+              t.id,
+              _stringCondition(resourceType, name, value, on: t),
+            );
+          case 'missing':
+            return _IndexCondition(t, t.id, path, negated: value == 'true');
+          case 'exact':
+            return _IndexCondition(
+              t,
+              t.id,
+              path & t.exactValue.equals(unescapeValue(value).trim()),
+            );
+          case 'contains':
+            final normalized =
+                normalizeSearchString(unescapeValue(value)).trim();
+            return _IndexCondition(
+              t,
+              t.id,
+              path & t.stringValue.like('%$normalized%'),
+            );
+          default:
+            return null;
+        }
       case 'date':
-        final (prefix, rest) = splitComparator(declared, value);
         final t = aliasName == null
             ? dateSearchParameters
             : alias(dateSearchParameters, aliasName);
+        if (modifier == 'missing') {
+          final path = onPath(t.resourceType, t.searchName, t.searchPath);
+          return _IndexCondition(t, t.id, path, negated: value == 'true');
+        }
+        if (modifier != null) return null;
+        final (prefix, rest) = splitComparator(declared, value);
         final condition =
             _dateCondition(resourceType, name, prefix, rest, on: t);
         if (condition == null) return null;
@@ -974,54 +1203,6 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
             matchingIds = lastUpdatedIds;
           } else {
             matchingIds = matchingIds.intersection(lastUpdatedIds);
-          }
-          firstParam = false;
-          continue;
-        }
-
-        if (paramName == '_tag') {
-          final tagIds =
-              await _searchTagParameter(resourceTypeString, paramValues);
-          if (firstParam) {
-            matchingIds = tagIds;
-          } else {
-            matchingIds = matchingIds.intersection(tagIds);
-          }
-          firstParam = false;
-          continue;
-        }
-
-        if (paramName == '_profile') {
-          final profileIds =
-              await _searchProfileParameter(resourceTypeString, paramValues);
-          if (firstParam) {
-            matchingIds = profileIds;
-          } else {
-            matchingIds = matchingIds.intersection(profileIds);
-          }
-          firstParam = false;
-          continue;
-        }
-
-        if (paramName == '_security') {
-          final securityIds =
-              await _searchSecurityParameter(resourceTypeString, paramValues);
-          if (firstParam) {
-            matchingIds = securityIds;
-          } else {
-            matchingIds = matchingIds.intersection(securityIds);
-          }
-          firstParam = false;
-          continue;
-        }
-
-        if (paramName == '_source') {
-          final sourceIds =
-              await _searchSourceParameter(resourceTypeString, paramValues);
-          if (firstParam) {
-            matchingIds = sourceIds;
-          } else {
-            matchingIds = matchingIds.intersection(sourceIds);
           }
           firstParam = false;
           continue;
@@ -2438,7 +2619,12 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
 
   /// The WHERE on `resources.last_updated` for one `_lastUpdated` value, or
   /// null when the value is not a search date.
-  Expression<bool>? _lastUpdatedCondition(String? prefix, String value) {
+  Expression<bool>? _lastUpdatedCondition(
+    String? prefix,
+    String value, {
+    $ResourcesTable? on,
+  }) {
+    final r = on ?? resources;
     final range = searchDateRange(value);
     if (range == null) {
       return null;
@@ -2446,8 +2632,7 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
     // last_updated is integer milliseconds; the range comparison is written
     // over DateTime expressions, so the point is lifted to one. SQLite
     // stores a Drift DateTime as whole seconds, hence the division.
-    final instant =
-        resources.lastUpdated.dartCast<double>() / const Constant(1000);
+    final instant = r.lastUpdated.dartCast<double>() / const Constant(1000);
     final low = instant.dartCast<DateTime>();
     final high = (instant + const Constant(1)).dartCast<DateTime>();
     return _dateRangeCondition(
@@ -2456,164 +2641,6 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
       prefix: prefix,
       search: range,
     );
-  }
-
-  Future<Set<String>> _searchTagParameter(
-    String resourceType,
-    List<String> values,
-  ) async {
-    final matchingIds = <String>{};
-    final allResources = await (select(resources)
-          ..where((tbl) => tbl.resourceType.equals(resourceType)))
-        .get();
-
-    for (final row in allResources) {
-      try {
-        final resourceJson = jsonDecode(row.resource) as Map<String, dynamic>;
-        final meta = resourceJson['meta'] as Map<String, dynamic>?;
-        if (meta == null) continue;
-        final tags = meta['tag'] as List<dynamic>?;
-        if (tags == null || tags.isEmpty) continue;
-
-        var matches = false;
-        for (final value in values) {
-          final parts = splitEscaped(value, '|');
-          final searchSystem = parts.length > 1 ? parts[0] : null;
-          final searchCode = parts.length > 1 ? parts[1] : parts[0];
-          for (final tag in tags) {
-            final tagMap = tag as Map<String, dynamic>;
-            final system = tagMap['system'] as String?;
-            final code = tagMap['code'] as String?;
-            if (searchSystem != null) {
-              if (system == searchSystem && code == searchCode) {
-                matches = true;
-                break;
-              }
-            } else {
-              if (code == searchCode) {
-                matches = true;
-                break;
-              }
-            }
-          }
-          if (matches) break;
-        }
-        if (matches) matchingIds.add(row.id);
-      } catch (_) {
-        continue;
-      }
-    }
-    return matchingIds;
-  }
-
-  Future<Set<String>> _searchProfileParameter(
-    String resourceType,
-    List<String> values,
-  ) async {
-    final matchingIds = <String>{};
-    final allResources = await (select(resources)
-          ..where((tbl) => tbl.resourceType.equals(resourceType)))
-        .get();
-
-    for (final row in allResources) {
-      try {
-        final resourceJson = jsonDecode(row.resource) as Map<String, dynamic>;
-        final meta = resourceJson['meta'] as Map<String, dynamic>?;
-        if (meta == null) continue;
-        final profiles = meta['profile'] as List<dynamic>?;
-        if (profiles == null || profiles.isEmpty) continue;
-
-        for (final value in values) {
-          for (final profile in profiles) {
-            final profileUri = profile is String ? profile : profile.toString();
-            if (profileUri == value || profileUri.contains(value)) {
-              matchingIds.add(row.id);
-              break;
-            }
-          }
-        }
-      } catch (_) {
-        continue;
-      }
-    }
-    return matchingIds;
-  }
-
-  Future<Set<String>> _searchSecurityParameter(
-    String resourceType,
-    List<String> values,
-  ) async {
-    final matchingIds = <String>{};
-    final allResources = await (select(resources)
-          ..where((tbl) => tbl.resourceType.equals(resourceType)))
-        .get();
-
-    for (final row in allResources) {
-      try {
-        final resourceJson = jsonDecode(row.resource) as Map<String, dynamic>;
-        final meta = resourceJson['meta'] as Map<String, dynamic>?;
-        if (meta == null) continue;
-        final securities = meta['security'] as List<dynamic>?;
-        if (securities == null || securities.isEmpty) continue;
-
-        var matches = false;
-        for (final value in values) {
-          final parts = splitEscaped(value, '|');
-          final searchSystem = parts.length > 1 ? parts[0] : null;
-          final searchCode = parts.length > 1 ? parts[1] : parts[0];
-          for (final security in securities) {
-            final securityMap = security as Map<String, dynamic>;
-            final system = securityMap['system'] as String?;
-            final code = securityMap['code'] as String?;
-            if (searchSystem != null) {
-              if (system == searchSystem && code == searchCode) {
-                matches = true;
-                break;
-              }
-            } else {
-              if (code == searchCode) {
-                matches = true;
-                break;
-              }
-            }
-          }
-          if (matches) break;
-        }
-        if (matches) matchingIds.add(row.id);
-      } catch (_) {
-        continue;
-      }
-    }
-    return matchingIds;
-  }
-
-  Future<Set<String>> _searchSourceParameter(
-    String resourceType,
-    List<String> values,
-  ) async {
-    final matchingIds = <String>{};
-    final allResources = await (select(resources)
-          ..where((tbl) => tbl.resourceType.equals(resourceType)))
-        .get();
-
-    for (final row in allResources) {
-      try {
-        final resourceJson = jsonDecode(row.resource) as Map<String, dynamic>;
-        final meta = resourceJson['meta'] as Map<String, dynamic>?;
-        if (meta == null) continue;
-        final source = meta['source'] as String?;
-        if (source == null) continue;
-        for (final value in values) {
-          if (source == value || source.contains(value)) {
-            matchingIds.add(row.id);
-            break;
-          }
-        }
-      } catch (_) {
-        continue;
-      }
-    }
-    return matchingIds;
   }
 
   Future<Set<String>> _searchMissingParameter(
@@ -2994,13 +3021,33 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
         (t.searchName.equals(searchPath) |
             t.searchPath.like('$resourceType.$searchPath') |
             t.searchPath.like('$resourceType.%.$searchPath'));
-    final parts = value.split('/');
-    if (parts.length == 2) {
+    final unescaped = unescapeValue(value);
+    final parts = unescaped.split('/');
+    if (unescaped.contains('://')) {
+      // R4B 3.1.1.4.12, `[parameter]=[url]`: "a reference to a resource by
+      // its absolute location, or by its canonical URL". The stored value
+      // as written, with the `[url]|[version]` form matching that exact
+      // string and the bare `[url]` also matching any version of it (R5
+      // 3.2.1.6.1.5: servers SHOULD read a `|[version]` as the business
+      // version, so a search without one is version-agnostic). This used
+      // to compare the whole URL against the id part, which never matched.
+      // A prefix test by substr rather than LIKE: LIKE has no escape
+      // character unless one is declared, and `_` (a wildcard) is common
+      // in URLs, so `us_core` would also match `us-core`.
+      final versioned = '$unescaped|';
+      where = where &
+          (t.referenceValue.equals(unescaped) |
+              (unescaped.contains('|')
+                  ? const Constant(false)
+                  : t.referenceValue
+                      .substr(1, versioned.length)
+                      .equals(versioned)));
+    } else if (parts.length == 2) {
       where = where &
           t.referenceResourceType.equals(parts[0]) &
           t.referenceIdPart.equals(parts[1]);
     } else {
-      where = where & t.referenceIdPart.equals(value);
+      where = where & t.referenceIdPart.equals(unescaped);
     }
     return where;
   }
@@ -3110,18 +3157,12 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
           continue;
         }
 
-        if (value.contains('/')) {
-          final parts = value.split('/');
-          if (parts.length == 2) {
-            whereCondition = whereCondition &
-                referenceSearchParameters.referenceResourceType
-                    .equals(parts[0]) &
-                referenceSearchParameters.referenceIdPart.equals(parts[1]);
-          }
-        } else {
-          whereCondition = whereCondition &
-              referenceSearchParameters.referenceIdPart.equals(value);
-        }
+        // The same builder the SQL-paged path uses, so `Type/id`, a bare
+        // id and an absolute or canonical URL mean the same thing on both.
+        // Before this an absolute URL added NO condition at all, so
+        // `subject=http://server/Patient/23` returned every resource that
+        // had a subject.
+        whereCondition = _referenceCondition(resourceType, searchPath, value);
 
         query.where((tbl) => whereCondition);
         // Only the id column is read; see _executeTokenQuery.
@@ -3404,11 +3445,21 @@ class FhirDao extends DatabaseAccessor<FhirDb> with _$FhirDaoMixin {
 
 /// One search parameter expressed as a WHERE on its own index table.
 class _IndexCondition {
-  const _IndexCondition(this.table, this.idColumn, this.condition);
+  const _IndexCondition(
+    this.table,
+    this.idColumn,
+    this.condition, {
+    this.negated = false,
+  });
 
   final TableInfo<Table, dynamic> table;
   final GeneratedColumn<String> idColumn;
   final Expression<bool> condition;
+
+  /// True when the resource must have NO row matching [condition]:
+  /// `:missing=true`, `:not`, `:not-in`. Never the outer select; nested as
+  /// `NOT EXISTS`.
+  final bool negated;
 }
 
 /// One `_sort` rule: the (aliased) table holding the value, how it joins to

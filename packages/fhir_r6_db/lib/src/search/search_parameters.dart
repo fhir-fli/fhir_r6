@@ -39,6 +39,72 @@ SearchParameterLists updateSearchParameters(fhir.Resource resource) {
       resource.meta!.lastUpdated!.valueDateTime!.millisecondsSinceEpoch;
   var i = 0;
   final searchParameterLists = SearchParameterLists();
+  // The Resource.meta parameters, base Resource, so every type
+  // carries them. Each goes to the table its own definition
+  // declares for this version.
+  // Resource.meta.profile (reference)
+  i = 0;
+  for (final entry in resource.meta?.profile ?? <fhir.FhirCanonical>[]) {
+    searchParameterLists.referenceParams.addAll(
+      entry.toReferenceSearchParameter(
+        resourceType,
+        id,
+        lastUpdated,
+        'Resource.meta.profile',
+        i,
+        searchName: '_profile',
+      ),
+    );
+    i++;
+  }
+  // Resource.meta.security (token)
+  i = 0;
+  for (final entry in resource.meta?.security ?? <fhir.Coding>[]) {
+    searchParameterLists.tokenParams.addAll(
+      entry.toTokenSearchParameter(
+        resourceType,
+        id,
+        lastUpdated,
+        'Resource.meta.security',
+        i,
+        searchName: '_security',
+      ),
+    );
+    i++;
+  }
+  // Resource.meta.source (uri)
+  i = 0;
+  for (final entry in [
+    if (resource.meta?.source != null) resource.meta!.source!
+  ]) {
+    searchParameterLists.uriParams.addAll(
+      entry.toUriSearchParameter(
+        resourceType,
+        id,
+        lastUpdated,
+        'Resource.meta.source',
+        i,
+        searchName: '_source',
+      ),
+    );
+    i++;
+  }
+  // Resource.meta.tag (token)
+  i = 0;
+  for (final entry in resource.meta?.tag ?? <fhir.Coding>[]) {
+    searchParameterLists.tokenParams.addAll(
+      entry.toTokenSearchParameter(
+        resourceType,
+        id,
+        lastUpdated,
+        'Resource.meta.tag',
+        i,
+        searchName: '_tag',
+      ),
+    );
+    i++;
+  }
+
   switch (resource) {
     case fhir.Account _:
       // Account.guarantor.party (reference)

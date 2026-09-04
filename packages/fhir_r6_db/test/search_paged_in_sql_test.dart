@@ -11,21 +11,30 @@ Future<void> main() async {
   late FhirDb db;
   late FhirDao dao;
 
+  /// Runs the search, and asserts which path ran: SQL paging whenever a
+  /// count was given, unless [general] says this shape is meant to fall
+  /// back. A right answer proves nothing about the path on its own.
   Future<List<String>> ids(
     Map<String, List<String>> params, {
     int? count,
     int? offset,
     List<String>? sort,
-  }) async =>
-      (await dao.search(
-        resourceType: R6ResourceType.Observation,
-        searchParameters: params,
-        count: count,
-        offset: offset,
-        sort: sort,
-      ))
-          .map((r) => r.id!.valueString!)
-          .toList();
+    bool general = false,
+  }) async {
+    final found = await dao.search(
+      resourceType: R6ResourceType.Observation,
+      searchParameters: params,
+      count: count,
+      offset: offset,
+      sort: sort,
+    );
+    expect(
+      dao.lastSearchPagedInSql,
+      count != null && !general,
+      reason: 'path for $params count=$count sort=$sort',
+    );
+    return found.map((r) => r.id!.valueString!).toList();
+  }
 
   setUp(() async {
     db = FhirDb(NativeDatabase.memory());
@@ -178,6 +187,207 @@ Future<void> main() async {
     );
   });
 
+  test('a comma is an OR inside one parameter, paged in SQL', () async {
+    // status=final,preliminary -> everything; code=B OR status=preliminary.
+    expect(
+      await ids(
+        {
+          'status': ['final,preliminary'],
+        },
+        count: 3,
+        offset: 27,
+      ),
+      ['o27', 'o28', 'o29'],
+    );
+    expect(
+      await ids(
+        {
+          'code': ['B'],
+          'status': ['preliminary,cancelled'],
+        },
+        count: 3,
+      ),
+      ['o21', 'o23', 'o25'],
+    );
+    // An escaped comma is one value, and it matches nothing here.
+    expect(
+      await ids(
+        {
+          'status': [r'final\,preliminary'],
+        },
+        count: 3,
+      ),
+      isEmpty,
+    );
+  });
+
+  test('a repeated parameter is an AND, paged in SQL', () async {
+    // code=A AND code=B: no observation has both.
+    expect(
+      await ids(
+        {
+          'code': ['A', 'B'],
+        },
+        count: 3,
+      ),
+      isEmpty,
+    );
+    // status=final AND status=final,preliminary: the even ids.
+    expect(
+      await ids(
+        {
+          'status': ['final', 'final,preliminary'],
+        },
+        count: 3,
+      ),
+      ['o00', 'o02', 'o04'],
+    );
+    // Agrees with the general path (no count, so no SQL paging).
+    expect(
+      await ids({
+        'code': ['A', 'B'],
+      }),
+      isEmpty,
+    );
+  });
+
+  test('_id and _lastUpdated page in SQL from the resources table', () async {
+    expect(
+      await ids(
+        {
+          '_id': ['o05,o07,zzz'],
+        },
+        count: 3,
+      ),
+      ['o05', 'o07'],
+    );
+    expect(
+      await ids(
+        {
+          '_id': ['o05'],
+          'status': ['final'],
+        },
+        count: 3,
+      ),
+      isEmpty,
+      reason: 'o05 is preliminary',
+    );
+    final year = DateTime.now().year.toString();
+    expect(
+      await ids(
+        {
+          '_lastUpdated': ['ge$year'],
+          'code': ['B'],
+        },
+        count: 2,
+      ),
+      ['o20', 'o21'],
+    );
+    expect(
+      await ids(
+        {
+          '_lastUpdated': ['lt$year'],
+        },
+        count: 2,
+      ),
+      isEmpty,
+    );
+  });
+
+  test('_tag, _security, _profile and _source page in SQL from the index',
+      () async {
+    await dao.saveResource(
+      Observation.fromJson({
+        'resourceType': 'Observation',
+        'id': 'tagged',
+        'meta': {
+          'tag': [
+            {'system': 'http://example.org/tags', 'code': 'urgent'},
+          ],
+          'security': [
+            {
+              'system': 'http://terminology.hl7.org/CodeSystem/v3-ActCode',
+              'code': 'HTEST',
+            },
+          ],
+          'profile': ['http://example.org/StructureDefinition/vitals'],
+          'source': 'http://example.org/source/monitor-7',
+        },
+        'status': 'final',
+        'code': {
+          'coding': [
+            {'system': 'http://example.org', 'code': 'A'},
+          ],
+        },
+      }),
+    );
+    // Before schema 9 these were answered by decoding every stored resource
+    // of the type in Dart; now they are ordinary token and uri rows.
+    expect(
+      await ids(
+        {
+          '_tag': ['http://example.org/tags|urgent'],
+        },
+        count: 3,
+      ),
+      ['tagged'],
+    );
+    expect(
+      await ids(
+        {
+          '_tag': ['urgent'],
+          'code': ['A'],
+        },
+        count: 3,
+      ),
+      ['tagged'],
+    );
+    expect(
+      await ids(
+        {
+          '_security': ['HTEST'],
+        },
+        count: 3,
+      ),
+      ['tagged'],
+    );
+    expect(
+      await ids(
+        {
+          '_profile': ['http://example.org/StructureDefinition/vitals'],
+        },
+        count: 3,
+      ),
+      ['tagged'],
+    );
+    expect(
+      await ids(
+        {
+          '_source': ['http://example.org/source/monitor-7'],
+        },
+        count: 3,
+      ),
+      ['tagged'],
+    );
+    expect(
+      await ids(
+        {
+          '_tag:missing': ['true'],
+          'code': ['A'],
+        },
+        count: 2,
+      ),
+      ['o00', 'o01'],
+    );
+    // The general path agrees.
+    expect(
+      await ids({
+        '_tag': ['urgent'],
+      }),
+      ['tagged'],
+    );
+  });
+
   test('a date parameter pages in SQL with its prefix honoured', () async {
     // date gt 2020-01-20 -> o20..o29 -> 10 rows, paged 4 at a time.
     final page1 = await ids(
@@ -217,6 +427,7 @@ Future<void> main() async {
           'date': ['gtnot-a-date'],
         },
         count: 5,
+        general: true,
       ),
       isEmpty,
     );
@@ -258,14 +469,309 @@ Future<void> main() async {
     expect(page, ['o22', 'o24', 'o26']);
   });
 
-  test('a string modifier falls back to the general path', () async {
-    final exact = await ids(
-      {
-        'value-string:exact': ['Alpha reading'],
-      },
-      count: 3,
+  test('string modifiers page in SQL: :exact and :contains', () async {
+    expect(
+      await ids(
+        {
+          'value-string:exact': ['Alpha reading'],
+        },
+        count: 3,
+      ),
+      ['o00', 'o01', 'o02'],
     );
-    expect(exact, ['o00', 'o01', 'o02']);
+    expect(
+      await ids(
+        {
+          'value-string:exact': ['alpha reading'],
+        },
+        count: 3,
+      ),
+      isEmpty,
+      reason: ':exact keeps casing',
+    );
+    expect(
+      await ids(
+        {
+          'value-string:contains': ['READ'],
+        },
+        count: 2,
+        offset: 28,
+      ),
+      ['o28', 'o29'],
+    );
+  });
+
+  test(':missing pages in SQL, true as NOT EXISTS and false as EXISTS',
+      () async {
+    // Every observation has a status; none has a note.
+    expect(
+      await ids(
+        {
+          'status:missing': ['true'],
+        },
+        count: 3,
+      ),
+      isEmpty,
+    );
+    expect(
+      await ids(
+        {
+          'status:missing': ['false'],
+        },
+        count: 3,
+      ),
+      ['o00', 'o01', 'o02'],
+    );
+    // Only a negated condition: the resources table is the outer select.
+    expect(
+      await ids(
+        {
+          'performer:missing': ['true'],
+        },
+        count: 3,
+        offset: 27,
+      ),
+      ['o27', 'o28', 'o29'],
+    );
+    expect(
+      await ids(
+        {
+          'performer:missing': ['true'],
+          'code': ['B'],
+        },
+        count: 3,
+      ),
+      ['o20', 'o21', 'o22'],
+    );
+    // Agrees with the general path.
+    expect(
+      await ids({
+        'performer:missing': ['true'],
+        'code': ['B'],
+      }),
+      hasLength(10),
+    );
+  });
+
+  test('token modifiers page in SQL: :not and :text', () async {
+    expect(
+      await ids(
+        {
+          'status:not': ['final'],
+        },
+        count: 3,
+      ),
+      ['o01', 'o03', 'o05'],
+    );
+    expect(
+      await ids(
+        {
+          'status:not': ['final'],
+          'code': ['A'],
+        },
+        count: 3,
+        offset: 8,
+      ),
+      ['o17', 'o19'],
+    );
+    // Display text is indexed from Coding.display; these have none.
+    expect(
+      await ids(
+        {
+          'code:text': ['anything'],
+        },
+        count: 3,
+      ),
+      isEmpty,
+    );
+    await dao.saveResource(
+      Observation.fromJson({
+        'resourceType': 'Observation',
+        'id': 'shown',
+        'status': 'final',
+        'code': {
+          'coding': [
+            {
+              'system': 'http://example.org',
+              'code': 'Z',
+              'display': 'Blood Pressure',
+            },
+          ],
+        },
+      }),
+    );
+    expect(
+      await ids(
+        {
+          'code:text': ['pressure'],
+        },
+        count: 3,
+      ),
+      ['shown'],
+      reason: ':text is a case-insensitive partial match on the display',
+    );
+  });
+
+  test('uri :below pages in SQL; :above falls back', () async {
+    for (final (id, url) in [
+      ('vs1', 'http://example.org/fhir/ValueSet/a'),
+      ('vs2', 'http://example.org/fhir/ValueSet/b'),
+      ('vs3', 'http://other.org/fhir/ValueSet/a'),
+    ]) {
+      await dao.saveResource(
+        ValueSet.fromJson({
+          'resourceType': 'ValueSet',
+          'id': id,
+          'status': 'active',
+          'url': url,
+        }),
+      );
+    }
+    Future<List<String>> vs(
+      String key,
+      String value, {
+      bool general = false,
+    }) async {
+      final found = await dao.search(
+        resourceType: R6ResourceType.ValueSet,
+        searchParameters: {
+          key: [value],
+        },
+        count: 10,
+      );
+      expect(dao.lastSearchPagedInSql, !general, reason: '$key=$value');
+      return found.map((r) => r.id!.valueString!).toList();
+    }
+
+    expect(await vs('url:below', 'http://example.org/fhir'), ['vs1', 'vs2']);
+    expect(
+      await vs(
+        'url:above',
+        'http://example.org/fhir/ValueSet/a/x',
+        general: true,
+      ),
+      ['vs1'],
+    );
+  });
+
+  test('reference modifiers page in SQL: a type, and :identifier', () async {
+    expect(
+      await ids(
+        {
+          'subject:Patient': ['p2'],
+        },
+        count: 3,
+      ),
+      ['o15', 'o16', 'o17'],
+    );
+    expect(
+      await ids(
+        {
+          'subject:Group': ['p2'],
+        },
+        count: 3,
+      ),
+      isEmpty,
+    );
+    await dao.saveResource(
+      Observation.fromJson({
+        'resourceType': 'Observation',
+        'id': 'by-mrn',
+        'status': 'final',
+        'code': {
+          'coding': [
+            {'system': 'http://example.org', 'code': 'A'},
+          ],
+        },
+        'subject': {
+          'identifier': {'system': 'http://mrn.example.org', 'value': '42'},
+        },
+      }),
+    );
+    expect(
+      await ids(
+        {
+          'subject:identifier': ['http://mrn.example.org|42'],
+        },
+        count: 3,
+      ),
+      ['by-mrn'],
+    );
+    expect(
+      await ids(
+        {
+          'subject:identifier': ['42'],
+        },
+        count: 3,
+      ),
+      ['by-mrn'],
+    );
+  });
+
+  test('an absolute or canonical URL reference matches as written', () async {
+    // R4B 3.1.1.4.12 `[parameter]=[url]`. Before this the general path added
+    // NO condition for a URL value, so it returned every resource with a
+    // subject, and the SQL path compared the URL to the id part.
+    await dao.saveResource(
+      Observation.fromJson({
+        'resourceType': 'Observation',
+        'id': 'abs',
+        'status': 'final',
+        'code': {
+          'coding': [
+            {'system': 'http://example.org', 'code': 'A'},
+          ],
+        },
+        'subject': {'reference': 'http://other.example.org/fhir/Patient/p9'},
+      }),
+    );
+    for (final count in [3, null]) {
+      expect(
+        await ids(
+          {
+            'subject': ['http://other.example.org/fhir/Patient/p9'],
+          },
+          count: count,
+        ),
+        ['abs'],
+        reason: 'count=$count',
+      );
+      expect(
+        await ids(
+          {
+            'subject': ['http://other.example.org/fhir/Patient/p1'],
+          },
+          count: count,
+        ),
+        isEmpty,
+        reason: 'count=$count',
+      );
+      // Type/id also matches an absolute reference to that type and id.
+      expect(
+        await ids(
+          {
+            'subject': ['Patient/p9'],
+          },
+          count: count,
+        ),
+        ['abs'],
+        reason: 'count=$count',
+      );
+    }
+  });
+
+  test('modifiers the SQL path does not build fall back', () async {
+    // :of-type reads the identifier's type from the resource in Dart.
+    expect(
+      await ids(
+        {
+          'identifier:of-type': ['http://x|MR|1'],
+        },
+        count: 3,
+        general: true,
+      ),
+      isEmpty,
+    );
   });
 
   test('a reference parameter pages in SQL, Type/id and bare id', () async {
@@ -570,6 +1076,7 @@ Future<void> main() async {
           'subject.name': ['anything'],
         },
         count: 5,
+        general: true,
       ),
       isEmpty,
     );
