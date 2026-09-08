@@ -487,7 +487,7 @@ void main() {
       1,
     );
     final version = await db.customSelect('PRAGMA user_version').getSingle();
-    expect(version.data.values.first, equals(10));
+    expect(version.data.values.first, equals(11));
     await db.close();
   });
 
@@ -540,7 +540,45 @@ void main() {
       1,
     );
     final version = await db.customSelect('PRAGMA user_version').getSingle();
-    expect(version.data.values.first, equals(10));
+    expect(version.data.values.first, equals(11));
+    await db.close();
+  });
+
+  test('a version-10 database stores its open bounds as infinity', () async {
+    // Schema 11: a Range with no low or no high used to leave the bound
+    // NULL; reopening converts every NULL bound and the row is then found
+    // through a single index range.
+    final dir = await Directory.systemTemp.createTemp('fhir_db_v10_');
+    addTearDown(() => dir.delete(recursive: true));
+    final file = File('${dir.path}/db.sqlite');
+    final db10 = FhirDb(NativeDatabase(file));
+    await db10.fhirDao.saveResource(
+      Patient.fromJson({'resourceType': 'Patient', 'id': 'v10'}),
+    );
+    await db10.customStatement(
+      'INSERT INTO quantity_search_parameters (resource_type, id, '
+      'last_updated, search_name, param_index, quantity_value, quantity_low, '
+      "quantity_high, quantity_code) VALUES ('ActivityDefinition', 'open', 0, "
+      "'context-quantity', 0, NULL, 200, NULL, 'a')",
+    );
+    await db10.customStatement('PRAGMA user_version = 10');
+    await db10.close();
+
+    final db = FhirDb(NativeDatabase(file));
+    final row = await db
+        .customSelect(
+          'SELECT quantity_low AS l, quantity_high AS h FROM '
+          "quantity_search_parameters WHERE id = 'open'",
+        )
+        .getSingle();
+    expect(row.read<double>('l'), 200);
+    expect(row.read<double>('h'), double.infinity);
+    expect(
+      await db.customSelect('PRAGMA user_version').getSingle().then(
+            (r) => r.read<int>('user_version'),
+          ),
+      11,
+    );
     await db.close();
   });
 
@@ -616,7 +654,7 @@ void main() {
       1,
     );
     final version = await db.customSelect('PRAGMA user_version').getSingle();
-    expect(version.data.values.first, equals(10));
+    expect(version.data.values.first, equals(11));
     await db.close();
   });
 }
