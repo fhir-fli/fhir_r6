@@ -51,7 +51,7 @@ Future<void> main() async {
         'link': [
           {
             'other': {'reference': 'Patient/p1'},
-            'type': 'seealso'
+            'type': 'seealso',
           },
         ],
       }),
@@ -138,33 +138,42 @@ Future<void> main() async {
 
   test('the compartment ANDs with the query', () async {
     expect(
-      await ids(R6ResourceType.Observation, params: {
-        'code': ['B']
-      }),
+      await ids(
+        R6ResourceType.Observation,
+        params: {
+          'code': ['B'],
+        },
+      ),
       ['o-performer'],
     );
     expect(dao.lastSearchPagedInSql, isTrue);
     // A parameter that matches outside the compartment finds nothing inside.
     expect(
-      await ids(R6ResourceType.Observation, params: {
-        '_id': ['o-other']
-      }),
+      await ids(
+        R6ResourceType.Observation,
+        params: {
+          '_id': ['o-other'],
+        },
+      ),
       isEmpty,
     );
   });
 
   test('a comma, which takes the general path, is still scoped', () async {
     expect(
-      await ids(R6ResourceType.Observation, params: {
-        'code': ['A,B']
-      }),
+      await ids(
+        R6ResourceType.Observation,
+        params: {
+          'code': ['A,B'],
+        },
+      ),
       ['o-both', 'o-performer', 'o-subject'],
     );
     expect(
       await ids(
         R6ResourceType.Observation,
         params: {
-          'code:not': ['B']
+          'code:not': ['B'],
         },
       ),
       ['o-both', 'o-subject'],
@@ -174,9 +183,12 @@ Future<void> main() async {
   test('the focal type: the focal resource and any linked to it', () async {
     expect(await ids(R6ResourceType.Patient), ['p1', 'p1-linked']);
     expect(
-      await ids(R6ResourceType.Patient, params: {
-        '_id': ['p1-linked']
-      }),
+      await ids(
+        R6ResourceType.Patient,
+        params: {
+          '_id': ['p1-linked'],
+        },
+      ),
       ['p1-linked'],
     );
   });
@@ -226,7 +238,7 @@ Future<void> main() async {
       await dao.searchCount(
         resourceType: R6ResourceType.Observation,
         searchParameters: {
-          'code': ['B']
+          'code': ['B'],
         },
         compartment: p1,
       ),
@@ -236,7 +248,7 @@ Future<void> main() async {
       await dao.searchCount(
         resourceType: R6ResourceType.Observation,
         searchParameters: {
-          'code': ['A,B']
+          'code': ['A,B'],
         },
         compartment: p1,
       ),
