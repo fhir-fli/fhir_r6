@@ -8,6 +8,8 @@ import 'package:fhir_r6_db/src/search/compartment_definitions.dart'
     as generated;
 import 'package:fhir_r6_db/src/search/search_parameter_types.dart';
 import 'package:fhir_r6_db/src/search/search_parameters.dart';
+import 'package:fhir_r6_path/fhir_r6_path.dart'
+    show FHIRPathEngine, IEvaluationContext, WorkerContext;
 
 /// FHIR R6B for the store: how `fhir_r6` resources are parsed, written and
 /// stamped, and this version's generated search and compartment data.
@@ -121,6 +123,15 @@ class R6Model extends core.FhirModel<Resource, R6ResourceType> {
       'uri': {'contains'},
     },
   );
+
+  /// The R6 engine, for uploaded SearchParameters: the binding's
+  /// [WorkerContext] answers the type questions (`is Patient`, `ofType`)
+  /// from the generated type hierarchy; [hostServices] is the store's.
+  @override
+  Future<FHIRPathEngine> createFhirPathEngine(
+    IEvaluationContext hostServices,
+  ) =>
+      FHIRPathEngine.create(WorkerContext(), hostServices);
 }
 
 /// The one model instance the binding's database uses.
