@@ -1781,9 +1781,9 @@ const Map<String, Map<String, SearchParameterDefinition>> searchParameterTypes =
     'patient': SearchParameterDefinition('reference', [], targets: ['Patient']),
   },
   'Bundle': {
-    'composition': SearchParameterDefinition('resource', []),
+    'composition': SearchParameterDefinition('reference', []),
     'identifier': SearchParameterDefinition('token', []),
-    'message': SearchParameterDefinition('resource', []),
+    'message': SearchParameterDefinition('reference', []),
     'timestamp': SearchParameterDefinition(
         'date', ['eq', 'ne', 'gt', 'ge', 'lt', 'le', 'sa', 'eb', 'ap']),
     'type': SearchParameterDefinition('token', []),

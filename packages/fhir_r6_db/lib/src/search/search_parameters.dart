@@ -305,7 +305,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'composed-of')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -418,7 +418,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'depends-on')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -456,7 +456,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'derived-from')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -582,7 +582,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'predecessor')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -690,7 +690,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'successor')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -2082,6 +2082,69 @@ SearchParameterLists updateSearchParameters(
         );
         i++;
       }
+      // Appointment.recurrenceTemplate.exists() (token)
+      i = 0;
+      for (final entry in resource
+              .makeIterable<fhir.Appointment>()
+              ?.map<fhir.FhirBoolean?>((e) => fhir.FhirBoolean(
+                  ((e?.recurrenceTemplate)?.isNotEmpty ?? false)))
+              ?.makeIterable<fhir.FhirBoolean>() ??
+          <fhir.Appointment>[]) {
+        searchParameterLists.tokenParams.addAll(
+          indexer.tokenRows(
+            entry,
+            resourceType,
+            id,
+            lastUpdated,
+            'Appointment.recurrenceTemplate.exists()',
+            i,
+            searchName: 'has-recurrence-template',
+          ),
+        );
+        i++;
+      }
+      // Appointment.recurrenceTemplate.exists() (token)
+      i = 0;
+      for (final entry in resource
+              .makeIterable<fhir.Appointment>()
+              ?.map<fhir.FhirBoolean?>((e) => fhir.FhirBoolean(
+                  ((e?.recurrenceTemplate)?.isNotEmpty ?? false)))
+              ?.makeIterable<fhir.FhirBoolean>() ??
+          <fhir.Appointment>[]) {
+        searchParameterLists.tokenParams.addAll(
+          indexer.tokenRows(
+            entry,
+            resourceType,
+            id,
+            lastUpdated,
+            'Appointment.recurrenceTemplate.exists()',
+            i,
+            searchName: 'is-recurring',
+          ),
+        );
+        i++;
+      }
+      // Appointment.originatingAppointment.exists() (token)
+      i = 0;
+      for (final entry in resource
+              .makeIterable<fhir.Appointment>()
+              ?.map<fhir.FhirBoolean?>(
+                  (e) => fhir.FhirBoolean((e?.originatingAppointment != null)))
+              ?.makeIterable<fhir.FhirBoolean>() ??
+          <fhir.Appointment>[]) {
+        searchParameterLists.tokenParams.addAll(
+          indexer.tokenRows(
+            entry,
+            resourceType,
+            id,
+            lastUpdated,
+            'Appointment.originatingAppointment.exists()',
+            i,
+            searchName: 'is-recurring',
+          ),
+        );
+        i++;
+      }
       // Appointment.participant.actor.where(resolve() is Location) (reference)
       i = 0;
       for (final entry in resource.participant
@@ -3338,6 +3401,25 @@ SearchParameterLists updateSearchParameters(
       }
       break;
     case fhir.Bundle _:
+      // Bundle.entry[0].resource.ofType(Composition) (resource)
+      i = 0;
+      for (final entry in resource.entry?.firstOrNull?.resource
+              ?.makeIterable<fhir.Resource>()
+              ?.whereType<fhir.Composition>() ??
+          <fhir.Resource>[]) {
+        searchParameterLists.referenceParams.addAll(
+          indexer.referenceRows(
+            entry,
+            resourceType,
+            id,
+            lastUpdated,
+            'Bundle.entry[0].resource.ofType(Composition)',
+            i,
+            searchName: 'composition',
+          ),
+        );
+        i++;
+      }
       // Bundle.identifier (token)
       i = 0;
       for (final entry
@@ -3352,6 +3434,25 @@ SearchParameterLists updateSearchParameters(
             'Bundle.identifier',
             i,
             searchName: 'identifier',
+          ),
+        );
+        i++;
+      }
+      // Bundle.entry[0].resource.ofType(MessageHeader) (resource)
+      i = 0;
+      for (final entry in resource.entry?.firstOrNull?.resource
+              ?.makeIterable<fhir.Resource>()
+              ?.whereType<fhir.MessageHeader>() ??
+          <fhir.Resource>[]) {
+        searchParameterLists.referenceParams.addAll(
+          indexer.referenceRows(
+            entry,
+            resourceType,
+            id,
+            lastUpdated,
+            'Bundle.entry[0].resource.ofType(MessageHeader)',
+            i,
+            searchName: 'message',
           ),
         );
         i++;
@@ -4207,6 +4308,28 @@ SearchParameterLists updateSearchParameters(
             id,
             lastUpdated,
             'CareTeam.name',
+            i,
+            searchName: 'name',
+          ),
+        );
+        i++;
+      }
+      // CareTeam.extension('http://hl7.org/fhir/StructureDefinition/careteam-alias').value (string)
+      i = 0;
+      for (final entry in resource.extension_
+              ?.where((e) =>
+                  e.url.valueString ==
+                  'http://hl7.org/fhir/StructureDefinition/careteam-alias')
+              ?.map<fhir.FhirBase?>((e) => e.valueX as fhir.FhirBase?)
+              ?.makeIterable<fhir.FhirBase>() ??
+          <fhir.FhirBase>[]) {
+        searchParameterLists.stringParams.addAll(
+          indexer.stringRows(
+            entry,
+            resourceType,
+            id,
+            lastUpdated,
+            "CareTeam.extension('http://hl7.org/fhir/StructureDefinition/careteam-alias').value",
             i,
             searchName: 'name',
           ),
@@ -6341,7 +6464,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'derived-from')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -6450,7 +6573,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'predecessor')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -8080,7 +8203,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'derived-from')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -8189,7 +8312,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'predecessor')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -14367,7 +14490,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'composed-of')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -14480,7 +14603,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'depends-on')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -14500,7 +14623,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'derived-from')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -14609,7 +14732,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'predecessor')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -14663,7 +14786,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'successor')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -19997,7 +20120,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'composed-of')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -20110,7 +20233,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'depends-on')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -20130,7 +20253,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'derived-from')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -20239,7 +20362,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'predecessor')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -20293,7 +20416,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'successor')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -20886,6 +21009,28 @@ SearchParameterLists updateSearchParameters(
         );
         i++;
       }
+      // Location.extension('http://hl7.org/fhir/StructureDefinition/location-boundary-geojson').value (special)
+      i = 0;
+      for (final entry in resource.extension_
+              ?.where((e) =>
+                  e.url.valueString ==
+                  'http://hl7.org/fhir/StructureDefinition/location-boundary-geojson')
+              ?.map<fhir.FhirBase?>((e) => e.valueX as fhir.FhirBase?)
+              ?.makeIterable<fhir.FhirBase>() ??
+          <fhir.FhirBase>[]) {
+        searchParameterLists.specialParams.addAll(
+          indexer.specialRows(
+            entry,
+            resourceType,
+            id,
+            lastUpdated,
+            "Location.extension('http://hl7.org/fhir/StructureDefinition/location-boundary-geojson').value",
+            i,
+            searchName: 'contains',
+          ),
+        );
+        i++;
+      }
       // Location.endpoint (reference)
       i = 0;
       for (final entry in resource.endpoint?.makeIterable<fhir.Reference>() ??
@@ -21173,7 +21318,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'composed-of')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -21286,7 +21431,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'depends-on')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -21324,7 +21469,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'derived-from')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -21433,7 +21578,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'predecessor')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -21487,7 +21632,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'successor')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -24451,7 +24596,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'derived-from')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -24560,7 +24705,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'predecessor')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -29076,7 +29221,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'composed-of')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -29189,7 +29334,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'depends-on')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -29227,7 +29372,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'derived-from')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -29336,7 +29481,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'predecessor')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -29390,7 +29535,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'successor')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -31578,6 +31723,31 @@ SearchParameterLists updateSearchParameters(
             'QuestionnaireResponse.basedOn',
             i,
             searchName: 'based-on',
+          ),
+        );
+        i++;
+      }
+      // QuestionnaireResponse.item.where(extension('http://hl7.org/fhir/StructureDefinition/questionnaireresponse-isSubject').exists()).answer.value.ofType(Reference) (reference)
+      i = 0;
+      for (final entry in resource.item
+              ?.where((e) =>
+                  e?.extension_?.any((x) =>
+                      x.url.valueString ==
+                      'http://hl7.org/fhir/StructureDefinition/questionnaireresponse-isSubject') ??
+                  false)
+              ?.expand((e) => e?.answer ?? <fhir.QuestionnaireResponseAnswer>[])
+              ?.map<fhir.Reference?>((e) => e?.valueReference)
+              ?.makeIterable<fhir.Reference>() ??
+          <fhir.Reference>[]) {
+        searchParameterLists.referenceParams.addAll(
+          indexer.referenceRows(
+            entry,
+            resourceType,
+            id,
+            lastUpdated,
+            "QuestionnaireResponse.item.where(extension('http://hl7.org/fhir/StructureDefinition/questionnaireresponse-isSubject').exists()).answer.value.ofType(Reference)",
+            i,
+            searchName: 'item-subject',
           ),
         );
         i++;
@@ -38884,7 +39054,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'derived-from')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
@@ -38993,7 +39163,7 @@ SearchParameterLists updateSearchParameters(
       i = 0;
       for (final entry in resource.relatedArtifact
               ?.where((e) => e.type?.valueString == 'predecessor')
-              ?.map((e) => e?.resource)
+              ?.map<fhir.FhirCanonical?>((e) => e?.resource)
               ?.makeIterable<fhir.FhirCanonical>() ??
           <fhir.FhirCanonical>[]) {
         searchParameterLists.referenceParams.addAll(
