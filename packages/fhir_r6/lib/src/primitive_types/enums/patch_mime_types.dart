@@ -99,12 +99,13 @@ class PatchMimeTypes extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = PatchMimeTypesEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return PatchMimeTypes._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -128,11 +129,25 @@ class PatchMimeTypes extends FhirCodeEnum {
         'PatchMimeTypes cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return PatchMimeTypes._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static PatchMimeTypes? _known(PatchMimeTypesEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for PatchMimeTypes
@@ -143,9 +158,8 @@ class PatchMimeTypes extends FhirCodeEnum {
     valueString: 'application/fhir+xml',
     valueEnum: PatchMimeTypesEnum.applicationFhirXml,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/patchmimetypes',
+      valueString: 'urn:ietf:bcp:13',
     ),
-    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: '',
     ),
@@ -156,9 +170,8 @@ class PatchMimeTypes extends FhirCodeEnum {
     valueString: 'application/fhir+json',
     valueEnum: PatchMimeTypesEnum.applicationFhirJson,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/patchmimetypes',
+      valueString: 'urn:ietf:bcp:13',
     ),
-    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: '',
     ),
@@ -169,9 +182,8 @@ class PatchMimeTypes extends FhirCodeEnum {
     valueString: 'application/fhir+turtle',
     valueEnum: PatchMimeTypesEnum.applicationFhirTurtle,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/patchmimetypes',
+      valueString: 'urn:ietf:bcp:13',
     ),
-    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: '',
     ),
@@ -182,9 +194,8 @@ class PatchMimeTypes extends FhirCodeEnum {
     valueString: 'application/json-patch+json',
     valueEnum: PatchMimeTypesEnum.applicationJsonPatchJson,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/patchmimetypes',
+      valueString: 'urn:ietf:bcp:13',
     ),
-    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: '',
     ),
@@ -195,9 +206,8 @@ class PatchMimeTypes extends FhirCodeEnum {
     valueString: 'application/xml-patch+xml',
     valueEnum: PatchMimeTypesEnum.applicationXmlPatchXml,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/patchmimetypes',
+      valueString: 'urn:ietf:bcp:13',
     ),
-    version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
       valueString: '',
     ),
@@ -216,6 +226,10 @@ class PatchMimeTypes extends FhirCodeEnum {
   PatchMimeTypes withElement(Element? newElement) {
     return PatchMimeTypes._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

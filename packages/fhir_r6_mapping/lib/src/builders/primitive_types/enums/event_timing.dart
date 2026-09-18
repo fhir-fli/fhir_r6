@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for EventTiming
@@ -259,12 +260,13 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     final valueEnum = EventTimingBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return EventTimingBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -296,10 +298,25 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
         'EventTimingBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(EventTimingBuilderEnum.fromString(value));
     return EventTimingBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static EventTimingBuilder? _known(EventTimingBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for EventTimingBuilder
@@ -310,7 +327,7 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'MORN',
     valueEnum: EventTimingBuilderEnum.mORN,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://hl7.org/fhir/event-timing',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -323,7 +340,7 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'MORN.early',
     valueEnum: EventTimingBuilderEnum.mornEarly,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://hl7.org/fhir/event-timing',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -336,7 +353,7 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'MORN.late',
     valueEnum: EventTimingBuilderEnum.mornLate,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://hl7.org/fhir/event-timing',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -349,7 +366,7 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'NOON',
     valueEnum: EventTimingBuilderEnum.nOON,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://hl7.org/fhir/event-timing',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -362,7 +379,7 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'AFT',
     valueEnum: EventTimingBuilderEnum.aFT,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://hl7.org/fhir/event-timing',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -375,7 +392,7 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'AFT.early',
     valueEnum: EventTimingBuilderEnum.aftEarly,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://hl7.org/fhir/event-timing',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -388,7 +405,7 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'AFT.late',
     valueEnum: EventTimingBuilderEnum.aftLate,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://hl7.org/fhir/event-timing',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -401,7 +418,7 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'EVE',
     valueEnum: EventTimingBuilderEnum.eVE,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://hl7.org/fhir/event-timing',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -414,7 +431,7 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'EVE.early',
     valueEnum: EventTimingBuilderEnum.eveEarly,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://hl7.org/fhir/event-timing',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -427,7 +444,7 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'EVE.late',
     valueEnum: EventTimingBuilderEnum.eveLate,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://hl7.org/fhir/event-timing',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -440,7 +457,7 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'NIGHT',
     valueEnum: EventTimingBuilderEnum.nIGHT,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://hl7.org/fhir/event-timing',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -453,7 +470,7 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'PHS',
     valueEnum: EventTimingBuilderEnum.pHS,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://hl7.org/fhir/event-timing',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -466,7 +483,7 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'IMD',
     valueEnum: EventTimingBuilderEnum.iMD,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://hl7.org/fhir/event-timing',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -479,9 +496,8 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'HS',
     valueEnum: EventTimingBuilderEnum.hS,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://terminology.hl7.org/CodeSystem/v3-TimingEvent',
     ),
-    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '',
     ),
@@ -492,9 +508,8 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'WAKE',
     valueEnum: EventTimingBuilderEnum.wAKE,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://terminology.hl7.org/CodeSystem/v3-TimingEvent',
     ),
-    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '',
     ),
@@ -505,9 +520,8 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'C',
     valueEnum: EventTimingBuilderEnum.c,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://terminology.hl7.org/CodeSystem/v3-TimingEvent',
     ),
-    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '',
     ),
@@ -518,9 +532,8 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'CM',
     valueEnum: EventTimingBuilderEnum.cM,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://terminology.hl7.org/CodeSystem/v3-TimingEvent',
     ),
-    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '',
     ),
@@ -531,9 +544,8 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'CD',
     valueEnum: EventTimingBuilderEnum.cD,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://terminology.hl7.org/CodeSystem/v3-TimingEvent',
     ),
-    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '',
     ),
@@ -544,9 +556,8 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'CV',
     valueEnum: EventTimingBuilderEnum.cV,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://terminology.hl7.org/CodeSystem/v3-TimingEvent',
     ),
-    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '',
     ),
@@ -557,9 +568,8 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'AC',
     valueEnum: EventTimingBuilderEnum.aC,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://terminology.hl7.org/CodeSystem/v3-TimingEvent',
     ),
-    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '',
     ),
@@ -570,9 +580,8 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'ACM',
     valueEnum: EventTimingBuilderEnum.aCM,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://terminology.hl7.org/CodeSystem/v3-TimingEvent',
     ),
-    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '',
     ),
@@ -583,9 +592,8 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'ACD',
     valueEnum: EventTimingBuilderEnum.aCD,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://terminology.hl7.org/CodeSystem/v3-TimingEvent',
     ),
-    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '',
     ),
@@ -596,9 +604,8 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'ACV',
     valueEnum: EventTimingBuilderEnum.aCV,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://terminology.hl7.org/CodeSystem/v3-TimingEvent',
     ),
-    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '',
     ),
@@ -609,9 +616,8 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'PC',
     valueEnum: EventTimingBuilderEnum.pC,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://terminology.hl7.org/CodeSystem/v3-TimingEvent',
     ),
-    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '',
     ),
@@ -622,9 +628,8 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'PCM',
     valueEnum: EventTimingBuilderEnum.pCM,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://terminology.hl7.org/CodeSystem/v3-TimingEvent',
     ),
-    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '',
     ),
@@ -635,9 +640,8 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'PCD',
     valueEnum: EventTimingBuilderEnum.pCD,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://terminology.hl7.org/CodeSystem/v3-TimingEvent',
     ),
-    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '',
     ),
@@ -648,9 +652,8 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
     valueString: 'PCV',
     valueEnum: EventTimingBuilderEnum.pCV,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/event-timing',
+      valueString: 'http://terminology.hl7.org/CodeSystem/v3-TimingEvent',
     ),
-    version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString: '',
     ),
@@ -699,6 +702,10 @@ class EventTimingBuilder extends FhirCodeEnumBuilder {
   ) {
     return EventTimingBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

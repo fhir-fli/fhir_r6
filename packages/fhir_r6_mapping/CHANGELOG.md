@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- **A bound `code` Builder carries its CodeSystem**, the same change as in the core package: constants name the CodeSystem, not the ValueSet, and a value parsed from JSON or built from a string takes its constant's `system`, `version` and `display`. `fromJson` also sets `valueEnum`, which it did not.
 - **`FhirDateTimeBaseBuilder.valueDateTime` honours the offset**, the same change as in the core package: a value with `Z` or an offset comes back in UTC at the instant it denotes; one without stays local.
 
 ## [0.12.0]

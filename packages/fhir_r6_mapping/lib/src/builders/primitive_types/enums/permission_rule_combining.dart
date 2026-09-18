@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for PermissionRuleCombining
@@ -112,12 +113,13 @@ class PermissionRuleCombiningBuilder extends FhirCodeEnumBuilder {
     final valueEnum = PermissionRuleCombiningBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return PermissionRuleCombiningBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -150,10 +152,26 @@ class PermissionRuleCombiningBuilder extends FhirCodeEnumBuilder {
         'PermissionRuleCombiningBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(PermissionRuleCombiningBuilderEnum.fromString(value));
     return PermissionRuleCombiningBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static PermissionRuleCombiningBuilder? _known(
+      PermissionRuleCombiningBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for PermissionRuleCombiningBuilder
@@ -165,7 +183,7 @@ class PermissionRuleCombiningBuilder extends FhirCodeEnumBuilder {
     valueString: 'deny-overrides',
     valueEnum: PermissionRuleCombiningBuilderEnum.denyOverrides,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/permission-rule-combining',
+      valueString: 'http://hl7.org/fhir/permission-rule-combining',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -179,7 +197,7 @@ class PermissionRuleCombiningBuilder extends FhirCodeEnumBuilder {
     valueString: 'permit-overrides',
     valueEnum: PermissionRuleCombiningBuilderEnum.permitOverrides,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/permission-rule-combining',
+      valueString: 'http://hl7.org/fhir/permission-rule-combining',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -193,7 +211,7 @@ class PermissionRuleCombiningBuilder extends FhirCodeEnumBuilder {
     valueString: 'ordered-deny-overrides',
     valueEnum: PermissionRuleCombiningBuilderEnum.orderedDenyOverrides,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/permission-rule-combining',
+      valueString: 'http://hl7.org/fhir/permission-rule-combining',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -207,7 +225,7 @@ class PermissionRuleCombiningBuilder extends FhirCodeEnumBuilder {
     valueString: 'ordered-permit-overrides',
     valueEnum: PermissionRuleCombiningBuilderEnum.orderedPermitOverrides,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/permission-rule-combining',
+      valueString: 'http://hl7.org/fhir/permission-rule-combining',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -221,7 +239,7 @@ class PermissionRuleCombiningBuilder extends FhirCodeEnumBuilder {
     valueString: 'deny-unless-permit',
     valueEnum: PermissionRuleCombiningBuilderEnum.denyUnlessPermit,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/permission-rule-combining',
+      valueString: 'http://hl7.org/fhir/permission-rule-combining',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -235,7 +253,7 @@ class PermissionRuleCombiningBuilder extends FhirCodeEnumBuilder {
     valueString: 'permit-unless-deny',
     valueEnum: PermissionRuleCombiningBuilderEnum.permitUnlessDeny,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/permission-rule-combining',
+      valueString: 'http://hl7.org/fhir/permission-rule-combining',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -266,6 +284,10 @@ class PermissionRuleCombiningBuilder extends FhirCodeEnumBuilder {
   ) {
     return PermissionRuleCombiningBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

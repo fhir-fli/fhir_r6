@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for ColorCodesOrRGB
@@ -1108,12 +1109,13 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     final valueEnum = ColorCodesOrRGBBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return ColorCodesOrRGBBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -1146,10 +1148,25 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
         'ColorCodesOrRGBBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(ColorCodesOrRGBBuilderEnum.fromString(value));
     return ColorCodesOrRGBBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static ColorCodesOrRGBBuilder? _known(ColorCodesOrRGBBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for ColorCodesOrRGBBuilder
@@ -1160,7 +1177,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'aliceblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.aliceblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1173,7 +1190,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'antiquewhite',
     valueEnum: ColorCodesOrRGBBuilderEnum.antiquewhite,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1186,7 +1203,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'aqua',
     valueEnum: ColorCodesOrRGBBuilderEnum.aqua,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1199,7 +1216,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'aquamarine',
     valueEnum: ColorCodesOrRGBBuilderEnum.aquamarine,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1212,7 +1229,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'azure',
     valueEnum: ColorCodesOrRGBBuilderEnum.azure,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1225,7 +1242,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'beige',
     valueEnum: ColorCodesOrRGBBuilderEnum.beige,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1238,7 +1255,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'bisque',
     valueEnum: ColorCodesOrRGBBuilderEnum.bisque,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1251,7 +1268,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'black',
     valueEnum: ColorCodesOrRGBBuilderEnum.black,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1264,7 +1281,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'blanchedalmond',
     valueEnum: ColorCodesOrRGBBuilderEnum.blanchedalmond,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1277,7 +1294,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'blue',
     valueEnum: ColorCodesOrRGBBuilderEnum.blue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1290,7 +1307,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'blueviolet',
     valueEnum: ColorCodesOrRGBBuilderEnum.blueviolet,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1303,7 +1320,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'brown',
     valueEnum: ColorCodesOrRGBBuilderEnum.brown,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1316,7 +1333,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'burlywood',
     valueEnum: ColorCodesOrRGBBuilderEnum.burlywood,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1329,7 +1346,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'cadetblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.cadetblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1342,7 +1359,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'chartreuse',
     valueEnum: ColorCodesOrRGBBuilderEnum.chartreuse,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1355,7 +1372,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'chocolate',
     valueEnum: ColorCodesOrRGBBuilderEnum.chocolate,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1368,7 +1385,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'coral',
     valueEnum: ColorCodesOrRGBBuilderEnum.coral,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1381,7 +1398,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'cornflowerblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.cornflowerblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1394,7 +1411,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'cornsilk',
     valueEnum: ColorCodesOrRGBBuilderEnum.cornsilk,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1407,7 +1424,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'crimson',
     valueEnum: ColorCodesOrRGBBuilderEnum.crimson,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1420,7 +1437,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'cyan',
     valueEnum: ColorCodesOrRGBBuilderEnum.cyan,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1433,7 +1450,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1446,7 +1463,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkcyan',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkcyan,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1459,7 +1476,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkgoldenrod',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkgoldenrod,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1472,7 +1489,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkgray',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkgray,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1485,7 +1502,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkgreen',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkgreen,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1498,7 +1515,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkgrey',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkgrey,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1511,7 +1528,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkkhaki',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkkhaki,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1524,7 +1541,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkmagenta',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkmagenta,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1537,7 +1554,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkolivegreen',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkolivegreen,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1550,7 +1567,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkorange',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkorange,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1563,7 +1580,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkorchid',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkorchid,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1576,7 +1593,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkred',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkred,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1589,7 +1606,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darksalmon',
     valueEnum: ColorCodesOrRGBBuilderEnum.darksalmon,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1602,7 +1619,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkseagreen',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkseagreen,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1615,7 +1632,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkslateblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkslateblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1628,7 +1645,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkslategray',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkslategray,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1641,7 +1658,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkslategrey',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkslategrey,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1654,7 +1671,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkturquoise',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkturquoise,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1667,7 +1684,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'darkviolet',
     valueEnum: ColorCodesOrRGBBuilderEnum.darkviolet,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1680,7 +1697,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'deeppink',
     valueEnum: ColorCodesOrRGBBuilderEnum.deeppink,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1693,7 +1710,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'deepskyblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.deepskyblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1706,7 +1723,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'dimgray',
     valueEnum: ColorCodesOrRGBBuilderEnum.dimgray,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1719,7 +1736,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'dimgrey',
     valueEnum: ColorCodesOrRGBBuilderEnum.dimgrey,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1732,7 +1749,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'dodgerblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.dodgerblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1745,7 +1762,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'firebrick',
     valueEnum: ColorCodesOrRGBBuilderEnum.firebrick,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1758,7 +1775,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'floralwhite',
     valueEnum: ColorCodesOrRGBBuilderEnum.floralwhite,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1771,7 +1788,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'forestgreen',
     valueEnum: ColorCodesOrRGBBuilderEnum.forestgreen,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1784,7 +1801,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'fuchsia',
     valueEnum: ColorCodesOrRGBBuilderEnum.fuchsia,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1797,7 +1814,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'gainsboro',
     valueEnum: ColorCodesOrRGBBuilderEnum.gainsboro,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1810,7 +1827,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'ghostwhite',
     valueEnum: ColorCodesOrRGBBuilderEnum.ghostwhite,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1823,7 +1840,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'gold',
     valueEnum: ColorCodesOrRGBBuilderEnum.gold,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1836,7 +1853,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'goldenrod',
     valueEnum: ColorCodesOrRGBBuilderEnum.goldenrod,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1849,7 +1866,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'gray',
     valueEnum: ColorCodesOrRGBBuilderEnum.gray,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1862,7 +1879,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'green',
     valueEnum: ColorCodesOrRGBBuilderEnum.green,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1875,7 +1892,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'greenyellow',
     valueEnum: ColorCodesOrRGBBuilderEnum.greenyellow,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1888,7 +1905,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'grey',
     valueEnum: ColorCodesOrRGBBuilderEnum.grey,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1901,7 +1918,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'honeydew',
     valueEnum: ColorCodesOrRGBBuilderEnum.honeydew,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1914,7 +1931,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'hotpink',
     valueEnum: ColorCodesOrRGBBuilderEnum.hotpink,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1927,7 +1944,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'indianred',
     valueEnum: ColorCodesOrRGBBuilderEnum.indianred,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1940,7 +1957,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'indigo',
     valueEnum: ColorCodesOrRGBBuilderEnum.indigo,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1953,7 +1970,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'ivory',
     valueEnum: ColorCodesOrRGBBuilderEnum.ivory,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1966,7 +1983,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'khaki',
     valueEnum: ColorCodesOrRGBBuilderEnum.khaki,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1979,7 +1996,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lavender',
     valueEnum: ColorCodesOrRGBBuilderEnum.lavender,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1992,7 +2009,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lavenderblush',
     valueEnum: ColorCodesOrRGBBuilderEnum.lavenderblush,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2005,7 +2022,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lawngreen',
     valueEnum: ColorCodesOrRGBBuilderEnum.lawngreen,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2018,7 +2035,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lemonchiffon',
     valueEnum: ColorCodesOrRGBBuilderEnum.lemonchiffon,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2031,7 +2048,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lightblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.lightblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2044,7 +2061,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lightcoral',
     valueEnum: ColorCodesOrRGBBuilderEnum.lightcoral,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2057,7 +2074,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lightcyan',
     valueEnum: ColorCodesOrRGBBuilderEnum.lightcyan,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2070,7 +2087,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lightgoldenrodyellow',
     valueEnum: ColorCodesOrRGBBuilderEnum.lightgoldenrodyellow,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2083,7 +2100,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lightgray',
     valueEnum: ColorCodesOrRGBBuilderEnum.lightgray,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2096,7 +2113,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lightgreen',
     valueEnum: ColorCodesOrRGBBuilderEnum.lightgreen,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2109,7 +2126,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lightgrey',
     valueEnum: ColorCodesOrRGBBuilderEnum.lightgrey,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2122,7 +2139,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lightpink',
     valueEnum: ColorCodesOrRGBBuilderEnum.lightpink,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2135,7 +2152,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lightsalmon',
     valueEnum: ColorCodesOrRGBBuilderEnum.lightsalmon,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2148,7 +2165,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lightseagreen',
     valueEnum: ColorCodesOrRGBBuilderEnum.lightseagreen,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2161,7 +2178,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lightskyblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.lightskyblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2174,7 +2191,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lightslategray',
     valueEnum: ColorCodesOrRGBBuilderEnum.lightslategray,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2187,7 +2204,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lightslategrey',
     valueEnum: ColorCodesOrRGBBuilderEnum.lightslategrey,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2200,7 +2217,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lightsteelblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.lightsteelblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2213,7 +2230,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lightyellow',
     valueEnum: ColorCodesOrRGBBuilderEnum.lightyellow,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2226,7 +2243,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'lime',
     valueEnum: ColorCodesOrRGBBuilderEnum.lime,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2239,7 +2256,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'limegreen',
     valueEnum: ColorCodesOrRGBBuilderEnum.limegreen,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2252,7 +2269,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'linen',
     valueEnum: ColorCodesOrRGBBuilderEnum.linen,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2265,7 +2282,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'magenta',
     valueEnum: ColorCodesOrRGBBuilderEnum.magenta,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2278,7 +2295,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'maroon',
     valueEnum: ColorCodesOrRGBBuilderEnum.maroon,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2291,7 +2308,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'mediumaquamarine',
     valueEnum: ColorCodesOrRGBBuilderEnum.mediumaquamarine,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2304,7 +2321,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'mediumblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.mediumblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2317,7 +2334,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'mediumorchid',
     valueEnum: ColorCodesOrRGBBuilderEnum.mediumorchid,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2330,7 +2347,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'mediumpurple',
     valueEnum: ColorCodesOrRGBBuilderEnum.mediumpurple,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2343,7 +2360,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'mediumseagreen',
     valueEnum: ColorCodesOrRGBBuilderEnum.mediumseagreen,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2356,7 +2373,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'mediumslateblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.mediumslateblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2369,7 +2386,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'mediumspringgreen',
     valueEnum: ColorCodesOrRGBBuilderEnum.mediumspringgreen,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2382,7 +2399,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'mediumturquoise',
     valueEnum: ColorCodesOrRGBBuilderEnum.mediumturquoise,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2395,7 +2412,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'mediumvioletred',
     valueEnum: ColorCodesOrRGBBuilderEnum.mediumvioletred,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2408,7 +2425,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'midnightblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.midnightblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2421,7 +2438,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'mintcream',
     valueEnum: ColorCodesOrRGBBuilderEnum.mintcream,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2434,7 +2451,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'mistyrose',
     valueEnum: ColorCodesOrRGBBuilderEnum.mistyrose,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2447,7 +2464,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'moccasin',
     valueEnum: ColorCodesOrRGBBuilderEnum.moccasin,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2460,7 +2477,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'navajowhite',
     valueEnum: ColorCodesOrRGBBuilderEnum.navajowhite,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2473,7 +2490,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'navy',
     valueEnum: ColorCodesOrRGBBuilderEnum.navy,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2486,7 +2503,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'oldlace',
     valueEnum: ColorCodesOrRGBBuilderEnum.oldlace,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2499,7 +2516,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'olive',
     valueEnum: ColorCodesOrRGBBuilderEnum.olive,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2512,7 +2529,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'olivedrab',
     valueEnum: ColorCodesOrRGBBuilderEnum.olivedrab,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2525,7 +2542,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'orange',
     valueEnum: ColorCodesOrRGBBuilderEnum.orange,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2538,7 +2555,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'orangered',
     valueEnum: ColorCodesOrRGBBuilderEnum.orangered,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2551,7 +2568,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'orchid',
     valueEnum: ColorCodesOrRGBBuilderEnum.orchid,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2564,7 +2581,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'palegoldenrod',
     valueEnum: ColorCodesOrRGBBuilderEnum.palegoldenrod,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2577,7 +2594,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'palegreen',
     valueEnum: ColorCodesOrRGBBuilderEnum.palegreen,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2590,7 +2607,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'paleturquoise',
     valueEnum: ColorCodesOrRGBBuilderEnum.paleturquoise,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2603,7 +2620,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'palevioletred',
     valueEnum: ColorCodesOrRGBBuilderEnum.palevioletred,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2616,7 +2633,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'papayawhip',
     valueEnum: ColorCodesOrRGBBuilderEnum.papayawhip,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2629,7 +2646,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'peachpuff',
     valueEnum: ColorCodesOrRGBBuilderEnum.peachpuff,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2642,7 +2659,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'peru',
     valueEnum: ColorCodesOrRGBBuilderEnum.peru,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2655,7 +2672,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'pink',
     valueEnum: ColorCodesOrRGBBuilderEnum.pink,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2668,7 +2685,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'plum',
     valueEnum: ColorCodesOrRGBBuilderEnum.plum,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2681,7 +2698,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'powderblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.powderblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2694,7 +2711,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'purple',
     valueEnum: ColorCodesOrRGBBuilderEnum.purple,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2707,7 +2724,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'rebeccapurple',
     valueEnum: ColorCodesOrRGBBuilderEnum.rebeccapurple,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2720,7 +2737,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'red',
     valueEnum: ColorCodesOrRGBBuilderEnum.red,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2733,7 +2750,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'rosybrown',
     valueEnum: ColorCodesOrRGBBuilderEnum.rosybrown,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2746,7 +2763,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'royalblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.royalblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2759,7 +2776,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'saddlebrown',
     valueEnum: ColorCodesOrRGBBuilderEnum.saddlebrown,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2772,7 +2789,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'salmon',
     valueEnum: ColorCodesOrRGBBuilderEnum.salmon,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2785,7 +2802,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'sandybrown',
     valueEnum: ColorCodesOrRGBBuilderEnum.sandybrown,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2798,7 +2815,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'seagreen',
     valueEnum: ColorCodesOrRGBBuilderEnum.seagreen,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2811,7 +2828,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'seashell',
     valueEnum: ColorCodesOrRGBBuilderEnum.seashell,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2824,7 +2841,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'sienna',
     valueEnum: ColorCodesOrRGBBuilderEnum.sienna,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2837,7 +2854,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'silver',
     valueEnum: ColorCodesOrRGBBuilderEnum.silver,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2850,7 +2867,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'skyblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.skyblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2863,7 +2880,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'slateblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.slateblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2876,7 +2893,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'slategray',
     valueEnum: ColorCodesOrRGBBuilderEnum.slategray,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2889,7 +2906,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'slategrey',
     valueEnum: ColorCodesOrRGBBuilderEnum.slategrey,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2902,7 +2919,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'snow',
     valueEnum: ColorCodesOrRGBBuilderEnum.snow,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2915,7 +2932,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'springgreen',
     valueEnum: ColorCodesOrRGBBuilderEnum.springgreen,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2928,7 +2945,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'steelblue',
     valueEnum: ColorCodesOrRGBBuilderEnum.steelblue,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2941,7 +2958,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'tan',
     valueEnum: ColorCodesOrRGBBuilderEnum.tan,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2954,7 +2971,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'teal',
     valueEnum: ColorCodesOrRGBBuilderEnum.teal,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2967,7 +2984,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'thistle',
     valueEnum: ColorCodesOrRGBBuilderEnum.thistle,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2980,7 +2997,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'tomato',
     valueEnum: ColorCodesOrRGBBuilderEnum.tomato,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2993,7 +3010,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'turquoise',
     valueEnum: ColorCodesOrRGBBuilderEnum.turquoise,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -3006,7 +3023,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'violet',
     valueEnum: ColorCodesOrRGBBuilderEnum.violet,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -3019,7 +3036,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'wheat',
     valueEnum: ColorCodesOrRGBBuilderEnum.wheat,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -3032,7 +3049,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'white',
     valueEnum: ColorCodesOrRGBBuilderEnum.white,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -3045,7 +3062,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'whitesmoke',
     valueEnum: ColorCodesOrRGBBuilderEnum.whitesmoke,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -3058,7 +3075,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'yellow',
     valueEnum: ColorCodesOrRGBBuilderEnum.yellow,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -3071,7 +3088,7 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
     valueString: 'yellowgreen',
     valueEnum: ColorCodesOrRGBBuilderEnum.yellowgreen,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/color-codes',
+      valueString: 'http://hl7.org/fhir/color-names',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -3243,6 +3260,10 @@ class ColorCodesOrRGBBuilder extends FhirCodeEnumBuilder {
   ) {
     return ColorCodesOrRGBBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

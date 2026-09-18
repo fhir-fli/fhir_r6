@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for ArtifactRelationshipType
@@ -315,12 +316,13 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     final valueEnum = ArtifactRelationshipTypeBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return ArtifactRelationshipTypeBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -353,10 +355,26 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
         'ArtifactRelationshipTypeBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(ArtifactRelationshipTypeBuilderEnum.fromString(value));
     return ArtifactRelationshipTypeBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static ArtifactRelationshipTypeBuilder? _known(
+      ArtifactRelationshipTypeBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for ArtifactRelationshipTypeBuilder
@@ -368,7 +386,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'documentation',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.documentation,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -382,7 +400,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'justification',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.justification,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -396,7 +414,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'predecessor',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.predecessor,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -410,7 +428,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'successor',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.successor,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -424,7 +442,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'derived-from',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.derivedFrom,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -438,7 +456,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'depends-on',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.dependsOn,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -452,7 +470,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'composed-of',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.composedOf,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -466,7 +484,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'part-of',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.partOf,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -480,7 +498,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'amends',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.amends,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -494,7 +512,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'amended-with',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.amendedWith,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -508,7 +526,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'appends',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.appends,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -522,7 +540,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'appended-with',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.appendedWith,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -536,7 +554,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'cites',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.cites,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -550,7 +568,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'cited-by',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.citedBy,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -564,7 +582,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'comments-on',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.commentsOn,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -578,7 +596,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'comment-in',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.commentIn,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -592,7 +610,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'contains',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.contains_,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -606,7 +624,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'contained-in',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.containedIn,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -620,7 +638,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'corrects',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.corrects,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -634,7 +652,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'correction-in',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.correctionIn,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -648,7 +666,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'replaces',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.replaces,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -662,7 +680,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'replaced-with',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.replacedWith,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -676,7 +694,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'retracts',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.retracts,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -690,7 +708,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'retracted-by',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.retractedBy,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -704,7 +722,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'signs',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.signs,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -718,7 +736,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'similar-to',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.similarTo,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -732,7 +750,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'supports',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.supports,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -746,7 +764,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'supported-with',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.supportedWith,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -760,7 +778,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'transforms',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.transforms,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -774,7 +792,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'transformed-into',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.transformedInto,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -788,7 +806,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'transformed-with',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.transformedWith,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -802,7 +820,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'specification-of',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.specificationOf,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -816,7 +834,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'created-with',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.createdWith,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -830,7 +848,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'cite-as',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.citeAs,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -844,7 +862,7 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'summarizes',
     valueEnum: ArtifactRelationshipTypeBuilderEnum.summarizes,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -904,6 +922,10 @@ class ArtifactRelationshipTypeBuilder extends FhirCodeEnumBuilder {
   ) {
     return ArtifactRelationshipTypeBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

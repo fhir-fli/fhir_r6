@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for InventoryCountType
@@ -84,12 +85,13 @@ class InventoryCountTypeBuilder extends FhirCodeEnumBuilder {
     final valueEnum = InventoryCountTypeBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return InventoryCountTypeBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -122,10 +124,26 @@ class InventoryCountTypeBuilder extends FhirCodeEnumBuilder {
         'InventoryCountTypeBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(InventoryCountTypeBuilderEnum.fromString(value));
     return InventoryCountTypeBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static InventoryCountTypeBuilder? _known(
+      InventoryCountTypeBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for InventoryCountTypeBuilder
@@ -136,7 +154,7 @@ class InventoryCountTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'snapshot',
     valueEnum: InventoryCountTypeBuilderEnum.snapshot,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/inventoryreport-counttype',
+      valueString: 'http://hl7.org/fhir/inventoryreport-counttype',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -149,7 +167,7 @@ class InventoryCountTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'difference',
     valueEnum: InventoryCountTypeBuilderEnum.difference,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/inventoryreport-counttype',
+      valueString: 'http://hl7.org/fhir/inventoryreport-counttype',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -175,6 +193,10 @@ class InventoryCountTypeBuilder extends FhirCodeEnumBuilder {
   ) {
     return InventoryCountTypeBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

@@ -38,8 +38,7 @@ enum DeviceDefinitionRegulatoryIdentifierTypeEnum {
 
   /// Converts a string to the corresponding enum value.
   static DeviceDefinitionRegulatoryIdentifierTypeEnum? fromString(
-    String? value,
-  ) {
+      String? value) {
     if (value == null) {
       return null;
     }
@@ -86,12 +85,13 @@ class DeviceDefinitionRegulatoryIdentifierType extends FhirCodeEnum {
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum =
         DeviceDefinitionRegulatoryIdentifierTypeEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return DeviceDefinitionRegulatoryIdentifierType._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -111,19 +111,32 @@ class DeviceDefinitionRegulatoryIdentifierType extends FhirCodeEnum {
     final element = elementJson != null ? Element.fromJson(elementJson) : null;
     if (value == null && element != null) {
       return DeviceDefinitionRegulatoryIdentifierType._(
-        valueString: null,
-        element: element,
-      );
+          valueString: null, element: element);
     } else if (value == null && element == null) {
       throw ArgumentError(
         'DeviceDefinitionRegulatoryIdentifierType cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return DeviceDefinitionRegulatoryIdentifierType._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static DeviceDefinitionRegulatoryIdentifierType? _known(
+      DeviceDefinitionRegulatoryIdentifierTypeEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for DeviceDefinitionRegulatoryIdentifierType
@@ -136,7 +149,7 @@ class DeviceDefinitionRegulatoryIdentifierType extends FhirCodeEnum {
     valueEnum: DeviceDefinitionRegulatoryIdentifierTypeEnum.basic,
     system: FhirUri._(
       valueString:
-          'http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type',
+          'http://hl7.org/fhir/devicedefinition-regulatory-identifier-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -151,7 +164,7 @@ class DeviceDefinitionRegulatoryIdentifierType extends FhirCodeEnum {
     valueEnum: DeviceDefinitionRegulatoryIdentifierTypeEnum.master,
     system: FhirUri._(
       valueString:
-          'http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type',
+          'http://hl7.org/fhir/devicedefinition-regulatory-identifier-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -166,7 +179,7 @@ class DeviceDefinitionRegulatoryIdentifierType extends FhirCodeEnum {
     valueEnum: DeviceDefinitionRegulatoryIdentifierTypeEnum.license,
     system: FhirUri._(
       valueString:
-          'http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type',
+          'http://hl7.org/fhir/devicedefinition-regulatory-identifier-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -185,6 +198,10 @@ class DeviceDefinitionRegulatoryIdentifierType extends FhirCodeEnum {
   DeviceDefinitionRegulatoryIdentifierType withElement(Element? newElement) {
     return DeviceDefinitionRegulatoryIdentifierType._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }
@@ -222,9 +239,7 @@ class DeviceDefinitionRegulatoryIdentifierTypeCopyWithImpl<T>
     extends $FhirCodeCopyWithImpl<T> {
   /// Constructor for the copyWith implementation.
   DeviceDefinitionRegulatoryIdentifierTypeCopyWithImpl(
-    super._value,
-    super._then,
-  );
+      super._value, super._then);
 
   @override
   T call({

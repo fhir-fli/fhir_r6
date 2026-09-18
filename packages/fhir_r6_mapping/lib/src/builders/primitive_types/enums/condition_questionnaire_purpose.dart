@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for ConditionQuestionnairePurpose
@@ -91,12 +92,13 @@ class ConditionQuestionnairePurposeBuilder extends FhirCodeEnumBuilder {
     final valueEnum = ConditionQuestionnairePurposeBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return ConditionQuestionnairePurposeBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -129,10 +131,27 @@ class ConditionQuestionnairePurposeBuilder extends FhirCodeEnumBuilder {
         'ConditionQuestionnairePurposeBuilder cannot be constructed from JSON.',
       );
     }
+    final known =
+        _known(ConditionQuestionnairePurposeBuilderEnum.fromString(value));
     return ConditionQuestionnairePurposeBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static ConditionQuestionnairePurposeBuilder? _known(
+      ConditionQuestionnairePurposeBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for ConditionQuestionnairePurposeBuilder
@@ -144,8 +163,7 @@ class ConditionQuestionnairePurposeBuilder extends FhirCodeEnumBuilder {
     valueString: 'preadmit',
     valueEnum: ConditionQuestionnairePurposeBuilderEnum.preadmit,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose',
+      valueString: 'http://hl7.org/fhir/condition-questionnaire-purpose',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -159,8 +177,7 @@ class ConditionQuestionnairePurposeBuilder extends FhirCodeEnumBuilder {
     valueString: 'diff-diagnosis',
     valueEnum: ConditionQuestionnairePurposeBuilderEnum.diffDiagnosis,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose',
+      valueString: 'http://hl7.org/fhir/condition-questionnaire-purpose',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -174,8 +191,7 @@ class ConditionQuestionnairePurposeBuilder extends FhirCodeEnumBuilder {
     valueString: 'outcome',
     valueEnum: ConditionQuestionnairePurposeBuilderEnum.outcome,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose',
+      valueString: 'http://hl7.org/fhir/condition-questionnaire-purpose',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -203,6 +219,10 @@ class ConditionQuestionnairePurposeBuilder extends FhirCodeEnumBuilder {
   ) {
     return ConditionQuestionnairePurposeBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

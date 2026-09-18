@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for DeviceAlertPriorityCodes
@@ -98,12 +99,13 @@ class DeviceAlertPriorityCodesBuilder extends FhirCodeEnumBuilder {
     final valueEnum = DeviceAlertPriorityCodesBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return DeviceAlertPriorityCodesBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -136,10 +138,26 @@ class DeviceAlertPriorityCodesBuilder extends FhirCodeEnumBuilder {
         'DeviceAlertPriorityCodesBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(DeviceAlertPriorityCodesBuilderEnum.fromString(value));
     return DeviceAlertPriorityCodesBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static DeviceAlertPriorityCodesBuilder? _known(
+      DeviceAlertPriorityCodesBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for DeviceAlertPriorityCodesBuilder
@@ -151,7 +169,7 @@ class DeviceAlertPriorityCodesBuilder extends FhirCodeEnumBuilder {
     valueString: 'high',
     valueEnum: DeviceAlertPriorityCodesBuilderEnum.high,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/devicealert-priority',
+      valueString: 'http://hl7.org/fhir/devicealert-priority',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -165,7 +183,7 @@ class DeviceAlertPriorityCodesBuilder extends FhirCodeEnumBuilder {
     valueString: 'medium',
     valueEnum: DeviceAlertPriorityCodesBuilderEnum.medium,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/devicealert-priority',
+      valueString: 'http://hl7.org/fhir/devicealert-priority',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -179,7 +197,7 @@ class DeviceAlertPriorityCodesBuilder extends FhirCodeEnumBuilder {
     valueString: 'low',
     valueEnum: DeviceAlertPriorityCodesBuilderEnum.low,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/devicealert-priority',
+      valueString: 'http://hl7.org/fhir/devicealert-priority',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -193,7 +211,7 @@ class DeviceAlertPriorityCodesBuilder extends FhirCodeEnumBuilder {
     valueString: 'info',
     valueEnum: DeviceAlertPriorityCodesBuilderEnum.info,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/devicealert-priority',
+      valueString: 'http://hl7.org/fhir/devicealert-priority',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -222,6 +240,10 @@ class DeviceAlertPriorityCodesBuilder extends FhirCodeEnumBuilder {
   ) {
     return DeviceAlertPriorityCodesBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

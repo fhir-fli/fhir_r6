@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for DeviceUsageStatus
@@ -119,12 +120,13 @@ class DeviceUsageStatusBuilder extends FhirCodeEnumBuilder {
     final valueEnum = DeviceUsageStatusBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return DeviceUsageStatusBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -157,10 +159,26 @@ class DeviceUsageStatusBuilder extends FhirCodeEnumBuilder {
         'DeviceUsageStatusBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(DeviceUsageStatusBuilderEnum.fromString(value));
     return DeviceUsageStatusBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static DeviceUsageStatusBuilder? _known(
+      DeviceUsageStatusBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for DeviceUsageStatusBuilder
@@ -171,7 +189,7 @@ class DeviceUsageStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'active',
     valueEnum: DeviceUsageStatusBuilderEnum.active,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/deviceusage-status',
+      valueString: 'http://hl7.org/fhir/deviceusage-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -184,7 +202,7 @@ class DeviceUsageStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'completed',
     valueEnum: DeviceUsageStatusBuilderEnum.completed,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/deviceusage-status',
+      valueString: 'http://hl7.org/fhir/deviceusage-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -197,7 +215,7 @@ class DeviceUsageStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'not-done',
     valueEnum: DeviceUsageStatusBuilderEnum.notDone,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/deviceusage-status',
+      valueString: 'http://hl7.org/fhir/deviceusage-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -210,7 +228,7 @@ class DeviceUsageStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'entered-in-error',
     valueEnum: DeviceUsageStatusBuilderEnum.enteredInError,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/deviceusage-status',
+      valueString: 'http://hl7.org/fhir/deviceusage-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -223,7 +241,7 @@ class DeviceUsageStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'intended',
     valueEnum: DeviceUsageStatusBuilderEnum.intended,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/deviceusage-status',
+      valueString: 'http://hl7.org/fhir/deviceusage-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -236,7 +254,7 @@ class DeviceUsageStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'stopped',
     valueEnum: DeviceUsageStatusBuilderEnum.stopped,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/deviceusage-status',
+      valueString: 'http://hl7.org/fhir/deviceusage-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -249,7 +267,7 @@ class DeviceUsageStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'on-hold',
     valueEnum: DeviceUsageStatusBuilderEnum.onHold,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/deviceusage-status',
+      valueString: 'http://hl7.org/fhir/deviceusage-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -280,6 +298,10 @@ class DeviceUsageStatusBuilder extends FhirCodeEnumBuilder {
   ) {
     return DeviceUsageStatusBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

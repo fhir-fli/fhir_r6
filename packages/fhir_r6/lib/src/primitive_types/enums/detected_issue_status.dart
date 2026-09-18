@@ -146,12 +146,13 @@ class DetectedIssueStatus extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = DetectedIssueStatusEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return DetectedIssueStatus._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -175,11 +176,25 @@ class DetectedIssueStatus extends FhirCodeEnum {
         'DetectedIssueStatus cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return DetectedIssueStatus._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static DetectedIssueStatus? _known(DetectedIssueStatusEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for DetectedIssueStatus
@@ -190,7 +205,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     valueString: 'registered',
     valueEnum: DetectedIssueStatusEnum.registered,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
+      valueString: 'http://hl7.org/fhir/observation-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -203,7 +218,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     valueString: 'specimen-in-process',
     valueEnum: DetectedIssueStatusEnum.specimenInProcess,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
+      valueString: 'http://hl7.org/fhir/observation-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -216,7 +231,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     valueString: 'preliminary',
     valueEnum: DetectedIssueStatusEnum.preliminary,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
+      valueString: 'http://hl7.org/fhir/observation-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -229,7 +244,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     valueString: 'final',
     valueEnum: DetectedIssueStatusEnum.final_,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
+      valueString: 'http://hl7.org/fhir/observation-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -242,7 +257,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     valueString: 'amended',
     valueEnum: DetectedIssueStatusEnum.amended,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
+      valueString: 'http://hl7.org/fhir/observation-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -255,7 +270,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     valueString: 'corrected',
     valueEnum: DetectedIssueStatusEnum.corrected,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
+      valueString: 'http://hl7.org/fhir/observation-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -268,7 +283,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     valueString: 'appended',
     valueEnum: DetectedIssueStatusEnum.appended,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
+      valueString: 'http://hl7.org/fhir/observation-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -281,7 +296,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     valueString: 'cancelled',
     valueEnum: DetectedIssueStatusEnum.cancelled,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
+      valueString: 'http://hl7.org/fhir/observation-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -294,7 +309,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     valueString: 'entered-in-error',
     valueEnum: DetectedIssueStatusEnum.enteredInError,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
+      valueString: 'http://hl7.org/fhir/observation-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -307,7 +322,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     valueString: 'unknown',
     valueEnum: DetectedIssueStatusEnum.unknown,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
+      valueString: 'http://hl7.org/fhir/observation-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -320,7 +335,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     valueString: 'cannot-be-obtained',
     valueEnum: DetectedIssueStatusEnum.cannotBeObtained,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
+      valueString: 'http://hl7.org/fhir/observation-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -333,7 +348,7 @@ class DetectedIssueStatus extends FhirCodeEnum {
     valueString: 'mitigated',
     valueEnum: DetectedIssueStatusEnum.mitigated,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/detectedissue-status',
+      valueString: 'http://hl7.org/fhir/detectedissue-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -361,6 +376,10 @@ class DetectedIssueStatus extends FhirCodeEnum {
   DetectedIssueStatus withElement(Element? newElement) {
     return DetectedIssueStatus._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

@@ -125,12 +125,13 @@ class EncounterStatus extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = EncounterStatusEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return EncounterStatus._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -154,11 +155,25 @@ class EncounterStatus extends FhirCodeEnum {
         'EncounterStatus cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return EncounterStatus._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static EncounterStatus? _known(EncounterStatusEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for EncounterStatus
@@ -169,7 +184,7 @@ class EncounterStatus extends FhirCodeEnum {
     valueString: 'planned',
     valueEnum: EncounterStatusEnum.planned,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/encounter-status',
+      valueString: 'http://hl7.org/fhir/encounter-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -182,7 +197,7 @@ class EncounterStatus extends FhirCodeEnum {
     valueString: 'in-progress',
     valueEnum: EncounterStatusEnum.inProgress,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/encounter-status',
+      valueString: 'http://hl7.org/fhir/encounter-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -195,7 +210,7 @@ class EncounterStatus extends FhirCodeEnum {
     valueString: 'on-hold',
     valueEnum: EncounterStatusEnum.onHold,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/encounter-status',
+      valueString: 'http://hl7.org/fhir/encounter-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -208,7 +223,7 @@ class EncounterStatus extends FhirCodeEnum {
     valueString: 'discharged',
     valueEnum: EncounterStatusEnum.discharged,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/encounter-status',
+      valueString: 'http://hl7.org/fhir/encounter-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -221,7 +236,7 @@ class EncounterStatus extends FhirCodeEnum {
     valueString: 'completed',
     valueEnum: EncounterStatusEnum.completed,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/encounter-status',
+      valueString: 'http://hl7.org/fhir/encounter-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -234,7 +249,7 @@ class EncounterStatus extends FhirCodeEnum {
     valueString: 'cancelled',
     valueEnum: EncounterStatusEnum.cancelled,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/encounter-status',
+      valueString: 'http://hl7.org/fhir/encounter-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -247,7 +262,7 @@ class EncounterStatus extends FhirCodeEnum {
     valueString: 'discontinued',
     valueEnum: EncounterStatusEnum.discontinued,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/encounter-status',
+      valueString: 'http://hl7.org/fhir/encounter-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -260,7 +275,7 @@ class EncounterStatus extends FhirCodeEnum {
     valueString: 'entered-in-error',
     valueEnum: EncounterStatusEnum.enteredInError,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/encounter-status',
+      valueString: 'http://hl7.org/fhir/encounter-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -273,7 +288,7 @@ class EncounterStatus extends FhirCodeEnum {
     valueString: 'unknown',
     valueEnum: EncounterStatusEnum.unknown,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/encounter-status',
+      valueString: 'http://hl7.org/fhir/encounter-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -298,6 +313,10 @@ class EncounterStatus extends FhirCodeEnum {
   EncounterStatus withElement(Element? newElement) {
     return EncounterStatus._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

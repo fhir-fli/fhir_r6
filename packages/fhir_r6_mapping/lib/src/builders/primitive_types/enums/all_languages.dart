@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 // ignore_for_file: constant_identifier_names
 part of '../primitive_types.dart';
 
@@ -2023,8 +2023,7 @@ class AllLanguagesBuilder extends FhirCodeEnumBuilder {
       return AllLanguagesBuilder._(valueString: null, element: element);
     } else if (value == null && element == null) {
       throw ArgumentError(
-        'AllLanguagesBuilder cannot be constructed from JSON.',
-      );
+          'AllLanguagesBuilder cannot be constructed from JSON.');
     }
     return AllLanguagesBuilder._(
       valueString: value,

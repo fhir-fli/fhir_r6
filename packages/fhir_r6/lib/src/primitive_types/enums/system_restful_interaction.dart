@@ -237,12 +237,13 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = SystemRestfulInteractionEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return SystemRestfulInteraction._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -266,11 +267,26 @@ class SystemRestfulInteraction extends FhirCodeEnum {
         'SystemRestfulInteraction cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return SystemRestfulInteraction._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static SystemRestfulInteraction? _known(
+      SystemRestfulInteractionEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for SystemRestfulInteraction
@@ -281,7 +297,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'read',
     valueEnum: SystemRestfulInteractionEnum.read,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -294,7 +310,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'vread',
     valueEnum: SystemRestfulInteractionEnum.vread,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -307,7 +323,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'update',
     valueEnum: SystemRestfulInteractionEnum.update,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -321,7 +337,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'update-conditional',
     valueEnum: SystemRestfulInteractionEnum.updateConditional,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -334,7 +350,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'patch',
     valueEnum: SystemRestfulInteractionEnum.patch,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -348,7 +364,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'patch-conditional',
     valueEnum: SystemRestfulInteractionEnum.patchConditional,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -361,7 +377,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'delete',
     valueEnum: SystemRestfulInteractionEnum.delete,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -375,7 +391,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'delete-conditional-single',
     valueEnum: SystemRestfulInteractionEnum.deleteConditionalSingle,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -389,7 +405,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'delete-conditional-multiple',
     valueEnum: SystemRestfulInteractionEnum.deleteConditionalMultiple,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -403,7 +419,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'delete-history',
     valueEnum: SystemRestfulInteractionEnum.deleteHistory,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -417,7 +433,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'delete-history-version',
     valueEnum: SystemRestfulInteractionEnum.deleteHistoryVersion,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -430,7 +446,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'history',
     valueEnum: SystemRestfulInteractionEnum.history,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -444,7 +460,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'history-instance',
     valueEnum: SystemRestfulInteractionEnum.historyInstance,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -458,7 +474,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'history-type',
     valueEnum: SystemRestfulInteractionEnum.historyType,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -472,7 +488,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'history-system',
     valueEnum: SystemRestfulInteractionEnum.historySystem,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -485,7 +501,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'create',
     valueEnum: SystemRestfulInteractionEnum.create,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -499,7 +515,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'create-conditional',
     valueEnum: SystemRestfulInteractionEnum.createConditional,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -512,7 +528,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'search',
     valueEnum: SystemRestfulInteractionEnum.search,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -525,7 +541,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'search-type',
     valueEnum: SystemRestfulInteractionEnum.searchType,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -539,7 +555,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'search-system',
     valueEnum: SystemRestfulInteractionEnum.searchSystem,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -553,7 +569,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'search-compartment',
     valueEnum: SystemRestfulInteractionEnum.searchCompartment,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -567,7 +583,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'capabilities',
     valueEnum: SystemRestfulInteractionEnum.capabilities,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -581,7 +597,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'transaction',
     valueEnum: SystemRestfulInteractionEnum.transaction,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -594,7 +610,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'batch',
     valueEnum: SystemRestfulInteractionEnum.batch,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -607,7 +623,7 @@ class SystemRestfulInteraction extends FhirCodeEnum {
     valueString: 'operation',
     valueEnum: SystemRestfulInteractionEnum.operation,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/system-restful-interaction',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -648,6 +664,10 @@ class SystemRestfulInteraction extends FhirCodeEnum {
   SystemRestfulInteraction withElement(Element? newElement) {
     return SystemRestfulInteraction._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

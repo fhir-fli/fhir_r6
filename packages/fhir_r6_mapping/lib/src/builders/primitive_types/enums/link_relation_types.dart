@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for LinkRelationTypes
@@ -911,12 +912,13 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     final valueEnum = LinkRelationTypesBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return LinkRelationTypesBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -949,10 +951,26 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
         'LinkRelationTypesBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(LinkRelationTypesBuilderEnum.fromString(value));
     return LinkRelationTypesBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static LinkRelationTypesBuilder? _known(
+      LinkRelationTypesBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for LinkRelationTypesBuilder
@@ -963,7 +981,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'about',
     valueEnum: LinkRelationTypesBuilderEnum.about,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -977,7 +995,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'acl',
     valueEnum: LinkRelationTypesBuilderEnum.acl,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -991,7 +1009,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'alternate',
     valueEnum: LinkRelationTypesBuilderEnum.alternate,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1004,7 +1022,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'amphtml',
     valueEnum: LinkRelationTypesBuilderEnum.amphtml,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1018,7 +1036,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'appendix',
     valueEnum: LinkRelationTypesBuilderEnum.appendix,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1031,7 +1049,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'apple-touch-icon',
     valueEnum: LinkRelationTypesBuilderEnum.appleTouchIcon,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1045,7 +1063,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'apple-touch-startup-image',
     valueEnum: LinkRelationTypesBuilderEnum.appleTouchStartupImage,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1058,7 +1076,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'archives',
     valueEnum: LinkRelationTypesBuilderEnum.archives,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1072,7 +1090,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'author',
     valueEnum: LinkRelationTypesBuilderEnum.author,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1085,7 +1103,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'blocked-by',
     valueEnum: LinkRelationTypesBuilderEnum.blockedBy,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1099,7 +1117,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'bookmark',
     valueEnum: LinkRelationTypesBuilderEnum.bookmark,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1112,7 +1130,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'canonical',
     valueEnum: LinkRelationTypesBuilderEnum.canonical,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1126,7 +1144,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'chapter',
     valueEnum: LinkRelationTypesBuilderEnum.chapter,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1139,7 +1157,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'cite-as',
     valueEnum: LinkRelationTypesBuilderEnum.citeAs,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1153,7 +1171,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'collection',
     valueEnum: LinkRelationTypesBuilderEnum.collection,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1167,7 +1185,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'contents',
     valueEnum: LinkRelationTypesBuilderEnum.contents,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1180,7 +1198,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'convertedFrom',
     valueEnum: LinkRelationTypesBuilderEnum.convertedFrom,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1194,7 +1212,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'copyright',
     valueEnum: LinkRelationTypesBuilderEnum.copyright,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1208,7 +1226,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'create-form',
     valueEnum: LinkRelationTypesBuilderEnum.createForm,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1222,7 +1240,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'current',
     valueEnum: LinkRelationTypesBuilderEnum.current,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1236,7 +1254,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'describedby',
     valueEnum: LinkRelationTypesBuilderEnum.describedby,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1250,7 +1268,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'describes',
     valueEnum: LinkRelationTypesBuilderEnum.describes,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1264,7 +1282,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'disclosure',
     valueEnum: LinkRelationTypesBuilderEnum.disclosure,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1278,7 +1296,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'dns-prefetch',
     valueEnum: LinkRelationTypesBuilderEnum.dnsPrefetch,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1292,7 +1310,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'duplicate',
     valueEnum: LinkRelationTypesBuilderEnum.duplicate,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1306,7 +1324,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'edit',
     valueEnum: LinkRelationTypesBuilderEnum.edit,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1320,7 +1338,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'edit-form',
     valueEnum: LinkRelationTypesBuilderEnum.editForm,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1334,7 +1352,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'edit-media',
     valueEnum: LinkRelationTypesBuilderEnum.editMedia,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1348,7 +1366,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'enclosure',
     valueEnum: LinkRelationTypesBuilderEnum.enclosure,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1362,7 +1380,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'external',
     valueEnum: LinkRelationTypesBuilderEnum.external_,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1376,7 +1394,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'first',
     valueEnum: LinkRelationTypesBuilderEnum.first,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1390,7 +1408,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'glossary',
     valueEnum: LinkRelationTypesBuilderEnum.glossary,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1403,7 +1421,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'help',
     valueEnum: LinkRelationTypesBuilderEnum.help,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1416,7 +1434,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'hosts',
     valueEnum: LinkRelationTypesBuilderEnum.hosts,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1430,7 +1448,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'hub',
     valueEnum: LinkRelationTypesBuilderEnum.hub,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1444,7 +1462,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'icon',
     valueEnum: LinkRelationTypesBuilderEnum.icon,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1457,7 +1475,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'index',
     valueEnum: LinkRelationTypesBuilderEnum.index_,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1470,7 +1488,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'intervalAfter',
     valueEnum: LinkRelationTypesBuilderEnum.intervalAfter,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1484,7 +1502,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'intervalBefore',
     valueEnum: LinkRelationTypesBuilderEnum.intervalBefore,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1498,7 +1516,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'intervalContains',
     valueEnum: LinkRelationTypesBuilderEnum.intervalContains,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1512,7 +1530,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'intervalDisjoint',
     valueEnum: LinkRelationTypesBuilderEnum.intervalDisjoint,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1526,7 +1544,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'intervalDuring',
     valueEnum: LinkRelationTypesBuilderEnum.intervalDuring,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1540,7 +1558,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'intervalEquals',
     valueEnum: LinkRelationTypesBuilderEnum.intervalEquals,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1555,7 +1573,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'intervalFinishedBy',
     valueEnum: LinkRelationTypesBuilderEnum.intervalFinishedBy,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1569,7 +1587,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'intervalFinishes',
     valueEnum: LinkRelationTypesBuilderEnum.intervalFinishes,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1583,7 +1601,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'intervalIn',
     valueEnum: LinkRelationTypesBuilderEnum.intervalIn,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1597,7 +1615,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'intervalMeets',
     valueEnum: LinkRelationTypesBuilderEnum.intervalMeets,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1611,7 +1629,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'intervalMetBy',
     valueEnum: LinkRelationTypesBuilderEnum.intervalMetBy,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1626,7 +1644,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'intervalOverlappedBy',
     valueEnum: LinkRelationTypesBuilderEnum.intervalOverlappedBy,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1640,7 +1658,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'intervalOverlaps',
     valueEnum: LinkRelationTypesBuilderEnum.intervalOverlaps,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1655,7 +1673,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'intervalStartedBy',
     valueEnum: LinkRelationTypesBuilderEnum.intervalStartedBy,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1669,7 +1687,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'intervalStarts',
     valueEnum: LinkRelationTypesBuilderEnum.intervalStarts,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1683,7 +1701,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'item',
     valueEnum: LinkRelationTypesBuilderEnum.item,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1697,7 +1715,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'last',
     valueEnum: LinkRelationTypesBuilderEnum.last,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1711,7 +1729,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'latest-version',
     valueEnum: LinkRelationTypesBuilderEnum.latestVersion,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1725,7 +1743,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'license',
     valueEnum: LinkRelationTypesBuilderEnum.license,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1738,7 +1756,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'linkset',
     valueEnum: LinkRelationTypesBuilderEnum.linkset,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1752,12 +1770,12 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'lrdd',
     valueEnum: LinkRelationTypesBuilderEnum.lrdd,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
       valueString:
-          """Refers to further information about the link's context, expressed as a LRDD ("Link-based Resource Descriptor Document') resource. See for information about processing this relation type in host-meta documents. When used elsewhere, it refers to additional links and other metadata. Multiple instances indicate additional LRDD resources. LRDD resources MUST have an 'application/xrd+xml' representation, and MAY have others.""",
+          'Refers to further information about the link\'s context, expressed as a LRDD ("Link-based Resource Descriptor Document") resource. See for information about processing this relation type in host-meta documents. When used elsewhere, it refers to additional links and other metadata. Multiple instances indicate additional LRDD resources. LRDD resources MUST have an "application/xrd+xml" representation, and MAY have others.',
     ),
   );
 
@@ -1766,7 +1784,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'manifest',
     valueEnum: LinkRelationTypesBuilderEnum.manifest,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1779,7 +1797,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'mask-icon',
     valueEnum: LinkRelationTypesBuilderEnum.maskIcon,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1793,7 +1811,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'media-feed',
     valueEnum: LinkRelationTypesBuilderEnum.mediaFeed,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1807,7 +1825,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'memento',
     valueEnum: LinkRelationTypesBuilderEnum.memento,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1821,7 +1839,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'micropub',
     valueEnum: LinkRelationTypesBuilderEnum.micropub,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1834,7 +1852,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'modulepreload',
     valueEnum: LinkRelationTypesBuilderEnum.modulepreload,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1848,7 +1866,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'monitor',
     valueEnum: LinkRelationTypesBuilderEnum.monitor,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1862,7 +1880,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'monitor-group',
     valueEnum: LinkRelationTypesBuilderEnum.monitorGroup,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1876,7 +1894,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'next',
     valueEnum: LinkRelationTypesBuilderEnum.next,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1890,7 +1908,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'next-archive',
     valueEnum: LinkRelationTypesBuilderEnum.nextArchive,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1903,7 +1921,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'nofollow',
     valueEnum: LinkRelationTypesBuilderEnum.nofollow,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1917,7 +1935,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'noopener',
     valueEnum: LinkRelationTypesBuilderEnum.noopener,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1931,7 +1949,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'noreferrer',
     valueEnum: LinkRelationTypesBuilderEnum.noreferrer,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1945,7 +1963,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'opener',
     valueEnum: LinkRelationTypesBuilderEnum.opener,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1959,7 +1977,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'openid2.local_id',
     valueEnum: LinkRelationTypesBuilderEnum.openid2LocalId,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1973,7 +1991,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'openid2.provider',
     valueEnum: LinkRelationTypesBuilderEnum.openid2Provider,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1987,7 +2005,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'original',
     valueEnum: LinkRelationTypesBuilderEnum.original,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2000,7 +2018,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'P3Pv1',
     valueEnum: LinkRelationTypesBuilderEnum.p3Pv1,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2013,7 +2031,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'payment',
     valueEnum: LinkRelationTypesBuilderEnum.payment,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2026,7 +2044,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'pingback',
     valueEnum: LinkRelationTypesBuilderEnum.pingback,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2040,7 +2058,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'preconnect',
     valueEnum: LinkRelationTypesBuilderEnum.preconnect,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2055,7 +2073,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'predecessor-version',
     valueEnum: LinkRelationTypesBuilderEnum.predecessorVersion,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2069,7 +2087,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'prefetch',
     valueEnum: LinkRelationTypesBuilderEnum.prefetch,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2083,7 +2101,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'preload',
     valueEnum: LinkRelationTypesBuilderEnum.preload,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2097,7 +2115,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'prerender',
     valueEnum: LinkRelationTypesBuilderEnum.prerender,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2111,7 +2129,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'prev',
     valueEnum: LinkRelationTypesBuilderEnum.prev,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2125,7 +2143,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'preview',
     valueEnum: LinkRelationTypesBuilderEnum.preview,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2139,7 +2157,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'previous',
     valueEnum: LinkRelationTypesBuilderEnum.previous,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2153,7 +2171,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'prev-archive',
     valueEnum: LinkRelationTypesBuilderEnum.prevArchive,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2166,7 +2184,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'privacy-policy',
     valueEnum: LinkRelationTypesBuilderEnum.privacyPolicy,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2180,7 +2198,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'profile',
     valueEnum: LinkRelationTypesBuilderEnum.profile,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2194,7 +2212,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'publication',
     valueEnum: LinkRelationTypesBuilderEnum.publication,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2208,7 +2226,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'related',
     valueEnum: LinkRelationTypesBuilderEnum.related,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2221,7 +2239,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'restconf',
     valueEnum: LinkRelationTypesBuilderEnum.restconf,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2235,7 +2253,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'replies',
     valueEnum: LinkRelationTypesBuilderEnum.replies,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2249,7 +2267,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'ruleinput',
     valueEnum: LinkRelationTypesBuilderEnum.ruleinput,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2263,7 +2281,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'search',
     valueEnum: LinkRelationTypesBuilderEnum.search,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2277,7 +2295,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'section',
     valueEnum: LinkRelationTypesBuilderEnum.section,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2290,7 +2308,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'self',
     valueEnum: LinkRelationTypesBuilderEnum.self,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2303,7 +2321,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'service',
     valueEnum: LinkRelationTypesBuilderEnum.service,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2317,7 +2335,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'service-desc',
     valueEnum: LinkRelationTypesBuilderEnum.serviceDesc,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2331,7 +2349,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'service-doc',
     valueEnum: LinkRelationTypesBuilderEnum.serviceDoc,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2345,7 +2363,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'service-meta',
     valueEnum: LinkRelationTypesBuilderEnum.serviceMeta,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2359,7 +2377,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'sponsored',
     valueEnum: LinkRelationTypesBuilderEnum.sponsored,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2373,7 +2391,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'start',
     valueEnum: LinkRelationTypesBuilderEnum.start,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2386,7 +2404,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'status',
     valueEnum: LinkRelationTypesBuilderEnum.status,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2400,7 +2418,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'stylesheet',
     valueEnum: LinkRelationTypesBuilderEnum.stylesheet,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2413,7 +2431,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'subsection',
     valueEnum: LinkRelationTypesBuilderEnum.subsection,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2427,7 +2445,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'successor-version',
     valueEnum: LinkRelationTypesBuilderEnum.successorVersion,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2441,7 +2459,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'sunset',
     valueEnum: LinkRelationTypesBuilderEnum.sunset,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2455,7 +2473,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'tag',
     valueEnum: LinkRelationTypesBuilderEnum.tag,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2469,7 +2487,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'terms-of-service',
     valueEnum: LinkRelationTypesBuilderEnum.termsOfService,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2483,7 +2501,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'timegate',
     valueEnum: LinkRelationTypesBuilderEnum.timegate,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2497,7 +2515,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'timemap',
     valueEnum: LinkRelationTypesBuilderEnum.timemap,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2511,7 +2529,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'type',
     valueEnum: LinkRelationTypesBuilderEnum.type,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2525,7 +2543,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'ugc',
     valueEnum: LinkRelationTypesBuilderEnum.ugc,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2539,7 +2557,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'up',
     valueEnum: LinkRelationTypesBuilderEnum.up,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2552,7 +2570,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'version-history',
     valueEnum: LinkRelationTypesBuilderEnum.versionHistory,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2566,7 +2584,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'via',
     valueEnum: LinkRelationTypesBuilderEnum.via,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2580,7 +2598,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'webmention',
     valueEnum: LinkRelationTypesBuilderEnum.webmention,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2594,7 +2612,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'working-copy',
     valueEnum: LinkRelationTypesBuilderEnum.workingCopy,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2607,7 +2625,7 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'working-copy-of',
     valueEnum: LinkRelationTypesBuilderEnum.workingCopyOf,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/iana-link-relations',
+      valueString: 'http://hl7.org/fhir/CodeSystem/iana-link-relations',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -2752,6 +2770,10 @@ class LinkRelationTypesBuilder extends FhirCodeEnumBuilder {
   ) {
     return LinkRelationTypesBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

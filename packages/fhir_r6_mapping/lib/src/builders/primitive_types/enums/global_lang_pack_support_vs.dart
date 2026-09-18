@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for GlobalLangPackSupportVS
@@ -91,12 +92,13 @@ class GlobalLangPackSupportVSBuilder extends FhirCodeEnumBuilder {
     final valueEnum = GlobalLangPackSupportVSBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return GlobalLangPackSupportVSBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -129,10 +131,26 @@ class GlobalLangPackSupportVSBuilder extends FhirCodeEnumBuilder {
         'GlobalLangPackSupportVSBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(GlobalLangPackSupportVSBuilderEnum.fromString(value));
     return GlobalLangPackSupportVSBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static GlobalLangPackSupportVSBuilder? _known(
+      GlobalLangPackSupportVSBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for GlobalLangPackSupportVSBuilder
@@ -144,7 +162,7 @@ class GlobalLangPackSupportVSBuilder extends FhirCodeEnumBuilder {
     valueString: 'not-supported',
     valueEnum: GlobalLangPackSupportVSBuilderEnum.notSupported,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/global-langpack-support',
+      valueString: 'http://hl7.org/fhir/global-langpack-support',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -158,7 +176,7 @@ class GlobalLangPackSupportVSBuilder extends FhirCodeEnumBuilder {
     valueString: 'explicit',
     valueEnum: GlobalLangPackSupportVSBuilderEnum.explicit,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/global-langpack-support',
+      valueString: 'http://hl7.org/fhir/global-langpack-support',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -172,7 +190,7 @@ class GlobalLangPackSupportVSBuilder extends FhirCodeEnumBuilder {
     valueString: 'implicit',
     valueEnum: GlobalLangPackSupportVSBuilderEnum.implicit,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/global-langpack-support',
+      valueString: 'http://hl7.org/fhir/global-langpack-support',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -200,6 +218,10 @@ class GlobalLangPackSupportVSBuilder extends FhirCodeEnumBuilder {
   ) {
     return GlobalLangPackSupportVSBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

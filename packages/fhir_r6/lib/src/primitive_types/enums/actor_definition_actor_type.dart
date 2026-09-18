@@ -146,12 +146,13 @@ class ActorDefinitionActorType extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = ActorDefinitionActorTypeEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return ActorDefinitionActorType._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -175,11 +176,26 @@ class ActorDefinitionActorType extends FhirCodeEnum {
         'ActorDefinitionActorType cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return ActorDefinitionActorType._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static ActorDefinitionActorType? _known(
+      ActorDefinitionActorTypeEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for ActorDefinitionActorType
@@ -190,7 +206,7 @@ class ActorDefinitionActorType extends FhirCodeEnum {
     valueString: 'system',
     valueEnum: ActorDefinitionActorTypeEnum.system_,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/actordefinition-actor-type',
+      valueString: 'http://hl7.org/fhir/actordefinition-actor-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -203,7 +219,7 @@ class ActorDefinitionActorType extends FhirCodeEnum {
     valueString: 'non-system',
     valueEnum: ActorDefinitionActorTypeEnum.nonSystem,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/actordefinition-actor-type',
+      valueString: 'http://hl7.org/fhir/actordefinition-actor-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -216,7 +232,7 @@ class ActorDefinitionActorType extends FhirCodeEnum {
     valueString: 'individual',
     valueEnum: ActorDefinitionActorTypeEnum.individual,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/actordefinition-actor-type',
+      valueString: 'http://hl7.org/fhir/actordefinition-actor-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -229,7 +245,7 @@ class ActorDefinitionActorType extends FhirCodeEnum {
     valueString: 'patient',
     valueEnum: ActorDefinitionActorTypeEnum.patient,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/actordefinition-actor-type',
+      valueString: 'http://hl7.org/fhir/actordefinition-actor-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -243,7 +259,7 @@ class ActorDefinitionActorType extends FhirCodeEnum {
     valueString: 'practitioner',
     valueEnum: ActorDefinitionActorTypeEnum.practitioner,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/actordefinition-actor-type',
+      valueString: 'http://hl7.org/fhir/actordefinition-actor-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -257,7 +273,7 @@ class ActorDefinitionActorType extends FhirCodeEnum {
     valueString: 'related-person',
     valueEnum: ActorDefinitionActorTypeEnum.relatedPerson,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/actordefinition-actor-type',
+      valueString: 'http://hl7.org/fhir/actordefinition-actor-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -270,7 +286,7 @@ class ActorDefinitionActorType extends FhirCodeEnum {
     valueString: 'device',
     valueEnum: ActorDefinitionActorTypeEnum.device,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/actordefinition-actor-type',
+      valueString: 'http://hl7.org/fhir/actordefinition-actor-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -283,7 +299,7 @@ class ActorDefinitionActorType extends FhirCodeEnum {
     valueString: 'collective',
     valueEnum: ActorDefinitionActorTypeEnum.collective,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/actordefinition-actor-type',
+      valueString: 'http://hl7.org/fhir/actordefinition-actor-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -296,7 +312,7 @@ class ActorDefinitionActorType extends FhirCodeEnum {
     valueString: 'care-team',
     valueEnum: ActorDefinitionActorTypeEnum.careTeam,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/actordefinition-actor-type',
+      valueString: 'http://hl7.org/fhir/actordefinition-actor-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -309,7 +325,7 @@ class ActorDefinitionActorType extends FhirCodeEnum {
     valueString: 'group',
     valueEnum: ActorDefinitionActorTypeEnum.group,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/actordefinition-actor-type',
+      valueString: 'http://hl7.org/fhir/actordefinition-actor-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -323,7 +339,7 @@ class ActorDefinitionActorType extends FhirCodeEnum {
     valueString: 'healthcare-service',
     valueEnum: ActorDefinitionActorTypeEnum.healthcareService,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/actordefinition-actor-type',
+      valueString: 'http://hl7.org/fhir/actordefinition-actor-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -337,7 +353,7 @@ class ActorDefinitionActorType extends FhirCodeEnum {
     valueString: 'organization',
     valueEnum: ActorDefinitionActorTypeEnum.organization,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/actordefinition-actor-type',
+      valueString: 'http://hl7.org/fhir/actordefinition-actor-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -365,6 +381,10 @@ class ActorDefinitionActorType extends FhirCodeEnum {
   ActorDefinitionActorType withElement(Element? newElement) {
     return ActorDefinitionActorType._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

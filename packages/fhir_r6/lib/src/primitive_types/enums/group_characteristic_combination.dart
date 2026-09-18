@@ -119,12 +119,13 @@ class GroupCharacteristicCombination extends FhirCodeEnum {
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum =
         GroupCharacteristicCombinationEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return GroupCharacteristicCombination._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -143,19 +144,32 @@ class GroupCharacteristicCombination extends FhirCodeEnum {
     final element = elementJson != null ? Element.fromJson(elementJson) : null;
     if (value == null && element != null) {
       return GroupCharacteristicCombination._(
-        valueString: null,
-        element: element,
-      );
+          valueString: null, element: element);
     } else if (value == null && element == null) {
       throw ArgumentError(
         'GroupCharacteristicCombination cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return GroupCharacteristicCombination._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static GroupCharacteristicCombination? _known(
+      GroupCharacteristicCombinationEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for GroupCharacteristicCombination
@@ -167,8 +181,7 @@ class GroupCharacteristicCombination extends FhirCodeEnum {
     valueString: 'all-of',
     valueEnum: GroupCharacteristicCombinationEnum.allOf,
     system: FhirUri._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/group-characteristic-combination',
+      valueString: 'http://hl7.org/fhir/group-characteristic-combination',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -182,8 +195,7 @@ class GroupCharacteristicCombination extends FhirCodeEnum {
     valueString: 'any-of',
     valueEnum: GroupCharacteristicCombinationEnum.anyOf,
     system: FhirUri._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/group-characteristic-combination',
+      valueString: 'http://hl7.org/fhir/group-characteristic-combination',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -197,8 +209,7 @@ class GroupCharacteristicCombination extends FhirCodeEnum {
     valueString: 'at-least',
     valueEnum: GroupCharacteristicCombinationEnum.atLeast,
     system: FhirUri._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/group-characteristic-combination',
+      valueString: 'http://hl7.org/fhir/group-characteristic-combination',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -212,8 +223,7 @@ class GroupCharacteristicCombination extends FhirCodeEnum {
     valueString: 'at-most',
     valueEnum: GroupCharacteristicCombinationEnum.atMost,
     system: FhirUri._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/group-characteristic-combination',
+      valueString: 'http://hl7.org/fhir/group-characteristic-combination',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -227,8 +237,7 @@ class GroupCharacteristicCombination extends FhirCodeEnum {
     valueString: 'except-subset',
     valueEnum: GroupCharacteristicCombinationEnum.exceptSubset,
     system: FhirUri._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/group-characteristic-combination',
+      valueString: 'http://hl7.org/fhir/group-characteristic-combination',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -242,8 +251,7 @@ class GroupCharacteristicCombination extends FhirCodeEnum {
     valueString: 'statistical',
     valueEnum: GroupCharacteristicCombinationEnum.statistical,
     system: FhirUri._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/group-characteristic-combination',
+      valueString: 'http://hl7.org/fhir/group-characteristic-combination',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -257,8 +265,7 @@ class GroupCharacteristicCombination extends FhirCodeEnum {
     valueString: 'net-effect',
     valueEnum: GroupCharacteristicCombinationEnum.netEffect,
     system: FhirUri._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/group-characteristic-combination',
+      valueString: 'http://hl7.org/fhir/group-characteristic-combination',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -272,8 +279,7 @@ class GroupCharacteristicCombination extends FhirCodeEnum {
     valueString: 'dataset',
     valueEnum: GroupCharacteristicCombinationEnum.dataset,
     system: FhirUri._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/group-characteristic-combination',
+      valueString: 'http://hl7.org/fhir/group-characteristic-combination',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -297,6 +303,10 @@ class GroupCharacteristicCombination extends FhirCodeEnum {
   GroupCharacteristicCombination withElement(Element? newElement) {
     return GroupCharacteristicCombination._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

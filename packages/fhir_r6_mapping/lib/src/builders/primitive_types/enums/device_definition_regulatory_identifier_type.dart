@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for DeviceDefinitionRegulatoryIdentifierType
@@ -93,12 +94,13 @@ class DeviceDefinitionRegulatoryIdentifierTypeBuilder
         DeviceDefinitionRegulatoryIdentifierTypeBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return DeviceDefinitionRegulatoryIdentifierTypeBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -131,10 +133,27 @@ class DeviceDefinitionRegulatoryIdentifierTypeBuilder
         'DeviceDefinitionRegulatoryIdentifierTypeBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(
+        DeviceDefinitionRegulatoryIdentifierTypeBuilderEnum.fromString(value));
     return DeviceDefinitionRegulatoryIdentifierTypeBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static DeviceDefinitionRegulatoryIdentifierTypeBuilder? _known(
+      DeviceDefinitionRegulatoryIdentifierTypeBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for DeviceDefinitionRegulatoryIdentifierTypeBuilder
@@ -147,7 +166,7 @@ class DeviceDefinitionRegulatoryIdentifierTypeBuilder
     valueEnum: DeviceDefinitionRegulatoryIdentifierTypeBuilderEnum.basic,
     system: FhirUriBuilder._(
       valueString:
-          'http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type',
+          'http://hl7.org/fhir/devicedefinition-regulatory-identifier-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -162,7 +181,7 @@ class DeviceDefinitionRegulatoryIdentifierTypeBuilder
     valueEnum: DeviceDefinitionRegulatoryIdentifierTypeBuilderEnum.master,
     system: FhirUriBuilder._(
       valueString:
-          'http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type',
+          'http://hl7.org/fhir/devicedefinition-regulatory-identifier-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -177,7 +196,7 @@ class DeviceDefinitionRegulatoryIdentifierTypeBuilder
     valueEnum: DeviceDefinitionRegulatoryIdentifierTypeBuilderEnum.license,
     system: FhirUriBuilder._(
       valueString:
-          'http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type',
+          'http://hl7.org/fhir/devicedefinition-regulatory-identifier-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -205,6 +224,10 @@ class DeviceDefinitionRegulatoryIdentifierTypeBuilder
   ) {
     return DeviceDefinitionRegulatoryIdentifierTypeBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

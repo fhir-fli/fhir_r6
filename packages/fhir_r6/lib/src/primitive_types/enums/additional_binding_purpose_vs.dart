@@ -132,12 +132,13 @@ class AdditionalBindingPurposeVS extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = AdditionalBindingPurposeVSEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return AdditionalBindingPurposeVS._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -161,11 +162,26 @@ class AdditionalBindingPurposeVS extends FhirCodeEnum {
         'AdditionalBindingPurposeVS cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return AdditionalBindingPurposeVS._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static AdditionalBindingPurposeVS? _known(
+      AdditionalBindingPurposeVSEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for AdditionalBindingPurposeVS
@@ -177,7 +193,7 @@ class AdditionalBindingPurposeVS extends FhirCodeEnum {
     valueString: 'maximum',
     valueEnum: AdditionalBindingPurposeVSEnum.maximum,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -191,7 +207,7 @@ class AdditionalBindingPurposeVS extends FhirCodeEnum {
     valueString: 'minimum',
     valueEnum: AdditionalBindingPurposeVSEnum.minimum,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -205,7 +221,7 @@ class AdditionalBindingPurposeVS extends FhirCodeEnum {
     valueString: 'required',
     valueEnum: AdditionalBindingPurposeVSEnum.required_,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -219,7 +235,7 @@ class AdditionalBindingPurposeVS extends FhirCodeEnum {
     valueString: 'extensible',
     valueEnum: AdditionalBindingPurposeVSEnum.extensible,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -233,7 +249,7 @@ class AdditionalBindingPurposeVS extends FhirCodeEnum {
     valueString: 'candidate',
     valueEnum: AdditionalBindingPurposeVSEnum.candidate,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -247,7 +263,7 @@ class AdditionalBindingPurposeVS extends FhirCodeEnum {
     valueString: 'current',
     valueEnum: AdditionalBindingPurposeVSEnum.current,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -261,7 +277,7 @@ class AdditionalBindingPurposeVS extends FhirCodeEnum {
     valueString: 'preferred',
     valueEnum: AdditionalBindingPurposeVSEnum.preferred,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -274,7 +290,7 @@ class AdditionalBindingPurposeVS extends FhirCodeEnum {
     valueString: 'ui',
     valueEnum: AdditionalBindingPurposeVSEnum.ui,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -288,7 +304,7 @@ class AdditionalBindingPurposeVS extends FhirCodeEnum {
     valueString: 'starter',
     valueEnum: AdditionalBindingPurposeVSEnum.starter,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -302,7 +318,7 @@ class AdditionalBindingPurposeVS extends FhirCodeEnum {
     valueString: 'component',
     valueEnum: AdditionalBindingPurposeVSEnum.component,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -328,6 +344,10 @@ class AdditionalBindingPurposeVS extends FhirCodeEnum {
   AdditionalBindingPurposeVS withElement(Element? newElement) {
     return AdditionalBindingPurposeVS._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

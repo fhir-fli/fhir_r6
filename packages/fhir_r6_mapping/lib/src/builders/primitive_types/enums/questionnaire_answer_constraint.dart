@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for QuestionnaireAnswerConstraint
@@ -92,12 +93,13 @@ class QuestionnaireAnswerConstraintBuilder extends FhirCodeEnumBuilder {
     final valueEnum = QuestionnaireAnswerConstraintBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return QuestionnaireAnswerConstraintBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -130,10 +132,27 @@ class QuestionnaireAnswerConstraintBuilder extends FhirCodeEnumBuilder {
         'QuestionnaireAnswerConstraintBuilder cannot be constructed from JSON.',
       );
     }
+    final known =
+        _known(QuestionnaireAnswerConstraintBuilderEnum.fromString(value));
     return QuestionnaireAnswerConstraintBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static QuestionnaireAnswerConstraintBuilder? _known(
+      QuestionnaireAnswerConstraintBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for QuestionnaireAnswerConstraintBuilder
@@ -145,8 +164,7 @@ class QuestionnaireAnswerConstraintBuilder extends FhirCodeEnumBuilder {
     valueString: 'optionsOnly',
     valueEnum: QuestionnaireAnswerConstraintBuilderEnum.optionsOnly,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/questionnaire-answer-constraint',
+      valueString: 'http://hl7.org/fhir/questionnaire-answer-constraint',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -160,8 +178,7 @@ class QuestionnaireAnswerConstraintBuilder extends FhirCodeEnumBuilder {
     valueString: 'optionsOrType',
     valueEnum: QuestionnaireAnswerConstraintBuilderEnum.optionsOrType,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/questionnaire-answer-constraint',
+      valueString: 'http://hl7.org/fhir/questionnaire-answer-constraint',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -175,8 +192,7 @@ class QuestionnaireAnswerConstraintBuilder extends FhirCodeEnumBuilder {
     valueString: 'optionsOrString',
     valueEnum: QuestionnaireAnswerConstraintBuilderEnum.optionsOrString,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/questionnaire-answer-constraint',
+      valueString: 'http://hl7.org/fhir/questionnaire-answer-constraint',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -204,6 +220,10 @@ class QuestionnaireAnswerConstraintBuilder extends FhirCodeEnumBuilder {
   ) {
     return QuestionnaireAnswerConstraintBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

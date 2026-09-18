@@ -293,12 +293,13 @@ class IssueType extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = IssueTypeEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return IssueType._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -322,11 +323,25 @@ class IssueType extends FhirCodeEnum {
         'IssueType cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return IssueType._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static IssueType? _known(IssueTypeEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for IssueType
@@ -337,7 +352,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'invalid',
     valueEnum: IssueTypeEnum.invalid,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -350,7 +365,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'structure',
     valueEnum: IssueTypeEnum.structure,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -363,7 +378,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'required',
     valueEnum: IssueTypeEnum.required_,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -376,7 +391,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'value',
     valueEnum: IssueTypeEnum.value_,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -389,7 +404,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'invariant',
     valueEnum: IssueTypeEnum.invariant,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -402,7 +417,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'security',
     valueEnum: IssueTypeEnum.security,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -415,7 +430,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'login',
     valueEnum: IssueTypeEnum.login,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -428,7 +443,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'unknown',
     valueEnum: IssueTypeEnum.unknown,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -441,7 +456,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'expired',
     valueEnum: IssueTypeEnum.expired,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -454,7 +469,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'forbidden',
     valueEnum: IssueTypeEnum.forbidden,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -467,7 +482,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'suppressed',
     valueEnum: IssueTypeEnum.suppressed,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -480,7 +495,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'processing',
     valueEnum: IssueTypeEnum.processing,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -493,7 +508,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'not-supported',
     valueEnum: IssueTypeEnum.notSupported,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -506,7 +521,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'duplicate',
     valueEnum: IssueTypeEnum.duplicate,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -519,7 +534,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'multiple-matches',
     valueEnum: IssueTypeEnum.multipleMatches,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -532,7 +547,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'not-found',
     valueEnum: IssueTypeEnum.notFound,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -545,7 +560,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'deleted',
     valueEnum: IssueTypeEnum.deleted,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -558,7 +573,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'too-long',
     valueEnum: IssueTypeEnum.tooLong,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -571,7 +586,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'code-invalid',
     valueEnum: IssueTypeEnum.codeInvalid,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -584,7 +599,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'extension',
     valueEnum: IssueTypeEnum.extensionValue,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -597,7 +612,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'too-costly',
     valueEnum: IssueTypeEnum.tooCostly,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -610,7 +625,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'business-rule',
     valueEnum: IssueTypeEnum.businessRule,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -623,7 +638,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'conflict',
     valueEnum: IssueTypeEnum.conflict,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -636,7 +651,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'limited-filter',
     valueEnum: IssueTypeEnum.limitedFilter,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -649,7 +664,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'transient',
     valueEnum: IssueTypeEnum.transient,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -662,7 +677,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'lock-error',
     valueEnum: IssueTypeEnum.lockError,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -675,7 +690,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'no-store',
     valueEnum: IssueTypeEnum.noStore,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -688,7 +703,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'exception',
     valueEnum: IssueTypeEnum.exception,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -701,7 +716,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'timeout',
     valueEnum: IssueTypeEnum.timeout,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -714,7 +729,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'incomplete',
     valueEnum: IssueTypeEnum.incomplete,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -727,7 +742,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'throttled',
     valueEnum: IssueTypeEnum.throttled,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -740,7 +755,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'informational',
     valueEnum: IssueTypeEnum.informational,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -753,7 +768,7 @@ class IssueType extends FhirCodeEnum {
     valueString: 'success',
     valueEnum: IssueTypeEnum.success,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/issue-type',
+      valueString: 'http://hl7.org/fhir/issue-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -802,6 +817,10 @@ class IssueType extends FhirCodeEnum {
   IssueType withElement(Element? newElement) {
     return IssueType._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

@@ -111,12 +111,13 @@ class UDIEntryType extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = UDIEntryTypeEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return UDIEntryType._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -140,11 +141,25 @@ class UDIEntryType extends FhirCodeEnum {
         'UDIEntryType cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return UDIEntryType._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static UDIEntryType? _known(UDIEntryTypeEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for UDIEntryType
@@ -155,7 +170,7 @@ class UDIEntryType extends FhirCodeEnum {
     valueString: 'barcode',
     valueEnum: UDIEntryTypeEnum.barcode,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/udi-entry-type',
+      valueString: 'http://hl7.org/fhir/udi-entry-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -168,7 +183,7 @@ class UDIEntryType extends FhirCodeEnum {
     valueString: 'rfid',
     valueEnum: UDIEntryTypeEnum.rfid,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/udi-entry-type',
+      valueString: 'http://hl7.org/fhir/udi-entry-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -181,7 +196,7 @@ class UDIEntryType extends FhirCodeEnum {
     valueString: 'manual',
     valueEnum: UDIEntryTypeEnum.manual,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/udi-entry-type',
+      valueString: 'http://hl7.org/fhir/udi-entry-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -194,7 +209,7 @@ class UDIEntryType extends FhirCodeEnum {
     valueString: 'card',
     valueEnum: UDIEntryTypeEnum.card,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/udi-entry-type',
+      valueString: 'http://hl7.org/fhir/udi-entry-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -207,7 +222,7 @@ class UDIEntryType extends FhirCodeEnum {
     valueString: 'self-reported',
     valueEnum: UDIEntryTypeEnum.selfReported,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/udi-entry-type',
+      valueString: 'http://hl7.org/fhir/udi-entry-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -220,7 +235,7 @@ class UDIEntryType extends FhirCodeEnum {
     valueString: 'electronic-transmission',
     valueEnum: UDIEntryTypeEnum.electronicTransmission,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/udi-entry-type',
+      valueString: 'http://hl7.org/fhir/udi-entry-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -233,7 +248,7 @@ class UDIEntryType extends FhirCodeEnum {
     valueString: 'unknown',
     valueEnum: UDIEntryTypeEnum.unknown,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/udi-entry-type',
+      valueString: 'http://hl7.org/fhir/udi-entry-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -256,6 +271,10 @@ class UDIEntryType extends FhirCodeEnum {
   UDIEntryType withElement(Element? newElement) {
     return UDIEntryType._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

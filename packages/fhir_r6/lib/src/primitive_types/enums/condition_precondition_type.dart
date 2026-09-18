@@ -76,12 +76,13 @@ class ConditionPreconditionType extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = ConditionPreconditionTypeEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return ConditionPreconditionType._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -105,11 +106,26 @@ class ConditionPreconditionType extends FhirCodeEnum {
         'ConditionPreconditionType cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return ConditionPreconditionType._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static ConditionPreconditionType? _known(
+      ConditionPreconditionTypeEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for ConditionPreconditionType
@@ -121,7 +137,7 @@ class ConditionPreconditionType extends FhirCodeEnum {
     valueString: 'sensitive',
     valueEnum: ConditionPreconditionTypeEnum.sensitive,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/condition-precondition-type',
+      valueString: 'http://hl7.org/fhir/condition-precondition-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -134,7 +150,7 @@ class ConditionPreconditionType extends FhirCodeEnum {
     valueString: 'specific',
     valueEnum: ConditionPreconditionTypeEnum.specific,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/condition-precondition-type',
+      valueString: 'http://hl7.org/fhir/condition-precondition-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -152,6 +168,10 @@ class ConditionPreconditionType extends FhirCodeEnum {
   ConditionPreconditionType withElement(Element? newElement) {
     return ConditionPreconditionType._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

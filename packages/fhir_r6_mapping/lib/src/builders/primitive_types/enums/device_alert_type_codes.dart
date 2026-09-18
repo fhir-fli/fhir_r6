@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for DeviceAlertTypeCodes
@@ -84,12 +85,13 @@ class DeviceAlertTypeCodesBuilder extends FhirCodeEnumBuilder {
     final valueEnum = DeviceAlertTypeCodesBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return DeviceAlertTypeCodesBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -122,10 +124,26 @@ class DeviceAlertTypeCodesBuilder extends FhirCodeEnumBuilder {
         'DeviceAlertTypeCodesBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(DeviceAlertTypeCodesBuilderEnum.fromString(value));
     return DeviceAlertTypeCodesBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static DeviceAlertTypeCodesBuilder? _known(
+      DeviceAlertTypeCodesBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for DeviceAlertTypeCodesBuilder
@@ -137,7 +155,7 @@ class DeviceAlertTypeCodesBuilder extends FhirCodeEnumBuilder {
     valueString: 'physiological',
     valueEnum: DeviceAlertTypeCodesBuilderEnum.physiological,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/devicealert-type',
+      valueString: 'http://hl7.org/fhir/devicealert-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -150,7 +168,7 @@ class DeviceAlertTypeCodesBuilder extends FhirCodeEnumBuilder {
     valueString: 'technical',
     valueEnum: DeviceAlertTypeCodesBuilderEnum.technical,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/devicealert-type',
+      valueString: 'http://hl7.org/fhir/devicealert-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -177,6 +195,10 @@ class DeviceAlertTypeCodesBuilder extends FhirCodeEnumBuilder {
   ) {
     return DeviceAlertTypeCodesBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

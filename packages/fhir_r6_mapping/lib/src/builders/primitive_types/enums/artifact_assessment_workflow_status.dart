@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for ArtifactAssessmentWorkflowStatus
@@ -143,12 +144,13 @@ class ArtifactAssessmentWorkflowStatusBuilder extends FhirCodeEnumBuilder {
     final valueEnum = ArtifactAssessmentWorkflowStatusBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return ArtifactAssessmentWorkflowStatusBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -181,10 +183,27 @@ class ArtifactAssessmentWorkflowStatusBuilder extends FhirCodeEnumBuilder {
         'ArtifactAssessmentWorkflowStatusBuilder cannot be constructed from JSON.',
       );
     }
+    final known =
+        _known(ArtifactAssessmentWorkflowStatusBuilderEnum.fromString(value));
     return ArtifactAssessmentWorkflowStatusBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static ArtifactAssessmentWorkflowStatusBuilder? _known(
+      ArtifactAssessmentWorkflowStatusBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for ArtifactAssessmentWorkflowStatusBuilder
@@ -196,8 +215,7 @@ class ArtifactAssessmentWorkflowStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'submitted',
     valueEnum: ArtifactAssessmentWorkflowStatusBuilderEnum.submitted,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
+      valueString: 'http://hl7.org/fhir/artifactassessment-workflow-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -211,8 +229,7 @@ class ArtifactAssessmentWorkflowStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'triaged',
     valueEnum: ArtifactAssessmentWorkflowStatusBuilderEnum.triaged,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
+      valueString: 'http://hl7.org/fhir/artifactassessment-workflow-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -226,8 +243,7 @@ class ArtifactAssessmentWorkflowStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'waiting-for-input',
     valueEnum: ArtifactAssessmentWorkflowStatusBuilderEnum.waitingForInput,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
+      valueString: 'http://hl7.org/fhir/artifactassessment-workflow-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -241,8 +257,7 @@ class ArtifactAssessmentWorkflowStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'resolved-no-change',
     valueEnum: ArtifactAssessmentWorkflowStatusBuilderEnum.resolvedNoChange,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
+      valueString: 'http://hl7.org/fhir/artifactassessment-workflow-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -257,8 +272,7 @@ class ArtifactAssessmentWorkflowStatusBuilder extends FhirCodeEnumBuilder {
     valueEnum:
         ArtifactAssessmentWorkflowStatusBuilderEnum.resolvedChangeRequired,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
+      valueString: 'http://hl7.org/fhir/artifactassessment-workflow-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -272,8 +286,7 @@ class ArtifactAssessmentWorkflowStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'deferred',
     valueEnum: ArtifactAssessmentWorkflowStatusBuilderEnum.deferred_,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
+      valueString: 'http://hl7.org/fhir/artifactassessment-workflow-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -287,8 +300,7 @@ class ArtifactAssessmentWorkflowStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'duplicate',
     valueEnum: ArtifactAssessmentWorkflowStatusBuilderEnum.duplicate,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
+      valueString: 'http://hl7.org/fhir/artifactassessment-workflow-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -302,8 +314,7 @@ class ArtifactAssessmentWorkflowStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'applied',
     valueEnum: ArtifactAssessmentWorkflowStatusBuilderEnum.applied,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
+      valueString: 'http://hl7.org/fhir/artifactassessment-workflow-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -317,8 +328,7 @@ class ArtifactAssessmentWorkflowStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'published',
     valueEnum: ArtifactAssessmentWorkflowStatusBuilderEnum.published,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
+      valueString: 'http://hl7.org/fhir/artifactassessment-workflow-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -332,8 +342,7 @@ class ArtifactAssessmentWorkflowStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'entered-in-error',
     valueEnum: ArtifactAssessmentWorkflowStatusBuilderEnum.enteredInError,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status',
+      valueString: 'http://hl7.org/fhir/artifactassessment-workflow-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -368,6 +377,10 @@ class ArtifactAssessmentWorkflowStatusBuilder extends FhirCodeEnumBuilder {
   ) {
     return ArtifactAssessmentWorkflowStatusBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

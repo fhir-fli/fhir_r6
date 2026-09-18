@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for PriceComponentType
@@ -105,12 +106,13 @@ class PriceComponentTypeBuilder extends FhirCodeEnumBuilder {
     final valueEnum = PriceComponentTypeBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return PriceComponentTypeBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -143,10 +145,26 @@ class PriceComponentTypeBuilder extends FhirCodeEnumBuilder {
         'PriceComponentTypeBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(PriceComponentTypeBuilderEnum.fromString(value));
     return PriceComponentTypeBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static PriceComponentTypeBuilder? _known(
+      PriceComponentTypeBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for PriceComponentTypeBuilder
@@ -157,7 +175,7 @@ class PriceComponentTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'base',
     valueEnum: PriceComponentTypeBuilderEnum.base,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/price-component-type',
+      valueString: 'http://hl7.org/fhir/price-component-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -170,7 +188,7 @@ class PriceComponentTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'surcharge',
     valueEnum: PriceComponentTypeBuilderEnum.surcharge,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/price-component-type',
+      valueString: 'http://hl7.org/fhir/price-component-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -183,7 +201,7 @@ class PriceComponentTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'discount',
     valueEnum: PriceComponentTypeBuilderEnum.discount,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/price-component-type',
+      valueString: 'http://hl7.org/fhir/price-component-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -196,7 +214,7 @@ class PriceComponentTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'tax',
     valueEnum: PriceComponentTypeBuilderEnum.tax,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/price-component-type',
+      valueString: 'http://hl7.org/fhir/price-component-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -209,7 +227,7 @@ class PriceComponentTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'informational',
     valueEnum: PriceComponentTypeBuilderEnum.informational,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/price-component-type',
+      valueString: 'http://hl7.org/fhir/price-component-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -238,6 +256,10 @@ class PriceComponentTypeBuilder extends FhirCodeEnumBuilder {
   ) {
     return PriceComponentTypeBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

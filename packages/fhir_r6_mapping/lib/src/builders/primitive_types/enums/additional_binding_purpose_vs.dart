@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for AdditionalBindingPurposeVS
@@ -140,12 +141,13 @@ class AdditionalBindingPurposeVSBuilder extends FhirCodeEnumBuilder {
     final valueEnum = AdditionalBindingPurposeVSBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return AdditionalBindingPurposeVSBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -178,10 +180,27 @@ class AdditionalBindingPurposeVSBuilder extends FhirCodeEnumBuilder {
         'AdditionalBindingPurposeVSBuilder cannot be constructed from JSON.',
       );
     }
+    final known =
+        _known(AdditionalBindingPurposeVSBuilderEnum.fromString(value));
     return AdditionalBindingPurposeVSBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static AdditionalBindingPurposeVSBuilder? _known(
+      AdditionalBindingPurposeVSBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for AdditionalBindingPurposeVSBuilder
@@ -193,7 +212,7 @@ class AdditionalBindingPurposeVSBuilder extends FhirCodeEnumBuilder {
     valueString: 'maximum',
     valueEnum: AdditionalBindingPurposeVSBuilderEnum.maximum,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -207,7 +226,7 @@ class AdditionalBindingPurposeVSBuilder extends FhirCodeEnumBuilder {
     valueString: 'minimum',
     valueEnum: AdditionalBindingPurposeVSBuilderEnum.minimum,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -221,7 +240,7 @@ class AdditionalBindingPurposeVSBuilder extends FhirCodeEnumBuilder {
     valueString: 'required',
     valueEnum: AdditionalBindingPurposeVSBuilderEnum.required_,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -235,7 +254,7 @@ class AdditionalBindingPurposeVSBuilder extends FhirCodeEnumBuilder {
     valueString: 'extensible',
     valueEnum: AdditionalBindingPurposeVSBuilderEnum.extensible,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -249,7 +268,7 @@ class AdditionalBindingPurposeVSBuilder extends FhirCodeEnumBuilder {
     valueString: 'candidate',
     valueEnum: AdditionalBindingPurposeVSBuilderEnum.candidate,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -263,7 +282,7 @@ class AdditionalBindingPurposeVSBuilder extends FhirCodeEnumBuilder {
     valueString: 'current',
     valueEnum: AdditionalBindingPurposeVSBuilderEnum.current,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -277,7 +296,7 @@ class AdditionalBindingPurposeVSBuilder extends FhirCodeEnumBuilder {
     valueString: 'preferred',
     valueEnum: AdditionalBindingPurposeVSBuilderEnum.preferred,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -291,7 +310,7 @@ class AdditionalBindingPurposeVSBuilder extends FhirCodeEnumBuilder {
     valueString: 'ui',
     valueEnum: AdditionalBindingPurposeVSBuilderEnum.ui,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -305,7 +324,7 @@ class AdditionalBindingPurposeVSBuilder extends FhirCodeEnumBuilder {
     valueString: 'starter',
     valueEnum: AdditionalBindingPurposeVSBuilderEnum.starter,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -319,7 +338,7 @@ class AdditionalBindingPurposeVSBuilder extends FhirCodeEnumBuilder {
     valueString: 'component',
     valueEnum: AdditionalBindingPurposeVSBuilderEnum.component,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/additional-binding-purpose',
+      valueString: 'http://hl7.org/fhir/CodeSystem/additional-binding-purpose',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -354,6 +373,10 @@ class AdditionalBindingPurposeVSBuilder extends FhirCodeEnumBuilder {
   ) {
     return AdditionalBindingPurposeVSBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

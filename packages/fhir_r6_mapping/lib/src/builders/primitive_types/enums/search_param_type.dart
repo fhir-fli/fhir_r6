@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for SearchParamType
@@ -140,12 +141,13 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     final valueEnum = SearchParamTypeBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return SearchParamTypeBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -178,10 +180,25 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
         'SearchParamTypeBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(SearchParamTypeBuilderEnum.fromString(value));
     return SearchParamTypeBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static SearchParamTypeBuilder? _known(SearchParamTypeBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for SearchParamTypeBuilder
@@ -192,7 +209,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'number',
     valueEnum: SearchParamTypeBuilderEnum.number,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
+      valueString: 'http://hl7.org/fhir/search-param-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -205,7 +222,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'date',
     valueEnum: SearchParamTypeBuilderEnum.date,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
+      valueString: 'http://hl7.org/fhir/search-param-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -218,7 +235,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'string',
     valueEnum: SearchParamTypeBuilderEnum.string,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
+      valueString: 'http://hl7.org/fhir/search-param-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -231,7 +248,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'token',
     valueEnum: SearchParamTypeBuilderEnum.token,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
+      valueString: 'http://hl7.org/fhir/search-param-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -244,7 +261,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'reference',
     valueEnum: SearchParamTypeBuilderEnum.reference,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
+      valueString: 'http://hl7.org/fhir/search-param-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -257,7 +274,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'composite',
     valueEnum: SearchParamTypeBuilderEnum.composite,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
+      valueString: 'http://hl7.org/fhir/search-param-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -270,7 +287,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'quantity',
     valueEnum: SearchParamTypeBuilderEnum.quantity,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
+      valueString: 'http://hl7.org/fhir/search-param-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -283,7 +300,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'uri',
     valueEnum: SearchParamTypeBuilderEnum.uri,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
+      valueString: 'http://hl7.org/fhir/search-param-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -296,7 +313,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'special',
     valueEnum: SearchParamTypeBuilderEnum.special,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
+      valueString: 'http://hl7.org/fhir/search-param-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -309,7 +326,7 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'resource',
     valueEnum: SearchParamTypeBuilderEnum.resource,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-param-type',
+      valueString: 'http://hl7.org/fhir/search-param-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -343,6 +360,10 @@ class SearchParamTypeBuilder extends FhirCodeEnumBuilder {
   ) {
     return SearchParamTypeBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }
