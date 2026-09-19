@@ -94,11 +94,18 @@ class R6Model extends core.FhirModel<Resource, R6ResourceType> {
       // against the parameter types it applies to. R5 adds `code-text` and
       // `text-advanced` over R4, gives `contains` to uri, and gives reference
       // `not-in` and `text`.
-      'string': {'missing', 'exact', 'contains', 'text'},
+      // String `text` is in the table ("The search parameter value is to be
+      // processed as input to a search with advanced text handling",
+      // build.fhir.org search.html modifier table, verbatim, read
+      // 2026-09-18) and is NOT implemented here, so it is refused below
+      // rather than answered as a starts-with match (fhirant
+      // REVIEW-2026-09-17 Q3). The table's `[type]` row is a placeholder
+      // for a resource type, not the word.
+      'string': {'missing', 'exact', 'contains'},
       'token': {'missing', 'text', 'not', 'in', 'not-in', 'of-type', 'below'},
       // A reference also takes ":[ResourceType]", which is not a fixed word
-      // and is checked separately.
-      'reference': {'missing', 'identifier', 'type'},
+      // and is checked separately (ModifierRules.isAllowed).
+      'reference': {'missing', 'identifier'},
       'uri': {'missing', 'above', 'below'},
       'date': {'missing'},
       'number': {'missing'},
@@ -110,6 +117,7 @@ class R6Model extends core.FhirModel<Resource, R6ResourceType> {
       'composite': <String>{},
     },
     unsupported: <String, Set<String>>{
+      'string': {'text'},
       'token': {'above', 'text-advanced', 'code-text'},
       'reference': {
         'above',

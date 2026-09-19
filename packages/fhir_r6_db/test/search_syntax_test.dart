@@ -177,6 +177,27 @@ Future<void> main() async {
       );
     });
 
+    // fhirant REVIEW-2026-09-17 Q3. Quoted verbatim from the modifier table
+    // of build.fhir.org/search.html, read row by row 2026-09-18: string
+    // `text` is "to be processed as input to a search with advanced text
+    // handling", which this store does not do, so it is refused rather than
+    // answered as a starts-with match; and the `[type]` row is a
+    // placeholder ("not the literal :[type], but a value such as
+    // :Patient"), not a modifier named `type`.
+    test(':text on a string parameter is refused as unsupported', () async {
+      await expectLater(
+        ids(R6ResourceType.Patient, 'name:text', 'Faulk'),
+        throwsA(isA<UnsupportedSearchModifier>()),
+      );
+    });
+
+    test('the literal word "type" is not a reference modifier', () async {
+      await expectLater(
+        ids(R6ResourceType.Observation, 'subject:type', 'Patient'),
+        throwsA(isA<UnsupportedSearchModifier>()),
+      );
+    });
+
     test('an unknown PARAMETER is not rejected on this basis', () async {
       // Nothing is known about it, so its modifier cannot be judged, and
       // refusing would reject searches a deployment does support.
