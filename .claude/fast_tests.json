@@ -1,0 +1,18 @@
+{
+  "_why": "Read by ~/.claude/hooks/fast-tests-on-stop.py. The whole packages/fhir_r6_db suite, 479 tests, 44 s (measured 2026-09-19); no subset has been shown to be representative.",
+  "suites": [
+    {
+      "package": "packages/fhir_r6_db",
+      "watch": [
+        "lib",
+        "test"
+      ],
+      "suffix": ".dart",
+      "timeout": 180,
+      "command": [
+        "dart",
+        "test"
+      ]
+    }
+  ]
+}
