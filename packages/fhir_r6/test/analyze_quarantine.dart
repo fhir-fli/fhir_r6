@@ -70,7 +70,8 @@ void main() async {
             _out('  ... and ${differences.length ~/ 3 - 10} more');
           }
         }
-      } catch (e) {
+      } on Object catch (e) {
+        // A diagnostic: it categorises whatever parsing threw.
         if (e.toString().contains('required') ||
             e.toString().contains('must not be null') ||
             e.toString().contains('Missing required')) {
@@ -83,7 +84,7 @@ void main() async {
           _out('  Error: $e');
         }
       }
-    } catch (e) {
+    } on Object catch (e) {
       categories['other_error']!.add(fileName);
       _out('\n[$fileName] - OTHER ERROR');
       _out('  Error: $e');

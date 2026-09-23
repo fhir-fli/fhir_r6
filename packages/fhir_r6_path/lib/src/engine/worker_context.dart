@@ -78,7 +78,7 @@ class WorkerContext implements IWorkerContext {
     }
     try {
       return (await fetchTypeDefinition(typeName)) != null;
-    } catch (_) {
+    } on Exception catch (_) {
       return false;
     }
   }
@@ -948,7 +948,7 @@ class WorkerContext implements IWorkerContext {
       return ValidationResult.error(
         message: 'No validation methods (client/server) enabled.',
       );
-    } catch (e) {
+    } on Exception catch (e) {
       // Catch and return any unexpected errors during validation
       return ValidationResult.error(
         message: 'Validation failed: $e',
@@ -1044,13 +1044,13 @@ class WorkerContext implements IWorkerContext {
         // Cache and return the result
         txCache.cacheValidation(cacheToken, result, TerminologyCache.transient);
         return result;
-      } catch (e) {
-        if (e is NoTerminologyServiceException) {
-          return ValidationResult.error(
-            message: 'No Terminology Service available',
-            errorClass: TerminologyServiceErrorClass.noservice,
-          );
-        }
+      } on NoTerminologyServiceException catch (_) {
+        return ValidationResult.error(
+          message: 'No Terminology Service available',
+          errorClass: TerminologyServiceErrorClass.noservice,
+        );
+      } on Exception catch (_) {
+        // Any other client-side failure falls through to the server path.
       }
     }
 
@@ -1096,7 +1096,7 @@ class WorkerContext implements IWorkerContext {
       // Cache and return the result
       txCache.cacheValidation(cacheToken, result, TerminologyCache.permanent);
       return result;
-    } catch (e) {
+    } on Exception catch (e) {
       return ValidationResult.error(
         message: e.toString(),
       )..txLink = txLog.getLastId();
@@ -1326,8 +1326,9 @@ class WorkerContext implements IWorkerContext {
               default:
                 errorClass = TerminologyServiceErrorClass.unknown;
             }
-          } catch (e) {
-            // Handle exceptions gracefully
+          } on Exception catch (_) {
+            // An issue the server's OperationOutcome does not describe
+            // stays classed unknown.
           }
         }
       }
@@ -1434,7 +1435,7 @@ class WorkerContext implements IWorkerContext {
       // final response = _sendValidationRequestToServer(params);
       // return processValidationResponse(response);
       throw Exception('Not yet implemented');
-    } catch (e) {
+    } on Exception catch (e) {
       return ValidationResult.error(
         message: 'Server validation failed: $e',
       );
