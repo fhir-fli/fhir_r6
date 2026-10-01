@@ -12,17 +12,15 @@ import 'package:fhir_r6/fhir_r6.dart'
         FHIRException,
         FhirBase,
         FhirCanonical,
-        FhirStringExtension,
-        IssueSeverity,
         IssueType,
         OperationOutcome,
-        OperationOutcomeIssue,
         Resource,
         StringExtensionForFHIR,
         StructureDefinition,
         StructureMap,
         ValueSet,
-        ValueSetContains;
+        ValueSetContains,
+        errorOperationOutcome;
 import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
 import 'package:fhir_r6_path/fhir_r6_path.dart';
 import 'package:uuid/uuid.dart';
@@ -152,17 +150,8 @@ class FhirMapEngine {
     }
   }
 
-  OperationOutcome _createOutcome(String message, String stack) {
-    return OperationOutcome(
-      issue: [
-        OperationOutcomeIssue(
-          severity: IssueSeverity.error,
-          code: IssueType.processing,
-          diagnostics: message.toFhirString,
-        ),
-      ],
-    );
-  }
+  OperationOutcome _createOutcome(String message, String stack) =>
+      errorOperationOutcome(diagnostics: message, code: IssueType.processing);
 
   String? _getInputType(
     StructureMapGroupBuilder g,
