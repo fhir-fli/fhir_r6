@@ -1,9 +1,10 @@
 import 'package:cql/cql.dart';
-import 'package:fhir_r6/fhir_r6.dart' show ValueSet;
+import 'package:fhir_r6/fhir_r6.dart' show Resource;
 import 'package:fhir_r6_path/fhir_r6_path.dart'
     show
         CanonicalResourceCache,
         OnlineResourceCache,
+        TypedResourceCache,
         ValidationOptions,
         ValueSetChecker,
         WorkerContext;
@@ -20,7 +21,8 @@ class R6TerminologyProvider implements TerminologyProvider {
   /// [OnlineResourceCache] (network); supply a pre-populated cache to resolve
   /// offline.
   R6TerminologyProvider({CanonicalResourceCache? resourceCache})
-      : _resourceCache = resourceCache ?? OnlineResourceCache();
+      : _resourceCache =
+            resourceCache ?? OnlineResourceCache(parse: Resource.fromJson);
 
   final CanonicalResourceCache _resourceCache;
 
@@ -30,7 +32,7 @@ class R6TerminologyProvider implements TerminologyProvider {
     required String? code,
     required CqlValueSet valueSet,
   }) async {
-    final resolved = await _resourceCache.getCanonicalResource<ValueSet>(
+    final resolved = await _resourceCache.valueSet(
       valueSet.id,
       valueSet.version,
     );
