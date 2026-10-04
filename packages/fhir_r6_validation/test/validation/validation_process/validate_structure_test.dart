@@ -1,6 +1,5 @@
 import 'package:fhir_node/fhir_node.dart';
 import 'package:fhir_r6/fhir_r6.dart';
-import 'package:fhir_r6_path/fhir_r6_path.dart';
 import 'package:fhir_r6_validation/fhir_r6_validation.dart';
 import 'package:test/test.dart';
 

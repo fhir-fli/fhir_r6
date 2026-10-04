@@ -1,5 +1,4 @@
 import 'package:fhir_r6/fhir_r6.dart';
-import 'package:fhir_r6_path/fhir_r6_path.dart';
 import 'package:fhir_r6_validation/fhir_r6_validation.dart';
 import 'package:test/test.dart';
 
@@ -38,7 +37,7 @@ void main() {
   });
 
   test('the default cache resolves nothing, and says so', () async {
-    final results = await FhirValidationEngine().validateFhirMap(
+    final results = await const FhirValidationEngine().validateFhirMap(
       structureToValidate: {'resourceType': 'Patient', 'id': 'p1'},
     );
 
@@ -51,7 +50,7 @@ void main() {
   test('a supplied cache is what the type is looked up in', () async {
     final cache = CanonicalResourceCache()..see(patientDefinition);
 
-    final results = await FhirValidationEngine().validateFhirMap(
+    final results = await const FhirValidationEngine().validateFhirMap(
       structureToValidate: {'resourceType': 'Patient', 'id': 'p1'},
       resourceCache: cache,
     );
@@ -65,7 +64,7 @@ void main() {
   test('validateFhirString passes the cache through', () async {
     final cache = CanonicalResourceCache()..see(patientDefinition);
 
-    final results = await FhirValidationEngine().validateFhirString(
+    final results = await const FhirValidationEngine().validateFhirString(
       structureToValidate: '{"resourceType":"Patient","id":"p1"}',
       resourceCache: cache,
     );
@@ -79,7 +78,7 @@ void main() {
   test('validateFhirResource passes the cache through', () async {
     final cache = CanonicalResourceCache()..see(patientDefinition);
 
-    final results = await FhirValidationEngine().validateFhirResource(
+    final results = await const FhirValidationEngine().validateFhirResource(
       structureToValidate: Patient(id: 'p1'.toFhirString),
       resourceCache: cache,
     );
