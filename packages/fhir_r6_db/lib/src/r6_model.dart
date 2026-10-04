@@ -32,10 +32,16 @@ class R6Model extends core.FhirModel<Resource, R6ResourceType> {
   R6ResourceType? typeFromName(String name) => R6ResourceType.fromString(name);
 
   @override
-  Resource fromJson(String json) => Resource.fromJsonString(json);
+  Resource fromJsonText(String json) => Resource.fromJsonString(json);
 
   @override
-  String toJson(Resource resource) => resource.toJsonString();
+  String toJsonText(Resource resource) => resource.toJsonString();
+
+  @override
+  Resource fromJson(Map<String, dynamic> json) => Resource.fromJson(json);
+
+  @override
+  Map<String, dynamic> toJson(Resource resource) => resource.toJson();
 
   @override
   Map<String, dynamic> jsonOf(FhirNode element) =>
