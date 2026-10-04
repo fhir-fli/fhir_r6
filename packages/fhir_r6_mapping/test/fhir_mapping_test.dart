@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:collection/collection.dart' show DeepCollectionEquality;
 import 'package:fhir_r6/fhir_r6.dart' show QuestionnaireResponse, Resource;
 import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
-import 'package:fhir_r6_path/fhir_r6_path.dart';
 import 'package:test/test.dart';
 import 'examples/step1/export.dart';
 // import 'examples/step10/export.dart';

@@ -1,6 +1,5 @@
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
-import 'package:fhir_r6_path/fhir_r6_path.dart';
 import 'package:test/test.dart';
 
 /// A map that never sets an element the target type requires. `build()` is

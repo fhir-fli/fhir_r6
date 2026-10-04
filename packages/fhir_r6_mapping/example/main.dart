@@ -6,7 +6,6 @@
 
 import 'package:fhir_r6/fhir_r6.dart';
 import 'package:fhir_r6_mapping/fhir_r6_mapping.dart';
-import 'package:fhir_r6_path/fhir_r6_path.dart';
 
 Future<void> main() async {
   final parser = await StructureMapParser.create();

@@ -3,6 +3,7 @@
   "id": "RadOrderQrToBundle",
   "url": "http://fhir.ch/ig/ch-rad-order/StructureMap/RadOrderQrToBundle",
   "name": "RadOrderQrToBundle",
+  "description": "Radiologoy QuestionnaireResponse to Bundle",
   "status": "draft",
   "structure": [
     {

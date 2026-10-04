@@ -3,6 +3,7 @@
   "id": "SDOHCCStructureMapHungerVitalSign",
   "url": "http://hl7.org/fhir/uv/sdc/StructureMap/SDOHCC-StructureMapHungerVitalSignMap",
   "name": "SDOHCCStructureMapHungerVitalSign",
+  "description": "A map that converts an SDOCC hunger vital sign questionnaire to a Bundle of Conditions and Observations",
   "status": "draft",
   "structure": [
     {
