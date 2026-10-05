@@ -139,12 +139,13 @@ class FilterOperator extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = FilterOperatorEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return FilterOperator._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -168,11 +169,25 @@ class FilterOperator extends FhirCodeEnum {
         'FilterOperator cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return FilterOperator._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static FilterOperator? _known(FilterOperatorEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for FilterOperator
@@ -183,7 +198,7 @@ class FilterOperator extends FhirCodeEnum {
     valueString: '=',
     valueEnum: FilterOperatorEnum.eq,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/filter-operator',
+      valueString: 'http://hl7.org/fhir/filter-operator',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -196,7 +211,7 @@ class FilterOperator extends FhirCodeEnum {
     valueString: 'is-a',
     valueEnum: FilterOperatorEnum.isA,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/filter-operator',
+      valueString: 'http://hl7.org/fhir/filter-operator',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -209,7 +224,7 @@ class FilterOperator extends FhirCodeEnum {
     valueString: 'descendent-of',
     valueEnum: FilterOperatorEnum.descendentOf,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/filter-operator',
+      valueString: 'http://hl7.org/fhir/filter-operator',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -222,7 +237,7 @@ class FilterOperator extends FhirCodeEnum {
     valueString: 'is-not-a',
     valueEnum: FilterOperatorEnum.isNotA,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/filter-operator',
+      valueString: 'http://hl7.org/fhir/filter-operator',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -235,7 +250,7 @@ class FilterOperator extends FhirCodeEnum {
     valueString: 'regex',
     valueEnum: FilterOperatorEnum.regex,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/filter-operator',
+      valueString: 'http://hl7.org/fhir/filter-operator',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -248,7 +263,7 @@ class FilterOperator extends FhirCodeEnum {
     valueString: 'in',
     valueEnum: FilterOperatorEnum.in_,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/filter-operator',
+      valueString: 'http://hl7.org/fhir/filter-operator',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -261,7 +276,7 @@ class FilterOperator extends FhirCodeEnum {
     valueString: 'not-in',
     valueEnum: FilterOperatorEnum.notIn,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/filter-operator',
+      valueString: 'http://hl7.org/fhir/filter-operator',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -274,7 +289,7 @@ class FilterOperator extends FhirCodeEnum {
     valueString: 'generalizes',
     valueEnum: FilterOperatorEnum.generalizes,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/filter-operator',
+      valueString: 'http://hl7.org/fhir/filter-operator',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -287,7 +302,7 @@ class FilterOperator extends FhirCodeEnum {
     valueString: 'child-of',
     valueEnum: FilterOperatorEnum.childOf,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/filter-operator',
+      valueString: 'http://hl7.org/fhir/filter-operator',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -300,7 +315,7 @@ class FilterOperator extends FhirCodeEnum {
     valueString: 'descendent-leaf',
     valueEnum: FilterOperatorEnum.descendentLeaf,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/filter-operator',
+      valueString: 'http://hl7.org/fhir/filter-operator',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -313,7 +328,7 @@ class FilterOperator extends FhirCodeEnum {
     valueString: 'exists',
     valueEnum: FilterOperatorEnum.exists,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/filter-operator',
+      valueString: 'http://hl7.org/fhir/filter-operator',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -340,6 +355,10 @@ class FilterOperator extends FhirCodeEnum {
   FilterOperator withElement(Element? newElement) {
     return FilterOperator._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

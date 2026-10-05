@@ -167,12 +167,13 @@ class SearchModifierCode extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = SearchModifierCodeEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return SearchModifierCode._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -196,11 +197,25 @@ class SearchModifierCode extends FhirCodeEnum {
         'SearchModifierCode cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return SearchModifierCode._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static SearchModifierCode? _known(SearchModifierCodeEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for SearchModifierCode
@@ -211,7 +226,7 @@ class SearchModifierCode extends FhirCodeEnum {
     valueString: 'missing',
     valueEnum: SearchModifierCodeEnum.missing,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-modifier-code',
+      valueString: 'http://hl7.org/fhir/search-modifier-code',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -224,7 +239,7 @@ class SearchModifierCode extends FhirCodeEnum {
     valueString: 'exact',
     valueEnum: SearchModifierCodeEnum.exact,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-modifier-code',
+      valueString: 'http://hl7.org/fhir/search-modifier-code',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -237,7 +252,7 @@ class SearchModifierCode extends FhirCodeEnum {
     valueString: 'contains',
     valueEnum: SearchModifierCodeEnum.contains_,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-modifier-code',
+      valueString: 'http://hl7.org/fhir/search-modifier-code',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -250,7 +265,7 @@ class SearchModifierCode extends FhirCodeEnum {
     valueString: 'not',
     valueEnum: SearchModifierCodeEnum.not,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-modifier-code',
+      valueString: 'http://hl7.org/fhir/search-modifier-code',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -263,7 +278,7 @@ class SearchModifierCode extends FhirCodeEnum {
     valueString: 'text',
     valueEnum: SearchModifierCodeEnum.text,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-modifier-code',
+      valueString: 'http://hl7.org/fhir/search-modifier-code',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -276,7 +291,7 @@ class SearchModifierCode extends FhirCodeEnum {
     valueString: 'in',
     valueEnum: SearchModifierCodeEnum.in_,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-modifier-code',
+      valueString: 'http://hl7.org/fhir/search-modifier-code',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -289,7 +304,7 @@ class SearchModifierCode extends FhirCodeEnum {
     valueString: 'not-in',
     valueEnum: SearchModifierCodeEnum.notIn,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-modifier-code',
+      valueString: 'http://hl7.org/fhir/search-modifier-code',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -302,7 +317,7 @@ class SearchModifierCode extends FhirCodeEnum {
     valueString: 'below',
     valueEnum: SearchModifierCodeEnum.below,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-modifier-code',
+      valueString: 'http://hl7.org/fhir/search-modifier-code',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -315,7 +330,7 @@ class SearchModifierCode extends FhirCodeEnum {
     valueString: 'above',
     valueEnum: SearchModifierCodeEnum.above,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-modifier-code',
+      valueString: 'http://hl7.org/fhir/search-modifier-code',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -328,7 +343,7 @@ class SearchModifierCode extends FhirCodeEnum {
     valueString: 'type',
     valueEnum: SearchModifierCodeEnum.type,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-modifier-code',
+      valueString: 'http://hl7.org/fhir/search-modifier-code',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -341,7 +356,7 @@ class SearchModifierCode extends FhirCodeEnum {
     valueString: 'identifier',
     valueEnum: SearchModifierCodeEnum.identifier,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-modifier-code',
+      valueString: 'http://hl7.org/fhir/search-modifier-code',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -354,7 +369,7 @@ class SearchModifierCode extends FhirCodeEnum {
     valueString: 'of-type',
     valueEnum: SearchModifierCodeEnum.ofType,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-modifier-code',
+      valueString: 'http://hl7.org/fhir/search-modifier-code',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -367,7 +382,7 @@ class SearchModifierCode extends FhirCodeEnum {
     valueString: 'code-text',
     valueEnum: SearchModifierCodeEnum.codeText,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-modifier-code',
+      valueString: 'http://hl7.org/fhir/search-modifier-code',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -380,7 +395,7 @@ class SearchModifierCode extends FhirCodeEnum {
     valueString: 'text-advanced',
     valueEnum: SearchModifierCodeEnum.textAdvanced,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-modifier-code',
+      valueString: 'http://hl7.org/fhir/search-modifier-code',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -393,7 +408,7 @@ class SearchModifierCode extends FhirCodeEnum {
     valueString: 'iterate',
     valueEnum: SearchModifierCodeEnum.iterate,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/search-modifier-code',
+      valueString: 'http://hl7.org/fhir/search-modifier-code',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -424,6 +439,10 @@ class SearchModifierCode extends FhirCodeEnum {
   SearchModifierCode withElement(Element? newElement) {
     return SearchModifierCode._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

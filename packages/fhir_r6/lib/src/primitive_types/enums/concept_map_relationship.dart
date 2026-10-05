@@ -97,12 +97,13 @@ class ConceptMapRelationship extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = ConceptMapRelationshipEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return ConceptMapRelationship._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -126,11 +127,25 @@ class ConceptMapRelationship extends FhirCodeEnum {
         'ConceptMapRelationship cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return ConceptMapRelationship._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static ConceptMapRelationship? _known(ConceptMapRelationshipEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for ConceptMapRelationship
@@ -141,7 +156,7 @@ class ConceptMapRelationship extends FhirCodeEnum {
     valueString: 'related-to',
     valueEnum: ConceptMapRelationshipEnum.relatedTo,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/concept-map-relationship',
+      valueString: 'http://hl7.org/fhir/concept-map-relationship',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -154,7 +169,7 @@ class ConceptMapRelationship extends FhirCodeEnum {
     valueString: 'equivalent',
     valueEnum: ConceptMapRelationshipEnum.equivalent,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/concept-map-relationship',
+      valueString: 'http://hl7.org/fhir/concept-map-relationship',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -168,7 +183,7 @@ class ConceptMapRelationship extends FhirCodeEnum {
     valueString: 'source-is-narrower-than-target',
     valueEnum: ConceptMapRelationshipEnum.sourceIsNarrowerThanTarget,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/concept-map-relationship',
+      valueString: 'http://hl7.org/fhir/concept-map-relationship',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -182,7 +197,7 @@ class ConceptMapRelationship extends FhirCodeEnum {
     valueString: 'source-is-broader-than-target',
     valueEnum: ConceptMapRelationshipEnum.sourceIsBroaderThanTarget,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/concept-map-relationship',
+      valueString: 'http://hl7.org/fhir/concept-map-relationship',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -195,7 +210,7 @@ class ConceptMapRelationship extends FhirCodeEnum {
     valueString: 'not-related-to',
     valueEnum: ConceptMapRelationshipEnum.notRelatedTo,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/concept-map-relationship',
+      valueString: 'http://hl7.org/fhir/concept-map-relationship',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -216,6 +231,10 @@ class ConceptMapRelationship extends FhirCodeEnum {
   ConceptMapRelationship withElement(Element? newElement) {
     return ConceptMapRelationship._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

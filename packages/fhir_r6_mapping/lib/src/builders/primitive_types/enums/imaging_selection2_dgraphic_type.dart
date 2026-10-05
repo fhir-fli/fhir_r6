@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for ImagingSelection2DGraphicType
@@ -105,12 +106,13 @@ class ImagingSelection2DGraphicTypeBuilder extends FhirCodeEnumBuilder {
     final valueEnum = ImagingSelection2DGraphicTypeBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return ImagingSelection2DGraphicTypeBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -143,10 +145,27 @@ class ImagingSelection2DGraphicTypeBuilder extends FhirCodeEnumBuilder {
         'ImagingSelection2DGraphicTypeBuilder cannot be constructed from JSON.',
       );
     }
+    final known =
+        _known(ImagingSelection2DGraphicTypeBuilderEnum.fromString(value));
     return ImagingSelection2DGraphicTypeBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static ImagingSelection2DGraphicTypeBuilder? _known(
+      ImagingSelection2DGraphicTypeBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for ImagingSelection2DGraphicTypeBuilder
@@ -158,8 +177,7 @@ class ImagingSelection2DGraphicTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'point',
     valueEnum: ImagingSelection2DGraphicTypeBuilderEnum.point,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype',
+      valueString: 'http://hl7.org/fhir/imagingselection-2dgraphictype',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -173,8 +191,7 @@ class ImagingSelection2DGraphicTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'polyline',
     valueEnum: ImagingSelection2DGraphicTypeBuilderEnum.polyline,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype',
+      valueString: 'http://hl7.org/fhir/imagingselection-2dgraphictype',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -188,8 +205,7 @@ class ImagingSelection2DGraphicTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'multipoint',
     valueEnum: ImagingSelection2DGraphicTypeBuilderEnum.multipoint,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype',
+      valueString: 'http://hl7.org/fhir/imagingselection-2dgraphictype',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -203,8 +219,7 @@ class ImagingSelection2DGraphicTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'circle',
     valueEnum: ImagingSelection2DGraphicTypeBuilderEnum.circle,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype',
+      valueString: 'http://hl7.org/fhir/imagingselection-2dgraphictype',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -218,8 +233,7 @@ class ImagingSelection2DGraphicTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'ellipse',
     valueEnum: ImagingSelection2DGraphicTypeBuilderEnum.ellipse,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype',
+      valueString: 'http://hl7.org/fhir/imagingselection-2dgraphictype',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -249,6 +263,10 @@ class ImagingSelection2DGraphicTypeBuilder extends FhirCodeEnumBuilder {
   ) {
     return ImagingSelection2DGraphicTypeBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

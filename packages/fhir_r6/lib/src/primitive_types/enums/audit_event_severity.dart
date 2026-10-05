@@ -118,12 +118,13 @@ class AuditEventSeverity extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = AuditEventSeverityEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return AuditEventSeverity._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -147,11 +148,25 @@ class AuditEventSeverity extends FhirCodeEnum {
         'AuditEventSeverity cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return AuditEventSeverity._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static AuditEventSeverity? _known(AuditEventSeverityEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for AuditEventSeverity
@@ -162,7 +177,7 @@ class AuditEventSeverity extends FhirCodeEnum {
     valueString: 'emergency',
     valueEnum: AuditEventSeverityEnum.emergency,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/audit-event-severity',
+      valueString: 'http://hl7.org/fhir/audit-event-severity',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -175,7 +190,7 @@ class AuditEventSeverity extends FhirCodeEnum {
     valueString: 'alert',
     valueEnum: AuditEventSeverityEnum.alert,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/audit-event-severity',
+      valueString: 'http://hl7.org/fhir/audit-event-severity',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -188,7 +203,7 @@ class AuditEventSeverity extends FhirCodeEnum {
     valueString: 'critical',
     valueEnum: AuditEventSeverityEnum.critical,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/audit-event-severity',
+      valueString: 'http://hl7.org/fhir/audit-event-severity',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -201,7 +216,7 @@ class AuditEventSeverity extends FhirCodeEnum {
     valueString: 'error',
     valueEnum: AuditEventSeverityEnum.error,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/audit-event-severity',
+      valueString: 'http://hl7.org/fhir/audit-event-severity',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -214,7 +229,7 @@ class AuditEventSeverity extends FhirCodeEnum {
     valueString: 'warning',
     valueEnum: AuditEventSeverityEnum.warning,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/audit-event-severity',
+      valueString: 'http://hl7.org/fhir/audit-event-severity',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -227,7 +242,7 @@ class AuditEventSeverity extends FhirCodeEnum {
     valueString: 'notice',
     valueEnum: AuditEventSeverityEnum.notice,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/audit-event-severity',
+      valueString: 'http://hl7.org/fhir/audit-event-severity',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -240,7 +255,7 @@ class AuditEventSeverity extends FhirCodeEnum {
     valueString: 'informational',
     valueEnum: AuditEventSeverityEnum.informational,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/audit-event-severity',
+      valueString: 'http://hl7.org/fhir/audit-event-severity',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -253,7 +268,7 @@ class AuditEventSeverity extends FhirCodeEnum {
     valueString: 'debug',
     valueEnum: AuditEventSeverityEnum.debug,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/audit-event-severity',
+      valueString: 'http://hl7.org/fhir/audit-event-severity',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -277,6 +292,10 @@ class AuditEventSeverity extends FhirCodeEnum {
   AuditEventSeverity withElement(Element? newElement) {
     return AuditEventSeverity._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

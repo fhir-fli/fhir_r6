@@ -90,12 +90,13 @@ class InventoryReportStatus extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = InventoryReportStatusEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return InventoryReportStatus._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -119,11 +120,25 @@ class InventoryReportStatus extends FhirCodeEnum {
         'InventoryReportStatus cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return InventoryReportStatus._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static InventoryReportStatus? _known(InventoryReportStatusEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for InventoryReportStatus
@@ -134,7 +149,7 @@ class InventoryReportStatus extends FhirCodeEnum {
     valueString: 'draft',
     valueEnum: InventoryReportStatusEnum.draft,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/inventoryreport-status',
+      valueString: 'http://hl7.org/fhir/inventoryreport-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -147,7 +162,7 @@ class InventoryReportStatus extends FhirCodeEnum {
     valueString: 'requested',
     valueEnum: InventoryReportStatusEnum.requested,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/inventoryreport-status',
+      valueString: 'http://hl7.org/fhir/inventoryreport-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -160,7 +175,7 @@ class InventoryReportStatus extends FhirCodeEnum {
     valueString: 'active',
     valueEnum: InventoryReportStatusEnum.active,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/inventoryreport-status',
+      valueString: 'http://hl7.org/fhir/inventoryreport-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -173,7 +188,7 @@ class InventoryReportStatus extends FhirCodeEnum {
     valueString: 'entered-in-error',
     valueEnum: InventoryReportStatusEnum.enteredInError,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/inventoryreport-status',
+      valueString: 'http://hl7.org/fhir/inventoryreport-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -193,6 +208,10 @@ class InventoryReportStatus extends FhirCodeEnum {
   InventoryReportStatus withElement(Element? newElement) {
     return InventoryReportStatus._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

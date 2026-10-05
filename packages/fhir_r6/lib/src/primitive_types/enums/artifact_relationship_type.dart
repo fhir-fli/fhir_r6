@@ -307,12 +307,13 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = ArtifactRelationshipTypeEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return ArtifactRelationshipType._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -336,11 +337,26 @@ class ArtifactRelationshipType extends FhirCodeEnum {
         'ArtifactRelationshipType cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return ArtifactRelationshipType._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static ArtifactRelationshipType? _known(
+      ArtifactRelationshipTypeEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for ArtifactRelationshipType
@@ -352,7 +368,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'documentation',
     valueEnum: ArtifactRelationshipTypeEnum.documentation,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -366,7 +382,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'justification',
     valueEnum: ArtifactRelationshipTypeEnum.justification,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -380,7 +396,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'predecessor',
     valueEnum: ArtifactRelationshipTypeEnum.predecessor,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -393,7 +409,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'successor',
     valueEnum: ArtifactRelationshipTypeEnum.successor,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -407,7 +423,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'derived-from',
     valueEnum: ArtifactRelationshipTypeEnum.derivedFrom,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -420,7 +436,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'depends-on',
     valueEnum: ArtifactRelationshipTypeEnum.dependsOn,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -433,7 +449,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'composed-of',
     valueEnum: ArtifactRelationshipTypeEnum.composedOf,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -446,7 +462,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'part-of',
     valueEnum: ArtifactRelationshipTypeEnum.partOf,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -459,7 +475,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'amends',
     valueEnum: ArtifactRelationshipTypeEnum.amends,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -473,7 +489,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'amended-with',
     valueEnum: ArtifactRelationshipTypeEnum.amendedWith,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -486,7 +502,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'appends',
     valueEnum: ArtifactRelationshipTypeEnum.appends,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -500,7 +516,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'appended-with',
     valueEnum: ArtifactRelationshipTypeEnum.appendedWith,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -513,7 +529,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'cites',
     valueEnum: ArtifactRelationshipTypeEnum.cites,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -526,7 +542,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'cited-by',
     valueEnum: ArtifactRelationshipTypeEnum.citedBy,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -539,7 +555,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'comments-on',
     valueEnum: ArtifactRelationshipTypeEnum.commentsOn,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -552,7 +568,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'comment-in',
     valueEnum: ArtifactRelationshipTypeEnum.commentIn,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -565,7 +581,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'contains',
     valueEnum: ArtifactRelationshipTypeEnum.contains_,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -579,7 +595,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'contained-in',
     valueEnum: ArtifactRelationshipTypeEnum.containedIn,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -592,7 +608,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'corrects',
     valueEnum: ArtifactRelationshipTypeEnum.corrects,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -606,7 +622,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'correction-in',
     valueEnum: ArtifactRelationshipTypeEnum.correctionIn,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -619,7 +635,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'replaces',
     valueEnum: ArtifactRelationshipTypeEnum.replaces,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -633,7 +649,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'replaced-with',
     valueEnum: ArtifactRelationshipTypeEnum.replacedWith,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -646,7 +662,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'retracts',
     valueEnum: ArtifactRelationshipTypeEnum.retracts,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -660,7 +676,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'retracted-by',
     valueEnum: ArtifactRelationshipTypeEnum.retractedBy,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -673,7 +689,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'signs',
     valueEnum: ArtifactRelationshipTypeEnum.signs,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -686,7 +702,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'similar-to',
     valueEnum: ArtifactRelationshipTypeEnum.similarTo,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -699,7 +715,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'supports',
     valueEnum: ArtifactRelationshipTypeEnum.supports,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -713,7 +729,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'supported-with',
     valueEnum: ArtifactRelationshipTypeEnum.supportedWith,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -726,7 +742,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'transforms',
     valueEnum: ArtifactRelationshipTypeEnum.transforms,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -740,7 +756,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'transformed-into',
     valueEnum: ArtifactRelationshipTypeEnum.transformedInto,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -754,7 +770,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'transformed-with',
     valueEnum: ArtifactRelationshipTypeEnum.transformedWith,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -768,7 +784,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'specification-of',
     valueEnum: ArtifactRelationshipTypeEnum.specificationOf,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -782,7 +798,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'created-with',
     valueEnum: ArtifactRelationshipTypeEnum.createdWith,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -795,7 +811,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'cite-as',
     valueEnum: ArtifactRelationshipTypeEnum.citeAs,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -808,7 +824,7 @@ class ArtifactRelationshipType extends FhirCodeEnum {
     valueString: 'summarizes',
     valueEnum: ArtifactRelationshipTypeEnum.summarizes,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/artifact-relationship-type',
+      valueString: 'http://hl7.org/fhir/artifact-relationship-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -859,6 +875,10 @@ class ArtifactRelationshipType extends FhirCodeEnum {
   ArtifactRelationshipType withElement(Element? newElement) {
     return ArtifactRelationshipType._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

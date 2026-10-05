@@ -132,12 +132,13 @@ class ActionParticipantType extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = ActionParticipantTypeEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return ActionParticipantType._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -161,11 +162,25 @@ class ActionParticipantType extends FhirCodeEnum {
         'ActionParticipantType cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return ActionParticipantType._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static ActionParticipantType? _known(ActionParticipantTypeEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for ActionParticipantType
@@ -176,7 +191,7 @@ class ActionParticipantType extends FhirCodeEnum {
     valueString: 'careteam',
     valueEnum: ActionParticipantTypeEnum.careteam,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/action-participant-type',
+      valueString: 'http://hl7.org/fhir/action-participant-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -189,7 +204,7 @@ class ActionParticipantType extends FhirCodeEnum {
     valueString: 'device',
     valueEnum: ActionParticipantTypeEnum.device,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/action-participant-type',
+      valueString: 'http://hl7.org/fhir/action-participant-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -202,7 +217,7 @@ class ActionParticipantType extends FhirCodeEnum {
     valueString: 'group',
     valueEnum: ActionParticipantTypeEnum.group,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/action-participant-type',
+      valueString: 'http://hl7.org/fhir/action-participant-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -216,7 +231,7 @@ class ActionParticipantType extends FhirCodeEnum {
     valueString: 'healthcareservice',
     valueEnum: ActionParticipantTypeEnum.healthcareservice,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/action-participant-type',
+      valueString: 'http://hl7.org/fhir/action-participant-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -229,7 +244,7 @@ class ActionParticipantType extends FhirCodeEnum {
     valueString: 'location',
     valueEnum: ActionParticipantTypeEnum.location,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/action-participant-type',
+      valueString: 'http://hl7.org/fhir/action-participant-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -242,7 +257,7 @@ class ActionParticipantType extends FhirCodeEnum {
     valueString: 'organization',
     valueEnum: ActionParticipantTypeEnum.organization,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/action-participant-type',
+      valueString: 'http://hl7.org/fhir/action-participant-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -255,7 +270,7 @@ class ActionParticipantType extends FhirCodeEnum {
     valueString: 'patient',
     valueEnum: ActionParticipantTypeEnum.patient,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/action-participant-type',
+      valueString: 'http://hl7.org/fhir/action-participant-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -268,7 +283,7 @@ class ActionParticipantType extends FhirCodeEnum {
     valueString: 'practitioner',
     valueEnum: ActionParticipantTypeEnum.practitioner,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/action-participant-type',
+      valueString: 'http://hl7.org/fhir/action-participant-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -281,7 +296,7 @@ class ActionParticipantType extends FhirCodeEnum {
     valueString: 'practitionerrole',
     valueEnum: ActionParticipantTypeEnum.practitionerrole,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/action-participant-type',
+      valueString: 'http://hl7.org/fhir/action-participant-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -294,7 +309,7 @@ class ActionParticipantType extends FhirCodeEnum {
     valueString: 'relatedperson',
     valueEnum: ActionParticipantTypeEnum.relatedperson,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/action-participant-type',
+      valueString: 'http://hl7.org/fhir/action-participant-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -320,6 +335,10 @@ class ActionParticipantType extends FhirCodeEnum {
   ActionParticipantType withElement(Element? newElement) {
     return ActionParticipantType._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

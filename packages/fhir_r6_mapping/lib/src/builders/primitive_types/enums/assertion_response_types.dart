@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for AssertionResponseTypes
@@ -378,12 +379,13 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     final valueEnum = AssertionResponseTypesBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return AssertionResponseTypesBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -416,10 +418,26 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
         'AssertionResponseTypesBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(AssertionResponseTypesBuilderEnum.fromString(value));
     return AssertionResponseTypesBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static AssertionResponseTypesBuilder? _known(
+      AssertionResponseTypesBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for AssertionResponseTypesBuilder
@@ -431,7 +449,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'continue',
     valueEnum: AssertionResponseTypesBuilderEnum.continue_,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -445,7 +463,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'switchingProtocols',
     valueEnum: AssertionResponseTypesBuilderEnum.switchingProtocols,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -458,7 +476,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'okay',
     valueEnum: AssertionResponseTypesBuilderEnum.okay,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -472,7 +490,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'created',
     valueEnum: AssertionResponseTypesBuilderEnum.created,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -486,7 +504,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'accepted',
     valueEnum: AssertionResponseTypesBuilderEnum.accepted,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -500,7 +518,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'nonAuthoritativeInformation',
     valueEnum: AssertionResponseTypesBuilderEnum.nonAuthoritativeInformation,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -514,7 +532,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'noContent',
     valueEnum: AssertionResponseTypesBuilderEnum.noContent,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -528,7 +546,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'resetContent',
     valueEnum: AssertionResponseTypesBuilderEnum.resetContent,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -542,7 +560,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'partialContent',
     valueEnum: AssertionResponseTypesBuilderEnum.partialContent,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -556,7 +574,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'multipleChoices',
     valueEnum: AssertionResponseTypesBuilderEnum.multipleChoices,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -570,7 +588,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'movedPermanently',
     valueEnum: AssertionResponseTypesBuilderEnum.movedPermanently,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -583,7 +601,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'found',
     valueEnum: AssertionResponseTypesBuilderEnum.found,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -597,7 +615,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'seeOther',
     valueEnum: AssertionResponseTypesBuilderEnum.seeOther,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -611,7 +629,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'notModified',
     valueEnum: AssertionResponseTypesBuilderEnum.notModified,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -625,7 +643,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'useProxy',
     valueEnum: AssertionResponseTypesBuilderEnum.useProxy,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -639,7 +657,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'temporaryRedirect',
     valueEnum: AssertionResponseTypesBuilderEnum.temporaryRedirect,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -653,7 +671,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'permanentRedirect',
     valueEnum: AssertionResponseTypesBuilderEnum.permanentRedirect,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -667,7 +685,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'badRequest',
     valueEnum: AssertionResponseTypesBuilderEnum.badRequest,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -681,7 +699,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'unauthorized',
     valueEnum: AssertionResponseTypesBuilderEnum.unauthorized,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -695,7 +713,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'paymentRequired',
     valueEnum: AssertionResponseTypesBuilderEnum.paymentRequired,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -709,7 +727,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'forbidden',
     valueEnum: AssertionResponseTypesBuilderEnum.forbidden,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -723,7 +741,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'notFound',
     valueEnum: AssertionResponseTypesBuilderEnum.notFound,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -737,7 +755,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'methodNotAllowed',
     valueEnum: AssertionResponseTypesBuilderEnum.methodNotAllowed,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -751,7 +769,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'notAcceptable',
     valueEnum: AssertionResponseTypesBuilderEnum.notAcceptable,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -765,7 +783,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'proxyAuthenticationRequired',
     valueEnum: AssertionResponseTypesBuilderEnum.proxyAuthenticationRequired,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -779,7 +797,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'requestTimeout',
     valueEnum: AssertionResponseTypesBuilderEnum.requestTimeout,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -793,7 +811,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'conflict',
     valueEnum: AssertionResponseTypesBuilderEnum.conflict,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -806,7 +824,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'gone',
     valueEnum: AssertionResponseTypesBuilderEnum.gone,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -820,7 +838,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'lengthRequired',
     valueEnum: AssertionResponseTypesBuilderEnum.lengthRequired,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -834,7 +852,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'preconditionFailed',
     valueEnum: AssertionResponseTypesBuilderEnum.preconditionFailed,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -848,7 +866,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'contentTooLarge',
     valueEnum: AssertionResponseTypesBuilderEnum.contentTooLarge,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -862,7 +880,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'uriTooLong',
     valueEnum: AssertionResponseTypesBuilderEnum.uriTooLong,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -876,7 +894,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'unsupportedMediaType',
     valueEnum: AssertionResponseTypesBuilderEnum.unsupportedMediaType,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -890,7 +908,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'rangeNotSatisfiable',
     valueEnum: AssertionResponseTypesBuilderEnum.rangeNotSatisfiable,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -904,7 +922,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'expectationFailed',
     valueEnum: AssertionResponseTypesBuilderEnum.expectationFailed,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -918,7 +936,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'misdirectedRequest',
     valueEnum: AssertionResponseTypesBuilderEnum.misdirectedRequest,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -932,7 +950,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'unprocessableContent',
     valueEnum: AssertionResponseTypesBuilderEnum.unprocessableContent,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -946,7 +964,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'upgradeRequired',
     valueEnum: AssertionResponseTypesBuilderEnum.upgradeRequired,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -960,7 +978,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'internalServerError',
     valueEnum: AssertionResponseTypesBuilderEnum.internalServerError,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -974,7 +992,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'notImplemented',
     valueEnum: AssertionResponseTypesBuilderEnum.notImplemented,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -988,7 +1006,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'badGateway',
     valueEnum: AssertionResponseTypesBuilderEnum.badGateway,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1002,7 +1020,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'serviceUnavailable',
     valueEnum: AssertionResponseTypesBuilderEnum.serviceUnavailable,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1016,7 +1034,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'gatewayTimeout',
     valueEnum: AssertionResponseTypesBuilderEnum.gatewayTimeout,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1030,7 +1048,7 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
     valueString: 'httpVersionNotSupported',
     valueEnum: AssertionResponseTypesBuilderEnum.httpVersionNotSupported,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/assert-response-code-types',
+      valueString: 'http://hl7.org/fhir/assert-response-code-types',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -1099,6 +1117,10 @@ class AssertionResponseTypesBuilder extends FhirCodeEnumBuilder {
   ) {
     return AssertionResponseTypesBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

@@ -175,12 +175,13 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = QuestionnaireItemTypeUsableEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return QuestionnaireItemTypeUsable._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -204,11 +205,26 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
         'QuestionnaireItemTypeUsable cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return QuestionnaireItemTypeUsable._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static QuestionnaireItemTypeUsable? _known(
+      QuestionnaireItemTypeUsableEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for QuestionnaireItemTypeUsable
@@ -220,7 +236,7 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
     valueString: 'group',
     valueEnum: QuestionnaireItemTypeUsableEnum.group,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/item-type-useable',
+      valueString: 'http://hl7.org/fhir/item-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -234,7 +250,7 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
     valueString: 'display',
     valueEnum: QuestionnaireItemTypeUsableEnum.display_,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/item-type-useable',
+      valueString: 'http://hl7.org/fhir/item-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -248,7 +264,7 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
     valueString: 'question',
     valueEnum: QuestionnaireItemTypeUsableEnum.question,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/item-type-useable',
+      valueString: 'http://hl7.org/fhir/item-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -262,7 +278,7 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
     valueString: 'boolean',
     valueEnum: QuestionnaireItemTypeUsableEnum.boolean,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/item-type-useable',
+      valueString: 'http://hl7.org/fhir/item-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -276,7 +292,7 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
     valueString: 'decimal',
     valueEnum: QuestionnaireItemTypeUsableEnum.decimal,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/item-type-useable',
+      valueString: 'http://hl7.org/fhir/item-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -290,7 +306,7 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
     valueString: 'integer',
     valueEnum: QuestionnaireItemTypeUsableEnum.integer,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/item-type-useable',
+      valueString: 'http://hl7.org/fhir/item-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -303,7 +319,7 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
     valueString: 'date',
     valueEnum: QuestionnaireItemTypeUsableEnum.date,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/item-type-useable',
+      valueString: 'http://hl7.org/fhir/item-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -317,7 +333,7 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
     valueString: 'dateTime',
     valueEnum: QuestionnaireItemTypeUsableEnum.dateTime,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/item-type-useable',
+      valueString: 'http://hl7.org/fhir/item-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -330,7 +346,7 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
     valueString: 'time',
     valueEnum: QuestionnaireItemTypeUsableEnum.time,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/item-type-useable',
+      valueString: 'http://hl7.org/fhir/item-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -344,7 +360,7 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
     valueString: 'string',
     valueEnum: QuestionnaireItemTypeUsableEnum.string,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/item-type-useable',
+      valueString: 'http://hl7.org/fhir/item-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -357,7 +373,7 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
     valueString: 'text',
     valueEnum: QuestionnaireItemTypeUsableEnum.text,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/item-type-useable',
+      valueString: 'http://hl7.org/fhir/item-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -370,7 +386,7 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
     valueString: 'url',
     valueEnum: QuestionnaireItemTypeUsableEnum.url,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/item-type-useable',
+      valueString: 'http://hl7.org/fhir/item-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -384,7 +400,7 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
     valueString: 'coding',
     valueEnum: QuestionnaireItemTypeUsableEnum.coding,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/item-type-useable',
+      valueString: 'http://hl7.org/fhir/item-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -398,7 +414,7 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
     valueString: 'attachment',
     valueEnum: QuestionnaireItemTypeUsableEnum.attachment,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/item-type-useable',
+      valueString: 'http://hl7.org/fhir/item-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -412,7 +428,7 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
     valueString: 'reference',
     valueEnum: QuestionnaireItemTypeUsableEnum.reference,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/item-type-useable',
+      valueString: 'http://hl7.org/fhir/item-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -426,7 +442,7 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
     valueString: 'quantity',
     valueEnum: QuestionnaireItemTypeUsableEnum.quantity,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/item-type-useable',
+      valueString: 'http://hl7.org/fhir/item-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -458,6 +474,10 @@ class QuestionnaireItemTypeUsable extends FhirCodeEnum {
   QuestionnaireItemTypeUsable withElement(Element? newElement) {
     return QuestionnaireItemTypeUsable._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

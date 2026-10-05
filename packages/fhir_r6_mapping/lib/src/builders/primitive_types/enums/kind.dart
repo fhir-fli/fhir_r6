@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for Kind
@@ -91,12 +92,13 @@ class KindBuilder extends FhirCodeEnumBuilder {
     final valueEnum = KindBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return KindBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -128,10 +130,25 @@ class KindBuilder extends FhirCodeEnumBuilder {
         'KindBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(KindBuilderEnum.fromString(value));
     return KindBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static KindBuilder? _known(KindBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for KindBuilder
@@ -142,7 +159,7 @@ class KindBuilder extends FhirCodeEnumBuilder {
     valueString: 'insurance',
     valueEnum: KindBuilderEnum.insurance,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/coverage-kind',
+      valueString: 'http://hl7.org/fhir/coverage-kind',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -155,7 +172,7 @@ class KindBuilder extends FhirCodeEnumBuilder {
     valueString: 'self-pay',
     valueEnum: KindBuilderEnum.selfPay,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/coverage-kind',
+      valueString: 'http://hl7.org/fhir/coverage-kind',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -168,7 +185,7 @@ class KindBuilder extends FhirCodeEnumBuilder {
     valueString: 'other',
     valueEnum: KindBuilderEnum.other,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/coverage-kind',
+      valueString: 'http://hl7.org/fhir/coverage-kind',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -195,6 +212,10 @@ class KindBuilder extends FhirCodeEnumBuilder {
   ) {
     return KindBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

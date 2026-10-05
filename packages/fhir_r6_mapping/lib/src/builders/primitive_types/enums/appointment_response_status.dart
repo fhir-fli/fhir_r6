@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for AppointmentResponseStatus
@@ -169,12 +170,13 @@ class AppointmentResponseStatusBuilder extends FhirCodeEnumBuilder {
     final valueEnum = AppointmentResponseStatusBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return AppointmentResponseStatusBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -207,10 +209,27 @@ class AppointmentResponseStatusBuilder extends FhirCodeEnumBuilder {
         'AppointmentResponseStatusBuilder cannot be constructed from JSON.',
       );
     }
+    final known =
+        _known(AppointmentResponseStatusBuilderEnum.fromString(value));
     return AppointmentResponseStatusBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static AppointmentResponseStatusBuilder? _known(
+      AppointmentResponseStatusBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for AppointmentResponseStatusBuilder
@@ -222,7 +241,7 @@ class AppointmentResponseStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'accepted',
     valueEnum: AppointmentResponseStatusBuilderEnum.accepted,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/participationstatus',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -236,7 +255,7 @@ class AppointmentResponseStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'declined',
     valueEnum: AppointmentResponseStatusBuilderEnum.declined,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/participationstatus',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -250,7 +269,7 @@ class AppointmentResponseStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'tentative',
     valueEnum: AppointmentResponseStatusBuilderEnum.tentative,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/participationstatus',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -264,7 +283,7 @@ class AppointmentResponseStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'needs-action',
     valueEnum: AppointmentResponseStatusBuilderEnum.needsAction,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/participationstatus',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -278,7 +297,7 @@ class AppointmentResponseStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'proposed',
     valueEnum: AppointmentResponseStatusBuilderEnum.proposed,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -292,7 +311,7 @@ class AppointmentResponseStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'pending',
     valueEnum: AppointmentResponseStatusBuilderEnum.pending,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -306,7 +325,7 @@ class AppointmentResponseStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'booked',
     valueEnum: AppointmentResponseStatusBuilderEnum.booked,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -320,7 +339,7 @@ class AppointmentResponseStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'arrived',
     valueEnum: AppointmentResponseStatusBuilderEnum.arrived,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -334,7 +353,7 @@ class AppointmentResponseStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'fulfilled',
     valueEnum: AppointmentResponseStatusBuilderEnum.fulfilled,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -348,7 +367,7 @@ class AppointmentResponseStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'cancelled',
     valueEnum: AppointmentResponseStatusBuilderEnum.cancelled,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -362,7 +381,7 @@ class AppointmentResponseStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'noshow',
     valueEnum: AppointmentResponseStatusBuilderEnum.noshow,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -376,7 +395,7 @@ class AppointmentResponseStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'entered-in-error',
     valueEnum: AppointmentResponseStatusBuilderEnum.enteredInError,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -390,7 +409,7 @@ class AppointmentResponseStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'checked-in',
     valueEnum: AppointmentResponseStatusBuilderEnum.checkedIn,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -404,7 +423,7 @@ class AppointmentResponseStatusBuilder extends FhirCodeEnumBuilder {
     valueString: 'waitlist',
     valueEnum: AppointmentResponseStatusBuilderEnum.waitlist,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -443,6 +462,10 @@ class AppointmentResponseStatusBuilder extends FhirCodeEnumBuilder {
   ) {
     return AppointmentResponseStatusBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

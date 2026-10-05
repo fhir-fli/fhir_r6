@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for ConceptMapAttributeType
@@ -105,12 +106,13 @@ class ConceptMapAttributeTypeBuilder extends FhirCodeEnumBuilder {
     final valueEnum = ConceptMapAttributeTypeBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return ConceptMapAttributeTypeBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -143,10 +145,26 @@ class ConceptMapAttributeTypeBuilder extends FhirCodeEnumBuilder {
         'ConceptMapAttributeTypeBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(ConceptMapAttributeTypeBuilderEnum.fromString(value));
     return ConceptMapAttributeTypeBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static ConceptMapAttributeTypeBuilder? _known(
+      ConceptMapAttributeTypeBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for ConceptMapAttributeTypeBuilder
@@ -157,7 +175,7 @@ class ConceptMapAttributeTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'code',
     valueEnum: ConceptMapAttributeTypeBuilderEnum.code,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/conceptmap-attribute-type',
+      valueString: 'http://hl7.org/fhir/conceptmap-attribute-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -171,7 +189,7 @@ class ConceptMapAttributeTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'Coding',
     valueEnum: ConceptMapAttributeTypeBuilderEnum.coding,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/conceptmap-attribute-type',
+      valueString: 'http://hl7.org/fhir/conceptmap-attribute-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -185,7 +203,7 @@ class ConceptMapAttributeTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'string',
     valueEnum: ConceptMapAttributeTypeBuilderEnum.string,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/conceptmap-attribute-type',
+      valueString: 'http://hl7.org/fhir/conceptmap-attribute-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -199,7 +217,7 @@ class ConceptMapAttributeTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'boolean',
     valueEnum: ConceptMapAttributeTypeBuilderEnum.boolean,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/conceptmap-attribute-type',
+      valueString: 'http://hl7.org/fhir/conceptmap-attribute-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -213,7 +231,7 @@ class ConceptMapAttributeTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'Quantity',
     valueEnum: ConceptMapAttributeTypeBuilderEnum.quantity,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/conceptmap-attribute-type',
+      valueString: 'http://hl7.org/fhir/conceptmap-attribute-type',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -243,6 +261,10 @@ class ConceptMapAttributeTypeBuilder extends FhirCodeEnumBuilder {
   ) {
     return ConceptMapAttributeTypeBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

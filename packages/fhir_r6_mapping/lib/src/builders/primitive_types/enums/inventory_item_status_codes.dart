@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for InventoryItemStatusCodes
@@ -98,12 +99,13 @@ class InventoryItemStatusCodesBuilder extends FhirCodeEnumBuilder {
     final valueEnum = InventoryItemStatusCodesBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return InventoryItemStatusCodesBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -136,10 +138,26 @@ class InventoryItemStatusCodesBuilder extends FhirCodeEnumBuilder {
         'InventoryItemStatusCodesBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(InventoryItemStatusCodesBuilderEnum.fromString(value));
     return InventoryItemStatusCodesBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static InventoryItemStatusCodesBuilder? _known(
+      InventoryItemStatusCodesBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for InventoryItemStatusCodesBuilder
@@ -151,7 +169,7 @@ class InventoryItemStatusCodesBuilder extends FhirCodeEnumBuilder {
     valueString: 'active',
     valueEnum: InventoryItemStatusCodesBuilderEnum.active,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/inventoryitem-status',
+      valueString: 'http://hl7.org/fhir/inventoryitem-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -165,7 +183,7 @@ class InventoryItemStatusCodesBuilder extends FhirCodeEnumBuilder {
     valueString: 'inactive',
     valueEnum: InventoryItemStatusCodesBuilderEnum.inactive,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/inventoryitem-status',
+      valueString: 'http://hl7.org/fhir/inventoryitem-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -179,7 +197,7 @@ class InventoryItemStatusCodesBuilder extends FhirCodeEnumBuilder {
     valueString: 'entered-in-error',
     valueEnum: InventoryItemStatusCodesBuilderEnum.enteredInError,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/inventoryitem-status',
+      valueString: 'http://hl7.org/fhir/inventoryitem-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -193,7 +211,7 @@ class InventoryItemStatusCodesBuilder extends FhirCodeEnumBuilder {
     valueString: 'unknown',
     valueEnum: InventoryItemStatusCodesBuilderEnum.unknown,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/inventoryitem-status',
+      valueString: 'http://hl7.org/fhir/inventoryitem-status',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -222,6 +240,10 @@ class InventoryItemStatusCodesBuilder extends FhirCodeEnumBuilder {
   ) {
     return InventoryItemStatusCodesBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

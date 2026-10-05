@@ -1,5 +1,26 @@
 # fhir_r6_mapping
 
+## [0.13.0]
+
+- **The engine and parser move to `fhir_mapping` 0.13.0**; this package is
+  its R6 binding. The generated builders stay here and now implement
+  `FhirNodeBuilder`, the contract the shared engine writes through;
+  `R6MappingModel` supplies them and R6's StructureMap spellings.
+  `fhirMappingEngine`, `FhirMapEngine.create(cache)` and
+  `StructureMapParser.create()` keep their signatures and return R6 types.
+  `MappingVariables`, the views, the exceptions and the caches are
+  re-exported from `fhir_mapping`; the engine-only extensions on
+  ElementDefinition, StructureDefinition, StructureMap and ValueSet are gone
+  (the engine reads those by element name now). `crypto` and `http` are no
+  longer dependencies.
+- Parser, per the Java reference: the old-format header's comment block is
+  the map's description, `/// experimental` is read, and a bare
+  `/// status = draft` is accepted.
+- `translate` over a CodeableConcept source looks the codings up one by one.
+
+- **A bound `code` Builder carries its CodeSystem**, the same change as in the core package: constants name the CodeSystem, not the ValueSet, and a value parsed from JSON or built from a string takes its constant's `system`, `version` and `display`. `fromJson` also sets `valueEnum`, which it did not.
+- **`FhirDateTimeBaseBuilder.valueDateTime` honours the offset**, the same change as in the core package: a value with `Z` or an offset comes back in UTC at the instant it denotes; one without stays local.
+
 ## [0.12.0]
 
 - No code changes; version aligned with the fhir_r4 0.12.0 family release

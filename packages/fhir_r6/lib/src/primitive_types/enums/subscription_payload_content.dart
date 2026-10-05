@@ -84,12 +84,13 @@ class SubscriptionPayloadContent extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = SubscriptionPayloadContentEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return SubscriptionPayloadContent._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -113,11 +114,26 @@ class SubscriptionPayloadContent extends FhirCodeEnum {
         'SubscriptionPayloadContent cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return SubscriptionPayloadContent._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static SubscriptionPayloadContent? _known(
+      SubscriptionPayloadContentEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for SubscriptionPayloadContent
@@ -128,7 +144,7 @@ class SubscriptionPayloadContent extends FhirCodeEnum {
     valueString: 'empty',
     valueEnum: SubscriptionPayloadContentEnum.empty_,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/subscription-payload-content',
+      valueString: 'http://hl7.org/fhir/subscription-payload-content',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -141,7 +157,7 @@ class SubscriptionPayloadContent extends FhirCodeEnum {
     valueString: 'id-only',
     valueEnum: SubscriptionPayloadContentEnum.idOnly,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/subscription-payload-content',
+      valueString: 'http://hl7.org/fhir/subscription-payload-content',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -155,7 +171,7 @@ class SubscriptionPayloadContent extends FhirCodeEnum {
     valueString: 'full-resource',
     valueEnum: SubscriptionPayloadContentEnum.fullResource,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/subscription-payload-content',
+      valueString: 'http://hl7.org/fhir/subscription-payload-content',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -174,6 +190,10 @@ class SubscriptionPayloadContent extends FhirCodeEnum {
   SubscriptionPayloadContent withElement(Element? newElement) {
     return SubscriptionPayloadContent._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

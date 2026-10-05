@@ -161,12 +161,13 @@ class AppointmentResponseStatus extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = AppointmentResponseStatusEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return AppointmentResponseStatus._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -190,11 +191,26 @@ class AppointmentResponseStatus extends FhirCodeEnum {
         'AppointmentResponseStatus cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return AppointmentResponseStatus._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static AppointmentResponseStatus? _known(
+      AppointmentResponseStatusEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for AppointmentResponseStatus
@@ -205,7 +221,7 @@ class AppointmentResponseStatus extends FhirCodeEnum {
     valueString: 'accepted',
     valueEnum: AppointmentResponseStatusEnum.accepted,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/participationstatus',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -218,7 +234,7 @@ class AppointmentResponseStatus extends FhirCodeEnum {
     valueString: 'declined',
     valueEnum: AppointmentResponseStatusEnum.declined,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/participationstatus',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -232,7 +248,7 @@ class AppointmentResponseStatus extends FhirCodeEnum {
     valueString: 'tentative',
     valueEnum: AppointmentResponseStatusEnum.tentative,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/participationstatus',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -246,7 +262,7 @@ class AppointmentResponseStatus extends FhirCodeEnum {
     valueString: 'needs-action',
     valueEnum: AppointmentResponseStatusEnum.needsAction,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/participationstatus',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -259,7 +275,7 @@ class AppointmentResponseStatus extends FhirCodeEnum {
     valueString: 'proposed',
     valueEnum: AppointmentResponseStatusEnum.proposed,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -272,7 +288,7 @@ class AppointmentResponseStatus extends FhirCodeEnum {
     valueString: 'pending',
     valueEnum: AppointmentResponseStatusEnum.pending,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -285,7 +301,7 @@ class AppointmentResponseStatus extends FhirCodeEnum {
     valueString: 'booked',
     valueEnum: AppointmentResponseStatusEnum.booked,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -298,7 +314,7 @@ class AppointmentResponseStatus extends FhirCodeEnum {
     valueString: 'arrived',
     valueEnum: AppointmentResponseStatusEnum.arrived,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -312,7 +328,7 @@ class AppointmentResponseStatus extends FhirCodeEnum {
     valueString: 'fulfilled',
     valueEnum: AppointmentResponseStatusEnum.fulfilled,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -326,7 +342,7 @@ class AppointmentResponseStatus extends FhirCodeEnum {
     valueString: 'cancelled',
     valueEnum: AppointmentResponseStatusEnum.cancelled,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -339,7 +355,7 @@ class AppointmentResponseStatus extends FhirCodeEnum {
     valueString: 'noshow',
     valueEnum: AppointmentResponseStatusEnum.noshow,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -353,7 +369,7 @@ class AppointmentResponseStatus extends FhirCodeEnum {
     valueString: 'entered-in-error',
     valueEnum: AppointmentResponseStatusEnum.enteredInError,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -367,7 +383,7 @@ class AppointmentResponseStatus extends FhirCodeEnum {
     valueString: 'checked-in',
     valueEnum: AppointmentResponseStatusEnum.checkedIn,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -380,7 +396,7 @@ class AppointmentResponseStatus extends FhirCodeEnum {
     valueString: 'waitlist',
     valueEnum: AppointmentResponseStatusEnum.waitlist,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/appointmentresponse-status',
+      valueString: 'http://hl7.org/fhir/appointmentstatus',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -410,6 +426,10 @@ class AppointmentResponseStatus extends FhirCodeEnum {
   AppointmentResponseStatus withElement(Element? newElement) {
     return AppointmentResponseStatus._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

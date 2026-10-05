@@ -118,12 +118,13 @@ class AdverseEventStatus extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = AdverseEventStatusEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return AdverseEventStatus._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -147,11 +148,25 @@ class AdverseEventStatus extends FhirCodeEnum {
         'AdverseEventStatus cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return AdverseEventStatus._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static AdverseEventStatus? _known(AdverseEventStatusEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for AdverseEventStatus
@@ -162,7 +177,7 @@ class AdverseEventStatus extends FhirCodeEnum {
     valueString: 'preparation',
     valueEnum: AdverseEventStatusEnum.preparation,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/adverse-event-status',
+      valueString: 'http://hl7.org/fhir/event-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -175,7 +190,7 @@ class AdverseEventStatus extends FhirCodeEnum {
     valueString: 'in-progress',
     valueEnum: AdverseEventStatusEnum.inProgress,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/adverse-event-status',
+      valueString: 'http://hl7.org/fhir/event-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -188,7 +203,7 @@ class AdverseEventStatus extends FhirCodeEnum {
     valueString: 'not-done',
     valueEnum: AdverseEventStatusEnum.notDone,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/adverse-event-status',
+      valueString: 'http://hl7.org/fhir/event-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -201,7 +216,7 @@ class AdverseEventStatus extends FhirCodeEnum {
     valueString: 'on-hold',
     valueEnum: AdverseEventStatusEnum.onHold,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/adverse-event-status',
+      valueString: 'http://hl7.org/fhir/event-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -214,7 +229,7 @@ class AdverseEventStatus extends FhirCodeEnum {
     valueString: 'stopped',
     valueEnum: AdverseEventStatusEnum.stopped,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/adverse-event-status',
+      valueString: 'http://hl7.org/fhir/event-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -227,7 +242,7 @@ class AdverseEventStatus extends FhirCodeEnum {
     valueString: 'completed',
     valueEnum: AdverseEventStatusEnum.completed,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/adverse-event-status',
+      valueString: 'http://hl7.org/fhir/event-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -240,7 +255,7 @@ class AdverseEventStatus extends FhirCodeEnum {
     valueString: 'entered-in-error',
     valueEnum: AdverseEventStatusEnum.enteredInError,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/adverse-event-status',
+      valueString: 'http://hl7.org/fhir/event-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -253,7 +268,7 @@ class AdverseEventStatus extends FhirCodeEnum {
     valueString: 'unknown',
     valueEnum: AdverseEventStatusEnum.unknown,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/adverse-event-status',
+      valueString: 'http://hl7.org/fhir/event-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -277,6 +292,10 @@ class AdverseEventStatus extends FhirCodeEnum {
   AdverseEventStatus withElement(Element? newElement) {
     return AdverseEventStatus._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

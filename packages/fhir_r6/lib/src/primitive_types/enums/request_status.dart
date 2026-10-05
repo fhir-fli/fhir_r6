@@ -118,12 +118,13 @@ class RequestStatus extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = RequestStatusEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return RequestStatus._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -147,11 +148,25 @@ class RequestStatus extends FhirCodeEnum {
         'RequestStatus cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return RequestStatus._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static RequestStatus? _known(RequestStatusEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for RequestStatus
@@ -162,7 +177,7 @@ class RequestStatus extends FhirCodeEnum {
     valueString: 'draft',
     valueEnum: RequestStatusEnum.draft,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
+      valueString: 'http://hl7.org/fhir/request-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -175,7 +190,7 @@ class RequestStatus extends FhirCodeEnum {
     valueString: 'active',
     valueEnum: RequestStatusEnum.active,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
+      valueString: 'http://hl7.org/fhir/request-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -188,7 +203,7 @@ class RequestStatus extends FhirCodeEnum {
     valueString: 'on-hold',
     valueEnum: RequestStatusEnum.onHold,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
+      valueString: 'http://hl7.org/fhir/request-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -201,7 +216,7 @@ class RequestStatus extends FhirCodeEnum {
     valueString: 'entered-in-error',
     valueEnum: RequestStatusEnum.enteredInError,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
+      valueString: 'http://hl7.org/fhir/request-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -214,7 +229,7 @@ class RequestStatus extends FhirCodeEnum {
     valueString: 'ended',
     valueEnum: RequestStatusEnum.ended,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
+      valueString: 'http://hl7.org/fhir/request-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -227,7 +242,7 @@ class RequestStatus extends FhirCodeEnum {
     valueString: 'completed',
     valueEnum: RequestStatusEnum.completed,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
+      valueString: 'http://hl7.org/fhir/request-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -240,7 +255,7 @@ class RequestStatus extends FhirCodeEnum {
     valueString: 'revoked',
     valueEnum: RequestStatusEnum.revoked,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
+      valueString: 'http://hl7.org/fhir/request-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -253,7 +268,7 @@ class RequestStatus extends FhirCodeEnum {
     valueString: 'unknown',
     valueEnum: RequestStatusEnum.unknown,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/request-status',
+      valueString: 'http://hl7.org/fhir/request-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -277,6 +292,10 @@ class RequestStatus extends FhirCodeEnum {
   RequestStatus withElement(Element? newElement) {
     return RequestStatus._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

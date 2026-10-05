@@ -97,12 +97,13 @@ class SubscriptionStatusCodes extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = SubscriptionStatusCodesEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return SubscriptionStatusCodes._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -126,11 +127,26 @@ class SubscriptionStatusCodes extends FhirCodeEnum {
         'SubscriptionStatusCodes cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return SubscriptionStatusCodes._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static SubscriptionStatusCodes? _known(
+      SubscriptionStatusCodesEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for SubscriptionStatusCodes
@@ -141,7 +157,7 @@ class SubscriptionStatusCodes extends FhirCodeEnum {
     valueString: 'requested',
     valueEnum: SubscriptionStatusCodesEnum.requested,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/subscription-status',
+      valueString: 'http://hl7.org/fhir/subscription-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -154,7 +170,7 @@ class SubscriptionStatusCodes extends FhirCodeEnum {
     valueString: 'active',
     valueEnum: SubscriptionStatusCodesEnum.active,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/subscription-status',
+      valueString: 'http://hl7.org/fhir/subscription-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -167,7 +183,7 @@ class SubscriptionStatusCodes extends FhirCodeEnum {
     valueString: 'error',
     valueEnum: SubscriptionStatusCodesEnum.error,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/subscription-status',
+      valueString: 'http://hl7.org/fhir/subscription-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -180,7 +196,7 @@ class SubscriptionStatusCodes extends FhirCodeEnum {
     valueString: 'off',
     valueEnum: SubscriptionStatusCodesEnum.off,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/subscription-status',
+      valueString: 'http://hl7.org/fhir/subscription-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -194,7 +210,7 @@ class SubscriptionStatusCodes extends FhirCodeEnum {
     valueString: 'entered-in-error',
     valueEnum: SubscriptionStatusCodesEnum.enteredInError,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/subscription-status',
+      valueString: 'http://hl7.org/fhir/subscription-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -215,6 +231,10 @@ class SubscriptionStatusCodes extends FhirCodeEnum {
   SubscriptionStatusCodes withElement(Element? newElement) {
     return SubscriptionStatusCodes._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

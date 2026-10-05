@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for InteractionTrigger
@@ -245,12 +246,13 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     final valueEnum = InteractionTriggerBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return InteractionTriggerBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -283,10 +285,26 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
         'InteractionTriggerBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(InteractionTriggerBuilderEnum.fromString(value));
     return InteractionTriggerBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static InteractionTriggerBuilder? _known(
+      InteractionTriggerBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for InteractionTriggerBuilder
@@ -297,7 +315,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'read',
     valueEnum: InteractionTriggerBuilderEnum.read,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -310,7 +328,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'vread',
     valueEnum: InteractionTriggerBuilderEnum.vread,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -323,7 +341,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'update',
     valueEnum: InteractionTriggerBuilderEnum.update,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -337,7 +355,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'update-conditional',
     valueEnum: InteractionTriggerBuilderEnum.updateConditional,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -350,7 +368,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'patch',
     valueEnum: InteractionTriggerBuilderEnum.patch,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -364,7 +382,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'patch-conditional',
     valueEnum: InteractionTriggerBuilderEnum.patchConditional,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -377,7 +395,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'delete',
     valueEnum: InteractionTriggerBuilderEnum.delete,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -391,7 +409,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'delete-conditional-single',
     valueEnum: InteractionTriggerBuilderEnum.deleteConditionalSingle,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -405,7 +423,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'delete-conditional-multiple',
     valueEnum: InteractionTriggerBuilderEnum.deleteConditionalMultiple,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -418,7 +436,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'delete-history',
     valueEnum: InteractionTriggerBuilderEnum.deleteHistory,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -432,7 +450,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'delete-history-version',
     valueEnum: InteractionTriggerBuilderEnum.deleteHistoryVersion,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -445,7 +463,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'history',
     valueEnum: InteractionTriggerBuilderEnum.history,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -459,7 +477,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'history-instance',
     valueEnum: InteractionTriggerBuilderEnum.historyInstance,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -472,7 +490,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'history-type',
     valueEnum: InteractionTriggerBuilderEnum.historyType,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -485,7 +503,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'history-system',
     valueEnum: InteractionTriggerBuilderEnum.historySystem,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -498,7 +516,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'create',
     valueEnum: InteractionTriggerBuilderEnum.create,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -512,7 +530,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'create-conditional',
     valueEnum: InteractionTriggerBuilderEnum.createConditional,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -525,7 +543,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'search',
     valueEnum: InteractionTriggerBuilderEnum.search,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -538,7 +556,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'search-type',
     valueEnum: InteractionTriggerBuilderEnum.searchType,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -551,7 +569,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'search-system',
     valueEnum: InteractionTriggerBuilderEnum.searchSystem,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -565,7 +583,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'search-compartment',
     valueEnum: InteractionTriggerBuilderEnum.searchCompartment,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -578,7 +596,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'capabilities',
     valueEnum: InteractionTriggerBuilderEnum.capabilities,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -591,7 +609,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'transaction',
     valueEnum: InteractionTriggerBuilderEnum.transaction,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -604,7 +622,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'batch',
     valueEnum: InteractionTriggerBuilderEnum.batch,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -617,7 +635,7 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
     valueString: 'operation',
     valueEnum: InteractionTriggerBuilderEnum.operation,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/interaction-trigger',
+      valueString: 'http://hl7.org/fhir/restful-interaction',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -666,6 +684,10 @@ class InteractionTriggerBuilder extends FhirCodeEnumBuilder {
   ) {
     return InteractionTriggerBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

@@ -97,12 +97,13 @@ class GenomicStudyStatus extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = GenomicStudyStatusEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return GenomicStudyStatus._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -126,11 +127,25 @@ class GenomicStudyStatus extends FhirCodeEnum {
         'GenomicStudyStatus cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return GenomicStudyStatus._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static GenomicStudyStatus? _known(GenomicStudyStatusEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for GenomicStudyStatus
@@ -141,7 +156,7 @@ class GenomicStudyStatus extends FhirCodeEnum {
     valueString: 'registered',
     valueEnum: GenomicStudyStatusEnum.registered,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/genomicstudy-status',
+      valueString: 'http://hl7.org/fhir/genomicstudy-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -154,7 +169,7 @@ class GenomicStudyStatus extends FhirCodeEnum {
     valueString: 'available',
     valueEnum: GenomicStudyStatusEnum.available,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/genomicstudy-status',
+      valueString: 'http://hl7.org/fhir/genomicstudy-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -167,7 +182,7 @@ class GenomicStudyStatus extends FhirCodeEnum {
     valueString: 'cancelled',
     valueEnum: GenomicStudyStatusEnum.cancelled,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/genomicstudy-status',
+      valueString: 'http://hl7.org/fhir/genomicstudy-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -180,7 +195,7 @@ class GenomicStudyStatus extends FhirCodeEnum {
     valueString: 'entered-in-error',
     valueEnum: GenomicStudyStatusEnum.enteredInError,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/genomicstudy-status',
+      valueString: 'http://hl7.org/fhir/genomicstudy-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -193,7 +208,7 @@ class GenomicStudyStatus extends FhirCodeEnum {
     valueString: 'unknown',
     valueEnum: GenomicStudyStatusEnum.unknown,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/genomicstudy-status',
+      valueString: 'http://hl7.org/fhir/genomicstudy-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -214,6 +229,10 @@ class GenomicStudyStatus extends FhirCodeEnum {
   GenomicStudyStatus withElement(Element? newElement) {
     return GenomicStudyStatus._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

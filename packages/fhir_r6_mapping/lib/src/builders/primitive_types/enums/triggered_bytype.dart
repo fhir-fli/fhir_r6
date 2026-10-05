@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for TriggeredBytype
@@ -91,12 +92,13 @@ class TriggeredBytypeBuilder extends FhirCodeEnumBuilder {
     final valueEnum = TriggeredBytypeBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return TriggeredBytypeBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -129,10 +131,25 @@ class TriggeredBytypeBuilder extends FhirCodeEnumBuilder {
         'TriggeredBytypeBuilder cannot be constructed from JSON.',
       );
     }
+    final known = _known(TriggeredBytypeBuilderEnum.fromString(value));
     return TriggeredBytypeBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static TriggeredBytypeBuilder? _known(TriggeredBytypeBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for TriggeredBytypeBuilder
@@ -143,7 +160,7 @@ class TriggeredBytypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'reflex',
     valueEnum: TriggeredBytypeBuilderEnum.reflex,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/observation-triggeredbytype',
+      valueString: 'http://hl7.org/fhir/observation-triggeredbytype',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -156,7 +173,7 @@ class TriggeredBytypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'repeat',
     valueEnum: TriggeredBytypeBuilderEnum.repeat,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/observation-triggeredbytype',
+      valueString: 'http://hl7.org/fhir/observation-triggeredbytype',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -169,7 +186,7 @@ class TriggeredBytypeBuilder extends FhirCodeEnumBuilder {
     valueString: 're-run',
     valueEnum: TriggeredBytypeBuilderEnum.reRun,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/observation-triggeredbytype',
+      valueString: 'http://hl7.org/fhir/observation-triggeredbytype',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -196,6 +213,10 @@ class TriggeredBytypeBuilder extends FhirCodeEnumBuilder {
   ) {
     return TriggeredBytypeBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

@@ -1,8 +1,27 @@
 # fhir_r6_bulk
 
+## [0.13.0]
+
+- The bulk-data code now lives in `fhir_bulk` 0.13.0, which serves every
+  FHIR version and reads resources through `fhir_node`. This package
+  re-exports it with the R6 model filled in (`r6Bulk`): `FhirBulk` and
+  `NdjsonStream` keep their static members over `Resource`; `WhichResource`,
+  `ImportFile`, the three `BulkRequest`s and `BulkImportRequest` keep their
+  typed constructors (`R6ResourceType`, `FhirId`, `FhirDateTime`) over the
+  core's string-typed classes, so `WhichResource.resourceType` is now the
+  type's name and `BulkRequest.request()` returns `List<Resource>`.
+  `BulkExportKickoff.unknownTypes` and `TypeFilter.resourceTypeKnown` take
+  the model: `kickoff.unknownTypes(r6Bulk)`.
+- A POST kick-off sends `_since` as `valueInstant`, as the Bulk Data IG
+  2.0.0 OperationDefinition `export` types it; it was `valueDateTime`.
+- `BulkImportRequest` rejects an empty file list or a non-HTTP(S) file URL
+  with `ArgumentError` at runtime (they were asserts).
+- **Streaming NDJSON: `NdjsonStream.lines` (from a byte stream, chunked anyhow), `resources`, `encode` and `write` (to a sink, flushing every N lines).** The list-shaped `FhirBulk` helpers stay; they hold a whole file, which a server export cannot (fhirant REVIEW-2026-09-06 finding 34: 813k Observations as a list 5.1 GB, streamed 741 MB).
+- **Bulk Data Access IG 2.0.0 models a client and a server both read**: `BulkExportKickoff` (from a query map or a POSTed `Parameters`; repeated and comma-delimited values are one list, as export.html requires), `TypeFilter`, `BulkExportFile`, `BulkExportManifest` (checked against export.html's own example response body), `bulkOutputFormats`. The client now reads the complete-status body through `BulkExportManifest`.
+
 ## [0.12.0]
 
-- No code changes; version aligned with the fhir_r4 0.12.0 family release
+- No code changes; version aligned with the fhir_r6 0.12.0 family release
 
 ## [0.9.0]
 
@@ -32,7 +51,11 @@
 * Unified versioning across all fhir_r6 packages
 * Updated dependencies
 
-## [0.4.0]
+## [0.4.2]
+
+* Updated dependencies
+
+## [0.4.1]
 
 * Updated dependencies
 * Fixed toNdJson() trailing newline bug
@@ -42,6 +65,9 @@
 * Fixed HTTP client cleanup
 * Fixed content-type header handling
 * Improved null safety checks
+
+## [0.4.0]
+
 * just update to use the most recent fhir_r6 package
 
 ## [0.3.0]

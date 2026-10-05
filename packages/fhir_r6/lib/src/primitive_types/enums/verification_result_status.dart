@@ -111,12 +111,13 @@ class VerificationResultStatus extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = VerificationResultStatusEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return VerificationResultStatus._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -140,11 +141,26 @@ class VerificationResultStatus extends FhirCodeEnum {
         'VerificationResultStatus cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return VerificationResultStatus._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static VerificationResultStatus? _known(
+      VerificationResultStatusEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for VerificationResultStatus
@@ -155,7 +171,7 @@ class VerificationResultStatus extends FhirCodeEnum {
     valueString: 'attested',
     valueEnum: VerificationResultStatusEnum.attested,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/verificationresult-status',
+      valueString: 'http://hl7.org/fhir/CodeSystem/verificationresult-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -168,7 +184,7 @@ class VerificationResultStatus extends FhirCodeEnum {
     valueString: 'validated',
     valueEnum: VerificationResultStatusEnum.validated,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/verificationresult-status',
+      valueString: 'http://hl7.org/fhir/CodeSystem/verificationresult-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -181,7 +197,7 @@ class VerificationResultStatus extends FhirCodeEnum {
     valueString: 'in-process',
     valueEnum: VerificationResultStatusEnum.inProcess,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/verificationresult-status',
+      valueString: 'http://hl7.org/fhir/CodeSystem/verificationresult-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -194,7 +210,7 @@ class VerificationResultStatus extends FhirCodeEnum {
     valueString: 'req-revalid',
     valueEnum: VerificationResultStatusEnum.reqRevalid,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/verificationresult-status',
+      valueString: 'http://hl7.org/fhir/CodeSystem/verificationresult-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -207,7 +223,7 @@ class VerificationResultStatus extends FhirCodeEnum {
     valueString: 'val-fail',
     valueEnum: VerificationResultStatusEnum.valFail,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/verificationresult-status',
+      valueString: 'http://hl7.org/fhir/CodeSystem/verificationresult-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -220,7 +236,7 @@ class VerificationResultStatus extends FhirCodeEnum {
     valueString: 'reval-fail',
     valueEnum: VerificationResultStatusEnum.revalFail,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/verificationresult-status',
+      valueString: 'http://hl7.org/fhir/CodeSystem/verificationresult-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -234,7 +250,7 @@ class VerificationResultStatus extends FhirCodeEnum {
     valueString: 'entered-in-error',
     valueEnum: VerificationResultStatusEnum.enteredInError,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/verificationresult-status',
+      valueString: 'http://hl7.org/fhir/CodeSystem/verificationresult-status',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -257,6 +273,10 @@ class VerificationResultStatus extends FhirCodeEnum {
   VerificationResultStatus withElement(Element? newElement) {
     return VerificationResultStatus._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

@@ -90,12 +90,13 @@ class DeviceAlertPresenceCodes extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = DeviceAlertPresenceCodesEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return DeviceAlertPresenceCodes._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -119,11 +120,26 @@ class DeviceAlertPresenceCodes extends FhirCodeEnum {
         'DeviceAlertPresenceCodes cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return DeviceAlertPresenceCodes._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static DeviceAlertPresenceCodes? _known(
+      DeviceAlertPresenceCodesEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for DeviceAlertPresenceCodes
@@ -134,7 +150,7 @@ class DeviceAlertPresenceCodes extends FhirCodeEnum {
     valueString: 'on',
     valueEnum: DeviceAlertPresenceCodesEnum.on_,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/devicealert-presence',
+      valueString: 'http://hl7.org/fhir/devicealert-presence',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -147,7 +163,7 @@ class DeviceAlertPresenceCodes extends FhirCodeEnum {
     valueString: 'latched',
     valueEnum: DeviceAlertPresenceCodesEnum.latched,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/devicealert-presence',
+      valueString: 'http://hl7.org/fhir/devicealert-presence',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -160,7 +176,7 @@ class DeviceAlertPresenceCodes extends FhirCodeEnum {
     valueString: 'off',
     valueEnum: DeviceAlertPresenceCodesEnum.off,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/devicealert-presence',
+      valueString: 'http://hl7.org/fhir/devicealert-presence',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -173,7 +189,7 @@ class DeviceAlertPresenceCodes extends FhirCodeEnum {
     valueString: 'ack',
     valueEnum: DeviceAlertPresenceCodesEnum.ack,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/devicealert-presence',
+      valueString: 'http://hl7.org/fhir/devicealert-presence',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -193,6 +209,10 @@ class DeviceAlertPresenceCodes extends FhirCodeEnum {
   DeviceAlertPresenceCodes withElement(Element? newElement) {
     return DeviceAlertPresenceCodes._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

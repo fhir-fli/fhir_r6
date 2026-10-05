@@ -314,12 +314,13 @@ class RelatedArtifactType extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = RelatedArtifactTypeEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return RelatedArtifactType._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -343,11 +344,25 @@ class RelatedArtifactType extends FhirCodeEnum {
         'RelatedArtifactType cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return RelatedArtifactType._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static RelatedArtifactType? _known(RelatedArtifactTypeEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for RelatedArtifactType
@@ -358,7 +373,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'documentation',
     valueEnum: RelatedArtifactTypeEnum.documentation,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -371,7 +386,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'justification',
     valueEnum: RelatedArtifactTypeEnum.justification,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -384,7 +399,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'citation',
     valueEnum: RelatedArtifactTypeEnum.citation,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -397,7 +412,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'predecessor',
     valueEnum: RelatedArtifactTypeEnum.predecessor,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -410,7 +425,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'successor',
     valueEnum: RelatedArtifactTypeEnum.successor,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -423,7 +438,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'derived-from',
     valueEnum: RelatedArtifactTypeEnum.derivedFrom,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -436,7 +451,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'depends-on',
     valueEnum: RelatedArtifactTypeEnum.dependsOn,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -449,7 +464,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'composed-of',
     valueEnum: RelatedArtifactTypeEnum.composedOf,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -462,7 +477,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'part-of',
     valueEnum: RelatedArtifactTypeEnum.partOf,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -475,7 +490,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'amends',
     valueEnum: RelatedArtifactTypeEnum.amends,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -488,7 +503,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'amended-with',
     valueEnum: RelatedArtifactTypeEnum.amendedWith,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -501,7 +516,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'appends',
     valueEnum: RelatedArtifactTypeEnum.appends,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -514,7 +529,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'appended-with',
     valueEnum: RelatedArtifactTypeEnum.appendedWith,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -527,7 +542,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'cites',
     valueEnum: RelatedArtifactTypeEnum.cites,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -540,7 +555,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'cited-by',
     valueEnum: RelatedArtifactTypeEnum.citedBy,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -553,7 +568,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'comments-on',
     valueEnum: RelatedArtifactTypeEnum.commentsOn,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -566,7 +581,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'comment-in',
     valueEnum: RelatedArtifactTypeEnum.commentIn,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -579,7 +594,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'contains',
     valueEnum: RelatedArtifactTypeEnum.contains_,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -592,7 +607,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'contained-in',
     valueEnum: RelatedArtifactTypeEnum.containedIn,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -605,7 +620,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'corrects',
     valueEnum: RelatedArtifactTypeEnum.corrects,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -618,7 +633,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'correction-in',
     valueEnum: RelatedArtifactTypeEnum.correctionIn,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -631,7 +646,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'replaces',
     valueEnum: RelatedArtifactTypeEnum.replaces,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -644,7 +659,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'replaced-with',
     valueEnum: RelatedArtifactTypeEnum.replacedWith,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -657,7 +672,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'retracts',
     valueEnum: RelatedArtifactTypeEnum.retracts,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -670,7 +685,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'retracted-by',
     valueEnum: RelatedArtifactTypeEnum.retractedBy,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -683,7 +698,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'signs',
     valueEnum: RelatedArtifactTypeEnum.signs,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -696,7 +711,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'similar-to',
     valueEnum: RelatedArtifactTypeEnum.similarTo,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -709,7 +724,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'supports',
     valueEnum: RelatedArtifactTypeEnum.supports,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -722,7 +737,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'supported-with',
     valueEnum: RelatedArtifactTypeEnum.supportedWith,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -735,7 +750,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'transforms',
     valueEnum: RelatedArtifactTypeEnum.transforms,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -748,7 +763,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'transformed-into',
     valueEnum: RelatedArtifactTypeEnum.transformedInto,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -761,7 +776,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'transformed-with',
     valueEnum: RelatedArtifactTypeEnum.transformedWith,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -774,7 +789,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'documents',
     valueEnum: RelatedArtifactTypeEnum.documents,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -787,7 +802,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'specification-of',
     valueEnum: RelatedArtifactTypeEnum.specificationOf,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -800,7 +815,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'created-with',
     valueEnum: RelatedArtifactTypeEnum.createdWith,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -813,7 +828,7 @@ class RelatedArtifactType extends FhirCodeEnum {
     valueString: 'cite-as',
     valueEnum: RelatedArtifactTypeEnum.citeAs,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/related-artifact-type',
+      valueString: 'http://hl7.org/fhir/related-artifact-type',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -865,6 +880,10 @@ class RelatedArtifactType extends FhirCodeEnum {
   RelatedArtifactType withElement(Element? newElement) {
     return RelatedArtifactType._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

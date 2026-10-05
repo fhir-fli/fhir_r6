@@ -90,12 +90,13 @@ class ClaimProcessingCodes extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = ClaimProcessingCodesEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return ClaimProcessingCodes._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -119,11 +120,25 @@ class ClaimProcessingCodes extends FhirCodeEnum {
         'ClaimProcessingCodes cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return ClaimProcessingCodes._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static ClaimProcessingCodes? _known(ClaimProcessingCodesEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for ClaimProcessingCodes
@@ -134,7 +149,7 @@ class ClaimProcessingCodes extends FhirCodeEnum {
     valueString: 'queued',
     valueEnum: ClaimProcessingCodesEnum.queued,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/claim-outcome',
+      valueString: 'http://hl7.org/fhir/claim-outcome',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -147,7 +162,7 @@ class ClaimProcessingCodes extends FhirCodeEnum {
     valueString: 'complete',
     valueEnum: ClaimProcessingCodesEnum.complete,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/claim-outcome',
+      valueString: 'http://hl7.org/fhir/claim-outcome',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -160,7 +175,7 @@ class ClaimProcessingCodes extends FhirCodeEnum {
     valueString: 'error',
     valueEnum: ClaimProcessingCodesEnum.error,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/claim-outcome',
+      valueString: 'http://hl7.org/fhir/claim-outcome',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -173,7 +188,7 @@ class ClaimProcessingCodes extends FhirCodeEnum {
     valueString: 'partial',
     valueEnum: ClaimProcessingCodesEnum.partial,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/claim-outcome',
+      valueString: 'http://hl7.org/fhir/claim-outcome',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -193,6 +208,10 @@ class ClaimProcessingCodes extends FhirCodeEnum {
   ClaimProcessingCodes withElement(Element? newElement) {
     return ClaimProcessingCodes._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

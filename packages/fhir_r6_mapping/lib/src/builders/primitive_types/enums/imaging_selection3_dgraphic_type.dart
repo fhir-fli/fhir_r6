@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for ImagingSelection3DGraphicType
@@ -112,12 +113,13 @@ class ImagingSelection3DGraphicTypeBuilder extends FhirCodeEnumBuilder {
     final valueEnum = ImagingSelection3DGraphicTypeBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return ImagingSelection3DGraphicTypeBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -150,10 +152,27 @@ class ImagingSelection3DGraphicTypeBuilder extends FhirCodeEnumBuilder {
         'ImagingSelection3DGraphicTypeBuilder cannot be constructed from JSON.',
       );
     }
+    final known =
+        _known(ImagingSelection3DGraphicTypeBuilderEnum.fromString(value));
     return ImagingSelection3DGraphicTypeBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static ImagingSelection3DGraphicTypeBuilder? _known(
+      ImagingSelection3DGraphicTypeBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for ImagingSelection3DGraphicTypeBuilder
@@ -165,8 +184,7 @@ class ImagingSelection3DGraphicTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'point',
     valueEnum: ImagingSelection3DGraphicTypeBuilderEnum.point,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype',
+      valueString: 'http://hl7.org/fhir/imagingselection-3dgraphictype',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -180,8 +198,7 @@ class ImagingSelection3DGraphicTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'multipoint',
     valueEnum: ImagingSelection3DGraphicTypeBuilderEnum.multipoint,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype',
+      valueString: 'http://hl7.org/fhir/imagingselection-3dgraphictype',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -195,8 +212,7 @@ class ImagingSelection3DGraphicTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'polyline',
     valueEnum: ImagingSelection3DGraphicTypeBuilderEnum.polyline,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype',
+      valueString: 'http://hl7.org/fhir/imagingselection-3dgraphictype',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -210,8 +226,7 @@ class ImagingSelection3DGraphicTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'polygon',
     valueEnum: ImagingSelection3DGraphicTypeBuilderEnum.polygon,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype',
+      valueString: 'http://hl7.org/fhir/imagingselection-3dgraphictype',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -225,8 +240,7 @@ class ImagingSelection3DGraphicTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'ellipse',
     valueEnum: ImagingSelection3DGraphicTypeBuilderEnum.ellipse,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype',
+      valueString: 'http://hl7.org/fhir/imagingselection-3dgraphictype',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -240,8 +254,7 @@ class ImagingSelection3DGraphicTypeBuilder extends FhirCodeEnumBuilder {
     valueString: 'ellipsoid',
     valueEnum: ImagingSelection3DGraphicTypeBuilderEnum.ellipsoid,
     system: FhirUriBuilder._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype',
+      valueString: 'http://hl7.org/fhir/imagingselection-3dgraphictype',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -272,6 +285,10 @@ class ImagingSelection3DGraphicTypeBuilder extends FhirCodeEnumBuilder {
   ) {
     return ImagingSelection3DGraphicTypeBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

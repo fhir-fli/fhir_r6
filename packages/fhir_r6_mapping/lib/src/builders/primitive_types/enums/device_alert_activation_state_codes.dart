@@ -1,3 +1,4 @@
+// ignore_for_file: unused_element_parameter, non_constant_identifier_names
 part of '../primitive_types.dart';
 
 /// Actual enum for DeviceAlertActivationStateCodes
@@ -91,12 +92,13 @@ class DeviceAlertActivationStateCodesBuilder extends FhirCodeEnumBuilder {
     final valueEnum = DeviceAlertActivationStateCodesBuilderEnum.fromString(
       valueString,
     );
+    final known = _known(valueEnum);
     return DeviceAlertActivationStateCodesBuilder._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -129,10 +131,27 @@ class DeviceAlertActivationStateCodesBuilder extends FhirCodeEnumBuilder {
         'DeviceAlertActivationStateCodesBuilder cannot be constructed from JSON.',
       );
     }
+    final known =
+        _known(DeviceAlertActivationStateCodesBuilderEnum.fromString(value));
     return DeviceAlertActivationStateCodesBuilder._(
       valueString: value,
+      valueEnum: known?.valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static DeviceAlertActivationStateCodesBuilder? _known(
+      DeviceAlertActivationStateCodesBuilderEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   ///  An actual enum that can be used for DeviceAlertActivationStateCodesBuilder
@@ -144,7 +163,7 @@ class DeviceAlertActivationStateCodesBuilder extends FhirCodeEnumBuilder {
     valueString: 'on',
     valueEnum: DeviceAlertActivationStateCodesBuilderEnum.on_,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/devicealert-activationState',
+      valueString: 'http://hl7.org/fhir/devicealert-activationState',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -158,7 +177,7 @@ class DeviceAlertActivationStateCodesBuilder extends FhirCodeEnumBuilder {
     valueString: 'off',
     valueEnum: DeviceAlertActivationStateCodesBuilderEnum.off,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/devicealert-activationState',
+      valueString: 'http://hl7.org/fhir/devicealert-activationState',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -172,7 +191,7 @@ class DeviceAlertActivationStateCodesBuilder extends FhirCodeEnumBuilder {
     valueString: 'paused',
     valueEnum: DeviceAlertActivationStateCodesBuilderEnum.paused,
     system: FhirUriBuilder._(
-      valueString: 'http://hl7.org/fhir/ValueSet/devicealert-activationState',
+      valueString: 'http://hl7.org/fhir/devicealert-activationState',
     ),
     version: FhirStringBuilder._(valueString: '6.0.0-ballot3'),
     display: FhirStringBuilder._(
@@ -200,6 +219,10 @@ class DeviceAlertActivationStateCodesBuilder extends FhirCodeEnumBuilder {
   ) {
     return DeviceAlertActivationStateCodesBuilder._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

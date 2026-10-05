@@ -100,12 +100,13 @@ class ArtifactAssessmentDisposition extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = ArtifactAssessmentDispositionEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return ArtifactAssessmentDisposition._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -124,19 +125,32 @@ class ArtifactAssessmentDisposition extends FhirCodeEnum {
     final element = elementJson != null ? Element.fromJson(elementJson) : null;
     if (value == null && element != null) {
       return ArtifactAssessmentDisposition._(
-        valueString: null,
-        element: element,
-      );
+          valueString: null, element: element);
     } else if (value == null && element == null) {
       throw ArgumentError(
         'ArtifactAssessmentDisposition cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return ArtifactAssessmentDisposition._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static ArtifactAssessmentDisposition? _known(
+      ArtifactAssessmentDispositionEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for ArtifactAssessmentDisposition
@@ -148,8 +162,7 @@ class ArtifactAssessmentDisposition extends FhirCodeEnum {
     valueString: 'unresolved',
     valueEnum: ArtifactAssessmentDispositionEnum.unresolved,
     system: FhirUri._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/artifactassessment-disposition',
+      valueString: 'http://hl7.org/fhir/artifactassessment-disposition',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -163,8 +176,7 @@ class ArtifactAssessmentDisposition extends FhirCodeEnum {
     valueString: 'not-persuasive',
     valueEnum: ArtifactAssessmentDispositionEnum.notPersuasive,
     system: FhirUri._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/artifactassessment-disposition',
+      valueString: 'http://hl7.org/fhir/artifactassessment-disposition',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -178,8 +190,7 @@ class ArtifactAssessmentDisposition extends FhirCodeEnum {
     valueString: 'persuasive',
     valueEnum: ArtifactAssessmentDispositionEnum.persuasive,
     system: FhirUri._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/artifactassessment-disposition',
+      valueString: 'http://hl7.org/fhir/artifactassessment-disposition',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -193,8 +204,7 @@ class ArtifactAssessmentDisposition extends FhirCodeEnum {
     valueString: 'persuasive-with-modification',
     valueEnum: ArtifactAssessmentDispositionEnum.persuasiveWithModification,
     system: FhirUri._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/artifactassessment-disposition',
+      valueString: 'http://hl7.org/fhir/artifactassessment-disposition',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -208,8 +218,7 @@ class ArtifactAssessmentDisposition extends FhirCodeEnum {
     valueString: 'not-persuasive-with-modification',
     valueEnum: ArtifactAssessmentDispositionEnum.notPersuasiveWithModification,
     system: FhirUri._(
-      valueString:
-          'http://hl7.org/fhir/ValueSet/artifactassessment-disposition',
+      valueString: 'http://hl7.org/fhir/artifactassessment-disposition',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -230,6 +239,10 @@ class ArtifactAssessmentDisposition extends FhirCodeEnum {
   ArtifactAssessmentDisposition withElement(Element? newElement) {
     return ArtifactAssessmentDisposition._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }

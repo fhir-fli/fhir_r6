@@ -90,12 +90,13 @@ class EligibilityOutcome extends FhirCodeEnum {
     final valueString =
         rawValue != null ? FhirCode._validateCode(rawValue) : null;
     final valueEnum = EligibilityOutcomeEnum.fromString(valueString);
+    final known = _known(valueEnum);
     return EligibilityOutcome._(
       valueString: valueString,
       valueEnum: valueEnum,
-      system: system,
-      version: version,
-      display: display,
+      system: system ?? known?.system,
+      version: version ?? known?.version,
+      display: display ?? known?.display,
       element: element,
       id: id,
       extension_: extension_,
@@ -119,11 +120,25 @@ class EligibilityOutcome extends FhirCodeEnum {
         'EligibilityOutcome cannot be constructed from JSON.',
       );
     }
+    final known = _known(valueEnum);
     return EligibilityOutcome._(
       valueString: value,
       valueEnum: valueEnum,
+      system: known?.system,
+      version: known?.version,
+      display: known?.display,
       element: element,
     );
+  }
+
+  /// The constant for [valueEnum], with its system, version and
+  /// display; null for a code the value set does not define.
+  static EligibilityOutcome? _known(EligibilityOutcomeEnum? valueEnum) {
+    if (valueEnum == null) return null;
+    for (final v in values) {
+      if (v.valueEnum == valueEnum) return v;
+    }
+    return null;
   }
 
   /// An actual enum that can be used for EligibilityOutcome
@@ -134,7 +149,7 @@ class EligibilityOutcome extends FhirCodeEnum {
     valueString: 'queued',
     valueEnum: EligibilityOutcomeEnum.queued,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/eligibility-outcome',
+      valueString: 'http://hl7.org/fhir/eligibility-outcome',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -147,7 +162,7 @@ class EligibilityOutcome extends FhirCodeEnum {
     valueString: 'complete',
     valueEnum: EligibilityOutcomeEnum.complete,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/eligibility-outcome',
+      valueString: 'http://hl7.org/fhir/eligibility-outcome',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -160,7 +175,7 @@ class EligibilityOutcome extends FhirCodeEnum {
     valueString: 'error',
     valueEnum: EligibilityOutcomeEnum.error,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/eligibility-outcome',
+      valueString: 'http://hl7.org/fhir/eligibility-outcome',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -173,7 +188,7 @@ class EligibilityOutcome extends FhirCodeEnum {
     valueString: 'partial',
     valueEnum: EligibilityOutcomeEnum.partial,
     system: FhirUri._(
-      valueString: 'http://hl7.org/fhir/ValueSet/eligibility-outcome',
+      valueString: 'http://hl7.org/fhir/eligibility-outcome',
     ),
     version: FhirString._(valueString: '6.0.0-ballot3'),
     display: FhirString._(
@@ -193,6 +208,10 @@ class EligibilityOutcome extends FhirCodeEnum {
   EligibilityOutcome withElement(Element? newElement) {
     return EligibilityOutcome._(
       valueString: valueString,
+      valueEnum: valueEnum,
+      system: system,
+      version: version,
+      display: display,
       element: newElement,
     );
   }
