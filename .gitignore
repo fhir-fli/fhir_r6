@@ -22,3 +22,6 @@ package-lock.json
 test_output.log
 test_results_*.txt
 error_log.txt
+
+# Test coverage output (dart test --coverage)
+coverage/
