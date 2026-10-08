@@ -1,5 +1,9 @@
 # fhir_r6_cql
 
+## [Unreleased]
+
+- **The boundary contract with the cql engine** (ported from fhir_r4_cql, measured 2026-10-07 against the restored June 2026 suite): `resolvePath` hands a FHIR primitive, or a composite the model info maps (Quantity, Coding, CodeableConcept, Period, Range, Ratio), to the engine as its System value; a value that crossed the boundary still `is` its FHIR type (`O.value is Quantity` over a converted Quantity; R6 spells the 64-bit integer `integer54`); a map with no `resourceType` is a CQL Tuple (ELM 04, Property: "the source may be a Tuple") whose element is the key, instead of being handed to `Resource.fromJson`, which threw. `test/r6_boundary_contract_test.dart`.
+
 ## [0.13.0]
 
 - **Re-exports cql 0.7.0** (breaking there: `To*`, `ConvertsTo*` and the
