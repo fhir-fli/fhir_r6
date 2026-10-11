@@ -1,5 +1,9 @@
 # fhir_r6_mapping
 
+## [0.14.0]
+
+- No code changes; version aligned with the fhir_r6 0.14.0 family release
+
 ## [0.13.0]
 
 - **The engine and parser move to `fhir_mapping` 0.13.0**; this package is

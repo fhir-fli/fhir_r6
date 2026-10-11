@@ -6,7 +6,7 @@
   `ResourceModel`; the store's text pair is `fromJsonText` / `toJsonText`
   (fhir_db 0.15.0).
 
-## [Unreleased]
+## [0.14.0]
 
 - **`name:text` is refused as unsupported and `subject:type` as unknown** (fhirant REVIEW-2026-09-17 Q3). The R6 modifier table defines string `:text` as advanced text handling, which this store does not do, so it is refused rather than answered as a starts-with match; `[type]` in that table is a placeholder for a resource type, not a modifier named `type`. `test/search_syntax_test.dart`.
 - **Uploaded `SearchParameter` resources are indexed** (fhir_db 0.14.0): `R6Model.createFhirPathEngine` supplies the binding's FHIRPath engine, so a stored `SearchParameter` with `status: active` indexes every later save of its base types by its expression, `rebuildSearchIndex()` indexes what was stored before it, and a definition the store cannot index by is refused with `InvalidSearchParameter`. Depends on `fhir_r6_path` and `fhir_path` 0.14.2 (`resolve()` on a literal reference). `test/custom_search_parameter_test.dart`, with US Core's published `race` parameter.
