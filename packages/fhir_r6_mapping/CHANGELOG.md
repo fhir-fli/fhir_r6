@@ -2,7 +2,7 @@
 
 ## [0.14.0]
 
-- No code changes; version aligned with the fhir_r6 0.14.0 family release
+- Requires `fhir_mapping` 0.13.1: a map's header description drops empty comment lines, a group always writes its rule list, and the metadata lines may come before the `map` line.
 
 ## [0.13.0]
 
