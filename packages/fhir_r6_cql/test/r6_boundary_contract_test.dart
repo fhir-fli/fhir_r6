@@ -48,6 +48,14 @@ void main() {
     expect(mr.is_(await mr.resolvePath(patient, 'active'), 'date'), isFalse);
   });
 
+  // R6 profiles-types.json (6.0.0-ballot3): the 64-bit integer's id is
+  // `integer64`; toCqlSystemType hands it to the engine as a CqlLong.
+  test('a converted integer64 still is integer64', () {
+    final long = CqlLong('9007199254740993');
+    expect(mr.is_(long, 'integer64'), isTrue);
+    expect(mr.is_(long, 'integer'), isFalse);
+  });
+
   test('a map without resourceType is a Tuple: the element is the key',
       () async {
     final tuple = <String, dynamic>{'x': CqlInteger(3)};

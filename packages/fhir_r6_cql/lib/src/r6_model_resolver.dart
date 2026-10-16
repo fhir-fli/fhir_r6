@@ -96,7 +96,7 @@ class R6ModelResolver implements ModelResolver {
       case 'positiveInt':
       case 'unsignedInt':
         return value is CqlInteger;
-      case 'integer54':
+      case 'integer64':
         return value is CqlLong;
       case 'decimal':
         return value is CqlDecimal;
