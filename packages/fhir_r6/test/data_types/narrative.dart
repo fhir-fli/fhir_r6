@@ -32,7 +32,7 @@ void narrativeTest() {
       );
       // narrative-status `empty`: "The contents of the narrative are some
       // equivalent of 'No human-readable text provided in this case'", so
-      // the div still has text (txt-2).
+      // the div still has text (txt-1 in R6).
       final empty = Narrative(
         status: NarrativeStatus.empty_,
         div: FhirXhtml(

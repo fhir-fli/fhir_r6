@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:fhir_r6/fhir_r4.dart';
+import 'package:fhir_r6/fhir_r6.dart';
 import 'package:test/test.dart';
 
 void xhtmlTest() {
