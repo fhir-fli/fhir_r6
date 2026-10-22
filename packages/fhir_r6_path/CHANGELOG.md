@@ -1,5 +1,9 @@
 # fhir_r6_path
 
+## [0.14.1]
+
+- **FHIRPath's `htmlChecks()` and `htmlChecks2()` answer for R6.** `R6ModelBinding` supplies fhir_path 0.15.1's narrative hook from fhir_r6 0.14.1's own check (`FhirXhtml.narrativeProblems`, `narrativeHasContent`), so txt-1 (R6 folds the content rule into it, so `htmlChecks()` asks for content too) evaluate as the parser enforces them; both used to be false for every narrative. Needs fhir_r6 ^0.14.1 and fhir_path ^0.15.1.
+
 ## [0.14.0]
 
 - No code changes; version aligned with the fhir_r6 0.14.0 family release
