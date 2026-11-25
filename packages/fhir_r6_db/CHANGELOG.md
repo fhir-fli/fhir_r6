@@ -2,7 +2,7 @@
 
 ## [0.14.1]
 
-- Requires fhir_db 0.16.0: the store's background re-index is recorded in
+- Requires fhir_db 0.16.1: the store's background re-index is recorded in
   the store file, read through `searchParameterIndexing.status()`, and a
   run cut off with its process is finished by the next connection. Every
   connection to a store file also sees a `SearchParameter` change made
