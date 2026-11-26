@@ -20,12 +20,11 @@ FHIR-FLI Mapping provides tools to parse the FHIR Mapping Language and execute t
 
 ## Installation
 
-```yaml
-dependencies:
-  fhir_r6_mapping: ^0.6.0
-  fhir_r6: ^0.6.0
-  fhir_r6_path: ^0.6.0
+```sh
+dart pub add fhir_r6_mapping fhir_r6 fhir_r6_path
 ```
+
+In a Flutter app, use `flutter pub add`.
 
 ## Quick Start
 
