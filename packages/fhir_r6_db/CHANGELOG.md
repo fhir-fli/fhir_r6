@@ -1,5 +1,9 @@
 # fhir_r6_db
 
+## [0.14.2]
+
+- README: install with `dart pub add`, which picks the current version. The README pinned ^0.6.x.
+
 ## [0.14.1]
 
 - Requires fhir_db 0.16.1: the store's background re-index is recorded in
